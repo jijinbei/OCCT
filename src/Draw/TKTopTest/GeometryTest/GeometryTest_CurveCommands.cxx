@@ -1096,7 +1096,7 @@ static int uniformAbscissa(Draw_Interpretor& di, int n, const char** a)
     Prop.SetCurve(ellip);
 
     GeomAdaptor_Curve GAC(ellip);
-    di << "Type Of curve: " << GAC.GetType() << "\n";
+    di << "Type Of curve: " << static_cast<int>(GAC.GetType()) << "\n";
     constexpr double Tol = Precision::Confusion();
     double           L;
 
@@ -1172,7 +1172,7 @@ static int EllipsUniformAbscissa(Draw_Interpretor& di, int n, const char** a)
     Prop.SetCurve(ellip);
 
     GeomAdaptor_Curve GAC(ellip);
-    di << "Type Of curve: " << GAC.GetType() << "\n";
+    di << "Type Of curve: " << static_cast<int>(GAC.GetType()) << "\n";
     constexpr double Tol = Precision::Confusion();
     double           L;
 
