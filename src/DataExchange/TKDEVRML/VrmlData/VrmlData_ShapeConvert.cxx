@@ -648,8 +648,8 @@ void VrmlData_ShapeConvert::addShape(const occ::handle<VrmlData_Group>&   thePar
           anAttribLab = aVisMat->Label();
           aStyle.SetMaterial(aVisMat);
         }
-        else if (aColorTool->GetColor(aLabel, XCAFDoc_ColorSurf, anAttribLab)
-                 || aColorTool->GetColor(aLabel, XCAFDoc_ColorGen, anAttribLab))
+        else if (aColorTool->GetColor(aLabel, XCAFDoc_ColorType::XCAFDoc_ColorSurf, anAttribLab)
+                 || aColorTool->GetColor(aLabel, XCAFDoc_ColorType::XCAFDoc_ColorGen, anAttribLab))
         {
           aColorTool->GetColor(anAttribLab, aColor);
           aStyle.SetColorSurf(aColor);
@@ -663,8 +663,8 @@ void VrmlData_ShapeConvert::addShape(const occ::handle<VrmlData_Group>&   thePar
           anAttribLab = aVisMat->Label();
           aStyle.SetMaterial(aVisMat);
         }
-        if (aColorTool->GetColor(theLabel, XCAFDoc_ColorSurf, anAttribLab)
-            || aColorTool->GetColor(theLabel, XCAFDoc_ColorGen, anAttribLab))
+        if (aColorTool->GetColor(theLabel, XCAFDoc_ColorType::XCAFDoc_ColorSurf, anAttribLab)
+            || aColorTool->GetColor(theLabel, XCAFDoc_ColorType::XCAFDoc_ColorGen, anAttribLab))
         {
           aColorTool->GetColor(anAttribLab, aColor);
           aStyle.SetColorSurf(aColor);

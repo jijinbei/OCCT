@@ -58,19 +58,19 @@ TopoDSToStep_FacetedError TopoDSToStep_FacetedTool::CheckTopoDSShape(const TopoD
           nVPol = aBsplS->NbVPoles();
           if (nUPol != 2 || nVPol != 2)
           {
-            return TopoDSToStep_SurfaceNotPlane;
+            return TopoDSToStep_FacetedError::TopoDSToStep_SurfaceNotPlane;
           }
         }
         else
         {
           // Degree in v != 1
-          return TopoDSToStep_SurfaceNotPlane;
+          return TopoDSToStep_FacetedError::TopoDSToStep_SurfaceNotPlane;
         }
       }
       else
       {
         // Degree in u != 1
-        return TopoDSToStep_SurfaceNotPlane;
+        return TopoDSToStep_FacetedError::TopoDSToStep_SurfaceNotPlane;
       }
     }
     else if (Su->IsKind(STANDARD_TYPE(Geom_BezierSurface)))
@@ -87,25 +87,25 @@ TopoDSToStep_FacetedError TopoDSToStep_FacetedTool::CheckTopoDSShape(const TopoD
           nVPol = aBzS->NbVPoles();
           if (nUPol != 2 || nVPol != 2)
           {
-            return TopoDSToStep_SurfaceNotPlane;
+            return TopoDSToStep_FacetedError::TopoDSToStep_SurfaceNotPlane;
           }
         }
         else
         {
           // Degree in v != 1
-          return TopoDSToStep_SurfaceNotPlane;
+          return TopoDSToStep_FacetedError::TopoDSToStep_SurfaceNotPlane;
         }
       }
       else
       {
         // Degree in u != 1
-        return TopoDSToStep_SurfaceNotPlane;
+        return TopoDSToStep_FacetedError::TopoDSToStep_SurfaceNotPlane;
       }
     }
     else
     {
       // the surface is neither a Plane nor a flat BSpline or Beziersurface
-      return TopoDSToStep_SurfaceNotPlane;
+      return TopoDSToStep_FacetedError::TopoDSToStep_SurfaceNotPlane;
     }
 
     // surface is flat; now check, if the PCurves are linear
@@ -121,14 +121,14 @@ TopoDSToStep_FacetedError TopoDSToStep_FacetedTool::CheckTopoDSShape(const TopoD
 
       if (C2d->IsKind(STANDARD_TYPE(Geom2d_Line)))
       {
-        return TopoDSToStep_FacetedDone;
+        return TopoDSToStep_FacetedError::TopoDSToStep_FacetedDone;
       }
       else if (C2d->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)))
       {
         occ::handle<Geom2d_BSplineCurve> aBspl2d = occ::down_cast<Geom2d_BSplineCurve>(C2d);
         if ((aBspl2d->Degree() != 1) || (aBspl2d->NbPoles() != 2))
         {
-          return TopoDSToStep_PCurveNotLinear;
+          return TopoDSToStep_FacetedError::TopoDSToStep_PCurveNotLinear;
         }
       }
       else if (C2d->IsKind(STANDARD_TYPE(Geom2d_BezierCurve)))
@@ -136,15 +136,15 @@ TopoDSToStep_FacetedError TopoDSToStep_FacetedTool::CheckTopoDSShape(const TopoD
         occ::handle<Geom2d_BezierCurve> aBzC2d = occ::down_cast<Geom2d_BezierCurve>(C2d);
         if ((aBzC2d->Degree() != 1) || (aBzC2d->NbPoles() != 2))
         {
-          return TopoDSToStep_PCurveNotLinear;
+          return TopoDSToStep_FacetedError::TopoDSToStep_PCurveNotLinear;
         }
       }
       else
       {
-        return TopoDSToStep_PCurveNotLinear;
+        return TopoDSToStep_FacetedError::TopoDSToStep_PCurveNotLinear;
       }
     } // end while (EdgeExp.More())
   } // end while (FaceExp.More())
 
-  return TopoDSToStep_FacetedDone;
+  return TopoDSToStep_FacetedError::TopoDSToStep_FacetedDone;
 }

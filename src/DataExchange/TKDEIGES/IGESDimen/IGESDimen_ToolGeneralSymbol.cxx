@@ -158,11 +158,11 @@ IGESData_DirChecker IGESDimen_ToolGeneralSymbol::DirChecker(
   const occ::handle<IGESDimen_GeneralSymbol>& /* ent */) const
 {
   IGESData_DirChecker DC(228, 0, 9999);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
-  DC.LineFont(IGESData_DefAny);
-  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.UseFlagRequired(1);
   return DC;
 }

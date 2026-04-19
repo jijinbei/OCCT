@@ -51,57 +51,57 @@ static bool HandleVrmlSceneStatus(const VrmlData_Scene&          theScene,
   const char* aStr = nullptr;
   switch (theScene.Status())
   {
-    case VrmlData_StatusOK:
+    case VrmlData_ErrorStatus::VrmlData_StatusOK:
       return true;
-    case VrmlData_EmptyData:
+    case VrmlData_ErrorStatus::VrmlData_EmptyData:
       aStr = "EmptyData";
       break;
-    case VrmlData_UnrecoverableError:
+    case VrmlData_ErrorStatus::VrmlData_UnrecoverableError:
       aStr = "UnrecoverableError";
       break;
-    case VrmlData_GeneralError:
+    case VrmlData_ErrorStatus::VrmlData_GeneralError:
       aStr = "GeneralError";
       break;
-    case VrmlData_EndOfFile:
+    case VrmlData_ErrorStatus::VrmlData_EndOfFile:
       aStr = "EndOfFile";
       break;
-    case VrmlData_NotVrmlFile:
+    case VrmlData_ErrorStatus::VrmlData_NotVrmlFile:
       aStr = "NotVrmlFile";
       break;
-    case VrmlData_CannotOpenFile:
+    case VrmlData_ErrorStatus::VrmlData_CannotOpenFile:
       aStr = "CannotOpenFile";
       break;
-    case VrmlData_VrmlFormatError:
+    case VrmlData_ErrorStatus::VrmlData_VrmlFormatError:
       aStr = "VrmlFormatError";
       break;
-    case VrmlData_NumericInputError:
+    case VrmlData_ErrorStatus::VrmlData_NumericInputError:
       aStr = "NumericInputError";
       break;
-    case VrmlData_IrrelevantNumber:
+    case VrmlData_ErrorStatus::VrmlData_IrrelevantNumber:
       aStr = "IrrelevantNumber";
       break;
-    case VrmlData_BooleanInputError:
+    case VrmlData_ErrorStatus::VrmlData_BooleanInputError:
       aStr = "BooleanInputError";
       break;
-    case VrmlData_StringInputError:
+    case VrmlData_ErrorStatus::VrmlData_StringInputError:
       aStr = "StringInputError";
       break;
-    case VrmlData_NodeNameUnknown:
+    case VrmlData_ErrorStatus::VrmlData_NodeNameUnknown:
       aStr = "NodeNameUnknown";
       break;
-    case VrmlData_NonPositiveSize:
+    case VrmlData_ErrorStatus::VrmlData_NonPositiveSize:
       aStr = "NonPositiveSize";
       break;
-    case VrmlData_ReadUnknownNode:
+    case VrmlData_ErrorStatus::VrmlData_ReadUnknownNode:
       aStr = "ReadUnknownNode";
       break;
-    case VrmlData_NonSupportedFeature:
+    case VrmlData_ErrorStatus::VrmlData_NonSupportedFeature:
       aStr = "NonSupportedFeature";
       break;
-    case VrmlData_OutputStreamUndefined:
+    case VrmlData_ErrorStatus::VrmlData_OutputStreamUndefined:
       aStr = "OutputStreamUndefined";
       break;
-    case VrmlData_NotImplemented:
+    case VrmlData_ErrorStatus::VrmlData_NotImplemented:
       aStr = "NotImplemented";
       break;
     default:
@@ -181,7 +181,7 @@ static bool ProcessVrmlScene(Standard_IStream&                            theStr
     return false;
   }
 
-  if (aScene.Status() == VrmlData_StatusOK)
+  if (aScene.Status() == VrmlData_ErrorStatus::VrmlData_StatusOK)
   {
     NCollection_DataMap<occ::handle<TopoDS_TShape>, occ::handle<VrmlData_Appearance>> aShapeAppMap;
     TopoDS_Shape aShape = aScene.GetShape(aShapeAppMap);

@@ -80,19 +80,19 @@ void IGESSolid_ToolShell::ReadOwnParams(const occ::handle<IGESSolid_Shell>&     
         Message_Msg Msg201("XSTEP_201");
         switch (aStatus)
         {
-          case IGESData_ReferenceError: {
+          case IGESData_Status::IGESData_ReferenceError: {
             Message_Msg Msg216("IGES_216");
             Msg201.Arg(Msg216.Value());
             PR.SendFail(Msg201);
             break;
           }
-          case IGESData_EntityError: {
+          case IGESData_Status::IGESData_EntityError: {
             Message_Msg Msg217("IGES_217");
             Msg201.Arg(Msg217.Value());
             PR.SendFail(Msg201);
             break;
           }
-          case IGESData_TypeError: {
+          case IGESData_Status::IGESData_TypeError: {
             Message_Msg Msg218("IGES_218");
             Msg201.Arg(Msg218.Value());
             PR.SendFail(Msg201);
@@ -170,10 +170,10 @@ IGESData_DirChecker IGESSolid_ToolShell::DirChecker(
 {
   IGESData_DirChecker DC(514, 1, 2);
 
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefVoid);
 
   DC.SubordinateStatusRequired(1);
   return DC;

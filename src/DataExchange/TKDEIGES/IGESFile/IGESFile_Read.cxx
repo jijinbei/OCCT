@@ -98,15 +98,15 @@ int IGESFile_Read(char*                                       nomfic,
 
   //  Loading results into an IGESReader
 
-  LesTypes[ArgVide] = Interface_ParamVoid;
-  LesTypes[ArgQuid] = Interface_ParamMisc;
-  LesTypes[ArgChar] = Interface_ParamText;
-  LesTypes[ArgInt]  = Interface_ParamInteger;
-  LesTypes[ArgSign] = Interface_ParamInteger;
-  LesTypes[ArgReal] = Interface_ParamReal;
-  LesTypes[ArgExp]  = Interface_ParamMisc; // exponent not finished
-  LesTypes[ArgRexp] = Interface_ParamReal; // complete exponent
-  LesTypes[ArgMexp] = Interface_ParamEnum; // exponent but no decimal point
+  LesTypes[ArgVide] = Interface_ParamType::Interface_ParamVoid;
+  LesTypes[ArgQuid] = Interface_ParamType::Interface_ParamMisc;
+  LesTypes[ArgChar] = Interface_ParamType::Interface_ParamText;
+  LesTypes[ArgInt]  = Interface_ParamType::Interface_ParamInteger;
+  LesTypes[ArgSign] = Interface_ParamType::Interface_ParamInteger;
+  LesTypes[ArgReal] = Interface_ParamType::Interface_ParamReal;
+  LesTypes[ArgExp]  = Interface_ParamType::Interface_ParamMisc; // exponent not finished
+  LesTypes[ArgRexp] = Interface_ParamType::Interface_ParamReal; // complete exponent
+  LesTypes[ArgMexp] = Interface_ParamType::Interface_ParamEnum; // exponent but no decimal point
 
   int nbparts, nbparams;
   iges_stats(&nbparts, &nbparams); // and performs necessary initializations

@@ -76,22 +76,22 @@ StepElement_EnumeratedVolumeElementPurpose StepElement_VolumeElementPurpose::
   occ::handle<StepElement_VolumeElementPurposeMember> SelMem =
     occ::down_cast<StepElement_VolumeElementPurposeMember>(Value());
   if (SelMem.IsNull())
-    return StepElement_StressDisplacement;
+    return StepElement_EnumeratedVolumeElementPurpose::StepElement_StressDisplacement;
   occ::handle<TCollection_HAsciiString> name = new TCollection_HAsciiString;
   name->AssignCat(SelMem->Name());
   occ::handle<TCollection_HAsciiString> nameitem =
     new TCollection_HAsciiString("EnumeratedVolumeElementPurpose");
   if (name->IsDifferent(nameitem))
-    return StepElement_StressDisplacement;
+    return StepElement_EnumeratedVolumeElementPurpose::StepElement_StressDisplacement;
   int                                        numit = SelMem->Enum();
   StepElement_EnumeratedVolumeElementPurpose val;
   switch (numit)
   {
     case 1:
-      val = StepElement_StressDisplacement;
+      val = StepElement_EnumeratedVolumeElementPurpose::StepElement_StressDisplacement;
       break;
     default:
-      return StepElement_StressDisplacement;
+      return StepElement_EnumeratedVolumeElementPurpose::StepElement_StressDisplacement;
       break;
   }
   return val;

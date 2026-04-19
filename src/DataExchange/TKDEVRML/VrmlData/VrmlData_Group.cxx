@@ -360,7 +360,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
         aStatus = Scene().ReadXYZ(theBuffer, aCenter, true, false);
       else
       {
-        aStatus = VrmlData_VrmlFormatError;
+        aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
         break;
       }
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "rotation"))
@@ -375,7 +375,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
       }
       else
       {
-        aStatus = VrmlData_VrmlFormatError;
+        aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
         break;
       }
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "scaleOrientation"))
@@ -386,7 +386,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
       }
       else
       {
-        aStatus = VrmlData_VrmlFormatError;
+        aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
         break;
       }
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "scale"))
@@ -394,7 +394,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
         aStatus = Scene().ReadXYZ(theBuffer, aScale, false, true);
       else
       {
-        aStatus = VrmlData_VrmlFormatError;
+        aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
         break;
       }
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "translation"))
@@ -402,7 +402,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
         aStatus = Scene().ReadXYZ(theBuffer, aTrans, true, false);
       else
       {
-        aStatus = VrmlData_VrmlFormatError;
+        aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
         break;
       }
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "DEF"))
@@ -528,7 +528,7 @@ VrmlData_ErrorStatus VrmlData_Group::openFile(Standard_IStream&              the
                                               const TCollection_AsciiString& theFilename)
 {
   std::ifstream&       aStream = static_cast<std::ifstream&>(theStream);
-  VrmlData_ErrorStatus aStatus(VrmlData_EmptyData);
+  VrmlData_ErrorStatus aStatus(VrmlData_ErrorStatus::VrmlData_EmptyData);
   NCollection_List<TCollection_ExtendedString>::Iterator aDirIter = Scene().VrmlDirIterator();
   for (; aDirIter.More(); aDirIter.Next())
   {
@@ -541,18 +541,18 @@ VrmlData_ErrorStatus VrmlData_Group::openFile(Standard_IStream&              the
       aStream.clear();
     else
     {
-      aStatus = VrmlData_StatusOK;
+      aStatus = VrmlData_ErrorStatus::VrmlData_StatusOK;
       break;
     }
   }
-  if (aStatus == VrmlData_EmptyData)
+  if (aStatus == VrmlData_ErrorStatus::VrmlData_EmptyData)
   {
     aStream.open(theFilename.ToCString(), std::ios::in);
     if (!aStream.fail())
-      aStatus = VrmlData_StatusOK;
+      aStatus = VrmlData_ErrorStatus::VrmlData_StatusOK;
   }
-  if (aStatus == VrmlData_EmptyData)
-    aStatus = VrmlData_CannotOpenFile;
+  if (aStatus == VrmlData_ErrorStatus::VrmlData_EmptyData)
+    aStatus = VrmlData_ErrorStatus::VrmlData_CannotOpenFile;
   return aStatus;
 }
 
@@ -560,7 +560,7 @@ VrmlData_ErrorStatus VrmlData_Group::openFile(Standard_IStream&              the
 
 VrmlData_ErrorStatus VrmlData_Group::Write(const char* thePrefix) const
 {
-  VrmlData_ErrorStatus aStatus(VrmlData_StatusOK);
+  VrmlData_ErrorStatus aStatus(VrmlData_ErrorStatus::VrmlData_StatusOK);
   if (!myNodes.IsEmpty())
   {
     const VrmlData_Scene& aScene      = Scene();

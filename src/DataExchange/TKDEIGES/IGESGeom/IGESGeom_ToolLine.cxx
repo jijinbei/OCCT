@@ -87,10 +87,10 @@ void IGESGeom_ToolLine::OwnCopy(const occ::handle<IGESGeom_Line>& another,
 IGESData_DirChecker IGESGeom_ToolLine::DirChecker(const occ::handle<IGESGeom_Line>& /* ent */) const
 {
   IGESData_DirChecker DC(110, 0, 2);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }

@@ -17,7 +17,7 @@
 #ifndef _StepBasic_SiPrefix_HeaderFile
 #define _StepBasic_SiPrefix_HeaderFile
 
-enum StepBasic_SiPrefix
+enum class StepBasic_SiPrefix
 {
   StepBasic_spExa,
   StepBasic_spPeta,

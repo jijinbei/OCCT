@@ -138,10 +138,10 @@ IGESData_DirChecker IGESSolid_ToolVertexList::DirChecker(
 {
   IGESData_DirChecker DC(502, 1);
 
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
 
   DC.SubordinateStatusRequired(1);
   DC.HierarchyStatusIgnored();

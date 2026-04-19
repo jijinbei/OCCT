@@ -48,7 +48,7 @@ public:
   float      Metallic;                 //!< metalness (or scale factor to the texture) within range [0.0, 1.0]; 1.0 by default
   float      Roughness;                //!< roughness (or scale factor to the texture) within range [0.0, 1.0]; 1.0 by default
   float      AlphaCutOff;              //!< alpha cutoff value; 0.5 by default
-  RWGltf_GltfAlphaMode    AlphaMode;                //!< alpha mode; RWGltf_GltfAlphaMode_Opaque by default
+  RWGltf_GltfAlphaMode    AlphaMode;                //!< alpha mode; RWGltf_GltfAlphaMode::RWGltf_GltfAlphaMode_Opaque by default
   bool        IsDoubleSided;            //!< specifies whether the material is double sided; FALSE by default
                                                // clang-format on
 
@@ -58,7 +58,7 @@ public:
         Metallic(1.0f),
         Roughness(1.0f),
         AlphaCutOff(0.5f),
-        AlphaMode(RWGltf_GltfAlphaMode_Opaque),
+        AlphaMode(RWGltf_GltfAlphaMode::RWGltf_GltfAlphaMode_Opaque),
         IsDoubleSided(false)
   {
   }

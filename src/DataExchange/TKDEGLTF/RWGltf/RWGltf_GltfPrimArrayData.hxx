@@ -35,7 +35,7 @@ public:
   RWGltf_GltfPrimArrayData()
       : StreamOffset(0),
         StreamLength(0),
-        Type(RWGltf_GltfArrayType_UNKNOWN)
+        Type(RWGltf_GltfArrayType::RWGltf_GltfArrayType_UNKNOWN)
   {
   }
 

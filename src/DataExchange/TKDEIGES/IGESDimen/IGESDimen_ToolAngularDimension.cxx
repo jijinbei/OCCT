@@ -135,10 +135,10 @@ IGESData_DirChecker IGESDimen_ToolAngularDimension::DirChecker(
   const occ::handle<IGESDimen_AngularDimension>& /* ent */) const
 {
   IGESData_DirChecker DC(202, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.UseFlagRequired(1);
   return DC;
 }

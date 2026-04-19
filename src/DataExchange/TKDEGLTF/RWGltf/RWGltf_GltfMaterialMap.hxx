@@ -37,13 +37,13 @@ public:
   //! @param[in] theStyle    material images to add
   Standard_EXPORT void AddGlbImages(std::ostream& theBinFile, const XCAFPrs_Style& theStyle);
 
-  //! Add bufferView's into RWGltf_GltfRootElement_BufferViews section with images collected by
+  //! Add bufferView's into RWGltf_GltfRootElement::RWGltf_GltfRootElement_BufferViews section with images collected by
   //! AddImagesToGlb().
   Standard_EXPORT void FlushGlbBufferViews(RWGltf_GltfOStreamWriter* theWriter,
                                            const int                 theBinDataBufferId,
                                            int&                      theBuffViewId);
 
-  //! Write RWGltf_GltfRootElement_Images section with images collected by AddImagesToGlb().
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Images section with images collected by AddImagesToGlb().
   Standard_EXPORT void FlushGlbImages(RWGltf_GltfOStreamWriter* theWriter);
 
 public:

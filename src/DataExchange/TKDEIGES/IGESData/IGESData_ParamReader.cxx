@@ -65,7 +65,7 @@ int IGESData_ParamReader::EntityNumber() const
 void IGESData_ParamReader::Clear()
 {
   thecurr   = 1;
-  thestage  = IGESData_ReadOwn;
+  thestage  = IGESData_ReadStage::IGESData_ReadOwn;
   pbrealint = pbrealform = 0;
 }
 
@@ -96,7 +96,7 @@ IGESData_ReadStage IGESData_ParamReader::Stage() const
 
 void IGESData_ParamReader::NextStage()
 {
-  if (thestage != IGESData_ReadEnd)
+  if (thestage != IGESData_ReadStage::IGESData_ReadEnd)
     thestage = (IGESData_ReadStage)(((long)thestage) + 1);
 }
 
@@ -104,7 +104,7 @@ void IGESData_ParamReader::NextStage()
 
 void IGESData_ParamReader::EndAll()
 {
-  thestage = IGESData_ReadEnd;
+  thestage = IGESData_ReadStage::IGESData_ReadEnd;
 }
 
 //  ....                  Basic parameter access                  ....
@@ -136,7 +136,7 @@ bool IGESData_ParamReader::IsParamDefined(const int num) const
 {
   if (num >= thenbpar)
     return false;
-  return (theparams->Value(num + thebase).ParamType() != Interface_ParamVoid);
+  return (theparams->Value(num + thebase).ParamType() != Interface_ParamType::Interface_ParamVoid);
 }
 
 //=================================================================================================
@@ -328,9 +328,9 @@ bool IGESData_ParamReader::ReadInteger(const IGESData_ParamCursor& PC, int& val)
   if (!PrepareRead(PC, false))
     return false;
   const Interface_FileParameter& FP = theparams->Value(theindex + thebase);
-  if (FP.ParamType() != Interface_ParamInteger)
+  if (FP.ParamType() != Interface_ParamType::Interface_ParamInteger)
   {
-    if (FP.ParamType() == Interface_ParamVoid)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       val = 0;
       return true;
@@ -350,9 +350,9 @@ bool IGESData_ParamReader::ReadInteger(const IGESData_ParamCursor& PC,
   if (!PrepareRead(PC, mess, false))
     return false;
   const Interface_FileParameter& FP = theparams->Value(theindex + thebase);
-  if (FP.ParamType() != Interface_ParamInteger)
+  if (FP.ParamType() != Interface_ParamType::Interface_ParamInteger)
   {
-    if (FP.ParamType() == Interface_ParamVoid)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       val = 0;
       return true;
@@ -376,9 +376,9 @@ bool IGESData_ParamReader::ReadBoolean(const IGESData_ParamCursor& PC,
   if (!PrepareRead(PC, false))
     return false;
   const Interface_FileParameter& FP = theparams->Value(theindex + thebase);
-  if (FP.ParamType() != Interface_ParamInteger)
+  if (FP.ParamType() != Interface_ParamType::Interface_ParamInteger)
   {
-    if (FP.ParamType() == Interface_ParamVoid)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       val = false;
       return true;
@@ -417,9 +417,9 @@ bool IGESData_ParamReader::ReadBoolean(const IGESData_ParamCursor& PC,
   if (!PrepareRead(PC, mess, false))
     return false;
   const Interface_FileParameter& FP = theparams->Value(theindex + thebase);
-  if (FP.ParamType() != Interface_ParamInteger)
+  if (FP.ParamType() != Interface_ParamType::Interface_ParamInteger)
   {
-    if (FP.ParamType() == Interface_ParamVoid)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       val = false;
       return true;
@@ -548,10 +548,10 @@ bool IGESData_ParamReader::ReadText(const IGESData_ParamCursor&            thePC
     return false;
   }
   const Interface_FileParameter& aFP = theparams->Value(theindex + thebase);
-  if (aFP.ParamType() != Interface_ParamText)
+  if (aFP.ParamType() != Interface_ParamType::Interface_ParamText)
   {
     theVal = new TCollection_HAsciiString("");
-    if (aFP.ParamType() == Interface_ParamVoid)
+    if (aFP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       return true;
     }
@@ -600,9 +600,9 @@ bool IGESData_ParamReader::ReadText(const IGESData_ParamCursor&            PC,
   if (!PrepareRead(PC, mess, false))
     return false;
   const Interface_FileParameter& FP = theparams->Value(theindex + thebase);
-  if (FP.ParamType() != Interface_ParamText)
+  if (FP.ParamType() != Interface_ParamType::Interface_ParamText)
   {
-    if (FP.ParamType() == Interface_ParamVoid)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       val = new TCollection_HAsciiString("");
       return true;
@@ -638,7 +638,7 @@ bool IGESData_ParamReader::ReadEntity(const occ::handle<IGESData_IGESReaderData>
                                       occ::handle<IGESData_IGESEntity>&           val,
                                       const bool                                  canbenul)
 {
-  aStatus = IGESData_EntityError;
+  aStatus = IGESData_Status::IGESData_EntityError;
   if (!PrepareRead(PC, false))
     return false;
   int nval;
@@ -650,7 +650,7 @@ bool IGESData_ParamReader::ReadEntity(const occ::handle<IGESData_IGESReaderData>
     val.Nullify();
     if (!canbenul)
     {
-      aStatus = IGESData_ReferenceError;
+      aStatus = IGESData_Status::IGESData_ReferenceError;
       // Message_Msg Msg216 ("IGESP_216");
       // amsg.Arg(amsg.Value());
       // SendFail (amsg);
@@ -658,7 +658,7 @@ bool IGESData_ParamReader::ReadEntity(const occ::handle<IGESData_IGESReaderData>
       thelast = true;
     }
     else
-      aStatus = IGESData_EntityOK;
+      aStatus = IGESData_Status::IGESData_EntityOK;
     return canbenul;
   }
   else
@@ -673,18 +673,18 @@ bool IGESData_ParamReader::ReadEntity(const occ::handle<IGESData_IGESReaderData>
       val.Nullify();
       if (!canbenul)
       {
-        aStatus = IGESData_EntityError;
+        aStatus = IGESData_Status::IGESData_EntityError;
         // Message_Msg Msg217 ("IGES_217");
         // amsg.Arg(Msg217.Value());
         // SendFail (amsg);
         thelast = true;
       }
       else
-        aStatus = IGESData_EntityOK;
+        aStatus = IGESData_Status::IGESData_EntityOK;
       return canbenul;
     }
   }
-  aStatus = IGESData_EntityOK;
+  aStatus = IGESData_Status::IGESData_EntityOK;
   return true;
 }
 
@@ -752,7 +752,7 @@ bool IGESData_ParamReader::ReadEntity(const occ::handle<IGESData_IGESReaderData>
     return res;
   if (!val->IsKind(type))
   {
-    aStatus = IGESData_TypeError;
+    aStatus = IGESData_Status::IGESData_TypeError;
     // Message_Msg Msg218 ("IGES_218");
     // amsg.Arg(Msg218.Value());
     // SendFail(amsg);
@@ -806,12 +806,12 @@ bool IGESData_ParamReader::ReadInts(const IGESData_ParamCursor&            PC,
   for (int i = FirstRead(); i > 0; i = NextRead())
   {
     const Interface_FileParameter& FP = theparams->Value(i + thebase);
-    if (FP.ParamType() == Interface_ParamInteger)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamInteger)
     {
       val->SetValue(ind, atoi(FP.CValue()));
       ind++;
     }
-    else if (FP.ParamType() == Interface_ParamVoid)
+    else if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       val->SetValue(ind, 0);
       ind++; // DEFAULT : rien a dire
@@ -842,12 +842,12 @@ bool IGESData_ParamReader::ReadInts(const IGESData_ParamCursor&            PC,
   for (int i = FirstRead(); i > 0; i = NextRead())
   {
     const Interface_FileParameter& FP = theparams->Value(i + thebase);
-    if (FP.ParamType() == Interface_ParamInteger)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamInteger)
     {
       val->SetValue(ind, atoi(FP.CValue()));
       ind++;
     }
-    else if (FP.ParamType() == Interface_ParamVoid)
+    else if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       val->SetValue(ind, 0);
       ind++; // DEFAULT : rien a dire
@@ -937,9 +937,9 @@ bool IGESData_ParamReader::ReadTexts(
   for (int i = FirstRead(); i > 0; i = NextRead())
   {
     const Interface_FileParameter& FP = theparams->Value(i + thebase);
-    if (FP.ParamType() != Interface_ParamText)
+    if (FP.ParamType() != Interface_ParamType::Interface_ParamText)
     {
-      if (FP.ParamType() == Interface_ParamVoid)
+      if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
       {
         val->SetValue(ind, new TCollection_HAsciiString(""));
         ind++;
@@ -990,9 +990,9 @@ bool IGESData_ParamReader::ReadTexts(
   for (int i = FirstRead(); i > 0; i = NextRead())
   {
     const Interface_FileParameter& FP = theparams->Value(i + thebase);
-    if (FP.ParamType() != Interface_ParamText)
+    if (FP.ParamType() != Interface_ParamType::Interface_ParamText)
     {
-      if (FP.ParamType() == Interface_ParamVoid)
+      if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
       {
         val->SetValue(ind, new TCollection_HAsciiString(""));
         ind++;
@@ -1244,7 +1244,7 @@ bool IGESData_ParamReader::ReadEntList(const occ::handle<IGESData_IGESReaderData
 bool IGESData_ParamReader::ReadingReal(const int num, double& val)
 {
   const Interface_FileParameter& FP = theparams->Value(num + thebase);
-  if (FP.ParamType() == Interface_ParamInteger)
+  if (FP.ParamType() == Interface_ParamType::Interface_ParamInteger)
   {
     if (!pbrealint)
     {
@@ -1274,9 +1274,9 @@ bool IGESData_ParamReader::ReadingReal(const int num, double& val)
     if (orig[i] == '\0')
       break;
   }
-  if (FP.ParamType() == Interface_ParamReal)
+  if (FP.ParamType() == Interface_ParamType::Interface_ParamReal)
     val = Atof(text);
-  else if (FP.ParamType() == Interface_ParamEnum)
+  else if (FP.ParamType() == Interface_ParamType::Interface_ParamEnum)
   { // convention
     if (!pbrealform)
     {
@@ -1297,7 +1297,7 @@ bool IGESData_ParamReader::ReadingReal(const int num, double& val)
 
     val = Atof(text);
   }
-  else if (FP.ParamType() == Interface_ParamVoid)
+  else if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
   {
     val = 0.0; // DEFAULT
   }
@@ -1320,7 +1320,7 @@ bool IGESData_ParamReader::ReadingReal(const int num, double& val)
 bool IGESData_ParamReader::ReadingReal(const int num, const char* const mess, double& val)
 {
   const Interface_FileParameter& FP = theparams->Value(num + thebase);
-  if (FP.ParamType() == Interface_ParamInteger)
+  if (FP.ParamType() == Interface_ParamType::Interface_ParamInteger)
   {
     if (!pbrealint)
     {
@@ -1350,9 +1350,9 @@ bool IGESData_ParamReader::ReadingReal(const int num, const char* const mess, do
     if (orig[i] == '\0')
       break;
   }
-  if (FP.ParamType() == Interface_ParamReal)
+  if (FP.ParamType() == Interface_ParamType::Interface_ParamReal)
     val = Atof(text);
-  else if (FP.ParamType() == Interface_ParamEnum)
+  else if (FP.ParamType() == Interface_ParamType::Interface_ParamEnum)
   { // convention
     if (!pbrealform)
     {
@@ -1373,7 +1373,7 @@ bool IGESData_ParamReader::ReadingReal(const int num, const char* const mess, do
 
     val = Atof(text);
   }
-  else if (FP.ParamType() == Interface_ParamVoid)
+  else if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
   {
     val = 0.0; // DEFAULT
   }
@@ -1399,9 +1399,9 @@ bool IGESData_ParamReader::ReadingEntityNumber(const int num, int& val)
   if (val == 0)
   {
     bool nulref = false;
-    if (FP.ParamType() == Interface_ParamInteger)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamInteger)
       nulref = (atoi(FP.CValue()) == 0);
-    else if (FP.ParamType() == Interface_ParamVoid)
+    else if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
       nulref = true;
     if (!nulref)
     {
@@ -1422,9 +1422,9 @@ bool IGESData_ParamReader::ReadingEntityNumber(const int num, const char* const 
   if (val == 0)
   {
     bool nulref = false;
-    if (FP.ParamType() == Interface_ParamInteger)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamInteger)
       nulref = (atoi(FP.CValue()) == 0);
-    else if (FP.ParamType() == Interface_ParamVoid)
+    else if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
       nulref = true;
     if (!nulref)
     {

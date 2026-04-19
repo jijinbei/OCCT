@@ -48,7 +48,7 @@
 //=================================================================================================
 
 TopoDSToStep_MakeStepWire::TopoDSToStep_MakeStepWire()
-    : myError(TopoDSToStep_WireOther)
+    : myError(TopoDSToStep_MakeWireError::TopoDSToStep_WireOther)
 {
   done = false;
 }
@@ -76,7 +76,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
 
   if (aTool.IsBound(aWire))
   {
-    myError  = TopoDSToStep_WireDone;
+    myError  = TopoDSToStep_MakeWireError::TopoDSToStep_WireDone;
     done     = true;
     myResult = aTool.Find(aWire);
     return;
@@ -86,7 +86,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
   {
     occ::handle<TransferBRep_ShapeMapper> errShape = new TransferBRep_ShapeMapper(aWire);
     FP->AddWarning(errShape, " Wire(internal/external) from Non Manifold Topology");
-    myError = TopoDSToStep_NonManifoldWire;
+    myError = TopoDSToStep_MakeWireError::TopoDSToStep_NonManifoldWire;
     done    = false;
     return;
   }
@@ -128,7 +128,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
       {
         occ::handle<TransferBRep_ShapeMapper> errShape = new TransferBRep_ShapeMapper(aWire);
         FP->AddWarning(errShape, " a Vertex Point not mapped");
-        myError = TopoDSToStep_WireOther;
+        myError = TopoDSToStep_MakeWireError::TopoDSToStep_WireOther;
         done    = false;
         return;
       }
@@ -147,7 +147,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
       PL->Init(aName, aPolygon);
 
       aTool.Bind(aWire, PL);
-      myError  = TopoDSToStep_WireDone;
+      myError  = TopoDSToStep_MakeWireError::TopoDSToStep_WireDone;
       done     = true;
       myResult = PL;
       return;
@@ -156,7 +156,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
     {
       occ::handle<TransferBRep_ShapeMapper> errShape = new TransferBRep_ShapeMapper(aWire);
       FP->AddWarning(errShape, " PolyLoop: Wire has less than 3 points");
-      myError = TopoDSToStep_WireOther;
+      myError = TopoDSToStep_MakeWireError::TopoDSToStep_WireOther;
       done    = false;
       return;
     }
@@ -228,7 +228,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
           occ::handle<TCollection_HAsciiString> name  = new TCollection_HAsciiString("");
           vloop->Init(name, occ::down_cast<StepShape_Vertex>(mkV.Value()));
           aTool.Bind(aWire, vloop);
-          myError  = TopoDSToStep_WireDone;
+          myError  = TopoDSToStep_MakeWireError::TopoDSToStep_WireDone;
           done     = true;
           myResult = vloop;
           return;
@@ -266,7 +266,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
         {
           occ::handle<TransferBRep_ShapeMapper> errShape = new TransferBRep_ShapeMapper(aWire);
           FP->AddWarning(errShape, " EdgeLoop: an Edge not mapped");
-          myError = TopoDSToStep_WireOther;
+          myError = TopoDSToStep_MakeWireError::TopoDSToStep_WireOther;
           done    = false;
           return;
         }
@@ -293,7 +293,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
     {
       occ::handle<TransferBRep_ShapeMapper> errShape = new TransferBRep_ShapeMapper(aWire);
       FP->AddWarning(errShape, " No Edges of this Wire were mapped");
-      myError = TopoDSToStep_WireOther;
+      myError = TopoDSToStep_MakeWireError::TopoDSToStep_WireOther;
       done    = false;
       return;
     }

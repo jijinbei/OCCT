@@ -15,7 +15,7 @@
 #define _RWGltf_WriterTrsfFormat_HeaderFile
 
 //! Transformation format.
-enum RWGltf_WriterTrsfFormat
+enum class RWGltf_WriterTrsfFormat
 {
   RWGltf_WriterTrsfFormat_Compact =
     0, //!< automatically choose most compact representation between Mat4 and TRS
@@ -25,7 +25,7 @@ enum RWGltf_WriterTrsfFormat
 };
 
 // clang-format off
-enum { RWGltf_WriterTrsfFormat_LOWER = 0, RWGltf_WriterTrsfFormat_UPPER = RWGltf_WriterTrsfFormat_TRS }; // aliases
+enum { RWGltf_WriterTrsfFormat_LOWER = 0, RWGltf_WriterTrsfFormat_UPPER = RWGltf_WriterTrsfFormat::RWGltf_WriterTrsfFormat_TRS }; // aliases
 
 // clang-format on
 

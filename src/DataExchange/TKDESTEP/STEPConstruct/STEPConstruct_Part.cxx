@@ -100,7 +100,7 @@ void STEPConstruct_Part::MakeSDR(const occ::handle<StepShape_ShapeRepresentation
     case 3:
       PDF = new StepBasic_ProductDefinitionFormationWithSpecifiedSource;
       occ::down_cast<StepBasic_ProductDefinitionFormationWithSpecifiedSource>(PDF)->SetMakeOrBuy(
-        StepBasic_sNotKnown);
+        StepBasic_Source::StepBasic_sNotKnown);
       break;
   }
   occ::handle<TCollection_HAsciiString> PDFName        = new TCollection_HAsciiString("");

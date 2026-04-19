@@ -81,11 +81,11 @@ IGESData_DirChecker IGESBasic_ToolExternalRefFileName::DirChecker(
   const occ::handle<IGESBasic_ExternalRefFileName>& /* ent */) const
 {
   IGESData_DirChecker DC(416, 0, 2);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefVoid);
   DC.BlankStatusIgnored();
   DC.HierarchyStatusIgnored();
   return DC;

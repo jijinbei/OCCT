@@ -360,7 +360,7 @@ bool IFSelect_EditForm::Modify(const int                                    num,
   if (!typval->Satisfies(newval))
     return false;
   Interface_ParamType pty = typval->Type();
-  if (pty == Interface_ParamIdent && !newval.IsNull())
+  if (pty == Interface_ParamType::Interface_ParamIdent && !newval.IsNull())
   {
     if (themodel.IsNull())
       return false;

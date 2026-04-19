@@ -114,14 +114,14 @@ void IGESData_FreeFormatEntity::AddEntities(
 {
   if (ents.IsNull())
   {
-    AddLiteral(Interface_ParamInteger, new TCollection_HAsciiString("0"));
+    AddLiteral(Interface_ParamType::Interface_ParamInteger, new TCollection_HAsciiString("0"));
     return;
   }
-  AddLiteral(Interface_ParamInteger, new TCollection_HAsciiString(ents->Length()));
+  AddLiteral(Interface_ParamType::Interface_ParamInteger, new TCollection_HAsciiString(ents->Length()));
   int iup = ents->Upper();
   for (int i = ents->Lower(); i <= iup; i++)
   {
-    AddEntity(Interface_ParamIdent, ents->Value(i));
+    AddEntity(Interface_ParamType::Interface_ParamIdent, ents->Value(i));
   }
 }
 
@@ -154,7 +154,7 @@ void IGESData_FreeFormatEntity::WriteOwnParams(IGESData_IGESWriter& IW) const
   for (int i = 1; i <= nb; i++)
   {
     Interface_ParamType ptyp = UndefinedContent()->ParamType(i);
-    if (ptyp == Interface_ParamVoid)
+    if (ptyp == Interface_ParamType::Interface_ParamVoid)
       IW.SendVoid();
     else if (UndefinedContent()->IsParamEntity(i))
     {

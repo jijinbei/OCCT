@@ -18,7 +18,7 @@
 #define _Vrml_SFImageNumber_HeaderFile
 
 //! qualifies VRML geometry shapes.
-enum Vrml_SFImageNumber
+enum class Vrml_SFImageNumber
 {
   Vrml_NULL,
   Vrml_ONE,

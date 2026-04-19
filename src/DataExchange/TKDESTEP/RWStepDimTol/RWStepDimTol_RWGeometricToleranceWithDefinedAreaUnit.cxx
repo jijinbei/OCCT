@@ -73,16 +73,16 @@ void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::ReadStep(
                    anUnitSize);
 
   // own fields of GeometricToleranceWithDefinedAreaUnit
-  StepDimTol_AreaUnitType aType = StepDimTol_Circular;
-  if (data->ParamType(num, 6) == Interface_ParamEnum)
+  StepDimTol_AreaUnitType aType = StepDimTol_AreaUnitType::StepDimTol_Circular;
+  if (data->ParamType(num, 6) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 6);
     if (strcmp(text, ".CIRCULAR.") == 0)
-      aType = StepDimTol_Circular;
+      aType = StepDimTol_AreaUnitType::StepDimTol_Circular;
     else if (strcmp(text, ".RECTANGULAR.") == 0)
-      aType = StepDimTol_Rectangular;
+      aType = StepDimTol_AreaUnitType::StepDimTol_Rectangular;
     else if (strcmp(text, ".SQUARE.") == 0)
-      aType = StepDimTol_Square;
+      aType = StepDimTol_AreaUnitType::StepDimTol_Square;
     else
       ach->AddFail("Parameter #6 (area_type) has not allowed value");
   }
@@ -135,13 +135,13 @@ void RWStepDimTol_RWGeometricToleranceWithDefinedAreaUnit::WriteStep(
 
   switch (ent->AreaType())
   {
-    case StepDimTol_Circular:
+    case StepDimTol_AreaUnitType::StepDimTol_Circular:
       SW.SendEnum(".CIRCULAR.");
       break;
-    case StepDimTol_Rectangular:
+    case StepDimTol_AreaUnitType::StepDimTol_Rectangular:
       SW.SendEnum(".RECTANGULAR.");
       break;
-    case StepDimTol_Square:
+    case StepDimTol_AreaUnitType::StepDimTol_Square:
       SW.SendEnum(".SQUARE.");
       break;
   }

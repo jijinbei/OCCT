@@ -76,7 +76,7 @@ void STEPConstruct_UnitContext::Init(const double                           Tol3
   occ::handle<StepBasic_NamedUnit> lengthUnit;
   const char*                      uName   = nullptr;
   bool                             hasPref = true;
-  StepBasic_SiPrefix               siPref  = StepBasic_spMilli;
+  StepBasic_SiPrefix               siPref  = StepBasic_SiPrefix::StepBasic_spMilli;
   double                           aScale  = 1.;
   switch (theModel->InternalParameters.WriteUnit)
   {
@@ -100,7 +100,7 @@ void STEPConstruct_UnitContext::Init(const double                           Tol3
       aScale  = 1000.0;
       break;
     case 7:
-      siPref = StepBasic_spKilo;
+      siPref = StepBasic_SiPrefix::StepBasic_spKilo;
       aScale = 1000000.0;
       break;
     case 8:
@@ -108,11 +108,11 @@ void STEPConstruct_UnitContext::Init(const double                           Tol3
       aScale = 0.0254;
       break;
     case 9:
-      siPref = StepBasic_spMicro;
+      siPref = StepBasic_SiPrefix::StepBasic_spMicro;
       aScale = 0.001;
       break;
     case 10:
-      siPref = StepBasic_spCenti;
+      siPref = StepBasic_SiPrefix::StepBasic_spCenti;
       aScale = 10.0;
       break;
     case 11:
@@ -122,7 +122,7 @@ void STEPConstruct_UnitContext::Init(const double                           Tol3
   }
 
   occ::handle<StepBasic_SiUnitAndLengthUnit> siUnit = new StepBasic_SiUnitAndLengthUnit;
-  siUnit->Init(hasPref, siPref, StepBasic_sunMetre);
+  siUnit->Init(hasPref, siPref, StepBasic_SiUnitName::StepBasic_sunMetre);
 
   if (uName)
   { // for non-metric units, create conversion_based_unit
@@ -150,16 +150,16 @@ void STEPConstruct_UnitContext::Init(const double                           Tol3
 
   occ::handle<StepBasic_SiUnitAndPlaneAngleUnit> radianUnit = new StepBasic_SiUnitAndPlaneAngleUnit;
   radianUnit->Init(false,
-                   StepBasic_spMilli, // the unit is radian, no prefix
-                   StepBasic_sunRadian);
+                   StepBasic_SiPrefix::StepBasic_spMilli, // the unit is radian, no prefix
+                   StepBasic_SiUnitName::StepBasic_sunRadian);
 
   occ::handle<NCollection_HArray1<occ::handle<StepBasic_NamedUnit>>> units =
     new NCollection_HArray1<occ::handle<StepBasic_NamedUnit>>(1, 3);
 
   occ::handle<StepBasic_SiUnitAndSolidAngleUnit> sradUnit = new StepBasic_SiUnitAndSolidAngleUnit;
   sradUnit->Init(false,
-                 StepBasic_spMilli, // the unit is steradian, no prefix
-                 StepBasic_sunSteradian);
+                 StepBasic_SiPrefix::StepBasic_spMilli, // the unit is steradian, no prefix
+                 StepBasic_SiUnitName::StepBasic_sunSteradian);
 
   units->SetValue(1, lengthUnit);
   units->SetValue(2, radianUnit);
@@ -209,37 +209,37 @@ double STEPConstruct_UnitContext::ConvertSiPrefix(const StepBasic_SiPrefix aPref
 {
   switch (aPrefix)
   {
-    case StepBasic_spExa:
+    case StepBasic_SiPrefix::StepBasic_spExa:
       return 1.E+18;
-    case StepBasic_spPeta:
+    case StepBasic_SiPrefix::StepBasic_spPeta:
       return 1.E+15;
-    case StepBasic_spTera:
+    case StepBasic_SiPrefix::StepBasic_spTera:
       return 1.E+12;
-    case StepBasic_spGiga:
+    case StepBasic_SiPrefix::StepBasic_spGiga:
       return 1.E+9;
-    case StepBasic_spMega:
+    case StepBasic_SiPrefix::StepBasic_spMega:
       return 1.E+6;
-    case StepBasic_spKilo:
+    case StepBasic_SiPrefix::StepBasic_spKilo:
       return 1.E+3;
-    case StepBasic_spHecto:
+    case StepBasic_SiPrefix::StepBasic_spHecto:
       return 1.E+2;
-    case StepBasic_spDeca:
+    case StepBasic_SiPrefix::StepBasic_spDeca:
       return 1.E+1;
-    case StepBasic_spDeci:
+    case StepBasic_SiPrefix::StepBasic_spDeci:
       return 1.E-1;
-    case StepBasic_spCenti:
+    case StepBasic_SiPrefix::StepBasic_spCenti:
       return 1.E-2;
-    case StepBasic_spMilli:
+    case StepBasic_SiPrefix::StepBasic_spMilli:
       return 1.E-3;
-    case StepBasic_spMicro:
+    case StepBasic_SiPrefix::StepBasic_spMicro:
       return 1.E-6;
-    case StepBasic_spNano:
+    case StepBasic_SiPrefix::StepBasic_spNano:
       return 1.E-9;
-    case StepBasic_spPico:
+    case StepBasic_SiPrefix::StepBasic_spPico:
       return 1.E-12;
-    case StepBasic_spFemto:
+    case StepBasic_SiPrefix::StepBasic_spFemto:
       return 1.E-15;
-    case StepBasic_spAtto:
+    case StepBasic_SiPrefix::StepBasic_spAtto:
       return 1.E-18;
     default:
       break;
@@ -255,9 +255,9 @@ bool STEPConstruct_UnitContext::SiUnitNameFactor(const occ::handle<StepBasic_SiU
   theSIUNFactor = 1.;
   switch (aSiUnit->Name())
   {
-    case StepBasic_sunMetre:
-    case StepBasic_sunRadian:
-    case StepBasic_sunSteradian:
+    case StepBasic_SiUnitName::StepBasic_sunMetre:
+    case StepBasic_SiUnitName::StepBasic_sunRadian:
+    case StepBasic_SiUnitName::StepBasic_sunSteradian:
       return true;
     default:
       //	std::cout << "Unknown SiUnitName : " << aSiUnit->Name() << std::endl;

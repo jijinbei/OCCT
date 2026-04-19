@@ -50,12 +50,12 @@ void IGESData_DefSwitch::SetRank(const int theRank)
 IGESData_DefType IGESData_DefSwitch::DefType() const
 {
   if (theval < 0)
-    return IGESData_DefReference;
+    return IGESData_DefType::IGESData_DefReference;
 
   if (theval > 0)
-    return IGESData_DefValue;
+    return IGESData_DefType::IGESData_DefValue;
 
-  return IGESData_DefVoid;
+  return IGESData_DefType::IGESData_DefVoid;
 }
 
 //=================================================================================================

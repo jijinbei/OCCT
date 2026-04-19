@@ -17,7 +17,7 @@
 #ifndef _Vrml_VertexOrdering_HeaderFile
 #define _Vrml_VertexOrdering_HeaderFile
 
-enum Vrml_VertexOrdering
+enum class Vrml_VertexOrdering
 {
   Vrml_UNKNOWN_ORDERING,
   Vrml_CLOCKWISE,

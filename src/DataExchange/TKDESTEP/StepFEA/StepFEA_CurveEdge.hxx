@@ -14,7 +14,7 @@
 #ifndef _StepFEA_CurveEdge_HeaderFile
 #define _StepFEA_CurveEdge_HeaderFile
 
-enum StepFEA_CurveEdge
+enum class StepFEA_CurveEdge
 {
   StepFEA_ElementEdge
 };

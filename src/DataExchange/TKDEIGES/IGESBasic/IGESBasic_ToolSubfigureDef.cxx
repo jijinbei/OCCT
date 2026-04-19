@@ -123,7 +123,7 @@ IGESData_DirChecker IGESBasic_ToolSubfigureDef::DirChecker(
   const occ::handle<IGESBasic_SubfigureDef>& ent) const
 {
   IGESData_DirChecker DC(308, 0); // TypeNo. 308, Form no. 0
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   if (ent->HierarchyStatus() == 1)
     DC.GraphicsIgnored(01);
   // GraphicsIgnored if hierarchy status = 01

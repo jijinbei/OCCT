@@ -63,13 +63,13 @@ void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_Mani
     Message_Msg Msg178("XSTEP_178");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg178.Arg(Msg216.Value());
         PR.SendFail(Msg178);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg178.Arg(Msg217.Value());
         PR.SendFail(Msg178);
@@ -112,19 +112,19 @@ void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_Mani
         Message_Msg Msg179("XSTEP_179");
         switch (aStatus)
         {
-          case IGESData_ReferenceError: {
+          case IGESData_Status::IGESData_ReferenceError: {
             Message_Msg Msg216("IGES_216");
             Msg179.Arg(Msg216.Value());
             PR.SendFail(Msg179);
             break;
           }
-          case IGESData_EntityError: {
+          case IGESData_Status::IGESData_EntityError: {
             Message_Msg Msg217("IGES_217");
             Msg179.Arg(Msg217.Value());
             PR.SendFail(Msg179);
             break;
           }
-          case IGESData_TypeError: {
+          case IGESData_Status::IGESData_TypeError: {
             Message_Msg Msg218("IGES_218");
             Msg179.Arg(Msg218.Value());
             PR.SendFail(Msg179);
@@ -200,10 +200,10 @@ IGESData_DirChecker IGESSolid_ToolManifoldSolid::DirChecker(
 {
   IGESData_DirChecker DC(186, 0);
 
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
 
   return DC;
 }

@@ -110,7 +110,7 @@ IGESData_DirChecker IGESBasic_ToolHierarchy::DirChecker(
   const occ::handle<IGESBasic_Hierarchy>& /*ent*/) const
 {
   IGESData_DirChecker DC(406, 10); // Form no = 10 & Type = 406
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.UseFlagIgnored();

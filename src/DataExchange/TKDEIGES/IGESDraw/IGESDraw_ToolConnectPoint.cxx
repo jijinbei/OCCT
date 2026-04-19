@@ -192,20 +192,20 @@ IGESData_DirChecker IGESDraw_ToolConnectPoint::DirChecker(
   const occ::handle<IGESDraw_ConnectPoint>& ent) const
 {
   IGESData_DirChecker DC(132, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.UseFlagRequired(4);
   if (!ent->DisplaySymbol().IsNull())
   {
-    DC.LineFont(IGESData_DefAny);
-    DC.LineWeight(IGESData_DefAny);
+    DC.LineFont(IGESData_DefType::IGESData_DefAny);
+    DC.LineWeight(IGESData_DefType::IGESData_DefAny);
   }
   else
   {
     // Note : If ent->DisplaySymbol() is NULL Handle; ignore Line Font, Weight
     //        and Hierarchy Status
-    DC.LineFont(IGESData_DefVoid);
-    DC.LineWeight(IGESData_DefVoid);
+    DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+    DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
     DC.HierarchyStatusIgnored();
   }
 

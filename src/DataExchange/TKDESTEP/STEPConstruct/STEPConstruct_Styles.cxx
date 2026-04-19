@@ -156,7 +156,7 @@ bool ProcessAsSurfaceStyleFillArea(const StepVisual_SurfaceStyleElementSelect& t
         // If current surface color is null, we will use negative side color.
         // Otherwise negative side color is ignored.
         && (theSurfaceColour.IsNull()
-            || theSide != StepVisual_ssNegative)) // abv 30 Mar 00: trj3_s1-pe.stp
+            || theSide != StepVisual_SurfaceSide::StepVisual_ssNegative)) // abv 30 Mar 00: trj3_s1-pe.stp
     {
       theSurfaceColour = aFASC->FillColour();
     }
@@ -624,7 +624,7 @@ occ::handle<StepVisual_PresentationStyleAssignment> STEPConstruct_Styles::MakeCo
     SSS->Init(SSSName, SSESs);
 
     occ::handle<StepVisual_SurfaceStyleUsage> SSU = new StepVisual_SurfaceStyleUsage;
-    SSU->Init(StepVisual_ssBoth, SSS);
+    SSU->Init(StepVisual_SurfaceSide::StepVisual_ssBoth, SSS);
 
     items.Append(SSU);
   }

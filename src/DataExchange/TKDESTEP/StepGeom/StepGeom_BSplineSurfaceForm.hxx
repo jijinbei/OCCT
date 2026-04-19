@@ -17,7 +17,7 @@
 #ifndef _StepGeom_BSplineSurfaceForm_HeaderFile
 #define _StepGeom_BSplineSurfaceForm_HeaderFile
 
-enum StepGeom_BSplineSurfaceForm
+enum class StepGeom_BSplineSurfaceForm
 {
   StepGeom_bssfPlaneSurf,
   StepGeom_bssfCylindricalSurf,

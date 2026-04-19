@@ -85,40 +85,40 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod::ReadStep(
     int num2   = sub;
     for (int i0 = 1; i0 <= nb0; i0++)
     {
-      StepDimTol_GeometricToleranceModifier anIt0 = StepDimTol_GTMMaximumMaterialRequirement;
-      if (data->ParamType(num2, i0) == Interface_ParamEnum)
+      StepDimTol_GeometricToleranceModifier anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement;
+      if (data->ParamType(num2, i0) == Interface_ParamType::Interface_ParamEnum)
       {
         const char* text = data->ParamCValue(num2, i0);
         if (strcmp(text, ".ANY_CROSS_SECTION.") == 0)
-          anIt0 = StepDimTol_GTMAnyCrossSection;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMAnyCrossSection;
         else if (strcmp(text, ".COMMON_ZONE.") == 0)
-          anIt0 = StepDimTol_GTMCommonZone;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMCommonZone;
         else if (strcmp(text, ".EACH_RADIAL_ELEMENT.") == 0)
-          anIt0 = StepDimTol_GTMEachRadialElement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMEachRadialElement;
         else if (strcmp(text, ".FREE_STATE.") == 0)
-          anIt0 = StepDimTol_GTMFreeState;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMFreeState;
         else if (strcmp(text, ".LEAST_MATERIAL_REQUIREMENT.") == 0)
-          anIt0 = StepDimTol_GTMLeastMaterialRequirement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement;
         else if (strcmp(text, ".LINE_ELEMENT.") == 0)
-          anIt0 = StepDimTol_GTMLineElement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLineElement;
         else if (strcmp(text, ".MAJOR_DIAMETER.") == 0)
-          anIt0 = StepDimTol_GTMMajorDiameter;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMajorDiameter;
         else if (strcmp(text, ".MAXIMUM_MATERIAL_REQUIREMENT.") == 0)
-          anIt0 = StepDimTol_GTMMaximumMaterialRequirement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement;
         else if (strcmp(text, ".MINOR_DIAMETER.") == 0)
-          anIt0 = StepDimTol_GTMMinorDiameter;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMinorDiameter;
         else if (strcmp(text, ".NOT_CONVEX.") == 0)
-          anIt0 = StepDimTol_GTMNotConvex;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMNotConvex;
         else if (strcmp(text, ".PITCH_DIAMETER.") == 0)
-          anIt0 = StepDimTol_GTMPitchDiameter;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMPitchDiameter;
         else if (strcmp(text, ".RECIPROCITY_REQUIREMENT.") == 0)
-          anIt0 = StepDimTol_GTMReciprocityRequirement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMReciprocityRequirement;
         else if (strcmp(text, ".SEPARATE_REQUIREMENT.") == 0)
-          anIt0 = StepDimTol_GTMSeparateRequirement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMSeparateRequirement;
         else if (strcmp(text, ".STATISTICAL_TOLERANCE.") == 0)
-          anIt0 = StepDimTol_GTMStatisticalTolerance;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMStatisticalTolerance;
         else if (strcmp(text, ".TANGENT_PLANE.") == 0)
-          anIt0 = StepDimTol_GTMTangentPlane;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMTangentPlane;
         else
           ach->AddFail("Parameter #5 (modifiers) has not allowed value");
       }
@@ -136,37 +136,37 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod::ReadStep(
   data->ComplexType(num0, aTypes);
   const char*                       aFirst = aTypes.First().ToCString();
   const char*                       aLast  = aTypes.Last().ToCString();
-  StepDimTol_GeometricToleranceType aType  = StepDimTol_GTTPositionTolerance;
+  StepDimTol_GeometricToleranceType aType  = StepDimTol_GeometricToleranceType::StepDimTol_GTTPositionTolerance;
   if (strcmp(aFirst, "ANGULARITY_TOLERANCE") == 0)
-    aType = StepDimTol_GTTAngularityTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTAngularityTolerance;
   else if (strcmp(aFirst, "CIRCULAR_RUNOUT_TOLERANCE") == 0)
-    aType = StepDimTol_GTTCircularRunoutTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTCircularRunoutTolerance;
   else if (strcmp(aFirst, "COAXIALITY_TOLERANCE") == 0)
-    aType = StepDimTol_GTTCoaxialityTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTCoaxialityTolerance;
   else if (strcmp(aFirst, "CONCENTRICITY_TOLERANCE") == 0)
-    aType = StepDimTol_GTTConcentricityTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTConcentricityTolerance;
   else if (strcmp(aFirst, "CYLINDRICITY_TOLERANCE") == 0)
-    aType = StepDimTol_GTTCylindricityTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTCylindricityTolerance;
   else if (strcmp(aFirst, "FLATNESS_TOLERANCE") == 0)
-    aType = StepDimTol_GTTFlatnessTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTFlatnessTolerance;
   else if (strcmp(aLast, "LINE_PROFILE_TOLERANCE") == 0)
-    aType = StepDimTol_GTTLineProfileTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTLineProfileTolerance;
   else if (strcmp(aLast, "PARALLELISM_TOLERANCE") == 0)
-    aType = StepDimTol_GTTParallelismTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTParallelismTolerance;
   else if (strcmp(aLast, "PERPENDICULARITY_TOLERANCE") == 0)
-    aType = StepDimTol_GTTPerpendicularityTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTPerpendicularityTolerance;
   else if (strcmp(aLast, "POSITION_TOLERANCE") == 0)
-    aType = StepDimTol_GTTPositionTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTPositionTolerance;
   else if (strcmp(aLast, "ROUNDNESS_TOLERANCE") == 0)
-    aType = StepDimTol_GTTRoundnessTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTRoundnessTolerance;
   else if (strcmp(aLast, "STRAIGHTNESS_TOLERANCE") == 0)
-    aType = StepDimTol_GTTStraightnessTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTStraightnessTolerance;
   else if (strcmp(aLast, "SURFACE_PROFILE_TOLERANCE") == 0)
-    aType = StepDimTol_GTTSurfaceProfileTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTSurfaceProfileTolerance;
   else if (strcmp(aLast, "SYMMETRY_TOLERANCE") == 0)
-    aType = StepDimTol_GTTSymmetryTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTSymmetryTolerance;
   else if (strcmp(aLast, "TOTAL_RUNOUT_TOLERANCE") == 0)
-    aType = StepDimTol_GTTTotalRunoutTolerance;
+    aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTTotalRunoutTolerance;
   else
     ach->AddFail("The type of geometric tolerance is not supported");
 
@@ -181,17 +181,17 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod::WriteStep(
   const occ::handle<StepDimTol_GeoTolAndGeoTolWthDatRefAndGeoTolWthMod>& ent) const
 {
   StepDimTol_GeometricToleranceType aType = ent->GetToleranceType();
-  if (aType == StepDimTol_GTTAngularityTolerance)
+  if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTAngularityTolerance)
     SW.StartEntity("ANGULARITY_TOLERANCE");
-  else if (aType == StepDimTol_GTTCircularRunoutTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTCircularRunoutTolerance)
     SW.StartEntity("CIRCULAR_RUNOUT_TOLERANCE");
-  else if (aType == StepDimTol_GTTCoaxialityTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTCoaxialityTolerance)
     SW.StartEntity("COAXIALITY_TOLERANCE");
-  else if (aType == StepDimTol_GTTConcentricityTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTConcentricityTolerance)
     SW.StartEntity("CONCENTRICITY_TOLERANCE");
-  else if (aType == StepDimTol_GTTCylindricityTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTCylindricityTolerance)
     SW.StartEntity("CYLINDRICITY_TOLERANCE");
-  else if (aType == StepDimTol_GTTFlatnessTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTFlatnessTolerance)
     SW.StartEntity("FLATNESS_TOLERANCE");
 
   SW.StartEntity("GEOMETRIC_TOLERANCE");
@@ -219,72 +219,72 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndGeoTolWthMod::WriteStep(
   {
     switch (aGTWM->ModifierValue(i))
     {
-      case StepDimTol_GTMAnyCrossSection:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMAnyCrossSection:
         SW.SendEnum(".ANY_CROSS_SECTION.");
         break;
-      case StepDimTol_GTMCommonZone:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMCommonZone:
         SW.SendEnum(".COMMON_ZONE.");
         break;
-      case StepDimTol_GTMEachRadialElement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMEachRadialElement:
         SW.SendEnum(".EACH_RADIAL_ELEMENT.");
         break;
-      case StepDimTol_GTMFreeState:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMFreeState:
         SW.SendEnum(".FREE_STATE.");
         break;
-      case StepDimTol_GTMLeastMaterialRequirement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement:
         SW.SendEnum(".LEAST_MATERIAL_REQUIREMENT.");
         break;
-      case StepDimTol_GTMLineElement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLineElement:
         SW.SendEnum(".LINE_ELEMENT.");
         break;
-      case StepDimTol_GTMMajorDiameter:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMajorDiameter:
         SW.SendEnum(".MAJOR_DIAMETER.");
         break;
-      case StepDimTol_GTMMaximumMaterialRequirement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement:
         SW.SendEnum(".MAXIMUM_MATERIAL_REQUIREMENT.");
         break;
-      case StepDimTol_GTMMinorDiameter:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMinorDiameter:
         SW.SendEnum(".MINOR_DIAMETER.");
         break;
-      case StepDimTol_GTMNotConvex:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMNotConvex:
         SW.SendEnum(".NOT_CONVEX.");
         break;
-      case StepDimTol_GTMPitchDiameter:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMPitchDiameter:
         SW.SendEnum(".PITCH_DIAMETER.");
         break;
-      case StepDimTol_GTMReciprocityRequirement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMReciprocityRequirement:
         SW.SendEnum(".RECIPROCITY_REQUIREMENT.");
         break;
-      case StepDimTol_GTMSeparateRequirement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMSeparateRequirement:
         SW.SendEnum(".SEPARATE_REQUIREMENT.");
         break;
-      case StepDimTol_GTMStatisticalTolerance:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMStatisticalTolerance:
         SW.SendEnum(".STATISTICAL_TOLERANCE.");
         break;
-      case StepDimTol_GTMTangentPlane:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMTangentPlane:
         SW.SendEnum(".TANGENT_PLANE.");
         break;
     }
   }
   SW.CloseSub();
 
-  if (aType == StepDimTol_GTTLineProfileTolerance)
+  if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTLineProfileTolerance)
     SW.StartEntity("LINE_PROFILE_TOLERANCE");
-  else if (aType == StepDimTol_GTTParallelismTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTParallelismTolerance)
     SW.StartEntity("PARALLELISM_TOLERANCE");
-  else if (aType == StepDimTol_GTTPerpendicularityTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTPerpendicularityTolerance)
     SW.StartEntity("PERPENDICULARITY_TOLERANCE");
-  else if (aType == StepDimTol_GTTPositionTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTPositionTolerance)
     SW.StartEntity("POSITION_TOLERANCE");
-  else if (aType == StepDimTol_GTTRoundnessTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTRoundnessTolerance)
     SW.StartEntity("ROUNDNESS_TOLERANCE");
-  else if (aType == StepDimTol_GTTStraightnessTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTStraightnessTolerance)
     SW.StartEntity("STRAIGHTNESS_TOLERANCE");
-  else if (aType == StepDimTol_GTTSurfaceProfileTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTSurfaceProfileTolerance)
     SW.StartEntity("SURFACE_PROFILE_TOLERANCE");
-  else if (aType == StepDimTol_GTTSymmetryTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTSymmetryTolerance)
     SW.StartEntity("SYMMETRY_TOLERANCE");
-  else if (aType == StepDimTol_GTTTotalRunoutTolerance)
+  else if (aType == StepDimTol_GeometricToleranceType::StepDimTol_GTTTotalRunoutTolerance)
     SW.StartEntity("TOTAL_RUNOUT_TOLERANCE");
 }
 

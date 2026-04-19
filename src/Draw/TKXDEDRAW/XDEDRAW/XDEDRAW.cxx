@@ -381,11 +381,11 @@ static void StatAssembly(const TDF_Label                        L,
   Quantity_ColorRGBA                   col;
   bool                                 IsColor   = false;
   bool                                 IsByLayer = false;
-  if (CTool->GetColor(L, XCAFDoc_ColorGen, col))
+  if (CTool->GetColor(L, XCAFDoc_ColorType::XCAFDoc_ColorGen, col))
     IsColor = true;
-  else if (CTool->GetColor(L, XCAFDoc_ColorSurf, col))
+  else if (CTool->GetColor(L, XCAFDoc_ColorType::XCAFDoc_ColorSurf, col))
     IsColor = true;
-  else if (CTool->GetColor(L, XCAFDoc_ColorCurv, col))
+  else if (CTool->GetColor(L, XCAFDoc_ColorType::XCAFDoc_ColorCurv, col))
     IsColor = true;
   else if (CTool->IsColorByLayer(L))
     IsByLayer = true;
@@ -401,7 +401,7 @@ static void StatAssembly(const TDF_Label                        L,
       {
         TDF_Label          aLayer = LTool->FindLayer(aLayerS->First());
         Quantity_ColorRGBA aColor;
-        if (CTool->GetColor(aLayer, XCAFDoc_ColorGen, aColor))
+        if (CTool->GetColor(aLayer, XCAFDoc_ColorType::XCAFDoc_ColorGen, aColor))
         {
           TCollection_AsciiString aColorName = aColor.GetRGB().StringName(aColor.GetRGB().Name());
           di << "Color(" << aColorName.ToCString() << ") ";
@@ -657,9 +657,9 @@ static int setPrs(Draw_Interpretor& di, int argc, const char** argv)
       prs->SetMaterial(Graphic3d_NameOfMaterial_Plastified);
     }
     //    Quantity_Color Col;
-    //    if ( colors.GetColor ( seq.Value(i), XCAFDoc_ColorSurf, Col ) )
+    //    if ( colors.GetColor ( seq.Value(i), XCAFDoc_ColorType::XCAFDoc_ColorSurf, Col ) )
     //      prs->SetColor ( Col.Name() );
-    //    else if ( colors.GetColor ( seq.Value(i), XCAFDoc_ColorCurv, Col ) )
+    //    else if ( colors.GetColor ( seq.Value(i), XCAFDoc_ColorType::XCAFDoc_ColorCurv, Col ) )
     //      prs->SetColor ( Col.Name() );
   }
   return 0;
@@ -727,9 +727,9 @@ static int show(Draw_Interpretor& di, int argc, const char** argv)
       prs->SetMaterial(Graphic3d_NameOfMaterial_Plastified);
     }
     //    Quantity_Color Col;
-    //    if ( colors.GetColor ( seq.Value(i), XCAFDoc_ColorSurf, Col ) )
+    //    if ( colors.GetColor ( seq.Value(i), XCAFDoc_ColorType::XCAFDoc_ColorSurf, Col ) )
     //      prs->SetColor ( Col.Name() );
-    //    else if ( colors.GetColor ( seq.Value(i), XCAFDoc_ColorCurv, Col ) )
+    //    else if ( colors.GetColor ( seq.Value(i), XCAFDoc_ColorType::XCAFDoc_ColorCurv, Col ) )
     //      prs->SetColor ( Col.Name() );
     prs->Display(true);
   }

@@ -17,7 +17,7 @@
 #ifndef _TopoDSToStep_MakeEdgeError_HeaderFile
 #define _TopoDSToStep_MakeEdgeError_HeaderFile
 
-enum TopoDSToStep_MakeEdgeError
+enum class TopoDSToStep_MakeEdgeError
 {
   TopoDSToStep_EdgeDone,
   TopoDSToStep_NonManifoldEdge,

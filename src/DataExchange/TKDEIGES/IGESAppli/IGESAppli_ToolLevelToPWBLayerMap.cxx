@@ -149,11 +149,11 @@ IGESData_DirChecker IGESAppli_ToolLevelToPWBLayerMap::DirChecker(
   const occ::handle<IGESAppli_LevelToPWBLayerMap>& /* ent */) const
 {
   IGESData_DirChecker DC(406, 24);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefVoid);
   DC.BlankStatusIgnored();
   DC.UseFlagIgnored();
   DC.HierarchyStatusIgnored();

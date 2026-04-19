@@ -14,7 +14,7 @@
 #ifndef _StepElement_EnumeratedCurveElementFreedom_HeaderFile
 #define _StepElement_EnumeratedCurveElementFreedom_HeaderFile
 
-enum StepElement_EnumeratedCurveElementFreedom
+enum class StepElement_EnumeratedCurveElementFreedom
 {
   StepElement_XTranslation,
   StepElement_YTranslation,

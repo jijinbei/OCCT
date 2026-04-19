@@ -327,10 +327,10 @@ IGESData_DirChecker IGESGeom_ToolBSplineCurve::DirChecker(
   const occ::handle<IGESGeom_BSplineCurve>& /* ent */) const
 {
   IGESData_DirChecker DC(126, 0, 5);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }

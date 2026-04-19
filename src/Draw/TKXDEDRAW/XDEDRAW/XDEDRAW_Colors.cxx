@@ -42,17 +42,17 @@ static bool parseXDocColorType(const TCollection_AsciiString& theArg, XCAFDoc_Co
   anArgCase.LowerCase();
   if (anArgCase == "surf" || anArgCase == "surface" || anArgCase == "s")
   {
-    theType = XCAFDoc_ColorSurf;
+    theType = XCAFDoc_ColorType::XCAFDoc_ColorSurf;
     return true;
   }
   else if (anArgCase == "curve" || anArgCase == "c")
   {
-    theType = XCAFDoc_ColorCurv;
+    theType = XCAFDoc_ColorType::XCAFDoc_ColorCurv;
     return true;
   }
   else if (anArgCase == "gen" || anArgCase == "generic")
   {
-    theType = XCAFDoc_ColorGen;
+    theType = XCAFDoc_ColorType::XCAFDoc_ColorGen;
     return true;
   }
   return false;
@@ -213,7 +213,7 @@ static int setColor(Draw_Interpretor&, int argc, const char** argv)
 
   Quantity_ColorRGBA aColor;
   bool               isColorDefined = false;
-  XCAFDoc_ColorType  aColType       = XCAFDoc_ColorGen;
+  XCAFDoc_ColorType  aColType       = XCAFDoc_ColorType::XCAFDoc_ColorGen;
   for (int anArgIter = 3; anArgIter < argc; ++anArgIter)
   {
     if (parseXDocColorType(argv[anArgIter], aColType))
@@ -317,7 +317,7 @@ static int getShapeColor(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   occ::handle<XCAFDoc_ColorTool> myColors = XCAFDoc_DocumentTool::ColorTool(aDoc->Main());
-  XCAFDoc_ColorType              aColType = XCAFDoc_ColorGen;
+  XCAFDoc_ColorType              aColType = XCAFDoc_ColorType::XCAFDoc_ColorGen;
   if (argc > 3 && !parseXDocColorType(argv[3], aColType))
   {
     Message::SendFail() << "Syntax error: unknown color type '" << argv[3] << "'";
@@ -492,7 +492,7 @@ static int unsetColor(Draw_Interpretor&, int argc, const char** argv)
     return 1;
   }
 
-  XCAFDoc_ColorType aColType = XCAFDoc_ColorGen;
+  XCAFDoc_ColorType aColType = XCAFDoc_ColorType::XCAFDoc_ColorGen;
   if (!parseXDocColorType(argv[3], aColType))
   {
     Message::SendFail() << "Syntax error: unknown color type '" << argv[3] << "'";
@@ -648,7 +648,7 @@ static int getStyledcolor(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   occ::handle<TDocStd_Document> aDoc;
-  XCAFDoc_ColorType             aColType = XCAFDoc_ColorGen;
+  XCAFDoc_ColorType             aColType = XCAFDoc_ColorType::XCAFDoc_ColorGen;
   DDocStd::GetDocument(argv[1], aDoc);
   TopoDS_Shape aShape = DBRep::Get(argv[2]);
   if (aDoc.IsNull())
@@ -706,7 +706,7 @@ static int setStyledcolor(Draw_Interpretor&, int argc, const char** argv)
     return 1;
   }
 
-  XCAFDoc_ColorType  aColorType = XCAFDoc_ColorGen;
+  XCAFDoc_ColorType  aColorType = XCAFDoc_ColorType::XCAFDoc_ColorGen;
   Quantity_ColorRGBA aColRGBA;
   for (int anArgIter = 3; anArgIter < argc; ++anArgIter)
   {

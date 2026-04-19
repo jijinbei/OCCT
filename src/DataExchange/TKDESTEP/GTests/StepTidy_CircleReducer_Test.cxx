@@ -114,7 +114,7 @@ TEST_F(StepTidy_CircleReducerTest, StepGeom_SurfaceCurve)
   aFirstSurfaceCurve->Init(new TCollection_HAsciiString,
                            aCircle1,
                            new NCollection_HArray1<StepGeom_PcurveOrSurface>,
-                           StepGeom_pscrCurve3d);
+                           StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d);
   addToModel(aFirstSurfaceCurve);
 
   // Creating SurfaceCurve containing the second Circle.
@@ -122,7 +122,7 @@ TEST_F(StepTidy_CircleReducerTest, StepGeom_SurfaceCurve)
   aSecondSurfaceCurve->Init(new TCollection_HAsciiString,
                             aCircle2,
                             new NCollection_HArray1<StepGeom_PcurveOrSurface>,
-                            StepGeom_pscrCurve3d);
+                            StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d);
   addToModel(aSecondSurfaceCurve);
 
   // Performing removal of duplicate Circles.
@@ -145,7 +145,7 @@ TEST_F(StepTidy_CircleReducerTest, StepGeom_SeamCurve)
   aFirstSeamCurve->Init(new TCollection_HAsciiString,
                         aCircle1,
                         new NCollection_HArray1<StepGeom_PcurveOrSurface>,
-                        StepGeom_pscrCurve3d);
+                        StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d);
   addToModel(aFirstSeamCurve);
 
   // Creating SeamCurve containing the second Circle.
@@ -153,7 +153,7 @@ TEST_F(StepTidy_CircleReducerTest, StepGeom_SeamCurve)
   aSecondSeamCurve->Init(new TCollection_HAsciiString,
                          aCircle2,
                          new NCollection_HArray1<StepGeom_PcurveOrSurface>,
-                         StepGeom_pscrCurve3d);
+                         StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d);
   addToModel(aSecondSeamCurve);
 
   // Performing removal of duplicate Circles.

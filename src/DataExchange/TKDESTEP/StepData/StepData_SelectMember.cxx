@@ -57,18 +57,18 @@ Interface_ParamType StepData_SelectMember::ParamType() const
 {
   int kind = Kind();
   if (kind == 0)
-    return Interface_ParamVoid;
+    return Interface_ParamType::Interface_ParamVoid;
   if (kind == 1)
-    return Interface_ParamInteger;
+    return Interface_ParamType::Interface_ParamInteger;
   if (kind == 2 || kind == 3)
-    return Interface_ParamLogical;
+    return Interface_ParamType::Interface_ParamLogical;
   if (kind == 4)
-    return Interface_ParamEnum;
+    return Interface_ParamType::Interface_ParamEnum;
   if (kind == 5)
-    return Interface_ParamReal;
+    return Interface_ParamType::Interface_ParamReal;
   if (kind == 6)
-    return Interface_ParamText;
-  return Interface_ParamMisc;
+    return Interface_ParamType::Interface_ParamText;
+  return Interface_ParamType::Interface_ParamMisc;
 }
 
 int StepData_SelectMember::Int() const

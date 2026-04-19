@@ -60,8 +60,8 @@ void RWStepVisual_RWTextLiteral::ReadStep(const occ::handle<StepData_StepReaderD
 
   // --- own field : path ---
 
-  StepVisual_TextPath aPath = StepVisual_tpUp;
-  if (data->ParamType(num, 5) == Interface_ParamEnum)
+  StepVisual_TextPath aPath = StepVisual_TextPath::StepVisual_tpUp;
+  if (data->ParamType(num, 5) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 5);
     if (!RWStepVisual_RWTextPath::ConvertToEnum(text, aPath))

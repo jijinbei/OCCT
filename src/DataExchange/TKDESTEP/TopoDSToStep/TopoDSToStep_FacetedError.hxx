@@ -17,7 +17,7 @@
 #ifndef _TopoDSToStep_FacetedError_HeaderFile
 #define _TopoDSToStep_FacetedError_HeaderFile
 
-enum TopoDSToStep_FacetedError
+enum class TopoDSToStep_FacetedError
 {
   TopoDSToStep_FacetedDone,
   TopoDSToStep_SurfaceNotPlane,

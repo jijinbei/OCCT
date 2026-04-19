@@ -39,18 +39,18 @@ void RWStepDimTol_RWDatumReferenceModifierWithValue::ReadStep(
 
   // own fields of DatumReferenceModifierWithValue
 
-  StepDimTol_DatumReferenceModifierType aModifierType = StepDimTol_CircularOrCylindrical;
-  if (data->ParamType(num, 1) == Interface_ParamEnum)
+  StepDimTol_DatumReferenceModifierType aModifierType = StepDimTol_DatumReferenceModifierType::StepDimTol_CircularOrCylindrical;
+  if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);
     if (strcmp(text, ".CIRCULAR_OR_CYLINDRICAL.") == 0)
-      aModifierType = StepDimTol_CircularOrCylindrical;
+      aModifierType = StepDimTol_DatumReferenceModifierType::StepDimTol_CircularOrCylindrical;
     else if (strcmp(text, ".DISTANCE.") == 0)
-      aModifierType = StepDimTol_Distance;
+      aModifierType = StepDimTol_DatumReferenceModifierType::StepDimTol_Distance;
     else if (strcmp(text, ".PROJECTED.") == 0)
-      aModifierType = StepDimTol_Projected;
+      aModifierType = StepDimTol_DatumReferenceModifierType::StepDimTol_Projected;
     else if (strcmp(text, ".SPHERICAL.") == 0)
-      aModifierType = StepDimTol_Spherical;
+      aModifierType = StepDimTol_DatumReferenceModifierType::StepDimTol_Spherical;
     else
       ach->AddFail("Parameter #1 (modifier_type) has not allowed value");
   }
@@ -79,16 +79,16 @@ void RWStepDimTol_RWDatumReferenceModifierWithValue::WriteStep(
 
   switch (ent->ModifierType())
   {
-    case StepDimTol_CircularOrCylindrical:
+    case StepDimTol_DatumReferenceModifierType::StepDimTol_CircularOrCylindrical:
       SW.SendEnum(".CIRCULAR_OR_CYLINDRICAL.");
       break;
-    case StepDimTol_Distance:
+    case StepDimTol_DatumReferenceModifierType::StepDimTol_Distance:
       SW.SendEnum(".DISTANCE.");
       break;
-    case StepDimTol_Projected:
+    case StepDimTol_DatumReferenceModifierType::StepDimTol_Projected:
       SW.SendEnum(".PROJECTED.");
       break;
-    case StepDimTol_Spherical:
+    case StepDimTol_DatumReferenceModifierType::StepDimTol_Spherical:
       SW.SendEnum(".SPHERICAL.");
       break;
   }

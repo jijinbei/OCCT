@@ -14,7 +14,7 @@
 #ifndef _StepElement_EnumeratedCurveElementPurpose_HeaderFile
 #define _StepElement_EnumeratedCurveElementPurpose_HeaderFile
 
-enum StepElement_EnumeratedCurveElementPurpose
+enum class StepElement_EnumeratedCurveElementPurpose
 {
   StepElement_Axial,
   StepElement_YYBending,

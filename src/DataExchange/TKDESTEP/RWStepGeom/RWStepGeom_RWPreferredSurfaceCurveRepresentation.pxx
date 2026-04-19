@@ -30,11 +30,11 @@ inline const char* ConvertToString(const StepGeom_PreferredSurfaceCurveRepresent
 {
   switch (theSourceEnum)
   {
-    case StepGeom_pscrPcurveS2:
+    case StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrPcurveS2:
       return pscrPcurveS2;
-    case StepGeom_pscrPcurveS1:
+    case StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrPcurveS1:
       return pscrPcurveS1;
-    case StepGeom_pscrCurve3d:
+    case StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d:
       return pscrCurve3d;
   }
   return nullptr;
@@ -49,15 +49,15 @@ inline bool ConvertToEnum(const char* const                             theRepre
 {
   if (IsEqual(theRepresentationStr, pscrPcurveS2))
   {
-    theResultEnum = StepGeom_pscrPcurveS2;
+    theResultEnum = StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrPcurveS2;
   }
   else if (IsEqual(theRepresentationStr, pscrPcurveS1))
   {
-    theResultEnum = StepGeom_pscrPcurveS1;
+    theResultEnum = StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrPcurveS1;
   }
   else if (IsEqual(theRepresentationStr, pscrCurve3d))
   {
-    theResultEnum = StepGeom_pscrCurve3d;
+    theResultEnum = StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d;
   }
   else
   {

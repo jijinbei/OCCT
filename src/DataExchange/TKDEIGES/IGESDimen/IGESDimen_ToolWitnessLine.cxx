@@ -136,10 +136,10 @@ IGESData_DirChecker IGESDimen_ToolWitnessLine::DirChecker(
   const occ::handle<IGESDimen_WitnessLine>& /* ent */) const
 {
   IGESData_DirChecker DC(106, 40);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefValue);
-  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefValue);
+  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.UseFlagRequired(1);
   DC.HierarchyStatusIgnored();
   return DC;

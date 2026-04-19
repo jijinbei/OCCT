@@ -17,7 +17,7 @@
 #ifndef _IGESData_Status_HeaderFile
 #define _IGESData_Status_HeaderFile
 
-enum IGESData_Status
+enum class IGESData_Status
 {
   IGESData_EntityOK,
   IGESData_EntityError,

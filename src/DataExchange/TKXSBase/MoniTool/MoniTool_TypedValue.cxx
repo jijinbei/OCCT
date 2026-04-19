@@ -34,20 +34,20 @@ static NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transie
   if (thelibtv.IsEmpty())
   {
     occ::handle<MoniTool_TypedValue> tv;
-    tv = new MoniTool_TypedValue("Integer", MoniTool_ValueInteger);
+    tv = new MoniTool_TypedValue("Integer", MoniTool_ValueType::MoniTool_ValueInteger);
     thelibtv.Bind("Integer", tv);
-    tv = new MoniTool_TypedValue("Real", MoniTool_ValueReal);
+    tv = new MoniTool_TypedValue("Real", MoniTool_ValueType::MoniTool_ValueReal);
     thelibtv.Bind("Real", tv);
-    tv = new MoniTool_TypedValue("Text", MoniTool_ValueText);
+    tv = new MoniTool_TypedValue("Text", MoniTool_ValueType::MoniTool_ValueText);
     thelibtv.Bind("Text", tv);
-    tv = new MoniTool_TypedValue("Transient", MoniTool_ValueIdent);
+    tv = new MoniTool_TypedValue("Transient", MoniTool_ValueType::MoniTool_ValueIdent);
     thelibtv.Bind("Transient", tv);
-    tv = new MoniTool_TypedValue("Boolean", MoniTool_ValueEnum);
+    tv = new MoniTool_TypedValue("Boolean", MoniTool_ValueType::MoniTool_ValueEnum);
     tv->AddDef("enum 0"); //    = 0 False  ,  > 0 True
     tv->AddDef("eval False");
     tv->AddDef("eval True");
     thelibtv.Bind("Boolean", tv);
-    tv = new MoniTool_TypedValue("Logical", MoniTool_ValueEnum);
+    tv = new MoniTool_TypedValue("Logical", MoniTool_ValueType::MoniTool_ValueEnum);
     tv->AddDef("enum -1"); //    < 0 False  ,  = 0 Unk  ,  > 0 True
     tv->AddDef("eval False");
     tv->AddDef("eval Unknown");
@@ -83,8 +83,8 @@ MoniTool_TypedValue::MoniTool_TypedValue(const char* const        name,
       theival(0),
       thehval(new TCollection_HAsciiString(""))
 {
-  if (type != MoniTool_ValueInteger && type != MoniTool_ValueReal && type != MoniTool_ValueEnum
-      && type != MoniTool_ValueText && type != MoniTool_ValueIdent)
+  if (type != MoniTool_ValueType::MoniTool_ValueInteger && type != MoniTool_ValueType::MoniTool_ValueReal && type != MoniTool_ValueType::MoniTool_ValueEnum
+      && type != MoniTool_ValueType::MoniTool_ValueText && type != MoniTool_ValueType::MoniTool_ValueIdent)
     throw Standard_ConstructionError("MoniTool_TypedValue : Type not supported");
   if (init[0] != '\0')
     if (Satisfies(new TCollection_HAsciiString(init)))
@@ -179,7 +179,7 @@ TCollection_AsciiString MoniTool_TypedValue::Definition() const
   char                    mess[50];
   switch (thetype)
   {
-    case MoniTool_ValueInteger: {
+    case MoniTool_ValueType::MoniTool_ValueInteger: {
       def.AssignCat("Integer");
       int ilim;
       if (IntegerLimit(false, ilim))
@@ -194,7 +194,7 @@ TCollection_AsciiString MoniTool_TypedValue::Definition() const
       }
     }
     break;
-    case MoniTool_ValueReal: {
+    case MoniTool_ValueType::MoniTool_ValueReal: {
       def.AssignCat("Real");
       double rlim;
       if (RealLimit(false, rlim))
@@ -214,7 +214,7 @@ TCollection_AsciiString MoniTool_TypedValue::Definition() const
       }
     }
     break;
-    case MoniTool_ValueEnum: {
+    case MoniTool_ValueType::MoniTool_ValueEnum: {
       def.AssignCat("Enum");
       int  startcase = 0, endcase = 0;
       bool match = false;
@@ -246,7 +246,7 @@ TCollection_AsciiString MoniTool_TypedValue::Definition() const
       }
     }
     break;
-    case MoniTool_ValueIdent: {
+    case MoniTool_ValueType::MoniTool_ValueIdent: {
       def.AssignCat("Object(Entity)");
       if (!theotyp.IsNull())
       {
@@ -255,7 +255,7 @@ TCollection_AsciiString MoniTool_TypedValue::Definition() const
       }
     }
     break;
-    case MoniTool_ValueText: {
+    case MoniTool_ValueType::MoniTool_ValueText: {
       def.AssignCat("Text");
       if (themaxlen > 0)
       {
@@ -297,10 +297,10 @@ void MoniTool_TypedValue::PrintValue(Standard_OStream& S) const
 {
   if (IsSetValue())
   {
-    if (thetype == MoniTool_ValueIdent)
+    if (thetype == MoniTool_ValueType::MoniTool_ValueIdent)
       S << " (type) " << theoval->DynamicType()->Name();
     if (!thehval.IsNull())
-      S << (thetype == MoniTool_ValueIdent ? " : " : "") << thehval->ToCString();
+      S << (thetype == MoniTool_ValueType::MoniTool_ValueIdent ? " : " : "") << thehval->ToCString();
 
     if (HasInterpret())
     {
@@ -380,7 +380,7 @@ int MoniTool_TypedValue::MaxLength() const
 
 void MoniTool_TypedValue::SetIntegerLimit(const bool max, const int val)
 {
-  if (thetype != MoniTool_ValueInteger)
+  if (thetype != MoniTool_ValueType::MoniTool_ValueInteger)
     throw Standard_ConstructionError("MoniTool_TypedValue : SetIntegerLimit, not an Integer");
 
   if (max)
@@ -413,7 +413,7 @@ bool MoniTool_TypedValue::IntegerLimit(const bool max, int& val) const
 
 void MoniTool_TypedValue::SetRealLimit(const bool max, const double val)
 {
-  if (thetype != MoniTool_ValueReal)
+  if (thetype != MoniTool_ValueType::MoniTool_ValueReal)
     throw Standard_ConstructionError("MoniTool_TypedValue : SetRealLimit, not a Real");
 
   if (max)
@@ -459,7 +459,7 @@ const char* MoniTool_TypedValue::UnitDef() const
 
 void MoniTool_TypedValue::StartEnum(const int start, const bool match)
 {
-  if (thetype != MoniTool_ValueEnum)
+  if (thetype != MoniTool_ValueType::MoniTool_ValueEnum)
     throw Standard_ConstructionError("MoniTool_TypedValue : StartEnum, Not an Enum");
 
   thelims |= 4;
@@ -480,7 +480,7 @@ void MoniTool_TypedValue::AddEnum(const char* const v1,
                                   const char* const v9,
                                   const char* const v10)
 {
-  if (thetype != MoniTool_ValueEnum)
+  if (thetype != MoniTool_ValueType::MoniTool_ValueEnum)
     throw Standard_ConstructionError("MoniTool_TypedValue : AddEnum, Not an Enum");
   if (theenums.IsNull())
     theenums = new NCollection_HArray1<TCollection_AsciiString>(theintlow, theintlow + 10);
@@ -557,7 +557,7 @@ void MoniTool_TypedValue::AddEnum(const char* const v1,
 
 void MoniTool_TypedValue::AddEnumValue(const char* const val, const int num)
 {
-  if (thetype != MoniTool_ValueEnum)
+  if (thetype != MoniTool_ValueType::MoniTool_ValueEnum)
     throw Standard_ConstructionError("MoniTool_TypedValue : AddEnum, Not an Enum");
   if (num < theintlow)
     throw Standard_ConstructionError("MoniTool_TypedValue : AddEnum, out of range");
@@ -588,7 +588,7 @@ void MoniTool_TypedValue::AddEnumValue(const char* const val, const int num)
 
 bool MoniTool_TypedValue::EnumDef(int& startcase, int& endcase, bool& match) const
 {
-  if (thetype != MoniTool_ValueEnum)
+  if (thetype != MoniTool_ValueType::MoniTool_ValueEnum)
     return false;
   startcase = theintlow;
   endcase   = theintup;
@@ -598,7 +598,7 @@ bool MoniTool_TypedValue::EnumDef(int& startcase, int& endcase, bool& match) con
 
 const char* MoniTool_TypedValue::EnumVal(const int num) const
 {
-  if (thetype != MoniTool_ValueEnum)
+  if (thetype != MoniTool_ValueType::MoniTool_ValueEnum)
     return "";
   if (num < theintlow || num > theintup)
     return "";
@@ -607,7 +607,7 @@ const char* MoniTool_TypedValue::EnumVal(const int num) const
 
 int MoniTool_TypedValue::EnumCase(const char* const val) const
 {
-  if (thetype != MoniTool_ValueEnum)
+  if (thetype != MoniTool_ValueType::MoniTool_ValueEnum)
     return (theintlow - 1);
   int i; // svv Jan 10 2000 : porting on DEC
   for (i = theintlow; i <= theintup; i++)
@@ -631,7 +631,7 @@ int MoniTool_TypedValue::EnumCase(const char* const val) const
 
 void MoniTool_TypedValue::SetObjectType(const occ::handle<Standard_Type>& typ)
 {
-  if (thetype != MoniTool_ValueIdent)
+  if (thetype != MoniTool_ValueType::MoniTool_ValueIdent)
     throw Standard_ConstructionError("MoniTool_TypedValue : AddEnum, Not an Entity/Object");
   theotyp = typ;
 }
@@ -654,7 +654,7 @@ bool MoniTool_TypedValue::HasInterpret() const
 {
   if (theinterp)
     return true;
-  if (thetype == MoniTool_ValueEnum)
+  if (thetype == MoniTool_ValueType::MoniTool_ValueEnum)
     return true;
   return false;
 }
@@ -676,7 +676,7 @@ const char* MoniTool_TypedValue::SatisfiesName() const
 
 bool MoniTool_TypedValue::IsSetValue() const
 {
-  if (thetype == MoniTool_ValueIdent)
+  if (thetype == MoniTool_ValueType::MoniTool_ValueIdent)
     return (!theoval.IsNull());
   if (thehval->Length() > 0)
     return true;
@@ -706,7 +706,7 @@ occ::handle<TCollection_HAsciiString> MoniTool_TypedValue::Interpret(
     return hval;
   if (theinterp)
     return theinterp(this, hval, native);
-  if (thetype == MoniTool_ValueEnum)
+  if (thetype == MoniTool_ValueType::MoniTool_ValueEnum)
   {
     //  We accept both forms : Enum preferably, otherwise Integer
     int  startcase, endcase;
@@ -734,7 +734,7 @@ bool MoniTool_TypedValue::Satisfies(const occ::handle<TCollection_HAsciiString>&
     return true;
   switch (thetype)
   {
-    case MoniTool_ValueInteger: {
+    case MoniTool_ValueType::MoniTool_ValueInteger: {
       if (!val->IsIntegerValue())
         return false;
       int ival, ilim;
@@ -747,7 +747,7 @@ bool MoniTool_TypedValue::Satisfies(const occ::handle<TCollection_HAsciiString>&
           return false;
       return true;
     }
-    case MoniTool_ValueReal: {
+    case MoniTool_ValueType::MoniTool_ValueReal: {
       if (!val->IsRealValue())
         return false;
       double rval, rlim;
@@ -760,7 +760,7 @@ bool MoniTool_TypedValue::Satisfies(const occ::handle<TCollection_HAsciiString>&
           return false;
       return true;
     }
-    case MoniTool_ValueEnum: {
+    case MoniTool_ValueType::MoniTool_ValueEnum: {
       //  We accept both forms : Enum preferably, otherwise Integer
       int  startcase, endcase; // unused ival;
       bool match;
@@ -777,7 +777,7 @@ bool MoniTool_TypedValue::Satisfies(const occ::handle<TCollection_HAsciiString>&
       //      if (ival >= startcase && ival <= endcase) return true;
       return false;
     }
-    case MoniTool_ValueText: {
+    case MoniTool_ValueType::MoniTool_ValueText: {
       if (themaxlen > 0 && val->Length() > themaxlen)
         return false;
       break;
@@ -802,13 +802,13 @@ bool MoniTool_TypedValue::SetCStringValue(const char* const val)
     return true;
   if (!Satisfies(hval))
     return false;
-  if (thetype == MoniTool_ValueInteger)
+  if (thetype == MoniTool_ValueType::MoniTool_ValueInteger)
   {
     thehval->Clear();
     theival = atoi(val);
     thehval->AssignCat(val);
   }
-  else if (thetype == MoniTool_ValueEnum)
+  else if (thetype == MoniTool_ValueType::MoniTool_ValueEnum)
   {
     int         ival = EnumCase(val);
     const char* cval = EnumVal(ival);
@@ -834,9 +834,9 @@ bool MoniTool_TypedValue::SetHStringValue(const occ::handle<TCollection_HAsciiSt
   if (!Satisfies(hval))
     return false;
   thehval = hval;
-  if (thetype == MoniTool_ValueInteger)
+  if (thetype == MoniTool_ValueType::MoniTool_ValueInteger)
     theival = atoi(hval->ToCString());
-  else if (thetype == MoniTool_ValueEnum)
+  else if (thetype == MoniTool_ValueType::MoniTool_ValueEnum)
     theival = EnumCase(hval->ToCString());
   //  else return true;
   return true;
@@ -855,7 +855,7 @@ bool MoniTool_TypedValue::SetIntegerValue(const int ival)
   if (!Satisfies(hval))
     return false;
   thehval->Clear();
-  if (thetype == MoniTool_ValueEnum)
+  if (thetype == MoniTool_ValueType::MoniTool_ValueEnum)
     thehval->AssignCat(EnumVal(ival));
   else
     thehval->AssignCat(hval->ToCString());
@@ -896,7 +896,7 @@ void MoniTool_TypedValue::GetObjectValue(occ::handle<Standard_Transient>& val) c
 
 bool MoniTool_TypedValue::SetObjectValue(const occ::handle<Standard_Transient>& obj)
 {
-  if (thetype != MoniTool_ValueIdent)
+  if (thetype != MoniTool_ValueType::MoniTool_ValueIdent)
     return false;
   if (obj.IsNull())
   {

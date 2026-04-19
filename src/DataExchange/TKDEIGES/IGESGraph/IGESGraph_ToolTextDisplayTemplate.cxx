@@ -185,10 +185,10 @@ IGESData_DirChecker IGESGraph_ToolTextDisplayTemplate::DirChecker(
   const occ::handle<IGESGraph_TextDisplayTemplate>& /*ent*/) const
 {
   IGESData_DirChecker DC(312, 0, 1);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.SubordinateStatusRequired(0);
   DC.UseFlagRequired(2);
   DC.HierarchyStatusRequired(0);

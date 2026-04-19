@@ -196,18 +196,18 @@ IGESData_DirChecker IGESGeom_ToolCopiousData::DirChecker(
   const occ::handle<IGESGeom_CopiousData>& ent) const
 {
   IGESData_DirChecker DC(106, 1, 63);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   if (ent->FormNumber() <= 3)
   {
-    DC.LineFont(IGESData_DefVoid);
-    DC.LineWeight(IGESData_DefVoid);
+    DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+    DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
   }
   else
   {
-    DC.LineFont(IGESData_DefAny);
-    DC.LineWeight(IGESData_DefValue);
+    DC.LineFont(IGESData_DefType::IGESData_DefAny);
+    DC.LineWeight(IGESData_DefType::IGESData_DefValue);
   }
-  DC.Color(IGESData_DefAny);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }

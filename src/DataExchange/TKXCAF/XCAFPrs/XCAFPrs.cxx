@@ -36,16 +36,16 @@ static void fillStyleColors(XCAFPrs_Style&                        theStyle,
                             const TDF_Label&                      theLabel)
 {
   Quantity_ColorRGBA aColor;
-  if (theTool->GetColor(theLabel, XCAFDoc_ColorGen, aColor))
+  if (theTool->GetColor(theLabel, XCAFDoc_ColorType::XCAFDoc_ColorGen, aColor))
   {
     theStyle.SetColorCurv(aColor.GetRGB());
     theStyle.SetColorSurf(aColor);
   }
-  if (theTool->GetColor(theLabel, XCAFDoc_ColorSurf, aColor))
+  if (theTool->GetColor(theLabel, XCAFDoc_ColorType::XCAFDoc_ColorSurf, aColor))
   {
     theStyle.SetColorSurf(aColor);
   }
-  if (theTool->GetColor(theLabel, XCAFDoc_ColorCurv, aColor))
+  if (theTool->GetColor(theLabel, XCAFDoc_ColorType::XCAFDoc_ColorCurv, aColor))
   {
     theStyle.SetColorCurv(aColor.GetRGB());
   }
@@ -124,7 +124,7 @@ void XCAFPrs::CollectStyleSettings(
         TDF_Label                      aLayer     = aLayerTool->FindLayer(aLayerNames->First());
         occ::handle<XCAFDoc_ColorTool> aColorTool = XCAFDoc_DocumentTool::ColorTool(theLabel);
         Quantity_ColorRGBA             aColor;
-        if (aColorTool->GetColor(aLayer, XCAFDoc_ColorGen, aColor))
+        if (aColorTool->GetColor(aLayer, XCAFDoc_ColorType::XCAFDoc_ColorGen, aColor))
           aLayerColor = aColor;
       }
       TopLoc_Location aLocSub = theLoc.Multiplied(XCAFDoc_ShapeTool::GetLocation(theLabel));
@@ -195,7 +195,7 @@ void XCAFPrs::CollectStyleSettings(
       {
         TDF_Label          aLayer = aLayerTool->FindLayer(aLayerNames->First());
         Quantity_ColorRGBA aColor;
-        if (aColorTool->GetColor(aLayer, XCAFDoc_ColorGen, aColor))
+        if (aColorTool->GetColor(aLayer, XCAFDoc_ColorType::XCAFDoc_ColorGen, aColor))
         {
           aLayerColor = aColor;
         }

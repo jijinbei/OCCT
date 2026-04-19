@@ -25,8 +25,8 @@ IMPLEMENT_STANDARD_RTTIEXT(Transfer_Binder, Standard_Transient)
 
 Transfer_Binder::Transfer_Binder()
 {
-  thestatus = Transfer_StatusVoid;
-  theexecst = Transfer_StatusInitial;
+  thestatus = Transfer_StatusResult::Transfer_StatusVoid;
+  theexecst = Transfer_StatusExec::Transfer_StatusInitial;
   thecheck  = new Interface_Check;
 }
 
@@ -123,25 +123,25 @@ occ::handle<Transfer_Binder> Transfer_Binder::NextResult() const
 
 void Transfer_Binder::SetResultPresent()
 {
-  if (thestatus == Transfer_StatusUsed)
+  if (thestatus == Transfer_StatusResult::Transfer_StatusUsed)
     throw Transfer_TransferFailure("Binder : SetResult, Result is Already Set and Used");
-  theexecst = Transfer_StatusDone;
-  thestatus = Transfer_StatusDefined;
+  theexecst = Transfer_StatusExec::Transfer_StatusDone;
+  thestatus = Transfer_StatusResult::Transfer_StatusDefined;
 }
 
 //=================================================================================================
 
 bool Transfer_Binder::HasResult() const
 {
-  return (thestatus != Transfer_StatusVoid);
+  return (thestatus != Transfer_StatusResult::Transfer_StatusVoid);
 }
 
 //=================================================================================================
 
 void Transfer_Binder::SetAlreadyUsed()
 {
-  if (thestatus != Transfer_StatusVoid)
-    thestatus = Transfer_StatusUsed;
+  if (thestatus != Transfer_StatusResult::Transfer_StatusVoid)
+    thestatus = Transfer_StatusResult::Transfer_StatusUsed;
 }
 
 //=================================================================================================
@@ -171,7 +171,7 @@ void Transfer_Binder::SetStatusExec(const Transfer_StatusExec stat)
 
 void Transfer_Binder::AddFail(const char* const mess, const char* const orig)
 {
-  theexecst = Transfer_StatusError;
+  theexecst = Transfer_StatusExec::Transfer_StatusError;
   thecheck->AddFail(mess, orig);
 }
 
@@ -179,7 +179,7 @@ void Transfer_Binder::AddFail(const char* const mess, const char* const orig)
 
 void Transfer_Binder::AddWarning(const char* const mess, const char* const orig)
 {
-  //  theexecst = Transfer_StatusError;
+  //  theexecst = Transfer_StatusExec::Transfer_StatusError;
   thecheck->AddWarning(mess, orig);
 }
 

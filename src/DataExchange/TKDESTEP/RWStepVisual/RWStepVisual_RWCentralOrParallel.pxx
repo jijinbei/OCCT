@@ -29,9 +29,9 @@ inline const char* ConvertToString(const StepVisual_CentralOrParallel theSourceE
 {
   switch (theSourceEnum)
   {
-    case StepVisual_copCentral:
+    case StepVisual_CentralOrParallel::StepVisual_copCentral:
       return copCentral;
-    case StepVisual_copParallel:
+    case StepVisual_CentralOrParallel::StepVisual_copParallel:
       return copParallel;
   }
   return nullptr;
@@ -46,11 +46,11 @@ inline bool ConvertToEnum(const char* const             theCentralOrParallelStr,
 {
   if (IsEqual(theCentralOrParallelStr, copCentral))
   {
-    theResultEnum = StepVisual_copCentral;
+    theResultEnum = StepVisual_CentralOrParallel::StepVisual_copCentral;
   }
   else if (IsEqual(theCentralOrParallelStr, copParallel))
   {
-    theResultEnum = StepVisual_copParallel;
+    theResultEnum = StepVisual_CentralOrParallel::StepVisual_copParallel;
   }
   else
   {

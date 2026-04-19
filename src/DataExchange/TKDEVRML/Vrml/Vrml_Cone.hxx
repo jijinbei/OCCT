@@ -37,7 +37,7 @@ class Vrml_Cone
 public:
   DEFINE_STANDARD_ALLOC
 
-  Standard_EXPORT Vrml_Cone(const Vrml_ConeParts aParts        = Vrml_ConeALL,
+  Standard_EXPORT Vrml_Cone(const Vrml_ConeParts aParts        = Vrml_ConeParts::Vrml_ConeALL,
                             const double         aBottomRadius = 1,
                             const double         aHeight       = 2);
 

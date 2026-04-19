@@ -66,7 +66,7 @@ bool RWObj_TriangulationReader::addMesh(const RWObj_SubMesh&      theMesh,
     }
   }
 
-  if (theReason == RWObj_SubMeshReason_NewObject)
+  if (theReason == RWObj_SubMeshReason::RWObj_SubMeshReason_NewObject)
   {
     // forced flush at the end of the object
     if (addSubShape(myLastObjectShape, myLastGroupShape, false))

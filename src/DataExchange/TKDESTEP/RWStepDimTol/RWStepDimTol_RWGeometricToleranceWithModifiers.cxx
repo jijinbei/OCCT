@@ -75,40 +75,40 @@ void RWStepDimTol_RWGeometricToleranceWithModifiers::ReadStep(
     int num2   = sub5;
     for (int i0 = 1; i0 <= nb0; i0++)
     {
-      StepDimTol_GeometricToleranceModifier anIt0 = StepDimTol_GTMMaximumMaterialRequirement;
-      if (data->ParamType(num2, i0) == Interface_ParamEnum)
+      StepDimTol_GeometricToleranceModifier anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement;
+      if (data->ParamType(num2, i0) == Interface_ParamType::Interface_ParamEnum)
       {
         const char* text = data->ParamCValue(num2, i0);
         if (strcmp(text, ".ANY_CROSS_SECTION.") == 0)
-          anIt0 = StepDimTol_GTMAnyCrossSection;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMAnyCrossSection;
         else if (strcmp(text, ".COMMON_ZONE.") == 0)
-          anIt0 = StepDimTol_GTMCommonZone;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMCommonZone;
         else if (strcmp(text, ".EACH_RADIAL_ELEMENT.") == 0)
-          anIt0 = StepDimTol_GTMEachRadialElement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMEachRadialElement;
         else if (strcmp(text, ".FREE_STATE.") == 0)
-          anIt0 = StepDimTol_GTMFreeState;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMFreeState;
         else if (strcmp(text, ".LEAST_MATERIAL_REQUIREMENT.") == 0)
-          anIt0 = StepDimTol_GTMLeastMaterialRequirement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement;
         else if (strcmp(text, ".LINE_ELEMENT.") == 0)
-          anIt0 = StepDimTol_GTMLineElement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLineElement;
         else if (strcmp(text, ".MAJOR_DIAMETER.") == 0)
-          anIt0 = StepDimTol_GTMMajorDiameter;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMajorDiameter;
         else if (strcmp(text, ".MAXIMUM_MATERIAL_REQUIREMENT.") == 0)
-          anIt0 = StepDimTol_GTMMaximumMaterialRequirement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement;
         else if (strcmp(text, ".MINOR_DIAMETER.") == 0)
-          anIt0 = StepDimTol_GTMMinorDiameter;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMinorDiameter;
         else if (strcmp(text, ".NOT_CONVEX.") == 0)
-          anIt0 = StepDimTol_GTMNotConvex;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMNotConvex;
         else if (strcmp(text, ".PITCH_DIAMETER.") == 0)
-          anIt0 = StepDimTol_GTMPitchDiameter;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMPitchDiameter;
         else if (strcmp(text, ".RECIPROCITY_REQUIREMENT.") == 0)
-          anIt0 = StepDimTol_GTMReciprocityRequirement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMReciprocityRequirement;
         else if (strcmp(text, ".SEPARATE_REQUIREMENT.") == 0)
-          anIt0 = StepDimTol_GTMSeparateRequirement;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMSeparateRequirement;
         else if (strcmp(text, ".STATISTICAL_TOLERANCE.") == 0)
-          anIt0 = StepDimTol_GTMStatisticalTolerance;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMStatisticalTolerance;
         else if (strcmp(text, ".TANGENT_PLANE.") == 0)
-          anIt0 = StepDimTol_GTMTangentPlane;
+          anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMTangentPlane;
         else
           ach->AddFail("Parameter #5 (modifiers) has not allowed value");
       }
@@ -146,49 +146,49 @@ void RWStepDimTol_RWGeometricToleranceWithModifiers::WriteStep(
   {
     switch (ent->ModifierValue(i))
     {
-      case StepDimTol_GTMAnyCrossSection:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMAnyCrossSection:
         SW.SendEnum(".ANY_CROSS_SECTION.");
         break;
-      case StepDimTol_GTMCommonZone:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMCommonZone:
         SW.SendEnum(".COMMON_ZONE.");
         break;
-      case StepDimTol_GTMEachRadialElement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMEachRadialElement:
         SW.SendEnum(".EACH_RADIAL_ELEMENT.");
         break;
-      case StepDimTol_GTMFreeState:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMFreeState:
         SW.SendEnum(".FREE_STATE.");
         break;
-      case StepDimTol_GTMLeastMaterialRequirement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement:
         SW.SendEnum(".LEAST_MATERIAL_REQUIREMENT.");
         break;
-      case StepDimTol_GTMLineElement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLineElement:
         SW.SendEnum(".LINE_ELEMENT.");
         break;
-      case StepDimTol_GTMMajorDiameter:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMajorDiameter:
         SW.SendEnum(".MAJOR_DIAMETER.");
         break;
-      case StepDimTol_GTMMaximumMaterialRequirement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement:
         SW.SendEnum(".MAXIMUM_MATERIAL_REQUIREMENT.");
         break;
-      case StepDimTol_GTMMinorDiameter:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMinorDiameter:
         SW.SendEnum(".MINOR_DIAMETER.");
         break;
-      case StepDimTol_GTMNotConvex:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMNotConvex:
         SW.SendEnum(".NOT_CONVEX.");
         break;
-      case StepDimTol_GTMPitchDiameter:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMPitchDiameter:
         SW.SendEnum(".PITCH_DIAMETER.");
         break;
-      case StepDimTol_GTMReciprocityRequirement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMReciprocityRequirement:
         SW.SendEnum(".RECIPROCITY_REQUIREMENT.");
         break;
-      case StepDimTol_GTMSeparateRequirement:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMSeparateRequirement:
         SW.SendEnum(".SEPARATE_REQUIREMENT.");
         break;
-      case StepDimTol_GTMStatisticalTolerance:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMStatisticalTolerance:
         SW.SendEnum(".STATISTICAL_TOLERANCE.");
         break;
-      case StepDimTol_GTMTangentPlane:
+      case StepDimTol_GeometricToleranceModifier::StepDimTol_GTMTangentPlane:
         SW.SendEnum(".TANGENT_PLANE.");
         break;
     }

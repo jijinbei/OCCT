@@ -17,7 +17,7 @@
 #ifndef _StepGeom_BSplineCurveForm_HeaderFile
 #define _StepGeom_BSplineCurveForm_HeaderFile
 
-enum StepGeom_BSplineCurveForm
+enum class StepGeom_BSplineCurveForm
 {
   StepGeom_bscfPolylineForm,
   StepGeom_bscfCircularArc,

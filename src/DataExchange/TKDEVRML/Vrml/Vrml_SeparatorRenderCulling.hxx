@@ -17,7 +17,7 @@
 #ifndef _Vrml_SeparatorRenderCulling_HeaderFile
 #define _Vrml_SeparatorRenderCulling_HeaderFile
 
-enum Vrml_SeparatorRenderCulling
+enum class Vrml_SeparatorRenderCulling
 {
   Vrml_OFF,
   Vrml_ON,

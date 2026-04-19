@@ -37,7 +37,7 @@ public:
   Argument()
       : myNext(nullptr),
         myValue(nullptr),
-        myType(Interface_ParamSub)
+        myType(Interface_ParamType::Interface_ParamSub)
   {
   }
 
@@ -134,7 +134,7 @@ StepFile_ReadData::StepFile_ReadData()
       myResText(nullptr),
       myCurrType(TextValue::SubList),
       mySubArg(nullptr),
-      myTypeArg(Interface_ParamSub),
+      myTypeArg(Interface_ParamType::Interface_ParamSub),
       myCurrArg(nullptr),
       myFirstRec(nullptr),
       myCurRec(nullptr),
@@ -178,7 +178,7 @@ void StepFile_ReadData::RecordNewEntity()
 {
   myErrorArg = false; // Reset error argument mod
   AddNewRecord(myCurRec);
-  SetTypeArg(Interface_ParamSub);
+  SetTypeArg(Interface_ParamType::Interface_ParamSub);
   mySubArg          = myCurRec->myIdent;
   myCurRec          = myCurRec->myNext;
   myLastRec->myNext = nullptr;
@@ -259,12 +259,12 @@ void StepFile_ReadData::CreateNewArg()
   Argument* aNewArg = static_cast<Argument*>(myOtherAlloc.AllocateOptimal(sizeof(Argument)));
   myNbPar++;
   aNewArg->myType = myTypeArg;
-  if (myTypeArg == Interface_ParamSub)
+  if (myTypeArg == Interface_ParamType::Interface_ParamSub)
     aNewArg->myValue = mySubArg;
   else
     GetResultText(&aNewArg->myValue);
 
-  if (myTypeArg == Interface_ParamMisc)
+  if (myTypeArg == Interface_ParamType::Interface_ParamMisc)
     myErrorArg = true;
 
   if (myCurRec->myFirst == nullptr)
@@ -294,7 +294,7 @@ void StepFile_ReadData::CreateErrorArg()
   // If already exists - update text value
   if (!myErrorArg)
   {
-    SetTypeArg(Interface_ParamMisc);
+    SetTypeArg(Interface_ParamType::Interface_ParamMisc);
     CreateNewArg();
     myErrorArg = true;
     return;
@@ -345,7 +345,7 @@ void StepFile_ReadData::FinalOfScope()
       PrintRecord(myLastRec);
     }
     myCurRec  = aRecord;
-    myTypeArg = Interface_ParamSub;
+    myTypeArg = Interface_ParamType::Interface_ParamSub;
     CreateNewArg();
   }
 
@@ -588,8 +588,8 @@ void StepFile_ReadData::PrintRecord(Record* theRecord)
     }
     Printf("  - Arg.%d[%c%c] : %s",
            aNumArg,
-           TextValue::ArgType1[myCurrArg->myType],
-           TextValue::ArgType2[myCurrArg->myType],
+           TextValue::ArgType1[static_cast<int>(myCurrArg->myType)],
+           TextValue::ArgType2[static_cast<int>(myCurrArg->myType)],
            myCurrArg->myValue);
     myCurrArg = myCurrArg->myNext;
   }

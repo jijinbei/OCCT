@@ -18,7 +18,7 @@
 #define _Interface_DataState_HeaderFile
 
 //! validity state of anentity's content (see InterfaceModel)
-enum Interface_DataState
+enum class Interface_DataState
 {
   Interface_StateOK,
   Interface_LoadWarning,

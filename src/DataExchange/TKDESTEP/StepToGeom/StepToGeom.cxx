@@ -397,7 +397,7 @@ occ::handle<Geom_BoundedCurve> StepToGeom::MakeBoundedCurve(
                 RUC->SelfIntersect(),
                 Kmult,
                 Knots,
-                StepGeom_ktUnspecified,
+                StepGeom_KnotType::StepGeom_ktUnspecified,
                 RUC->WeightsData());
 
     return MakeBSplineCurve(RBSPL, theLocalFactors);
@@ -433,7 +433,7 @@ occ::handle<Geom_BoundedCurve> StepToGeom::MakeBoundedCurve(
                 RQUC->SelfIntersect(),
                 Kmult,
                 Knots,
-                StepGeom_ktUnspecified,
+                StepGeom_KnotType::StepGeom_ktUnspecified,
                 RQUC->WeightsData());
 
     return MakeBSplineCurve(RBSPL, theLocalFactors);
@@ -665,7 +665,7 @@ occ::handle<Geom_BoundedSurface> StepToGeom::MakeBoundedSurface(
                 VKmult,
                 UKnots,
                 VKnots,
-                StepGeom_ktUnspecified,
+                StepGeom_KnotType::StepGeom_ktUnspecified,
                 RUS->WeightsData());
 
     return MakeBSplineSurface(RBSPL, theLocalFactors);
@@ -717,7 +717,7 @@ occ::handle<Geom_BoundedSurface> StepToGeom::MakeBoundedSurface(
                 VKmult,
                 UKnots,
                 VKnots,
-                StepGeom_ktUnspecified,
+                StepGeom_KnotType::StepGeom_ktUnspecified,
                 RQUS->WeightsData());
     return MakeBSplineSurface(RBSPL, theLocalFactors);
   }
@@ -2277,10 +2277,10 @@ occ::handle<Geom_TrimmedCurve> StepToGeom::MakeTrimmedCurve(
   int MasterRep;
   switch (SC->MasterRepresentation())
   {
-    case StepGeom_tpCartesian:
+    case StepGeom_TrimmingPreference::StepGeom_tpCartesian:
       MasterRep = 1;
       break;
-    case StepGeom_tpParameter:
+    case StepGeom_TrimmingPreference::StepGeom_tpParameter:
       MasterRep = 2;
       break;
     default:
@@ -2593,7 +2593,7 @@ occ::handle<NCollection_HArray1<double>> StepToGeom::MakeYprRotation(
   }
   occ::handle<StepBasic_SiUnitAndPlaneAngleUnit> aSiUnit =
     occ::down_cast<StepBasic_SiUnitAndPlaneAngleUnit>(aPau);
-  if (aSiUnit.IsNull() || aSiUnit->Name() != StepBasic_sunRadian)
+  if (aSiUnit.IsNull() || aSiUnit->Name() != StepBasic_SiUnitName::StepBasic_sunRadian)
   {
     return anYPRRotation;
   }

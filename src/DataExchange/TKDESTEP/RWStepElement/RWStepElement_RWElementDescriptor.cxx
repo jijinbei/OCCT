@@ -39,16 +39,16 @@ void RWStepElement_RWElementDescriptor::ReadStep(
 
   // Own fields of ElementDescriptor
 
-  StepElement_ElementOrder aTopologyOrder = StepElement_Linear;
-  if (data->ParamType(num, 1) == Interface_ParamEnum)
+  StepElement_ElementOrder aTopologyOrder = StepElement_ElementOrder::StepElement_Linear;
+  if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);
     if (strcmp(text, ".LINEAR.") == 0)
-      aTopologyOrder = StepElement_Linear;
+      aTopologyOrder = StepElement_ElementOrder::StepElement_Linear;
     else if (strcmp(text, ".QUADRATIC.") == 0)
-      aTopologyOrder = StepElement_Quadratic;
+      aTopologyOrder = StepElement_ElementOrder::StepElement_Quadratic;
     else if (strcmp(text, ".CUBIC.") == 0)
-      aTopologyOrder = StepElement_Cubic;
+      aTopologyOrder = StepElement_ElementOrder::StepElement_Cubic;
     else
       ach->AddFail("Parameter #1 (topology_order) has not allowed value");
   }
@@ -73,13 +73,13 @@ void RWStepElement_RWElementDescriptor::WriteStep(
 
   switch (ent->TopologyOrder())
   {
-    case StepElement_Linear:
+    case StepElement_ElementOrder::StepElement_Linear:
       SW.SendEnum(".LINEAR.");
       break;
-    case StepElement_Quadratic:
+    case StepElement_ElementOrder::StepElement_Quadratic:
       SW.SendEnum(".QUADRATIC.");
       break;
-    case StepElement_Cubic:
+    case StepElement_ElementOrder::StepElement_Cubic:
       SW.SendEnum(".CUBIC.");
       break;
   }

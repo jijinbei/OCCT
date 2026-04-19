@@ -111,7 +111,7 @@ IGESData_DirChecker IGESAppli_ToolDrilledHole::DirChecker(
   const occ::handle<IGESAppli_DrilledHole>& /*ent*/) const
 {
   IGESData_DirChecker DC(406, 6); // Form no = 6 & Type = 406
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.UseFlagIgnored();
@@ -124,7 +124,7 @@ void IGESAppli_ToolDrilledHole::OwnCheck(const occ::handle<IGESAppli_DrilledHole
                                          occ::handle<Interface_Check>& ach) const
 {
   if (ent->SubordinateStatus() != 0)
-    if (ent->DefLevel() != IGESData_DefOne && ent->DefLevel() != IGESData_DefSeveral)
+    if (ent->DefLevel() != IGESData_DefList::IGESData_DefOne && ent->DefLevel() != IGESData_DefList::IGESData_DefSeveral)
       ach->AddFail("Level type : Not value/reference");
   if (ent->NbPropertyValues() != 5)
     ach->AddFail("Number of Property Values != 5");

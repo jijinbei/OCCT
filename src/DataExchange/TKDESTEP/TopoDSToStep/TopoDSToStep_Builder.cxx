@@ -39,7 +39,7 @@
 //=================================================================================================
 
 TopoDSToStep_Builder::TopoDSToStep_Builder()
-    : myError(TopoDSToStep_BuilderOther)
+    : myError(TopoDSToStep_BuilderError::TopoDSToStep_BuilderOther)
 {
   done = false;
 }
@@ -69,7 +69,7 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
 
   if (myTool.IsBound(aShape))
   {
-    myError  = TopoDSToStep_BuilderDone;
+    myError  = TopoDSToStep_BuilderError::TopoDSToStep_BuilderDone;
     done     = true;
     myResult = myTool.Find(aShape);
     return;
@@ -164,7 +164,7 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
       else
       {
         // Builder Error handling;
-        myError = TopoDSToStep_NoFaceMapped;
+        myError = TopoDSToStep_BuilderError::TopoDSToStep_NoFaceMapped;
         done    = false;
       }
 
@@ -178,7 +178,7 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
         if (MkTessShell.IsDone())
         {
           myTessellatedResult = MkTessShell.Value();
-          myError             = TopoDSToStep_BuilderDone;
+          myError             = TopoDSToStep_BuilderError::TopoDSToStep_BuilderDone;
           done                = true;
         }
       }
@@ -215,13 +215,13 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
         {
           myTessellatedResult = MkTessFace.Value();
         }
-        myError = TopoDSToStep_BuilderDone;
+        myError = TopoDSToStep_BuilderError::TopoDSToStep_BuilderDone;
         done    = true;
       }
       else
       {
         // MakeFace Error Handling : Face not Mapped
-        myError = TopoDSToStep_BuilderOther;
+        myError = TopoDSToStep_BuilderError::TopoDSToStep_BuilderOther;
         //	  occ::handle<TransferBRep_ShapeMapper> errShape =
         //	    new TransferBRep_ShapeMapper(Face);
         //	  FP->AddWarning(errShape, " the Face has not been mapped");

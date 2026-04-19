@@ -17,7 +17,7 @@
 #ifndef _StepBasic_Source_HeaderFile
 #define _StepBasic_Source_HeaderFile
 
-enum StepBasic_Source
+enum class StepBasic_Source
 {
   StepBasic_sMade,
   StepBasic_sBought,

@@ -300,7 +300,7 @@ IGESData_DirChecker IGESDefs_ToolAttributeTable::DirChecker(
   const occ::handle<IGESDefs_AttributeTable>& /* ent */) const
 {
   IGESData_DirChecker DC(422, 0, 1);
-  DC.Structure(IGESData_DefReference);
+  DC.Structure(IGESData_DefType::IGESData_DefReference);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.HierarchyStatusIgnored();

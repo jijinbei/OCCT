@@ -27,7 +27,7 @@ RWGltf_GltfLatePrimitiveArray::RWGltf_GltfLatePrimitiveArray(const TCollection_A
                                                              const TCollection_AsciiString& theName)
     : myId(theId),
       myName(theName),
-      myPrimMode(RWGltf_GltfPrimitiveMode_UNKNOWN)
+      myPrimMode(RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_UNKNOWN)
 {
 }
 
@@ -56,16 +56,16 @@ Quantity_ColorRGBA RWGltf_GltfLatePrimitiveArray::BaseColor() const
 RWGltf_GltfPrimArrayData& RWGltf_GltfLatePrimitiveArray::AddPrimArrayData(
   RWGltf_GltfArrayType theType)
 {
-  if (theType == RWGltf_GltfArrayType_Position)
+  if (theType == RWGltf_GltfArrayType::RWGltf_GltfArrayType_Position)
   {
     // make sure positions go first
     myData.Prepend(RWGltf_GltfPrimArrayData(theType));
     return myData.ChangeFirst();
   }
-  else if (theType == RWGltf_GltfArrayType_Indices)
+  else if (theType == RWGltf_GltfArrayType::RWGltf_GltfArrayType_Indices)
   {
     // make sure indexes go after vertex positions but before any other vertex attributes
-    if (myData.First().Type == RWGltf_GltfArrayType_Position)
+    if (myData.First().Type == RWGltf_GltfArrayType::RWGltf_GltfArrayType_Position)
     {
       myData.InsertAfter(NCollection_Sequence<RWGltf_GltfPrimArrayData>::Lower(),
                          RWGltf_GltfPrimArrayData(theType));

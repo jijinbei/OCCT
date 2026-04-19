@@ -155,7 +155,7 @@ const char* Interface_FileReaderData::ParamCValue(const int num, const int nump)
 
 bool Interface_FileReaderData::IsParamDefined(const int num, const int nump) const
 {
-  return (Param(num, nump).ParamType() != Interface_ParamVoid);
+  return (Param(num, nump).ParamType() != Interface_ParamType::Interface_ParamVoid);
 }
 
 int Interface_FileReaderData::ParamNumber(const int num, const int nump) const

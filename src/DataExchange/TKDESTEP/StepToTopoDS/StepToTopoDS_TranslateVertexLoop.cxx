@@ -36,7 +36,7 @@
 //=================================================================================================
 
 StepToTopoDS_TranslateVertexLoop::StepToTopoDS_TranslateVertexLoop()
-    : myError(StepToTopoDS_TranslateVertexLoopOther)
+    : myError(StepToTopoDS_TranslateVertexLoopError::StepToTopoDS_TranslateVertexLoopOther)
 {
 }
 
@@ -85,7 +85,7 @@ void StepToTopoDS_TranslateVertexLoop::Init(const occ::handle<StepShape_VertexLo
     else
     {
       TP->AddWarning(VL, "VertexLoop not mapped to TopoDS ");
-      myError = StepToTopoDS_TranslateVertexLoopOther;
+      myError = StepToTopoDS_TranslateVertexLoopError::StepToTopoDS_TranslateVertexLoopOther;
       done    = false;
       return;
     }
@@ -101,13 +101,13 @@ void StepToTopoDS_TranslateVertexLoop::Init(const occ::handle<StepShape_VertexLo
     B.Add(W, E);
     aTool.Bind(VL, W);
     myResult = W;
-    myError  = StepToTopoDS_TranslateVertexLoopDone;
+    myError  = StepToTopoDS_TranslateVertexLoopError::StepToTopoDS_TranslateVertexLoopDone;
     done     = true;
   }
   else
   {
     myResult = TopoDS::Wire(aTool.Find(VL));
-    myError  = StepToTopoDS_TranslateVertexLoopDone;
+    myError  = StepToTopoDS_TranslateVertexLoopError::StepToTopoDS_TranslateVertexLoopDone;
     done     = true;
   }
 }

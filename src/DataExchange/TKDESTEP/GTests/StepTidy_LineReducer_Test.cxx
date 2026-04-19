@@ -119,7 +119,7 @@ TEST_F(StepTidy_LineReducerTest, StepGeom_TrimmedCurve)
                            new NCollection_HArray1<StepGeom_TrimmingSelect>,
                            new NCollection_HArray1<StepGeom_TrimmingSelect>,
                            true,
-                           StepGeom_tpUnspecified);
+                           StepGeom_TrimmingPreference::StepGeom_tpUnspecified);
   addToModel(aFirstTrimmedCurve);
 
   // Creating TrimmedCurve containing the second Line.
@@ -129,7 +129,7 @@ TEST_F(StepTidy_LineReducerTest, StepGeom_TrimmedCurve)
                             new NCollection_HArray1<StepGeom_TrimmingSelect>,
                             new NCollection_HArray1<StepGeom_TrimmingSelect>,
                             true,
-                            StepGeom_tpUnspecified);
+                            StepGeom_TrimmingPreference::StepGeom_tpUnspecified);
   addToModel(aSecondTrimmedCurve);
 
   // Performing removal of duplicate Lines.
@@ -152,7 +152,7 @@ TEST_F(StepTidy_LineReducerTest, StepGeom_SurfaceCurve)
   aFirstSurfaceCurve->Init(new TCollection_HAsciiString,
                            aLine1,
                            new NCollection_HArray1<StepGeom_PcurveOrSurface>,
-                           StepGeom_pscrCurve3d);
+                           StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d);
   addToModel(aFirstSurfaceCurve);
 
   // Creating SurfaceCurve containing the second Line.
@@ -160,7 +160,7 @@ TEST_F(StepTidy_LineReducerTest, StepGeom_SurfaceCurve)
   aSecondSurfaceCurve->Init(new TCollection_HAsciiString,
                             aLine2,
                             new NCollection_HArray1<StepGeom_PcurveOrSurface>,
-                            StepGeom_pscrCurve3d);
+                            StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d);
   addToModel(aSecondSurfaceCurve);
 
   // Performing removal of duplicate Lines.
@@ -219,7 +219,7 @@ TEST_F(StepTidy_LineReducerTest, StepGeom_SeamCurve)
   aFirstSeamCurve->Init(new TCollection_HAsciiString,
                         aLine1,
                         new NCollection_HArray1<StepGeom_PcurveOrSurface>,
-                        StepGeom_pscrCurve3d);
+                        StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d);
   addToModel(aFirstSeamCurve);
 
   // Creating SeamCurve containing the second Line.
@@ -227,7 +227,7 @@ TEST_F(StepTidy_LineReducerTest, StepGeom_SeamCurve)
   aSecondSeamCurve->Init(new TCollection_HAsciiString,
                          aLine2,
                          new NCollection_HArray1<StepGeom_PcurveOrSurface>,
-                         StepGeom_pscrCurve3d);
+                         StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d);
   addToModel(aSecondSeamCurve);
 
   // Performing removal of duplicate Lines.

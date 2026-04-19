@@ -16,7 +16,7 @@
 #ifndef _StepVisual_NullStyle_HeaderFile
 #define _StepVisual_NullStyle_HeaderFile
 
-enum StepVisual_NullStyle
+enum class StepVisual_NullStyle
 {
   StepVisual_Null
 };

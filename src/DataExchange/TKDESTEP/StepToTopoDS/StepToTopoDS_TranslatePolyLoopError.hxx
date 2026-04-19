@@ -17,7 +17,7 @@
 #ifndef _StepToTopoDS_TranslatePolyLoopError_HeaderFile
 #define _StepToTopoDS_TranslatePolyLoopError_HeaderFile
 
-enum StepToTopoDS_TranslatePolyLoopError
+enum class StepToTopoDS_TranslatePolyLoopError
 {
   StepToTopoDS_TranslatePolyLoopDone,
   StepToTopoDS_TranslatePolyLoopOther

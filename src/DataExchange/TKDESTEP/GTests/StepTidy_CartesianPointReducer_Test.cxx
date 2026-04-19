@@ -278,12 +278,12 @@ TEST_F(StepTidy_CartesianPointReducerTest, StepGeom_BSplineCurveWithKnots)
   aFirstCurve->Init(new TCollection_HAsciiString,
                     1,
                     aFirstControlPoints,
-                    StepGeom_bscfUnspecified,
+                    StepGeom_BSplineCurveForm::StepGeom_bscfUnspecified,
                     StepData_LUnknown,
                     StepData_LUnknown,
                     new NCollection_HArray1<int>,
                     new NCollection_HArray1<double>,
-                    StepGeom_ktUnspecified);
+                    StepGeom_KnotType::StepGeom_ktUnspecified);
   addToModel(aFirstCurve);
 
   // Creating curve containing the second Cartesian point.
@@ -294,12 +294,12 @@ TEST_F(StepTidy_CartesianPointReducerTest, StepGeom_BSplineCurveWithKnots)
   aSecondCurve->Init(new TCollection_HAsciiString,
                      1,
                      aSecondControlPoints,
-                     StepGeom_bscfUnspecified,
+                     StepGeom_BSplineCurveForm::StepGeom_bscfUnspecified,
                      StepData_LUnknown,
                      StepData_LUnknown,
                      new NCollection_HArray1<int>,
                      new NCollection_HArray1<double>,
-                     StepGeom_ktUnspecified);
+                     StepGeom_KnotType::StepGeom_ktUnspecified);
   addToModel(aSecondCurve);
 
   // Performing removal of duplicate Cartesian points.
@@ -356,7 +356,7 @@ TEST_F(StepTidy_CartesianPointReducerTest, StepGeom_BSplineSurfaceWithKnots)
                       1,
                       1,
                       aFirstControlPoints,
-                      StepGeom_bssfUnspecified,
+                      StepGeom_BSplineSurfaceForm::StepGeom_bssfUnspecified,
                       StepData_LUnknown,
                       StepData_LUnknown,
                       StepData_LUnknown,
@@ -364,7 +364,7 @@ TEST_F(StepTidy_CartesianPointReducerTest, StepGeom_BSplineSurfaceWithKnots)
                       new NCollection_HArray1<int>,
                       new NCollection_HArray1<double>,
                       new NCollection_HArray1<double>,
-                      StepGeom_ktUnspecified);
+                      StepGeom_KnotType::StepGeom_ktUnspecified);
   addToModel(aFirstSurface);
 
   // Creating surface containing the second Cartesian point.
@@ -377,7 +377,7 @@ TEST_F(StepTidy_CartesianPointReducerTest, StepGeom_BSplineSurfaceWithKnots)
                        1,
                        1,
                        aSecondControlPoints,
-                       StepGeom_bssfUnspecified,
+                       StepGeom_BSplineSurfaceForm::StepGeom_bssfUnspecified,
                        StepData_LUnknown,
                        StepData_LUnknown,
                        StepData_LUnknown,
@@ -385,7 +385,7 @@ TEST_F(StepTidy_CartesianPointReducerTest, StepGeom_BSplineSurfaceWithKnots)
                        new NCollection_HArray1<int>,
                        new NCollection_HArray1<double>,
                        new NCollection_HArray1<double>,
-                       StepGeom_ktUnspecified);
+                       StepGeom_KnotType::StepGeom_ktUnspecified);
   addToModel(aSecondSurface);
 
   // Performing removal of duplicate Cartesian points.
@@ -478,12 +478,12 @@ TEST_F(StepTidy_CartesianPointReducerTest, StepGeom_BSplineCurveWithKnotsAndRati
   aFirstCurve->Init(new TCollection_HAsciiString,
                     1,
                     aFirstControlPoints,
-                    StepGeom_bscfUnspecified,
+                    StepGeom_BSplineCurveForm::StepGeom_bscfUnspecified,
                     StepData_LUnknown,
                     StepData_LUnknown,
                     new NCollection_HArray1<int>,
                     new NCollection_HArray1<double>,
-                    StepGeom_ktUnspecified,
+                    StepGeom_KnotType::StepGeom_ktUnspecified,
                     new NCollection_HArray1<double>);
   addToModel(aFirstCurve);
 
@@ -496,12 +496,12 @@ TEST_F(StepTidy_CartesianPointReducerTest, StepGeom_BSplineCurveWithKnotsAndRati
   aSecondCurve->Init(new TCollection_HAsciiString,
                      1,
                      aSecondControlPoints,
-                     StepGeom_bscfUnspecified,
+                     StepGeom_BSplineCurveForm::StepGeom_bscfUnspecified,
                      StepData_LUnknown,
                      StepData_LUnknown,
                      new NCollection_HArray1<int>,
                      new NCollection_HArray1<double>,
-                     StepGeom_ktUnspecified,
+                     StepGeom_KnotType::StepGeom_ktUnspecified,
                      new NCollection_HArray1<double>);
   addToModel(aSecondCurve);
 
@@ -531,7 +531,7 @@ TEST_F(StepTidy_CartesianPointReducerTest,
     1,
     1,
     new NCollection_HArray2<occ::handle<StepGeom_CartesianPoint>>(1, 1, 1, 1),
-    StepGeom_bssfUnspecified,
+    StepGeom_BSplineSurfaceForm::StepGeom_bssfUnspecified,
     StepData_LUnknown,
     StepData_LUnknown,
     StepData_LUnknown,
@@ -546,7 +546,7 @@ TEST_F(StepTidy_CartesianPointReducerTest,
                     1,
                     1,
                     aFirstControlPoints,
-                    StepGeom_bssfUnspecified,
+                    StepGeom_BSplineSurfaceForm::StepGeom_bssfUnspecified,
                     StepData_LUnknown,
                     StepData_LUnknown,
                     StepData_LUnknown,
@@ -554,7 +554,7 @@ TEST_F(StepTidy_CartesianPointReducerTest,
                     new NCollection_HArray1<int>,
                     new NCollection_HArray1<double>,
                     new NCollection_HArray1<double>,
-                    StepGeom_ktUnspecified);
+                    StepGeom_KnotType::StepGeom_ktUnspecified);
   addToModel(aFirstBSSWN);
   occ::handle<StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface> aFirstSurface =
     new StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface;
@@ -562,7 +562,7 @@ TEST_F(StepTidy_CartesianPointReducerTest,
                       1,
                       1,
                       aFirstControlPoints,
-                      StepGeom_bssfUnspecified,
+                      StepGeom_BSplineSurfaceForm::StepGeom_bssfUnspecified,
                       StepData_LUnknown,
                       StepData_LUnknown,
                       StepData_LUnknown,
@@ -579,7 +579,7 @@ TEST_F(StepTidy_CartesianPointReducerTest,
                      1,
                      1,
                      aSecondControlPoints,
-                     StepGeom_bssfUnspecified,
+                     StepGeom_BSplineSurfaceForm::StepGeom_bssfUnspecified,
                      StepData_LUnknown,
                      StepData_LUnknown,
                      StepData_LUnknown,
@@ -587,7 +587,7 @@ TEST_F(StepTidy_CartesianPointReducerTest,
                      new NCollection_HArray1<int>,
                      new NCollection_HArray1<double>,
                      new NCollection_HArray1<double>,
-                     StepGeom_ktUnspecified);
+                     StepGeom_KnotType::StepGeom_ktUnspecified);
   addToModel(aSecondBSSWN);
   occ::handle<StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface> aSecondSurface =
     new StepGeom_BSplineSurfaceWithKnotsAndRationalBSplineSurface;
@@ -595,7 +595,7 @@ TEST_F(StepTidy_CartesianPointReducerTest,
                        1,
                        1,
                        aSecondControlPoints,
-                       StepGeom_bssfUnspecified,
+                       StepGeom_BSplineSurfaceForm::StepGeom_bssfUnspecified,
                        StepData_LUnknown,
                        StepData_LUnknown,
                        StepData_LUnknown,

@@ -139,11 +139,11 @@ IGESData_DirChecker IGESDimen_ToolDimensionTolerance::DirChecker(
   const occ::handle<IGESDimen_DimensionTolerance>& /*ent*/) const
 {
   IGESData_DirChecker DC(406, 29);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefVoid);
   DC.BlankStatusIgnored();
   DC.SubordinateStatusRequired(2);
   DC.UseFlagRequired(2);

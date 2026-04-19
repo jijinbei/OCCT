@@ -106,7 +106,7 @@ IGESData_DirChecker IGESDimen_ToolBasicDimension::DirChecker(
   const occ::handle<IGESDimen_BasicDimension>& /* ent */) const
 {
   IGESData_DirChecker DC(406, 31); // Type = 406, Form = 31
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.SubordinateStatusRequired(01);

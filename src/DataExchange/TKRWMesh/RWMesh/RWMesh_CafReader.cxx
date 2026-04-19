@@ -224,11 +224,11 @@ void RWMesh_CafReader::setShapeStyle(const CafDocumentTools& theTools,
 {
   if (theStyle.IsSetColorSurf())
   {
-    theTools.ColorTool->SetColor(theLabel, theStyle.GetColorSurfRGBA(), XCAFDoc_ColorSurf);
+    theTools.ColorTool->SetColor(theLabel, theStyle.GetColorSurfRGBA(), XCAFDoc_ColorType::XCAFDoc_ColorSurf);
   }
   if (theStyle.IsSetColorCurv())
   {
-    theTools.ColorTool->SetColor(theLabel, theStyle.GetColorCurv(), XCAFDoc_ColorCurv);
+    theTools.ColorTool->SetColor(theLabel, theStyle.GetColorCurv(), XCAFDoc_ColorType::XCAFDoc_ColorCurv);
   }
   if (!theStyle.Material().IsNull())
   {

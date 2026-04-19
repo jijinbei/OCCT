@@ -14,7 +14,7 @@
 #ifndef _StepElement_EnumeratedSurfaceElementPurpose_HeaderFile
 #define _StepElement_EnumeratedSurfaceElementPurpose_HeaderFile
 
-enum StepElement_EnumeratedSurfaceElementPurpose
+enum class StepElement_EnumeratedSurfaceElementPurpose
 {
   StepElement_MembraneDirect,
   StepElement_MembraneShear,

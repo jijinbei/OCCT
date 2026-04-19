@@ -17,7 +17,7 @@
 #ifndef _StepVisual_SurfaceSide_HeaderFile
 #define _StepVisual_SurfaceSide_HeaderFile
 
-enum StepVisual_SurfaceSide
+enum class StepVisual_SurfaceSide
 {
   StepVisual_ssNegative,
   StepVisual_ssPositive,

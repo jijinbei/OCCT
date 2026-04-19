@@ -99,7 +99,7 @@ IGESData_DirChecker IGESAppli_ToolLevelFunction::DirChecker(
   const occ::handle<IGESAppli_LevelFunction>& /* ent */) const
 {
   IGESData_DirChecker DC(406, 3); // Form no = 3 & Type = 406
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.UseFlagIgnored();

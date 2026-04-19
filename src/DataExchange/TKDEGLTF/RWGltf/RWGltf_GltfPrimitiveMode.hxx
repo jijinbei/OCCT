@@ -17,7 +17,7 @@
 
 //! Low-level glTF enumeration defining Primitive type.
 //! Similar to Graphic3d_TypeOfData but does not define actual type and includes matrices.
-enum RWGltf_GltfPrimitiveMode
+enum class RWGltf_GltfPrimitiveMode
 {
   RWGltf_GltfPrimitiveMode_UNKNOWN       = -1, //!< unknown or invalid type
   RWGltf_GltfPrimitiveMode_Points        = 0,  //!< GL_POINTS

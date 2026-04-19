@@ -17,7 +17,7 @@
 #ifndef _StepToTopoDS_BuilderError_HeaderFile
 #define _StepToTopoDS_BuilderError_HeaderFile
 
-enum StepToTopoDS_BuilderError
+enum class StepToTopoDS_BuilderError
 {
   StepToTopoDS_BuilderDone,
   StepToTopoDS_BuilderOther

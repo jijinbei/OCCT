@@ -107,10 +107,10 @@ IGESData_DirChecker IGESGeom_ToolCircularArc::DirChecker(
   const occ::handle<IGESGeom_CircularArc>& /* ent */) const
 {
   IGESData_DirChecker DC(100, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }

@@ -86,10 +86,10 @@ void IGESAppli_ToolNode::OwnCopy(const occ::handle<IGESAppli_Node>& another,
 IGESData_DirChecker IGESAppli_ToolNode::DirChecker(const occ::handle<IGESAppli_Node>& /*ent*/) const
 {
   IGESData_DirChecker DC(134, 0); // Form no = 0 & Type = 134
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.UseFlagRequired(04);
   return DC;
 }

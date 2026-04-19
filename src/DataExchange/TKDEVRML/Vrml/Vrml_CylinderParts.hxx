@@ -17,7 +17,7 @@
 #ifndef _Vrml_CylinderParts_HeaderFile
 #define _Vrml_CylinderParts_HeaderFile
 
-enum Vrml_CylinderParts
+enum class Vrml_CylinderParts
 {
   Vrml_CylinderSIDES,
   Vrml_CylinderTOP,

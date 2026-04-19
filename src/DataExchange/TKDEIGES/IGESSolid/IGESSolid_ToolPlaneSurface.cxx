@@ -55,19 +55,19 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
     Message_Msg Msg174("XSTEP_174");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg174.Arg(Msg216.Value());
         PR.SendFail(Msg174);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg174.Arg(Msg217.Value());
         PR.SendFail(Msg174);
         break;
       }
-      case IGESData_TypeError: {
+      case IGESData_Status::IGESData_TypeError: {
         Message_Msg Msg218("IGES_218");
         Msg174.Arg(Msg218.Value());
         PR.SendFail(Msg174);
@@ -86,19 +86,19 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
     Message_Msg Msg175("XSTEP_175");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg175.Arg(Msg216.Value());
         PR.SendFail(Msg175);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg175.Arg(Msg217.Value());
         PR.SendFail(Msg175);
         break;
       }
-      case IGESData_TypeError: {
+      case IGESData_Status::IGESData_TypeError: {
         Message_Msg Msg218("IGES_218");
         Msg175.Arg(Msg218.Value());
         PR.SendFail(Msg175);
@@ -120,19 +120,19 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
       Message_Msg Msg176("XSTEP_176");
       switch (aStatus)
       {
-        case IGESData_ReferenceError: {
+        case IGESData_Status::IGESData_ReferenceError: {
           Message_Msg Msg216("IGES_216");
           Msg176.Arg(Msg216.Value());
           PR.SendFail(Msg176);
           break;
         }
-        case IGESData_EntityError: {
+        case IGESData_Status::IGESData_EntityError: {
           Message_Msg Msg217("IGES_217");
           Msg176.Arg(Msg217.Value());
           PR.SendFail(Msg176);
           break;
         }
-        case IGESData_TypeError: {
+        case IGESData_Status::IGESData_TypeError: {
           Message_Msg Msg218("IGES_218");
           Msg176.Arg(Msg218.Value());
           PR.SendFail(Msg176);
@@ -199,9 +199,9 @@ IGESData_DirChecker IGESSolid_ToolPlaneSurface::DirChecker(
 {
   IGESData_DirChecker DC(190, 0, 1);
 
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
 
   DC.BlankStatusIgnored();
   DC.HierarchyStatusIgnored();

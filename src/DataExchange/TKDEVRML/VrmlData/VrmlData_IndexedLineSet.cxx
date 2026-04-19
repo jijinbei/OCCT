@@ -151,7 +151,7 @@ VrmlData_ErrorStatus VrmlData_IndexedLineSet::Read(VrmlData_InBuffer& theBuffer)
       break;
   }
   // Read the terminating (closing) brace
-  if (OK(aStatus) || aStatus == VrmlData_EmptyData)
+  if (OK(aStatus) || aStatus == VrmlData_ErrorStatus::VrmlData_EmptyData)
     if (OK(aStatus, readBrace(theBuffer)))
     {
       // Post-processing

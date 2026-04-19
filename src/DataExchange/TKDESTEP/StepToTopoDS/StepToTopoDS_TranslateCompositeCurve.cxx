@@ -122,7 +122,7 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
       TP->AddFail(CC, "Segment has null parent curve");
       return false;
     }
-    isClosed = (ccs->Transition() != StepGeom_tcDiscontinuous);
+    isClosed = (ccs->Transition() != StepGeom_TransitionCode::StepGeom_tcDiscontinuous);
 
     // if segment is itself a composite_curve, translate recursively
     if (crv->IsKind(STANDARD_TYPE(StepGeom_CompositeCurve)))

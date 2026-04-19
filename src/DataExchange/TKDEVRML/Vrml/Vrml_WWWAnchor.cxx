@@ -70,9 +70,9 @@ Standard_OStream& Vrml_WWWAnchor::Print(Standard_OStream& anOStream) const
 
   switch (myMap)
   {
-    case Vrml_MAP_NONE:
+    case Vrml_WWWAnchorMap::Vrml_MAP_NONE:
       break; // anOStream  << "    map\tNONE ";
-    case Vrml_POINT:
+    case Vrml_WWWAnchorMap::Vrml_POINT:
       anOStream << "    map\t\tPOINT\n";
       break;
   }

@@ -45,7 +45,7 @@ IMPLEMENT_STANDARD_RTTIEXT(VrmlData_IndexedFaceSet, VrmlData_Faceted)
 
 VrmlData_ErrorStatus VrmlData_Faceted::readData(VrmlData_InBuffer& theBuffer)
 {
-  VrmlData_ErrorStatus aStatus(VrmlData_EmptyData);
+  VrmlData_ErrorStatus aStatus(VrmlData_ErrorStatus::VrmlData_EmptyData);
   bool                 aBool;
   if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "ccw"))
   {
@@ -68,7 +68,7 @@ VrmlData_ErrorStatus VrmlData_Faceted::readData(VrmlData_InBuffer& theBuffer)
     if (OK(aStatus, Scene().ReadReal(theBuffer, anAngle, false, false)))
     {
       if (anAngle < -Precision::Confusion() * 0.001)
-        aStatus = VrmlData_IrrelevantNumber;
+        aStatus = VrmlData_ErrorStatus::VrmlData_IrrelevantNumber;
       else
         myCreaseAngle = anAngle;
     }
@@ -324,7 +324,7 @@ VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Read(VrmlData_InBuffer& theBuffer)
   {
     if (OK(aStatus, VrmlData_Faceted::readData(theBuffer)))
       continue;
-    if (aStatus != VrmlData_EmptyData)
+    if (aStatus != VrmlData_ErrorStatus::VrmlData_EmptyData)
       break;
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "colorPerVertex"))
       aStatus = ReadBoolean(theBuffer, myColorPerVertex);
@@ -381,7 +381,7 @@ VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Read(VrmlData_InBuffer& theBuffer)
       break;
   }
   // Read the terminating (closing) brace
-  if (OK(aStatus) || aStatus == VrmlData_EmptyData)
+  if (OK(aStatus) || aStatus == VrmlData_ErrorStatus::VrmlData_EmptyData)
     if (OK(aStatus, readBrace(theBuffer)))
     {
       // Post-processing
@@ -402,7 +402,7 @@ VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Read(VrmlData_InBuffer& theBuffer)
 //   // This loop searches for any opening bracket.
 //   // Such bracket increments the level counter. A closing bracket decrements
 //   // the counter. The loop terminates when the counter becomes zero.
-//   while ((aStatus = VrmlData_Scene::ReadLine(theBuffer)) == VrmlData_StatusOK)
+//   while ((aStatus = VrmlData_Scene::ReadLine(theBuffer)) == VrmlData_ErrorStatus::VrmlData_StatusOK)
 //   {
 //     int aChar;
 //     while ((aChar = theBuffer.LinePtr[0]) != '\0') {

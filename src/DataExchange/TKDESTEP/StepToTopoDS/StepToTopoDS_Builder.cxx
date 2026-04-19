@@ -109,7 +109,7 @@ static void ResetPreci(occ::handle<StepData_StepModel>& theStepModel,
 //=================================================================================================
 
 StepToTopoDS_Builder::StepToTopoDS_Builder()
-    : myError(StepToTopoDS_BuilderOther)
+    : myError(StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther)
 {
   done = false;
 }
@@ -142,7 +142,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_ManifoldSolidBrep>& 
   if (!myTranShell.IsDone())
   {
     theTP->AddWarning(aShell, " OuterShell from ManifoldSolidBrep not mapped to TopoDS");
-    myError = StepToTopoDS_BuilderOther;
+    myError = StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther;
     done    = false;
     return;
   }
@@ -153,7 +153,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_ManifoldSolidBrep>& 
   aBuilder.MakeSolid(aSolid);
   aBuilder.Add(aSolid, aShape);
   myResult = aSolid;
-  myError  = StepToTopoDS_BuilderDone;
+  myError  = StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone;
   done     = true;
 
   // Get Statistics :
@@ -209,7 +209,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_BrepWithVoids>&   th
   if (!aTranShell.IsDone())
   {
     theTP->AddWarning(aCShell, " OuterShell from BrepWithVoids not mapped to TopoDS");
-    myError = StepToTopoDS_BuilderOther;
+    myError = StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther;
     done    = false;
     return;
   }
@@ -218,7 +218,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_BrepWithVoids>&   th
   aBuilder.MakeSolid(aSolid);
   aBuilder.Add(aSolid, aShape);
   myResult = aSolid;
-  myError  = StepToTopoDS_BuilderDone;
+  myError  = StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone;
   done     = true;
 
   // Voids
@@ -293,7 +293,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FacetedBrep>&     th
   if (!aTranShell.IsDone())
   {
     theTP->AddWarning(aCShell, " OuterShell from FacetedBrep not mapped to TopoDS");
-    myError = StepToTopoDS_BuilderOther;
+    myError = StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther;
     done    = false;
     return;
   }
@@ -306,7 +306,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FacetedBrep>&     th
   aBuilder.MakeSolid(aSolid);
   aBuilder.Add(aSolid, aShape);
   myResult = aSolid;
-  myError  = StepToTopoDS_BuilderDone;
+  myError  = StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone;
   done     = true;
 }
 
@@ -341,7 +341,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FacetedBrepAndBrepWi
   {
     theTP->AddWarning(aCShell, " OuterShell from FacetedBrepAndBrepWithVoids not mapped to TopoDS");
     done    = false;
-    myError = StepToTopoDS_BuilderOther;
+    myError = StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther;
     return;
   }
   TopoDS_Shape aShape = aTranShell.Value();
@@ -370,7 +370,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FacetedBrepAndBrepWi
     }
   }
   myResult = aSolid;
-  myError  = StepToTopoDS_BuilderDone;
+  myError  = StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone;
   done     = true;
 }
 
@@ -451,7 +451,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_ShellBasedSurfaceMod
     myResult = S;
   else
     myResult = Shl;
-  myError = StepToTopoDS_BuilderDone;
+  myError = StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone;
   done    = true;
 
   // Get Statistics :
@@ -543,7 +543,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_EdgeBasedWireframeMo
       myResult = C;
   }
 
-  myError = (myResult.IsNull() ? StepToTopoDS_BuilderDone : StepToTopoDS_BuilderOther);
+  myError = (myResult.IsNull() ? StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone : StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther);
   done    = !myResult.IsNull();
 
   occ::handle<StepData_StepModel> aStepModel = occ::down_cast<StepData_StepModel>(TP->Model());
@@ -620,7 +620,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FaceBasedSurfaceMode
       myResult = C;
   }
 
-  myError = (myResult.IsNull() ? StepToTopoDS_BuilderDone : StepToTopoDS_BuilderOther);
+  myError = (myResult.IsNull() ? StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone : StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther);
   done    = !myResult.IsNull();
 
   occ::handle<StepData_StepModel> aStepModel = occ::down_cast<StepData_StepModel>(TP->Model());
@@ -834,7 +834,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_GeometricSet>&    GC
       TP->AddWarning(ent, " Entity not mapped to TopoDS");
   }
   myResult = S;
-  myError  = StepToTopoDS_BuilderDone;
+  myError  = StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone;
   done     = true;
 }
 
@@ -872,13 +872,13 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepVisual_TessellatedSolid>& 
   if (!aTranSolid.IsDone())
   {
     theTP->AddWarning(theTSo, " TessellatedSolid not mapped to TopoDS");
-    myError = StepToTopoDS_BuilderOther;
+    myError = StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther;
     done    = false;
     return;
   }
   TopoDS_Shape aS = aTranSolid.Value();
   myResult        = TopoDS::Solid(aS);
-  myError         = StepToTopoDS_BuilderDone;
+  myError         = StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone;
   done            = true;
 }
 
@@ -913,13 +913,13 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepVisual_TessellatedShell>& 
   if (!aTranShell.IsDone())
   {
     theTP->AddWarning(theTSh, " TessellatedShell not mapped to TopoDS");
-    myError = StepToTopoDS_BuilderOther;
+    myError = StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther;
     done    = false;
     return;
   }
   TopoDS_Shape aS = aTranShell.Value();
   myResult        = TopoDS::Shell(aS);
-  myError         = StepToTopoDS_BuilderDone;
+  myError         = StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone;
   done            = true;
 }
 
@@ -951,13 +951,13 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepVisual_TessellatedFace>& t
   if (!aTranFace.IsDone())
   {
     theTP->AddWarning(theTF, " TessellatedFace not mapped to TopoDS");
-    myError = StepToTopoDS_BuilderOther;
+    myError = StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther;
     done    = false;
     return;
   }
   TopoDS_Shape aS = aTranFace.Value();
   myResult        = TopoDS::Face(aS);
-  myError         = StepToTopoDS_BuilderDone;
+  myError         = StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone;
   done            = true;
 }
 
@@ -985,13 +985,13 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepVisual_TessellatedSurfaceS
   if (!aTranFace.IsDone())
   {
     theTP->AddWarning(theTSS, " TessellatedSurfaceSet not mapped to TopoDS");
-    myError = StepToTopoDS_BuilderOther;
+    myError = StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther;
     done    = false;
     return;
   }
   TopoDS_Shape aS = aTranFace.Value();
   myResult        = TopoDS::Face(aS);
-  myError         = StepToTopoDS_BuilderDone;
+  myError         = StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone;
   done            = true;
 }
 

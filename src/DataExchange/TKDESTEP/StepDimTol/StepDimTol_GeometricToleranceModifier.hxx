@@ -16,7 +16,7 @@
 #ifndef _StepDimTol_GeometricToleranceModifier_HeaderFile
 #define _StepDimTol_GeometricToleranceModifier_HeaderFile
 
-enum StepDimTol_GeometricToleranceModifier
+enum class StepDimTol_GeometricToleranceModifier
 {
   StepDimTol_GTMAnyCrossSection,
   StepDimTol_GTMCommonZone,

@@ -43,37 +43,37 @@ inline const char* ConvertToString(const StepBasic_SiPrefix theSourceEnum)
 {
   switch (theSourceEnum)
   {
-    case StepBasic_spExa:
+    case StepBasic_SiPrefix::StepBasic_spExa:
       return spExa;
-    case StepBasic_spPico:
+    case StepBasic_SiPrefix::StepBasic_spPico:
       return spPico;
-    case StepBasic_spMega:
+    case StepBasic_SiPrefix::StepBasic_spMega:
       return spMega;
-    case StepBasic_spFemto:
+    case StepBasic_SiPrefix::StepBasic_spFemto:
       return spFemto;
-    case StepBasic_spAtto:
+    case StepBasic_SiPrefix::StepBasic_spAtto:
       return spAtto;
-    case StepBasic_spCenti:
+    case StepBasic_SiPrefix::StepBasic_spCenti:
       return spCenti;
-    case StepBasic_spNano:
+    case StepBasic_SiPrefix::StepBasic_spNano:
       return spNano;
-    case StepBasic_spHecto:
+    case StepBasic_SiPrefix::StepBasic_spHecto:
       return spHecto;
-    case StepBasic_spMicro:
+    case StepBasic_SiPrefix::StepBasic_spMicro:
       return spMicro;
-    case StepBasic_spTera:
+    case StepBasic_SiPrefix::StepBasic_spTera:
       return spTera;
-    case StepBasic_spGiga:
+    case StepBasic_SiPrefix::StepBasic_spGiga:
       return spGiga;
-    case StepBasic_spMilli:
+    case StepBasic_SiPrefix::StepBasic_spMilli:
       return spMilli;
-    case StepBasic_spPeta:
+    case StepBasic_SiPrefix::StepBasic_spPeta:
       return spPeta;
-    case StepBasic_spDeci:
+    case StepBasic_SiPrefix::StepBasic_spDeci:
       return spDeci;
-    case StepBasic_spKilo:
+    case StepBasic_SiPrefix::StepBasic_spKilo:
       return spKilo;
-    case StepBasic_spDeca:
+    case StepBasic_SiPrefix::StepBasic_spDeca:
       return spDeca;
   }
   return nullptr; // Default value
@@ -87,67 +87,67 @@ inline bool ConvertToEnum(const char* const thePrefixStr, StepBasic_SiPrefix& th
 {
   if (IsEqual(thePrefixStr, spExa))
   {
-    theResultEnum = StepBasic_spExa;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spExa;
   }
   else if (IsEqual(thePrefixStr, spPico))
   {
-    theResultEnum = StepBasic_spPico;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spPico;
   }
   else if (IsEqual(thePrefixStr, spMega))
   {
-    theResultEnum = StepBasic_spMega;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spMega;
   }
   else if (IsEqual(thePrefixStr, spFemto))
   {
-    theResultEnum = StepBasic_spFemto;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spFemto;
   }
   else if (IsEqual(thePrefixStr, spAtto))
   {
-    theResultEnum = StepBasic_spAtto;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spAtto;
   }
   else if (IsEqual(thePrefixStr, spCenti))
   {
-    theResultEnum = StepBasic_spCenti;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spCenti;
   }
   else if (IsEqual(thePrefixStr, spNano))
   {
-    theResultEnum = StepBasic_spNano;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spNano;
   }
   else if (IsEqual(thePrefixStr, spHecto))
   {
-    theResultEnum = StepBasic_spHecto;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spHecto;
   }
   else if (IsEqual(thePrefixStr, spMicro))
   {
-    theResultEnum = StepBasic_spMicro;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spMicro;
   }
   else if (IsEqual(thePrefixStr, spTera))
   {
-    theResultEnum = StepBasic_spTera;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spTera;
   }
   else if (IsEqual(thePrefixStr, spGiga))
   {
-    theResultEnum = StepBasic_spGiga;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spGiga;
   }
   else if (IsEqual(thePrefixStr, spMilli))
   {
-    theResultEnum = StepBasic_spMilli;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spMilli;
   }
   else if (IsEqual(thePrefixStr, spPeta))
   {
-    theResultEnum = StepBasic_spPeta;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spPeta;
   }
   else if (IsEqual(thePrefixStr, spDeci))
   {
-    theResultEnum = StepBasic_spDeci;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spDeci;
   }
   else if (IsEqual(thePrefixStr, spKilo))
   {
-    theResultEnum = StepBasic_spKilo;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spKilo;
   }
   else if (IsEqual(thePrefixStr, spDeca))
   {
-    theResultEnum = StepBasic_spDeca;
+    theResultEnum = StepBasic_SiPrefix::StepBasic_spDeca;
   }
   else
   {

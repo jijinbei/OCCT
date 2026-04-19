@@ -17,7 +17,7 @@
 #ifndef _StepGeom_KnotType_HeaderFile
 #define _StepGeom_KnotType_HeaderFile
 
-enum StepGeom_KnotType
+enum class StepGeom_KnotType
 {
   StepGeom_ktUniformKnots,
   StepGeom_ktUnspecified,

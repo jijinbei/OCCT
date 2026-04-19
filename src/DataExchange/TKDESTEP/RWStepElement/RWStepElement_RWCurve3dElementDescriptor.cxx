@@ -45,16 +45,16 @@ void RWStepElement_RWCurve3dElementDescriptor::ReadStep(
 
   // Inherited fields of ElementDescriptor
 
-  StepElement_ElementOrder aElementDescriptor_TopologyOrder = StepElement_Linear;
-  if (data->ParamType(num, 1) == Interface_ParamEnum)
+  StepElement_ElementOrder aElementDescriptor_TopologyOrder = StepElement_ElementOrder::StepElement_Linear;
+  if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);
     if (strcmp(text, ".LINEAR.") == 0)
-      aElementDescriptor_TopologyOrder = StepElement_Linear;
+      aElementDescriptor_TopologyOrder = StepElement_ElementOrder::StepElement_Linear;
     else if (strcmp(text, ".QUADRATIC.") == 0)
-      aElementDescriptor_TopologyOrder = StepElement_Quadratic;
+      aElementDescriptor_TopologyOrder = StepElement_ElementOrder::StepElement_Quadratic;
     else if (strcmp(text, ".CUBIC.") == 0)
-      aElementDescriptor_TopologyOrder = StepElement_Cubic;
+      aElementDescriptor_TopologyOrder = StepElement_ElementOrder::StepElement_Cubic;
     else
       ach->AddFail("Parameter #1 (element_descriptor.topology_order) has not allowed value");
   }
@@ -114,13 +114,13 @@ void RWStepElement_RWCurve3dElementDescriptor::WriteStep(
 
   switch (ent->StepElement_ElementDescriptor::TopologyOrder())
   {
-    case StepElement_Linear:
+    case StepElement_ElementOrder::StepElement_Linear:
       SW.SendEnum(".LINEAR.");
       break;
-    case StepElement_Quadratic:
+    case StepElement_ElementOrder::StepElement_Quadratic:
       SW.SendEnum(".QUADRATIC.");
       break;
-    case StepElement_Cubic:
+    case StepElement_ElementOrder::StepElement_Cubic:
       SW.SendEnum(".CUBIC.");
       break;
   }

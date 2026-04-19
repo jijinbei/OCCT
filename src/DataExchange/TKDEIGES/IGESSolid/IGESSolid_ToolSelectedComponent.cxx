@@ -91,10 +91,10 @@ IGESData_DirChecker IGESSolid_ToolSelectedComponent::DirChecker(
 {
   IGESData_DirChecker DC(182, 0);
 
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
 
   DC.BlankStatusIgnored();
   DC.UseFlagRequired(3);

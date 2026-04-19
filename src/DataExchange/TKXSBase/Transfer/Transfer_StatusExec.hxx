@@ -18,7 +18,7 @@
 #define _Transfer_StatusExec_HeaderFile
 
 //! execution status of an individual transfer (see Transcriptor)
-enum Transfer_StatusExec
+enum class Transfer_StatusExec
 {
   Transfer_StatusInitial,
   Transfer_StatusRun,

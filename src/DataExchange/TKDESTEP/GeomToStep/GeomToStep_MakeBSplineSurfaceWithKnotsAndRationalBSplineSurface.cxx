@@ -72,7 +72,7 @@ GeomToStep_MakeBSplineSurfaceWithKnotsAndRationalBSplineSurface::
     }
   }
 
-  aSurfaceForm = StepGeom_bssfUnspecified;
+  aSurfaceForm = StepGeom_BSplineSurfaceForm::StepGeom_bssfUnspecified;
 
   if (BS->IsUClosed())
     aUClosed = StepData_LTrue;
@@ -121,15 +121,15 @@ GeomToStep_MakeBSplineSurfaceWithKnotsAndRationalBSplineSurface::
   UDistribution = BS->UKnotDistribution();
   VDistribution = BS->VKnotDistribution();
   if (UDistribution == GeomAbs_NonUniform && VDistribution == GeomAbs_NonUniform)
-    KnotSpec = StepGeom_ktUnspecified;
+    KnotSpec = StepGeom_KnotType::StepGeom_ktUnspecified;
   else if (UDistribution == GeomAbs_Uniform && VDistribution == GeomAbs_Uniform)
-    KnotSpec = StepGeom_ktUniformKnots;
+    KnotSpec = StepGeom_KnotType::StepGeom_ktUniformKnots;
   else if (UDistribution == GeomAbs_QuasiUniform && VDistribution == GeomAbs_QuasiUniform)
-    KnotSpec = StepGeom_ktQuasiUniformKnots;
+    KnotSpec = StepGeom_KnotType::StepGeom_ktQuasiUniformKnots;
   else if (UDistribution == GeomAbs_PiecewiseBezier && VDistribution == GeomAbs_PiecewiseBezier)
-    KnotSpec = StepGeom_ktPiecewiseBezierKnots;
+    KnotSpec = StepGeom_KnotType::StepGeom_ktPiecewiseBezierKnots;
   else
-    KnotSpec = StepGeom_ktUnspecified;
+    KnotSpec = StepGeom_KnotType::StepGeom_ktUnspecified;
 
   const NCollection_Array2<double>& W = BS->WeightsArray();
   aWeightsData                        = new NCollection_HArray2<double>(1, NU, 1, NV);

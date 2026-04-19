@@ -64,19 +64,19 @@ void IGESBasic_ToolSingularSubfigure::ReadOwnParams(
     Message_Msg Msg212("XSTEP_212");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg212.Arg(Msg216.Value());
         PR.SendFail(Msg212);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg212.Arg(Msg217.Value());
         PR.SendFail(Msg212);
         break;
       }
-      case IGESData_TypeError: {
+      case IGESData_Status::IGESData_TypeError: {
         Message_Msg Msg218("IGES_218");
         Msg212.Arg(Msg218.Value());
         PR.SendFail(Msg212);
@@ -153,7 +153,7 @@ IGESData_DirChecker IGESBasic_ToolSingularSubfigure::DirChecker(
   const occ::handle<IGESBasic_SingularSubfigure>& ent) const
 {
   IGESData_DirChecker DC(408, 0); // TypeNo. 408, Form no. 0
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   if (ent->HierarchyStatus() == 1)
     DC.GraphicsIgnored(01); // GraphicsIgnored if Hierarchy = 01
   return DC;

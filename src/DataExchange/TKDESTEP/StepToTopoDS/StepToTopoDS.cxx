@@ -23,11 +23,11 @@ occ::handle<TCollection_HAsciiString> StepToTopoDS::DecodeBuilderError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (Error)
   {
-    case StepToTopoDS_BuilderDone: {
+    case StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone: {
       mess = new TCollection_HAsciiString("Builder Done");
       break;
     }
-    case StepToTopoDS_BuilderOther: {
+    case StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther: {
       mess = new TCollection_HAsciiString("Builder Other");
       break;
     }
@@ -41,11 +41,11 @@ occ::handle<TCollection_HAsciiString> StepToTopoDS::DecodeShellError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (Error)
   {
-    case StepToTopoDS_TranslateShellDone: {
+    case StepToTopoDS_TranslateShellError::StepToTopoDS_TranslateShellDone: {
       mess = new TCollection_HAsciiString("Translate Shell Done");
       break;
     }
-    case StepToTopoDS_TranslateShellOther: {
+    case StepToTopoDS_TranslateShellError::StepToTopoDS_TranslateShellOther: {
       mess = new TCollection_HAsciiString("Translate Shell Other");
       break;
     }
@@ -59,11 +59,11 @@ occ::handle<TCollection_HAsciiString> StepToTopoDS::DecodeFaceError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (Error)
   {
-    case StepToTopoDS_TranslateFaceDone: {
+    case StepToTopoDS_TranslateFaceError::StepToTopoDS_TranslateFaceDone: {
       mess = new TCollection_HAsciiString("Translate Face Done");
       break;
     }
-    case StepToTopoDS_TranslateFaceOther: {
+    case StepToTopoDS_TranslateFaceError::StepToTopoDS_TranslateFaceOther: {
       mess = new TCollection_HAsciiString("Translate Face Other");
       break;
     }
@@ -77,11 +77,11 @@ occ::handle<TCollection_HAsciiString> StepToTopoDS::DecodeEdgeError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (Error)
   {
-    case StepToTopoDS_TranslateEdgeDone: {
+    case StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeDone: {
       mess = new TCollection_HAsciiString("Translate Edge Done");
       break;
     }
-    case StepToTopoDS_TranslateEdgeOther: {
+    case StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeOther: {
       mess = new TCollection_HAsciiString("Translate Edge Other");
       break;
     }
@@ -95,11 +95,11 @@ occ::handle<TCollection_HAsciiString> StepToTopoDS::DecodeVertexError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (Error)
   {
-    case StepToTopoDS_TranslateVertexDone: {
+    case StepToTopoDS_TranslateVertexError::StepToTopoDS_TranslateVertexDone: {
       mess = new TCollection_HAsciiString("Translate Vertex Done");
       break;
     }
-    case StepToTopoDS_TranslateVertexOther: {
+    case StepToTopoDS_TranslateVertexError::StepToTopoDS_TranslateVertexOther: {
       mess = new TCollection_HAsciiString("Translate Vertex Other");
       break;
     }
@@ -113,11 +113,11 @@ occ::handle<TCollection_HAsciiString> StepToTopoDS::DecodeVertexLoopError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (Error)
   {
-    case StepToTopoDS_TranslateVertexLoopDone: {
+    case StepToTopoDS_TranslateVertexLoopError::StepToTopoDS_TranslateVertexLoopDone: {
       mess = new TCollection_HAsciiString("Translate VertexLoop Done");
       break;
     }
-    case StepToTopoDS_TranslateVertexLoopOther: {
+    case StepToTopoDS_TranslateVertexLoopError::StepToTopoDS_TranslateVertexLoopOther: {
       mess = new TCollection_HAsciiString("Translate VertexLoop Other");
       break;
     }
@@ -131,11 +131,11 @@ occ::handle<TCollection_HAsciiString> StepToTopoDS::DecodePolyLoopError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (Error)
   {
-    case StepToTopoDS_TranslatePolyLoopDone: {
+    case StepToTopoDS_TranslatePolyLoopError::StepToTopoDS_TranslatePolyLoopDone: {
       mess = new TCollection_HAsciiString("Translate PolyLoop Done");
       break;
     }
-    case StepToTopoDS_TranslatePolyLoopOther: {
+    case StepToTopoDS_TranslatePolyLoopError::StepToTopoDS_TranslatePolyLoopOther: {
       mess = new TCollection_HAsciiString("Translate PolyLoop Other");
       break;
     }
@@ -148,28 +148,28 @@ const char* StepToTopoDS::DecodeGeometricToolError(const StepToTopoDS_GeometricT
   const char* mess = "";
   switch (Error)
   {
-    case StepToTopoDS_GeometricToolDone: {
+    case StepToTopoDS_GeometricToolError::StepToTopoDS_GeometricToolDone: {
       mess = static_cast<const char*>(" Geometric Tool is done");
       break;
     }
-    case StepToTopoDS_GeometricToolIsDegenerated: {
+    case StepToTopoDS_GeometricToolError::StepToTopoDS_GeometricToolIsDegenerated: {
       mess = static_cast<const char*>(" an Edge is degenerated");
       break;
     }
-    case StepToTopoDS_GeometricToolHasNoPCurve: {
+    case StepToTopoDS_GeometricToolError::StepToTopoDS_GeometricToolHasNoPCurve: {
       mess = static_cast<const char*>(
         " SurfaceCurve does not contain a PCurve lying on the BasisSurface");
       break;
     }
-    case StepToTopoDS_GeometricToolWrong3dParameters: {
+    case StepToTopoDS_GeometricToolError::StepToTopoDS_GeometricToolWrong3dParameters: {
       mess = static_cast<const char*>(" the update of 3D-Parameters failed");
       break;
     }
-    case StepToTopoDS_GeometricToolNoProjectiOnCurve: {
+    case StepToTopoDS_GeometricToolError::StepToTopoDS_GeometricToolNoProjectiOnCurve: {
       mess = static_cast<const char*>(" the projection of a VertexPoint on the curve3d failed");
       break;
     }
-    case StepToTopoDS_GeometricToolOther: {
+    case StepToTopoDS_GeometricToolError::StepToTopoDS_GeometricToolOther: {
       mess = static_cast<const char*>(" GeometricTool failed");
       break;
     }

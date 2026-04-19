@@ -69,8 +69,8 @@ void RWStepGeom_RWSeamCurve::ReadStep(const occ::handle<StepData_StepReaderData>
 
   // --- inherited field : masterRepresentation ---
 
-  StepGeom_PreferredSurfaceCurveRepresentation aMasterRepresentation = StepGeom_pscrCurve3d;
-  if (data->ParamType(num, 4) == Interface_ParamEnum)
+  StepGeom_PreferredSurfaceCurveRepresentation aMasterRepresentation = StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d;
+  if (data->ParamType(num, 4) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 4);
     if (!RWStepGeom_RWPreferredSurfaceCurveRepresentation::ConvertToEnum(text,

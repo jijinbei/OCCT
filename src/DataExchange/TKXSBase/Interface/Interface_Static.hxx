@@ -68,7 +68,7 @@ public:
   //! begin as "not set", its value is empty
   Standard_EXPORT Interface_Static(const char* const         family,
                                    const char* const         name,
-                                   const Interface_ParamType type = Interface_ParamText,
+                                   const Interface_ParamType type = Interface_ParamType::Interface_ParamText,
                                    const char* const         init = "");
 
   //! Creates a new Static with same definition as another one

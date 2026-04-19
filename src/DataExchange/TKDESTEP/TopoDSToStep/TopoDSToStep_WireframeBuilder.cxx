@@ -54,7 +54,7 @@
 //=================================================================================================
 
 TopoDSToStep_WireframeBuilder::TopoDSToStep_WireframeBuilder()
-    : myError(TopoDSToStep_BuilderOther)
+    : myError(TopoDSToStep_BuilderError::TopoDSToStep_BuilderOther)
 {
   done = false;
 }
@@ -128,7 +128,7 @@ static occ::handle<StepGeom_TrimmedCurve> MakeTrimmedCurve(
 
   occ::handle<TCollection_HAsciiString> empty = new TCollection_HAsciiString("");
   occ::handle<StepGeom_TrimmedCurve>    pmsTC = new StepGeom_TrimmedCurve;
-  pmsTC->Init(empty, C, aSTS1, aSTS2, sense, StepGeom_tpParameter);
+  pmsTC->Init(empty, C, aSTS1, aSTS2, sense, StepGeom_TrimmingPreference::StepGeom_tpParameter);
   return pmsTC;
 }
 

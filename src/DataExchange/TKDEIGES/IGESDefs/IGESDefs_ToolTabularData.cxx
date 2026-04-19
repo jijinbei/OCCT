@@ -108,7 +108,7 @@ void IGESDefs_ToolTabularData::ReadOwnParams(const occ::handle<IGESDefs_TabularD
   int nbd    = 0;
   for (i = curnum; i <= nbpars; i++)
   {
-    if (PR.ParamType(i) != Interface_ParamReal)
+    if (PR.ParamType(i) != Interface_ParamType::Interface_ParamReal)
       break;
     nbd = i - curnum + 1;
   }
@@ -132,7 +132,7 @@ void IGESDefs_ToolTabularData::ReadOwnParams(const occ::handle<IGESDefs_TabularD
   /*  for (;;) {
       curnum = PR.CurrentNumber();
       if (curnum > PR.NbParams()) break;
-      if (PR.ParamType(curnum) != Interface_ParamReal) break;
+      if (PR.ParamType(curnum) != Interface_ParamType::Interface_ParamReal) break;
       PR.SetCurrentNumber (curnum+1);
     }  */
   PR.AddWarning("Don't know exactly how to read dependent values ...");
@@ -214,10 +214,10 @@ IGESData_DirChecker IGESDefs_ToolTabularData::DirChecker(
   const occ::handle<IGESDefs_TabularData>& /* ent */) const
 {
   IGESData_DirChecker DC(406, 11);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefVoid);
 
   DC.BlankStatusIgnored();
   DC.UseFlagIgnored();

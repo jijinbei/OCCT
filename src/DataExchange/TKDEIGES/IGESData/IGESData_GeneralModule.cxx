@@ -106,17 +106,17 @@ void IGESData_GeneralModule::CopyCase(const int                              CN,
   // ...                Resume header                ...
   //?  ento->InitTypeAndForm (enfr->TypeNumber(), enfr->FormNumber());ShallowCopy
 
-  if (enfr->DefLineFont() == IGESData_DefReference)
+  if (enfr->DefLineFont() == IGESData_DefType::IGESData_DefReference)
     ento->InitLineFont(GetCasted(IGESData_LineFontEntity, TC.Transferred(enfr->LineFont())));
   else
     ento->InitLineFont(enfr->LineFont(), enfr->RankLineFont());
 
-  if (enfr->DefLevel() == IGESData_DefSeveral)
+  if (enfr->DefLevel() == IGESData_DefList::IGESData_DefSeveral)
     ento->InitLevel(GetCasted(IGESData_LevelListEntity, TC.Transferred(enfr->LevelList())), -1);
   else
     ento->InitLevel(enfr->LevelList(), enfr->Level());
 
-  if (enfr->DefView() != IGESData_DefNone)
+  if (enfr->DefView() != IGESData_DefList::IGESData_DefNone)
     ento->InitView(GetCasted(IGESData_ViewKindEntity, TC.Transferred(enfr->View())));
 
   if (enfr->HasTransf())
@@ -127,7 +127,7 @@ void IGESData_GeneralModule::CopyCase(const int                              CN,
                    enfr->UseFlag(),
                    enfr->HierarchyStatus());
 
-  if (enfr->DefColor() == IGESData_DefReference)
+  if (enfr->DefColor() == IGESData_DefType::IGESData_DefReference)
     ento->InitColor(GetCasted(IGESData_ColorEntity, TC.Transferred(enfr->Color())));
   else
     ento->InitColor(enfr->Color(), enfr->RankColor());

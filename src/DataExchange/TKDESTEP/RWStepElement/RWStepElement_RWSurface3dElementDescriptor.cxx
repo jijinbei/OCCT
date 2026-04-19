@@ -43,16 +43,16 @@ void RWStepElement_RWSurface3dElementDescriptor::ReadStep(
 
   // Inherited fields of ElementDescriptor
 
-  StepElement_ElementOrder aElementDescriptor_TopologyOrder = StepElement_Linear;
-  if (data->ParamType(num, 1) == Interface_ParamEnum)
+  StepElement_ElementOrder aElementDescriptor_TopologyOrder = StepElement_ElementOrder::StepElement_Linear;
+  if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);
     if (!strcmp(text, ".LINEAR."))
-      aElementDescriptor_TopologyOrder = StepElement_Linear;
+      aElementDescriptor_TopologyOrder = StepElement_ElementOrder::StepElement_Linear;
     else if (!strcmp(text, ".QUADRATIC."))
-      aElementDescriptor_TopologyOrder = StepElement_Quadratic;
+      aElementDescriptor_TopologyOrder = StepElement_ElementOrder::StepElement_Quadratic;
     else if (!strcmp(text, ".CUBIC."))
-      aElementDescriptor_TopologyOrder = StepElement_Cubic;
+      aElementDescriptor_TopologyOrder = StepElement_ElementOrder::StepElement_Cubic;
     else
       ach->AddFail("Parameter #1 (element_descriptor.topology_order) has not allowed value");
   }
@@ -97,14 +97,14 @@ void RWStepElement_RWSurface3dElementDescriptor::ReadStep(
     }
   }
 
-  StepElement_Element2dShape aShape = StepElement_Quadrilateral;
-  if (data->ParamType(num, 4) == Interface_ParamEnum)
+  StepElement_Element2dShape aShape = StepElement_Element2dShape::StepElement_Quadrilateral;
+  if (data->ParamType(num, 4) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 4);
     if (!strcmp(text, ".QUADRILATERAL."))
-      aShape = StepElement_Quadrilateral;
+      aShape = StepElement_Element2dShape::StepElement_Quadrilateral;
     else if (!strcmp(text, ".TRIANGLE."))
-      aShape = StepElement_Triangle;
+      aShape = StepElement_Element2dShape::StepElement_Triangle;
     else
       ach->AddFail("Parameter #4 (shape) has not allowed value");
   }
@@ -126,13 +126,13 @@ void RWStepElement_RWSurface3dElementDescriptor::WriteStep(
 
   switch (ent->StepElement_ElementDescriptor::TopologyOrder())
   {
-    case StepElement_Linear:
+    case StepElement_ElementOrder::StepElement_Linear:
       SW.SendEnum(".LINEAR.");
       break;
-    case StepElement_Quadratic:
+    case StepElement_ElementOrder::StepElement_Quadratic:
       SW.SendEnum(".QUADRATIC.");
       break;
-    case StepElement_Cubic:
+    case StepElement_ElementOrder::StepElement_Cubic:
       SW.SendEnum(".CUBIC.");
       break;
   }
@@ -159,10 +159,10 @@ void RWStepElement_RWSurface3dElementDescriptor::WriteStep(
 
   switch (ent->Shape())
   {
-    case StepElement_Quadrilateral:
+    case StepElement_Element2dShape::StepElement_Quadrilateral:
       SW.SendEnum(".QUADRILATERAL.");
       break;
-    case StepElement_Triangle:
+    case StepElement_Element2dShape::StepElement_Triangle:
       SW.SendEnum(".TRIANGLE.");
       break;
   }

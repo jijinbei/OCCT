@@ -42,16 +42,16 @@ static XCAFPrs_Style mergedStyle(const occ::handle<XCAFDoc_ColorTool>&       the
     aStyle.SetMaterial(aVisMat);
   }
   Quantity_ColorRGBA aColor;
-  if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorGen, aColor))
+  if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorType::XCAFDoc_ColorGen, aColor))
   {
     aStyle.SetColorCurv(aColor.GetRGB());
     aStyle.SetColorSurf(aColor);
   }
-  if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorSurf, aColor))
+  if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorType::XCAFDoc_ColorSurf, aColor))
   {
     aStyle.SetColorSurf(aColor);
   }
-  if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorCurv, aColor))
+  if (theColorTool->GetColor(theRefLabel, XCAFDoc_ColorType::XCAFDoc_ColorCurv, aColor))
   {
     aStyle.SetColorCurv(aColor.GetRGB());
   }
@@ -63,16 +63,16 @@ static XCAFPrs_Style mergedStyle(const occ::handle<XCAFDoc_ColorTool>&       the
     {
       aStyle.SetMaterial(aVisMat);
     }
-    if (theColorTool->GetColor(theLabel, XCAFDoc_ColorGen, aColor))
+    if (theColorTool->GetColor(theLabel, XCAFDoc_ColorType::XCAFDoc_ColorGen, aColor))
     {
       aStyle.SetColorCurv(aColor.GetRGB());
       aStyle.SetColorSurf(aColor);
     }
-    if (theColorTool->GetColor(theLabel, XCAFDoc_ColorSurf, aColor))
+    if (theColorTool->GetColor(theLabel, XCAFDoc_ColorType::XCAFDoc_ColorSurf, aColor))
     {
       aStyle.SetColorSurf(aColor);
     }
-    if (theColorTool->GetColor(theLabel, XCAFDoc_ColorCurv, aColor))
+    if (theColorTool->GetColor(theLabel, XCAFDoc_ColorType::XCAFDoc_ColorCurv, aColor))
     {
       aStyle.SetColorCurv(aColor.GetRGB());
     }

@@ -18,7 +18,7 @@
 
 Interface_FileParameter::Interface_FileParameter()
 {
-  thetype = Interface_ParamMisc;
+  thetype = Interface_ParamType::Interface_ParamMisc;
   thenum  = 0;
 }
 

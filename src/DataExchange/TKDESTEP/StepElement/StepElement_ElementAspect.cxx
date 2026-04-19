@@ -89,21 +89,21 @@ StepElement_ElementVolume StepElement_ElementAspect::ElementVolume() const
   occ::handle<StepElement_ElementAspectMember> SelMem =
     occ::down_cast<StepElement_ElementAspectMember>(Value());
   if (SelMem.IsNull())
-    return StepElement_Volume;
+    return StepElement_ElementVolume::StepElement_Volume;
   occ::handle<TCollection_HAsciiString> name = new TCollection_HAsciiString;
   name->AssignCat(SelMem->Name());
   occ::handle<TCollection_HAsciiString> nameitem = new TCollection_HAsciiString("ELEMENT_VOLUME");
   if (name->IsDifferent(nameitem))
-    return StepElement_Volume;
+    return StepElement_ElementVolume::StepElement_Volume;
   int                       numit = SelMem->Enum();
   StepElement_ElementVolume val;
   switch (numit)
   {
     case 1:
-      val = StepElement_Volume;
+      val = StepElement_ElementVolume::StepElement_Volume;
       break;
     default:
-      return StepElement_Volume;
+      return StepElement_ElementVolume::StepElement_Volume;
       break;
   }
   return val;
@@ -369,21 +369,21 @@ StepElement_CurveEdge StepElement_ElementAspect::CurveEdge() const
   occ::handle<StepElement_ElementAspectMember> SelMem =
     occ::down_cast<StepElement_ElementAspectMember>(Value());
   if (SelMem.IsNull())
-    return StepElement_ElementEdge;
+    return StepElement_CurveEdge::StepElement_ElementEdge;
   occ::handle<TCollection_HAsciiString> name = new TCollection_HAsciiString;
   name->AssignCat(SelMem->Name());
   occ::handle<TCollection_HAsciiString> nameitem = new TCollection_HAsciiString("CURVE_EDGE");
   if (name->IsDifferent(nameitem))
-    return StepElement_ElementEdge;
+    return StepElement_CurveEdge::StepElement_ElementEdge;
   int                   numit = SelMem->Enum();
   StepElement_CurveEdge val;
   switch (numit)
   {
     case 1:
-      val = StepElement_ElementEdge;
+      val = StepElement_CurveEdge::StepElement_ElementEdge;
       break;
     default:
-      return StepElement_ElementEdge;
+      return StepElement_CurveEdge::StepElement_ElementEdge;
       break;
   }
   return val;

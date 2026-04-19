@@ -46,7 +46,7 @@ int StepBasic_SizeSelect::CaseMem(const occ::handle<StepData_SelectMember>& ent)
     return 0;
   // skl  Interface_ParamType type = ent->ParamType();
   //  Void : on admet "non defini" (en principe, on ne devrait pas)
-  // skl  if (type != Interface_ParamVoid && type != Interface_ParamReal) return 0;
+  // skl  if (type != Interface_ParamType::Interface_ParamVoid && type != Interface_ParamType::Interface_ParamReal) return 0;
   if (ent->Matches("POSITIVE_LENGTH_MEASURE"))
     return 1;
   return 0;

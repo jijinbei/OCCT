@@ -150,50 +150,50 @@ IGESSelect_EditHeader::IGESSelect_EditHeader()
   SetValue(7, version, "G6:Version");
 
   occ::handle<Interface_TypedValue> intbits =
-    new Interface_TypedValue("Integer Binary Bits", Interface_ParamInteger);
+    new Interface_TypedValue("Integer Binary Bits", Interface_ParamType::Interface_ParamInteger);
   SetValue(8, intbits, "G7:IntBits");
   occ::handle<Interface_TypedValue> pow10s =
-    new Interface_TypedValue("Single Precision Magnitude", Interface_ParamInteger);
+    new Interface_TypedValue("Single Precision Magnitude", Interface_ParamType::Interface_ParamInteger);
   SetValue(9, pow10s, "G8:SingleMag");
   occ::handle<Interface_TypedValue> dig10s =
-    new Interface_TypedValue("Single Precision Significance", Interface_ParamInteger);
+    new Interface_TypedValue("Single Precision Significance", Interface_ParamType::Interface_ParamInteger);
   SetValue(10, dig10s, "G9:SingDigits");
   occ::handle<Interface_TypedValue> pow10d =
-    new Interface_TypedValue("Double Precision Magnitude", Interface_ParamInteger);
+    new Interface_TypedValue("Double Precision Magnitude", Interface_ParamType::Interface_ParamInteger);
   SetValue(11, pow10d, "G10:DoubleMag");
   occ::handle<Interface_TypedValue> dig10d =
-    new Interface_TypedValue("Double Precision Significance", Interface_ParamInteger);
+    new Interface_TypedValue("Double Precision Significance", Interface_ParamType::Interface_ParamInteger);
   SetValue(12, dig10d, "G11:DoubDigits");
 
   occ::handle<Interface_TypedValue> recname = new Interface_TypedValue("Receiver Product Id");
   SetValue(13, recname, "G12:Receiver", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> scale =
-    new Interface_TypedValue("Model Space Scale", Interface_ParamReal);
+    new Interface_TypedValue("Model Space Scale", Interface_ParamType::Interface_ParamReal);
   SetValue(14, scale, "G13:Scale", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> unitflag =
-    new Interface_TypedValue("Units Flag", Interface_ParamInteger);
+    new Interface_TypedValue("Units Flag", Interface_ParamType::Interface_ParamInteger);
   unitflag->SetIntegerLimit(false, 1);
   unitflag->SetIntegerLimit(true, 11);
   SetValue(15, unitflag, "G14:UnitFlag", IFSelect_Optional);
   //  On prend a la source ...  Mieux vaudrait "recopier" les definitions ...
   occ::handle<Interface_TypedValue> unitname =
-    new Interface_TypedValue("Units Name", Interface_ParamEnum);
+    new Interface_TypedValue("Units Name", Interface_ParamType::Interface_ParamEnum);
   unitname->StartEnum(1);
   for (i = 1; i <= 11; i++)
     unitname->AddEnumValue(IGESData_BasicEditor::UnitFlagName(i), i);
   //  similaire a Interface_Static::Static("XSTEP.iges.unit");
   SetValue(16, unitname, "G15:UnitName", IFSelect_Optional);
   occ::handle<Interface_TypedValue> unitval =
-    new Interface_TypedValue("Computed Unit Value", Interface_ParamReal);
+    new Interface_TypedValue("Computed Unit Value", Interface_ParamType::Interface_ParamReal);
   SetValue(17, unitval, "V15:UnitValue", IFSelect_EditDynamic);
 
   occ::handle<Interface_TypedValue> linwgr =
-    new Interface_TypedValue("Max Line Weight Gradation", Interface_ParamInteger);
+    new Interface_TypedValue("Max Line Weight Gradation", Interface_ParamType::Interface_ParamInteger);
   SetValue(18, linwgr, "G16:LineWGrad", IFSelect_Optional);
   occ::handle<Interface_TypedValue> maxlw =
-    new Interface_TypedValue("Width of Max Line Weight", Interface_ParamReal);
+    new Interface_TypedValue("Width of Max Line Weight", Interface_ParamType::Interface_ParamReal);
   SetValue(19, maxlw, "G17:MaxLineW");
 
   occ::handle<Interface_TypedValue> filedate = new Interface_TypedValue("Date of File Creation");
@@ -201,10 +201,10 @@ IGESSelect_EditHeader::IGESSelect_EditHeader()
   SetValue(20, filedate, "G18:FileDate");
 
   occ::handle<Interface_TypedValue> resol =
-    new Interface_TypedValue("Max Resolution", Interface_ParamReal);
+    new Interface_TypedValue("Max Resolution", Interface_ParamType::Interface_ParamReal);
   SetValue(21, resol, "G19:Resolution");
   occ::handle<Interface_TypedValue> coord =
-    new Interface_TypedValue("Max Coordinates", Interface_ParamReal);
+    new Interface_TypedValue("Max Coordinates", Interface_ParamType::Interface_ParamReal);
   SetValue(22, coord, "G20:MaxCoord", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> author = new Interface_TypedValue("Name of Author");
@@ -213,26 +213,26 @@ IGESSelect_EditHeader::IGESSelect_EditHeader()
   SetValue(24, company, "G22:Company");
 
   occ::handle<Interface_TypedValue> igesvers =
-    new Interface_TypedValue("Version Flag", Interface_ParamInteger);
+    new Interface_TypedValue("Version Flag", Interface_ParamType::Interface_ParamInteger);
   nb = IGESData_BasicEditor::IGESVersionMax();
   igesvers->SetIntegerLimit(false, 1);
   igesvers->SetIntegerLimit(true, nb);
   SetValue(25, igesvers, "G23:IGESVersion");
   occ::handle<Interface_TypedValue> versname =
-    new Interface_TypedValue("IGES Version Name", Interface_ParamEnum);
+    new Interface_TypedValue("IGES Version Name", Interface_ParamType::Interface_ParamEnum);
   versname->StartEnum(0);
   for (i = 0; i <= IGESData_BasicEditor::IGESVersionMax(); i++)
     versname->AddEnumValue(IGESData_BasicEditor::IGESVersionName(i), i);
   SetValue(26, versname, "V23:VersionName");
 
   occ::handle<Interface_TypedValue> draft =
-    new Interface_TypedValue("Drafting Standard Flag", Interface_ParamInteger);
+    new Interface_TypedValue("Drafting Standard Flag", Interface_ParamType::Interface_ParamInteger);
   nb = IGESData_BasicEditor::DraftingMax();
   draft->SetIntegerLimit(false, 0);
   draft->SetIntegerLimit(true, nb);
   SetValue(27, draft, "G24:Drafting");
   occ::handle<Interface_TypedValue> draftname =
-    new Interface_TypedValue("Drafting Standard Name", Interface_ParamEnum);
+    new Interface_TypedValue("Drafting Standard Name", Interface_ParamType::Interface_ParamEnum);
   draftname->StartEnum(0);
   for (i = 0; i <= nb; i++)
     draftname->AddEnumValue(IGESData_BasicEditor::DraftingName(i), i);

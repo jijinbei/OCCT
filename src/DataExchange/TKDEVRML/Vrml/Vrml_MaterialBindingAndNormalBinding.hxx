@@ -17,7 +17,7 @@
 #ifndef _Vrml_MaterialBindingAndNormalBinding_HeaderFile
 #define _Vrml_MaterialBindingAndNormalBinding_HeaderFile
 
-enum Vrml_MaterialBindingAndNormalBinding
+enum class Vrml_MaterialBindingAndNormalBinding
 {
   Vrml_DEFAULT,
   Vrml_OVERALL,

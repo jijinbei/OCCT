@@ -60,21 +60,21 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
   // Own fields of ActuatedKinematicPair
   occ::handle<StepKinematics_ActuatedKinematicPair> anActuatedKinematicPair =
     new StepKinematics_ActuatedKinematicPair;
-  StepKinematics_ActuatedDirection aTX   = StepKinematics_adNotActuated;
+  StepKinematics_ActuatedDirection aTX   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
   bool                             hasTX = true;
   if (theData->IsParamDefined(theNum, 1))
   {
-    if (theData->ParamType(theNum, 1) == Interface_ParamEnum)
+    if (theData->ParamType(theNum, 1) == Interface_ParamType::Interface_ParamEnum)
     {
       const char* text = theData->ParamCValue(theNum, 1);
       if (strcmp(text, ".BIDIRECTIONAL."))
-        aTX = StepKinematics_adBidirectional;
+        aTX = StepKinematics_ActuatedDirection::StepKinematics_adBidirectional;
       else if (strcmp(text, ".POSITIVE_ONLY."))
-        aTX = StepKinematics_adPositiveOnly;
+        aTX = StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly;
       else if (strcmp(text, ".NEGATIVE_ONLY."))
-        aTX = StepKinematics_adNegativeOnly;
+        aTX = StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly;
       else if (strcmp(text, ".NOT_ACTUATED."))
-        aTX = StepKinematics_adNotActuated;
+        aTX = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
       else
         theArch->AddFail("Parameter #1 (t_x) has not allowed value");
     }
@@ -86,21 +86,21 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     hasTX = false;
   }
 
-  StepKinematics_ActuatedDirection aTY   = StepKinematics_adNotActuated;
+  StepKinematics_ActuatedDirection aTY   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
   bool                             hasTY = true;
   if (theData->IsParamDefined(theNum, 2))
   {
-    if (theData->ParamType(theNum, 2) == Interface_ParamEnum)
+    if (theData->ParamType(theNum, 2) == Interface_ParamType::Interface_ParamEnum)
     {
       const char* text = theData->ParamCValue(theNum, 8);
       if (strcmp(text, ".BIDIRECTIONAL."))
-        aTY = StepKinematics_adBidirectional;
+        aTY = StepKinematics_ActuatedDirection::StepKinematics_adBidirectional;
       else if (strcmp(text, ".POSITIVE_ONLY."))
-        aTY = StepKinematics_adPositiveOnly;
+        aTY = StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly;
       else if (strcmp(text, ".NEGATIVE_ONLY."))
-        aTY = StepKinematics_adNegativeOnly;
+        aTY = StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly;
       else if (strcmp(text, ".NOT_ACTUATED."))
-        aTY = StepKinematics_adNotActuated;
+        aTY = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
       else
         theArch->AddFail("Parameter #2 (t_y) has not allowed value");
     }
@@ -112,21 +112,21 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     hasTY = false;
   }
 
-  StepKinematics_ActuatedDirection aTZ   = StepKinematics_adNotActuated;
+  StepKinematics_ActuatedDirection aTZ   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
   bool                             hasTZ = true;
   if (theData->IsParamDefined(theNum, 3))
   {
-    if (theData->ParamType(theNum, 3) == Interface_ParamEnum)
+    if (theData->ParamType(theNum, 3) == Interface_ParamType::Interface_ParamEnum)
     {
       const char* text = theData->ParamCValue(theNum, 9);
       if (strcmp(text, ".BIDIRECTIONAL."))
-        aTZ = StepKinematics_adBidirectional;
+        aTZ = StepKinematics_ActuatedDirection::StepKinematics_adBidirectional;
       else if (strcmp(text, ".POSITIVE_ONLY."))
-        aTZ = StepKinematics_adPositiveOnly;
+        aTZ = StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly;
       else if (strcmp(text, ".NEGATIVE_ONLY."))
-        aTZ = StepKinematics_adNegativeOnly;
+        aTZ = StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly;
       else if (strcmp(text, ".NOT_ACTUATED."))
-        aTZ = StepKinematics_adNotActuated;
+        aTZ = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
       else
         theArch->AddFail("Parameter #3 (t_z) has not allowed value");
     }
@@ -138,21 +138,21 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     hasTZ = false;
   }
 
-  StepKinematics_ActuatedDirection aRX   = StepKinematics_adNotActuated;
+  StepKinematics_ActuatedDirection aRX   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
   bool                             hasRX = true;
   if (theData->IsParamDefined(theNum, 4))
   {
-    if (theData->ParamType(theNum, 4) == Interface_ParamEnum)
+    if (theData->ParamType(theNum, 4) == Interface_ParamType::Interface_ParamEnum)
     {
       const char* text = theData->ParamCValue(theNum, 10);
       if (strcmp(text, ".BIDIRECTIONAL."))
-        aRX = StepKinematics_adBidirectional;
+        aRX = StepKinematics_ActuatedDirection::StepKinematics_adBidirectional;
       else if (strcmp(text, ".POSITIVE_ONLY."))
-        aRX = StepKinematics_adPositiveOnly;
+        aRX = StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly;
       else if (strcmp(text, ".NEGATIVE_ONLY."))
-        aRX = StepKinematics_adNegativeOnly;
+        aRX = StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly;
       else if (strcmp(text, ".NOT_ACTUATED."))
-        aRX = StepKinematics_adNotActuated;
+        aRX = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
       else
         theArch->AddFail("Parameter #14 (r_x) has not allowed value");
     }
@@ -164,21 +164,21 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     hasRX = false;
   }
 
-  StepKinematics_ActuatedDirection aRY   = StepKinematics_adNotActuated;
+  StepKinematics_ActuatedDirection aRY   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
   bool                             hasRY = true;
   if (theData->IsParamDefined(theNum, 5))
   {
-    if (theData->ParamType(theNum, 5) == Interface_ParamEnum)
+    if (theData->ParamType(theNum, 5) == Interface_ParamType::Interface_ParamEnum)
     {
       const char* text = theData->ParamCValue(theNum, 11);
       if (strcmp(text, ".BIDIRECTIONAL."))
-        aRY = StepKinematics_adBidirectional;
+        aRY = StepKinematics_ActuatedDirection::StepKinematics_adBidirectional;
       else if (strcmp(text, ".POSITIVE_ONLY."))
-        aRY = StepKinematics_adPositiveOnly;
+        aRY = StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly;
       else if (strcmp(text, ".NEGATIVE_ONLY."))
-        aRY = StepKinematics_adNegativeOnly;
+        aRY = StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly;
       else if (strcmp(text, ".NOT_ACTUATED."))
-        aRY = StepKinematics_adNotActuated;
+        aRY = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
       else
         theArch->AddFail("Parameter #5 (r_y) has not allowed value");
     }
@@ -190,21 +190,21 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::ReadStep(
     hasRY = false;
   }
 
-  StepKinematics_ActuatedDirection aRZ   = StepKinematics_adNotActuated;
+  StepKinematics_ActuatedDirection aRZ   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
   bool                             hasRZ = true;
   if (theData->IsParamDefined(theNum, 6))
   {
-    if (theData->ParamType(theNum, 6) == Interface_ParamEnum)
+    if (theData->ParamType(theNum, 6) == Interface_ParamType::Interface_ParamEnum)
     {
       const char* text = theData->ParamCValue(theNum, 12);
       if (strcmp(text, ".BIDIRECTIONAL."))
-        aRZ = StepKinematics_adBidirectional;
+        aRZ = StepKinematics_ActuatedDirection::StepKinematics_adBidirectional;
       else if (strcmp(text, ".POSITIVE_ONLY."))
-        aRZ = StepKinematics_adPositiveOnly;
+        aRZ = StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly;
       else if (strcmp(text, ".NEGATIVE_ONLY."))
-        aRZ = StepKinematics_adNegativeOnly;
+        aRZ = StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly;
       else if (strcmp(text, ".NOT_ACTUATED."))
-        aRZ = StepKinematics_adNotActuated;
+        aRZ = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
       else
         theArch->AddFail("Parameter #6 (r_z) has not allowed value");
     }
@@ -2003,16 +2003,16 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
   {
     switch (theEnt->GetActuatedKinematicPair()->TX())
     {
-      case StepKinematics_adBidirectional:
+      case StepKinematics_ActuatedDirection::StepKinematics_adBidirectional:
         theSW.SendEnum(".BIDIRECTIONAL.");
         break;
-      case StepKinematics_adPositiveOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly:
         theSW.SendEnum(".POSITIVE_ONLY.");
         break;
-      case StepKinematics_adNegativeOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly:
         theSW.SendEnum(".NEGATIVE_ONLY.");
         break;
-      case StepKinematics_adNotActuated:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNotActuated:
         theSW.SendEnum(".NOT_ACTUATED.");
         break;
     }
@@ -2024,16 +2024,16 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
   {
     switch (theEnt->GetActuatedKinematicPair()->TY())
     {
-      case StepKinematics_adBidirectional:
+      case StepKinematics_ActuatedDirection::StepKinematics_adBidirectional:
         theSW.SendEnum(".BIDIRECTIONAL.");
         break;
-      case StepKinematics_adPositiveOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly:
         theSW.SendEnum(".POSITIVE_ONLY.");
         break;
-      case StepKinematics_adNegativeOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly:
         theSW.SendEnum(".NEGATIVE_ONLY.");
         break;
-      case StepKinematics_adNotActuated:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNotActuated:
         theSW.SendEnum(".NOT_ACTUATED.");
         break;
     }
@@ -2045,16 +2045,16 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
   {
     switch (theEnt->GetActuatedKinematicPair()->TZ())
     {
-      case StepKinematics_adBidirectional:
+      case StepKinematics_ActuatedDirection::StepKinematics_adBidirectional:
         theSW.SendEnum(".BIDIRECTIONAL.");
         break;
-      case StepKinematics_adPositiveOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly:
         theSW.SendEnum(".POSITIVE_ONLY.");
         break;
-      case StepKinematics_adNegativeOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly:
         theSW.SendEnum(".NEGATIVE_ONLY.");
         break;
-      case StepKinematics_adNotActuated:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNotActuated:
         theSW.SendEnum(".NOT_ACTUATED.");
         break;
     }
@@ -2066,16 +2066,16 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
   {
     switch (theEnt->GetActuatedKinematicPair()->RX())
     {
-      case StepKinematics_adBidirectional:
+      case StepKinematics_ActuatedDirection::StepKinematics_adBidirectional:
         theSW.SendEnum(".BIDIRECTIONAL.");
         break;
-      case StepKinematics_adPositiveOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly:
         theSW.SendEnum(".POSITIVE_ONLY.");
         break;
-      case StepKinematics_adNegativeOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly:
         theSW.SendEnum(".NEGATIVE_ONLY.");
         break;
-      case StepKinematics_adNotActuated:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNotActuated:
         theSW.SendEnum(".NOT_ACTUATED.");
         break;
     }
@@ -2087,16 +2087,16 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
   {
     switch (theEnt->GetActuatedKinematicPair()->RY())
     {
-      case StepKinematics_adBidirectional:
+      case StepKinematics_ActuatedDirection::StepKinematics_adBidirectional:
         theSW.SendEnum(".BIDIRECTIONAL.");
         break;
-      case StepKinematics_adPositiveOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly:
         theSW.SendEnum(".POSITIVE_ONLY.");
         break;
-      case StepKinematics_adNegativeOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly:
         theSW.SendEnum(".NEGATIVE_ONLY.");
         break;
-      case StepKinematics_adNotActuated:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNotActuated:
         theSW.SendEnum(".NOT_ACTUATED.");
         break;
     }
@@ -2108,16 +2108,16 @@ void RWStepKinematics_RWActuatedKinPairAndOrderKinPair::WriteStep(
   {
     switch (theEnt->GetActuatedKinematicPair()->RZ())
     {
-      case StepKinematics_adBidirectional:
+      case StepKinematics_ActuatedDirection::StepKinematics_adBidirectional:
         theSW.SendEnum(".BIDIRECTIONAL.");
         break;
-      case StepKinematics_adPositiveOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adPositiveOnly:
         theSW.SendEnum(".POSITIVE_ONLY.");
         break;
-      case StepKinematics_adNegativeOnly:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNegativeOnly:
         theSW.SendEnum(".NEGATIVE_ONLY.");
         break;
-      case StepKinematics_adNotActuated:
+      case StepKinematics_ActuatedDirection::StepKinematics_adNotActuated:
         theSW.SendEnum(".NOT_ACTUATED.");
         break;
     }

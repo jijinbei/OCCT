@@ -63,13 +63,13 @@ void IGESGeom_ToolCurveOnSurface::ReadOwnParams(const occ::handle<IGESGeom_Curve
     Message_Msg Msg131("XSTEP_131");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg131.Arg(Msg216.Value());
         PR.SendFail(Msg131);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg131.Arg(Msg217.Value());
         PR.SendFail(Msg131);
@@ -85,13 +85,13 @@ void IGESGeom_ToolCurveOnSurface::ReadOwnParams(const occ::handle<IGESGeom_Curve
     Message_Msg Msg132("XSTEP_132");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg132.Arg(Msg216.Value());
         PR.SendFail(Msg132);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg132.Arg(Msg217.Value());
         PR.SendFail(Msg132);
@@ -107,13 +107,13 @@ void IGESGeom_ToolCurveOnSurface::ReadOwnParams(const occ::handle<IGESGeom_Curve
     Message_Msg Msg133("XSTEP_133");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg133.Arg(Msg216.Value());
         PR.SendFail(Msg133);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg133.Arg(Msg217.Value());
         PR.SendFail(Msg133);
@@ -197,10 +197,10 @@ IGESData_DirChecker IGESGeom_ToolCurveOnSurface::DirChecker(
   const occ::handle<IGESGeom_CurveOnSurface>& /* ent */) const
 {
   IGESData_DirChecker DC(142, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
 
   DC.UseFlagRequired(5);
   DC.HierarchyStatusIgnored();

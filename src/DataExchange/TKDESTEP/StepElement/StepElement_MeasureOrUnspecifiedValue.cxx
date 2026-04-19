@@ -111,22 +111,22 @@ StepElement_UnspecifiedValue StepElement_MeasureOrUnspecifiedValue::UnspecifiedV
   occ::handle<StepElement_MeasureOrUnspecifiedValueMember> SelMem =
     occ::down_cast<StepElement_MeasureOrUnspecifiedValueMember>(Value());
   if (SelMem.IsNull())
-    return StepElement_Unspecified;
+    return StepElement_UnspecifiedValue::StepElement_Unspecified;
   occ::handle<TCollection_HAsciiString> name = new TCollection_HAsciiString;
   name->AssignCat(SelMem->Name());
   occ::handle<TCollection_HAsciiString> nameitem =
     new TCollection_HAsciiString("UNSPECIFIED_VALUE");
   if (name->IsDifferent(nameitem))
-    return StepElement_Unspecified;
+    return StepElement_UnspecifiedValue::StepElement_Unspecified;
   int                          numit = SelMem->Enum();
   StepElement_UnspecifiedValue val;
   switch (numit)
   {
     case 1:
-      val = StepElement_Unspecified;
+      val = StepElement_UnspecifiedValue::StepElement_Unspecified;
       break;
     default:
-      return StepElement_Unspecified;
+      return StepElement_UnspecifiedValue::StepElement_Unspecified;
       break;
   }
   return val;

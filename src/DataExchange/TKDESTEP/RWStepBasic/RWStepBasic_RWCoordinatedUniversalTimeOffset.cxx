@@ -57,8 +57,8 @@ void RWStepBasic_RWCoordinatedUniversalTimeOffset::ReadStep(
 
   // --- own field : sense ---
 
-  StepBasic_AheadOrBehind aSense = StepBasic_aobAhead;
-  if (data->ParamType(num, 3) == Interface_ParamEnum)
+  StepBasic_AheadOrBehind aSense = StepBasic_AheadOrBehind::StepBasic_aobAhead;
+  if (data->ParamType(num, 3) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 3);
     if (!RWStepBasic_RWAheadOrBehind::ConvertToEnum(text, aSense))

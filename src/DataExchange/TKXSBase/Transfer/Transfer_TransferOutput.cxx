@@ -34,7 +34,7 @@ Transfer_TransferOutput::Transfer_TransferOutput(
   theproc->SetActor(actor);
   themodel = amodel;
   //  thescope = false;
-  //  theundef = Transfer_UndefIgnore;
+  //  theundef = Transfer_UndefMode::Transfer_UndefIgnore;
 }
 
 Transfer_TransferOutput::Transfer_TransferOutput(
@@ -44,7 +44,7 @@ Transfer_TransferOutput::Transfer_TransferOutput(
   theproc  = proc;
   themodel = amodel;
   //  thescope = false; //szv#4:S4163:12Mar99 initialization needed
-  //  theundef = Transfer_UndefIgnore;
+  //  theundef = Transfer_UndefMode::Transfer_UndefIgnore;
 }
 
 // bool&  Transfer_TransferOutput::ScopeMode ()
@@ -77,10 +77,10 @@ void Transfer_TransferOutput::Transfer(const occ::handle<Standard_Transient>& ob
   //  if ( ! ok ) return;
 
   /*  switch (theundef) {
-      case Transfer_UndefIgnore  : return;
-      case Transfer_UndefFailure : throw Transfer_TransferFailure("TransferOutput : Transfer
-    Undefined as Failure"); case Transfer_UndefContent : break; // on ne sait pas traiter ... case
-    Transfer_UndefUser    : break; // idem
+      case Transfer_UndefMode::Transfer_UndefIgnore  : return;
+      case Transfer_UndefMode::Transfer_UndefFailure : throw Transfer_TransferFailure("TransferOutput : Transfer
+    Undefined as Failure"); case Transfer_UndefMode::Transfer_UndefContent : break; // on ne sait pas traiter ... case
+    Transfer_UndefMode::Transfer_UndefUser    : break; // idem
     }
   */
 }
@@ -143,7 +143,7 @@ Interface_EntityIterator Transfer_TransferOutput::ListForStatus(const bool norma
     if (binder.IsNull())
       continue;
     Transfer_StatusExec statex = binder->StatusExec();
-    bool                ok = (statex == Transfer_StatusInitial || statex == Transfer_StatusDone);
+    bool                ok = (statex == Transfer_StatusExec::Transfer_StatusInitial || statex == Transfer_StatusExec::Transfer_StatusDone);
     if (ok == normal)
       list.AddItem((roots ? theproc->Root(i) : theproc->Mapped(i)));
   }

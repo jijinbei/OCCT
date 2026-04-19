@@ -156,10 +156,10 @@ IGESData_DirChecker IGESGeom_ToolFlash::DirChecker(
   const occ::handle<IGESGeom_Flash>& /* ent */) const
 {
   IGESData_DirChecker DC(125, 0, 4);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefValue);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefValue);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusRequired(0);
   return DC;
 }

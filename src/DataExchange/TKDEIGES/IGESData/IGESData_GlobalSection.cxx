@@ -159,11 +159,11 @@ void IGESData_GlobalSection::Init(const occ::handle<Interface_ParamSet>& params,
     // char message[80]; //szv#4:S4163:12Mar99 unused
     const char*         val = params->Param(i).CValue();
     Interface_ParamType fpt = params->Param(i).ParamType();
-    if (fpt == Interface_ParamVoid)
+    if (fpt == Interface_ParamType::Interface_ParamVoid)
       continue;
 
     // if the param is an Integer
-    if (fpt == Interface_ParamInteger)
+    if (fpt == Interface_ParamType::Interface_ParamInteger)
     {
       // but a real is expected
       if (i == 13 || i == 17 || i == 19 || i == 20)
@@ -172,7 +172,7 @@ void IGESData_GlobalSection::Init(const occ::handle<Interface_ParamSet>& params,
     }
 
     // if the param is a Real
-    else if (fpt == Interface_ParamReal || fpt == Interface_ParamEnum)
+    else if (fpt == Interface_ParamType::Interface_ParamReal || fpt == Interface_ParamType::Interface_ParamEnum)
     {
       char text[50];
       int  k, j = 0;
@@ -189,7 +189,7 @@ void IGESData_GlobalSection::Init(const occ::handle<Interface_ParamSet>& params,
     }
 
     // if the param is a text
-    else if (fpt == Interface_ParamText)
+    else if (fpt == Interface_ParamType::Interface_ParamText)
     {
       strval = new TCollection_HAsciiString(val);
       if (val[0] != '\0')
@@ -385,104 +385,104 @@ occ::handle<Interface_ParamSet> IGESData_GlobalSection::Params() const
   uncar[0]                            = ',';
   occ::handle<Interface_ParamSet> res = new Interface_ParamSet(26); // gka 19.01.99
   if (theSeparator == ',')
-    res->Append(vide, 0, Interface_ParamVoid, 0);
+    res->Append(vide, 0, Interface_ParamType::Interface_ParamVoid, 0);
   else
   {
     uncar[0] = theSeparator;
-    res->Append(uncar, 1, Interface_ParamMisc, 0);
+    res->Append(uncar, 1, Interface_ParamType::Interface_ParamMisc, 0);
   }
 
   if (theEndMark == ';')
-    res->Append(vide, 0, Interface_ParamVoid, 0);
+    res->Append(vide, 0, Interface_ParamType::Interface_ParamVoid, 0);
   else
   {
     uncar[0] = theEndMark;
-    res->Append(uncar, 1, Interface_ParamMisc, 0);
+    res->Append(uncar, 1, Interface_ParamType::Interface_ParamMisc, 0);
   }
 
   MakeHollerith(theSendName, text, lt);
-  res->Append(text, lt, Interface_ParamText, 0);
+  res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
 
   MakeHollerith(theFileName, text, lt);
-  res->Append(text, lt, Interface_ParamText, 0);
+  res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
 
   MakeHollerith(theSystemId, text, lt);
-  res->Append(text, lt, Interface_ParamText, 0);
+  res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
 
   MakeHollerith(theInterfaceVersion, text, lt);
-  res->Append(text, lt, Interface_ParamText, 0);
+  res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
 
   Sprintf(nombre, "%d", theIntegerBits);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamInteger, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamInteger, 0);
 
   Sprintf(nombre, "%d", theMaxPower10Single);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamInteger, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamInteger, 0);
 
   Sprintf(nombre, "%d", theMaxDigitsSingle);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamInteger, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamInteger, 0);
 
   Sprintf(nombre, "%d", theMaxPower10Double);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamInteger, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamInteger, 0);
 
   Sprintf(nombre, "%d", theMaxDigitsDouble);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamInteger, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamInteger, 0);
 
   MakeHollerith(theReceiveName, text, lt);
-  res->Append(text, lt, Interface_ParamText, 0);
+  res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
 
   Interface_FloatWriter::Convert(theScale, nombre, true, 0., 0., "%f", "%f");
   //  Sprintf(nombre,"%f",theScale);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamReal, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamReal, 0);
 
   Sprintf(nombre, "%d", theUnitFlag);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamInteger, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamInteger, 0);
 
   MakeHollerith(theUnitName, text, lt);
-  res->Append(text, lt, Interface_ParamText, 0);
+  res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
 
   Sprintf(nombre, "%d", theLineWeightGrad);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamInteger, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamInteger, 0);
 
   Interface_FloatWriter::Convert(theMaxLineWeight, nombre, true, 0., 0., "%f", "%f");
   //  Sprintf(nombre,"%f",theMaxLineWeight);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamReal, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamReal, 0);
 
   MakeHollerith(theDate, text, lt);
-  res->Append(text, lt, Interface_ParamText, 0);
+  res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
 
   Interface_FloatWriter::Convert(theResolution, nombre, true, 0., 0., "%g", "%g");
   //  Sprintf(nombre,"%f",theResolution);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamReal, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamReal, 0);
 
   if (hasMaxCoord)
     Interface_FloatWriter::Convert(theMaxCoord, nombre, true, 0., 0., "%f", "%f");
   //  Sprintf(nombre,"%f",theMaxCoord);
   else
     nombre[0] = '\0';
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamReal, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamReal, 0);
 
   MakeHollerith(theAuthorName, text, lt);
-  res->Append(text, lt, Interface_ParamText, 0);
+  res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
 
   MakeHollerith(theCompanyName, text, lt);
-  res->Append(text, lt, Interface_ParamText, 0);
+  res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
 
   Sprintf(nombre, "%d", theIGESVersion);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamInteger, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamInteger, 0);
 
   Sprintf(nombre, "%d", theDraftingStandard);
-  res->Append(nombre, (int)strlen(nombre), Interface_ParamInteger, 0);
+  res->Append(nombre, (int)strlen(nombre), Interface_ParamType::Interface_ParamInteger, 0);
 
   if (!theLastChangeDate.IsNull())
   {
     MakeHollerith(theLastChangeDate, text, lt);
-    res->Append(text, lt, Interface_ParamText, 0);
+    res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
   }
 
   if (!theAppliProtocol.IsNull())
   {
     MakeHollerith(theAppliProtocol, text, lt);
-    res->Append(text, lt, Interface_ParamText, 0);
+    res->Append(text, lt, Interface_ParamType::Interface_ParamText, 0);
   }
   // Ici : parametre absent ignore
 

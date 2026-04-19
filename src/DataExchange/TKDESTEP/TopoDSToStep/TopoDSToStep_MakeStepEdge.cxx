@@ -56,7 +56,7 @@
 //=================================================================================================
 
 TopoDSToStep_MakeStepEdge::TopoDSToStep_MakeStepEdge()
-    : myError(TopoDSToStep_EdgeOther)
+    : myError(TopoDSToStep_MakeEdgeError::TopoDSToStep_EdgeOther)
 {
   done = false;
 }
@@ -93,7 +93,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     if (FP->FindTypedTransient(aSTEPMapper, STANDARD_TYPE(StepShape_EdgeCurve), anEC))
     {
       // Non-manifold topology detected
-      myError  = TopoDSToStep_EdgeDone;
+      myError  = TopoDSToStep_MakeEdgeError::TopoDSToStep_EdgeDone;
       myResult = anEC;
       done     = true;
       return;
@@ -103,7 +103,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
 
   if (aTool.IsBound(aEdge))
   {
-    myError  = TopoDSToStep_EdgeDone;
+    myError  = TopoDSToStep_MakeEdgeError::TopoDSToStep_EdgeDone;
     done     = true;
     myResult = aTool.Find(aEdge);
     return;
@@ -137,7 +137,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
   {
     occ::handle<TransferBRep_ShapeMapper> errShape = new TransferBRep_ShapeMapper(aEdge);
     FP->AddWarning(errShape, " Edge(internal/external) from Non Manifold Topology");
-    myError = TopoDSToStep_NonManifoldEdge;
+    myError = TopoDSToStep_MakeEdgeError::TopoDSToStep_NonManifoldEdge;
     done    = false;
     return;
   }
@@ -159,7 +159,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
   {
     occ::handle<TransferBRep_ShapeMapper> errShape = new TransferBRep_ShapeMapper(aEdge);
     FP->AddWarning(errShape, " First Vertex of Edge not mapped");
-    myError = TopoDSToStep_EdgeOther;
+    myError = TopoDSToStep_MakeEdgeError::TopoDSToStep_EdgeOther;
     done    = false;
     return;
   }
@@ -171,7 +171,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
   {
     occ::handle<TransferBRep_ShapeMapper> errShape = new TransferBRep_ShapeMapper(aEdge);
     FP->AddWarning(errShape, " Last Vertex of Edge not mapped");
-    myError = TopoDSToStep_EdgeOther;
+    myError = TopoDSToStep_MakeEdgeError::TopoDSToStep_EdgeOther;
     done    = false;
     return;
   }
@@ -318,13 +318,13 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     if (!isSeam)
     {
       occ::handle<StepGeom_SurfaceCurve> SurfaceCurve = new StepGeom_SurfaceCurve;
-      SurfaceCurve->Init(aName, Gpms, aGeom, StepGeom_pscrPcurveS1);
+      SurfaceCurve->Init(aName, Gpms, aGeom, StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrPcurveS1);
       Gpms = SurfaceCurve;
     }
     else
     {
       occ::handle<StepGeom_SeamCurve> SeamCurve = new StepGeom_SeamCurve;
-      SeamCurve->Init(aName, Gpms, aGeom, StepGeom_pscrPcurveS1);
+      SeamCurve->Init(aName, Gpms, aGeom, StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrPcurveS1);
       Gpms = SeamCurve;
     }
   }
@@ -335,7 +335,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
   Epms->Init(aName, V1, V2, Gpms, true);
 
   aTool.Bind(aEdge, Epms);
-  myError  = TopoDSToStep_EdgeDone;
+  myError  = TopoDSToStep_MakeEdgeError::TopoDSToStep_EdgeDone;
   myResult = Epms;
   done     = true;
   return;

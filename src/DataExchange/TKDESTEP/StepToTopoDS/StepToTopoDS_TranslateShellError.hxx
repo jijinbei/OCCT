@@ -17,7 +17,7 @@
 #ifndef _StepToTopoDS_TranslateShellError_HeaderFile
 #define _StepToTopoDS_TranslateShellError_HeaderFile
 
-enum StepToTopoDS_TranslateShellError
+enum class StepToTopoDS_TranslateShellError
 {
   StepToTopoDS_TranslateShellDone,
   StepToTopoDS_TranslateShellOther

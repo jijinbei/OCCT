@@ -83,7 +83,7 @@ bool IGESBasic_ToolName::OwnCorrect(const occ::handle<IGESBasic_Name>& ent) cons
 IGESData_DirChecker IGESBasic_ToolName::DirChecker(const occ::handle<IGESBasic_Name>& /*ent*/) const
 {
   IGESData_DirChecker DC(406, 15); // Form no = 15 & Type = 406
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.UseFlagIgnored();

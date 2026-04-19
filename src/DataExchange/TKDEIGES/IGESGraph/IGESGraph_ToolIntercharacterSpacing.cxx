@@ -89,10 +89,10 @@ IGESData_DirChecker IGESGraph_ToolIntercharacterSpacing::DirChecker(
   const occ::handle<IGESGraph_IntercharacterSpacing>& /*ent*/) const
 {
   IGESData_DirChecker DC(406, 18);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefVoid);
   DC.BlankStatusIgnored();
   DC.UseFlagIgnored();
   DC.HierarchyStatusIgnored();

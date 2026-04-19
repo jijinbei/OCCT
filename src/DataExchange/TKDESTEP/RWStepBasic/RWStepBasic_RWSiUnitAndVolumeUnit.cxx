@@ -47,11 +47,11 @@ void RWStepBasic_RWSiUnitAndVolumeUnit::ReadStep(
   if (!data->CheckNbParams(num, 2, ach, "si_unit"))
     return;
 
-  StepBasic_SiPrefix aPrefix    = StepBasic_spExa;
+  StepBasic_SiPrefix aPrefix    = StepBasic_SiPrefix::StepBasic_spExa;
   bool               hasAprefix = false;
   if (data->IsParamDefined(num, 1))
   {
-    if (data->ParamType(num, 1) == Interface_ParamEnum)
+    if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
     {
       const char* text = data->ParamCValue(num, 1);
       hasAprefix       = RWStepBasic_RWSiPrefix::ConvertToEnum(text, aPrefix);
@@ -69,7 +69,7 @@ void RWStepBasic_RWSiUnitAndVolumeUnit::ReadStep(
   }
 
   StepBasic_SiUnitName aName;
-  if (data->ParamType(num, 2) == Interface_ParamEnum)
+  if (data->ParamType(num, 2) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 2);
     if (!RWStepBasic_RWSiUnitName::ConvertToEnum(text, aName))

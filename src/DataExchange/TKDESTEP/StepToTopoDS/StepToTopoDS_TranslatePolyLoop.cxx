@@ -44,7 +44,7 @@
 //=================================================================================================
 
 StepToTopoDS_TranslatePolyLoop::StepToTopoDS_TranslatePolyLoop()
-    : myError(StepToTopoDS_TranslatePolyLoopOther)
+    : myError(StepToTopoDS_TranslatePolyLoopError::StepToTopoDS_TranslatePolyLoopOther)
 {
   done = false;
 }
@@ -181,13 +181,13 @@ void StepToTopoDS_TranslatePolyLoop::Init(const occ::handle<StepShape_PolyLoop>&
     W.Closed(BRep_Tool::IsClosed(W));
     aTool.Bind(PL, W);
     myResult = W;
-    myError  = StepToTopoDS_TranslatePolyLoopDone;
+    myError  = StepToTopoDS_TranslatePolyLoopError::StepToTopoDS_TranslatePolyLoopDone;
     done     = true;
   }
   else
   {
     myResult = TopoDS::Wire(aTool.Find(PL));
-    myError  = StepToTopoDS_TranslatePolyLoopDone;
+    myError  = StepToTopoDS_TranslatePolyLoopError::StepToTopoDS_TranslatePolyLoopDone;
     done     = true;
   }
 }

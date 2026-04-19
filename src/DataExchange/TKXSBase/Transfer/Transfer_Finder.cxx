@@ -93,14 +93,14 @@ Interface_ParamType Transfer_Finder::AttributeType(const char* const name) const
 {
   occ::handle<Standard_Transient> atr = Attribute(name);
   if (atr.IsNull())
-    return Interface_ParamVoid;
+    return Interface_ParamType::Interface_ParamVoid;
   if (atr->DynamicType() == STANDARD_TYPE(Interface_IntVal))
-    return Interface_ParamInteger;
+    return Interface_ParamType::Interface_ParamInteger;
   if (atr->DynamicType() == STANDARD_TYPE(Geom2d_CartesianPoint))
-    return Interface_ParamReal;
+    return Interface_ParamType::Interface_ParamReal;
   if (atr->DynamicType() == STANDARD_TYPE(TCollection_HAsciiString))
-    return Interface_ParamText;
-  return Interface_ParamIdent;
+    return Interface_ParamType::Interface_ParamText;
+  return Interface_ParamType::Interface_ParamIdent;
 }
 
 void Transfer_Finder::SetIntegerAttribute(const char* const name, const int val)

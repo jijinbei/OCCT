@@ -15,7 +15,7 @@
 #define _RWMesh_NameFormat_HeaderFile
 
 //! Name format preference for XCAF shape labels.
-enum RWMesh_NameFormat
+enum class RWMesh_NameFormat
 {
   RWMesh_NameFormat_Empty,    //!< omit the name
   RWMesh_NameFormat_Product,  //!< return Product name

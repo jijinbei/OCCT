@@ -26,10 +26,10 @@ Vrml_Texture2::Vrml_Texture2()
 
   myImage->SetWidth(0);
   myImage->SetHeight(0);
-  myImage->SetNumber(Vrml_NULL);
+  myImage->SetNumber(Vrml_SFImageNumber::Vrml_NULL);
 
-  myWrapS = Vrml_REPEAT;
-  myWrapT = Vrml_REPEAT;
+  myWrapS = Vrml_Texture2Wrap::Vrml_REPEAT;
+  myWrapT = Vrml_Texture2Wrap::Vrml_REPEAT;
 }
 
 Vrml_Texture2::Vrml_Texture2(const TCollection_AsciiString&   aFilename,
@@ -94,26 +94,26 @@ Standard_OStream& Vrml_Texture2::Print(Standard_OStream& anOStream) const
     anOStream << '"' << myFilename << '"' << "\n";
   }
 
-  if (myImage->Width() != 0 || myImage->Height() != 0 || myImage->Number() != Vrml_NULL)
+  if (myImage->Width() != 0 || myImage->Height() != 0 || myImage->Number() != Vrml_SFImageNumber::Vrml_NULL)
   {
     anOStream << "    image\t";
     anOStream << myImage->Width() << " " << myImage->Height() << " ";
 
     switch (myImage->Number())
     {
-      case Vrml_NULL:
+      case Vrml_SFImageNumber::Vrml_NULL:
         anOStream << "0";
         break;
-      case Vrml_ONE:
+      case Vrml_SFImageNumber::Vrml_ONE:
         anOStream << "1";
         break;
-      case Vrml_TWO:
+      case Vrml_SFImageNumber::Vrml_TWO:
         anOStream << "2";
         break;
-      case Vrml_THREE:
+      case Vrml_SFImageNumber::Vrml_THREE:
         anOStream << "3";
         break;
-      case Vrml_FOUR:
+      case Vrml_SFImageNumber::Vrml_FOUR:
         anOStream << "4";
         break;
     }
@@ -131,18 +131,18 @@ Standard_OStream& Vrml_Texture2::Print(Standard_OStream& anOStream) const
 
   switch (myWrapS)
   {
-    case Vrml_REPEAT:
+    case Vrml_Texture2Wrap::Vrml_REPEAT:
       break; // anOStream  << "    wrapS\tREPEAT ";
-    case Vrml_CLAMP:
+    case Vrml_Texture2Wrap::Vrml_CLAMP:
       anOStream << "    wrapS\tCLAMP\n";
       break;
   }
 
   switch (myWrapT)
   {
-    case Vrml_REPEAT:
+    case Vrml_Texture2Wrap::Vrml_REPEAT:
       break; // anOStream  << "    wrapT\tREPEAT ";
-    case Vrml_CLAMP:
+    case Vrml_Texture2Wrap::Vrml_CLAMP:
       anOStream << "    wrapT\tCLAMP\n";
       break;
   }

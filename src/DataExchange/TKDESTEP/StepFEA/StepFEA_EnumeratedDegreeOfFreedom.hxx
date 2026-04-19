@@ -14,7 +14,7 @@
 #ifndef _StepFEA_EnumeratedDegreeOfFreedom_HeaderFile
 #define _StepFEA_EnumeratedDegreeOfFreedom_HeaderFile
 
-enum StepFEA_EnumeratedDegreeOfFreedom
+enum class StepFEA_EnumeratedDegreeOfFreedom
 {
   StepFEA_XTranslation,
   StepFEA_YTranslation,

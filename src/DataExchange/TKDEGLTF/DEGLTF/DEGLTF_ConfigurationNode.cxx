@@ -114,12 +114,12 @@ bool DEGLTF_ConfigurationNode::Load(const occ::handle<DE_ConfigurationContext>& 
     (RWMesh_NameFormat)(theResource->IntegerVal("write.node.name.format",
                                                 InternalParameters.WriteNodeNameFormat,
                                                 aScope)
-                        % (RWMesh_NameFormat_ProductAndInstanceAndOcaf + 1));
+                        % (RWMesh_NameFormat::RWMesh_NameFormat_ProductAndInstanceAndOcaf + 1));
   InternalParameters.WriteMeshNameFormat =
     (RWMesh_NameFormat)(theResource->IntegerVal("write.mesh.name.format",
                                                 InternalParameters.WriteMeshNameFormat,
                                                 aScope)
-                        % (RWMesh_NameFormat_ProductAndInstanceAndOcaf + 1));
+                        % (RWMesh_NameFormat::RWMesh_NameFormat_ProductAndInstanceAndOcaf + 1));
   InternalParameters.WriteForcedUVExport =
     theResource->BooleanVal("write.forced.uv.export",
                             InternalParameters.WriteForcedUVExport,

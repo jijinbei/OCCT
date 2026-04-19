@@ -17,7 +17,7 @@
 #ifndef _Vrml_FontStyleStyle_HeaderFile
 #define _Vrml_FontStyleStyle_HeaderFile
 
-enum Vrml_FontStyleStyle
+enum class Vrml_FontStyleStyle
 {
   Vrml_NONE,
   Vrml_BOLD,

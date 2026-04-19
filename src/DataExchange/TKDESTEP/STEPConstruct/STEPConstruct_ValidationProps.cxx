@@ -420,7 +420,7 @@ bool STEPConstruct_ValidationProps::AddVolume(const TopoDS_Shape& Shape, const d
   if (volUnit.DerivedUnit().IsNull())
   {
     occ::handle<StepBasic_SiUnitAndLengthUnit> MM = new StepBasic_SiUnitAndLengthUnit;
-    MM->Init(true, StepBasic_spMilli, StepBasic_sunMetre);
+    MM->Init(true, StepBasic_SiPrefix::StepBasic_spMilli, StepBasic_SiUnitName::StepBasic_sunMetre);
 
     occ::handle<StepBasic_DerivedUnitElement> DUE = new StepBasic_DerivedUnitElement;
     DUE->Init(MM, 3.);
@@ -455,7 +455,7 @@ bool STEPConstruct_ValidationProps::AddArea(const TopoDS_Shape& Shape, const dou
   if (areaUnit.DerivedUnit().IsNull())
   {
     occ::handle<StepBasic_SiUnitAndLengthUnit> MM = new StepBasic_SiUnitAndLengthUnit;
-    MM->Init(true, StepBasic_spMilli, StepBasic_sunMetre);
+    MM->Init(true, StepBasic_SiPrefix::StepBasic_spMilli, StepBasic_SiUnitName::StepBasic_sunMetre);
 
     occ::handle<StepBasic_DerivedUnitElement> DUE = new StepBasic_DerivedUnitElement;
     DUE->Init(MM, 2.);

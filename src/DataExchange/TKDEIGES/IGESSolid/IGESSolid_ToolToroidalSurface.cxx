@@ -113,9 +113,9 @@ IGESData_DirChecker IGESSolid_ToolToroidalSurface::DirChecker(
 {
   IGESData_DirChecker DC(198, 0, 1);
 
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
 
   DC.BlankStatusIgnored();
   DC.SubordinateStatusRequired(1);

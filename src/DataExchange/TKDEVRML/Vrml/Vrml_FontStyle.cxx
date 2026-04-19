@@ -64,24 +64,24 @@ Standard_OStream& Vrml_FontStyle::Print(Standard_OStream& anOStream) const
 
   switch (myFamily)
   {
-    case Vrml_SERIF:
+    case Vrml_FontStyleFamily::Vrml_SERIF:
       break; // anOStream  << "    family\tSERIF ";
-    case Vrml_SANS:
+    case Vrml_FontStyleFamily::Vrml_SANS:
       anOStream << "    family\tSANS\n";
       break;
-    case Vrml_TYPEWRITER:
+    case Vrml_FontStyleFamily::Vrml_TYPEWRITER:
       anOStream << "    family\tTYPEWRITER\n";
       break;
   }
 
   switch (myStyle)
   {
-    case Vrml_NONE:
+    case Vrml_FontStyleStyle::Vrml_NONE:
       break; // anOStream  << "    style\tSERIF ";
-    case Vrml_BOLD:
+    case Vrml_FontStyleStyle::Vrml_BOLD:
       anOStream << "    style\tBOLD\n";
       break;
-    case Vrml_ITALIC:
+    case Vrml_FontStyleStyle::Vrml_ITALIC:
       anOStream << "    style\tITALIC\n";
       break;
   }

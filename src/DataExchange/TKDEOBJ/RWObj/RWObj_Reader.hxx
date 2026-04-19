@@ -151,7 +151,7 @@ protected:
   //! so that implementation should decide if previously allocated sub-mesh should be used or new
   //! one to be allocated. Sub-mesh command can be skipped if previous sub-mesh is empty, or if the
   //! reason is out of interest for particular reader (e.g. if materials are ignored, reader may
-  //! ignore RWObj_SubMeshReason_NewMaterial reason).
+  //! ignore RWObj_SubMeshReason::RWObj_SubMeshReason_NewMaterial reason).
   //! @param theMesh   mesh definition
   //! @param theReason reason to create new sub-mesh
   //! @return TRUE if new sub-mesh should be started since this point

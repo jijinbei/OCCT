@@ -65,7 +65,7 @@ void RWStepAP242_RWDraughtingModelItemAssociation::ReadStep(
   occ::handle<StepRepr_RepresentationItem>                                   anEnt;
   int                                                                        nbSub;
   Interface_ParamType aType = data->ParamType(num, 5);
-  if (aType == Interface_ParamIdent)
+  if (aType == Interface_ParamType::Interface_ParamIdent)
   {
     data->ReadEntity(num,
                      5,

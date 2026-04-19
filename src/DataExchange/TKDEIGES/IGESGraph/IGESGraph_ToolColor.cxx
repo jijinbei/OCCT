@@ -47,7 +47,7 @@ void IGESGraph_ToolColor::ReadOwnParams(const occ::handle<IGESGraph_Color>& ent,
   PR.ReadReal(PR.Current(), "BLUE as % Of Full Intensity", tempBlue);
 
   if ((PR.CurrentNumber() <= PR.NbParams())
-      && (PR.ParamType(PR.CurrentNumber()) == Interface_ParamText))
+      && (PR.ParamType(PR.CurrentNumber()) == Interface_ParamType::Interface_ParamText))
     PR.ReadText(PR.Current(), "Color Name", tempColorName);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
@@ -91,10 +91,10 @@ IGESData_DirChecker IGESGraph_ToolColor::DirChecker(
   const occ::handle<IGESGraph_Color>& /*ent*/) const
 {
   IGESData_DirChecker DC(314, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.BlankStatusIgnored();
   DC.SubordinateStatusRequired(0);
   DC.UseFlagRequired(2);

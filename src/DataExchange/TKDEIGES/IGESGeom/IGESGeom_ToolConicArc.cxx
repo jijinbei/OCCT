@@ -157,11 +157,11 @@ IGESData_DirChecker IGESGeom_ToolConicArc::DirChecker(
   const occ::handle<IGESGeom_ConicArc>& /* ent */) const
 {
   IGESData_DirChecker DC(104, 0, 3);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }

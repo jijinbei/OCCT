@@ -179,7 +179,7 @@ static void CheckPCurves(TopoDS_Wire&       aWire,
 //=================================================================================================
 
 StepToTopoDS_TranslateEdgeLoop::StepToTopoDS_TranslateEdgeLoop()
-    : myError(StepToTopoDS_TranslateEdgeLoopOther)
+    : myError(StepToTopoDS_TranslateEdgeLoopError::StepToTopoDS_TranslateEdgeLoopOther)
 {
   done = false;
 }
@@ -222,7 +222,7 @@ void StepToTopoDS_TranslateEdgeLoop::Init(const occ::handle<StepShape_FaceBound>
   if (aTool.IsBound(EL))
   {
     myResult = TopoDS::Wire(aTool.Find(EL));
-    myError  = StepToTopoDS_TranslateEdgeLoopDone;
+    myError  = StepToTopoDS_TranslateEdgeLoopError::StepToTopoDS_TranslateEdgeLoopDone;
     done     = true;
     return;
   }
@@ -662,7 +662,7 @@ void StepToTopoDS_TranslateEdgeLoop::Init(const occ::handle<StepShape_FaceBound>
           {
             TP->AddFail(EC, " Seam curve not mapped");
             done    = false;
-            myError = StepToTopoDS_TranslateEdgeLoopOther;
+            myError = StepToTopoDS_TranslateEdgeLoopError::StepToTopoDS_TranslateEdgeLoopOther;
             continue;
           }
           else if (!ForwardEdge)
@@ -700,7 +700,7 @@ void StepToTopoDS_TranslateEdgeLoop::Init(const occ::handle<StepShape_FaceBound>
         {
           TP->AddFail(EC, " Seam curve not mapped");
           done    = false;
-          myError = StepToTopoDS_TranslateEdgeLoopOther;
+          myError = StepToTopoDS_TranslateEdgeLoopError::StepToTopoDS_TranslateEdgeLoopOther;
           continue;
         }
       }
@@ -721,7 +721,7 @@ void StepToTopoDS_TranslateEdgeLoop::Init(const occ::handle<StepShape_FaceBound>
           {
             TP->AddFail(EC, " Edge: Trimming of 2D curve failed");
             done    = false;
-            myError = StepToTopoDS_TranslateEdgeLoopOther;
+            myError = StepToTopoDS_TranslateEdgeLoopError::StepToTopoDS_TranslateEdgeLoopOther;
             continue;
           }
         }
@@ -731,14 +731,14 @@ void StepToTopoDS_TranslateEdgeLoop::Init(const occ::handle<StepShape_FaceBound>
       {
         TP->AddFail(EC, " an Edge not mapped");
         done    = false;
-        myError = StepToTopoDS_TranslateEdgeLoopOther;
+        myError = StepToTopoDS_TranslateEdgeLoopError::StepToTopoDS_TranslateEdgeLoopOther;
       }
     }
     else
     { // The Edge is Not mapped => switch to next wire ?
       TP->AddFail(EC, " an Edge not mapped");
       done    = false;
-      myError = StepToTopoDS_TranslateEdgeLoopOther;
+      myError = StepToTopoDS_TranslateEdgeLoopError::StepToTopoDS_TranslateEdgeLoopOther;
     }
 
     if (done)
@@ -794,7 +794,7 @@ void StepToTopoDS_TranslateEdgeLoop::Init(const occ::handle<StepShape_FaceBound>
     }
 
   myResult = W;
-  myError  = StepToTopoDS_TranslateEdgeLoopDone;
+  myError  = StepToTopoDS_TranslateEdgeLoopError::StepToTopoDS_TranslateEdgeLoopDone;
   done     = true;
   //  Check des PCurves SYSTEMATIQUE, s il n y en a que quelques unes
   CheckPCurves(W, Face, isPlane, preci);

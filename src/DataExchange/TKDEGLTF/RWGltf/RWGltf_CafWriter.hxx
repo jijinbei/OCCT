@@ -84,19 +84,19 @@ public:
   bool IsBinary() const { return myIsBinary; }
 
   //! Return preferred transformation format for writing into glTF file;
-  //! RWGltf_WriterTrsfFormat_Compact by default.
+  //! RWGltf_WriterTrsfFormat::RWGltf_WriterTrsfFormat_Compact by default.
   RWGltf_WriterTrsfFormat TransformationFormat() const { return myTrsfFormat; }
 
   //! Set preferred transformation format for writing into glTF file.
   void SetTransformationFormat(RWGltf_WriterTrsfFormat theFormat) { myTrsfFormat = theFormat; }
 
-  //! Return name format for exporting Nodes; RWMesh_NameFormat_InstanceOrProduct by default.
+  //! Return name format for exporting Nodes; RWMesh_NameFormat::RWMesh_NameFormat_InstanceOrProduct by default.
   RWMesh_NameFormat NodeNameFormat() const { return myNodeNameFormat; }
 
   //! Set name format for exporting Nodes.
   void SetNodeNameFormat(RWMesh_NameFormat theFormat) { myNodeNameFormat = theFormat; }
 
-  //! Return name format for exporting Meshes; RWMesh_NameFormat_Product by default.
+  //! Return name format for exporting Meshes; RWMesh_NameFormat::RWMesh_NameFormat_Product by default.
   RWMesh_NameFormat MeshNameFormat() const { return myMeshNameFormat; }
 
   //! Set name format for exporting Meshes.
@@ -310,70 +310,70 @@ protected:
                                                  const RWMesh_VertexIterator& theVertexIter);
 
 protected:
-  //! Write bufferView for vertex positions within RWGltf_GltfRootElement_Accessors section
+  //! Write bufferView for vertex positions within RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section
   //! @param[in] theGltfFace  face definition to write
   Standard_EXPORT virtual void writePositions(const RWGltf_GltfFace& theGltfFace);
 
-  //! Write bufferView for vertex normals within RWGltf_GltfRootElement_Accessors section
+  //! Write bufferView for vertex normals within RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section
   //! @param[in] theGltfFace  face definition to write
   Standard_EXPORT virtual void writeNormals(const RWGltf_GltfFace& theGltfFace);
 
-  //! Write bufferView for vertex texture coordinates within RWGltf_GltfRootElement_Accessors
+  //! Write bufferView for vertex texture coordinates within RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors
   //! section
   //! @param[in] theGltfFace  face definition to write
   Standard_EXPORT virtual void writeTextCoords(const RWGltf_GltfFace& theGltfFace);
 
-  //! Write bufferView for triangle indexes within RWGltf_GltfRootElement_Accessors section.
+  //! Write bufferView for triangle indexes within RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section.
   //! @param[in] theGltfFace  face definition to write
   Standard_EXPORT virtual void writeIndices(const RWGltf_GltfFace& theGltfFace);
 
 protected:
-  //! Write RWGltf_GltfRootElement_Accessors section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section.
   //! @param[in] theSceneNodeMap  ordered map of scene nodes
   Standard_EXPORT virtual void writeAccessors(const RWGltf_GltfSceneNodeMap& theSceneNodeMap);
 
-  //! Write RWGltf_GltfRootElement_Animations section (reserved).
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Animations section (reserved).
   Standard_EXPORT virtual void writeAnimations();
 
-  //! Write RWGltf_GltfRootElement_Asset section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Asset section.
   //! @param[in] theFileInfo  optional metadata to write into file header
   Standard_EXPORT virtual void writeAsset(
     const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>&
       theFileInfo);
 
-  //! Write RWGltf_GltfRootElement_BufferViews section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_BufferViews section.
   //! @param[in] theBinDataBufferId  index of binary buffer with vertex data
   Standard_EXPORT virtual void writeBufferViews(const int theBinDataBufferId);
 
-  //! Write RWGltf_GltfRootElement_Buffers section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Buffers section.
   Standard_EXPORT virtual void writeBuffers();
 
-  //! Write RWGltf_GltfRootElement_ExtensionsUsed/RWGltf_GltfRootElement_ExtensionsRequired sections
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_ExtensionsUsed/RWGltf_GltfRootElement::RWGltf_GltfRootElement_ExtensionsRequired sections
   //! (reserved).
   Standard_EXPORT virtual void writeExtensions();
 
-  //! Write RWGltf_GltfRootElement_Images section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Images section.
   //! @param[in] theSceneNodeMap  ordered map of scene nodes
   //! @param[out] theMaterialMap  map of materials, filled with image files used by textures
   Standard_EXPORT virtual void writeImages(const RWGltf_GltfSceneNodeMap& theSceneNodeMap);
 
-  //! Write RWGltf_GltfRootElement_Materials section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Materials section.
   //! @param[in] theSceneNodeMap  ordered map of scene nodes
   //! @param[out] theMaterialMap  map of materials, filled with materials
   Standard_EXPORT virtual void writeMaterials(const RWGltf_GltfSceneNodeMap& theSceneNodeMap);
 
-  //! Write RWGltf_GltfRootElement_Materials section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Materials section.
   //! @param[in]  theShapeIter         Shape iterator to traverse shapes
   //! @param[out] theIsStarted         Flag indicating that writing material has been started
   Standard_EXPORT virtual void writeMaterial(RWMesh_ShapeIterator& theShapeIter,
                                              bool&                 theIsStarted);
 
-  //! Write RWGltf_GltfRootElement_Meshes section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Meshes section.
   //! @param[in] theSceneNodeMap  ordered map of scene nodes
   //! @param[in] theMaterialMap   map of materials
   Standard_EXPORT virtual void writeMeshes(const RWGltf_GltfSceneNodeMap& theSceneNodeMap);
 
-  //! Write a primitive array to RWGltf_GltfRootElement_Meshes section.
+  //! Write a primitive array to RWGltf_GltfRootElement::RWGltf_GltfRootElement_Meshes section.
   //! @param[in]     theGltfFace     face to write
   //! @param[in]     theName         primitive array name
   //! @param[in]     theDracoBufInd  draco buffer index
@@ -383,7 +383,7 @@ protected:
                                               const int                      theDracoBufInd,
                                               bool&                          theToStartPrims);
 
-  //! Write RWGltf_GltfRootElement_Nodes section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Nodes section.
   //! @param[in] theDocument      input document
   //! @param[in] theRootLabels    list of root shapes to export
   //! @param[in] theLabelFilter   optional filter with document nodes to export
@@ -397,21 +397,21 @@ protected:
     const RWGltf_GltfSceneNodeMap&                  theSceneNodeMap,
     NCollection_Sequence<int>&                      theSceneRootNodeInds);
 
-  //! Write RWGltf_GltfRootElement_Samplers section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Samplers section.
   Standard_EXPORT virtual void writeSamplers();
 
-  //! Write RWGltf_GltfRootElement_Scene section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Scene section.
   //! @param[in] theDefSceneId  index of default scene (0)
   Standard_EXPORT virtual void writeScene(const int theDefSceneId);
 
-  //! Write RWGltf_GltfRootElement_Scenes section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Scenes section.
   //! @param[in] theSceneRootNodeInds  sequence of scene nodes pointing to root shapes
   Standard_EXPORT virtual void writeScenes(const NCollection_Sequence<int>& theSceneRootNodeInds);
 
-  //! Write RWGltf_GltfRootElement_Skins section (reserved).
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Skins section (reserved).
   Standard_EXPORT virtual void writeSkins();
 
-  //! Write RWGltf_GltfRootElement_Textures section.
+  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Textures section.
   //! @param[in] theSceneNodeMap  ordered map of scene nodes
   //! @param[out] theMaterialMap  map of materials, filled with textures
   Standard_EXPORT virtual void writeTextures(const RWGltf_GltfSceneNodeMap& theSceneNodeMap);
@@ -449,7 +449,7 @@ protected:
                                         const RWGltf_GltfArrayType                     theArrType,
                                         const Message_ProgressScope& thePSentryBin);
 
-  //! Write shapes to RWGltf_GltfRootElement_Meshes section
+  //! Write shapes to RWGltf_GltfRootElement::RWGltf_GltfRootElement_Meshes section
   //! @param[in] theShapeIter          Shape iterator to traverse shapes
   //! @param[in,out] theDracoBufInd    Draco buffer index
   //! @param[in,out] theToStartPrims   Flag to indicate if primitives should be started

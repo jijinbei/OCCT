@@ -1119,11 +1119,11 @@ static void SetAssemblyComponentStyle(
     }
 
     if (!aSurfCol.IsNull() || aRenderProps.IsDefined())
-      theCTool->SetInstanceColor(aShape, XCAFDoc_ColorSurf, aFullSCol);
+      theCTool->SetInstanceColor(aShape, XCAFDoc_ColorType::XCAFDoc_ColorSurf, aFullSCol);
     if (!aBoundCol.IsNull())
-      theCTool->SetInstanceColor(aShape, XCAFDoc_ColorCurv, aBCol);
+      theCTool->SetInstanceColor(aShape, XCAFDoc_ColorType::XCAFDoc_ColorCurv, aBCol);
     if (!aCurveCol.IsNull())
-      theCTool->SetInstanceColor(aShape, XCAFDoc_ColorCurv, aCCol);
+      theCTool->SetInstanceColor(aShape, XCAFDoc_ColorType::XCAFDoc_ColorCurv, aCCol);
   }
 }
 
@@ -1289,11 +1289,11 @@ static void SetStyle(
         if (isFound)
         {
           if (!aSurfCol.IsNull() || aRenderProps.IsDefined())
-            theCTool->SetColor(aL, aFullSCol, XCAFDoc_ColorSurf);
+            theCTool->SetColor(aL, aFullSCol, XCAFDoc_ColorType::XCAFDoc_ColorSurf);
           if (!aBoundCol.IsNull())
-            theCTool->SetColor(aL, aBCol, XCAFDoc_ColorCurv);
+            theCTool->SetColor(aL, aBCol, XCAFDoc_ColorType::XCAFDoc_ColorCurv);
           if (!aCurveCol.IsNull())
-            theCTool->SetColor(aL, aCCol, XCAFDoc_ColorCurv);
+            theCTool->SetColor(aL, aCCol, XCAFDoc_ColorType::XCAFDoc_ColorCurv);
         }
         else
         {
@@ -1303,11 +1303,11 @@ static void SetStyle(
             if (theSTool->SearchUsingMap(it.Value(), aL1, false, true))
             {
               if (!aSurfCol.IsNull() || aRenderProps.IsDefined())
-                theCTool->SetColor(aL1, aFullSCol, XCAFDoc_ColorSurf);
+                theCTool->SetColor(aL1, aFullSCol, XCAFDoc_ColorType::XCAFDoc_ColorSurf);
               if (!aBoundCol.IsNull())
-                theCTool->SetColor(aL1, aBCol, XCAFDoc_ColorCurv);
+                theCTool->SetColor(aL1, aBCol, XCAFDoc_ColorType::XCAFDoc_ColorCurv);
               if (!aCurveCol.IsNull())
-                theCTool->SetColor(aL1, aCCol, XCAFDoc_ColorCurv);
+                theCTool->SetColor(aL1, aCCol, XCAFDoc_ColorType::XCAFDoc_ColorCurv);
             }
           }
         }
@@ -2074,19 +2074,19 @@ bool STEPCAFControl_Reader::ReadSHUOs(
         {
           colRGBA = aRenderProps.GetRGBAColor();
         }
-        CTool->SetColor(aLabelForStyle, colRGBA, XCAFDoc_ColorSurf);
+        CTool->SetColor(aLabelForStyle, colRGBA, XCAFDoc_ColorType::XCAFDoc_ColorSurf);
       }
       if (!BoundCol.IsNull())
       {
         Quantity_Color col;
         STEPConstruct_Styles::DecodeColor(BoundCol, col);
-        CTool->SetColor(aLabelForStyle, col, XCAFDoc_ColorCurv);
+        CTool->SetColor(aLabelForStyle, col, XCAFDoc_ColorType::XCAFDoc_ColorCurv);
       }
       if (!CurveCol.IsNull())
       {
         Quantity_Color col;
         STEPConstruct_Styles::DecodeColor(CurveCol, col);
-        CTool->SetColor(aLabelForStyle, col, XCAFDoc_ColorCurv);
+        CTool->SetColor(aLabelForStyle, col, XCAFDoc_ColorType::XCAFDoc_ColorCurv);
       }
       if (!IsVisible)
         // sets the invisibility for shape.
@@ -2116,7 +2116,7 @@ static bool GetMassConversionFactor(const occ::handle<StepBasic_NamedUnit>& NU, 
     if (NU2->IsKind(STANDARD_TYPE(StepBasic_SiUnit)))
     {
       occ::handle<StepBasic_SiUnit> SU = occ::down_cast<StepBasic_SiUnit>(NU2);
-      if (SU->Name() == StepBasic_sunGram)
+      if (SU->Name() == StepBasic_SiUnitName::StepBasic_sunGram)
       {
         if (SU->HasPrefix())
           afact *= STEPConstruct_UnitContext::ConvertSiPrefix(SU->Prefix());
@@ -4324,11 +4324,11 @@ static void setDimObjectToXCAF(const occ::handle<Standard_Transient>&    theEnt,
       {
         // get qualifier for angular value
         aType = XCAFDimTolObjects_DimensionType_Size_Angular;
-        if (anAngSize->AngleSelection() == StepShape_Equal)
+        if (anAngSize->AngleSelection() == StepShape_AngleRelator::StepShape_Equal)
           aDimObj->SetAngularQualifier(XCAFDimTolObjects_AngularQualifier_Equal);
-        else if (anAngSize->AngleSelection() == StepShape_Large)
+        else if (anAngSize->AngleSelection() == StepShape_AngleRelator::StepShape_Large)
           aDimObj->SetAngularQualifier(XCAFDimTolObjects_AngularQualifier_Large);
-        else if (anAngSize->AngleSelection() == StepShape_Small)
+        else if (anAngSize->AngleSelection() == StepShape_AngleRelator::StepShape_Small)
           aDimObj->SetAngularQualifier(XCAFDimTolObjects_AngularQualifier_Small);
       }
     }
@@ -4340,11 +4340,11 @@ static void setDimObjectToXCAF(const occ::handle<Standard_Transient>&    theEnt,
       {
         // get qualifier for angular value
         aType = XCAFDimTolObjects_DimensionType_Location_Angular;
-        if (anAngLoc->AngleSelection() == StepShape_Equal)
+        if (anAngLoc->AngleSelection() == StepShape_AngleRelator::StepShape_Equal)
           aDimObj->SetAngularQualifier(XCAFDimTolObjects_AngularQualifier_Equal);
-        else if (anAngLoc->AngleSelection() == StepShape_Large)
+        else if (anAngLoc->AngleSelection() == StepShape_AngleRelator::StepShape_Large)
           aDimObj->SetAngularQualifier(XCAFDimTolObjects_AngularQualifier_Large);
-        else if (anAngLoc->AngleSelection() == StepShape_Small)
+        else if (anAngLoc->AngleSelection() == StepShape_AngleRelator::StepShape_Small)
           aDimObj->SetAngularQualifier(XCAFDimTolObjects_AngularQualifier_Small);
       }
     }
@@ -4683,9 +4683,9 @@ static void setGeomTolObjectToXCAF(const occ::handle<Standard_Transient>&    the
   {
     for (int i = aModifiers->Lower(); i <= aModifiers->Upper(); i++)
     {
-      if (aModifiers->Value(i) == StepDimTol_GTMLeastMaterialRequirement)
+      if (aModifiers->Value(i) == StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement)
         aTolObj->SetMaterialRequirementModifier(XCAFDimTolObjects_GeomToleranceMatReqModif_L);
-      else if (aModifiers->Value(i) == StepDimTol_GTMMaximumMaterialRequirement)
+      else if (aModifiers->Value(i) == StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement)
         aTolObj->SetMaterialRequirementModifier(XCAFDimTolObjects_GeomToleranceMatReqModif_M);
       else
         aTolObj->AddModifier((XCAFDimTolObjects_GeomToleranceModif)aModifiers->Value(i));
@@ -5301,9 +5301,9 @@ bool STEPCAFControl_Reader::ReadViews(const occ::handle<XSControl_WorkSession>& 
     anObj->SetUpDirection(anAxis->Direction() ^ anAxis->XDirection());
     occ::handle<StepVisual_ViewVolume> aViewVolume = aCameraModel->PerspectiveOfVolume();
     XCAFView_ProjectionType            aType       = XCAFView_ProjectionType_NoCamera;
-    if (aViewVolume->ProjectionType() == StepVisual_copCentral)
+    if (aViewVolume->ProjectionType() == StepVisual_CentralOrParallel::StepVisual_copCentral)
       aType = XCAFView_ProjectionType_Central;
-    else if (aViewVolume->ProjectionType() == StepVisual_copParallel)
+    else if (aViewVolume->ProjectionType() == StepVisual_CentralOrParallel::StepVisual_copParallel)
       aType = XCAFView_ProjectionType_Parallel;
     anObj->SetType(aType);
     occ::handle<Geom_CartesianPoint> aPoint =
@@ -6443,11 +6443,11 @@ bool STEPCAFControl_Reader::fillAttributes(
         if (!aMeasureValueMem.IsNull())
         {
           Interface_ParamType aParamType = aMeasureValueMem->ParamType();
-          if (aParamType == Interface_ParamInteger)
+          if (aParamType == Interface_ParamType::Interface_ParamInteger)
           {
             theAttr->SetInteger(aPropName, aMeasureValueMem->Integer());
           }
-          else if (aParamType == Interface_ParamReal)
+          else if (aParamType == Interface_ParamType::Interface_ParamReal)
           {
             theAttr->SetReal(aPropName, aMeasureValueMem->Real());
           }

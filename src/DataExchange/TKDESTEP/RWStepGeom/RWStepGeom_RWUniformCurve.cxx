@@ -69,8 +69,8 @@ void RWStepGeom_RWUniformCurve::ReadStep(const occ::handle<StepData_StepReaderDa
 
   // --- inherited field : curveForm ---
 
-  StepGeom_BSplineCurveForm aCurveForm = StepGeom_bscfPolylineForm;
-  if (data->ParamType(num, 4) == Interface_ParamEnum)
+  StepGeom_BSplineCurveForm aCurveForm = StepGeom_BSplineCurveForm::StepGeom_bscfPolylineForm;
+  if (data->ParamType(num, 4) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 4);
     if (!RWStepGeom_RWBSplineCurveForm::ConvertToEnum(text, aCurveForm))

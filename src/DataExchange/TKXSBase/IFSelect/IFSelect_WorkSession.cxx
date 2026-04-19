@@ -1049,7 +1049,7 @@ occ::handle<Standard_Transient> IFSelect_WorkSession::NewParamFromStatic(const c
   occ::handle<Interface_Static>   stat = Interface_Static::Static(statname);
   if (stat.IsNull())
     return param;
-  if (stat->Type() == Interface_ParamInteger)
+  if (stat->Type() == Interface_ParamType::Interface_ParamInteger)
   {
     occ::handle<IFSelect_IntParam> intpar = new IFSelect_IntParam;
     intpar->SetStaticName(statname);

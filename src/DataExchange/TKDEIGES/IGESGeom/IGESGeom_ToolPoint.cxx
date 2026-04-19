@@ -69,19 +69,19 @@ void IGESGeom_ToolPoint::ReadOwnParams(const occ::handle<IGESGeom_Point>&       
       Message_Msg Msg74("XSTEP_74");
       switch (aStatus)
       {
-        case IGESData_ReferenceError: {
+        case IGESData_Status::IGESData_ReferenceError: {
           Message_Msg Msg216("IGES_216");
           Msg74.Arg(Msg216.Value());
           PR.SendFail(Msg74);
           break;
         }
-        case IGESData_EntityError: {
+        case IGESData_Status::IGESData_EntityError: {
           Message_Msg Msg217("IGES_217");
           Msg74.Arg(Msg217.Value());
           PR.SendFail(Msg74);
           break;
         }
-        case IGESData_TypeError: {
+        case IGESData_Status::IGESData_TypeError: {
           Message_Msg Msg218("IGES_218");
           Msg74.Arg(Msg218.Value());
           PR.SendFail(Msg74);
@@ -128,13 +128,13 @@ void IGESGeom_ToolPoint::OwnCopy(const occ::handle<IGESGeom_Point>& another,
 IGESData_DirChecker IGESGeom_ToolPoint::DirChecker(const occ::handle<IGESGeom_Point>& ent) const
 {
   IGESData_DirChecker DC(116, 0);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   if (ent->HasDisplaySymbol())
   {
-    DC.LineFont(IGESData_DefAny);
-    DC.LineWeight(IGESData_DefValue);
+    DC.LineFont(IGESData_DefType::IGESData_DefAny);
+    DC.LineWeight(IGESData_DefType::IGESData_DefValue);
   }
-  DC.Color(IGESData_DefAny);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   return DC;
 }
 

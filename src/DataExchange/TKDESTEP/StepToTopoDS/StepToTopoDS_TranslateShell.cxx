@@ -38,7 +38,7 @@
 //=================================================================================================
 
 StepToTopoDS_TranslateShell::StepToTopoDS_TranslateShell()
-    : myError(StepToTopoDS_TranslateShellOther)
+    : myError(StepToTopoDS_TranslateShellError::StepToTopoDS_TranslateShellOther)
 {
   done = false;
 }
@@ -105,13 +105,13 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepShape_ConnectedFace
     Sh.Closed(BRep_Tool::IsClosed(Sh));
     myResult = Sh;
     aTool.Bind(CFS, myResult);
-    myError = StepToTopoDS_TranslateShellDone;
+    myError = StepToTopoDS_TranslateShellError::StepToTopoDS_TranslateShellDone;
     done    = true;
   }
   else
   {
     myResult = TopoDS::Shell(aTool.Find(CFS));
-    myError  = StepToTopoDS_TranslateShellDone;
+    myError  = StepToTopoDS_TranslateShellError::StepToTopoDS_TranslateShellDone;
     done     = true;
   }
 }
@@ -201,7 +201,7 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepVisual_TessellatedS
 
   aSh.Closed(BRep_Tool::IsClosed(aSh));
   myResult = aSh;
-  myError  = StepToTopoDS_TranslateShellDone;
+  myError  = StepToTopoDS_TranslateShellError::StepToTopoDS_TranslateShellDone;
   done     = true;
 }
 

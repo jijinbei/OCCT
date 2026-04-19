@@ -90,9 +90,9 @@ IGESData_DefType IGESData_UndefinedEntity::DefLineFont() const
   if (st == 0)
     return IGESData_IGESEntity::DefLineFont();
   else if (st == 1)
-    return IGESData_ErrorVal;
+    return IGESData_DefType::IGESData_ErrorVal;
   else
-    return IGESData_ErrorRef;
+    return IGESData_DefType::IGESData_ErrorRef;
 }
 
 //=================================================================================================
@@ -103,9 +103,9 @@ IGESData_DefList IGESData_UndefinedEntity::DefLevel() const
   if (st == 0)
     return IGESData_IGESEntity::DefLevel();
   else if (st == 1)
-    return IGESData_ErrorOne;
+    return IGESData_DefList::IGESData_ErrorOne;
   else
-    return IGESData_ErrorSeveral;
+    return IGESData_DefList::IGESData_ErrorSeveral;
 }
 
 //=================================================================================================
@@ -116,9 +116,9 @@ IGESData_DefList IGESData_UndefinedEntity::DefView() const
   if (st == 0)
     return IGESData_IGESEntity::DefView();
   else if (st == 1)
-    return IGESData_ErrorOne;
+    return IGESData_DefList::IGESData_ErrorOne;
   else
-    return IGESData_ErrorSeveral;
+    return IGESData_DefList::IGESData_ErrorSeveral;
 }
 
 //=================================================================================================
@@ -129,9 +129,9 @@ IGESData_DefType IGESData_UndefinedEntity::DefColor() const
   if (st == 0)
     return IGESData_IGESEntity::DefColor();
   else if (st == 1)
-    return IGESData_ErrorVal;
+    return IGESData_DefType::IGESData_ErrorVal;
   else
-    return IGESData_ErrorRef;
+    return IGESData_DefType::IGESData_ErrorRef;
 }
 
 //=================================================================================================
@@ -392,7 +392,7 @@ void IGESData_UndefinedEntity::WriteOwnParams(IGESData_IGESWriter& IW) const
   for (int i = 1; i <= nb; i++)
   {
     Interface_ParamType ptyp = thecont->ParamType(i);
-    if (ptyp == Interface_ParamVoid)
+    if (ptyp == Interface_ParamType::Interface_ParamVoid)
       IW.SendVoid();
     else if (thecont->IsParamEntity(i))
     {

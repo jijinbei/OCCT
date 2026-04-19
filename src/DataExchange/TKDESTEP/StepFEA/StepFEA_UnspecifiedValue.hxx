@@ -14,7 +14,7 @@
 #ifndef _StepFEA_UnspecifiedValue_HeaderFile
 #define _StepFEA_UnspecifiedValue_HeaderFile
 
-enum StepFEA_UnspecifiedValue
+enum class StepFEA_UnspecifiedValue
 {
   StepFEA_Unspecified
 };

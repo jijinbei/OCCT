@@ -37,8 +37,8 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Standard_EXPORT Vrml_FontStyle(const double               aSize   = 10,
-                                 const Vrml_FontStyleFamily aFamily = Vrml_SERIF,
-                                 const Vrml_FontStyleStyle  aStyle  = Vrml_NONE);
+                                 const Vrml_FontStyleFamily aFamily = Vrml_FontStyleFamily::Vrml_SERIF,
+                                 const Vrml_FontStyleStyle  aStyle  = Vrml_FontStyleStyle::Vrml_NONE);
 
   Standard_EXPORT void SetSize(const double aSize);
 

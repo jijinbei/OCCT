@@ -31,13 +31,13 @@ inline const char* ConvertToString(const StepGeom_TransitionCode theTransitionCo
 {
   switch (theTransitionCodeEnum)
   {
-    case StepGeom_tcDiscontinuous:
+    case StepGeom_TransitionCode::StepGeom_tcDiscontinuous:
       return tcDiscontinuous;
-    case StepGeom_tcContSameGradientSameCurvature:
+    case StepGeom_TransitionCode::StepGeom_tcContSameGradientSameCurvature:
       return tcContSameGradientSameCurvature;
-    case StepGeom_tcContSameGradient:
+    case StepGeom_TransitionCode::StepGeom_tcContSameGradient:
       return tcContSameGradient;
-    case StepGeom_tcContinuous:
+    case StepGeom_TransitionCode::StepGeom_tcContinuous:
       return tcContinuous;
   }
   return nullptr;
@@ -52,19 +52,19 @@ inline bool ConvertToEnum(const char* const        theTransitionCodeStr,
 {
   if (IsEqual(theTransitionCodeStr, tcDiscontinuous))
   {
-    theResultEnum = StepGeom_tcDiscontinuous;
+    theResultEnum = StepGeom_TransitionCode::StepGeom_tcDiscontinuous;
   }
   else if (IsEqual(theTransitionCodeStr, tcContSameGradientSameCurvature))
   {
-    theResultEnum = StepGeom_tcContSameGradientSameCurvature;
+    theResultEnum = StepGeom_TransitionCode::StepGeom_tcContSameGradientSameCurvature;
   }
   else if (IsEqual(theTransitionCodeStr, tcContSameGradient))
   {
-    theResultEnum = StepGeom_tcContSameGradient;
+    theResultEnum = StepGeom_TransitionCode::StepGeom_tcContSameGradient;
   }
   else if (IsEqual(theTransitionCodeStr, tcContinuous))
   {
-    theResultEnum = StepGeom_tcContinuous;
+    theResultEnum = StepGeom_TransitionCode::StepGeom_tcContinuous;
   }
   else
   {

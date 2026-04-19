@@ -61,13 +61,13 @@ void IGESGeom_ToolTabulatedCylinder::ReadOwnParams(
     Message_Msg Msg156("XSTEP_156");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg156.Arg(Msg216.Value());
         PR.SendFail(Msg156);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg156.Arg(Msg217.Value());
         PR.SendFail(Msg156);
@@ -118,10 +118,10 @@ IGESData_DirChecker IGESGeom_ToolTabulatedCylinder::DirChecker(
   const occ::handle<IGESGeom_TabulatedCylinder>& /* ent */) const
 {
   IGESData_DirChecker DC(122, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }

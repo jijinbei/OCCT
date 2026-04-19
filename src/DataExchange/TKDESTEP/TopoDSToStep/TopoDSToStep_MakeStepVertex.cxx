@@ -33,7 +33,7 @@
 //=================================================================================================
 
 TopoDSToStep_MakeStepVertex::TopoDSToStep_MakeStepVertex()
-    : myError(TopoDSToStep_VertexOther)
+    : myError(TopoDSToStep_MakeVertexError::TopoDSToStep_VertexOther)
 {
   done = false;
 }
@@ -68,7 +68,7 @@ void TopoDSToStep_MakeStepVertex::Init(const TopoDS_Vertex&                     
     if (FP->FindTypedTransient(aSTEPMapper, STANDARD_TYPE(StepShape_VertexPoint), aVP))
     {
       // Non-manifold topology detected
-      myError  = TopoDSToStep_VertexOther;
+      myError  = TopoDSToStep_MakeVertexError::TopoDSToStep_VertexOther;
       myResult = aVP;
       done     = true;
       return;
@@ -78,7 +78,7 @@ void TopoDSToStep_MakeStepVertex::Init(const TopoDS_Vertex&                     
 
   if (aTool.IsBound(aVertex))
   {
-    myError  = TopoDSToStep_VertexOther;
+    myError  = TopoDSToStep_MakeVertexError::TopoDSToStep_VertexOther;
     done     = true;
     myResult = aTool.Find(aVertex);
     return;
@@ -95,7 +95,7 @@ void TopoDSToStep_MakeStepVertex::Init(const TopoDS_Vertex&                     
   Vpms->Init(aName, Gpms);
 
   aTool.Bind(aVertex, Vpms);
-  myError  = TopoDSToStep_VertexDone;
+  myError  = TopoDSToStep_MakeVertexError::TopoDSToStep_VertexDone;
   done     = true;
   myResult = Vpms;
 }

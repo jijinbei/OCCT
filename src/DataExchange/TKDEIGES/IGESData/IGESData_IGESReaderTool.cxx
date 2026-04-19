@@ -131,7 +131,7 @@ bool IGESData_IGESReaderTool::AnalyseRecord(const int                           
   else
     ReadDir(ent, igesdat, igesdat->DirPart(num), ach);
 
-  thestep = IGESData_ReadDir;
+  thestep = IGESData_ReadStage::IGESData_ReadDir;
 
   //   Parameter List : control of its header
   //  occ::handle<Interface_ParamList> list = Data()->Params(num);
@@ -149,7 +149,7 @@ bool IGESData_IGESReaderTool::AnalyseRecord(const int                           
     return false;
   }
   const Interface_FileParameter& FP = thelist->Value(n0par);
-  if ((FP.ParamType() != Interface_ParamInteger) || (atoi(FP.CValue()) != ent->TypeNumber()))
+  if ((FP.ParamType() != Interface_ParamType::Interface_ParamInteger) || (atoi(FP.CValue()) != ent->TypeNumber()))
   {
     // Sending of message : DE : Incorrect type
     Message_Msg Msg28("XSTEP_28");
@@ -159,11 +159,11 @@ bool IGESData_IGESReaderTool::AnalyseRecord(const int                           
   }
 
   IGESData_ParamReader PR(thelist, ach, n0par, nbpar, num);
-  thestep = IGESData_ReadOwn;
+  thestep = IGESData_ReadStage::IGESData_ReadOwn;
   ReadOwnParams(ent, igesdat, PR);
-  if ((thestep = PR.Stage()) == IGESData_ReadOwn)
+  if ((thestep = PR.Stage()) == IGESData_ReadStage::IGESData_ReadOwn)
     PR.NextStage();
-  if (thestep == IGESData_ReadEnd)
+  if (thestep == IGESData_ReadStage::IGESData_ReadEnd)
   {
     if (!PR.IsCheckEmpty())
       ach = PR.Check();
@@ -171,16 +171,16 @@ bool IGESData_IGESReaderTool::AnalyseRecord(const int                           
   }
 
   ReadAssocs(ent, igesdat, PR);
-  if ((thestep = PR.Stage()) == IGESData_ReadAssocs)
+  if ((thestep = PR.Stage()) == IGESData_ReadStage::IGESData_ReadAssocs)
     PR.NextStage();
-  if (thestep == IGESData_ReadEnd)
+  if (thestep == IGESData_ReadStage::IGESData_ReadEnd)
   {
     if (!PR.IsCheckEmpty())
       ach = PR.Check();
     return (!ach->HasFailed());
   }
   ReadProps(ent, igesdat, PR);
-  //  thestep = IGESData_ReadEnd;
+  //  thestep = IGESData_ReadStage::IGESData_ReadEnd;
   if (!PR.IsCheckEmpty())
     ach = PR.Check();
   return (!ach->HasFailed());
@@ -442,7 +442,7 @@ void IGESData_IGESReaderTool::ReadProps(const occ::handle<IGESData_IGESEntity>& 
   occ::handle<Interface_Check> ach = new Interface_Check;
   Msg38.Arg(thecnum);
   Msg38.Arg(thectyp.Type());
-  if (PR.Stage() != IGESData_ReadProps)
+  if (PR.Stage() != IGESData_ReadStage::IGESData_ReadProps)
     ach->SendFail(Msg38);
   int ncur = PR.CurrentNumber();
   int nbp  = PR.NbParams();
@@ -489,7 +489,7 @@ void IGESData_IGESReaderTool::ReadAssocs(const occ::handle<IGESData_IGESEntity>&
   Msg37.Arg(thecnum);
   Msg37.Arg(thectyp.Type());
   occ::handle<Interface_Check> ach = new Interface_Check;
-  if (PR.Stage() != IGESData_ReadAssocs)
+  if (PR.Stage() != IGESData_ReadStage::IGESData_ReadAssocs)
     ach->SendFail(Msg37);
   int ncur = PR.CurrentNumber();
   int nbp  = PR.NbParams();

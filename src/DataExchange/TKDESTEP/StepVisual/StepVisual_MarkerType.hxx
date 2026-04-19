@@ -17,7 +17,7 @@
 #ifndef _StepVisual_MarkerType_HeaderFile
 #define _StepVisual_MarkerType_HeaderFile
 
-enum StepVisual_MarkerType
+enum class StepVisual_MarkerType
 {
   StepVisual_mtDot,
   StepVisual_mtX,

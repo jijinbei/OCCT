@@ -30,11 +30,11 @@ inline const char* ConvertToString(const StepBasic_AheadOrBehind theSourceEnum)
 {
   switch (theSourceEnum)
   {
-    case StepBasic_aobAhead:
+    case StepBasic_AheadOrBehind::StepBasic_aobAhead:
       return aobAhead;
-    case StepBasic_aobExact:
+    case StepBasic_AheadOrBehind::StepBasic_aobExact:
       return aobExact;
-    case StepBasic_aobBehind:
+    case StepBasic_AheadOrBehind::StepBasic_aobBehind:
       return aobBehind;
   }
   return nullptr;
@@ -49,15 +49,15 @@ inline bool ConvertToEnum(const char* const        theAheadOrBehindStr,
 {
   if (IsEqual(theAheadOrBehindStr, aobAhead))
   {
-    theResultEnum = StepBasic_aobAhead;
+    theResultEnum = StepBasic_AheadOrBehind::StepBasic_aobAhead;
   }
   else if (IsEqual(theAheadOrBehindStr, aobExact))
   {
-    theResultEnum = StepBasic_aobExact;
+    theResultEnum = StepBasic_AheadOrBehind::StepBasic_aobExact;
   }
   else if (IsEqual(theAheadOrBehindStr, aobBehind))
   {
-    theResultEnum = StepBasic_aobBehind;
+    theResultEnum = StepBasic_AheadOrBehind::StepBasic_aobBehind;
   }
   else
   {

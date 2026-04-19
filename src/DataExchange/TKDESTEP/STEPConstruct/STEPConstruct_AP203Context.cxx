@@ -117,9 +117,9 @@ occ::handle<StepBasic_DateAndTime> STEPConstruct_AP203Context::DefaultDateAndTim
 #endif
     int                     shifth = abs(shift) / 3600;
     int                     shiftm = (abs(shift) - shifth * 3600) / 60;
-    StepBasic_AheadOrBehind sense  = (shift > 0   ? StepBasic_aobBehind
-                                      : shift < 0 ? StepBasic_aobAhead
-                                                  : StepBasic_aobExact);
+    StepBasic_AheadOrBehind sense  = (shift > 0   ? StepBasic_AheadOrBehind::StepBasic_aobBehind
+                                      : shift < 0 ? StepBasic_AheadOrBehind::StepBasic_aobAhead
+                                                  : StepBasic_AheadOrBehind::StepBasic_aobExact);
     zone->Init(shifth, (shiftm != 0), shiftm, sense);
 
     occ::handle<StepBasic_LocalTime> aTime = new StepBasic_LocalTime;

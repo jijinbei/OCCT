@@ -18,7 +18,7 @@
 #define _Transfer_StatusResult_HeaderFile
 
 //! result status of transferring an entity (see Transcriptor)
-enum Transfer_StatusResult
+enum class Transfer_StatusResult
 {
   Transfer_StatusVoid,
   Transfer_StatusDefined,

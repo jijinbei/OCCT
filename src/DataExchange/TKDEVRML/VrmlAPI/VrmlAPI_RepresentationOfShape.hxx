@@ -18,14 +18,14 @@
 
 //! Identifies the representation of the shape written
 //! to a VRML file. The available options are :
-//! -      VrmlAPI_ShadedRepresentation :
+//! -      VrmlAPI_RepresentationOfShape::VrmlAPI_ShadedRepresentation :
 //! the shape is translated with a shaded representation.
-//! -      VrmlAPI_WireFrameRepresentation :
+//! -      VrmlAPI_RepresentationOfShape::VrmlAPI_WireFrameRepresentation :
 //! the shape is translated with a wireframe representation.
-//! -      VrmlAPI_BothRepresentation : the shape is translated
+//! -      VrmlAPI_RepresentationOfShape::VrmlAPI_BothRepresentation : the shape is translated
 //! to VRML format with both representations : shaded and
 //! wireframe. This is the default option.
-enum VrmlAPI_RepresentationOfShape
+enum class VrmlAPI_RepresentationOfShape
 {
   VrmlAPI_ShadedRepresentation,
   VrmlAPI_WireFrameRepresentation,

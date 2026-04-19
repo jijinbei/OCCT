@@ -332,10 +332,10 @@ IGESData_DirChecker IGESGeom_ToolSplineCurve::DirChecker(
   const occ::handle<IGESGeom_SplineCurve>& /* ent */) const
 {
   IGESData_DirChecker DC(112, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusIgnored();
 
   return DC;

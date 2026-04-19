@@ -17,7 +17,7 @@
 #ifndef _StepShape_AngleRelator_HeaderFile
 #define _StepShape_AngleRelator_HeaderFile
 
-enum StepShape_AngleRelator
+enum class StepShape_AngleRelator
 {
   StepShape_Equal,
   StepShape_Large,

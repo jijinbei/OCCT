@@ -17,7 +17,7 @@
 #ifndef _Vrml_FontStyleFamily_HeaderFile
 #define _Vrml_FontStyleFamily_HeaderFile
 
-enum Vrml_FontStyleFamily
+enum class Vrml_FontStyleFamily
 {
   Vrml_SERIF,
   Vrml_SANS,

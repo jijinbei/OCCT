@@ -17,7 +17,7 @@
 #ifndef _MoniTool_ValueType_HeaderFile
 #define _MoniTool_ValueType_HeaderFile
 
-enum MoniTool_ValueType
+enum class MoniTool_ValueType
 {
   MoniTool_ValueMisc,
   MoniTool_ValueInteger,

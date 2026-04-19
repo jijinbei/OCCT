@@ -32,15 +32,15 @@ occ::handle<TCollection_HAsciiString> TopoDSToStep::DecodeBuilderError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (E)
   {
-    case TopoDSToStep_BuilderDone: {
+    case TopoDSToStep_BuilderError::TopoDSToStep_BuilderDone: {
       mess = new TCollection_HAsciiString("Builder Done");
       break;
     }
-    case TopoDSToStep_NoFaceMapped: {
+    case TopoDSToStep_BuilderError::TopoDSToStep_NoFaceMapped: {
       mess = new TCollection_HAsciiString("None of the Shell Faces has been mapped");
       break;
     }
-    case TopoDSToStep_BuilderOther: {
+    case TopoDSToStep_BuilderError::TopoDSToStep_BuilderOther: {
       mess = new TCollection_HAsciiString("Other Error in Builder");
       break;
     }
@@ -54,23 +54,23 @@ occ::handle<TCollection_HAsciiString> TopoDSToStep::DecodeFaceError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (E)
   {
-    case TopoDSToStep_FaceDone: {
+    case TopoDSToStep_MakeFaceError::TopoDSToStep_FaceDone: {
       mess = new TCollection_HAsciiString("Face Done");
       break;
     }
-    case TopoDSToStep_FaceOther: {
+    case TopoDSToStep_MakeFaceError::TopoDSToStep_FaceOther: {
       mess = new TCollection_HAsciiString("Other Error in Make STEP face");
       break;
     }
-    case TopoDSToStep_InfiniteFace: {
+    case TopoDSToStep_MakeFaceError::TopoDSToStep_InfiniteFace: {
       mess = new TCollection_HAsciiString("The Face has no Outer Wire");
       break;
     }
-    case TopoDSToStep_NonManifoldFace: {
+    case TopoDSToStep_MakeFaceError::TopoDSToStep_NonManifoldFace: {
       mess = new TCollection_HAsciiString("The Face is Internal or External");
       break;
     }
-    case TopoDSToStep_NoWireMapped: {
+    case TopoDSToStep_MakeFaceError::TopoDSToStep_NoWireMapped: {
       mess = new TCollection_HAsciiString("None of the Face Wires has been mapped");
       break;
     }
@@ -84,15 +84,15 @@ occ::handle<TCollection_HAsciiString> TopoDSToStep::DecodeWireError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (E)
   {
-    case TopoDSToStep_WireDone: {
+    case TopoDSToStep_MakeWireError::TopoDSToStep_WireDone: {
       mess = new TCollection_HAsciiString("Wire Done");
       break;
     }
-    case TopoDSToStep_WireOther: {
+    case TopoDSToStep_MakeWireError::TopoDSToStep_WireOther: {
       mess = new TCollection_HAsciiString("Other Error in Make STEP wire");
       break;
     }
-    case TopoDSToStep_NonManifoldWire: {
+    case TopoDSToStep_MakeWireError::TopoDSToStep_NonManifoldWire: {
       mess = new TCollection_HAsciiString("The Wire is Internal or External");
       break;
     }
@@ -106,15 +106,15 @@ occ::handle<TCollection_HAsciiString> TopoDSToStep::DecodeEdgeError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (E)
   {
-    case TopoDSToStep_EdgeDone: {
+    case TopoDSToStep_MakeEdgeError::TopoDSToStep_EdgeDone: {
       mess = new TCollection_HAsciiString("Edge Done");
       break;
     }
-    case TopoDSToStep_EdgeOther: {
+    case TopoDSToStep_MakeEdgeError::TopoDSToStep_EdgeOther: {
       mess = new TCollection_HAsciiString("Other Error in Make STEP Edge");
       break;
     }
-    case TopoDSToStep_NonManifoldEdge: {
+    case TopoDSToStep_MakeEdgeError::TopoDSToStep_NonManifoldEdge: {
       mess = new TCollection_HAsciiString("The Edge is Internal or External");
       break;
     }
@@ -128,11 +128,11 @@ occ::handle<TCollection_HAsciiString> TopoDSToStep::DecodeVertexError(
   occ::handle<TCollection_HAsciiString> mess;
   switch (E)
   {
-    case TopoDSToStep_VertexDone: {
+    case TopoDSToStep_MakeVertexError::TopoDSToStep_VertexDone: {
       mess = new TCollection_HAsciiString("Vertex Done");
       break;
     }
-    case TopoDSToStep_VertexOther: {
+    case TopoDSToStep_MakeVertexError::TopoDSToStep_VertexOther: {
       mess = new TCollection_HAsciiString("Other Error in Make STEP Vertex");
       break;
     }

@@ -37,8 +37,8 @@ void RWStepVisual_RWViewVolume::ReadStep(const occ::handle<StepData_StepReaderDa
 
   // --- own field : projectionType ---
 
-  StepVisual_CentralOrParallel aProjectionType = StepVisual_copCentral;
-  if (data->ParamType(num, 1) == Interface_ParamEnum)
+  StepVisual_CentralOrParallel aProjectionType = StepVisual_CentralOrParallel::StepVisual_copCentral;
+  if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);
     if (!RWStepVisual_RWCentralOrParallel::ConvertToEnum(text, aProjectionType))

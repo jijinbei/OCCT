@@ -61,7 +61,7 @@ static void dumpNodeHeader(Standard_OStream&              theStream,
 
 VrmlData_Scene::VrmlData_Scene(const occ::handle<NCollection_IncAllocator>& theAlloc)
     : myLinearScale(1.),
-      myStatus(VrmlData_StatusOK),
+      myStatus(VrmlData_ErrorStatus::VrmlData_StatusOK),
       myAllocator(theAlloc.IsNull() ? new NCollection_IncAllocator : theAlloc.operator->()),
       myLineError(0),
       myOutput(nullptr),
@@ -126,7 +126,7 @@ Standard_OStream& operator<<(Standard_OStream& theOutput, const VrmlData_Scene& 
     if (!aNode.IsNull())
     {
       const VrmlData_ErrorStatus aStatus = aScene.WriteNode(nullptr, aNode);
-      if (aStatus != VrmlData_StatusOK && aStatus != VrmlData_NotImplemented)
+      if (aStatus != VrmlData_ErrorStatus::VrmlData_StatusOK && aStatus != VrmlData_ErrorStatus::VrmlData_NotImplemented)
         break;
     }
   }
@@ -144,7 +144,7 @@ Standard_OStream& operator<<(Standard_OStream& theOutput, const VrmlData_Scene& 
     if (!aNode.IsNull())
     {
       const VrmlData_ErrorStatus aStatus = aScene.WriteNode(nullptr, aNode);
-      if (aStatus != VrmlData_StatusOK && aStatus != VrmlData_NotImplemented)
+      if (aStatus != VrmlData_ErrorStatus::VrmlData_StatusOK && aStatus != VrmlData_ErrorStatus::VrmlData_NotImplemented)
         break;
     }
   }
@@ -183,10 +183,10 @@ const occ::handle<VrmlData_WorldInfo>& VrmlData_Scene::WorldInfo() const
 
 VrmlData_ErrorStatus VrmlData_Scene::readLine(VrmlData_InBuffer& theBuffer)
 {
-  VrmlData_ErrorStatus aStatus = VrmlData_StatusOK;
+  VrmlData_ErrorStatus aStatus = VrmlData_ErrorStatus::VrmlData_StatusOK;
   if (theBuffer.Input.eof())
   {
-    return VrmlData_EndOfFile;
+    return VrmlData_ErrorStatus::VrmlData_EndOfFile;
   }
   // Read a line.
   theBuffer.Input.getline(theBuffer.Line, sizeof(theBuffer.Line));
@@ -212,7 +212,7 @@ VrmlData_ErrorStatus VrmlData_Scene::readLine(VrmlData_InBuffer& theBuffer)
     }
     if (anInd == 0) // no possible to rolling back
     {
-      return VrmlData_UnrecoverableError;
+      return VrmlData_ErrorStatus::VrmlData_UnrecoverableError;
     }
     theBuffer.Input.seekg(-static_cast<std::streamoff>((aNbChars - anInd - 1)), std::ios::cur);
   }
@@ -222,17 +222,17 @@ VrmlData_ErrorStatus VrmlData_Scene::readLine(VrmlData_InBuffer& theBuffer)
   const std::ios::iostate aState = theBuffer.Input.rdstate();
   if (aState & std::ios::badbit)
   {
-    aStatus = VrmlData_UnrecoverableError;
+    aStatus = VrmlData_ErrorStatus::VrmlData_UnrecoverableError;
   }
   else if (aState & std::ios::failbit)
   {
     if (aState & std::ios::eofbit)
     {
-      aStatus = VrmlData_EndOfFile;
+      aStatus = VrmlData_ErrorStatus::VrmlData_EndOfFile;
     }
     else
     {
-      aStatus = VrmlData_GeneralError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_GeneralError;
     }
   }
   theBuffer.LinePtr     = &theBuffer.Line[0];
@@ -244,9 +244,9 @@ VrmlData_ErrorStatus VrmlData_Scene::readLine(VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_Scene::ReadLine(VrmlData_InBuffer& theBuffer)
 {
-  VrmlData_ErrorStatus aStatus(VrmlData_StatusOK);
+  VrmlData_ErrorStatus aStatus(VrmlData_ErrorStatus::VrmlData_StatusOK);
 
-  while (aStatus == VrmlData_StatusOK)
+  while (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
   {
     // Find the first significant character of the line
     for (; *theBuffer.LinePtr != '\0'; theBuffer.LinePtr++)
@@ -300,9 +300,9 @@ nonempty_line:
 VrmlData_ErrorStatus VrmlData_Scene::readHeader(VrmlData_InBuffer& theBuffer)
 {
   VrmlData_ErrorStatus aStat = readLine(theBuffer);
-  if (aStat != VrmlData_StatusOK)
+  if (aStat != VrmlData_ErrorStatus::VrmlData_StatusOK)
   {
-    return VrmlData_NotVrmlFile;
+    return VrmlData_ErrorStatus::VrmlData_NotVrmlFile;
   }
   TCollection_AsciiString aHeader(theBuffer.LinePtr);
   // The max possible header size is 25 (with spaces)
@@ -313,7 +313,7 @@ VrmlData_ErrorStatus VrmlData_Scene::readHeader(VrmlData_InBuffer& theBuffer)
   }
   else
   {
-    aStat = VrmlData_NotVrmlFile;
+    aStat = VrmlData_ErrorStatus::VrmlData_NotVrmlFile;
   }
   return aStat;
 }
@@ -337,15 +337,15 @@ VrmlData_Scene& VrmlData_Scene::operator<<(Standard_IStream& theInput)
   {
     if (!VrmlData_Node::OK(myStatus, ReadLine(aBuffer)))
     {
-      if (myStatus == VrmlData_EndOfFile)
-        myStatus = VrmlData_StatusOK;
+      if (myStatus == VrmlData_ErrorStatus::VrmlData_EndOfFile)
+        myStatus = VrmlData_ErrorStatus::VrmlData_StatusOK;
       break;
     }
     // this line provides the method ReadNode in the present context
     occ::handle<VrmlData_Node> aNode;
     myStatus = aNullNode->ReadNode(aBuffer, aNode);
     // Unknown nodes are not stored however they do not generate error
-    if (myStatus != VrmlData_StatusOK)
+    if (myStatus != VrmlData_ErrorStatus::VrmlData_StatusOK)
       break;
     if (!aNode.IsNull() /*&&
         !aNode->IsKind (STANDARD_TYPE(VrmlData_UnknownNode))*/)
@@ -362,7 +362,7 @@ VrmlData_Scene& VrmlData_Scene::operator<<(Standard_IStream& theInput)
       }
     }
   }
-  if (myStatus != VrmlData_StatusOK)
+  if (myStatus != VrmlData_ErrorStatus::VrmlData_StatusOK)
     myLineError = aBuffer.LineCount;
 
   return *this;
@@ -437,7 +437,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadWord(VrmlData_InBuffer&       theBuffer
                                               TCollection_AsciiString& theWord)
 {
   VrmlData_ErrorStatus aStatus = ReadLine(theBuffer);
-  if (aStatus == VrmlData_StatusOK)
+  if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
   {
     char* ptr = theBuffer.LinePtr;
     while (*ptr != '\0' && *ptr != '\n' && *ptr != '\r' && *ptr != ' ' && *ptr != '\t'
@@ -445,7 +445,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadWord(VrmlData_InBuffer&       theBuffer
       ptr++;
     const int aLen = int(ptr - theBuffer.LinePtr);
     if (aLen <= 0)
-      aStatus = VrmlData_StringInputError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_StringInputError;
     else
     {
       theWord           = TCollection_AsciiString((const char*)theBuffer.LinePtr, aLen);
@@ -481,7 +481,7 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
   }
 
   const char* strName = aName.ToCString();
-  if (aStatus == VrmlData_StatusOK)
+  if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
   {
     // create the new node
     if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "Appearance"))
@@ -541,10 +541,10 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
       if (isProto)
       {
         aStatus = ReadLine(theBuffer);
-        if (aStatus == VrmlData_StatusOK)
+        if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
         {
           if (theBuffer.LinePtr[0] != '[')
-            aStatus = VrmlData_VrmlFormatError;
+            aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
           else
           {
             theBuffer.LinePtr++;
@@ -552,7 +552,7 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
             // This loop searches for any opening bracket '['.
             // Such bracket increments the level counter. A closing bracket decrements
             // the counter. The loop terminates when the counter becomes negative.
-            while (aLevelCounter >= 0 && (aStatus = ReadLine(theBuffer)) == VrmlData_StatusOK)
+            while (aLevelCounter >= 0 && (aStatus = ReadLine(theBuffer)) == VrmlData_ErrorStatus::VrmlData_StatusOK)
             {
               int aChar;
               while ((aChar = theBuffer.LinePtr[0]) != '\0')
@@ -573,7 +573,7 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
           }
         }
       }
-      if (aStatus == VrmlData_StatusOK)
+      if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
         aNode = new VrmlData_UnknownNode(*this, strName, aTitle.ToCString());
     }
   }
@@ -584,9 +584,9 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
       myNamedNodes.Add(aNode);
     if (!theType.IsNull())
       if (!aNode->IsKind(theType))
-        aStatus = VrmlData_VrmlFormatError;
+        aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
   }
-  if (aStatus == VrmlData_StatusOK)
+  if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
   {
     if (theBuffer.LinePtr[0] == '{')
     {
@@ -596,7 +596,7 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
     }
     else
     {
-      aStatus = VrmlData_VrmlFormatError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
     }
   }
   return aStatus;
@@ -710,9 +710,9 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadReal(VrmlData_InBuffer& theBuffer,
     char* endptr;
     aResult = Strtod(theBuffer.LinePtr, &endptr);
     if (endptr == theBuffer.LinePtr)
-      aStatus = VrmlData_NumericInputError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_NumericInputError;
     else if (isOnlyPositive && aResult < 0.001 * Precision::Confusion())
-      aStatus = VrmlData_IrrelevantNumber;
+      aStatus = VrmlData_ErrorStatus::VrmlData_IrrelevantNumber;
     else
     {
       theResult         = isScale ? (aResult * myLinearScale) : aResult;
@@ -730,7 +730,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadXYZ(VrmlData_InBuffer& theBuffer,
                                              bool               isOnlyPos) const
 {
   double               aVal[3] = {0., 0., 0.};
-  VrmlData_ErrorStatus aStatus = VrmlData_StatusOK;
+  VrmlData_ErrorStatus aStatus = VrmlData_ErrorStatus::VrmlData_StatusOK;
   for (int i = 0; i < 3; i++)
   {
     if (!VrmlData_Node::OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
@@ -739,20 +739,20 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadXYZ(VrmlData_InBuffer& theBuffer,
     aVal[i] = Strtod(theBuffer.LinePtr, &endptr);
     if (endptr == theBuffer.LinePtr)
     {
-      aStatus = VrmlData_NumericInputError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_NumericInputError;
       break;
     }
     else
     {
       if (isOnlyPos && aVal[i] < 0.001 * Precision::Confusion())
       {
-        aStatus = VrmlData_IrrelevantNumber;
+        aStatus = VrmlData_ErrorStatus::VrmlData_IrrelevantNumber;
         break;
       }
       theBuffer.LinePtr = endptr;
     }
   }
-  if (aStatus == VrmlData_StatusOK)
+  if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
   {
     if (isScale)
     {
@@ -774,7 +774,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadXY(VrmlData_InBuffer& theBuffer,
                                             bool               isOnlyPos) const
 {
   double               aVal[2] = {0., 0.};
-  VrmlData_ErrorStatus aStatus = VrmlData_StatusOK;
+  VrmlData_ErrorStatus aStatus = VrmlData_ErrorStatus::VrmlData_StatusOK;
   for (int i = 0; i < 2; i++)
   {
     if (!VrmlData_Node::OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
@@ -783,20 +783,20 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadXY(VrmlData_InBuffer& theBuffer,
     aVal[i] = Strtod(theBuffer.LinePtr, &endptr);
     if (endptr == theBuffer.LinePtr)
     {
-      aStatus = VrmlData_NumericInputError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_NumericInputError;
       break;
     }
     else
     {
       if (isOnlyPos && aVal[i] < 0.001 * Precision::Confusion())
       {
-        aStatus = VrmlData_IrrelevantNumber;
+        aStatus = VrmlData_ErrorStatus::VrmlData_IrrelevantNumber;
         break;
       }
       theBuffer.LinePtr = endptr;
     }
   }
-  if (aStatus == VrmlData_StatusOK)
+  if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
   {
     if (isScale)
       theXY.SetCoord(aVal[0] * myLinearScale, aVal[1] * myLinearScale);
@@ -821,7 +821,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadArrIndex(VrmlData_InBuffer& theBuffer,
   if (VrmlData_Node::OK(aStatus, ReadLine(theBuffer)))
   {
     if (theBuffer.LinePtr[0] != '[') // opening bracket
-      aStatus = VrmlData_VrmlFormatError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
     else
     {
       theBuffer.LinePtr++;
@@ -870,7 +870,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadArrIndex(VrmlData_InBuffer& theBuffer,
           int* bufFace = static_cast<int*>(myAllocator->Allocate((aLen + 1) * sizeof(int)));
           if (bufFace == nullptr)
           {
-            aStatus = VrmlData_UnrecoverableError;
+            aStatus = VrmlData_ErrorStatus::VrmlData_UnrecoverableError;
             break;
           }
           bufFace[0] = aLen;
@@ -880,7 +880,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadArrIndex(VrmlData_InBuffer& theBuffer,
           vecIndice.Append(bufFace);
         }
       }
-      if (aStatus == VrmlData_StatusOK)
+      if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
       {
         const size_t aNbBlocks = static_cast<size_t>(vecIndice.Length());
         if (aNbBlocks)
@@ -888,7 +888,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadArrIndex(VrmlData_InBuffer& theBuffer,
           const int** anArray =
             static_cast<const int**>(myAllocator->Allocate(aNbBlocks * sizeof(int*)));
           if (anArray == nullptr)
-            aStatus = VrmlData_UnrecoverableError;
+            aStatus = VrmlData_ErrorStatus::VrmlData_UnrecoverableError;
           else
           {
             for (size_t i = 0; i < aNbBlocks; i++)
@@ -909,7 +909,7 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteArrIndex(const char*  thePrefix,
                                                    const int**  theArrIndex,
                                                    const size_t theNbBlocks) const
 {
-  VrmlData_ErrorStatus aStatus(VrmlData_StatusOK);
+  VrmlData_ErrorStatus aStatus(VrmlData_ErrorStatus::VrmlData_StatusOK);
   if (theNbBlocks && (!IsDummyWrite()))
   {
     if (VrmlData_Node::OK(aStatus, WriteLine(thePrefix, "[", 1)))
@@ -954,7 +954,7 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteArrIndex(const char*  thePrefix,
         }
         WriteLine(buf, iBlock < theNbBlocks - 1 ? "-1," : "-1");
       }
-      if (aStatus == VrmlData_StatusOK)
+      if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
         aStatus = WriteLine("]", nullptr, -1);
     }
   }
@@ -1001,7 +1001,7 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteLine(const char* theLin0,
                                    "                                        ";
   VrmlData_ErrorStatus& aStatus  = const_cast<VrmlData_ErrorStatus&>(myStatus);
   if (IsDummyWrite())
-    aStatus = VrmlData_StatusOK;
+    aStatus = VrmlData_ErrorStatus::VrmlData_StatusOK;
   else
   {
     int& aCurrentIndent = const_cast<int&>(myCurrentIndent);
@@ -1027,12 +1027,12 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteLine(const char* theLin0,
     }
     const int stat = myOutput->rdstate();
     if (stat & std::ios::badbit)
-      aStatus = VrmlData_UnrecoverableError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_UnrecoverableError;
     else if (stat & std::ios::failbit)
       //       if (stat & std::ios::eofbit)
-      //         aStatus = VrmlData_EndOfFile;
+      //         aStatus = VrmlData_ErrorStatus::VrmlData_EndOfFile;
       //       else
-      aStatus = VrmlData_GeneralError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_GeneralError;
     if (theIndent > 0)
       aCurrentIndent += myIndent;
   }
@@ -1044,7 +1044,7 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteLine(const char* theLin0,
 VrmlData_ErrorStatus VrmlData_Scene::WriteNode(const char*                       thePrefix,
                                                const occ::handle<VrmlData_Node>& theNode) const
 {
-  VrmlData_ErrorStatus aStatus(VrmlData_StatusOK);
+  VrmlData_ErrorStatus aStatus(VrmlData_ErrorStatus::VrmlData_StatusOK);
   bool                 isNoName(false);
   if (theNode->Name() == nullptr)
     isNoName = true;

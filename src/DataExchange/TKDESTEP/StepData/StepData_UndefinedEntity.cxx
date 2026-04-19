@@ -79,7 +79,7 @@ void StepData_UndefinedEntity::ReadRecord(const occ::handle<StepData_StepReaderD
     const char*                           val    = SR->ParamCValue(num, i);
     Interface_ParamType                   partyp = SR->ParamType(num, i);
     int                                   nume   = 0;
-    if (partyp == Interface_ParamIdent)
+    if (partyp == Interface_ParamType::Interface_ParamIdent)
     {
       nume = SR->ParamNumber(num, i);
       if (nume > 0)
@@ -93,17 +93,17 @@ void StepData_UndefinedEntity::ReadRecord(const occ::handle<StepData_StepReaderD
       if (nume <= 0)
       {
         ach->AddFail("A reference to another entity is unresolved");
-        partyp = Interface_ParamVoid;
+        partyp = Interface_ParamType::Interface_ParamVoid;
       }
     }
-    else if (partyp == Interface_ParamSub)
+    else if (partyp == Interface_ParamType::Interface_ParamSub)
     {
       nume                                      = SR->ParamNumber(num, i);
       occ::handle<StepData_UndefinedEntity> und = new StepData_UndefinedEntity(true);
       anent                                     = und;
       und->ReadRecord(SR, nume, ach);
     }
-    else if (partyp == Interface_ParamText)
+    else if (partyp == Interface_ParamType::Interface_ParamText)
     {
       //    Return integre a supprimer silya
       int lval = (int)strlen(val);
@@ -146,7 +146,7 @@ void StepData_UndefinedEntity::WriteParams(StepData_StepWriter& SW) const
   for (int i = 1; i <= nb; i++)
   {
     Interface_ParamType partyp = thecont->ParamType(i);
-    if (partyp == Interface_ParamSub)
+    if (partyp == Interface_ParamType::Interface_ParamSub)
     {
       DeclareAndCast(StepData_UndefinedEntity, und, thecont->ParamEntity(i));
       und->StepType(); // svv #2
@@ -156,7 +156,7 @@ void StepData_UndefinedEntity::WriteParams(StepData_StepWriter& SW) const
       if (und->IsSub())
         SW.CloseSub();
     }
-    else if (partyp == Interface_ParamIdent)
+    else if (partyp == Interface_ParamType::Interface_ParamIdent)
     {
       anent = thecont->ParamEntity(i);
       SW.Send(anent);
@@ -192,12 +192,12 @@ void StepData_UndefinedEntity::FillShared(Interface_EntityIterator& list) const
   for (i = 1; i <= nb; i++)
   {
     Interface_ParamType ptype = thecont->ParamType(i);
-    if (ptype == Interface_ParamSub)
+    if (ptype == Interface_ParamType::Interface_ParamSub)
     {
       DeclareAndCast(StepData_UndefinedEntity, subent, thecont->ParamEntity(i));
       subent->FillShared(list);
     }
-    else if (ptype == Interface_ParamIdent)
+    else if (ptype == Interface_ParamType::Interface_ParamIdent)
     {
       list.AddItem(thecont->ParamEntity(i));
     }

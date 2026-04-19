@@ -36,7 +36,7 @@
 //=================================================================================================
 
 StepToTopoDS_TranslateVertex::StepToTopoDS_TranslateVertex()
-    : myError(StepToTopoDS_TranslateVertexOther)
+    : myError(StepToTopoDS_TranslateVertexError::StepToTopoDS_TranslateVertexOther)
 {
   done = false;
 }
@@ -63,7 +63,7 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
 {
   if (aVertex.IsNull())
   {
-    myError = StepToTopoDS_TranslateVertexOther;
+    myError = StepToTopoDS_TranslateVertexError::StepToTopoDS_TranslateVertexOther;
     done    = false;
     return;
   }
@@ -74,7 +74,7 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
     if (NMTool.IsActive() && NMTool.IsBound(aVertex))
     {
       myResult = NMTool.Find(aVertex);
-      myError  = StepToTopoDS_TranslateVertexDone;
+      myError  = StepToTopoDS_TranslateVertexError::StepToTopoDS_TranslateVertexDone;
       done     = true;
       return;
     }
@@ -86,7 +86,7 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
         && NMTool.IsBound(aVName->String()))
     {
       myResult = NMTool.Find(aVName->String());
-      myError  = StepToTopoDS_TranslateVertexDone;
+      myError  = StepToTopoDS_TranslateVertexError::StepToTopoDS_TranslateVertexDone;
       done     = true;
       return;
     }
@@ -97,7 +97,7 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
     const occ::handle<StepGeom_Point>        P  = VP->VertexGeometry();
     if (P.IsNull())
     {
-      myError = StepToTopoDS_TranslateVertexOther;
+      myError = StepToTopoDS_TranslateVertexError::StepToTopoDS_TranslateVertexOther;
       done    = false;
       return;
     }
@@ -122,7 +122,7 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
   {
     myResult = TopoDS::Vertex(aTool.Find(aVertex));
   }
-  myError = StepToTopoDS_TranslateVertexDone;
+  myError = StepToTopoDS_TranslateVertexError::StepToTopoDS_TranslateVertexDone;
   done    = true;
 }
 

@@ -186,7 +186,7 @@ IGESData_DirChecker IGESDraw_ToolLabelDisplay::DirChecker(
   const occ::handle<IGESDraw_LabelDisplay>& /*ent*/) const
 {
   IGESData_DirChecker DC(402, 5);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.HierarchyStatusIgnored();
   DC.BlankStatusIgnored();
   return DC;

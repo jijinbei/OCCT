@@ -22,7 +22,7 @@ Vrml_AsciiText::Vrml_AsciiText()
   myString = new NCollection_HArray1<TCollection_AsciiString>(1, 1, tmpS);
 
   mySpacing       = 1;
-  myJustification = Vrml_LEFT;
+  myJustification = Vrml_AsciiTextJustification::Vrml_LEFT;
   myWidth         = 0;
 }
 
@@ -108,12 +108,12 @@ Standard_OStream& Vrml_AsciiText::Print(Standard_OStream& anOStream) const
 
   switch (myJustification)
   {
-    case Vrml_LEFT:
+    case Vrml_AsciiTextJustification::Vrml_LEFT:
       break; // anOStream  << "    justification\t LEFT";
-    case Vrml_CENTER:
+    case Vrml_AsciiTextJustification::Vrml_CENTER:
       anOStream << "    justification\tCENTER\n";
       break;
-    case Vrml_RIGHT:
+    case Vrml_AsciiTextJustification::Vrml_RIGHT:
       anOStream << "    justification\tRIGHT\n";
       break;
   }

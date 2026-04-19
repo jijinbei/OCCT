@@ -859,7 +859,7 @@ YY_DECL
           {
             BEGIN(INITIAL);
             CreateNewText(YYText(), YYLeng());
-            SetTypeArg(Interface_ParamText);
+            SetTypeArg(Interface_ParamType::Interface_ParamText);
             return (token::QUID);
           } /* end of string (apostrophe followed by comma or closing parenthesis) - reset the
                scanner to initial state, record the value of all yytext collected */
@@ -923,7 +923,7 @@ YY_DECL
           YY_RULE_SETUP
           {
             CreateNewText(YYText(), YYLeng());
-            SetTypeArg(Interface_ParamInteger);
+            SetTypeArg(Interface_ParamType::Interface_ParamInteger);
             return (token::QUID);
           }
           YY_BREAK
@@ -931,7 +931,7 @@ YY_DECL
           YY_RULE_SETUP
           {
             CreateNewText(YYText(), YYLeng());
-            SetTypeArg(Interface_ParamReal);
+            SetTypeArg(Interface_ParamType::Interface_ParamReal);
             return (token::QUID);
           }
           YY_BREAK
@@ -939,7 +939,7 @@ YY_DECL
           YY_RULE_SETUP
           {
             CreateNewText(YYText(), YYLeng());
-            SetTypeArg(Interface_ParamReal);
+            SetTypeArg(Interface_ParamType::Interface_ParamReal);
             return (token::QUID);
           }
           YY_BREAK
@@ -947,7 +947,7 @@ YY_DECL
           YY_RULE_SETUP
           {
             CreateNewText(YYText(), YYLeng());
-            SetTypeArg(Interface_ParamHexa);
+            SetTypeArg(Interface_ParamType::Interface_ParamHexa);
             return (token::QUID);
           }
           YY_BREAK
@@ -955,7 +955,7 @@ YY_DECL
           YY_RULE_SETUP
           {
             CreateNewText(YYText(), YYLeng());
-            SetTypeArg(Interface_ParamEnum);
+            SetTypeArg(Interface_ParamType::Interface_ParamEnum);
             return (token::QUID);
           }
           YY_BREAK
@@ -982,7 +982,7 @@ YY_DECL
           YY_RULE_SETUP
           {
             CreateNewText(YYText(), YYLeng());
-            SetTypeArg(Interface_ParamVoid);
+            SetTypeArg(Interface_ParamType::Interface_ParamVoid);
             return (token::QUID);
           }
           YY_BREAK
@@ -1085,7 +1085,7 @@ YY_DECL
           YY_RULE_SETUP
           {
             CreateNewText(YYText(), YYLeng());
-            SetTypeArg(Interface_ParamMisc);
+            SetTypeArg(Interface_ParamType::Interface_ParamMisc);
             return (token::QUID);
           }
           YY_BREAK

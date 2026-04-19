@@ -88,7 +88,7 @@ void IGESSelect_ChangeLevelList::Performing(IFSelect_ContextModif& ctx,
     DeclareAndCast(IGESData_IGESEntity, ent, ctx.ValueResult());
     if (ent.IsNull())
       continue;
-    if (ent->DefLevel() != IGESData_DefSeveral)
+    if (ent->DefLevel() != IGESData_DefList::IGESData_DefSeveral)
       continue;
     if (yaold && ent->Level() != oldl)
       continue;

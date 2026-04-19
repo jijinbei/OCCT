@@ -4116,7 +4116,7 @@ static int OCC33657_3(Draw_Interpretor&, int, const char**)
   // Checking writers working in parallel.
   OSD_Parallel::For(0, 100, [&](int) {
     STEPControl_Writer aWriter;
-    aWriter.Transfer(aShape, STEPControl_StepModelType::STEPControl_AsIs, DESTEP_Parameters{});
+    aWriter.Transfer(aShape, STEPControl_AsIs, DESTEP_Parameters{});
     std::ostringstream aStream;
     aWriter.WriteStream(aStream);
   });
@@ -4160,7 +4160,7 @@ static int OCC33657_4(Draw_Interpretor& theDI, int theArgC, const char** theArgV
     // Writing.
     STEPControl_Writer aWriter;
     aWriter.Transfer(aSourceShape,
-                     STEPControl_StepModelType::STEPControl_AsIs,
+                     STEPControl_AsIs,
                      DESTEP_Parameters{});
     std::stringstream aStream;
     aWriter.WriteStream(aStream);

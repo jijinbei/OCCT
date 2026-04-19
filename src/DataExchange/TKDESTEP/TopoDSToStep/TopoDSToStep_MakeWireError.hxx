@@ -17,7 +17,7 @@
 #ifndef _TopoDSToStep_MakeWireError_HeaderFile
 #define _TopoDSToStep_MakeWireError_HeaderFile
 
-enum TopoDSToStep_MakeWireError
+enum class TopoDSToStep_MakeWireError
 {
   TopoDSToStep_WireDone,
   TopoDSToStep_NonManifoldWire,

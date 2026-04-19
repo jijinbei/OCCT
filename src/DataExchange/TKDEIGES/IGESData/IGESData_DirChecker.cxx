@@ -31,7 +31,7 @@
 IGESData_DirChecker::IGESData_DirChecker()
 {
   thetype = theform1 = theform2 = 0;
-  thestructure = thelinefont = thelineweig = thecolor = IGESData_ErrorRef;
+  thestructure = thelinefont = thelineweig = thecolor = IGESData_DefType::IGESData_ErrorRef;
   thegraphier                                         = -100; // do not test GraphicsIgnored
   theblankst = thesubordst = theuseflag = thehierst = -100;   // do not test
 }
@@ -43,7 +43,7 @@ IGESData_DirChecker::IGESData_DirChecker(const int atype)
   thetype      = atype;
   theform1     = 0;
   theform2     = -1; // form test inhibited
-  thestructure = thelinefont = thelineweig = thecolor = IGESData_ErrorRef;
+  thestructure = thelinefont = thelineweig = thecolor = IGESData_DefType::IGESData_ErrorRef;
   thegraphier                                         = -100; // do not test GraphicsIgnored
   theblankst = thesubordst = theuseflag = thehierst = -100;   // do not test
 }
@@ -54,7 +54,7 @@ IGESData_DirChecker::IGESData_DirChecker(const int atype, const int aform)
 {
   thetype  = atype;
   theform1 = theform2 = aform; // form : required value
-  thestructure = thelinefont = thelineweig = thecolor = IGESData_ErrorRef;
+  thestructure = thelinefont = thelineweig = thecolor = IGESData_DefType::IGESData_ErrorRef;
   thegraphier                                         = -100; // do not test GraphicsIgnored
   theblankst = thesubordst = theuseflag = thehierst = -100;   // do not test
 }
@@ -66,7 +66,7 @@ IGESData_DirChecker::IGESData_DirChecker(const int atype, const int aform1, cons
   thetype      = atype;
   theform1     = aform1;
   theform2     = aform2; // form : [...]
-  thestructure = thelinefont = thelineweig = thecolor = IGESData_ErrorRef;
+  thestructure = thelinefont = thelineweig = thecolor = IGESData_DefType::IGESData_ErrorRef;
   thegraphier                                         = -100; // do not test GraphicsIgnored
   theblankst = thesubordst = theuseflag = thehierst = -100;   // do not test
 }
@@ -82,7 +82,7 @@ bool IGESData_DirChecker::IsSet() const
 
 void IGESData_DirChecker::SetDefault()
 {
-  Structure(IGESData_DefVoid);
+  Structure(IGESData_DefType::IGESData_DefVoid);
 } // Default option
 
 //=================================================================================================
@@ -229,7 +229,7 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
   }
 
   // Sending of message : Structure field is undefined.
-  if (thestructure == IGESData_DefReference && !ent->HasStructure())
+  if (thestructure == IGESData_DefType::IGESData_DefReference && !ent->HasStructure())
   {
     Message_Msg Msg59("XSTEP_59");
     ach->SendFail(Msg59);
@@ -243,12 +243,12 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
     IGESData_DefType df = ent->DefLineFont();
 
     // Sending of message : Line Font Pattern field is incorrect
-    if (df == IGESData_ErrorVal || df == IGESData_ErrorRef)
+    if (df == IGESData_DefType::IGESData_ErrorVal || df == IGESData_DefType::IGESData_ErrorRef)
     {
       Message_Msg Msg60("XSTEP_60");
       ach->SendFail(Msg60);
     }
-    else if (thelinefont == IGESData_DefValue && df != IGESData_DefValue)
+    else if (thelinefont == IGESData_DefType::IGESData_DefValue && df != IGESData_DefType::IGESData_DefValue)
     {
       Message_Msg Msg60("XSTEP_60");
       ach->SendWarning(Msg60);
@@ -257,7 +257,7 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
     int         dlw = ent->LineWeightNumber();
     Message_Msg Msg69("XSTEP_69");
     // Sending of message : Line Weight Number is undefined.
-    if (thelineweig == IGESData_DefValue && dlw == 0)
+    if (thelineweig == IGESData_DefType::IGESData_DefValue && dlw == 0)
     {
       //      Message_Msg Msg69 ("XSTEP_69");
       ach->SendWarning(Msg69);
@@ -266,12 +266,12 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
     df = ent->DefColor();
 
     // Sending of message : Color Number field is incorrect.
-    if (df == IGESData_ErrorVal || df == IGESData_ErrorRef)
+    if (df == IGESData_DefType::IGESData_ErrorVal || df == IGESData_DefType::IGESData_ErrorRef)
     {
       //      Message_Msg Msg69 ("XSTEP_69");
       ach->SendFail(Msg69);
     }
-    else if (thecolor == IGESData_DefValue && df != IGESData_DefValue)
+    else if (thecolor == IGESData_DefType::IGESData_DefValue && df != IGESData_DefType::IGESData_DefValue)
     {
       //      Message_Msg Msg69 ("XSTEP_69");
       ach->SendWarning(Msg69);
@@ -376,7 +376,7 @@ bool IGESData_DirChecker::Correct(const occ::handle<IGESData_IGESEntity>& ent) c
   }
 
   occ::handle<IGESData_IGESEntity> structure; // by default Null
-  if (thestructure != IGESData_DefVoid)
+  if (thestructure != IGESData_DefType::IGESData_DefVoid)
     structure = ent->Structure();
   occ::handle<IGESData_ViewKindEntity>     nulview;
   occ::handle<IGESData_LineFontEntity>     nulfont;
@@ -386,15 +386,15 @@ bool IGESData_DirChecker::Correct(const occ::handle<IGESData_IGESEntity>& ent) c
   if (thegraphier != -1)
     label = ent->LabelDisplay();
   int linew = 0;
-  if (thegraphier != -1 && thelineweig != IGESData_DefVoid)
+  if (thegraphier != -1 && thelineweig != IGESData_DefType::IGESData_DefVoid)
     linew = ent->LineWeightNumber();
 
-  if (thegraphier == -1 || (ent->RankLineFont() != 0 && thelinefont == IGESData_DefVoid))
+  if (thegraphier == -1 || (ent->RankLineFont() != 0 && thelinefont == IGESData_DefType::IGESData_DefVoid))
   {
     ent->InitLineFont(nulfont);
     done = true;
   }
-  if (thegraphier == -1 || (ent->RankColor() != 0 && thecolor == IGESData_DefVoid))
+  if (thegraphier == -1 || (ent->RankColor() != 0 && thecolor == IGESData_DefType::IGESData_DefVoid))
   {
     ent->InitColor(nulcolor);
     done = true;
@@ -406,7 +406,7 @@ bool IGESData_DirChecker::Correct(const occ::handle<IGESData_IGESEntity>& ent) c
     done = true;
   }
   if ((thegraphier == -1 && (!ent->LabelDisplay().IsNull() || ent->LineWeightNumber() != 0))
-      || (ent->HasStructure() && thestructure == IGESData_DefVoid)) // combines :
+      || (ent->HasStructure() && thestructure == IGESData_DefType::IGESData_DefVoid)) // combines :
   {
     ent->InitMisc(structure, label, linew);
     done = true;

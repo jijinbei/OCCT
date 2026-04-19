@@ -17,7 +17,7 @@
 #ifndef _StepGeom_TrimmingPreference_HeaderFile
 #define _StepGeom_TrimmingPreference_HeaderFile
 
-enum StepGeom_TrimmingPreference
+enum class StepGeom_TrimmingPreference
 {
   StepGeom_tpCartesian,
   StepGeom_tpParameter,

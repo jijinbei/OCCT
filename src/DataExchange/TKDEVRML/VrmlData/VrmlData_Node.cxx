@@ -103,7 +103,7 @@ bool VrmlData_Node::IsDefault() const
 
 VrmlData_ErrorStatus VrmlData_Node::Write(const char*) const
 {
-  return VrmlData_NotImplemented;
+  return VrmlData_ErrorStatus::VrmlData_NotImplemented;
 }
 
 //=================================================================================================
@@ -111,7 +111,7 @@ VrmlData_ErrorStatus VrmlData_Node::Write(const char*) const
 VrmlData_ErrorStatus VrmlData_Node::WriteClosing() const
 {
   VrmlData_ErrorStatus aResult = Scene().Status();
-  if (aResult == VrmlData_StatusOK || aResult == VrmlData_NotImplemented)
+  if (aResult == VrmlData_ErrorStatus::VrmlData_StatusOK || aResult == VrmlData_ErrorStatus::VrmlData_NotImplemented)
     aResult = Scene().WriteLine("}", nullptr, -GlobalIndent());
   return aResult;
 }
@@ -126,7 +126,7 @@ VrmlData_ErrorStatus VrmlData_Node::readBrace(VrmlData_InBuffer& theBuffer)
     if (theBuffer.LinePtr[0] == '}')
       theBuffer.LinePtr++;
     else
-      aStatus = VrmlData_VrmlFormatError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
   }
   return aStatus;
 }
@@ -143,7 +143,7 @@ VrmlData_ErrorStatus VrmlData_Node::ReadBoolean(VrmlData_InBuffer& theBuffer, bo
     else if (VRMLDATA_LCOMPARE(theBuffer.LinePtr, "FALSE"))
       theResult = false;
     else
-      aStatus = VrmlData_BooleanInputError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_BooleanInputError;
   }
   return aStatus;
 }
@@ -159,7 +159,7 @@ VrmlData_ErrorStatus VrmlData_Node::ReadInteger(VrmlData_InBuffer& theBuffer, lo
     long  aResult;
     aResult = strtol(theBuffer.LinePtr, &endptr, 10);
     if (endptr == theBuffer.LinePtr)
-      aStatus = VrmlData_NumericInputError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_NumericInputError;
     else
     {
       theResult         = aResult;
@@ -178,14 +178,14 @@ VrmlData_ErrorStatus VrmlData_Node::ReadString(VrmlData_InBuffer&       theBuffe
   if (OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
   {
     if (theBuffer.LinePtr[0] != '\"')
-      aStatus = VrmlData_StringInputError;
+      aStatus = VrmlData_ErrorStatus::VrmlData_StringInputError;
     else
     {
       char* ptr = &theBuffer.LinePtr[1];
       while (*ptr != '\0' && *ptr != '\"')
         ptr++;
       if (*ptr == '\0')
-        aStatus = VrmlData_StringInputError;
+        aStatus = VrmlData_ErrorStatus::VrmlData_StringInputError;
       else
       {
         *ptr              = '\0';
@@ -234,7 +234,7 @@ VrmlData_ErrorStatus VrmlData_Node::ReadMultiString(
       else if (theBuffer.LinePtr[0] == ']') // closing bracket
         theBuffer.LinePtr++;
       else
-        aStatus = VrmlData_VrmlFormatError;
+        aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
       break;
     }
   }
@@ -256,11 +256,11 @@ VrmlData_ErrorStatus VrmlData_Node::ReadNode(VrmlData_InBuffer&                t
     {
       TCollection_AsciiString aName;
       aStatus = VrmlData_Scene::ReadWord(theBuffer, aName);
-      if (aStatus == VrmlData_StatusOK)
+      if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
       {
         aNode = myScene->FindNode(aName.ToCString(), theType);
         if (aNode.IsNull())
-          aStatus = VrmlData_NodeNameUnknown;
+          aStatus = VrmlData_ErrorStatus::VrmlData_NodeNameUnknown;
         //         else
         //           aNode = aNode->Clone(0L);
       }
@@ -273,7 +273,7 @@ VrmlData_ErrorStatus VrmlData_Node::ReadNode(VrmlData_InBuffer&                t
         // The node data are read here, including the final closing brace
         aStatus = aNode->Read(theBuffer);
 
-    if (aStatus == VrmlData_StatusOK)
+    if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
       theNode = aNode;
   }
   return aStatus;
@@ -344,7 +344,7 @@ VrmlData_ErrorStatus VrmlData_ShapeNode::Read(VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_ShapeNode::Write(const char* thePrefix) const
 {
-  VrmlData_ErrorStatus  aStatus(VrmlData_StatusOK);
+  VrmlData_ErrorStatus  aStatus(VrmlData_ErrorStatus::VrmlData_StatusOK);
   const VrmlData_Scene& aScene   = Scene();
   static char           header[] = "Shape {";
   if (OK(aStatus, aScene.WriteLine(thePrefix, header, GlobalIndent())))
@@ -373,7 +373,7 @@ bool VrmlData_ShapeNode::IsDefault() const
 
 VrmlData_ErrorStatus VrmlData_UnknownNode::Read(VrmlData_InBuffer& theBuffer)
 {
-  VrmlData_ErrorStatus aStatus = VrmlData_StatusOK;
+  VrmlData_ErrorStatus aStatus = VrmlData_ErrorStatus::VrmlData_StatusOK;
   int                  aLevelCounter(0);
   // This loop searches for any opening brace.
   // Such brace increments the level counter. A closing brace decrements
@@ -569,7 +569,7 @@ VrmlData_ErrorStatus VrmlData_ImageTexture::Read(VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_ImageTexture::Write(const char* thePrefix) const
 {
-  VrmlData_ErrorStatus  aStatus  = VrmlData_StatusOK;
+  VrmlData_ErrorStatus  aStatus  = VrmlData_ErrorStatus::VrmlData_StatusOK;
   const VrmlData_Scene& aScene   = Scene();
   static char           header[] = "ImageTexture {";
   if (!aScene.IsDummyWrite() && OK(aStatus, aScene.WriteLine(thePrefix, header, GlobalIndent())))

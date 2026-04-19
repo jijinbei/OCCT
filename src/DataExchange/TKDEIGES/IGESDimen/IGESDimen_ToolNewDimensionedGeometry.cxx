@@ -206,11 +206,11 @@ IGESData_DirChecker IGESDimen_ToolNewDimensionedGeometry::DirChecker(
   const occ::handle<IGESDimen_NewDimensionedGeometry>& /* ent */) const
 {
   IGESData_DirChecker DC(402, 21);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefVoid);
   DC.BlankStatusIgnored();
   DC.SubordinateStatusRequired(1);
   DC.UseFlagRequired(2);

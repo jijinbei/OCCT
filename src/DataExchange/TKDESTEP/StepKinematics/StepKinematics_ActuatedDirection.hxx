@@ -17,7 +17,7 @@
 #ifndef _StepKinematics_ActuatedDirection_HeaderFile
 #define _StepKinematics_ActuatedDirection_HeaderFile
 
-enum StepKinematics_ActuatedDirection
+enum class StepKinematics_ActuatedDirection
 {
   StepKinematics_adBidirectional,
   StepKinematics_adPositiveOnly,

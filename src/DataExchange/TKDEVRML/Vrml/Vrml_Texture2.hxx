@@ -36,8 +36,8 @@ class Vrml_SFImage;
 //! By default:
 //! myFilename ("")
 //! myImage (0 0 0)
-//! myWrapS (Vrml_REPEAT)
-//! myWrapT (Vrml_REPEAT)
+//! myWrapS (Vrml_Texture2Wrap::Vrml_REPEAT)
+//! myWrapT (Vrml_Texture2Wrap::Vrml_REPEAT)
 class Vrml_Texture2
 {
 public:

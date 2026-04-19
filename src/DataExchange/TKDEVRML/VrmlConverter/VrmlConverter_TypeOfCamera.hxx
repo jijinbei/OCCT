@@ -17,7 +17,7 @@
 #ifndef _VrmlConverter_TypeOfCamera_HeaderFile
 #define _VrmlConverter_TypeOfCamera_HeaderFile
 
-enum VrmlConverter_TypeOfCamera
+enum class VrmlConverter_TypeOfCamera
 {
   VrmlConverter_NoCamera,
   VrmlConverter_PerspectiveCamera,

@@ -453,7 +453,7 @@ void StepData_StepReaderData::AddStepParam(const int                 num,
                                            const Interface_ParamType atype,
                                            const int                 nument)
 {
-  if (atype == Interface_ParamSub)
+  if (atype == Interface_ParamType::Interface_ParamSub)
   {
     int numid = 0;
     if (aval[2] != '\0')
@@ -471,7 +471,7 @@ void StepData_StepReaderData::AddStepParam(const int                 num,
       Interface_FileReaderData::AddParam(num, aval, atype, numid);
     }
   }
-  else if (atype == Interface_ParamIdent)
+  else if (atype == Interface_ParamType::Interface_ParamIdent)
   {
     int numid = atoi(&aval[1]);
     Interface_FileReaderData::AddParam(num, aval, atype, numid);
@@ -515,7 +515,7 @@ int StepData_StepReaderData::SubListNumber(const int num, const int nump, const 
   if (nump == 0 || nump > NbParams(num))
     return 0;
   const Interface_FileParameter& FP = Param(num, nump);
-  if (FP.ParamType() != Interface_ParamSub)
+  if (FP.ParamType() != Interface_ParamType::Interface_ParamSub)
     return 0;
   if (aslast)
   {
@@ -686,7 +686,7 @@ bool StepData_StepReaderData::ReadSubList(const int                     num,
   }
   //  Si optionel indefini, on passe l eponge
   numsub      = 0;
-  bool isvoid = (Param(num, nump).ParamType() == Interface_ParamVoid);
+  bool isvoid = (Param(num, nump).ParamType() == Interface_ParamType::Interface_ParamVoid);
   if (isvoid && optional)
     return false;
 
@@ -735,38 +735,38 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
   int                                                                     kod = 0;
   switch (FT0)
   {
-    case Interface_ParamMisc:
+    case Interface_ParamType::Interface_ParamMisc:
       return -1;
-    case Interface_ParamInteger:
+    case Interface_ParamType::Interface_ParamInteger:
       kod = 1;
       break;
-    case Interface_ParamReal:
+    case Interface_ParamType::Interface_ParamReal:
       kod = 5;
       break;
-    case Interface_ParamIdent:
+    case Interface_ParamType::Interface_ParamIdent:
       kod = 7;
       break;
-    case Interface_ParamVoid:
+    case Interface_ParamType::Interface_ParamVoid:
       kod = 0;
       break;
-    case Interface_ParamText:
+    case Interface_ParamType::Interface_ParamText:
       kod = 6;
       break;
-    case Interface_ParamEnum:
+    case Interface_ParamType::Interface_ParamEnum:
       kod = 4;
       break; // a confirmer(logical)
       /*      kod = 4;
         if ( str[0] == '.' && str[2] == '.' && str[3] == '\0' &&
         (str[1] == 'T' || str[1] == 'F' || str[1] == 'U') ) kod = 3;
         break; */ // svv #2
-    case Interface_ParamLogical:
+    case Interface_ParamType::Interface_ParamLogical:
       return -1;
-    case Interface_ParamSub:
+    case Interface_ParamType::Interface_ParamSub:
       kod = 0;
       break;
-    case Interface_ParamHexa:
+    case Interface_ParamType::Interface_ParamHexa:
       return -1;
-    case Interface_ParamBinary:
+    case Interface_ParamType::Interface_ParamBinary:
       return -1;
     default:
       return -1;
@@ -801,7 +801,7 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
     switch (kod)
     {
       case 1: {
-        if (FT != Interface_ParamInteger)
+        if (FT != Interface_ParamType::Interface_ParamInteger)
         {
           kod = 0;
           break;
@@ -811,7 +811,7 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
       }
       case 2:
       case 3: {
-        if (FT != Interface_ParamEnum)
+        if (FT != Interface_ParamType::Interface_ParamEnum)
         {
           kod = 0;
           break;
@@ -827,7 +827,7 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
         break;
       }
       case 4: {
-        if (FT != Interface_ParamEnum)
+        if (FT != Interface_ParamType::Interface_ParamEnum)
         {
           kod = 0;
           break;
@@ -838,7 +838,7 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
         break;
       }
       case 5: {
-        if (FT != Interface_ParamReal)
+        if (FT != Interface_ParamType::Interface_ParamReal)
         {
           kod = 0;
           break;
@@ -847,7 +847,7 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
         break;
       }
       case 6: {
-        if (FT != Interface_ParamText)
+        if (FT != Interface_ParamType::Interface_ParamText)
         {
           kod = 0;
           break;
@@ -905,26 +905,26 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
 
     switch (FT)
     {
-      case Interface_ParamMisc:
+      case Interface_ParamType::Interface_ParamMisc:
         break;
-      case Interface_ParamInteger: {
+      case Interface_ParamType::Interface_ParamInteger: {
         occ::handle<StepData_SelectInt> sin = new StepData_SelectInt;
         sin->SetInteger(atoi(str));
         htr->SetValue(ip, sin);
         break;
       }
-      case Interface_ParamReal: {
+      case Interface_ParamType::Interface_ParamReal: {
         occ::handle<StepData_SelectReal> sre = new StepData_SelectReal;
         sre->SetReal(Interface_FileReaderData::Fastof(str));
         break;
         // htr->SetValue (ip,sre); break; svv #2: unreachable
       }
-      case Interface_ParamIdent:
+      case Interface_ParamType::Interface_ParamIdent:
         htr->SetValue(ip, BoundEntity(FP.EntityNumber()));
         break;
-      case Interface_ParamVoid:
+      case Interface_ParamType::Interface_ParamVoid:
         break;
-      case Interface_ParamEnum: {
+      case Interface_ParamType::Interface_ParamEnum: {
         occ::handle<StepData_SelectInt>   sin;
         occ::handle<StepData_SelectNamed> sna;
         int                               logic = -1;
@@ -963,15 +963,15 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
         }
         break;
       }
-      case Interface_ParamLogical:
+      case Interface_ParamType::Interface_ParamLogical:
         break;
-      case Interface_ParamText: {
+      case Interface_ParamType::Interface_ParamText: {
         occ::handle<TCollection_HAsciiString> txt = new TCollection_HAsciiString(str);
         cleanText(txt);
         htr->SetValue(ip, txt);
         break;
       }
-      case Interface_ParamSub: {
+      case Interface_ParamType::Interface_ParamSub: {
         occ::handle<Standard_Transient> sub;
         int                             nent = FP.EntityNumber();
         int                             kind = ReadSub(nent, mess, ach, descr, sub);
@@ -980,9 +980,9 @@ int StepData_StepReaderData::ReadSub(const int                           numsub,
         htr->SetValue(ip, sub);
         break;
       }
-      case Interface_ParamHexa:
+      case Interface_ParamType::Interface_ParamHexa:
         break;
-      case Interface_ParamBinary:
+      case Interface_ParamType::Interface_ParamBinary:
         break;
       default:
         break;
@@ -1035,29 +1035,29 @@ bool StepData_StepReaderData::ReadField(const int                           num,
   Interface_ParamType             FT = FP.ParamType();
   switch (FT)
   {
-    case Interface_ParamMisc:
+    case Interface_ParamType::Interface_ParamMisc:
       OK = false;
       break;
-    case Interface_ParamInteger:
+    case Interface_ParamType::Interface_ParamInteger:
       fild.SetInteger(atoi(str));
       break;
-    case Interface_ParamReal:
+    case Interface_ParamType::Interface_ParamReal:
       fild.SetReal(Interface_FileReaderData::Fastof(str));
       break;
-    case Interface_ParamIdent:
+    case Interface_ParamType::Interface_ParamIdent:
       nent = FP.EntityNumber();
       if (nent > 0)
         fild.SetEntity(BoundEntity(nent));
       break;
-    case Interface_ParamVoid:
+    case Interface_ParamType::Interface_ParamVoid:
       break;
-    case Interface_ParamText: {
+    case Interface_ParamType::Interface_ParamText: {
       occ::handle<TCollection_HAsciiString> txt = new TCollection_HAsciiString(str);
       cleanText(txt);
       fild.Set(txt);
       break;
     }
-    case Interface_ParamEnum:
+    case Interface_ParamType::Interface_ParamEnum:
       if (!strcmp(str, ".T."))
         fild.SetLogical(StepData_LTrue);
       else if (!strcmp(str, ".F."))
@@ -1067,10 +1067,10 @@ bool StepData_StepReaderData::ReadField(const int                           num,
       else
         fild.SetEnum(-1, str);
       break;
-    case Interface_ParamLogical:
+    case Interface_ParamType::Interface_ParamLogical:
       OK = false;
       break;
-    case Interface_ParamSub:
+    case Interface_ParamType::Interface_ParamSub:
       nent = FP.EntityNumber();
       kind = ReadSub(nent, mess, ach, descr, sub);
       if (kind < 0)
@@ -1078,10 +1078,10 @@ bool StepData_StepReaderData::ReadField(const int                           num,
       fild.Clear(kind);
       fild.Set(sub);
       break;
-    case Interface_ParamHexa:
+    case Interface_ParamType::Interface_ParamHexa:
       OK = false;
       break;
-    case Interface_ParamBinary:
+    case Interface_ParamType::Interface_ParamBinary:
       OK = false;
       break;
     default:
@@ -1133,9 +1133,9 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
   //    Now, let's go: read the field and put it in place
   switch (FT)
   {
-    case Interface_ParamMisc:
+    case Interface_ParamType::Interface_ParamMisc:
       break;
-    case Interface_ParamInteger: {
+    case Interface_ParamType::Interface_ParamInteger: {
       if (!val.IsNull())
       {
         DeclareAndCast(StepData_SelectMember, sm, val);
@@ -1147,7 +1147,7 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
       val = sin;
       return true;
     }
-    case Interface_ParamReal: {
+    case Interface_ParamType::Interface_ParamReal: {
       if (!val.IsNull())
       {
         DeclareAndCast(StepData_SelectMember, sm, val);
@@ -1159,15 +1159,15 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
       val = sre;
       return true;
     }
-    case Interface_ParamIdent: {
+    case Interface_ParamType::Interface_ParamIdent: {
       int nent = FP.EntityNumber();
       if (nent > 0)
         val = BoundEntity(nent);
       return (!val.IsNull());
     }
-    case Interface_ParamVoid:
+    case Interface_ParamType::Interface_ParamVoid:
       break;
-    case Interface_ParamEnum: {
+    case Interface_ParamType::Interface_ParamEnum: {
       occ::handle<StepData_SelectMember> sm;
       if (!val.IsNull())
         sm = GetCasted(StepData_SelectMember, val);
@@ -1220,9 +1220,9 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
       } // -> Select general
       return true;
     }
-    case Interface_ParamLogical:
+    case Interface_ParamType::Interface_ParamLogical:
       break;
-    case Interface_ParamText: {
+    case Interface_ParamType::Interface_ParamText: {
       occ::handle<TCollection_HAsciiString> txt = new TCollection_HAsciiString(str);
       cleanText(txt);
 
@@ -1237,7 +1237,7 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
       val = txt;
       return true;
     }
-    case Interface_ParamSub: {
+    case Interface_ParamType::Interface_ParamSub: {
       int numsub = SubListNumber(num, nump, false);
       int nbp    = NbParams(numsub);
       if (nbp == 0)
@@ -1254,14 +1254,14 @@ bool StepData_StepReaderData::ReadAny(const int                           num,
           int nbp2    = NbParams(numsub2);
           if (nbp2 > 1)
           {
-            if (Param(numsub2, 1).ParamType() == Interface_ParamReal)
+            if (Param(numsub2, 1).ParamType() == Interface_ParamType::Interface_ParamReal)
             {
               if (!sma->SetName(rectyp.ToCString()))
                 return false;
               occ::handle<NCollection_HSequence<double>> aSeq = new NCollection_HSequence<double>;
               for (int i = 1; i <= nbp2; i++)
               {
-                if (Param(numsub2, i).ParamType() != Interface_ParamReal)
+                if (Param(numsub2, i).ParamType() != Interface_ParamType::Interface_ParamReal)
                   continue;
                 occ::handle<Standard_Transient> asr = new StepData_SelectReal;
                 if (!ReadAny(numsub2, i, mess, ach, descr, asr))
@@ -1317,13 +1317,13 @@ bool StepData_StepReaderData::ReadXY(const int                     num,
     if (NbParams(numsub) == 2)
     {
       const Interface_FileParameter& FPX = Param(numsub, 1);
-      if (FPX.ParamType() == Interface_ParamReal)
+      if (FPX.ParamType() == Interface_ParamType::Interface_ParamReal)
         X = Interface_FileReaderData::Fastof(FPX.CValue());
       else
         errmess = "Parameter n0.%d (%s) : (X,Y) X not a Real";
 
       const Interface_FileParameter& FPY = Param(numsub, 2);
-      if (FPY.ParamType() == Interface_ParamReal)
+      if (FPY.ParamType() == Interface_ParamType::Interface_ParamReal)
         Y = Interface_FileReaderData::Fastof(FPY.CValue());
       else
         errmess = "Parameter n0.%d (%s) : (X,Y) Y not a Real";
@@ -1360,19 +1360,19 @@ bool StepData_StepReaderData::ReadXYZ(const int                     num,
     if (NbParams(numsub) == 3)
     {
       const Interface_FileParameter& FPX = Param(numsub, 1);
-      if (FPX.ParamType() == Interface_ParamReal)
+      if (FPX.ParamType() == Interface_ParamType::Interface_ParamReal)
         X = Interface_FileReaderData::Fastof(FPX.CValue());
       else
         errmess = "Parameter n0.%d (%s) : (X,Y,Z) X not a Real";
 
       const Interface_FileParameter& FPY = Param(numsub, 2);
-      if (FPY.ParamType() == Interface_ParamReal)
+      if (FPY.ParamType() == Interface_ParamType::Interface_ParamReal)
         Y = Interface_FileReaderData::Fastof(FPY.CValue());
       else
         errmess = "Parameter n0.%d (%s) : (X,Y,Z) Y not a Real";
 
       const Interface_FileParameter& FPZ = Param(numsub, 3);
-      if (FPZ.ParamType() == Interface_ParamReal)
+      if (FPZ.ParamType() == Interface_ParamType::Interface_ParamReal)
         Z = Interface_FileReaderData::Fastof(FPZ.CValue());
       else
         errmess = "Parameter n0.%d (%s) : (X,Y,Z) Z not a Real";
@@ -1404,7 +1404,7 @@ bool StepData_StepReaderData::ReadReal(const int                     num,
   if (nump > 0 && nump <= NbParams(num))
   {
     const Interface_FileParameter& FP = Param(num, nump);
-    if (FP.ParamType() == Interface_ParamReal || FP.ParamType() == Interface_ParamInteger)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamReal || FP.ParamType() == Interface_ParamType::Interface_ParamInteger)
       val = Interface_FileReaderData::Fastof(FP.CValue());
     else
       errmess = "Parameter n0.%d (%s) not a Real";
@@ -1437,7 +1437,7 @@ bool StepData_StepReaderData::ReadEntity(const int                         num,
   {
     const Interface_FileParameter& FP   = Param(num, nump);
     int                            nent = FP.EntityNumber();
-    if (FP.ParamType() == Interface_ParamIdent)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamIdent)
     {
       if (nent > 0)
       {
@@ -1486,7 +1486,7 @@ bool StepData_StepReaderData::ReadEntity(const int                     num,
   {
     const Interface_FileParameter& FP   = Param(num, nump);
     int                            nent = FP.EntityNumber();
-    if (FP.ParamType() == Interface_ParamIdent)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamIdent)
     {
       if (nent > 0)
       {
@@ -1504,7 +1504,7 @@ bool StepData_StepReaderData::ReadEntity(const int                     num,
       else
         errmess = "Parameter n0.%d (%s) : Unresolved reference";
     }
-    else if (FP.ParamType() == Interface_ParamVoid)
+    else if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       errmess = "Parameter n0.%d (%s) not an Entity";
     }
@@ -1549,14 +1549,14 @@ bool StepData_StepReaderData::ReadInteger(const int                     num,
   if (nump > 0 && nump <= NbParams(num))
   {
     const Interface_FileParameter& FP = Param(num, nump);
-    if (FP.ParamType() == Interface_ParamInteger)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamInteger)
       val = atoi(FP.CValue());
-    else if (FP.ParamType() == Interface_ParamReal)
+    else if (FP.ParamType() == Interface_ParamType::Interface_ParamReal)
     {
       val     = static_cast<int>(std::round(Interface_FileReaderData::Fastof(FP.CValue())));
       errmess = "Parameter n0.%d (%s) was rounded";
     }
-    if (FP.ParamType() != Interface_ParamInteger && FP.ParamType() != Interface_ParamReal)
+    if (FP.ParamType() != Interface_ParamType::Interface_ParamInteger && FP.ParamType() != Interface_ParamType::Interface_ParamReal)
       errmess = "Parameter n0.%d (%s) not an Integer";
   }
   else
@@ -1584,7 +1584,7 @@ bool StepData_StepReaderData::ReadBoolean(const int                     num,
   if (nump > 0 && nump <= NbParams(num))
   {
     const Interface_FileParameter& FP = Param(num, nump);
-    if (FP.ParamType() == Interface_ParamEnum)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamEnum)
     {
       const char* txt = FP.CValue();
       if (!strcmp(txt, ".T."))
@@ -1621,7 +1621,7 @@ bool StepData_StepReaderData::ReadLogical(const int                     num,
   if (nump > 0 && nump <= NbParams(num))
   {
     const Interface_FileParameter& FP = Param(num, nump);
-    if (FP.ParamType() == Interface_ParamEnum)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamEnum)
     {
       const char* txt = FP.CValue();
       if (!strcmp(txt, ".T."))
@@ -1660,7 +1660,7 @@ bool StepData_StepReaderData::ReadString(const int                              
   if (nump > 0 && nump <= NbParams(num))
   {
     const Interface_FileParameter& FP = Param(num, nump);
-    if (FP.ParamType() == Interface_ParamText)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamText)
     {
       /*const char* anStr = FP.CValue();
       if(strlen(anStr) < 3)
@@ -1701,11 +1701,11 @@ bool StepData_StepReaderData::ReadEnumParam(const int                     num,
   if (nump > 0 && nump <= NbParams(num))
   {
     const Interface_FileParameter& FP = Param(num, nump);
-    if (FP.ParamType() == Interface_ParamEnum)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamEnum)
     {
       text = FP.CValue();
     }
-    else if (FP.ParamType() == Interface_ParamVoid)
+    else if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       errmess = "Parameter n0.%d (%s) : Undefined Enumeration not allowed";
     }
@@ -1751,7 +1751,7 @@ bool StepData_StepReaderData::ReadEnum(const int                     num,
   if (nump > 0 && nump <= NbParams(num))
   {
     const Interface_FileParameter& FP = Param(num, nump);
-    if (FP.ParamType() == Interface_ParamEnum)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamEnum)
     {
       val = enumtool.Value(FP.CValue());
       if (val >= 0)
@@ -1759,7 +1759,7 @@ bool StepData_StepReaderData::ReadEnum(const int                     num,
       else
         errmess = "Parameter n0.%d (%s) : Incorrect Enumeration Value";
     }
-    else if (FP.ParamType() == Interface_ParamVoid)
+    else if (FP.ParamType() == Interface_ParamType::Interface_ParamVoid)
     {
       val = enumtool.NullValue();
       if (val < 0)
@@ -1795,7 +1795,7 @@ bool StepData_StepReaderData::ReadTypedParam(const int                     num,
   if (nump > 0 && nump <= NbParams(num))
   {
     const Interface_FileParameter& FP = Param(num, nump);
-    if (FP.ParamType() != Interface_ParamSub)
+    if (FP.ParamType() != Interface_ParamType::Interface_ParamSub)
     {
       //    Not a sub-list: OK if allowed
       numr  = num;
@@ -1908,7 +1908,7 @@ int StepData_StepReaderData::FindEntityNumber(const int num, const int id) const
   for (int i = 1; i <= nb; i++)
   {
     const Interface_FileParameter& FP = Param(num, i);
-    if (FP.ParamType() != Interface_ParamIdent)
+    if (FP.ParamType() != Interface_ParamType::Interface_ParamIdent)
       continue;
     int ixp = atoi(&FP.CValue()[1]);
     if (ixp == id)
@@ -2007,7 +2007,7 @@ void StepData_StepReaderData::SetEntityNumbers(const bool withmap)
       Interface_FileParameter& FP = ChangeParameter(nda + na);
       //      Interface_FileParameter& FP = ChangeParam (num,na);
       Interface_ParamType letype = FP.ParamType();
-      if (letype == Interface_ParamSub)
+      if (letype == Interface_ParamType::Interface_ParamSub)
       {
         int numsub = FP.EntityNumber();
         if (numsub > thelastn)
@@ -2018,7 +2018,7 @@ void StepData_StepReaderData::SetEntityNumbers(const bool withmap)
         }
         FP.SetEntityNumber(subn(numsub));
       }
-      else if (letype == Interface_ParamIdent)
+      else if (letype == Interface_ParamType::Interface_ParamIdent)
       {
         int id     = FP.EntityNumber();
         int indmap = imap.FindIndex(id);
@@ -2194,7 +2194,7 @@ void StepData_StepReaderData::SetEntityNumbers(const bool withmap)
       for (int na = 1; na <= nba; na++)
       {
         Interface_FileParameter& FP = ChangeParam(num, na);
-        if (FP.ParamType() != Interface_ParamIdent)
+        if (FP.ParamType() != Interface_ParamType::Interface_ParamIdent)
           continue;
         int id = -FP.EntityNumber();
         if (id < 0)
@@ -2262,13 +2262,13 @@ void StepData_StepReaderData::SetEntityNumbers(const bool withmap)
 
       Interface_FileParameter& FP     = ChangeParam(num, na);
       Interface_ParamType      letype = FP.ParamType();
-      if (letype == Interface_ParamSub)
+      if (letype == Interface_ParamType::Interface_ParamSub)
       {
         //  sub-list type parameter: sub-list number read by unstacking
         FP.SetEntityNumber(subpile->Value(nbsubpil));
         nbsubpil--; //	subpile->Remove(nbsubpil);
       }
-      else if (letype == Interface_ParamIdent)
+      else if (letype == Interface_ParamType::Interface_ParamIdent)
       {
         //  ident type parameter (references an entity): search for requested ident
         int id = -FP.EntityNumber();
@@ -2477,7 +2477,7 @@ void StepData_StepReaderData::PrepareHeader()
 
         Interface_FileParameter& FP = ChangeParam(num,na);
         Interface_ParamType letype = FP.ParamType();
-        if (letype == Interface_ParamSub) {
+        if (letype == Interface_ParamType::Interface_ParamSub) {
   ..  sub-list type parameter: sub-list number read by unstacking
           FP.SetEntityNumber(subpile.Last());
   .. ..        SetParam(num,na,FP);

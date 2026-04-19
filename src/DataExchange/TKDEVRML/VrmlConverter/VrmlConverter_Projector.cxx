@@ -134,7 +134,7 @@ VrmlConverter_Projector::VrmlConverter_Projector(const NCollection_Array1<TopoDS
   T.SetTransformation(Axe);
 
   bool Pers = false;
-  if (Camera == VrmlConverter_PerspectiveCamera)
+  if (Camera == VrmlConverter_TypeOfCamera::VrmlConverter_PerspectiveCamera)
     Pers = true;
 
   // build a Projector with automatic minmax directions
@@ -155,17 +155,17 @@ VrmlConverter_Projector::VrmlConverter_Projector(const NCollection_Array1<TopoDS
   //== definitions cameras and lights
   //
 
-  if (Light == VrmlConverter_DirectionLight)
+  if (Light == VrmlConverter_TypeOfLight::VrmlConverter_DirectionLight)
   {
     myDirectionalLight.SetDirection(Zpers.Reversed());
   }
 
-  if (Light == VrmlConverter_PointLight)
+  if (Light == VrmlConverter_TypeOfLight::VrmlConverter_PointLight)
   {
     myPointLight.SetLocation(VSource);
   }
 
-  if (Light == VrmlConverter_SpotLight || Camera != VrmlConverter_NoCamera)
+  if (Light == VrmlConverter_TypeOfLight::VrmlConverter_SpotLight || Camera != VrmlConverter_TypeOfCamera::VrmlConverter_NoCamera)
   {
 
     /*
@@ -269,14 +269,14 @@ VrmlConverter_Projector::VrmlConverter_Projector(const NCollection_Array1<TopoDS
     //  std::cout << " MaxAngle: " << Angle << std::endl;
     //  std::cout << " ****************** " << std::endl;
 
-    if (Light == VrmlConverter_SpotLight)
+    if (Light == VrmlConverter_TypeOfLight::VrmlConverter_SpotLight)
     {
       mySpotLight.SetLocation(VSource);
       mySpotLight.SetDirection(Zpers.Reversed());
       mySpotLight.SetCutOffAngle(2 * Angle);
     }
 
-    if (Camera == VrmlConverter_PerspectiveCamera)
+    if (Camera == VrmlConverter_TypeOfCamera::VrmlConverter_PerspectiveCamera)
     {
       //    myPerspectiveCamera.SetPosition(VSource);
       //    myPerspectiveCamera.SetOrientation(Vrml_SFRotation
@@ -285,7 +285,7 @@ VrmlConverter_Projector::VrmlConverter_Projector(const NCollection_Array1<TopoDS
       myPerspectiveCamera.SetAngle(2 * Angle);
     }
 
-    if (Camera == VrmlConverter_OrthographicCamera)
+    if (Camera == VrmlConverter_TypeOfCamera::VrmlConverter_OrthographicCamera)
     {
       //  myOrthographicCamera.SetPosition(VSource);
       //  myOrthographicCamera.SetOrientation(Vrml_SFRotation
@@ -300,9 +300,9 @@ void VrmlConverter_Projector::Add(Standard_OStream& anOStream) const
 {
   switch (myTypeOfCamera)
   {
-    case VrmlConverter_NoCamera:
+    case VrmlConverter_TypeOfCamera::VrmlConverter_NoCamera:
       break;
-    case VrmlConverter_PerspectiveCamera: {
+    case VrmlConverter_TypeOfCamera::VrmlConverter_PerspectiveCamera: {
       Vrml_TransformSeparator TS;
       TS.Print(anOStream);
       myMatrixTransform.Print(anOStream);
@@ -312,7 +312,7 @@ void VrmlConverter_Projector::Add(Standard_OStream& anOStream) const
       TS.Print(anOStream);
     }
     break;
-    case VrmlConverter_OrthographicCamera: {
+    case VrmlConverter_TypeOfCamera::VrmlConverter_OrthographicCamera: {
       Vrml_TransformSeparator TS;
       TS.Print(anOStream);
       myMatrixTransform.Print(anOStream);
@@ -326,17 +326,17 @@ void VrmlConverter_Projector::Add(Standard_OStream& anOStream) const
 
   switch (myTypeOfLight)
   {
-    case VrmlConverter_NoLight:
+    case VrmlConverter_TypeOfLight::VrmlConverter_NoLight:
       break;
-    case VrmlConverter_DirectionLight: {
+    case VrmlConverter_TypeOfLight::VrmlConverter_DirectionLight: {
       myDirectionalLight.Print(anOStream);
     }
     break;
-    case VrmlConverter_PointLight: {
+    case VrmlConverter_TypeOfLight::VrmlConverter_PointLight: {
       myPointLight.Print(anOStream);
     }
     break;
-    case VrmlConverter_SpotLight: {
+    case VrmlConverter_TypeOfLight::VrmlConverter_SpotLight: {
       mySpotLight.Print(anOStream);
     }
     break;

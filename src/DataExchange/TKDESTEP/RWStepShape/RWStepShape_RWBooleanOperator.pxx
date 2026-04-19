@@ -30,11 +30,11 @@ inline const char* ConvertToString(const StepShape_BooleanOperator theSourceEnum
 {
   switch (theSourceEnum)
   {
-    case StepShape_boDifference:
+    case StepShape_BooleanOperator::StepShape_boDifference:
       return boDifference;
-    case StepShape_boIntersection:
+    case StepShape_BooleanOperator::StepShape_boIntersection:
       return boIntersection;
-    case StepShape_boUnion:
+    case StepShape_BooleanOperator::StepShape_boUnion:
       return boUnion;
   }
   return nullptr;
@@ -49,15 +49,15 @@ inline bool ConvertToEnum(const char* const          theOperatorStr,
 {
   if (IsEqual(theOperatorStr, boDifference))
   {
-    theResultEnum = StepShape_boDifference;
+    theResultEnum = StepShape_BooleanOperator::StepShape_boDifference;
   }
   else if (IsEqual(theOperatorStr, boIntersection))
   {
-    theResultEnum = StepShape_boIntersection;
+    theResultEnum = StepShape_BooleanOperator::StepShape_boIntersection;
   }
   else if (IsEqual(theOperatorStr, boUnion))
   {
-    theResultEnum = StepShape_boUnion;
+    theResultEnum = StepShape_BooleanOperator::StepShape_boUnion;
   }
   else
   {

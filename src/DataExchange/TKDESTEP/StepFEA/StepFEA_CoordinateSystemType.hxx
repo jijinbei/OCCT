@@ -14,7 +14,7 @@
 #ifndef _StepFEA_CoordinateSystemType_HeaderFile
 #define _StepFEA_CoordinateSystemType_HeaderFile
 
-enum StepFEA_CoordinateSystemType
+enum class StepFEA_CoordinateSystemType
 {
   StepFEA_Cartesian,
   StepFEA_Cylindrical,

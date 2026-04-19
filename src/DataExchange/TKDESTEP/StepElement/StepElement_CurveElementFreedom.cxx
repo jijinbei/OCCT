@@ -79,43 +79,43 @@ StepElement_EnumeratedCurveElementFreedom StepElement_CurveElementFreedom::
   occ::handle<StepElement_CurveElementFreedomMember> SelMem =
     occ::down_cast<StepElement_CurveElementFreedomMember>(Value());
   if (SelMem.IsNull())
-    return StepElement_None;
+    return StepElement_EnumeratedCurveElementFreedom::StepElement_None;
   occ::handle<TCollection_HAsciiString> name = new TCollection_HAsciiString;
   name->AssignCat(SelMem->Name());
   occ::handle<TCollection_HAsciiString> nameitem =
     new TCollection_HAsciiString("ENUMERATED_CURVE_ELEMENT_FREEDOM");
   if (name->IsDifferent(nameitem))
-    return StepElement_None;
+    return StepElement_EnumeratedCurveElementFreedom::StepElement_None;
   int                                       numit = SelMem->Enum();
   StepElement_EnumeratedCurveElementFreedom val;
   switch (numit)
   {
     case 1:
-      val = StepElement_XTranslation;
+      val = StepElement_EnumeratedCurveElementFreedom::StepElement_XTranslation;
       break;
     case 2:
-      val = StepElement_YTranslation;
+      val = StepElement_EnumeratedCurveElementFreedom::StepElement_YTranslation;
       break;
     case 3:
-      val = StepElement_ZTranslation;
+      val = StepElement_EnumeratedCurveElementFreedom::StepElement_ZTranslation;
       break;
     case 4:
-      val = StepElement_XRotation;
+      val = StepElement_EnumeratedCurveElementFreedom::StepElement_XRotation;
       break;
     case 5:
-      val = StepElement_YRotation;
+      val = StepElement_EnumeratedCurveElementFreedom::StepElement_YRotation;
       break;
     case 6:
-      val = StepElement_ZRotation;
+      val = StepElement_EnumeratedCurveElementFreedom::StepElement_ZRotation;
       break;
     case 7:
-      val = StepElement_Warp;
+      val = StepElement_EnumeratedCurveElementFreedom::StepElement_Warp;
       break;
     case 8:
-      val = StepElement_None;
+      val = StepElement_EnumeratedCurveElementFreedom::StepElement_None;
       break;
     default:
-      return StepElement_None;
+      return StepElement_EnumeratedCurveElementFreedom::StepElement_None;
       break;
   }
   return val;

@@ -80,7 +80,7 @@
 //=================================================================================================
 
 TopoDSToStep_MakeStepFace::TopoDSToStep_MakeStepFace()
-    : myError(TopoDSToStep_FaceOther)
+    : myError(TopoDSToStep_MakeFaceError::TopoDSToStep_FaceOther)
 {
   done = false;
 }
@@ -123,7 +123,7 @@ void TopoDSToStep_MakeStepFace::Init(const TopoDS_Face&                         
       occ::handle<StepShape_AdvancedFace> aLinkingAF = new StepShape_AdvancedFace;
       aLinkingAF->Init(anAF->Name(), anAF->Bounds(), anAF->FaceGeometry(), !anAF->SameSense());
 
-      myError  = TopoDSToStep_FaceDone;
+      myError  = TopoDSToStep_MakeFaceError::TopoDSToStep_FaceDone;
       myResult = aLinkingAF;
       done     = true;
       return;
@@ -133,7 +133,7 @@ void TopoDSToStep_MakeStepFace::Init(const TopoDS_Face&                         
 
   if (aTool.IsBound(aFace))
   {
-    myError  = TopoDSToStep_FaceDone;
+    myError  = TopoDSToStep_MakeFaceError::TopoDSToStep_FaceDone;
     done     = true;
     myResult = aTool.Find(aFace);
     return;
@@ -142,7 +142,7 @@ void TopoDSToStep_MakeStepFace::Init(const TopoDS_Face&                         
   if (aFace.Orientation() == TopAbs_INTERNAL || aFace.Orientation() == TopAbs_EXTERNAL)
   {
     FP->AddWarning(errShape, " Face from Non Manifold Topology");
-    myError = TopoDSToStep_NonManifoldFace;
+    myError = TopoDSToStep_MakeFaceError::TopoDSToStep_NonManifoldFace;
     done    = false;
     return;
   }
@@ -154,7 +154,7 @@ void TopoDSToStep_MakeStepFace::Init(const TopoDS_Face&                         
   if (theOuterWire.IsNull())
   {
     FP->AddWarning(errShape, " Face without wire not mapped");
-    myError = TopoDSToStep_InfiniteFace;
+    myError = TopoDSToStep_MakeFaceError::TopoDSToStep_InfiniteFace;
     done    = false;
     return;
   }
@@ -168,7 +168,7 @@ void TopoDSToStep_MakeStepFace::Init(const TopoDS_Face&                         
     if (Su.IsNull())
     {
       FP->AddWarning(errShape, " Face without geometry not mapped");
-      myError = TopoDSToStep_FaceOther;
+      myError = TopoDSToStep_MakeFaceError::TopoDSToStep_FaceOther;
       done    = false;
       return;
     }
@@ -456,7 +456,7 @@ void TopoDSToStep_MakeStepFace::Init(const TopoDS_Face&                         
       Fpms->Init(aName, aBounds, Spms, aFace.Orientation() == TopAbs_FORWARD);
 
       aTool.Bind(aFace, Fpms);
-      myError  = TopoDSToStep_FaceDone;
+      myError  = TopoDSToStep_MakeFaceError::TopoDSToStep_FaceDone;
       myResult = Fpms;
       done     = true;
     }
@@ -466,14 +466,14 @@ void TopoDSToStep_MakeStepFace::Init(const TopoDS_Face&                         
       // MakeFace Face Error Handling
       // ----------------------------
       FP->AddWarning(errShape, " No Wires of this Face were mapped");
-      myError = TopoDSToStep_NoWireMapped;
+      myError = TopoDSToStep_MakeFaceError::TopoDSToStep_NoWireMapped;
       done    = false;
     }
   }
   catch (Standard_Failure const& theFailure)
   {
     FP->AddFail(errShape, theFailure.what());
-    myError = TopoDSToStep_FaceOther;
+    myError = TopoDSToStep_MakeFaceError::TopoDSToStep_FaceOther;
     done    = false;
   }
 }

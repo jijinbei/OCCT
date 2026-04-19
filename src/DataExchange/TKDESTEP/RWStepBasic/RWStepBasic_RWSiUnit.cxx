@@ -38,11 +38,11 @@ void RWStepBasic_RWSiUnit::ReadStep(const occ::handle<StepData_StepReaderData>& 
   data->CheckDerived(num, 1, "dimensions", ach, false);
 
   // --- own field : prefix ---
-  StepBasic_SiPrefix aPrefix    = StepBasic_spExa;
+  StepBasic_SiPrefix aPrefix    = StepBasic_SiPrefix::StepBasic_spExa;
   bool               hasAprefix = false;
   if (data->IsParamDefined(num, 2))
   {
-    if (data->ParamType(num, 2) == Interface_ParamEnum)
+    if (data->ParamType(num, 2) == Interface_ParamType::Interface_ParamEnum)
     {
       const char* text = data->ParamCValue(num, 2);
       hasAprefix       = RWStepBasic_RWSiPrefix::ConvertToEnum(text, aPrefix);
@@ -58,8 +58,8 @@ void RWStepBasic_RWSiUnit::ReadStep(const occ::handle<StepData_StepReaderData>& 
   }
 
   // --- own field : name ---
-  StepBasic_SiUnitName aName = StepBasic_sunMetre;
-  if (data->ParamType(num, 3) == Interface_ParamEnum)
+  StepBasic_SiUnitName aName = StepBasic_SiUnitName::StepBasic_sunMetre;
+  if (data->ParamType(num, 3) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 3);
     if (!RWStepBasic_RWSiUnitName::ConvertToEnum(text, aName))

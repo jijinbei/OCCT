@@ -33,7 +33,7 @@
 //! that this item is incorrect
 //! - ErrorSeveral indicates that the list contains several
 //! items, but that at least one of them is incorrect.
-enum IGESData_DefList
+enum class IGESData_DefList
 {
   IGESData_DefNone,
   IGESData_DefOne,

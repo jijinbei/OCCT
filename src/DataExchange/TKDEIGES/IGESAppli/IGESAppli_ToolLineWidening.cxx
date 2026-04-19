@@ -114,7 +114,7 @@ IGESData_DirChecker IGESAppli_ToolLineWidening::DirChecker(
   const occ::handle<IGESAppli_LineWidening>& /*ent*/) const
 {
   IGESData_DirChecker DC(406, 5); // Form no = 5 & Type = 406
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.UseFlagIgnored();
@@ -127,7 +127,7 @@ void IGESAppli_ToolLineWidening::OwnCheck(const occ::handle<IGESAppli_LineWideni
                                           occ::handle<Interface_Check>& ach) const
 {
   if (ent->SubordinateStatus() != 0)
-    if (ent->DefLevel() == IGESData_DefOne || ent->DefLevel() == IGESData_DefSeveral)
+    if (ent->DefLevel() == IGESData_DefList::IGESData_DefOne || ent->DefLevel() == IGESData_DefList::IGESData_DefSeveral)
       ach->AddWarning("Level type: defined while ignored");
   if (ent->NbPropertyValues() != 5)
     ach->AddFail("Number of Property Values != 5");

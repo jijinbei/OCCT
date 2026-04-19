@@ -34,7 +34,7 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_EditDirPart, IFSelect_Editor)
 
 static occ::handle<Interface_TypedValue> NewDefType(const char* const name)
 {
-  occ::handle<Interface_TypedValue> deftype = new Interface_TypedValue(name, Interface_ParamEnum);
+  occ::handle<Interface_TypedValue> deftype = new Interface_TypedValue(name, Interface_ParamType::Interface_ParamEnum);
   deftype->StartEnum(0);
   deftype->AddEnumValue("Void", 0);
   deftype->AddEnumValue("Value", 1);
@@ -44,7 +44,7 @@ static occ::handle<Interface_TypedValue> NewDefType(const char* const name)
 
 static occ::handle<Interface_TypedValue> NewDefList(const char* const name)
 {
-  occ::handle<Interface_TypedValue> deftype = new Interface_TypedValue(name, Interface_ParamEnum);
+  occ::handle<Interface_TypedValue> deftype = new Interface_TypedValue(name, Interface_ParamType::Interface_ParamEnum);
   deftype->StartEnum(0);
   deftype->AddEnumValue("None", 0);
   deftype->AddEnumValue("One", 1);
@@ -58,90 +58,90 @@ IGESSelect_EditDirPart::IGESSelect_EditDirPart()
   // int i,nb; //szv#4:S4163:12Mar99 unused
   //   Definition
   occ::handle<Interface_TypedValue> typenum =
-    new Interface_TypedValue("Type Number", Interface_ParamInteger);
+    new Interface_TypedValue("Type Number", Interface_ParamType::Interface_ParamInteger);
   SetValue(1, typenum, "D1:Type", IFSelect_EditRead);
   occ::handle<Interface_TypedValue> formnum =
-    new Interface_TypedValue("Form Number", Interface_ParamInteger);
+    new Interface_TypedValue("Form Number", Interface_ParamType::Interface_ParamInteger);
   SetValue(2, formnum, "D15:Form", IFSelect_EditRead);
 
   occ::handle<Interface_TypedValue> stru =
-    new Interface_TypedValue("Structure", Interface_ParamIdent);
+    new Interface_TypedValue("Structure", Interface_ParamType::Interface_ParamIdent);
   SetValue(3, stru, "D3:Struct", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> lftype = NewDefType("Line Font Pattern");
   SetValue(4, lftype, "D4:LineFont", IFSelect_EditDynamic);
   occ::handle<Interface_TypedValue> lfval =
-    new Interface_TypedValue("Line Font Number", Interface_ParamInteger);
+    new Interface_TypedValue("Line Font Number", Interface_ParamType::Interface_ParamInteger);
   lfval->SetIntegerLimit(false, 0);
   SetValue(5, lfval, "N4:LineFont", IFSelect_Optional);
   occ::handle<Interface_TypedValue> lfent =
-    new Interface_TypedValue("Line Font Entity", Interface_ParamIdent);
+    new Interface_TypedValue("Line Font Entity", Interface_ParamType::Interface_ParamIdent);
   SetValue(6, lfent, "E4:LineFont", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> levlist = NewDefList("Level");
   SetValue(7, levlist, "D5:Level", IFSelect_EditDynamic);
   occ::handle<Interface_TypedValue> leval =
-    new Interface_TypedValue("Level Number", Interface_ParamInteger);
+    new Interface_TypedValue("Level Number", Interface_ParamType::Interface_ParamInteger);
   leval->SetIntegerLimit(false, 0);
   SetValue(8, leval, "N5:Level", IFSelect_Optional);
   occ::handle<Interface_TypedValue> levent =
-    new Interface_TypedValue("Level List Entity", Interface_ParamIdent);
+    new Interface_TypedValue("Level List Entity", Interface_ParamType::Interface_ParamIdent);
   SetValue(9, levent, "L5:Level", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> viewlist = NewDefList("View");
   SetValue(10, viewlist, "D6:View", IFSelect_EditDynamic);
   occ::handle<Interface_TypedValue> viewent =
-    new Interface_TypedValue("View Entity", Interface_ParamIdent);
+    new Interface_TypedValue("View Entity", Interface_ParamType::Interface_ParamIdent);
   SetValue(11, viewent, "E6:View", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> transf =
-    new Interface_TypedValue("Transformation", Interface_ParamIdent);
+    new Interface_TypedValue("Transformation", Interface_ParamType::Interface_ParamIdent);
   SetValue(12, transf, "D7:Transf", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> labdisp =
-    new Interface_TypedValue("Label Display Associativity", Interface_ParamIdent);
+    new Interface_TypedValue("Label Display Associativity", Interface_ParamType::Interface_ParamIdent);
   SetValue(13, labdisp, "D8:LabelDisp", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> blank =
-    new Interface_TypedValue("Blank Status", Interface_ParamInteger);
+    new Interface_TypedValue("Blank Status", Interface_ParamType::Interface_ParamInteger);
   blank->SetIntegerLimit(false, 0);
   blank->SetIntegerLimit(true, 1);
   SetValue(14, blank, "D9-1:Blank");
   occ::handle<Interface_TypedValue> subord =
-    new Interface_TypedValue("Subordinate Status", Interface_ParamInteger);
+    new Interface_TypedValue("Subordinate Status", Interface_ParamType::Interface_ParamInteger);
   subord->SetIntegerLimit(false, 0);
   subord->SetIntegerLimit(true, 3);
   SetValue(15, subord, "D9-2:Subordinate", IFSelect_EditProtected);
   occ::handle<Interface_TypedValue> useflg =
-    new Interface_TypedValue("Use Flag", Interface_ParamInteger);
+    new Interface_TypedValue("Use Flag", Interface_ParamType::Interface_ParamInteger);
   useflg->SetIntegerLimit(false, 0);
   useflg->SetIntegerLimit(true, 6);
   SetValue(16, useflg, "D9-3:UseFlag");
   occ::handle<Interface_TypedValue> hier =
-    new Interface_TypedValue("Hierarchy", Interface_ParamInteger);
+    new Interface_TypedValue("Hierarchy", Interface_ParamType::Interface_ParamInteger);
   hier->SetIntegerLimit(false, 0);
   hier->SetIntegerLimit(true, 2);
   SetValue(17, hier, "D9-4:Hierarchy", IFSelect_EditProtected);
 
   occ::handle<Interface_TypedValue> lwnum =
-    new Interface_TypedValue("Line Weight Number", Interface_ParamInteger);
+    new Interface_TypedValue("Line Weight Number", Interface_ParamType::Interface_ParamInteger);
   lwnum->SetIntegerLimit(false, 0);
   SetValue(18, lwnum, "D12:LineWeight");
 
   occ::handle<Interface_TypedValue> coltype = NewDefType("Color");
   SetValue(19, coltype, "D13:Color", IFSelect_EditDynamic);
   occ::handle<Interface_TypedValue> colval =
-    new Interface_TypedValue("Color Number", Interface_ParamInteger);
+    new Interface_TypedValue("Color Number", Interface_ParamType::Interface_ParamInteger);
   colval->SetIntegerLimit(false, 0);
   SetValue(20, colval, "N13:Color", IFSelect_Optional);
   occ::handle<Interface_TypedValue> colent =
-    new Interface_TypedValue("Color Entity", Interface_ParamIdent);
+    new Interface_TypedValue("Color Entity", Interface_ParamType::Interface_ParamIdent);
   SetValue(21, colent, "E13:Color", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> entlab = new Interface_TypedValue("Entity Label");
   SetValue(22, entlab, "D18:Label");
   occ::handle<Interface_TypedValue> sublab =
-    new Interface_TypedValue("Subscript Number", Interface_ParamInteger);
+    new Interface_TypedValue("Subscript Number", Interface_ParamType::Interface_ParamInteger);
   SetValue(23, sublab, "D19:Subscript", IFSelect_Optional);
 }
 
@@ -167,11 +167,11 @@ occ::handle<TCollection_HAsciiString> DefTypeName(const IGESData_DefType& deftyp
 {
   switch (deftype)
   {
-    case IGESData_DefVoid:
+    case IGESData_DefType::IGESData_DefVoid:
       return new TCollection_HAsciiString("Void");
-    case IGESData_DefValue:
+    case IGESData_DefType::IGESData_DefValue:
       return new TCollection_HAsciiString("Value");
-    case IGESData_DefReference:
+    case IGESData_DefType::IGESData_DefReference:
       return new TCollection_HAsciiString("Entity");
     default:
       break;
@@ -183,11 +183,11 @@ occ::handle<TCollection_HAsciiString> DefListName(const IGESData_DefList& deflis
 {
   switch (deflist)
   {
-    case IGESData_DefNone:
+    case IGESData_DefList::IGESData_DefNone:
       return new TCollection_HAsciiString("None");
-    case IGESData_DefOne:
+    case IGESData_DefList::IGESData_DefOne:
       return new TCollection_HAsciiString("One");
-    case IGESData_DefSeveral:
+    case IGESData_DefList::IGESData_DefSeveral:
       return new TCollection_HAsciiString("List");
     default:
       break;
@@ -213,16 +213,16 @@ bool IGESSelect_EditDirPart::Load(const occ::handle<IFSelect_EditForm>&        f
 
   form->LoadValue(4, DefTypeName(iges->DefLineFont()));
   form->LoadValue(5, new TCollection_HAsciiString(iges->RankLineFont()));
-  if (iges->DefLineFont() == IGESData_DefReference)
+  if (iges->DefLineFont() == IGESData_DefType::IGESData_DefReference)
     form->LoadValue(6, modl->StringLabel(iges->LineFont()));
 
   form->LoadValue(7, DefListName(iges->DefLevel()));
   form->LoadValue(8, new TCollection_HAsciiString(iges->Level()));
-  if (iges->DefLevel() == IGESData_DefSeveral)
+  if (iges->DefLevel() == IGESData_DefList::IGESData_DefSeveral)
     form->LoadValue(9, modl->StringLabel(iges->LevelList()));
 
   form->LoadValue(10, DefListName(iges->DefView()));
-  if (iges->DefView() != IGESData_DefNone)
+  if (iges->DefView() != IGESData_DefList::IGESData_DefNone)
     form->LoadValue(11, modl->StringLabel(iges->View()));
 
   if (iges->HasTransf())
@@ -239,7 +239,7 @@ bool IGESSelect_EditDirPart::Load(const occ::handle<IFSelect_EditForm>&        f
 
   form->LoadValue(19, DefTypeName(iges->DefColor()));
   form->LoadValue(20, new TCollection_HAsciiString(iges->RankColor()));
-  if (iges->DefColor() == IGESData_DefReference)
+  if (iges->DefColor() == IGESData_DefType::IGESData_DefReference)
     form->LoadValue(21, modl->StringLabel(iges->Color()));
 
   form->LoadValue(22, iges->ShortLabel());
@@ -261,57 +261,57 @@ bool IGESSelect_EditDirPart::Update(const occ::handle<IFSelect_EditForm>&       
   if (num == 5)
   {
     if (val.IsNull())
-      form->Touch(4, DefTypeName(IGESData_DefVoid));
+      form->Touch(4, DefTypeName(IGESData_DefType::IGESData_DefVoid));
     else
-      form->Touch(4, DefTypeName(IGESData_DefValue));
+      form->Touch(4, DefTypeName(IGESData_DefType::IGESData_DefValue));
   }
   if (num == 6)
   {
     if (val.IsNull())
-      form->Touch(4, DefTypeName(IGESData_DefVoid));
+      form->Touch(4, DefTypeName(IGESData_DefType::IGESData_DefVoid));
     else
-      form->Touch(4, DefTypeName(IGESData_DefReference));
+      form->Touch(4, DefTypeName(IGESData_DefType::IGESData_DefReference));
   }
 
   //    Level
   if (num == 8)
   {
     if (val.IsNull())
-      form->Touch(7, DefListName(IGESData_DefNone));
+      form->Touch(7, DefListName(IGESData_DefList::IGESData_DefNone));
     else
-      form->Touch(7, DefListName(IGESData_DefOne));
+      form->Touch(7, DefListName(IGESData_DefList::IGESData_DefOne));
   }
   if (num == 9)
   {
     if (val.IsNull())
-      form->Touch(7, DefListName(IGESData_DefNone));
+      form->Touch(7, DefListName(IGESData_DefList::IGESData_DefNone));
     else
-      form->Touch(7, DefListName(IGESData_DefSeveral));
+      form->Touch(7, DefListName(IGESData_DefList::IGESData_DefSeveral));
   }
 
   //    View
   if (num == 11)
   {
     if (val.IsNull())
-      form->Touch(10, DefListName(IGESData_DefNone));
+      form->Touch(10, DefListName(IGESData_DefList::IGESData_DefNone));
     else
-      form->Touch(10, DefListName(IGESData_DefOne));
+      form->Touch(10, DefListName(IGESData_DefList::IGESData_DefOne));
   }
 
   //    Color
   if (num == 20)
   {
     if (val.IsNull())
-      form->Touch(19, DefTypeName(IGESData_DefVoid));
+      form->Touch(19, DefTypeName(IGESData_DefType::IGESData_DefVoid));
     else
-      form->Touch(19, DefTypeName(IGESData_DefValue));
+      form->Touch(19, DefTypeName(IGESData_DefType::IGESData_DefValue));
   }
   if (num == 21)
   {
     if (val.IsNull())
-      form->Touch(19, DefTypeName(IGESData_DefVoid));
+      form->Touch(19, DefTypeName(IGESData_DefType::IGESData_DefVoid));
     else
-      form->Touch(19, DefTypeName(IGESData_DefReference));
+      form->Touch(19, DefTypeName(IGESData_DefType::IGESData_DefReference));
   }
 
   return true;

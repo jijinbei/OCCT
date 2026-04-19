@@ -14,7 +14,7 @@
 #ifndef _StepElement_Volume3dElementShape_HeaderFile
 #define _StepElement_Volume3dElementShape_HeaderFile
 
-enum StepElement_Volume3dElementShape
+enum class StepElement_Volume3dElementShape
 {
   StepElement_Hexahedron,
   StepElement_Wedge,

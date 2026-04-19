@@ -478,7 +478,7 @@ VrmlData_ErrorStatus VrmlData_TextureCoordinate::Read(VrmlData_InBuffer& theBuff
       if (OK(aStatus, VrmlData_Scene::ReadLine(theBuffer)))
       {
         if (theBuffer.LinePtr[0] != '[') // opening bracket
-          aStatus = VrmlData_VrmlFormatError;
+          aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
         else
         {
           theBuffer.LinePtr++;
@@ -554,7 +554,7 @@ VrmlData_ErrorStatus VrmlData_ArrayVec3d::ReadArray(VrmlData_InBuffer& theBuffer
     {
       const size_t aNameLen = strlen(theName);
       if (strncmp(theBuffer.LinePtr, theName, aNameLen))
-        aStatus = VrmlData_VrmlFormatError;
+        aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
       else
         theBuffer.LinePtr += aNameLen;
     }
@@ -575,7 +575,7 @@ VrmlData_ErrorStatus VrmlData_ArrayVec3d::ReadArray(VrmlData_InBuffer& theBuffer
         gp_XYZ anXYZ;
         // Read three numbers (XYZ value)
         if (!OK(aStatus, Scene().ReadXYZ(theBuffer, anXYZ, isScale, false)))
-          aStatus = VrmlData_VrmlFormatError;
+          aStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
         else
           vecValues.Append(anXYZ);
       }
@@ -627,7 +627,7 @@ VrmlData_ErrorStatus VrmlData_ArrayVec3d::ReadArray(VrmlData_InBuffer& theBuffer
 
 VrmlData_ErrorStatus VrmlData_ArrayVec3d::WriteArray(const char* theName, const bool isScale) const
 {
-  VrmlData_ErrorStatus aStatus(VrmlData_StatusOK);
+  VrmlData_ErrorStatus aStatus(VrmlData_ErrorStatus::VrmlData_StatusOK);
   if (myLength > 0)
   {
     aStatus = Scene().WriteLine(theName, "[", 2 * GlobalIndent());
@@ -639,7 +639,7 @@ VrmlData_ErrorStatus VrmlData_ArrayVec3d::WriteArray(const char* theName, const 
       if (OK(aStatus))
         aStatus = Scene().WriteXYZ(myArray[myLength - 1], isScale);
     }
-    if (aStatus == VrmlData_StatusOK)
+    if (aStatus == VrmlData_ErrorStatus::VrmlData_StatusOK)
       aStatus = Scene().WriteLine("]", nullptr, -2 * GlobalIndent());
   }
   return aStatus;

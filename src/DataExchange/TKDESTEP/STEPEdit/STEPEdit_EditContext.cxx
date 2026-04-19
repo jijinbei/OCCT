@@ -28,7 +28,7 @@ STEPEdit_EditContext::STEPEdit_EditContext()
     : IFSelect_Editor(5)
 {
   occ::handle<Interface_TypedValue> ac_val =
-    new Interface_TypedValue("Application Context", Interface_ParamIdent);
+    new Interface_TypedValue("Application Context", Interface_ParamType::Interface_ParamIdent);
   SetValue(1, ac_val, "AC", IFSelect_EditRead);
 
   occ::handle<Interface_TypedValue> ac_status = new Interface_TypedValue("AppliContext_Status");
@@ -36,13 +36,13 @@ STEPEdit_EditContext::STEPEdit_EditContext()
   occ::handle<Interface_TypedValue> ac_sche = new Interface_TypedValue("AppliContext_Schema");
   SetValue(3, ac_sche, "AC_Schema");
   occ::handle<Interface_TypedValue> ac_year =
-    new Interface_TypedValue("AppliContext_Year", Interface_ParamInteger);
+    new Interface_TypedValue("AppliContext_Year", Interface_ParamType::Interface_ParamInteger);
   SetValue(4, ac_year, "AC_Year");
   occ::handle<Interface_TypedValue> ac_name = new Interface_TypedValue("AppliContext_Name");
   SetValue(5, ac_name, "AC_Name");
 
   //  occ::handle<Interface_TypedValue> prpc_val = new Interface_TypedValue("Product Related Product
-  //  Category",Interface_ParamIdent); SetValue(6,ac_val,"PRPC",IFSelect_EditRead);
+  //  Category",Interface_ParamType::Interface_ParamIdent); SetValue(6,ac_val,"PRPC",IFSelect_EditRead);
 
   //  occ::handle<Interface_TypedValue> prpc_name = new Interface_TypedValue("PRPC_Name");
   //  SetValue(7,prpc_name,"PRPC_Name");

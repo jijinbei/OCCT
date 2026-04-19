@@ -78,13 +78,13 @@ void IGESBasic_ToolSingleParent::ReadOwnParams(const occ::handle<IGESBasic_Singl
     Message_Msg Msg206("XSTEP_206");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg206.Arg(Msg216.Value());
         PR.SendFail(Msg206);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg206.Arg(Msg217.Value());
         PR.SendFail(Msg206);
@@ -157,7 +157,7 @@ IGESData_DirChecker IGESBasic_ToolSingleParent::DirChecker(
   const occ::handle<IGESBasic_SingleParent>& /* ent */) const
 {
   IGESData_DirChecker DC(402, 9); // Form no = 9 & Type = 402
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.HierarchyStatusIgnored();

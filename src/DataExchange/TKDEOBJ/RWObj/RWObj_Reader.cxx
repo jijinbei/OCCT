@@ -240,7 +240,7 @@ bool RWObj_Reader::read(std::istream&                  theStream,
 
     if (!checkMemory())
     {
-      addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewObject);
+      addMesh(myActiveSubMesh, RWObj_SubMeshReason::RWObj_SubMeshReason_NewObject);
       return false;
     }
   }
@@ -268,7 +268,7 @@ bool RWObj_Reader::read(std::istream&                  theStream,
   // flush the last group
   if (!theToProbe)
   {
-    addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewObject);
+    addMesh(myActiveSubMesh, RWObj_SubMeshReason::RWObj_SubMeshReason_NewObject);
   }
   if (myNbElemsBig != 0)
   {
@@ -619,7 +619,7 @@ void RWObj_Reader::pushObject(const char* theObjectName)
   {
     // empty group name is OK
   }
-  if (addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewObject))
+  if (addMesh(myActiveSubMesh, RWObj_SubMeshReason::RWObj_SubMeshReason_NewObject))
   {
     myPackedIndices.Clear(); // vertices might be duplicated after this point...
   }
@@ -635,7 +635,7 @@ void RWObj_Reader::pushGroup(const char* theGroupName)
   {
     // empty group name is OK
   }
-  if (addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewGroup))
+  if (addMesh(myActiveSubMesh, RWObj_SubMeshReason::RWObj_SubMeshReason_NewGroup))
   {
     myPackedIndices.Clear(); // vertices might be duplicated after this point...
   }
@@ -660,7 +660,7 @@ void RWObj_Reader::pushSmoothGroup(const char* theSmoothGroupIndex)
     return;
   }
 
-  if (addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewSmoothGroup))
+  if (addMesh(myActiveSubMesh, RWObj_SubMeshReason::RWObj_SubMeshReason_NewSmoothGroup))
   {
     myPackedIndices.Clear(); // vertices might be duplicated after this point...
   }
@@ -688,7 +688,7 @@ void RWObj_Reader::pushMaterial(const char* theMaterialName)
   }
 
   // implicitly create a new group to split materials
-  if (addMesh(myActiveSubMesh, RWObj_SubMeshReason_NewMaterial))
+  if (addMesh(myActiveSubMesh, RWObj_SubMeshReason::RWObj_SubMeshReason_NewMaterial))
   {
     myPackedIndices.Clear(); // vertices might be duplicated after this point...
   }

@@ -47,7 +47,7 @@ void RWStepVisual_RWPresentationStyleByContext::ReadStep(
     for (int i1 = 1; i1 <= nb1; i1++)
     {
       Interface_ParamType aType = data->ParamType(nsub1, i1);
-      if (aType == Interface_ParamIdent)
+      if (aType == Interface_ParamType::Interface_ParamIdent)
       {
         data->ReadEntity(nsub1, i1, "styles", ach, aStylesItem);
       }

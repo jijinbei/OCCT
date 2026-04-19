@@ -147,7 +147,7 @@ IGESData_DirChecker IGESBasic_ToolGroupWithoutBackP::DirChecker(
   const occ::handle<IGESBasic_GroupWithoutBackP>& /* ent */) const
 {
   IGESData_DirChecker DC(402, 7); // TypeNo. 402, Form no. 7
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.HierarchyStatusIgnored();

@@ -1405,14 +1405,14 @@ bool STEPCAFControl_Writer::writeColors(const occ::handle<XSControl_WorkSession>
           aStyle.SetVisibility(false);
         }
       }
-      if (XCAFDoc_ColorTool::GetColor(aSeqValue, XCAFDoc_ColorGen, aColor))
+      if (XCAFDoc_ColorTool::GetColor(aSeqValue, XCAFDoc_ColorType::XCAFDoc_ColorGen, aColor))
       {
         aStyle.SetColorCurv(aColor.GetRGB());
         aStyle.SetColorSurf(aColor);
       }
-      if (XCAFDoc_ColorTool::GetColor(aSeqValue, XCAFDoc_ColorSurf, aColor))
+      if (XCAFDoc_ColorTool::GetColor(aSeqValue, XCAFDoc_ColorType::XCAFDoc_ColorSurf, aColor))
         aStyle.SetColorSurf(aColor);
-      if (XCAFDoc_ColorTool::GetColor(aSeqValue, XCAFDoc_ColorCurv, aColor))
+      if (XCAFDoc_ColorTool::GetColor(aSeqValue, XCAFDoc_ColorType::XCAFDoc_ColorCurv, aColor))
         aStyle.SetColorCurv(aColor.GetRGB());
       if (!aStyle.IsSetColorSurf())
       {
@@ -2053,14 +2053,14 @@ static bool getSHUOstyle(const TDF_Label& theSHUOlab, XCAFPrs_Style& theSHUOstyl
   }
   else
   {
-    if (XCAFDoc_ColorTool::GetColor(theSHUOlab, XCAFDoc_ColorGen, aColor))
+    if (XCAFDoc_ColorTool::GetColor(theSHUOlab, XCAFDoc_ColorType::XCAFDoc_ColorGen, aColor))
     {
       theSHUOstyle.SetColorCurv(aColor);
       theSHUOstyle.SetColorSurf(aColor);
     }
-    if (XCAFDoc_ColorTool::GetColor(theSHUOlab, XCAFDoc_ColorSurf, aColor))
+    if (XCAFDoc_ColorTool::GetColor(theSHUOlab, XCAFDoc_ColorType::XCAFDoc_ColorSurf, aColor))
       theSHUOstyle.SetColorSurf(aColor);
-    if (XCAFDoc_ColorTool::GetColor(theSHUOlab, XCAFDoc_ColorCurv, aColor))
+    if (XCAFDoc_ColorTool::GetColor(theSHUOlab, XCAFDoc_ColorType::XCAFDoc_ColorCurv, aColor))
       theSHUOstyle.SetColorCurv(aColor);
     if (!theSHUOstyle.IsSetColorSurf())
     {
@@ -4046,12 +4046,12 @@ void STEPCAFControl_Writer::writeGeomTolerance(
     }
     if (anObject->GetMaterialRequirementModifier() == XCAFDimTolObjects_GeomToleranceMatReqModif_L)
     {
-      aModifArray->SetValue(aModifNb, StepDimTol_GTMLeastMaterialRequirement);
+      aModifArray->SetValue(aModifNb, StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement);
     }
     else if (anObject->GetMaterialRequirementModifier()
              == XCAFDimTolObjects_GeomToleranceMatReqModif_M)
     {
-      aModifArray->SetValue(aModifNb, StepDimTol_GTMMaximumMaterialRequirement);
+      aModifArray->SetValue(aModifNb, StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement);
     }
     // Modifier with value
     if (anObject->GetMaxValueModifier() != 0)
@@ -4469,11 +4469,11 @@ bool STEPCAFControl_Writer::writeDGTs(const occ::handle<XSControl_WorkSession>& 
           occ::handle<StepDimTol_ModifiedGeometricTolerance> aMGT =
             new StepDimTol_ModifiedGeometricTolerance;
           if (aKind == 21)
-            aMGT->SetModifier(StepDimTol_MaximumMaterialCondition);
+            aMGT->SetModifier(StepDimTol_LimitCondition::StepDimTol_MaximumMaterialCondition);
           else if (aKind == 22)
-            aMGT->SetModifier(StepDimTol_LeastMaterialCondition);
+            aMGT->SetModifier(StepDimTol_LimitCondition::StepDimTol_LeastMaterialCondition);
           else if (aKind == 23)
-            aMGT->SetModifier(StepDimTol_RegardlessOfFeatureSize);
+            aMGT->SetModifier(StepDimTol_LimitCondition::StepDimTol_RegardlessOfFeatureSize);
           occ::handle<StepDimTol_GeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol> aGTComplex =
             new StepDimTol_GeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol;
           aGTComplex->Init(aName, aDescription, aLMWU, aSA, aGTWDR, aMGT);
@@ -4778,20 +4778,20 @@ bool STEPCAFControl_Writer::writeDGTsAP242(const occ::handle<XSControl_WorkSessi
     {
       // Angular_Location
       occ::handle<StepShape_AngularLocation> aDim     = new StepShape_AngularLocation();
-      StepShape_AngleRelator                 aRelator = StepShape_Equal;
+      StepShape_AngleRelator                 aRelator = StepShape_AngleRelator::StepShape_Equal;
       if (anObject->HasQualifier())
       {
         XCAFDimTolObjects_AngularQualifier aQualifier = anObject->GetAngularQualifier();
         switch (aQualifier)
         {
           case XCAFDimTolObjects_AngularQualifier_Small:
-            aRelator = StepShape_Small;
+            aRelator = StepShape_AngleRelator::StepShape_Small;
             break;
           case XCAFDimTolObjects_AngularQualifier_Large:
-            aRelator = StepShape_Large;
+            aRelator = StepShape_AngleRelator::StepShape_Large;
             break;
           default:
-            aRelator = StepShape_Equal;
+            aRelator = StepShape_AngleRelator::StepShape_Equal;
         }
       }
       aDim->Init(new TCollection_HAsciiString(), false, nullptr, aFirstSA, aSecondSA, aRelator);
@@ -4818,20 +4818,20 @@ bool STEPCAFControl_Writer::writeDGTsAP242(const occ::handle<XSControl_WorkSessi
     {
       // Angular_Size
       occ::handle<StepShape_AngularSize> aDim     = new StepShape_AngularSize();
-      StepShape_AngleRelator             aRelator = StepShape_Equal;
+      StepShape_AngleRelator             aRelator = StepShape_AngleRelator::StepShape_Equal;
       if (anObject->HasQualifier())
       {
         XCAFDimTolObjects_AngularQualifier aQualifier = anObject->GetAngularQualifier();
         switch (aQualifier)
         {
           case XCAFDimTolObjects_AngularQualifier_Small:
-            aRelator = StepShape_Small;
+            aRelator = StepShape_AngleRelator::StepShape_Small;
             break;
           case XCAFDimTolObjects_AngularQualifier_Large:
-            aRelator = StepShape_Large;
+            aRelator = StepShape_AngleRelator::StepShape_Large;
             break;
           default:
-            aRelator = StepShape_Equal;
+            aRelator = StepShape_AngleRelator::StepShape_Equal;
         }
       }
       aDim->Init(aFirstSA, new TCollection_HAsciiString(), aRelator);
@@ -5053,12 +5053,12 @@ bool STEPCAFControl_Writer::writeMaterials(const occ::handle<XSControl_WorkSessi
         {
           // mass
           occ::handle<StepBasic_SiUnitAndMassUnit> aSMU = new StepBasic_SiUnitAndMassUnit;
-          aSMU->SetName(StepBasic_sunGram);
+          aSMU->SetName(StepBasic_SiUnitName::StepBasic_sunGram);
           occ::handle<StepBasic_DerivedUnitElement> aDUE1 = new StepBasic_DerivedUnitElement;
           aDUE1->Init(aSMU, 3.0);
           // length
           occ::handle<StepBasic_SiUnitAndLengthUnit> aSLU = new StepBasic_SiUnitAndLengthUnit;
-          aSLU->Init(true, StepBasic_spCenti, StepBasic_sunMetre);
+          aSLU->Init(true, StepBasic_SiPrefix::StepBasic_spCenti, StepBasic_SiUnitName::StepBasic_sunMetre);
           occ::handle<StepBasic_DerivedUnitElement> aDUE2 = new StepBasic_DerivedUnitElement;
           aDUE2->Init(aSLU, 2.0);
           // other

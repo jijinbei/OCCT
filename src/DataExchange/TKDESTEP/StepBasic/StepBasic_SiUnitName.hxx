@@ -17,7 +17,7 @@
 #ifndef _StepBasic_SiUnitName_HeaderFile
 #define _StepBasic_SiUnitName_HeaderFile
 
-enum StepBasic_SiUnitName
+enum class StepBasic_SiUnitName
 {
   StepBasic_sunMetre,
   StepBasic_sunGram,

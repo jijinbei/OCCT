@@ -14,7 +14,7 @@
 #ifndef _StepElement_ElementVolume_HeaderFile
 #define _StepElement_ElementVolume_HeaderFile
 
-enum StepElement_ElementVolume
+enum class StepElement_ElementVolume
 {
   StepElement_Volume
 };

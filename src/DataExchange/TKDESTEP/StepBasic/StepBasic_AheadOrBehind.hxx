@@ -17,7 +17,7 @@
 #ifndef _StepBasic_AheadOrBehind_HeaderFile
 #define _StepBasic_AheadOrBehind_HeaderFile
 
-enum StepBasic_AheadOrBehind
+enum class StepBasic_AheadOrBehind
 {
   StepBasic_aobAhead,
   StepBasic_aobExact,

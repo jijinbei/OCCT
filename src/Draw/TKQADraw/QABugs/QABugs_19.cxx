@@ -960,7 +960,7 @@ static int OCC23951(Draw_Interpretor& di, int argc, const char** argv)
   TDataStd_Name::Set(lab1, "Box1");
 
   Quantity_Color yellow(Quantity_NOC_YELLOW);
-  XCAFDoc_DocumentTool::ColorTool(aDoc->Main())->SetColor(lab1, yellow, XCAFDoc_ColorGen);
+  XCAFDoc_DocumentTool::ColorTool(aDoc->Main())->SetColor(lab1, yellow, XCAFDoc_ColorType::XCAFDoc_ColorGen);
   XCAFDoc_DocumentTool::ColorTool(aDoc->Main())->SetVisibility(lab1, false);
 
   STEPControl_StepModelType mode = STEPControl_AsIs;
@@ -1011,7 +1011,7 @@ static int OCC23950(Draw_Interpretor& di, int argc, const char** argv)
   XCAFDoc_DocumentTool::ShapeTool(aDoc->Main())->UpdateAssemblies();
 
   Quantity_Color yellow(Quantity_NOC_YELLOW);
-  XCAFDoc_DocumentTool::ColorTool(labelA0)->SetColor(component01, yellow, XCAFDoc_ColorGen);
+  XCAFDoc_DocumentTool::ColorTool(labelA0)->SetColor(component01, yellow, XCAFDoc_ColorType::XCAFDoc_ColorGen);
   XCAFDoc_DocumentTool::ColorTool(labelA0)->SetVisibility(component01, false);
 
   STEPControl_StepModelType mode = STEPControl_AsIs;

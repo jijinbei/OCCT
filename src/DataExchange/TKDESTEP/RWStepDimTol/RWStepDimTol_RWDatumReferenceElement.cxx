@@ -74,7 +74,7 @@ void RWStepDimTol_RWDatumReferenceElement::ReadStep(
   StepDimTol_DatumOrCommonDatum aBase;
   occ::handle<StepDimTol_Datum> aDatum;
   Interface_ParamType           aType = data->ParamType(num, 5);
-  if (aType == Interface_ParamIdent)
+  if (aType == Interface_ParamType::Interface_ParamIdent)
   {
     data->ReadEntity(num,
                      5,
@@ -92,7 +92,7 @@ void RWStepDimTol_RWDatumReferenceElement::ReadStep(
     if (data->ReadSubList(num, 5, "general_datum_reference.base", ach, nbSub))
     {
       aType = data->ParamType(nbSub, 1);
-      if (aType == Interface_ParamSub)
+      if (aType == Interface_ParamType::Interface_ParamSub)
       {
         int aNewNbSub;
         if (data->ReadSubList(nbSub, 1, "general_datum_reference.base", ach, aNewNbSub))
@@ -129,7 +129,7 @@ void RWStepDimTol_RWDatumReferenceElement::ReadStep(
     for (int i = 1; i <= nbElements; i++)
     {
       aType = data->ParamType(nbSub, i);
-      if (aType == Interface_ParamIdent)
+      if (aType == Interface_ParamType::Interface_ParamIdent)
       {
         occ::handle<StepDimTol_DatumReferenceModifierWithValue> aDRMWV;
         data->ReadEntity(nbSub,

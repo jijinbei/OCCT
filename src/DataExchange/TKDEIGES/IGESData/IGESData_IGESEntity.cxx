@@ -155,10 +155,10 @@ occ::handle<IGESData_LineFontEntity> IGESData_IGESEntity::LineFont() const
 IGESData_DefList IGESData_IGESEntity::DefLevel() const
 {
   if (theDefLevel > 0)
-    return IGESData_DefOne;
+    return IGESData_DefList::IGESData_DefOne;
   if (theDefLevel < 0)
-    return IGESData_DefSeveral;
-  return IGESData_DefNone;
+    return IGESData_DefList::IGESData_DefSeveral;
+  return IGESData_DefList::IGESData_DefNone;
 }
 
 int IGESData_IGESEntity::Level() const
@@ -174,11 +174,11 @@ occ::handle<IGESData_LevelListEntity> IGESData_IGESEntity::LevelList() const
 IGESData_DefList IGESData_IGESEntity::DefView() const
 {
   if (View().IsNull())
-    return IGESData_DefNone;
+    return IGESData_DefList::IGESData_DefNone;
   if (View()->IsSingle())
-    return IGESData_DefOne;
+    return IGESData_DefList::IGESData_DefOne;
   else
-    return IGESData_DefSeveral;
+    return IGESData_DefList::IGESData_DefSeveral;
 }
 
 occ::handle<IGESData_ViewKindEntity> IGESData_IGESEntity::View() const
@@ -189,7 +189,7 @@ occ::handle<IGESData_ViewKindEntity> IGESData_IGESEntity::View() const
 occ::handle<IGESData_ViewKindEntity> IGESData_IGESEntity::SingleView() const
 {
   occ::handle<IGESData_ViewKindEntity> nulvue;
-  if (DefView() != IGESData_DefOne)
+  if (DefView() != IGESData_DefList::IGESData_DefOne)
     return nulvue;
   return View();
 }
@@ -197,7 +197,7 @@ occ::handle<IGESData_ViewKindEntity> IGESData_IGESEntity::SingleView() const
 occ::handle<IGESData_ViewKindEntity> IGESData_IGESEntity::ViewList() const
 {
   occ::handle<IGESData_ViewKindEntity> nulvue;
-  if (DefView() != IGESData_DefSeveral)
+  if (DefView() != IGESData_DefList::IGESData_DefSeveral)
     return nulvue;
   return View();
 }

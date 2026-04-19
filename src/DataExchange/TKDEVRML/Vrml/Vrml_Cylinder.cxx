@@ -58,15 +58,15 @@ Standard_OStream& Vrml_Cylinder::Print(Standard_OStream& anOStream) const
 
   switch (myParts)
   {
-    case Vrml_CylinderALL:
+    case Vrml_CylinderParts::Vrml_CylinderALL:
       break; // anOStream  << "\tparts\tALL ";
-    case Vrml_CylinderSIDES:
+    case Vrml_CylinderParts::Vrml_CylinderSIDES:
       anOStream << "    parts\tSIDES\n";
       break;
-    case Vrml_CylinderTOP:
+    case Vrml_CylinderParts::Vrml_CylinderTOP:
       anOStream << "    parts\tTOP\n";
       break;
-    case Vrml_CylinderBOTTOM:
+    case Vrml_CylinderParts::Vrml_CylinderBOTTOM:
       anOStream << "    parts\tBOTTOM\n";
       break;
   }

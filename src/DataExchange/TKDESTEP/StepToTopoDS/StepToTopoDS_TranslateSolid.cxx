@@ -33,7 +33,7 @@
 //=================================================================================================
 
 StepToTopoDS_TranslateSolid::StepToTopoDS_TranslateSolid()
-    : myError(StepToTopoDS_TranslateSolidOther)
+    : myError(StepToTopoDS_TranslateSolidError::StepToTopoDS_TranslateSolidOther)
 {
   done = false;
 }
@@ -127,7 +127,7 @@ void StepToTopoDS_TranslateSolid::Init(const occ::handle<StepVisual_TessellatedS
   }
 
   myResult = aSo;
-  myError  = StepToTopoDS_TranslateSolidDone;
+  myError  = StepToTopoDS_TranslateSolidError::StepToTopoDS_TranslateSolidDone;
   done     = true;
 }
 

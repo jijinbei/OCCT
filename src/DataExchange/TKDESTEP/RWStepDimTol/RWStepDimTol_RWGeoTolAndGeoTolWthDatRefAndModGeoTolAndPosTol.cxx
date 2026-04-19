@@ -74,16 +74,16 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::ReadStep(
 
   data->NamedForComplex("MODIFIED_GEOMETRIC_TOLERANCE", "MDGMTL", num0, num, ach);
   // Own fields of ModifiedGeometricTolerance
-  StepDimTol_LimitCondition aModifier = StepDimTol_MaximumMaterialCondition;
-  if (data->ParamType(num, 1) == Interface_ParamEnum)
+  StepDimTol_LimitCondition aModifier = StepDimTol_LimitCondition::StepDimTol_MaximumMaterialCondition;
+  if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);
     if (strcmp(text, ".MAXIMUM_MATERIAL_CONDITION.") == 0)
-      aModifier = StepDimTol_MaximumMaterialCondition;
+      aModifier = StepDimTol_LimitCondition::StepDimTol_MaximumMaterialCondition;
     else if (strcmp(text, ".LEAST_MATERIAL_CONDITION.") == 0)
-      aModifier = StepDimTol_LeastMaterialCondition;
+      aModifier = StepDimTol_LimitCondition::StepDimTol_LeastMaterialCondition;
     else if (strcmp(text, ".REGARDLESS_OF_FEATURE_SIZE.") == 0)
-      aModifier = StepDimTol_RegardlessOfFeatureSize;
+      aModifier = StepDimTol_LimitCondition::StepDimTol_RegardlessOfFeatureSize;
     else
       ach->AddFail("Parameter in MODIFIED_GEOMETRIC_TOLERANCE has not allowed value");
   }
@@ -122,13 +122,13 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndModGeoTolAndPosTol::WriteStep(
   SW.StartEntity("MODIFIED_GEOMETRIC_TOLERANCE");
   switch (ent->GetModifiedGeometricTolerance()->Modifier())
   {
-    case StepDimTol_MaximumMaterialCondition:
+    case StepDimTol_LimitCondition::StepDimTol_MaximumMaterialCondition:
       SW.SendEnum(".MAXIMUM_MATERIAL_CONDITION.");
       break;
-    case StepDimTol_LeastMaterialCondition:
+    case StepDimTol_LimitCondition::StepDimTol_LeastMaterialCondition:
       SW.SendEnum(".LEAST_MATERIAL_CONDITION.");
       break;
-    case StepDimTol_RegardlessOfFeatureSize:
+    case StepDimTol_LimitCondition::StepDimTol_RegardlessOfFeatureSize:
       SW.SendEnum(".REGARDLESS_OF_FEATURE_SIZE.");
       break;
   }

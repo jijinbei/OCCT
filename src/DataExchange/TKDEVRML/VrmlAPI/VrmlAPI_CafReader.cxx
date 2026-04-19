@@ -33,41 +33,41 @@ static TCollection_AsciiString getVrmlErrorName(VrmlData_ErrorStatus theStatus)
 {
   switch (theStatus)
   {
-    case VrmlData_StatusOK:
+    case VrmlData_ErrorStatus::VrmlData_StatusOK:
       return "";
-    case VrmlData_EmptyData:
+    case VrmlData_ErrorStatus::VrmlData_EmptyData:
       return "EmptyData";
-    case VrmlData_UnrecoverableError:
+    case VrmlData_ErrorStatus::VrmlData_UnrecoverableError:
       return "UnrecoverableError";
-    case VrmlData_GeneralError:
+    case VrmlData_ErrorStatus::VrmlData_GeneralError:
       return "GeneralError";
-    case VrmlData_EndOfFile:
+    case VrmlData_ErrorStatus::VrmlData_EndOfFile:
       return "EndOfFile";
-    case VrmlData_NotVrmlFile:
+    case VrmlData_ErrorStatus::VrmlData_NotVrmlFile:
       return "NotVrmlFile";
-    case VrmlData_CannotOpenFile:
+    case VrmlData_ErrorStatus::VrmlData_CannotOpenFile:
       return "CannotOpenFile";
-    case VrmlData_VrmlFormatError:
+    case VrmlData_ErrorStatus::VrmlData_VrmlFormatError:
       return "VrmlFormatError";
-    case VrmlData_NumericInputError:
+    case VrmlData_ErrorStatus::VrmlData_NumericInputError:
       return "NumericInputError";
-    case VrmlData_IrrelevantNumber:
+    case VrmlData_ErrorStatus::VrmlData_IrrelevantNumber:
       return "IrrelevantNumber";
-    case VrmlData_BooleanInputError:
+    case VrmlData_ErrorStatus::VrmlData_BooleanInputError:
       return "BooleanInputError";
-    case VrmlData_StringInputError:
+    case VrmlData_ErrorStatus::VrmlData_StringInputError:
       return "StringInputError";
-    case VrmlData_NodeNameUnknown:
+    case VrmlData_ErrorStatus::VrmlData_NodeNameUnknown:
       return "NodeNameUnknown";
-    case VrmlData_NonPositiveSize:
+    case VrmlData_ErrorStatus::VrmlData_NonPositiveSize:
       return "NonPositiveSize";
-    case VrmlData_ReadUnknownNode:
+    case VrmlData_ErrorStatus::VrmlData_ReadUnknownNode:
       return "ReadUnknownNode";
-    case VrmlData_NonSupportedFeature:
+    case VrmlData_ErrorStatus::VrmlData_NonSupportedFeature:
       return "NonSupportedFeature";
-    case VrmlData_OutputStreamUndefined:
+    case VrmlData_ErrorStatus::VrmlData_OutputStreamUndefined:
       return "OutputStreamUndefined";
-    case VrmlData_NotImplemented:
+    case VrmlData_ErrorStatus::VrmlData_NotImplemented:
       return "NotImplemented";
   }
   return "UNKNOWN";
@@ -137,7 +137,7 @@ bool VrmlAPI_CafReader::performMesh(std::istream&                  theStream,
     performMeshSubshape(myAttribMap, aShapeAppMap, aShape);
     myRootShapes.Append(aShape);
   }
-  if (aScene.Status() != VrmlData_StatusOK || aShape.IsNull())
+  if (aScene.Status() != VrmlData_ErrorStatus::VrmlData_StatusOK || aShape.IsNull())
   {
     Message::SendFail() << "Error in VrmlAPI_CafReader: " << getVrmlErrorName(aScene.Status())
                         << "occurred at line " << aScene.GetLineError()

@@ -56,12 +56,12 @@ Standard_OStream& Vrml_Cone::Print(Standard_OStream& anOStream) const
 
   switch (myParts)
   {
-    case Vrml_ConeALL:
+    case Vrml_ConeParts::Vrml_ConeALL:
       break; // anOStream  << "    parts\t\tALL ";
-    case Vrml_ConeSIDES:
+    case Vrml_ConeParts::Vrml_ConeSIDES:
       anOStream << "    parts\t\tSIDES\n";
       break;
-    case Vrml_ConeBOTTOM:
+    case Vrml_ConeParts::Vrml_ConeBOTTOM:
       anOStream << "    parts\t\tBOTTOM\n";
       break;
   }

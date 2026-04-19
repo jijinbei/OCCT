@@ -38,7 +38,7 @@ for (i = P.Lower(); i <= P.Upper(); i++)
   Listpoints->SetValue(i, Pt);
 }
 
-Form = StepGeom_bscfUnspecified;
+Form = StepGeom_BSplineCurveForm::StepGeom_bscfUnspecified;
 
 if (BS->IsClosed())
   Fermeture = StepData_LTrue;
@@ -66,13 +66,13 @@ for (i = K.Lower(); i <= K.Upper(); i++)
 
 Distribution = BS->KnotDistribution();
 if (Distribution == GeomAbs_NonUniform)
-  KnotSpec = StepGeom_ktUnspecified;
+  KnotSpec = StepGeom_KnotType::StepGeom_ktUnspecified;
 else if (Distribution == GeomAbs_Uniform)
-  KnotSpec = StepGeom_ktUniformKnots;
+  KnotSpec = StepGeom_KnotType::StepGeom_ktUniformKnots;
 else if (Distribution == GeomAbs_QuasiUniform)
-  KnotSpec = StepGeom_ktQuasiUniformKnots;
+  KnotSpec = StepGeom_KnotType::StepGeom_ktQuasiUniformKnots;
 else
-  KnotSpec = StepGeom_ktPiecewiseBezierKnots;
+  KnotSpec = StepGeom_KnotType::StepGeom_ktPiecewiseBezierKnots;
 
 BSWK                                       = new StepGeom_BSplineCurveWithKnots;
 occ::handle<TCollection_HAsciiString> name = new TCollection_HAsciiString("");

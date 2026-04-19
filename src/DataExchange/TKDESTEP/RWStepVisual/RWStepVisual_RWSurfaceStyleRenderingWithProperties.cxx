@@ -45,18 +45,18 @@ void RWStepVisual_RWSurfaceStyleRenderingWithProperties::ReadStep(
   // Inherited fields of SurfaceStyleRendering
 
   StepVisual_ShadingSurfaceMethod aSurfaceStyleRendering_RenderingMethod =
-    StepVisual_ssmNormalShading;
-  if (data->ParamType(num, 1) == Interface_ParamEnum)
+    StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
+  if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);
     if (strcmp(text, ".CONSTANT_SHADING."))
-      aSurfaceStyleRendering_RenderingMethod = StepVisual_ssmConstantShading;
+      aSurfaceStyleRendering_RenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmConstantShading;
     else if (strcmp(text, ".COLOUR_SHADING."))
-      aSurfaceStyleRendering_RenderingMethod = StepVisual_ssmColourShading;
+      aSurfaceStyleRendering_RenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmColourShading;
     else if (strcmp(text, ".DOT_SHADING."))
-      aSurfaceStyleRendering_RenderingMethod = StepVisual_ssmDotShading;
+      aSurfaceStyleRendering_RenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmDotShading;
     else if (strcmp(text, ".NORMAL_SHADING."))
-      aSurfaceStyleRendering_RenderingMethod = StepVisual_ssmNormalShading;
+      aSurfaceStyleRendering_RenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
     else
       ach->AddFail("Parameter #1 (surface_style_rendering.rendering_method) has not allowed value");
   }
@@ -105,16 +105,16 @@ void RWStepVisual_RWSurfaceStyleRenderingWithProperties::WriteStep(
 
   switch (ent->RenderingMethod())
   {
-    case StepVisual_ssmConstantShading:
+    case StepVisual_ShadingSurfaceMethod::StepVisual_ssmConstantShading:
       SW.SendEnum(".CONSTANT_SHADING.");
       break;
-    case StepVisual_ssmColourShading:
+    case StepVisual_ShadingSurfaceMethod::StepVisual_ssmColourShading:
       SW.SendEnum(".COLOUR_SHADING.");
       break;
-    case StepVisual_ssmDotShading:
+    case StepVisual_ShadingSurfaceMethod::StepVisual_ssmDotShading:
       SW.SendEnum(".DOT_SHADING.");
       break;
-    case StepVisual_ssmNormalShading:
+    case StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading:
       SW.SendEnum(".NORMAL_SHADING.");
       break;
   }

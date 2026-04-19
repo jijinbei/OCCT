@@ -16,7 +16,7 @@
 #define _RWObj_SubMeshReason_HeaderFile
 
 //! Reason for creating a new group within OBJ reader.
-enum RWObj_SubMeshReason
+enum class RWObj_SubMeshReason
 {
   RWObj_SubMeshReason_NewObject,   //!< new object, should occur only ones in valid OBJ file (at the
                                    //!< very beginning)

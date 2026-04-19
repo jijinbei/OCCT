@@ -421,7 +421,7 @@ static occ::handle<Poly_Triangulation> CreatePolyTriangulation(
 //=================================================================================================
 
 StepToTopoDS_TranslateFace::StepToTopoDS_TranslateFace()
-    : myError(StepToTopoDS_TranslateFaceOther)
+    : myError(StepToTopoDS_TranslateFaceError::StepToTopoDS_TranslateFaceOther)
 {
   done = false;
 }
@@ -500,7 +500,7 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
   if (theTopoDSTool.IsBound(theFaceSurface))
   {
     myResult = TopoDS::Face(theTopoDSTool.Find(theFaceSurface));
-    myError  = StepToTopoDS_TranslateFaceDone;
+    myError  = StepToTopoDS_TranslateFaceError::StepToTopoDS_TranslateFaceDone;
     done     = true;
     return;
   }
@@ -517,7 +517,7 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
   if (aStepGeomSurface.IsNull())
   {
     aMessageHandler->AddFail(aStepGeomSurface, " Surface has not been created");
-    myError = StepToTopoDS_TranslateFaceOther;
+    myError = StepToTopoDS_TranslateFaceError::StepToTopoDS_TranslateFaceOther;
     done    = false;
     return;
   }
@@ -529,7 +529,7 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
     // Reverse shape's orientation for the next shell
     anExistingShape.Reverse();
     myResult = anExistingShape;
-    myError  = StepToTopoDS_TranslateFaceDone;
+    myError  = StepToTopoDS_TranslateFaceError::StepToTopoDS_TranslateFaceDone;
     done     = true;
     return;
   }
@@ -545,7 +545,7 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
   if (aGeomSurface.IsNull())
   {
     aMessageHandler->AddFail(aStepGeomSurface, " Surface has not been created");
-    myError = StepToTopoDS_TranslateFaceOther;
+    myError = StepToTopoDS_TranslateFaceError::StepToTopoDS_TranslateFaceOther;
     done    = false;
     return;
   }
@@ -755,7 +755,7 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
   }
 
   myResult = aResultFace;
-  myError  = StepToTopoDS_TranslateFaceDone;
+  myError  = StepToTopoDS_TranslateFaceError::StepToTopoDS_TranslateFaceDone;
   done     = true;
 }
 
@@ -830,7 +830,7 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepVisual_TessellatedFa
   aTP->Bind(theTF, new TransferBRep_ShapeBinder(aF));
 
   myResult = aF;
-  myError  = StepToTopoDS_TranslateFaceDone;
+  myError  = StepToTopoDS_TranslateFaceError::StepToTopoDS_TranslateFaceDone;
   done     = true;
 }
 
@@ -876,7 +876,7 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepVisual_TessellatedSu
     theNMTool.Bind(theTSS, aF);
 
   myResult = aF;
-  myError  = StepToTopoDS_TranslateFaceDone;
+  myError  = StepToTopoDS_TranslateFaceError::StepToTopoDS_TranslateFaceDone;
   done     = true;
 }
 

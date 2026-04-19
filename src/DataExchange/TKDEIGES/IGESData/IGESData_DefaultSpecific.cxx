@@ -49,7 +49,7 @@ void IGESData_DefaultSpecific::OwnDump(const int /*CN*/,
   for (int i = 1; i <= nb; i++)
   {
     Interface_ParamType ptyp = cont->ParamType(i);
-    if (ptyp == Interface_ParamVoid)
+    if (ptyp == Interface_ParamType::Interface_ParamVoid)
       S << "	[" << i << ":Void]";
     else if (cont->IsParamEntity(i))
     {

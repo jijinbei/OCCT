@@ -148,10 +148,10 @@ IGESData_DirChecker IGESDraw_ToolPlanar::DirChecker(
   const occ::handle<IGESDraw_Planar>& /*ent*/) const
 {
   IGESData_DirChecker DC(402, 16);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefVoid);
   DC.BlankStatusIgnored();
   DC.UseFlagRequired(5);
   DC.HierarchyStatusIgnored();

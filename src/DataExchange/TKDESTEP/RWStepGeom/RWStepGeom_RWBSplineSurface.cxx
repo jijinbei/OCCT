@@ -89,8 +89,8 @@ void RWStepGeom_RWBSplineSurface::ReadStep(const occ::handle<StepData_StepReader
 
   // --- own field : surfaceForm ---
 
-  StepGeom_BSplineSurfaceForm aSurfaceForm = StepGeom_bssfPlaneSurf;
-  if (data->ParamType(num, 5) == Interface_ParamEnum)
+  StepGeom_BSplineSurfaceForm aSurfaceForm = StepGeom_BSplineSurfaceForm::StepGeom_bssfPlaneSurf;
+  if (data->ParamType(num, 5) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 5);
     if (!RWStepGeom_RWBSplineSurfaceForm::ConvertToEnum(text, aSurfaceForm))

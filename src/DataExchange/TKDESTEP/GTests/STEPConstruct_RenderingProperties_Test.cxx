@@ -83,7 +83,7 @@ protected:
     // Create and return the final object
     occ::handle<StepVisual_SurfaceStyleRenderingWithProperties> aResult =
       new StepVisual_SurfaceStyleRenderingWithProperties();
-    aResult->Init(StepVisual_ssmNormalShading, aSurfaceColor, aProps);
+    aResult->Init(StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading, aSurfaceColor, aProps);
 
     return aResult;
   }
@@ -146,7 +146,7 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, DefaultConstructor)
   EXPECT_FALSE(aProps.IsSpecularColourDefined());
 
   EXPECT_EQ(aProps.Transparency(), 0.0);
-  EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ssmNormalShading);
+  EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading);
 }
 
 // Test RGBA color constructor
@@ -165,7 +165,7 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, RGBAConstructor)
 
   EXPECT_TRUE(AreColorsEqual(aProps.SurfaceColor(), mySurfaceColor));
   EXPECT_NEAR(aProps.Transparency(), 0.25, 0.001);
-  EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ssmNormalShading);
+  EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading);
 }
 
 // Test StepVisual_SurfaceStyleRenderingWithProperties constructor
@@ -190,7 +190,7 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, StepRenderingPropertiesConstructor
   EXPECT_NEAR(aProps.SpecularReflectance(), mySpecularFactor, 0.001);
   EXPECT_NEAR(aProps.SpecularExponent(), mySpecularExponent, 0.001);
   EXPECT_TRUE(AreColorsEqual(aProps.SpecularColour(), mySpecularColor));
-  EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ssmNormalShading);
+  EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading);
 }
 
 // Test XCAFDoc_VisMaterialCommon constructor
@@ -271,7 +271,7 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, CreateRenderingProperties)
     aProps.CreateRenderingProperties();
 
   ASSERT_FALSE(aStepProps.IsNull());
-  EXPECT_EQ(aStepProps->RenderingMethod(), StepVisual_ssmNormalShading);
+  EXPECT_EQ(aStepProps->RenderingMethod(), StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading);
 
   // Verify properties through re-parsing
   STEPConstruct_RenderingProperties aParsedProps(aStepProps);
@@ -367,12 +367,12 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, InitWithCustomRenderingMethod)
 
   // Initialize with phong shading
   aProps.Init(mySurfaceColor, myTransparency);
-  aProps.SetRenderingMethod(StepVisual_ssmDotShading);
+  aProps.SetRenderingMethod(StepVisual_ShadingSurfaceMethod::StepVisual_ssmDotShading);
 
   EXPECT_TRUE(aProps.IsDefined());
   EXPECT_TRUE(AreColorsEqual(aProps.SurfaceColor(), mySurfaceColor));
   EXPECT_NEAR(aProps.Transparency(), myTransparency, 0.001);
-  EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ssmDotShading);
+  EXPECT_EQ(aProps.RenderingMethod(), StepVisual_ShadingSurfaceMethod::StepVisual_ssmDotShading);
 }
 
 // Test the IsMaterialConvertible method

@@ -33,7 +33,7 @@
 //! but its value is incorrect (it could be out of range, for example)
 //! - ErrorRef indicates that the item is defined as an entity but
 //! is not of the required type.
-enum IGESData_DefType
+enum class IGESData_DefType
 {
   IGESData_DefVoid,
   IGESData_DefValue,

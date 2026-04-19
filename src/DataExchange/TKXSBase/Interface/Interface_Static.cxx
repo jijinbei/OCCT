@@ -51,7 +51,7 @@ Interface_Static::Interface_Static(const char* const                    family,
 {
   switch (Type())
   {
-    case Interface_ParamInteger: {
+    case Interface_ParamType::Interface_ParamInteger: {
       int lim;
       if (other->IntegerLimit(true, lim))
         SetIntegerLimit(true, lim);
@@ -59,7 +59,7 @@ Interface_Static::Interface_Static(const char* const                    family,
         SetIntegerLimit(false, lim);
     }
     break;
-    case Interface_ParamReal: {
+    case Interface_ParamType::Interface_ParamReal: {
       double lim;
       if (other->RealLimit(true, lim))
         SetRealLimit(true, lim);
@@ -68,7 +68,7 @@ Interface_Static::Interface_Static(const char* const                    family,
       SetUnitDef(other->UnitDef());
     }
     break;
-    case Interface_ParamEnum: {
+    case Interface_ParamType::Interface_ParamEnum: {
       bool match;
       int  e0, e1, i;
       other->EnumDef(e0, e1, match);
@@ -78,7 +78,7 @@ Interface_Static::Interface_Static(const char* const                    family,
         AddEnum(other->EnumVal(i));
     }
     break;
-    case Interface_ParamIdent:
+    case Interface_ParamType::Interface_ParamIdent:
       SetObjectType(other->ObjectType());
       break;
     default:
@@ -146,7 +146,7 @@ bool Interface_Static::Init(const char* const         family,
   if (MoniTool_TypedValue::Stats().IsBound(name))
     return false;
   occ::handle<Interface_Static> item;
-  if (type == Interface_ParamMisc)
+  if (type == Interface_ParamType::Interface_ParamMisc)
   {
     occ::handle<Interface_Static> other = Interface_Static::Static(init);
     if (other.IsNull())
@@ -169,25 +169,25 @@ bool Interface_Static::Init(const char* const family,
   switch (type)
   {
     case 'e':
-      epyt = Interface_ParamEnum;
+      epyt = Interface_ParamType::Interface_ParamEnum;
       break;
     case 'i':
-      epyt = Interface_ParamInteger;
+      epyt = Interface_ParamType::Interface_ParamInteger;
       break;
     case 'o':
-      epyt = Interface_ParamIdent;
+      epyt = Interface_ParamType::Interface_ParamIdent;
       break;
     case 'p':
-      epyt = Interface_ParamText;
+      epyt = Interface_ParamType::Interface_ParamText;
       break;
     case 'r':
-      epyt = Interface_ParamReal;
+      epyt = Interface_ParamType::Interface_ParamReal;
       break;
     case 't':
-      epyt = Interface_ParamText;
+      epyt = Interface_ParamType::Interface_ParamText;
       break;
     case '=':
-      epyt = Interface_ParamMisc;
+      epyt = Interface_ParamType::Interface_ParamMisc;
       break;
     case '&': {
       occ::handle<Interface_Static> unstat = Interface_Static::Static(name);
@@ -263,13 +263,13 @@ const char* Interface_Static::CDef(const char* const name, const char* const par
   if (part[0] == 't' && part[1] == 'y')
   {
     Interface_ParamType typ = stat->Type();
-    if (typ == Interface_ParamInteger)
+    if (typ == Interface_ParamType::Interface_ParamInteger)
       return "integer";
-    if (typ == Interface_ParamReal)
+    if (typ == Interface_ParamType::Interface_ParamReal)
       return "real";
-    if (typ == Interface_ParamText)
+    if (typ == Interface_ParamType::Interface_ParamText)
       return "text";
-    if (typ == Interface_ParamEnum)
+    if (typ == Interface_ParamType::Interface_ParamEnum)
       return "enum";
     return "?type?";
   }

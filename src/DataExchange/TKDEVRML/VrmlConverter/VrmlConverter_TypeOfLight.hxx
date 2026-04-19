@@ -17,7 +17,7 @@
 #ifndef _VrmlConverter_TypeOfLight_HeaderFile
 #define _VrmlConverter_TypeOfLight_HeaderFile
 
-enum VrmlConverter_TypeOfLight
+enum class VrmlConverter_TypeOfLight
 {
   VrmlConverter_NoLight,
   VrmlConverter_DirectionLight,

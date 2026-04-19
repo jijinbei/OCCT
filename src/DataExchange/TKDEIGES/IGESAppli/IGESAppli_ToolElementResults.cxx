@@ -247,11 +247,11 @@ IGESData_DirChecker IGESAppli_ToolElementResults::DirChecker(
   const occ::handle<IGESAppli_ElementResults>& /* ent  */) const
 {
   IGESData_DirChecker DC(148, 0, 34);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefAny);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.BlankStatusIgnored();
   DC.UseFlagRequired(3);
   DC.HierarchyStatusIgnored();

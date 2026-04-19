@@ -147,9 +147,9 @@ IGESData_DirChecker IGESSolid_ToolCylinder::DirChecker(
 {
   IGESData_DirChecker DC(154, 0);
 
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
 
   DC.UseFlagRequired(0);
   DC.HierarchyStatusIgnored();

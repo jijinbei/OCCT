@@ -221,12 +221,12 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
     if (GetColorMode() && IsCTool)
     {
       // read colors
-      if (ent->DefColor() == IGESData_DefValue || ent->DefColor() == IGESData_DefReference)
+      if (ent->DefColor() == IGESData_DefType::IGESData_DefValue || ent->DefColor() == IGESData_DefType::IGESData_DefReference)
       {
         // color is assigned
         // decode color and set to document
         IsColor = true;
-        if (ent->DefColor() == IGESData_DefValue)
+        if (ent->DefColor() == IGESData_DefType::IGESData_DefValue)
         {
           col = IGESCAFControl::DecodeColor(ent->RankColor());
         }
@@ -273,7 +273,7 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
         {
           if (STool->SearchUsingMap(it.Value(), L, false, true))
           {
-            CTool->SetColor(L, col, XCAFDoc_ColorGen);
+            CTool->SetColor(L, col, XCAFDoc_ColorType::XCAFDoc_ColorGen);
             if (GetLayerMode() && IsLTool)
             {
               // read layers
@@ -281,12 +281,12 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
               IGESData_DefList aDeflist = ent->DefLevel();
               switch (aDeflist)
               {
-                case IGESData_DefOne: {
+                case IGESData_DefList::IGESData_DefOne: {
                   TCollection_ExtendedString aLayerName(ent->Level());
                   LTool->SetLayer(L, aLayerName);
                   break;
                 }
-                case IGESData_DefSeveral: {
+                case IGESData_DefList::IGESData_DefSeveral: {
                   occ::handle<IGESData_LevelListEntity> aLevelList = ent->LevelList();
                   int                                   layerNb    = aLevelList->NbLevelNumbers();
                   for (int ilev = 1; ilev <= layerNb; ilev++)
@@ -308,7 +308,7 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
     {
       if (IsColor)
       {
-        CTool->SetColor(L, col, XCAFDoc_ColorGen);
+        CTool->SetColor(L, col, XCAFDoc_ColorType::XCAFDoc_ColorGen);
       }
       if (GetNameMode())
       {
@@ -329,12 +329,12 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
         IGESData_DefList aDeflist = ent->DefLevel();
         switch (aDeflist)
         {
-          case IGESData_DefOne: {
+          case IGESData_DefList::IGESData_DefOne: {
             TCollection_ExtendedString aLayerName(ent->Level());
             LTool->SetLayer(L, aLayerName);
             break;
           }
-          case IGESData_DefSeveral: {
+          case IGESData_DefList::IGESData_DefSeveral: {
             occ::handle<IGESData_LevelListEntity> aLevelList = ent->LevelList();
             int                                   layerNb    = aLevelList->NbLevelNumbers();
             for (int ilev = 1; ilev <= layerNb; ilev++)

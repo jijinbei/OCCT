@@ -17,7 +17,7 @@
 #ifndef _Vrml_ConeParts_HeaderFile
 #define _Vrml_ConeParts_HeaderFile
 
-enum Vrml_ConeParts
+enum class Vrml_ConeParts
 {
   Vrml_ConeSIDES,
   Vrml_ConeBOTTOM,

@@ -37,8 +37,8 @@ void RWStepVisual_RWSurfaceStyleUsage::ReadStep(
 
   // --- own field : side ---
 
-  StepVisual_SurfaceSide aSide = StepVisual_ssNegative;
-  if (data->ParamType(num, 1) == Interface_ParamEnum)
+  StepVisual_SurfaceSide aSide = StepVisual_SurfaceSide::StepVisual_ssNegative;
+  if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);
     if (!RWStepVisual_RWSurfaceSide::ConvertToEnum(text, aSide))

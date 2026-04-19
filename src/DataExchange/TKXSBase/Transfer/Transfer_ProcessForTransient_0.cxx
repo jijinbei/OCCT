@@ -209,7 +209,7 @@ bool Transfer_ProcessForTransient::IsAlreadyUsed(const occ::handle<Standard_Tran
     throw Transfer_TransferFailure(
       "TransferProcess : IsAlreadyUsed, transfer not done cannot be used...");
   }
-  return (binder->Status() == Transfer_StatusUsed);
+  return (binder->Status() == Transfer_StatusResult::Transfer_StatusUsed);
 }
 
 //=================================================================================================
@@ -247,7 +247,7 @@ void Transfer_ProcessForTransient::Bind(const occ::handle<Standard_Transient>& s
       binder->Merge(former);
       themap(theindex) = binder;
     }
-    else if (former->Status() == Transfer_StatusUsed)
+    else if (former->Status() == Transfer_StatusResult::Transfer_StatusUsed)
     {
       StartTrace(former, start, thelevel, 4);
       throw Transfer_TransferFailure("TransferProcess : Bind, already Bound");
@@ -515,7 +515,7 @@ void Transfer_ProcessForTransient::BindTransient(const occ::handle<Standard_Tran
     occ::down_cast<Transfer_SimpleBinderOfTransient>(former);
   if (!binder.IsNull())
   {
-    if (binder->Status() == Transfer_StatusVoid)
+    if (binder->Status() == Transfer_StatusResult::Transfer_StatusVoid)
     {
       binder->SetResult(res);
       return;
@@ -736,15 +736,15 @@ occ::handle<Transfer_Binder> Transfer_ProcessForTransient::Transferring(
     Transfer_StatusExec             statex  = former->StatusExec();
     switch (statex)
     {
-      case Transfer_StatusInitial:
+      case Transfer_StatusExec::Transfer_StatusInitial:
         break;
-      case Transfer_StatusDone:
+      case Transfer_StatusExec::Transfer_StatusDone:
         aSender << " .. and Transfer done" << std::endl;
         return former;
-      case Transfer_StatusRun:
-        former->SetStatusExec(Transfer_StatusLoop);
+      case Transfer_StatusExec::Transfer_StatusRun:
+        former->SetStatusExec(Transfer_StatusExec::Transfer_StatusLoop);
         return former;
-      case Transfer_StatusError:
+      case Transfer_StatusExec::Transfer_StatusError:
         if (thetrace)
         {
           aSender << "                  *** Transfer in Error Status  :" << std::endl;
@@ -753,7 +753,7 @@ occ::handle<Transfer_Binder> Transfer_ProcessForTransient::Transferring(
         else
           StartTrace(former, start, thelevel, 4);
         throw Transfer_TransferFailure("TransferProcess : Transfer in Error Status");
-      case Transfer_StatusLoop:
+      case Transfer_StatusExec::Transfer_StatusLoop:
         if (thetrace)
         {
           aSender << "                  *** Transfer  Head of Dead Loop  :" << std::endl;
@@ -765,7 +765,7 @@ occ::handle<Transfer_Binder> Transfer_ProcessForTransient::Transferring(
         break;
     }
     if (!hasDeadLoop)
-      former->SetStatusExec(Transfer_StatusRun);
+      former->SetStatusExec(Transfer_StatusExec::Transfer_StatusRun);
   }
 
   occ::handle<Transfer_Binder> binder;
@@ -774,7 +774,7 @@ occ::handle<Transfer_Binder> Transfer_ProcessForTransient::Transferring(
   // Handle dead loop condition detected before calling TransferProduct
   // When hasDeadLoop is true, we know:
   // 1. former is NOT null (hasDeadLoop only set inside !former.IsNull() block)
-  // 2. former->StatusExec() == Transfer_StatusLoop (that's what triggered hasDeadLoop)
+  // 2. former->StatusExec() == Transfer_StatusExec::Transfer_StatusLoop (that's what triggered hasDeadLoop)
   if (hasDeadLoop)
   {
     Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
@@ -843,14 +843,14 @@ occ::handle<Transfer_Binder> Transfer_ProcessForTransient::Transferring(
   else
   {
     if (!former.IsNull())
-      former->SetStatusExec(Transfer_StatusDone); //+
+      former->SetStatusExec(Transfer_StatusExec::Transfer_StatusDone); //+
     return occ::handle<Transfer_Binder>();        // Null Binder ... what else to do?
   }
 
   if (therootl >= thelevel)
   {
     therootl = 0;
-    if (therootm && binder->Status() != Transfer_StatusVoid)
+    if (therootm && binder->Status() != Transfer_StatusResult::Transfer_StatusVoid)
     {
       SetRoot(start);
     }
@@ -895,7 +895,7 @@ occ::handle<Transfer_Binder> Transfer_ProcessForTransient::TransferProduct(
       thelevel--;
     return binder;
   }
-  if (therootl == 0 && binder->StatusExec() == Transfer_StatusDone)
+  if (therootl == 0 && binder->StatusExec() == Transfer_StatusExec::Transfer_StatusDone)
     therootl = thelevel - 1;
 
   if (thelevel > 0)
@@ -964,7 +964,7 @@ void Transfer_ProcessForTransient::StartTrace(const occ::handle<Transfer_Binder>
     bool                         hasres = false;
     while (!bnd.IsNull())
     {
-      if (bnd->Status() != Transfer_StatusVoid)
+      if (bnd->Status() != Transfer_StatusResult::Transfer_StatusVoid)
       {
         if (!hasres)
           aSender << "\n  ---  Result Type : ";
@@ -1052,7 +1052,7 @@ Transfer_IteratorOfProcessForTransient Transfer_ProcessForTransient::AbnormalRes
     if (binder.IsNull())
       continue;
     Transfer_StatusExec statex = binder->StatusExec();
-    if (statex != Transfer_StatusInitial && statex != Transfer_StatusDone)
+    if (statex != Transfer_StatusExec::Transfer_StatusInitial && statex != Transfer_StatusExec::Transfer_StatusDone)
       iter.Add(binder, Mapped(i));
   }
   return iter;
@@ -1071,7 +1071,7 @@ Interface_CheckIterator Transfer_ProcessForTransient::CheckList(const bool erron
       continue;
     Transfer_StatusExec          statex = binder->StatusExec();
     occ::handle<Interface_Check> check  = binder->Check();
-    if (statex != Transfer_StatusInitial && statex != Transfer_StatusDone && !check->HasFailed())
+    if (statex != Transfer_StatusExec::Transfer_StatusInitial && statex != Transfer_StatusExec::Transfer_StatusDone && !check->HasFailed())
       check->AddFail("Transfer in Abnormal Status (!= Initial or Done)");
     if (!check->HasFailed() && (erronly || check->NbWarnings() == 0))
       continue;
@@ -1143,7 +1143,7 @@ Interface_CheckIterator Transfer_ProcessForTransient::CheckListOne(
       continue;
     Transfer_StatusExec          statex = binder->StatusExec();
     occ::handle<Interface_Check> check  = binder->Check();
-    if (statex != Transfer_StatusInitial && statex != Transfer_StatusDone && !check->HasFailed())
+    if (statex != Transfer_StatusExec::Transfer_StatusInitial && statex != Transfer_StatusExec::Transfer_StatusDone && !check->HasFailed())
       check->AddFail("Transfer in Abnormal Status (!= Initial or Done)");
     if (!check->HasFailed() && (erronly || check->NbWarnings() == 0))
       continue;
@@ -1182,7 +1182,7 @@ bool Transfer_ProcessForTransient::IsCheckListEmpty(const occ::handle<Standard_T
 
     Transfer_StatusExec          statex = binder->StatusExec();
     occ::handle<Interface_Check> check  = binder->Check();
-    if (statex != Transfer_StatusInitial && statex != Transfer_StatusDone)
+    if (statex != Transfer_StatusExec::Transfer_StatusInitial && statex != Transfer_StatusExec::Transfer_StatusDone)
       return false;
     if (check->HasFailed() || (!erronly && check->NbWarnings() > 0))
       return false;

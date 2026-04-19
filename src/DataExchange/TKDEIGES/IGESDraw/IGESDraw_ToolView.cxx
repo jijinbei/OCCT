@@ -132,10 +132,10 @@ void IGESDraw_ToolView::OwnCopy(const occ::handle<IGESDraw_View>& another,
 IGESData_DirChecker IGESDraw_ToolView::DirChecker(const occ::handle<IGESDraw_View>& /*ent*/) const
 {
   IGESData_DirChecker DC(410, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefVoid);
   DC.BlankStatusIgnored();
   DC.UseFlagRequired(1);
   DC.HierarchyStatusIgnored();

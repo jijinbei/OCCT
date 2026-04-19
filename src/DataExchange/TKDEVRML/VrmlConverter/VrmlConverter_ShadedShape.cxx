@@ -312,7 +312,7 @@ void VrmlConverter_ShadedShape::Add(Standard_OStream&                        anO
       // ShapeHints
       SH.Print(anOStream);
       // NormalBinding
-      Vrml_MaterialBindingAndNormalBinding MBNB1 = Vrml_PER_VERTEX_INDEXED;
+      Vrml_MaterialBindingAndNormalBinding MBNB1 = Vrml_MaterialBindingAndNormalBinding::Vrml_PER_VERTEX_INDEXED;
       Vrml_NormalBinding                   NB(MBNB1);
       NB.Print(anOStream);
       // Separator 2 {

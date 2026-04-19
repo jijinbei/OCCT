@@ -17,7 +17,7 @@
 #ifndef _TopoDSToStep_MakeVertexError_HeaderFile
 #define _TopoDSToStep_MakeVertexError_HeaderFile
 
-enum TopoDSToStep_MakeVertexError
+enum class TopoDSToStep_MakeVertexError
 {
   TopoDSToStep_VertexDone,
   TopoDSToStep_VertexOther

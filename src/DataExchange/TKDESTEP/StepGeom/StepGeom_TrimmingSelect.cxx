@@ -40,7 +40,7 @@ int StepGeom_TrimmingSelect::CaseMem(const occ::handle<StepData_SelectMember>& e
     return 0;
   Interface_ParamType type = ent->ParamType();
   //  Void : on admet "non defini" (en principe, on ne devrait pas)
-  if (type != Interface_ParamVoid && type != Interface_ParamReal)
+  if (type != Interface_ParamType::Interface_ParamVoid && type != Interface_ParamType::Interface_ParamReal)
     return 0;
   if (ent->Matches("PARAMETER_VALUE"))
     return 1;

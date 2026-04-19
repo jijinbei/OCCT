@@ -218,7 +218,7 @@ void IGESData_IGESWriter::SectionsDP()
     throw Interface_InterfaceError("IGESWriter : SectionsDP");
   thesect = 3;
   thecurr.SetMax(MaxcarsP);
-  thestep = IGESData_ReadEnd;
+  thestep = IGESData_ReadStage::IGESData_ReadEnd;
 }
 
 void IGESData_IGESWriter::SectionT()
@@ -231,7 +231,7 @@ void IGESData_IGESWriter::SectionT()
 
 void IGESData_IGESWriter::DirPart(const occ::handle<IGESData_IGESEntity>& anent)
 {
-  if (thesect != 3 && thestep != IGESData_ReadEnd)
+  if (thesect != 3 && thestep != IGESData_ReadStage::IGESData_ReadEnd)
     throw Interface_InterfaceError("IGESWriter : DirPart");
   int  v[17];
   char res1[9], res2[9], label[9], snum[9];
@@ -248,23 +248,23 @@ void IGESData_IGESWriter::DirPart(const occ::handle<IGESData_IGESEntity>& anent)
     v[2] = 0;
 
   IGESData_DefType linet = anent->DefLineFont();
-  if (linet == IGESData_DefReference)
+  if (linet == IGESData_DefType::IGESData_DefReference)
     v[3] = -themodel->DNum(anent->DirFieldEntity(4));
-  else if (linet == IGESData_DefValue)
+  else if (linet == IGESData_DefType::IGESData_DefValue)
     v[3] = anent->RankLineFont();
   else
     v[3] = 0;
 
   IGESData_DefList levt = anent->DefLevel();
-  if (levt == IGESData_DefSeveral)
+  if (levt == IGESData_DefList::IGESData_DefSeveral)
     v[4] = -themodel->DNum(anent->DirFieldEntity(5));
-  else if (levt == IGESData_DefOne)
+  else if (levt == IGESData_DefList::IGESData_DefOne)
     v[4] = anent->Level();
   else
     v[4] = 0;
 
   IGESData_DefList viewt = anent->DefView();
-  if (viewt == IGESData_DefSeveral || viewt == IGESData_DefOne)
+  if (viewt == IGESData_DefList::IGESData_DefSeveral || viewt == IGESData_DefList::IGESData_DefOne)
     v[5] = themodel->DNum(anent->DirFieldEntity(6));
   else
     v[5] = 0;
@@ -287,9 +287,9 @@ void IGESData_IGESWriter::DirPart(const occ::handle<IGESData_IGESEntity>& anent)
   v[13] = anent->LineWeightNumber();
 
   IGESData_DefType colt = anent->DefColor();
-  if (colt == IGESData_DefReference)
+  if (colt == IGESData_DefType::IGESData_DefReference)
     v[14] = -themodel->DNum(anent->DirFieldEntity(13));
-  else if (colt == IGESData_DefValue)
+  else if (colt == IGESData_DefType::IGESData_DefValue)
     v[14] = anent->RankColor();
   else
     v[14] = 0;
@@ -342,26 +342,26 @@ void IGESData_IGESWriter::DirPart(const occ::handle<IGESData_IGESEntity>& anent)
           label,
           snum);
   //  DP ChangeValue donc mis a jour d office
-  thestep = IGESData_ReadDir;
+  thestep = IGESData_ReadStage::IGESData_ReadDir;
 }
 
 void IGESData_IGESWriter::OwnParams(const occ::handle<IGESData_IGESEntity>& anent)
 {
   char text[20];
-  if (thesect != 3 && thestep != IGESData_ReadDir)
+  if (thesect != 3 && thestep != IGESData_ReadStage::IGESData_ReadDir)
     throw Interface_InterfaceError("IGESWriter : OwnParams");
   thepnum.SetValue(themodel->Number(anent), thepars->Length() + 1);
   thecurr.Clear();
   Sprintf(text, "%d", anent->TypeNumber());
   AddString(text);
-  thestep = IGESData_ReadOwn;
+  thestep = IGESData_ReadStage::IGESData_ReadOwn;
 }
 
 void IGESData_IGESWriter::Properties(const occ::handle<IGESData_IGESEntity>& anent)
 {
-  if (thesect != 3 && thestep != IGESData_ReadOwn)
+  if (thesect != 3 && thestep != IGESData_ReadStage::IGESData_ReadOwn)
     throw Interface_InterfaceError("IGESWriter : Properties");
-  thestep = IGESData_ReadProps;
+  thestep = IGESData_ReadStage::IGESData_ReadProps;
   if (!anent->ArePresentProperties())
     return;
   Send(anent->NbProperties());
@@ -374,9 +374,9 @@ void IGESData_IGESWriter::Properties(const occ::handle<IGESData_IGESEntity>& ane
 
 void IGESData_IGESWriter::Associativities(const occ::handle<IGESData_IGESEntity>& anent)
 {
-  if (thesect != 3 && thestep != IGESData_ReadOwn)
+  if (thesect != 3 && thestep != IGESData_ReadStage::IGESData_ReadOwn)
     throw Interface_InterfaceError("IGESWriter : Associativities");
-  thestep = IGESData_ReadAssocs;
+  thestep = IGESData_ReadStage::IGESData_ReadAssocs;
   if (!anent->ArePresentAssociativities() && !anent->ArePresentProperties())
     return; // Properties follow : do not omit them !
   Send(anent->NbAssociativities());
@@ -385,17 +385,17 @@ void IGESData_IGESWriter::Associativities(const occ::handle<IGESData_IGESEntity>
     DeclareAndCast(IGESData_IGESEntity, localent, iter.Value());
     Send(localent);
   }
-  thestep = IGESData_ReadAssocs;
+  thestep = IGESData_ReadStage::IGESData_ReadAssocs;
 }
 
 void IGESData_IGESWriter::EndEntity()
 {
-  if (thesect != 3 && thestep != IGESData_ReadOwn)
+  if (thesect != 3 && thestep != IGESData_ReadStage::IGESData_ReadOwn)
     throw Interface_InterfaceError("IGESWriter : EndEntity");
   AddChar(theendm);
   if (thecurr.Length() > 0)
     thepars->Append(thecurr.Moved());
-  thestep = IGESData_ReadEnd;
+  thestep = IGESData_ReadStage::IGESData_ReadEnd;
 }
 
 //  ....                    Parameter feeding                    ....

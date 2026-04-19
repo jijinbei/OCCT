@@ -568,7 +568,7 @@ int parser::parse()
 
           case 17: // unarg: IDENT
           {
-            StepData->SetTypeArg(Interface_ParamIdent);
+            StepData->SetTypeArg(Interface_ParamType::Interface_ParamIdent);
             StepData->CreateNewArg();
           }
           break;
@@ -629,7 +629,7 @@ int parser::parse()
 
           case 40: // unid: IDENT
           {
-            StepData->SetTypeArg(Interface_ParamIdent);
+            StepData->SetTypeArg(Interface_ParamType::Interface_ParamIdent);
             StepData->CreateNewArg();
           }
           break;

@@ -90,16 +90,16 @@ void RWStepFEA_RWFeaAxis2Placement3d::ReadStep(
 
   // Own fields of FeaAxis2Placement3d
 
-  StepFEA_CoordinateSystemType aSystemType = StepFEA_Cartesian;
-  if (data->ParamType(num, 5) == Interface_ParamEnum)
+  StepFEA_CoordinateSystemType aSystemType = StepFEA_CoordinateSystemType::StepFEA_Cartesian;
+  if (data->ParamType(num, 5) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 5);
     if (strcmp(text, ".CARTESIAN.") == 0)
-      aSystemType = StepFEA_Cartesian;
+      aSystemType = StepFEA_CoordinateSystemType::StepFEA_Cartesian;
     else if (strcmp(text, ".CYLINDRICAL.") == 0)
-      aSystemType = StepFEA_Cylindrical;
+      aSystemType = StepFEA_CoordinateSystemType::StepFEA_Cylindrical;
     else if (strcmp(text, ".SPHERICAL.") == 0)
-      aSystemType = StepFEA_Spherical;
+      aSystemType = StepFEA_CoordinateSystemType::StepFEA_Spherical;
     else
       ach->AddFail("Parameter #5 (system_type) has not allowed value");
   }
@@ -155,13 +155,13 @@ void RWStepFEA_RWFeaAxis2Placement3d::WriteStep(
 
   switch (ent->SystemType())
   {
-    case StepFEA_Cartesian:
+    case StepFEA_CoordinateSystemType::StepFEA_Cartesian:
       SW.SendEnum(".CARTESIAN.");
       break;
-    case StepFEA_Cylindrical:
+    case StepFEA_CoordinateSystemType::StepFEA_Cylindrical:
       SW.SendEnum(".CYLINDRICAL.");
       break;
-    case StepFEA_Spherical:
+    case StepFEA_CoordinateSystemType::StepFEA_Spherical:
       SW.SendEnum(".SPHERICAL.");
       break;
   }

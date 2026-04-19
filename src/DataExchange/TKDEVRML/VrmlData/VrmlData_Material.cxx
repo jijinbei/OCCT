@@ -71,12 +71,12 @@ static bool parseColor(VrmlData_ErrorStatus& theStatus,
     }
     else
     {
-      theStatus = VrmlData_VrmlFormatError;
+      theStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
     }
   }
   if (!isValidColor(theColor))
   {
-    theStatus = VrmlData_IrrelevantNumber;
+    theStatus = VrmlData_ErrorStatus::VrmlData_IrrelevantNumber;
     return false;
   }
   return true;
@@ -110,12 +110,12 @@ static bool parseScalar(VrmlData_ErrorStatus& theStatus,
     }
     else
     {
-      theStatus = VrmlData_VrmlFormatError;
+      theStatus = VrmlData_ErrorStatus::VrmlData_VrmlFormatError;
     }
   }
   if (!isValidValue(theValue))
   {
-    theStatus = VrmlData_IrrelevantNumber;
+    theStatus = VrmlData_ErrorStatus::VrmlData_IrrelevantNumber;
     return false;
   }
   return true;
@@ -245,7 +245,7 @@ VrmlData_ErrorStatus VrmlData_Material::Read(VrmlData_InBuffer& theBuffer)
 
 VrmlData_ErrorStatus VrmlData_Material::Write(const char* thePrefix) const
 {
-  VrmlData_ErrorStatus  aStatus  = VrmlData_StatusOK;
+  VrmlData_ErrorStatus  aStatus  = VrmlData_ErrorStatus::VrmlData_StatusOK;
   const VrmlData_Scene& aScene   = Scene();
   static char           header[] = "Material {";
   if (!aScene.IsDummyWrite() && OK(aStatus, aScene.WriteLine(thePrefix, header, GlobalIndent())))

@@ -180,10 +180,10 @@ IGESData_DirChecker IGESDraw_ToolRectArraySubfigure::DirChecker(
   const occ::handle<IGESDraw_RectArraySubfigure>& /*ent*/) const
 {
   IGESData_DirChecker DC(412, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.GraphicsIgnored(1);
 
   return DC;

@@ -204,7 +204,7 @@ IGESData_DirChecker IGESAppli_ToolNodalDisplAndRot::DirChecker(
   const occ::handle<IGESAppli_NodalDisplAndRot>& /* ent */) const
 {
   IGESData_DirChecker DC(138, 0); // Form no = 0 & Type = 138
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.HierarchyStatusIgnored();
   return DC;

@@ -48,8 +48,8 @@ void RWStepGeom_RWSurfacePatch::ReadStep(const occ::handle<StepData_StepReaderDa
 
   // --- own field : uTransition ---
 
-  StepGeom_TransitionCode aUTransition = StepGeom_tcDiscontinuous;
-  if (data->ParamType(num, 2) == Interface_ParamEnum)
+  StepGeom_TransitionCode aUTransition = StepGeom_TransitionCode::StepGeom_tcDiscontinuous;
+  if (data->ParamType(num, 2) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 2);
     if (!RWStepGeom_RWTransitionCode::ConvertToEnum(text, aUTransition))
@@ -62,8 +62,8 @@ void RWStepGeom_RWSurfacePatch::ReadStep(const occ::handle<StepData_StepReaderDa
 
   // --- own field : vTransition ---
 
-  StepGeom_TransitionCode aVTransition = StepGeom_tcDiscontinuous;
-  if (data->ParamType(num, 3) == Interface_ParamEnum)
+  StepGeom_TransitionCode aVTransition = StepGeom_TransitionCode::StepGeom_tcDiscontinuous;
+  if (data->ParamType(num, 3) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 3);
     if (!RWStepGeom_RWTransitionCode::ConvertToEnum(text, aVTransition))

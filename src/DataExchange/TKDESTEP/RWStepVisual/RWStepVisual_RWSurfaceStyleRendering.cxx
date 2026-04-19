@@ -40,18 +40,18 @@ void RWStepVisual_RWSurfaceStyleRendering::ReadStep(
 
   // Own fields of SurfaceStyleRendering
 
-  StepVisual_ShadingSurfaceMethod aRenderingMethod = StepVisual_ssmNormalShading;
-  if (data->ParamType(num, 1) == Interface_ParamEnum)
+  StepVisual_ShadingSurfaceMethod aRenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
+  if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);
     if (strcmp(text, ".CONSTANT_SHADING."))
-      aRenderingMethod = StepVisual_ssmConstantShading;
+      aRenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmConstantShading;
     else if (strcmp(text, ".COLOUR_SHADING."))
-      aRenderingMethod = StepVisual_ssmColourShading;
+      aRenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmColourShading;
     else if (strcmp(text, ".DOT_SHADING."))
-      aRenderingMethod = StepVisual_ssmDotShading;
+      aRenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmDotShading;
     else if (strcmp(text, ".NORMAL_SHADING."))
-      aRenderingMethod = StepVisual_ssmNormalShading;
+      aRenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
     else
       ach->AddFail("Parameter #1 (rendering_method) has not allowed value");
   }
@@ -76,16 +76,16 @@ void RWStepVisual_RWSurfaceStyleRendering::WriteStep(
 
   switch (ent->RenderingMethod())
   {
-    case StepVisual_ssmConstantShading:
+    case StepVisual_ShadingSurfaceMethod::StepVisual_ssmConstantShading:
       SW.SendEnum(".CONSTANT_SHADING.");
       break;
-    case StepVisual_ssmColourShading:
+    case StepVisual_ShadingSurfaceMethod::StepVisual_ssmColourShading:
       SW.SendEnum(".COLOUR_SHADING.");
       break;
-    case StepVisual_ssmDotShading:
+    case StepVisual_ShadingSurfaceMethod::StepVisual_ssmDotShading:
       SW.SendEnum(".DOT_SHADING.");
       break;
-    case StepVisual_ssmNormalShading:
+    case StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading:
       SW.SendEnum(".NORMAL_SHADING.");
       break;
   }

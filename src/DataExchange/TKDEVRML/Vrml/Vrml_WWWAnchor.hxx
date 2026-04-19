@@ -40,7 +40,7 @@ public:
 
   Standard_EXPORT Vrml_WWWAnchor(const TCollection_AsciiString& aName        = "",
                                  const TCollection_AsciiString& aDescription = "",
-                                 const Vrml_WWWAnchorMap        aMap         = Vrml_MAP_NONE);
+                                 const Vrml_WWWAnchorMap        aMap         = Vrml_WWWAnchorMap::Vrml_MAP_NONE);
 
   Standard_EXPORT void SetName(const TCollection_AsciiString& aName);
 

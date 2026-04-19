@@ -70,31 +70,31 @@ Standard_OStream& Vrml_ShapeHints::Print(Standard_OStream& anOStream) const
 
   switch (myVertexOrdering)
   {
-    case Vrml_UNKNOWN_ORDERING:
+    case Vrml_VertexOrdering::Vrml_UNKNOWN_ORDERING:
       break; // anOStream  << "    vertexOrdering\tUNKNOWN_ORDERING";
-    case Vrml_CLOCKWISE:
+    case Vrml_VertexOrdering::Vrml_CLOCKWISE:
       anOStream << "    vertexOrdering\tCLOCKWISE\n";
       break;
-    case Vrml_COUNTERCLOCKWISE:
+    case Vrml_VertexOrdering::Vrml_COUNTERCLOCKWISE:
       anOStream << "    vertexOrdering\tCOUNTERCLOCKWISE\n";
       break;
   }
 
   switch (myShapeType)
   {
-    case Vrml_UNKNOWN_SHAPE_TYPE:
+    case Vrml_ShapeType::Vrml_UNKNOWN_SHAPE_TYPE:
       break; // anOStream  << "    shapeType\t\tUNKNOWN_SHAPE_TYPE";
-    case Vrml_SOLID:
+    case Vrml_ShapeType::Vrml_SOLID:
       anOStream << "    shapeType\t\tSOLID\n";
       break;
   }
 
   switch (myFaceType)
   {
-    case Vrml_UNKNOWN_FACE_TYPE:
+    case Vrml_FaceType::Vrml_UNKNOWN_FACE_TYPE:
       anOStream << "    faceType\t\tUNKNOWN_FACE_TYPE\n";
       break;
-    case Vrml_CONVEX:
+    case Vrml_FaceType::Vrml_CONVEX:
       break; // anOStream  << "    faceType\t\tCONVEX";
   }
 

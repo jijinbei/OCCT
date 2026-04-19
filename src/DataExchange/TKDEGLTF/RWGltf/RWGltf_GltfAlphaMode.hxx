@@ -18,7 +18,7 @@
 #include <Standard_CString.hxx>
 
 //! Low-level glTF enumeration defining Alpha Mode.
-enum RWGltf_GltfAlphaMode
+enum class RWGltf_GltfAlphaMode
 {
   RWGltf_GltfAlphaMode_Opaque, //!< alpha value is ignored and the rendered output is fully opaque
   RWGltf_GltfAlphaMode_Mask,   //!< rendered output is either fully opaque or fully transparent
@@ -31,17 +31,17 @@ inline RWGltf_GltfAlphaMode RWGltf_GltfParseAlphaMode(const char* theType)
 {
   if (IsEqual("OPAQUE", theType))
   {
-    return RWGltf_GltfAlphaMode_Opaque;
+    return RWGltf_GltfAlphaMode::RWGltf_GltfAlphaMode_Opaque;
   }
   else if (IsEqual("MASK", theType))
   {
-    return RWGltf_GltfAlphaMode_Mask;
+    return RWGltf_GltfAlphaMode::RWGltf_GltfAlphaMode_Mask;
   }
   else if (IsEqual("BLEND", theType))
   {
-    return RWGltf_GltfAlphaMode_Blend;
+    return RWGltf_GltfAlphaMode::RWGltf_GltfAlphaMode_Blend;
   }
-  return RWGltf_GltfAlphaMode_Opaque;
+  return RWGltf_GltfAlphaMode::RWGltf_GltfAlphaMode_Opaque;
 }
 
 #endif // _RWGltf_GltfAlphaMode_HeaderFile

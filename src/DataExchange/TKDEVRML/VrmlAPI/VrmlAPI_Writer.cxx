@@ -142,7 +142,7 @@ void VrmlAPI_Writer::ResetToDefaults()
   myFrontMaterial->SetSpecularColor(Col3);
   myPointsMaterial->SetSpecularColor(Col3);
 
-  myRepresentation = VrmlAPI_BothRepresentation;
+  myRepresentation = VrmlAPI_RepresentationOfShape::VrmlAPI_BothRepresentation;
 }
 
 occ::handle<VrmlConverter_Drawer> VrmlAPI_Writer::Drawer() const
@@ -394,20 +394,20 @@ bool VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape, Standard_OStream& theO
   //----  Definition of data for Projector
   //=========================================
 
-  VrmlConverter_TypeOfLight            Light  = VrmlConverter_NoLight;
-  VrmlConverter_TypeOfCamera           Camera = VrmlConverter_PerspectiveCamera;
+  VrmlConverter_TypeOfLight            Light  = VrmlConverter_TypeOfLight::VrmlConverter_NoLight;
+  VrmlConverter_TypeOfCamera           Camera = VrmlConverter_TypeOfCamera::VrmlConverter_PerspectiveCamera;
   occ::handle<VrmlConverter_Projector> projector =
     new VrmlConverter_Projector(Shapes, Focus, DX, DY, DZ, XUp, YUp, ZUp, Camera, Light);
 
   Vrml::VrmlHeaderWriter(theOStream);
-  if (myRepresentation == VrmlAPI_BothRepresentation)
+  if (myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_BothRepresentation)
     Vrml::CommentWriter(
       " This file contents both Shaded and Wire Frame representation of selected Shape ",
       theOStream);
-  if (myRepresentation == VrmlAPI_ShadedRepresentation)
+  if (myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_ShadedRepresentation)
     Vrml::CommentWriter(" This file contents only Shaded representation of selected Shape ",
                         theOStream);
-  if (myRepresentation == VrmlAPI_WireFrameRepresentation)
+  if (myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_WireFrameRepresentation)
     Vrml::CommentWriter(" This file contents only Wire Frame representation of selected Shape ",
                         theOStream);
 
@@ -415,16 +415,16 @@ bool VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape, Standard_OStream& theO
   S1.Print(theOStream);
   projector->Add(theOStream);
 
-  Light  = VrmlConverter_DirectionLight;
-  Camera = VrmlConverter_OrthographicCamera;
+  Light  = VrmlConverter_TypeOfLight::VrmlConverter_DirectionLight;
+  Camera = VrmlConverter_TypeOfCamera::VrmlConverter_OrthographicCamera;
   occ::handle<VrmlConverter_Projector> projector1 =
     new VrmlConverter_Projector(Shapes, Focus, DX, DY, DZ, XUp, YUp, ZUp, Camera, Light);
   projector1->Add(theOStream);
 
   Vrml_Separator S2;
   S2.Print(theOStream);
-  if ((myRepresentation == VrmlAPI_ShadedRepresentation
-       || myRepresentation == VrmlAPI_BothRepresentation)
+  if ((myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_ShadedRepresentation
+       || myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_BothRepresentation)
       && hasTriangles)
   {
     Vrml_Group Group1;
@@ -434,8 +434,8 @@ bool VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape, Standard_OStream& theO
     VrmlConverter_ShadedShape::Add(theOStream, aShape, myDrawer);
     Group1.Print(theOStream);
   }
-  if (myRepresentation == VrmlAPI_WireFrameRepresentation
-      || myRepresentation == VrmlAPI_BothRepresentation)
+  if (myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_WireFrameRepresentation
+      || myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_BothRepresentation)
   {
     Vrml_Group Group2;
     Group2.Print(theOStream);
@@ -454,13 +454,13 @@ bool VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape, Standard_OStream& theO
 bool VrmlAPI_Writer::write_v2(const TopoDS_Shape& aShape, Standard_OStream& theOStream) const
 {
   bool anExtFace = false;
-  if (myRepresentation == VrmlAPI_ShadedRepresentation
-      || myRepresentation == VrmlAPI_BothRepresentation)
+  if (myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_ShadedRepresentation
+      || myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_BothRepresentation)
     anExtFace = true;
 
   bool anExtEdge = false;
-  if (myRepresentation == VrmlAPI_WireFrameRepresentation
-      || myRepresentation == VrmlAPI_BothRepresentation)
+  if (myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_WireFrameRepresentation
+      || myRepresentation == VrmlAPI_RepresentationOfShape::VrmlAPI_BothRepresentation)
     anExtEdge = true;
 
   VrmlData_Scene        aScene;

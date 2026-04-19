@@ -62,13 +62,13 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
     Message_Msg Msg169("XSTEP_169");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg169.Arg(Msg216.Value());
         PR.SendFail(Msg169);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg169.Arg(Msg217.Value());
         PR.SendFail(Msg169);
@@ -116,19 +116,19 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
     Message_Msg Msg172("XSTEP_172");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg172.Arg(Msg216.Value());
         PR.SendFail(Msg172);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg172.Arg(Msg217.Value());
         PR.SendFail(Msg172);
         break;
       }
-      case IGESData_TypeError: {
+      case IGESData_Status::IGESData_TypeError: {
         Message_Msg Msg218("IGES_218");
         Msg172.Arg(Msg218.Value());
         PR.SendFail(Msg172);
@@ -159,19 +159,19 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
         Message_Msg Msg173("XSTEP_173");
         switch (aStatus)
         {
-          case IGESData_ReferenceError: {
+          case IGESData_Status::IGESData_ReferenceError: {
             Message_Msg Msg216("IGES_216");
             Msg173.Arg(Msg216.Value());
             PR.SendFail(Msg173);
             break;
           }
-          case IGESData_EntityError: {
+          case IGESData_Status::IGESData_EntityError: {
             Message_Msg Msg217("IGES_217");
             Msg173.Arg(Msg217.Value());
             PR.SendFail(Msg173);
             break;
           }
-          case IGESData_TypeError: {
+          case IGESData_Status::IGESData_TypeError: {
             Message_Msg Msg218("IGES_218");
             Msg173.Arg(Msg218.Value());
             PR.SendFail(Msg173);
@@ -253,10 +253,10 @@ IGESData_DirChecker IGESGeom_ToolTrimmedSurface::DirChecker(
   const occ::handle<IGESGeom_TrimmedSurface>& /* ent */) const
 {
   IGESData_DirChecker DC(144, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.UseFlagRequired(0);
   DC.HierarchyStatusIgnored();
 

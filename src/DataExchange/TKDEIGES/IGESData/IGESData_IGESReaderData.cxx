@@ -29,7 +29,7 @@ IGESData_IGESReaderData::IGESData_IGESReaderData(const int nbe, const int nbp)
       thectyp(0, 0),
       thedirs(0, nbe)
 {
-  thestep = IGESData_ReadDir;
+  thestep = IGESData_ReadStage::IGESData_ReadDir;
   thedefw = 0.;
   theparh = new Interface_ParamSet(30);
   thestar = new NCollection_HSequence<occ::handle<TCollection_HAsciiString>>();
@@ -198,7 +198,7 @@ void IGESData_IGESReaderData::SetEntityNumbers()
       int nbp = NbParams(i);
       for (int j = 1; j <= nbp; j ++) {
         Interface_FileParameter& FP = ChangeParam(i,j);
-        if (FP.ParamType() == Interface_ParamInteger) {
+        if (FP.ParamType() == Interface_ParamType::Interface_ParamInteger) {
       int val = atoi(FP.CValue());
       if (val > 0) {
         if (val != ((val/2) *2) && val < 2*nbd) {  // candidat possible

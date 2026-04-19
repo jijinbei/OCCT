@@ -30,11 +30,11 @@ inline const char* ConvertToString(const StepGeom_TrimmingPreference theSourceEn
 {
   switch (theSourceEnum)
   {
-    case StepGeom_tpParameter:
+    case StepGeom_TrimmingPreference::StepGeom_tpParameter:
       return tpParameter;
-    case StepGeom_tpUnspecified:
+    case StepGeom_TrimmingPreference::StepGeom_tpUnspecified:
       return tpUnspecified;
-    case StepGeom_tpCartesian:
+    case StepGeom_TrimmingPreference::StepGeom_tpCartesian:
       return tpCartesian;
   }
   return nullptr;
@@ -49,15 +49,15 @@ inline bool ConvertToEnum(const char* const            thePreferenceStr,
 {
   if (IsEqual(thePreferenceStr, tpParameter))
   {
-    theResultEnum = StepGeom_tpParameter;
+    theResultEnum = StepGeom_TrimmingPreference::StepGeom_tpParameter;
   }
   else if (IsEqual(thePreferenceStr, tpUnspecified))
   {
-    theResultEnum = StepGeom_tpUnspecified;
+    theResultEnum = StepGeom_TrimmingPreference::StepGeom_tpUnspecified;
   }
   else if (IsEqual(thePreferenceStr, tpCartesian))
   {
-    theResultEnum = StepGeom_tpCartesian;
+    theResultEnum = StepGeom_TrimmingPreference::StepGeom_tpCartesian;
   }
   else
   {

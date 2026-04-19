@@ -30,11 +30,11 @@ inline const char* ConvertToString(const StepVisual_SurfaceSide theSourceEnum)
 {
   switch (theSourceEnum)
   {
-    case StepVisual_ssNegative:
+    case StepVisual_SurfaceSide::StepVisual_ssNegative:
       return ssNegative;
-    case StepVisual_ssPositive:
+    case StepVisual_SurfaceSide::StepVisual_ssPositive:
       return ssPositive;
-    case StepVisual_ssBoth:
+    case StepVisual_SurfaceSide::StepVisual_ssBoth:
       return ssBoth;
   }
   return nullptr;
@@ -48,15 +48,15 @@ inline bool ConvertToEnum(const char* const theSideStr, StepVisual_SurfaceSide& 
 {
   if (IsEqual(theSideStr, ssNegative))
   {
-    theResultEnum = StepVisual_ssNegative;
+    theResultEnum = StepVisual_SurfaceSide::StepVisual_ssNegative;
   }
   else if (IsEqual(theSideStr, ssPositive))
   {
-    theResultEnum = StepVisual_ssPositive;
+    theResultEnum = StepVisual_SurfaceSide::StepVisual_ssPositive;
   }
   else if (IsEqual(theSideStr, ssBoth))
   {
-    theResultEnum = StepVisual_ssBoth;
+    theResultEnum = StepVisual_SurfaceSide::StepVisual_ssBoth;
   }
   else
   {

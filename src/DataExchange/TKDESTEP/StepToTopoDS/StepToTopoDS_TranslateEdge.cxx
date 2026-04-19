@@ -168,7 +168,7 @@ static TopoDS_Edge MakeEdge(const occ::handle<Geom_Curve>& C3D,
 // ============================================================================
 
 StepToTopoDS_TranslateEdge::StepToTopoDS_TranslateEdge()
-    : myError(StepToTopoDS_TranslateEdgeOther)
+    : myError(StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeOther)
 {
   done = false;
 }
@@ -215,7 +215,7 @@ void StepToTopoDS_TranslateEdge::Init(const occ::handle<StepShape_Edge>& aEdge,
     }
     else
     {
-      myError = StepToTopoDS_TranslateEdgeDone;
+      myError = StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeDone;
       done    = true;
       //: S4136      B.SameRange(TopoDS::Edge(myResult), false);    //:a5 abv 11 Feb 98
       //: S4136      B.SameParameter(TopoDS::Edge(myResult), false);//:a5
@@ -231,7 +231,7 @@ void StepToTopoDS_TranslateEdge::Init(const occ::handle<StepShape_Edge>& aEdge,
     if (!OE->Orientation())
       existingShape.Reverse();
     myResult = existingShape;
-    myError  = StepToTopoDS_TranslateEdgeDone;
+    myError  = StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeDone;
     done     = true;
     return;
   }
@@ -249,7 +249,7 @@ void StepToTopoDS_TranslateEdge::Init(const occ::handle<StepShape_Edge>& aEdge,
     // Register Edge for final processing (I-DEAS case)
     NMTool.RegisterNMEdge(existingShape);
     myResult = existingShape;
-    myError  = StepToTopoDS_TranslateEdgeDone;
+    myError  = StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeDone;
     done     = true;
     return;
   }
@@ -261,7 +261,7 @@ void StepToTopoDS_TranslateEdge::Init(const occ::handle<StepShape_Edge>& aEdge,
   if (C.IsNull())
   {
     TP->AddFail(EC, " Geom Curve in EdgeCurve is equal to 0");
-    myError = StepToTopoDS_TranslateEdgeOther;
+    myError = StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeOther;
     done    = false;
     return;
   }
@@ -353,7 +353,7 @@ void StepToTopoDS_TranslateEdge::Init(const occ::handle<StepShape_Edge>& aEdge,
     }
 
     myResult = E;
-    myError  = StepToTopoDS_TranslateEdgeDone;
+    myError  = StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeDone;
   }
 }
 
@@ -403,7 +403,7 @@ void StepToTopoDS_TranslateEdge::MakeFromCurve3D(const occ::handle<StepGeom_Curv
   if (C1.IsNull())
   {
     TP->AddFail(C3D, " Make Geom_Curve (3D) failed");
-    myError = StepToTopoDS_TranslateEdgeOther;
+    myError = StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeOther;
     done    = false;
     return;
   }
@@ -483,7 +483,7 @@ void StepToTopoDS_TranslateEdge::MakeFromCurve3D(const occ::handle<StepGeom_Curv
         {
           DecodeMakeEdgeError(ME, C3D, C1, V1, V2, U1, U2, aTool, EC);
           E       = MakeEdge(C1, V1, V2, U1, U2);
-          myError = StepToTopoDS_TranslateEdgeDone;
+          myError = StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeDone;
           done    = true;
           //		return;
         }
@@ -492,7 +492,7 @@ void StepToTopoDS_TranslateEdge::MakeFromCurve3D(const occ::handle<StepGeom_Curv
       {
         // Then, this is should be coded as degenerated
         // To be performed later !!!
-        myError = StepToTopoDS_TranslateEdgeDone;
+        myError = StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeDone;
         //  Bon, on la fait cette petite edge, mais faudra repasser
         //  pour l enlever ET FUSIONNER LES VERTEX, pour tout le shell !
         //  courbe trop petite pour etre mise -> fait planter
@@ -522,7 +522,7 @@ void StepToTopoDS_TranslateEdge::MakeFromCurve3D(const occ::handle<StepGeom_Curv
     {
       DecodeMakeEdgeError(ME, C3D, C1, V1, V2, U1, U2, aTool, EC);
       E       = MakeEdge(C1, V1, V2, U1, U2);
-      myError = StepToTopoDS_TranslateEdgeDone;
+      myError = StepToTopoDS_TranslateEdgeError::StepToTopoDS_TranslateEdgeDone;
       done    = true;
     }
   }

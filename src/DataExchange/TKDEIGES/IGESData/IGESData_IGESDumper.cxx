@@ -163,13 +163,13 @@ void IGESData_IGESDumper::Dump(const occ::handle<IGESData_IGESEntity>& ent,
       S << "\n";
     }
     IGESData_DefList viewkind = ent->DefView();
-    if (viewkind == IGESData_DefOne)
+    if (viewkind == IGESData_DefList::IGESData_DefOne)
     {
       S << "**      View          :";
       PrintDNum(ent->View(), S);
       S << "\n";
     }
-    if (viewkind == IGESData_DefSeveral)
+    if (viewkind == IGESData_DefList::IGESData_DefSeveral)
     {
       S << "**      View (List)   :";
       PrintDNum(ent->ViewList(), S);
@@ -188,11 +188,11 @@ void IGESData_IGESDumper::Dump(const occ::handle<IGESData_IGESEntity>& ent,
     }
 
     S << "\n              Graphic Attributes\n";
-    if (ent->DefLineFont() == IGESData_DefValue)
+    if (ent->DefLineFont() == IGESData_DefType::IGESData_DefValue)
     {
       S << "**      LineFont Value:" << ent->RankLineFont() << "\n";
     }
-    else if (ent->DefLineFont() == IGESData_DefReference)
+    else if (ent->DefLineFont() == IGESData_DefType::IGESData_DefReference)
     {
       S << "**      LineFont Ref  :";
       PrintDNum(ent->LineFont(), S);
@@ -221,11 +221,11 @@ void IGESData_IGESDumper::Dump(const occ::handle<IGESData_IGESEntity>& ent,
         S << "    ->  Value:" << ent->LineWeight();
       S << std::endl;
     }
-    if (ent->DefColor() == IGESData_DefValue)
+    if (ent->DefColor() == IGESData_DefType::IGESData_DefValue)
     {
       S << "**      Color Value   :" << ent->RankColor();
     }
-    else if (ent->DefColor() == IGESData_DefReference)
+    else if (ent->DefColor() == IGESData_DefType::IGESData_DefReference)
     {
       S << "**      Color Ref     :";
       PrintDNum(ent->Color(), S);

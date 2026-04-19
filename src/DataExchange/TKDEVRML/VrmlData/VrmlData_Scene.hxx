@@ -60,7 +60,7 @@ public:
 
   /**
    * Query the status of the previous operation.
-   * Normally it should be equal to VrmlData_StatusOK (no error).
+   * Normally it should be equal to VrmlData_ErrorStatus::VrmlData_StatusOK (no error).
    */
   inline VrmlData_ErrorStatus Status() const { return myStatus; }
 

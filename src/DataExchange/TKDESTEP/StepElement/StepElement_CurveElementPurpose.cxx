@@ -76,40 +76,40 @@ StepElement_EnumeratedCurveElementPurpose StepElement_CurveElementPurpose::
   occ::handle<StepElement_CurveElementPurposeMember> SelMem =
     occ::down_cast<StepElement_CurveElementPurposeMember>(Value());
   if (SelMem.IsNull())
-    return StepElement_Axial;
+    return StepElement_EnumeratedCurveElementPurpose::StepElement_Axial;
   occ::handle<TCollection_HAsciiString> name = new TCollection_HAsciiString;
   name->AssignCat(SelMem->Name());
   occ::handle<TCollection_HAsciiString> nameitem =
     new TCollection_HAsciiString("ENUMERATED_CURVEELEMENT_PURPOSE");
   if (name->IsDifferent(nameitem))
-    return StepElement_Axial;
+    return StepElement_EnumeratedCurveElementPurpose::StepElement_Axial;
   int                                       numit = SelMem->Enum();
   StepElement_EnumeratedCurveElementPurpose val;
   switch (numit)
   {
     case 1:
-      val = StepElement_Axial;
+      val = StepElement_EnumeratedCurveElementPurpose::StepElement_Axial;
       break;
     case 2:
-      val = StepElement_YYBending;
+      val = StepElement_EnumeratedCurveElementPurpose::StepElement_YYBending;
       break;
     case 3:
-      val = StepElement_ZZBending;
+      val = StepElement_EnumeratedCurveElementPurpose::StepElement_ZZBending;
       break;
     case 4:
-      val = StepElement_Torsion;
+      val = StepElement_EnumeratedCurveElementPurpose::StepElement_Torsion;
       break;
     case 5:
-      val = StepElement_XYShear;
+      val = StepElement_EnumeratedCurveElementPurpose::StepElement_XYShear;
       break;
     case 6:
-      val = StepElement_XZShear;
+      val = StepElement_EnumeratedCurveElementPurpose::StepElement_XZShear;
       break;
     case 7:
-      val = StepElement_Warping;
+      val = StepElement_EnumeratedCurveElementPurpose::StepElement_Warping;
       break;
     default:
-      return StepElement_Axial;
+      return StepElement_EnumeratedCurveElementPurpose::StepElement_Axial;
       break;
   }
   return val;

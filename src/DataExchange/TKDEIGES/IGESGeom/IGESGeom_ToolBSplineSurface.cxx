@@ -214,7 +214,7 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(
   while (imax >= icur)
   {
     Interface_ParamType pt = PR.ParamType(icur);
-    if (pt == Interface_ParamReal)
+    if (pt == Interface_ParamType::Interface_ParamReal)
     {
       if (!PR.ReadReal(PR.Current(), bid))
       {
@@ -223,7 +223,7 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(
       if (pbfin == 0)
         pbfin = 1;
     }
-    else if (pt == Interface_ParamInteger || pt == Interface_ParamVoid)
+    else if (pt == Interface_ParamType::Interface_ParamInteger || pt == Interface_ParamType::Interface_ParamVoid)
       break;
     else
       pbfin = -1;
@@ -384,10 +384,10 @@ IGESData_DirChecker IGESGeom_ToolBSplineSurface::DirChecker(
   const occ::handle<IGESGeom_BSplineSurface>& /* ent */) const
 {
   IGESData_DirChecker DC(128, 0, 9);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }

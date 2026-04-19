@@ -128,7 +128,7 @@ IGESData_DirChecker IGESDimen_ToolDimensionedGeometry::DirChecker(
   const occ::handle<IGESDimen_DimensionedGeometry>& /* ent */) const
 {
   IGESData_DirChecker DC(402, 13); // type no = 402; form no. = 13
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.HierarchyStatusIgnored();

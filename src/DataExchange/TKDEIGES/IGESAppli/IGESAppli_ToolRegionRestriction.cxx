@@ -102,7 +102,7 @@ IGESData_DirChecker IGESAppli_ToolRegionRestriction::DirChecker(
   const occ::handle<IGESAppli_RegionRestriction>& /*ent*/) const
 {
   IGESData_DirChecker DC(406, 2); // Form no = 2 & Type = 406
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
   DC.BlankStatusIgnored();
   DC.UseFlagIgnored();
@@ -115,7 +115,7 @@ void IGESAppli_ToolRegionRestriction::OwnCheck(const occ::handle<IGESAppli_Regio
                                                occ::handle<Interface_Check>& ach) const
 {
   if (ent->SubordinateStatus() != 0)
-    if (ent->DefLevel() != IGESData_DefOne && ent->DefLevel() != IGESData_DefSeveral)
+    if (ent->DefLevel() != IGESData_DefList::IGESData_DefOne && ent->DefLevel() != IGESData_DefList::IGESData_DefSeveral)
       ach->AddFail("Level type: Not value/reference");
   if (ent->NbPropertyValues() != 3)
     ach->AddFail("Number of Property Values != 3");

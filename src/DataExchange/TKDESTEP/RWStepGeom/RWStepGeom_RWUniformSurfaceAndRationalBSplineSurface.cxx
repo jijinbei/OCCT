@@ -90,8 +90,8 @@ void RWStepGeom_RWUniformSurfaceAndRationalBSplineSurface::ReadStep(
 
   // --- field : surfaceForm ---
 
-  StepGeom_BSplineSurfaceForm aSurfaceForm = StepGeom_bssfPlaneSurf;
-  if (data->ParamType(num, 4) == Interface_ParamEnum)
+  StepGeom_BSplineSurfaceForm aSurfaceForm = StepGeom_BSplineSurfaceForm::StepGeom_bssfPlaneSurf;
+  if (data->ParamType(num, 4) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 4);
     if (!RWStepGeom_RWBSplineSurfaceForm::ConvertToEnum(text, aSurfaceForm))

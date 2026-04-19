@@ -71,9 +71,9 @@ IGESData_DirChecker IGESSolid_ToolSolidInstance::DirChecker(
 {
   IGESData_DirChecker DC(430, 0, 1);
 
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
 
   DC.GraphicsIgnored(1);
   return DC;

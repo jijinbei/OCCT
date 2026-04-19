@@ -33,17 +33,17 @@ inline const char* ConvertToString(const StepGeom_BSplineCurveForm theSourceEnum
 {
   switch (theSourceEnum)
   {
-    case StepGeom_bscfEllipticArc:
+    case StepGeom_BSplineCurveForm::StepGeom_bscfEllipticArc:
       return bscfEllipticArc;
-    case StepGeom_bscfPolylineForm:
+    case StepGeom_BSplineCurveForm::StepGeom_bscfPolylineForm:
       return bscfPolylineForm;
-    case StepGeom_bscfParabolicArc:
+    case StepGeom_BSplineCurveForm::StepGeom_bscfParabolicArc:
       return bscfParabolicArc;
-    case StepGeom_bscfCircularArc:
+    case StepGeom_BSplineCurveForm::StepGeom_bscfCircularArc:
       return bscfCircularArc;
-    case StepGeom_bscfUnspecified:
+    case StepGeom_BSplineCurveForm::StepGeom_bscfUnspecified:
       return bscfUnspecified;
-    case StepGeom_bscfHyperbolicArc:
+    case StepGeom_BSplineCurveForm::StepGeom_bscfHyperbolicArc:
       return bscfHyperbolicArc;
   }
   return nullptr;
@@ -57,27 +57,27 @@ inline bool ConvertToEnum(const char* const theFormString, StepGeom_BSplineCurve
 {
   if (IsEqual(theFormString, bscfEllipticArc))
   {
-    theResultEnum = StepGeom_bscfEllipticArc;
+    theResultEnum = StepGeom_BSplineCurveForm::StepGeom_bscfEllipticArc;
   }
   else if (IsEqual(theFormString, bscfPolylineForm))
   {
-    theResultEnum = StepGeom_bscfPolylineForm;
+    theResultEnum = StepGeom_BSplineCurveForm::StepGeom_bscfPolylineForm;
   }
   else if (IsEqual(theFormString, bscfParabolicArc))
   {
-    theResultEnum = StepGeom_bscfParabolicArc;
+    theResultEnum = StepGeom_BSplineCurveForm::StepGeom_bscfParabolicArc;
   }
   else if (IsEqual(theFormString, bscfCircularArc))
   {
-    theResultEnum = StepGeom_bscfCircularArc;
+    theResultEnum = StepGeom_BSplineCurveForm::StepGeom_bscfCircularArc;
   }
   else if (IsEqual(theFormString, bscfUnspecified))
   {
-    theResultEnum = StepGeom_bscfUnspecified;
+    theResultEnum = StepGeom_BSplineCurveForm::StepGeom_bscfUnspecified;
   }
   else if (IsEqual(theFormString, bscfHyperbolicArc))
   {
-    theResultEnum = StepGeom_bscfHyperbolicArc;
+    theResultEnum = StepGeom_BSplineCurveForm::StepGeom_bscfHyperbolicArc;
   }
   else
   {

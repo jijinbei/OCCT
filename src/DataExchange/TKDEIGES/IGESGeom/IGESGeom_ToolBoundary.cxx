@@ -79,13 +79,13 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
     Message_Msg Msg124("XTSEP_124");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg124.Arg(Msg216.Value());
         PR.SendFail(Msg124);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg124.Arg(Msg217.Value());
         PR.SendFail(Msg124);
@@ -124,13 +124,13 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
         Message_Msg Msg127("XTSEP_127");
         switch (aStatus)
         {
-          case IGESData_ReferenceError: {
+          case IGESData_Status::IGESData_ReferenceError: {
             Message_Msg Msg216("IGES_216");
             Msg127.Arg(Msg216.Value());
             PR.SendFail(Msg127);
             break;
           }
-          case IGESData_EntityError: {
+          case IGESData_Status::IGESData_EntityError: {
             Message_Msg Msg217("IGES_217");
             Msg127.Arg(Msg217.Value());
             PR.SendFail(Msg127);
@@ -353,11 +353,11 @@ IGESData_DirChecker IGESGeom_ToolBoundary::DirChecker(
   const occ::handle<IGESGeom_Boundary>& /* ent */) const
 {
   IGESData_DirChecker DC(141, 0);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   DC.GraphicsIgnored();
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.SubordinateStatusRequired(0);
   DC.HierarchyStatusIgnored();
   return DC;

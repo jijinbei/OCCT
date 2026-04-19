@@ -17,7 +17,7 @@
 #ifndef _StepShape_BooleanOperator_HeaderFile
 #define _StepShape_BooleanOperator_HeaderFile
 
-enum StepShape_BooleanOperator
+enum class StepShape_BooleanOperator
 {
   StepShape_boDifference,
   StepShape_boIntersection,

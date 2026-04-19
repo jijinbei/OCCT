@@ -68,13 +68,13 @@ void IGESGeom_ToolOffsetSurface::ReadOwnParams(const occ::handle<IGESGeom_Offset
     Message_Msg Msg164("XSTEP_164");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg164.Arg(Msg216.Value());
         PR.SendFail(Msg164);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg164.Arg(Msg217.Value());
         PR.SendFail(Msg164);
@@ -130,10 +130,10 @@ IGESData_DirChecker IGESGeom_ToolOffsetSurface::DirChecker(
   const occ::handle<IGESGeom_OffsetSurface>& /* ent */) const
 {
   IGESData_DirChecker DC(140, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusIgnored();
   return DC;
 }

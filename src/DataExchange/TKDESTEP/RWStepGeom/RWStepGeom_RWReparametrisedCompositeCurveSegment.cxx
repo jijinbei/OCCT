@@ -38,8 +38,8 @@ void RWStepGeom_RWReparametrisedCompositeCurveSegment::ReadStep(
 
   // --- inherited field : transition ---
 
-  StepGeom_TransitionCode aTransition = StepGeom_tcDiscontinuous;
-  if (data->ParamType(num, 1) == Interface_ParamEnum)
+  StepGeom_TransitionCode aTransition = StepGeom_TransitionCode::StepGeom_tcDiscontinuous;
+  if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);
     if (!RWStepGeom_RWTransitionCode::ConvertToEnum(text, aTransition))

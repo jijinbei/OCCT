@@ -17,7 +17,7 @@
 #ifndef _StepToTopoDS_GeometricToolError_HeaderFile
 #define _StepToTopoDS_GeometricToolError_HeaderFile
 
-enum StepToTopoDS_GeometricToolError
+enum class StepToTopoDS_GeometricToolError
 {
   StepToTopoDS_GeometricToolDone,
   StepToTopoDS_GeometricToolIsDegenerated,

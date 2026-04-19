@@ -16,7 +16,7 @@
 #ifndef _StepDimTol_AreaUnitType_HeaderFile
 #define _StepDimTol_AreaUnitType_HeaderFile
 
-enum StepDimTol_AreaUnitType
+enum class StepDimTol_AreaUnitType
 {
   StepDimTol_Circular,
   StepDimTol_Rectangular,

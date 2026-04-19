@@ -21,7 +21,7 @@ Vrml_Separator::Vrml_Separator(const Vrml_SeparatorRenderCulling aRenderCulling)
 
 Vrml_Separator::Vrml_Separator()
 {
-  myRenderCulling = Vrml_AUTO;
+  myRenderCulling = Vrml_SeparatorRenderCulling::Vrml_AUTO;
   myFlagPrint     = false;
 }
 
@@ -40,9 +40,9 @@ Standard_OStream& Vrml_Separator::Print(Standard_OStream& anOStream)
   if (myFlagPrint == 0)
   {
     anOStream << "Separator {\n";
-    if (myRenderCulling != Vrml_AUTO)
+    if (myRenderCulling != Vrml_SeparatorRenderCulling::Vrml_AUTO)
     {
-      if (myRenderCulling == Vrml_ON)
+      if (myRenderCulling == Vrml_SeparatorRenderCulling::Vrml_ON)
         anOStream << "    renderCulling\tON\n";
       else
         anOStream << "    renderCulling\tOFF\n";

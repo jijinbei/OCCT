@@ -53,19 +53,19 @@ void IGESGeom_ToolSurfaceOfRevolution::ReadOwnParams(
     Message_Msg Msg152("XSTEP_152");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg152.Arg(Msg216.Value());
         PR.SendFail(Msg152);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg152.Arg(Msg217.Value());
         PR.SendFail(Msg152);
         break;
       }
-      case IGESData_TypeError: {
+      case IGESData_Status::IGESData_TypeError: {
         Message_Msg Msg218("IGES_218");
         Msg152.Arg(Msg218.Value());
         PR.SendFail(Msg152);
@@ -80,13 +80,13 @@ void IGESGeom_ToolSurfaceOfRevolution::ReadOwnParams(
     Message_Msg Msg153("XSTEP_153");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg153.Arg(Msg216.Value());
         PR.SendFail(Msg153);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg153.Arg(Msg217.Value());
         PR.SendFail(Msg153);
@@ -151,10 +151,10 @@ IGESData_DirChecker IGESGeom_ToolSurfaceOfRevolution::DirChecker(
   const occ::handle<IGESGeom_SurfaceOfRevolution>& /*ent*/) const
 {
   IGESData_DirChecker DC(120, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
 
   DC.HierarchyStatusIgnored();
   return DC;

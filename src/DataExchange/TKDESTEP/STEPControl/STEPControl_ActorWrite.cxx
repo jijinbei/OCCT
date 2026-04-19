@@ -1152,14 +1152,14 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
       }
       case STEPControl_FacetedBrep: {
         TopoDSToStep_FacetedError facErr = TopoDSToStep_FacetedTool::CheckTopoDSShape(aShape);
-        if (facErr != TopoDSToStep_FacetedDone)
+        if (facErr != TopoDSToStep_FacetedError::TopoDSToStep_FacetedDone)
         {
           FP->AddFail(start, "Error in Faceted Shape from TopoDS");
-          if (facErr == TopoDSToStep_SurfaceNotPlane)
+          if (facErr == TopoDSToStep_FacetedError::TopoDSToStep_SurfaceNotPlane)
           {
             FP->AddFail(start, "-- The TopoDS_Face is not plane");
           }
-          else if (facErr == TopoDSToStep_PCurveNotLinear)
+          else if (facErr == TopoDSToStep_FacetedError::TopoDSToStep_PCurveNotLinear)
           {
             FP->AddFail(start, "-- The Face contains non linear PCurves");
           }
@@ -1180,14 +1180,14 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
       }
       case STEPControl_FacetedBrepAndBrepWithVoids: {
         TopoDSToStep_FacetedError facErr = TopoDSToStep_FacetedTool::CheckTopoDSShape(aShape);
-        if (facErr != TopoDSToStep_FacetedDone)
+        if (facErr != TopoDSToStep_FacetedError::TopoDSToStep_FacetedDone)
         {
           FP->AddFail(start, "Error in Faceted Shape from TopoDS");
-          if (facErr == TopoDSToStep_SurfaceNotPlane)
+          if (facErr == TopoDSToStep_FacetedError::TopoDSToStep_SurfaceNotPlane)
           {
             FP->AddFail(start, "-- The TopoDS_Face is not plane");
           }
-          else if (facErr == TopoDSToStep_PCurveNotLinear)
+          else if (facErr == TopoDSToStep_FacetedError::TopoDSToStep_PCurveNotLinear)
           {
             FP->AddFail(start, "-- The Face contains non linear PCurves");
           }

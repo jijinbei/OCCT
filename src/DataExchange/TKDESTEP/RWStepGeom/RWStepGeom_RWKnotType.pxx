@@ -32,13 +32,13 @@ inline const char* ConvertToString(const StepGeom_KnotType theSourceEnum)
 {
   switch (theSourceEnum)
   {
-    case StepGeom_ktUniformKnots:
+    case StepGeom_KnotType::StepGeom_ktUniformKnots:
       return ktUniformKnots;
-    case StepGeom_ktQuasiUniformKnots:
+    case StepGeom_KnotType::StepGeom_ktQuasiUniformKnots:
       return ktQuasiUniformKnots;
-    case StepGeom_ktPiecewiseBezierKnots:
+    case StepGeom_KnotType::StepGeom_ktPiecewiseBezierKnots:
       return ktPiecewiseBezierKnots;
-    case StepGeom_ktUnspecified:
+    case StepGeom_KnotType::StepGeom_ktUnspecified:
       return ktUnspecified;
   }
   return nullptr;
@@ -52,19 +52,19 @@ inline bool ConvertToEnum(const char* const theKnotTypeString, StepGeom_KnotType
 {
   if (IsEqual(theKnotTypeString, ktUniformKnots))
   {
-    theResultEnum = StepGeom_ktUniformKnots;
+    theResultEnum = StepGeom_KnotType::StepGeom_ktUniformKnots;
   }
   else if (IsEqual(theKnotTypeString, ktQuasiUniformKnots))
   {
-    theResultEnum = StepGeom_ktQuasiUniformKnots;
+    theResultEnum = StepGeom_KnotType::StepGeom_ktQuasiUniformKnots;
   }
   else if (IsEqual(theKnotTypeString, ktPiecewiseBezierKnots))
   {
-    theResultEnum = StepGeom_ktPiecewiseBezierKnots;
+    theResultEnum = StepGeom_KnotType::StepGeom_ktPiecewiseBezierKnots;
   }
   else if (IsEqual(theKnotTypeString, ktUnspecified))
   {
-    theResultEnum = StepGeom_ktUnspecified;
+    theResultEnum = StepGeom_KnotType::StepGeom_ktUnspecified;
   }
   else
   {

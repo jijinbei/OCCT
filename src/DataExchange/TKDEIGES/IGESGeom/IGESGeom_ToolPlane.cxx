@@ -81,13 +81,13 @@ void IGESGeom_ToolPlane::ReadOwnParams(const occ::handle<IGESGeom_Plane>&       
       Message_Msg Msg136("XSTEP_136");
       switch (aStatus)
       {
-        case IGESData_ReferenceError: {
+        case IGESData_Status::IGESData_ReferenceError: {
           Message_Msg Msg216("IGES_216");
           Msg136.Arg(Msg216.Value());
           PR.SendFail(Msg136);
           break;
         }
-        case IGESData_EntityError: {
+        case IGESData_Status::IGESData_EntityError: {
           Message_Msg Msg217("IGES_217");
           Msg136.Arg(Msg217.Value());
           PR.SendFail(Msg136);
@@ -172,19 +172,19 @@ void IGESGeom_ToolPlane::OwnCopy(const occ::handle<IGESGeom_Plane>& another,
 IGESData_DirChecker IGESGeom_ToolPlane::DirChecker(const occ::handle<IGESGeom_Plane>& ent) const
 {
   IGESData_DirChecker DC(108, -1, 1);
-  DC.Structure(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
   if (ent->FormNumber() != 0)
   {
-    DC.LineFont(IGESData_DefAny);
-    //      DC.LineWeight(IGESData_DefValue);
+    DC.LineFont(IGESData_DefType::IGESData_DefAny);
+    //      DC.LineWeight(IGESData_DefType::IGESData_DefValue);
   }
   else
   {
-    DC.LineFont(IGESData_DefVoid);
-    DC.LineWeight(IGESData_DefVoid);
+    DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+    DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
     DC.HierarchyStatusIgnored();
   }
-  DC.Color(IGESData_DefAny);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   return DC;
 }
 

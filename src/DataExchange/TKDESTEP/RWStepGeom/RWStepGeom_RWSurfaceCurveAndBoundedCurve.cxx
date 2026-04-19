@@ -83,8 +83,8 @@ void RWStepGeom_RWSurfaceCurveAndBoundedCurve::ReadStep(
   }
 
   // --- own field : masterRepresentation ---
-  StepGeom_PreferredSurfaceCurveRepresentation aMasterRepresentation = StepGeom_pscrCurve3d;
-  if (data->ParamType(num1, 3) == Interface_ParamEnum)
+  StepGeom_PreferredSurfaceCurveRepresentation aMasterRepresentation = StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d;
+  if (data->ParamType(num1, 3) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num1, 3);
     if (!RWStepGeom_RWPreferredSurfaceCurveRepresentation::ConvertToEnum(text,

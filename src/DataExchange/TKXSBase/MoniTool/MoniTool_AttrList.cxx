@@ -77,14 +77,14 @@ MoniTool_ValueType MoniTool_AttrList::AttributeType(const char* const name) cons
 {
   occ::handle<Standard_Transient> atr = Attribute(name);
   if (atr.IsNull())
-    return MoniTool_ValueVoid;
+    return MoniTool_ValueType::MoniTool_ValueVoid;
   if (atr->DynamicType() == STANDARD_TYPE(MoniTool_IntVal))
-    return MoniTool_ValueInteger;
+    return MoniTool_ValueType::MoniTool_ValueInteger;
   if (atr->DynamicType() == STANDARD_TYPE(MoniTool_RealVal))
-    return MoniTool_ValueReal;
+    return MoniTool_ValueType::MoniTool_ValueReal;
   if (atr->DynamicType() == STANDARD_TYPE(TCollection_HAsciiString))
-    return MoniTool_ValueText;
-  return MoniTool_ValueIdent;
+    return MoniTool_ValueType::MoniTool_ValueText;
+  return MoniTool_ValueType::MoniTool_ValueIdent;
 }
 
 void MoniTool_AttrList::SetIntegerAttribute(const char* const name, const int val)

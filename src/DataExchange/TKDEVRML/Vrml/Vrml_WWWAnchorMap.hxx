@@ -17,7 +17,7 @@
 #ifndef _Vrml_WWWAnchorMap_HeaderFile
 #define _Vrml_WWWAnchorMap_HeaderFile
 
-enum Vrml_WWWAnchorMap
+enum class Vrml_WWWAnchorMap
 {
   Vrml_MAP_NONE,
   Vrml_POINT

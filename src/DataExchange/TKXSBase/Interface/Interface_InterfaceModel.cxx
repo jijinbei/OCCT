@@ -261,28 +261,28 @@ Interface_DataState Interface_InterfaceModel::EntityState(const int num) const
   if (!thereports.IsBound(num))
   {
     if (!therepch.IsBound(num))
-      return Interface_StateOK;
+      return Interface_DataState::Interface_StateOK;
     rep = occ::down_cast<Interface_ReportEntity>(therepch.Find(num));
     if (rep->IsError())
-      return Interface_DataFail;
-    return Interface_DataWarning;
+      return Interface_DataState::Interface_DataFail;
+    return Interface_DataState::Interface_DataWarning;
   }
   rep = occ::down_cast<Interface_ReportEntity>(thereports.Find(num));
   if (rep.IsNull())
-    return Interface_StateUnknown;
+    return Interface_DataState::Interface_StateUnknown;
   if (rep->IsUnknown())
-    return Interface_StateUnknown;
+    return Interface_DataState::Interface_StateUnknown;
   if (rep->HasNewContent())
-    return Interface_StateUnloaded;
+    return Interface_DataState::Interface_StateUnloaded;
   if (rep->IsError())
-    return Interface_LoadFail;
+    return Interface_DataState::Interface_LoadFail;
 
   if (!therepch.IsBound(num))
-    return Interface_LoadWarning;
+    return Interface_DataState::Interface_LoadWarning;
   rep = occ::down_cast<Interface_ReportEntity>(therepch.Find(num));
   if (rep->IsError())
-    return Interface_DataFail;
-  return Interface_DataWarning;
+    return Interface_DataState::Interface_DataFail;
+  return Interface_DataState::Interface_DataWarning;
 }
 
 //=================================================================================================

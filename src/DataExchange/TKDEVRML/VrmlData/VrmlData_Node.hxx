@@ -126,11 +126,11 @@ public:
   Standard_EXPORT static VrmlData_ErrorStatus ReadInteger(VrmlData_InBuffer& theBuffer,
                                                           long&              theResult);
 
-  static inline bool OK(const VrmlData_ErrorStatus theStat) { return theStat == VrmlData_StatusOK; }
+  static inline bool OK(const VrmlData_ErrorStatus theStat) { return theStat == VrmlData_ErrorStatus::VrmlData_StatusOK; }
 
   static inline bool OK(VrmlData_ErrorStatus& outStat, const VrmlData_ErrorStatus theStat)
   {
-    return (outStat = theStat) == VrmlData_StatusOK;
+    return (outStat = theStat) == VrmlData_ErrorStatus::VrmlData_StatusOK;
   }
 
   /**

@@ -17,7 +17,7 @@
 #ifndef _StepToTopoDS_TranslateFaceError_HeaderFile
 #define _StepToTopoDS_TranslateFaceError_HeaderFile
 
-enum StepToTopoDS_TranslateFaceError
+enum class StepToTopoDS_TranslateFaceError
 {
   StepToTopoDS_TranslateFaceDone,
   StepToTopoDS_TranslateFaceOther

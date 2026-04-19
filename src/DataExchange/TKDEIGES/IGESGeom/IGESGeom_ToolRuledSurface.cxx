@@ -50,13 +50,13 @@ void IGESGeom_ToolRuledSurface::ReadOwnParams(const occ::handle<IGESGeom_RuledSu
     Message_Msg Msg148("XSTEP_148");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg148.Arg(Msg216.Value());
         PR.SendFail(Msg148);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg148.Arg(Msg217.Value());
         PR.SendFail(Msg148);
@@ -71,13 +71,13 @@ void IGESGeom_ToolRuledSurface::ReadOwnParams(const occ::handle<IGESGeom_RuledSu
     Message_Msg Msg149("XSTEP_149");
     switch (aStatus)
     {
-      case IGESData_ReferenceError: {
+      case IGESData_Status::IGESData_ReferenceError: {
         Message_Msg Msg216("IGES_216");
         Msg149.Arg(Msg216.Value());
         PR.SendFail(Msg149);
         break;
       }
-      case IGESData_EntityError: {
+      case IGESData_Status::IGESData_EntityError: {
         Message_Msg Msg217("IGES_217");
         Msg149.Arg(Msg217.Value());
         PR.SendFail(Msg149);
@@ -139,10 +139,10 @@ IGESData_DirChecker IGESGeom_ToolRuledSurface::DirChecker(
   const occ::handle<IGESGeom_RuledSurface>& /*ent*/) const
 {
   IGESData_DirChecker DC(118, 0, 1);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  //  DC.LineWeight(IGESData_DefValue);
-  DC.Color(IGESData_DefAny);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  //  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
+  DC.Color(IGESData_DefType::IGESData_DefAny);
   DC.HierarchyStatusIgnored();
 
   return DC;

@@ -17,7 +17,7 @@
 #ifndef _StepVisual_TextPath_HeaderFile
 #define _StepVisual_TextPath_HeaderFile
 
-enum StepVisual_TextPath
+enum class StepVisual_TextPath
 {
   StepVisual_tpUp,
   StepVisual_tpRight,

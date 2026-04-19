@@ -854,7 +854,7 @@ bool StepAP209_Construct::CreateFeaStructure(const occ::handle<StepBasic_Product
                SGD1,
                true,
                SGD2,
-               StepFEA_Cartesian,
+               StepFEA_CoordinateSystemType::StepFEA_Cartesian,
                new TCollection_HAsciiString("FEA_BASIC_COORD_SYSTEM"));
   smodel->AddWithRefs(FA2P3D);
   smodel->SetIdentLabel(FA2P3D, smodel->Number(FA2P3D));
@@ -885,20 +885,20 @@ bool StepAP209_Construct::CreateFeaStructure(const occ::handle<StepBasic_Product
     NewHANU->SetValue(i, OldHANU->Value(i));
   // create SiUnitAndTimeUnit
   occ::handle<StepBasic_SiUnitAndTimeUnit> SUTU = new StepBasic_SiUnitAndTimeUnit;
-  SUTU->Init(false, StepBasic_spExa, StepBasic_sunSecond);
+  SUTU->Init(false, StepBasic_SiPrefix::StepBasic_spExa, StepBasic_SiUnitName::StepBasic_sunSecond);
   smodel->AddWithRefs(SUTU);
   smodel->SetIdentLabel(SUTU, smodel->Number(SUTU));
   NewHANU->SetValue(OldHANU->Length() + 1, SUTU);
   // create SiUnitAndMassUnit
   occ::handle<StepBasic_SiUnitAndMassUnit> SUMU = new StepBasic_SiUnitAndMassUnit;
-  SUMU->Init(true, StepBasic_spKilo, StepBasic_sunGram);
+  SUMU->Init(true, StepBasic_SiPrefix::StepBasic_spKilo, StepBasic_SiUnitName::StepBasic_sunGram);
   smodel->AddWithRefs(SUMU);
   smodel->SetIdentLabel(SUMU, smodel->Number(SUMU));
   NewHANU->SetValue(OldHANU->Length() + 2, SUMU);
   // create SiUnitAndThermodynamicTemperatureUnit
   occ::handle<StepBasic_SiUnitAndThermodynamicTemperatureUnit> SUTTU =
     new StepBasic_SiUnitAndThermodynamicTemperatureUnit;
-  SUTTU->Init(false, StepBasic_spExa, StepBasic_sunDegreeCelsius);
+  SUTTU->Init(false, StepBasic_SiPrefix::StepBasic_spExa, StepBasic_SiUnitName::StepBasic_sunDegreeCelsius);
   smodel->AddWithRefs(SUTTU);
   smodel->SetIdentLabel(SUTTU, smodel->Number(SUTTU));
   NewHANU->SetValue(OldHANU->Length() + 3, SUTTU);
@@ -1122,7 +1122,7 @@ bool StepAP209_Construct::CreateAddingEntities(
   smodel->SetIdentLabel(CDate, smodel->Number(CDate));
   occ::handle<StepBasic_CoordinatedUniversalTimeOffset> CUTO =
     new StepBasic_CoordinatedUniversalTimeOffset;
-  CUTO->Init(0, true, 0, StepBasic_aobAhead);
+  CUTO->Init(0, true, 0, StepBasic_AheadOrBehind::StepBasic_aobAhead);
   smodel->AddEntity(CUTO);
   smodel->SetIdentLabel(CUTO, smodel->Number(CUTO));
   occ::handle<StepBasic_LocalTime> LT = new StepBasic_LocalTime;

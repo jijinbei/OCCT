@@ -205,7 +205,7 @@ void Transfer_TransientProcess::PrintStats(const int /*mode*/, Standard_OStream&
       continue;
     const occ::handle<Interface_Check> ach  = binder->Check();
     Transfer_StatusExec                stat = binder->StatusExec();
-    if (stat != Transfer_StatusInitial && stat != Transfer_StatusDone)
+    if (stat != Transfer_StatusExec::Transfer_StatusInitial && stat != Transfer_StatusExec::Transfer_StatusDone)
       nbe++;
     else
     {

@@ -16,7 +16,7 @@
 #ifndef _StepDimTol_SimpleDatumReferenceModifier_HeaderFile
 #define _StepDimTol_SimpleDatumReferenceModifier_HeaderFile
 
-enum StepDimTol_SimpleDatumReferenceModifier
+enum class StepDimTol_SimpleDatumReferenceModifier
 {
   StepDimTol_SDRMAnyCrossSection,
   StepDimTol_SDRMAnyLongitudinalSection,

@@ -77,7 +77,7 @@ static bool CheckValue(const occ::handle<TCollection_HAsciiString>& val,
   Interface_ParamType pty = thedef->Type();
   if (!thedef->Satisfies(val))
     return false;
-  if (pty == Interface_ParamIdent && !val.IsNull())
+  if (pty == Interface_ParamType::Interface_ParamIdent && !val.IsNull())
   {
     if (modl->NextNumberForLabel(val->ToCString(), 0) <= 0)
       return false;

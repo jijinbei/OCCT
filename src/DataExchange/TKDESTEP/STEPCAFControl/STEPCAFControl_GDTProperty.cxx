@@ -1218,37 +1218,37 @@ StepDimTol_GeometricToleranceType STEPCAFControl_GDTProperty::GetGeomToleranceTy
   switch (theType)
   {
     case XCAFDimTolObjects_GeomToleranceType_Angularity:
-      return StepDimTol_GTTAngularityTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTAngularityTolerance;
     case XCAFDimTolObjects_GeomToleranceType_CircularRunout:
-      return StepDimTol_GTTCircularRunoutTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTCircularRunoutTolerance;
     case XCAFDimTolObjects_GeomToleranceType_CircularityOrRoundness:
-      return StepDimTol_GTTRoundnessTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTRoundnessTolerance;
     case XCAFDimTolObjects_GeomToleranceType_Coaxiality:
-      return StepDimTol_GTTCoaxialityTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTCoaxialityTolerance;
     case XCAFDimTolObjects_GeomToleranceType_Concentricity:
-      return StepDimTol_GTTConcentricityTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTConcentricityTolerance;
     case XCAFDimTolObjects_GeomToleranceType_Cylindricity:
-      return StepDimTol_GTTCylindricityTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTCylindricityTolerance;
     case XCAFDimTolObjects_GeomToleranceType_Flatness:
-      return StepDimTol_GTTFlatnessTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTFlatnessTolerance;
     case XCAFDimTolObjects_GeomToleranceType_Parallelism:
-      return StepDimTol_GTTParallelismTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTParallelismTolerance;
     case XCAFDimTolObjects_GeomToleranceType_Perpendicularity:
-      return StepDimTol_GTTPerpendicularityTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTPerpendicularityTolerance;
     case XCAFDimTolObjects_GeomToleranceType_Position:
-      return StepDimTol_GTTPositionTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTPositionTolerance;
     case XCAFDimTolObjects_GeomToleranceType_ProfileOfLine:
-      return StepDimTol_GTTLineProfileTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTLineProfileTolerance;
     case XCAFDimTolObjects_GeomToleranceType_ProfileOfSurface:
-      return StepDimTol_GTTSurfaceProfileTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTSurfaceProfileTolerance;
     case XCAFDimTolObjects_GeomToleranceType_Straightness:
-      return StepDimTol_GTTStraightnessTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTStraightnessTolerance;
     case XCAFDimTolObjects_GeomToleranceType_Symmetry:
-      return StepDimTol_GTTSymmetryTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTSymmetryTolerance;
     case XCAFDimTolObjects_GeomToleranceType_TotalRunout:
-      return StepDimTol_GTTTotalRunoutTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTTotalRunoutTolerance;
     default:
-      return StepDimTol_GTTPositionTolerance;
+      return StepDimTol_GeometricToleranceType::StepDimTol_GTTPositionTolerance;
   }
 }
 
@@ -1259,35 +1259,35 @@ XCAFDimTolObjects_GeomToleranceType STEPCAFControl_GDTProperty::GetGeomTolerance
 {
   switch (theType)
   {
-    case StepDimTol_GTTAngularityTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTAngularityTolerance:
       return XCAFDimTolObjects_GeomToleranceType_Angularity;
-    case StepDimTol_GTTCircularRunoutTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTCircularRunoutTolerance:
       return XCAFDimTolObjects_GeomToleranceType_CircularRunout;
-    case StepDimTol_GTTRoundnessTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTRoundnessTolerance:
       return XCAFDimTolObjects_GeomToleranceType_CircularityOrRoundness;
-    case StepDimTol_GTTCoaxialityTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTCoaxialityTolerance:
       return XCAFDimTolObjects_GeomToleranceType_Coaxiality;
-    case StepDimTol_GTTConcentricityTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTConcentricityTolerance:
       return XCAFDimTolObjects_GeomToleranceType_Concentricity;
-    case StepDimTol_GTTCylindricityTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTCylindricityTolerance:
       return XCAFDimTolObjects_GeomToleranceType_Cylindricity;
-    case StepDimTol_GTTFlatnessTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTFlatnessTolerance:
       return XCAFDimTolObjects_GeomToleranceType_Flatness;
-    case StepDimTol_GTTParallelismTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTParallelismTolerance:
       return XCAFDimTolObjects_GeomToleranceType_Parallelism;
-    case StepDimTol_GTTPerpendicularityTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTPerpendicularityTolerance:
       return XCAFDimTolObjects_GeomToleranceType_Perpendicularity;
-    case StepDimTol_GTTPositionTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTPositionTolerance:
       return XCAFDimTolObjects_GeomToleranceType_Position;
-    case StepDimTol_GTTLineProfileTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTLineProfileTolerance:
       return XCAFDimTolObjects_GeomToleranceType_ProfileOfLine;
-    case StepDimTol_GTTSurfaceProfileTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTSurfaceProfileTolerance:
       return XCAFDimTolObjects_GeomToleranceType_ProfileOfSurface;
-    case StepDimTol_GTTStraightnessTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTStraightnessTolerance:
       return XCAFDimTolObjects_GeomToleranceType_Straightness;
-    case StepDimTol_GTTSymmetryTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTSymmetryTolerance:
       return XCAFDimTolObjects_GeomToleranceType_Symmetry;
-    case StepDimTol_GTTTotalRunoutTolerance:
+    case StepDimTol_GeometricToleranceType::StepDimTol_GTTTotalRunoutTolerance:
       return XCAFDimTolObjects_GeomToleranceType_TotalRunout;
     default:
       return XCAFDimTolObjects_GeomToleranceType_Position;
@@ -1328,37 +1328,37 @@ StepDimTol_GeometricToleranceModifier STEPCAFControl_GDTProperty::GetGeomToleran
   switch (theModifier)
   {
     case XCAFDimTolObjects_GeomToleranceModif_Any_Cross_Section:
-      return StepDimTol_GTMAnyCrossSection;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMAnyCrossSection;
     case XCAFDimTolObjects_GeomToleranceModif_Common_Zone:
-      return StepDimTol_GTMCommonZone;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMCommonZone;
     case XCAFDimTolObjects_GeomToleranceModif_Each_Radial_Element:
-      return StepDimTol_GTMEachRadialElement;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMEachRadialElement;
     case XCAFDimTolObjects_GeomToleranceModif_Free_State:
-      return StepDimTol_GTMFreeState;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMFreeState;
     case XCAFDimTolObjects_GeomToleranceModif_Least_Material_Requirement:
-      return StepDimTol_GTMLeastMaterialRequirement;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement;
     case XCAFDimTolObjects_GeomToleranceModif_Line_Element:
-      return StepDimTol_GTMLineElement;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLineElement;
     case XCAFDimTolObjects_GeomToleranceModif_Major_Diameter:
-      return StepDimTol_GTMMajorDiameter;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMajorDiameter;
     case XCAFDimTolObjects_GeomToleranceModif_Maximum_Material_Requirement:
-      return StepDimTol_GTMMaximumMaterialRequirement;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement;
     case XCAFDimTolObjects_GeomToleranceModif_Minor_Diameter:
-      return StepDimTol_GTMMinorDiameter;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMinorDiameter;
     case XCAFDimTolObjects_GeomToleranceModif_Not_Convex:
-      return StepDimTol_GTMNotConvex;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMNotConvex;
     case XCAFDimTolObjects_GeomToleranceModif_Pitch_Diameter:
-      return StepDimTol_GTMPitchDiameter;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMPitchDiameter;
     case XCAFDimTolObjects_GeomToleranceModif_Reciprocity_Requirement:
-      return StepDimTol_GTMReciprocityRequirement;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMReciprocityRequirement;
     case XCAFDimTolObjects_GeomToleranceModif_Separate_Requirement:
-      return StepDimTol_GTMSeparateRequirement;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMSeparateRequirement;
     case XCAFDimTolObjects_GeomToleranceModif_Statistical_Tolerance:
-      return StepDimTol_GTMStatisticalTolerance;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMStatisticalTolerance;
     case XCAFDimTolObjects_GeomToleranceModif_Tangent_Plane:
-      return StepDimTol_GTMTangentPlane;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMTangentPlane;
     default:
-      return StepDimTol_GTMMaximumMaterialRequirement;
+      return StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement;
   }
 }
 
@@ -1388,19 +1388,19 @@ occ::handle<NCollection_HArray1<StepDimTol_DatumReferenceModifier>> STEPCAFContr
     switch (theModifWithVal)
     {
       case XCAFDimTolObjects_DatumModifWithValue_CircularOrCylindrical:
-        aType = StepDimTol_CircularOrCylindrical;
+        aType = StepDimTol_DatumReferenceModifierType::StepDimTol_CircularOrCylindrical;
         break;
       case XCAFDimTolObjects_DatumModifWithValue_Distance:
-        aType = StepDimTol_Distance;
+        aType = StepDimTol_DatumReferenceModifierType::StepDimTol_Distance;
         break;
       case XCAFDimTolObjects_DatumModifWithValue_Projected:
-        aType = StepDimTol_Projected;
+        aType = StepDimTol_DatumReferenceModifierType::StepDimTol_Projected;
         break;
       case XCAFDimTolObjects_DatumModifWithValue_Spherical:
-        aType = StepDimTol_Spherical;
+        aType = StepDimTol_DatumReferenceModifierType::StepDimTol_Spherical;
         break;
       default:
-        aType = StepDimTol_Distance;
+        aType = StepDimTol_DatumReferenceModifierType::StepDimTol_Distance;
     }
     occ::handle<StepBasic_LengthMeasureWithUnit> aLMWU = new StepBasic_LengthMeasureWithUnit();
     occ::handle<StepBasic_MeasureValueMember>    aValueMember = new StepBasic_MeasureValueMember();

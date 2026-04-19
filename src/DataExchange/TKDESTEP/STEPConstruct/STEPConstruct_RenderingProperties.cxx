@@ -33,7 +33,7 @@
 STEPConstruct_RenderingProperties::STEPConstruct_RenderingProperties()
     : mySurfaceColor(Quantity_NOC_WHITE),
       myTransparency(0.0),
-      myRenderingMethod(StepVisual_ssmNormalShading),
+      myRenderingMethod(StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading),
       myIsDefined(false),
       myAmbientReflectance(0.0, false),
       myDiffuseReflectance(0.0, false),
@@ -49,7 +49,7 @@ STEPConstruct_RenderingProperties::STEPConstruct_RenderingProperties(
   const occ::handle<StepVisual_SurfaceStyleRenderingWithProperties>& theRenderingProperties)
     : mySurfaceColor(Quantity_NOC_WHITE),
       myTransparency(0.0),
-      myRenderingMethod(StepVisual_ssmNormalShading),
+      myRenderingMethod(StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading),
       myIsDefined(false),
       myAmbientReflectance(0.0, false),
       myDiffuseReflectance(0.0, false),
@@ -66,7 +66,7 @@ STEPConstruct_RenderingProperties::STEPConstruct_RenderingProperties(
   const Quantity_ColorRGBA& theRGBAColor)
     : mySurfaceColor(Quantity_NOC_WHITE),
       myTransparency(0.0),
-      myRenderingMethod(StepVisual_ssmNormalShading),
+      myRenderingMethod(StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading),
       myIsDefined(false),
       myAmbientReflectance(0.0, false),
       myDiffuseReflectance(0.0, false),
@@ -84,7 +84,7 @@ STEPConstruct_RenderingProperties::STEPConstruct_RenderingProperties(
   const double                          theTransparency)
     : mySurfaceColor(Quantity_NOC_WHITE),
       myTransparency(0.0),
-      myRenderingMethod(StepVisual_ssmNormalShading),
+      myRenderingMethod(StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading),
       myIsDefined(false),
       myAmbientReflectance(0.0, false),
       myDiffuseReflectance(0.0, false),
@@ -101,7 +101,7 @@ STEPConstruct_RenderingProperties::STEPConstruct_RenderingProperties(
   const XCAFDoc_VisMaterialCommon& theMaterial)
     : mySurfaceColor(Quantity_NOC_WHITE),
       myTransparency(0.0),
-      myRenderingMethod(StepVisual_ssmNormalShading),
+      myRenderingMethod(StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading),
       myIsDefined(false),
       myAmbientReflectance(0.0, false),
       myDiffuseReflectance(0.0, false),
@@ -118,7 +118,7 @@ STEPConstruct_RenderingProperties::STEPConstruct_RenderingProperties(
   const occ::handle<XCAFDoc_VisMaterial>& theMaterial)
     : mySurfaceColor(Quantity_NOC_WHITE),
       myTransparency(0.0),
-      myRenderingMethod(StepVisual_ssmNormalShading),
+      myRenderingMethod(StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading),
       myIsDefined(false),
       myAmbientReflectance(0.0, false),
       myDiffuseReflectance(0.0, false),
@@ -136,7 +136,7 @@ STEPConstruct_RenderingProperties::STEPConstruct_RenderingProperties(
   const double          theTransparency)
     : mySurfaceColor(Quantity_NOC_WHITE),
       myTransparency(0.0),
-      myRenderingMethod(StepVisual_ssmNormalShading),
+      myRenderingMethod(StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading),
       myIsDefined(false),
       myAmbientReflectance(0.0, false),
       myDiffuseReflectance(0.0, false),
@@ -358,7 +358,7 @@ void STEPConstruct_RenderingProperties::Init(
 {
   mySurfaceColor        = Quantity_NOC_WHITE;
   myTransparency        = 0.0;
-  myRenderingMethod     = StepVisual_ssmNormalShading;
+  myRenderingMethod     = StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
   myIsDefined           = false;
   myAmbientReflectance  = std::make_pair(0.0, false);
   myDiffuseReflectance  = std::make_pair(0.0, false);
@@ -448,7 +448,7 @@ void STEPConstruct_RenderingProperties::Init(const Quantity_ColorRGBA& theRGBACo
 {
   mySurfaceColor        = theRGBAColor.GetRGB();
   myTransparency        = 1.0 - theRGBAColor.Alpha();
-  myRenderingMethod     = StepVisual_ssmNormalShading;
+  myRenderingMethod     = StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
   myIsDefined           = true;
   myAmbientReflectance  = std::make_pair(0.0, false);
   myDiffuseReflectance  = std::make_pair(0.0, false);
@@ -464,7 +464,7 @@ void STEPConstruct_RenderingProperties::Init(const occ::handle<StepVisual_Colour
 {
   mySurfaceColor        = Quantity_NOC_WHITE;
   myTransparency        = theTransparency;
-  myRenderingMethod     = StepVisual_ssmNormalShading;
+  myRenderingMethod     = StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
   myIsDefined           = false;
   myAmbientReflectance  = std::make_pair(0.0, false);
   myDiffuseReflectance  = std::make_pair(0.0, false);
@@ -501,7 +501,7 @@ void STEPConstruct_RenderingProperties::Init(const XCAFDoc_VisMaterialCommon& th
   // Basic properties - use diffuse color as the base surface color
   mySurfaceColor    = theMaterial.DiffuseColor;
   myTransparency    = theMaterial.Transparency;
-  myRenderingMethod = StepVisual_ssmNormalShading;
+  myRenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
   myIsDefined       = true;
 
   // Reset reflectance properties
@@ -638,7 +638,7 @@ void STEPConstruct_RenderingProperties::Init(const Quantity_Color& theSurfaceCol
 {
   mySurfaceColor        = theSurfaceColor;
   myTransparency        = theTransparency;
-  myRenderingMethod     = StepVisual_ssmNormalShading;
+  myRenderingMethod     = StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
   myIsDefined           = true;
   myAmbientReflectance  = std::make_pair(0.0, false);
   myDiffuseReflectance  = std::make_pair(0.0, false);

@@ -18,7 +18,7 @@
 #define _IGESData_ReadStage_HeaderFile
 
 //! gives successive stages of reading an entity (see ParamReader)
-enum IGESData_ReadStage
+enum class IGESData_ReadStage
 {
   IGESData_ReadDir,
   IGESData_ReadOwn,

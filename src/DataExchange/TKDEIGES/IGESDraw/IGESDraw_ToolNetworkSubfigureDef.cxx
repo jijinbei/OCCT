@@ -238,9 +238,9 @@ IGESData_DirChecker IGESDraw_ToolNetworkSubfigureDef::DirChecker(
   const occ::handle<IGESDraw_NetworkSubfigureDef>& /*ent*/) const
 {
   IGESData_DirChecker DC(320, 0);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefAny);
-  DC.LineWeight(IGESData_DefValue);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefAny);
+  DC.LineWeight(IGESData_DefType::IGESData_DefValue);
   DC.BlankStatusIgnored();
   DC.UseFlagRequired(2);
   DC.GraphicsIgnored(1);

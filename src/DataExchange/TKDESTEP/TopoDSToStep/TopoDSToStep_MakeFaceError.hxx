@@ -17,7 +17,7 @@
 #ifndef _TopoDSToStep_MakeFaceError_HeaderFile
 #define _TopoDSToStep_MakeFaceError_HeaderFile
 
-enum TopoDSToStep_MakeFaceError
+enum class TopoDSToStep_MakeFaceError
 {
   TopoDSToStep_FaceDone,
   TopoDSToStep_InfiniteFace,

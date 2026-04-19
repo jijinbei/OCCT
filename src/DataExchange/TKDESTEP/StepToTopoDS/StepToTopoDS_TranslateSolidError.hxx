@@ -14,7 +14,7 @@
 #ifndef _StepToTopoDS_TranslateSolidError_HeaderFile
 #define _StepToTopoDS_TranslateSolidError_HeaderFile
 
-enum StepToTopoDS_TranslateSolidError
+enum class StepToTopoDS_TranslateSolidError
 {
   StepToTopoDS_TranslateSolidDone,
   StepToTopoDS_TranslateSolidOther

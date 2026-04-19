@@ -60,7 +60,7 @@ void IGESGraph_ToolNominalSize::ReadOwnParams(const occ::handle<IGESGraph_Nomina
   if (PR.NbParams() >= PR.CurrentNumber())
   {
     int num = PR.CurrentNumber();
-    if (PR.ParamType(num) == Interface_ParamText)
+    if (PR.ParamType(num) == Interface_ParamType::Interface_ParamText)
       // Reading standardName(String)
       PR.ReadText(PR.Current(),
                   "Name of relevant engg. standard",
@@ -120,10 +120,10 @@ IGESData_DirChecker IGESGraph_ToolNominalSize::DirChecker(
   const occ::handle<IGESGraph_NominalSize>& /*ent*/) const
 {
   IGESData_DirChecker DC(406, 13);
-  DC.Structure(IGESData_DefVoid);
-  DC.LineFont(IGESData_DefVoid);
-  DC.LineWeight(IGESData_DefVoid);
-  DC.Color(IGESData_DefVoid);
+  DC.Structure(IGESData_DefType::IGESData_DefVoid);
+  DC.LineFont(IGESData_DefType::IGESData_DefVoid);
+  DC.LineWeight(IGESData_DefType::IGESData_DefVoid);
+  DC.Color(IGESData_DefType::IGESData_DefVoid);
   DC.BlankStatusIgnored();
   DC.UseFlagIgnored();
   DC.HierarchyStatusIgnored();
