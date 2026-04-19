@@ -288,7 +288,7 @@ Aspect_TypeOfResize Cocoa_Window::DoResize()
 {
   if (myHView == nullptr)
   {
-    return Aspect_TOR_UNKNOWN;
+    return Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
   }
 
 #if defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE
@@ -297,7 +297,7 @@ Aspect_TypeOfResize Cocoa_Window::DoResize()
   NSRect aBounds = [myHView bounds];
 #endif
   int aMask = 0;
-  Aspect_TypeOfResize aMode = Aspect_TOR_UNKNOWN;
+  Aspect_TypeOfResize aMode = Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
 
   if (Abs ((int )aBounds.origin.x                         - myXLeft  ) > 2) aMask |= 1;
   if (Abs ((int )(aBounds.origin.x + aBounds.size.width)  - myXRight ) > 2) aMask |= 2;
@@ -305,15 +305,15 @@ Aspect_TypeOfResize Cocoa_Window::DoResize()
   if (Abs ((int )(aBounds.origin.y + aBounds.size.height) - myYBottom) > 2) aMask |= 8;
   switch (aMask)
   {
-    case 0:  aMode = Aspect_TOR_NO_BORDER;               break;
-    case 1:  aMode = Aspect_TOR_LEFT_BORDER;             break;
-    case 2:  aMode = Aspect_TOR_RIGHT_BORDER;            break;
-    case 4:  aMode = Aspect_TOR_TOP_BORDER;              break;
-    case 5:  aMode = Aspect_TOR_LEFT_AND_TOP_BORDER;     break;
-    case 6:  aMode = Aspect_TOR_TOP_AND_RIGHT_BORDER;    break;
-    case 8:  aMode = Aspect_TOR_BOTTOM_BORDER;           break;
-    case 9:  aMode = Aspect_TOR_BOTTOM_AND_LEFT_BORDER;  break;
-    case 10: aMode = Aspect_TOR_RIGHT_AND_BOTTOM_BORDER; break;
+    case 0:  aMode = Aspect_TypeOfResize::Aspect_TOR_NO_BORDER;               break;
+    case 1:  aMode = Aspect_TypeOfResize::Aspect_TOR_LEFT_BORDER;             break;
+    case 2:  aMode = Aspect_TypeOfResize::Aspect_TOR_RIGHT_BORDER;            break;
+    case 4:  aMode = Aspect_TypeOfResize::Aspect_TOR_TOP_BORDER;              break;
+    case 5:  aMode = Aspect_TypeOfResize::Aspect_TOR_LEFT_AND_TOP_BORDER;     break;
+    case 6:  aMode = Aspect_TypeOfResize::Aspect_TOR_TOP_AND_RIGHT_BORDER;    break;
+    case 8:  aMode = Aspect_TypeOfResize::Aspect_TOR_BOTTOM_BORDER;           break;
+    case 9:  aMode = Aspect_TypeOfResize::Aspect_TOR_BOTTOM_AND_LEFT_BORDER;  break;
+    case 10: aMode = Aspect_TypeOfResize::Aspect_TOR_RIGHT_AND_BOTTOM_BORDER; break;
     default: break;
   }
 
