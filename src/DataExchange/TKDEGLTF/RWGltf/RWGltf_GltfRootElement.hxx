@@ -45,7 +45,8 @@ enum class RWGltf_GltfRootElement
 //! Root elements within glTF JSON document - names array.
 inline const char* RWGltf_GltfRootElementName(RWGltf_GltfRootElement theElem)
 {
-  static const char* THE_ROOT_NAMES[RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB] = {
+  static const char* THE_ROOT_NAMES[static_cast<int>(
+    RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB)] = {
     "asset",
     "scenes",
     "scene",
@@ -65,7 +66,7 @@ inline const char* RWGltf_GltfRootElementName(RWGltf_GltfRootElement theElem)
     "images",
     "extensionsUsed",
     "extensionsRequired"};
-  return THE_ROOT_NAMES[theElem];
+  return THE_ROOT_NAMES[static_cast<int>(theElem)];
 }
 
 #endif // _RWGltf_GltfRootElement_HeaderFile
