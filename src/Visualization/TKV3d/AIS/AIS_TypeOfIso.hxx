@@ -18,7 +18,7 @@
 #define _AIS_TypeOfIso_HeaderFile
 
 //! Declares the type of isoparameter displayed.
-enum AIS_TypeOfIso
+enum class AIS_TypeOfIso
 {
   AIS_TOI_IsoU,
   AIS_TOI_IsoV,

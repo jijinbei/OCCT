@@ -15,7 +15,7 @@
 #define _AIS_SelectionScheme_HeaderFile
 
 //! Sets selection schemes for interactive contexts.
-enum AIS_SelectionScheme
+enum class AIS_SelectionScheme
 {
   AIS_SelectionScheme_UNKNOWN = -1, //!< undefined scheme
   AIS_SelectionScheme_Replace = 0,  //!< clears current selection and select detected objects

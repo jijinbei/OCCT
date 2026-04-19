@@ -76,7 +76,7 @@ public:
   int Signature() const override { return 4; }
 
   //! Returns datum as the type of Interactive Object.
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive_Datum; }
+  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Datum; }
 
   //! Allows you to provide settings for the color aColor.
   Standard_EXPORT void SetColor(const Quantity_Color& theColor) override;

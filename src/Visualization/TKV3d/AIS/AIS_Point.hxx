@@ -36,7 +36,7 @@ public:
   int Signature() const override { return 1; }
 
   //! Indicates that a point is a datum.
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive_Datum; }
+  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Datum; }
 
   //! Returns the component specified in SetComponent.
   Standard_EXPORT occ::handle<Geom_Point> Component();

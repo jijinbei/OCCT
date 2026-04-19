@@ -44,7 +44,7 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_Axis, AIS_InteractiveObject)
 
 AIS_Axis::AIS_Axis(const occ::handle<Geom_Line>& aComponent)
     : myComponent(aComponent),
-      myTypeOfAxis(AIS_TOAX_Unknown),
+      myTypeOfAxis(AIS_TypeOfAxis::AIS_TOAX_Unknown),
       myIsXYZAxis(false)
 {
   myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_DOTDASH, 1.));
@@ -91,7 +91,7 @@ AIS_Axis::AIS_Axis(const occ::handle<Geom_Axis2Placement>& aComponent,
 
 AIS_Axis::AIS_Axis(const occ::handle<Geom_Axis1Placement>& anAxis)
     : myComponent(new Geom_Line(anAxis->Ax1())),
-      myTypeOfAxis(AIS_TOAX_Unknown),
+      myTypeOfAxis(AIS_TypeOfAxis::AIS_TOAX_Unknown),
       myIsXYZAxis(false)
 {
   myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_DOTDASH, 1.));
@@ -108,7 +108,7 @@ AIS_Axis::AIS_Axis(const occ::handle<Geom_Axis1Placement>& anAxis)
 
 AIS_Axis::AIS_Axis(const gp_Ax1& theAxis, const double theLength)
     : myComponent(new Geom_Line(theAxis)),
-      myTypeOfAxis(AIS_TOAX_ZAxis),
+      myTypeOfAxis(AIS_TypeOfAxis::AIS_TOAX_ZAxis),
       myIsXYZAxis(true)
 {
   myDir    = theAxis.Direction();
@@ -134,7 +134,7 @@ AIS_Axis::AIS_Axis(const gp_Ax1& theAxis, const double theLength)
 void AIS_Axis::SetComponent(const occ::handle<Geom_Line>& aComponent)
 {
   myComponent  = aComponent;
-  myTypeOfAxis = AIS_TOAX_Unknown;
+  myTypeOfAxis = AIS_TypeOfAxis::AIS_TOAX_Unknown;
   myIsXYZAxis  = false;
   SetInfiniteState();
 
@@ -258,7 +258,7 @@ void AIS_Axis::ComputeFields()
 
     switch (myTypeOfAxis)
     {
-      case AIS_TOAX_XAxis: {
+      case AIS_TypeOfAxis::AIS_TOAX_XAxis: {
         oX.Coord(x, y, z);
         myVal        = DA->AxisLength(Prs3d_DatumParts_XAxis);
         myDir        = oX;
@@ -266,7 +266,7 @@ void AIS_Axis::ComputeFields()
         myText       = static_cast<const char*>("X");
         break;
       }
-      case AIS_TOAX_YAxis: {
+      case AIS_TypeOfAxis::AIS_TOAX_YAxis: {
         oY.Coord(x, y, z);
         myVal        = DA->AxisLength(Prs3d_DatumParts_YAxis);
         myDir        = oY;
@@ -274,7 +274,7 @@ void AIS_Axis::ComputeFields()
         myText       = static_cast<const char*>("Y");
         break;
       }
-      case AIS_TOAX_ZAxis: {
+      case AIS_TypeOfAxis::AIS_TOAX_ZAxis: {
         oZ.Coord(x, y, z);
         myVal        = DA->AxisLength(Prs3d_DatumParts_ZAxis);
         myDir        = oZ;

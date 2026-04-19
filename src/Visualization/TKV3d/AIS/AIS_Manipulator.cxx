@@ -176,15 +176,15 @@ occ::handle<Prs3d_Presentation> AIS_Manipulator::getHighlightPresentation(
 
   switch (anOwner->Mode())
   {
-    case AIS_MM_Translation:
+    case AIS_ManipulatorMode::AIS_MM_Translation:
       return myAxes[anOwner->Index()].TranslatorHighlightPrs();
-    case AIS_MM_Rotation:
+    case AIS_ManipulatorMode::AIS_MM_Rotation:
       return myAxes[anOwner->Index()].RotatorHighlightPrs();
-    case AIS_MM_Scaling:
+    case AIS_ManipulatorMode::AIS_MM_Scaling:
       return myAxes[anOwner->Index()].ScalerHighlightPrs();
-    case AIS_MM_TranslationPlane:
+    case AIS_ManipulatorMode::AIS_MM_TranslationPlane:
       return myAxes[anOwner->Index()].DraggerHighlightPrs();
-    case AIS_MM_None:
+    case AIS_ManipulatorMode::AIS_MM_None:
       break;
   }
 
@@ -205,15 +205,15 @@ occ::handle<Graphic3d_Group> AIS_Manipulator::getGroup(const int                
 
   switch (theMode)
   {
-    case AIS_MM_Translation:
+    case AIS_ManipulatorMode::AIS_MM_Translation:
       return myAxes[theIndex].TranslatorGroup();
-    case AIS_MM_Rotation:
+    case AIS_ManipulatorMode::AIS_MM_Rotation:
       return myAxes[theIndex].RotatorGroup();
-    case AIS_MM_Scaling:
+    case AIS_ManipulatorMode::AIS_MM_Scaling:
       return myAxes[theIndex].ScalerGroup();
-    case AIS_MM_TranslationPlane:
+    case AIS_ManipulatorMode::AIS_MM_TranslationPlane:
       return myAxes[theIndex].DraggerGroup();
-    case AIS_MM_None:
+    case AIS_ManipulatorMode::AIS_MM_None:
       break;
   }
 
@@ -225,7 +225,7 @@ occ::handle<Graphic3d_Group> AIS_Manipulator::getGroup(const int                
 AIS_Manipulator::AIS_Manipulator()
     : myPosition(gp::XOY()),
       myCurrentIndex(-1),
-      myCurrentMode(AIS_MM_None),
+      myCurrentMode(AIS_ManipulatorMode::AIS_MM_None),
       mySkinMode(ManipulatorSkin_Shaded),
       myIsActivationOnDetection(false),
       myIsZoomPersistentMode(true),
@@ -245,7 +245,7 @@ AIS_Manipulator::AIS_Manipulator()
 AIS_Manipulator::AIS_Manipulator(const gp_Ax2& thePosition)
     : myPosition(thePosition),
       myCurrentIndex(-1),
-      myCurrentMode(AIS_MM_None),
+      myCurrentMode(AIS_ManipulatorMode::AIS_MM_None),
       mySkinMode(ManipulatorSkin_Shaded),
       myIsActivationOnDetection(false),
       myIsZoomPersistentMode(true),
@@ -271,23 +271,23 @@ void AIS_Manipulator::SetPart(const int                 theAxisIndex,
     "AIS_Manipulator::SetMode(): axis index should be between 0 and 2");
   switch (theMode)
   {
-    case AIS_MM_Translation:
+    case AIS_ManipulatorMode::AIS_MM_Translation:
       myAxes[theAxisIndex].SetTranslation(theIsEnabled);
       break;
 
-    case AIS_MM_Rotation:
+    case AIS_ManipulatorMode::AIS_MM_Rotation:
       myAxes[theAxisIndex].SetRotation(theIsEnabled);
       break;
 
-    case AIS_MM_Scaling:
+    case AIS_ManipulatorMode::AIS_MM_Scaling:
       myAxes[theAxisIndex].SetScaling(theIsEnabled);
       break;
 
-    case AIS_MM_TranslationPlane:
+    case AIS_ManipulatorMode::AIS_MM_TranslationPlane:
       myAxes[theAxisIndex].SetDragging(theIsEnabled);
       break;
 
-    case AIS_MM_None:
+    case AIS_ManipulatorMode::AIS_MM_None:
       break;
   }
 }
@@ -317,7 +317,7 @@ void AIS_Manipulator::EnableMode(const AIS_ManipulatorMode theMode)
     return;
   }
 
-  aContext->Activate(this, theMode);
+  aContext->Activate(this, static_cast<int>(theMode));
 }
 
 //=================================================================================================
@@ -428,10 +428,10 @@ void AIS_Manipulator::Attach(
 
   if (theOptions.EnableModes)
   {
-    EnableMode(AIS_MM_Rotation);
-    EnableMode(AIS_MM_Translation);
-    EnableMode(AIS_MM_Scaling);
-    EnableMode(AIS_MM_TranslationPlane);
+    EnableMode(AIS_ManipulatorMode::AIS_MM_Rotation);
+    EnableMode(AIS_ManipulatorMode::AIS_MM_Translation);
+    EnableMode(AIS_ManipulatorMode::AIS_MM_Scaling);
+    EnableMode(AIS_ManipulatorMode::AIS_MM_TranslationPlane);
   }
 }
 
@@ -524,8 +524,8 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
                            gp_Dir(aProj.x(), aProj.y(), aProj.z()));
   switch (myCurrentMode)
   {
-    case AIS_MM_Translation:
-    case AIS_MM_Scaling: {
+    case AIS_ManipulatorMode::AIS_MM_Translation:
+    case AIS_ManipulatorMode::AIS_MM_Scaling: {
       const gp_Lin aLine(myStartPosition.Location(), myAxes[myCurrentIndex].Position().Direction());
       Extrema_ExtElC anExtrema(anInputLine, aLine, Precision::Angular());
       if (!anExtrema.IsDone() || anExtrema.IsParallel() || anExtrema.NbExt() != 1)
@@ -549,12 +549,12 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
       }
 
       gp_Trsf aNewTrsf;
-      if (myCurrentMode == AIS_MM_Translation)
+      if (myCurrentMode == AIS_ManipulatorMode::AIS_MM_Translation)
       {
         aNewTrsf.SetTranslation(gp_Vec(myStartPick, aNewPosition));
         theTrsf *= aNewTrsf;
       }
-      else if (myCurrentMode == AIS_MM_Scaling)
+      else if (myCurrentMode == AIS_ManipulatorMode::AIS_MM_Scaling)
       {
         if (aNewPosition.Distance(myStartPosition.Location()) < Precision::Confusion())
         {
@@ -568,7 +568,7 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
       }
       return true;
     }
-    case AIS_MM_Rotation: {
+    case AIS_ManipulatorMode::AIS_MM_Rotation: {
       const gp_Pnt        aPosLoc   = myStartPosition.Location();
       const gp_Ax1        aCurrAxis = getAx1FromAx2Dir(myStartPosition, myCurrentIndex);
       IntAna_IntConicQuad aIntersector(anInputLine,
@@ -651,7 +651,7 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
       myPrevState = anAngle;
       return true;
     }
-    case AIS_MM_TranslationPlane: {
+    case AIS_ManipulatorMode::AIS_MM_TranslationPlane: {
       const gp_Pnt        aPosLoc   = myStartPosition.Location();
       const gp_Ax1        aCurrAxis = getAx1FromAx2Dir(myStartPosition, myCurrentIndex);
       IntAna_IntConicQuad aIntersector(anInputLine,
@@ -681,7 +681,7 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
       theTrsf *= aNewTrsf;
       return true;
     }
-    case AIS_MM_None: {
+    case AIS_ManipulatorMode::AIS_MM_None: {
       return false;
     }
   }
@@ -699,7 +699,7 @@ bool AIS_Manipulator::ProcessDragging(const occ::handle<AIS_InteractiveContext>&
 {
   switch (theAction)
   {
-    case AIS_DragAction_Start: {
+    case AIS_DragAction::AIS_DragAction_Start: {
       if (HasActiveMode())
       {
         StartTransform(theDragFrom.x(), theDragFrom.y(), theView);
@@ -707,18 +707,18 @@ bool AIS_Manipulator::ProcessDragging(const occ::handle<AIS_InteractiveContext>&
       }
       break;
     }
-    case AIS_DragAction_Confirmed: {
+    case AIS_DragAction::AIS_DragAction_Confirmed: {
       return true;
     }
-    case AIS_DragAction_Update: {
+    case AIS_DragAction::AIS_DragAction_Update: {
       Transform(theDragTo.x(), theDragTo.y(), theView);
       return true;
     }
-    case AIS_DragAction_Abort: {
+    case AIS_DragAction::AIS_DragAction_Abort: {
       StopTransform(false);
       return true;
     }
-    case AIS_DragAction_Stop: {
+    case AIS_DragAction::AIS_DragAction_Stop: {
       StopTransform(true);
       if (mySkinMode == ManipulatorSkin_Flat)
       {
@@ -947,19 +947,19 @@ void AIS_Manipulator::RecomputeTransformation(const occ::handle<Graphic3d_Camera
 
   if (isRecomputedTranslation)
   {
-    RecomputeSelection(AIS_MM_Translation);
+    RecomputeSelection(AIS_ManipulatorMode::AIS_MM_Translation);
   };
   if (isRecomputedRotation)
   {
-    RecomputeSelection(AIS_MM_Rotation);
+    RecomputeSelection(AIS_ManipulatorMode::AIS_MM_Rotation);
   };
   if (isRecomputedDragging)
   {
-    RecomputeSelection(AIS_MM_TranslationPlane);
+    RecomputeSelection(AIS_ManipulatorMode::AIS_MM_TranslationPlane);
   };
   if (isRecomputedScaling)
   {
-    RecomputeSelection(AIS_MM_Scaling);
+    RecomputeSelection(AIS_ManipulatorMode::AIS_MM_Scaling);
   };
 
   Object()->GetContext()->RecomputeSelectionOnly(this);
@@ -1006,9 +1006,9 @@ void AIS_Manipulator::Transform(const gp_Trsf& theTrsf)
     }
   }
 
-  if ((myCurrentMode == AIS_MM_Translation && myBehaviorOnTransform.FollowTranslation)
-      || (myCurrentMode == AIS_MM_Rotation && myBehaviorOnTransform.FollowRotation)
-      || (myCurrentMode == AIS_MM_TranslationPlane && myBehaviorOnTransform.FollowDragging))
+  if ((myCurrentMode == AIS_ManipulatorMode::AIS_MM_Translation && myBehaviorOnTransform.FollowTranslation)
+      || (myCurrentMode == AIS_ManipulatorMode::AIS_MM_Rotation && myBehaviorOnTransform.FollowRotation)
+      || (myCurrentMode == AIS_ManipulatorMode::AIS_MM_TranslationPlane && myBehaviorOnTransform.FollowDragging))
   {
     gp_Pnt aPos  = myStartPosition.Location().Transformed(theTrsf);
     gp_Dir aVDir = myStartPosition.Direction().Transformed(theTrsf);
@@ -1141,7 +1141,7 @@ void AIS_Manipulator::DeactivateCurrentMode()
     }
     anAspect->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
     anAspect->SetMaterial(myDrawer->ShadingAspect()->Material());
-    if (myCurrentMode == AIS_MM_TranslationPlane)
+    if (myCurrentMode == AIS_ManipulatorMode::AIS_MM_TranslationPlane)
       anAspect->SetTransparency(1.0);
     else
     {
@@ -1153,7 +1153,7 @@ void AIS_Manipulator::DeactivateCurrentMode()
   }
 
   myCurrentIndex = -1;
-  myCurrentMode  = AIS_MM_None;
+  myCurrentMode  = AIS_ManipulatorMode::AIS_MM_None;
 
   if (myHasStartedTransformation)
   {
@@ -1317,7 +1317,7 @@ void AIS_Manipulator::HilightSelected(
     return;
   }
 
-  if (anOwner->Mode() == AIS_MM_TranslationPlane && mySkinMode == ManipulatorSkin_Shaded)
+  if (anOwner->Mode() == AIS_ManipulatorMode::AIS_MM_TranslationPlane && mySkinMode == ManipulatorSkin_Shaded)
   {
     myDraggerHighlight->SetColor(myAxes[anOwner->Index()].Color());
     aGroup->SetGroupPrimitivesAspect(myDraggerHighlight->Aspect());
@@ -1351,7 +1351,7 @@ void AIS_Manipulator::HilightOwnerWithColor(const occ::handle<PrsMgr_Presentatio
 
   aPresentation->CStructure()->ViewAffinity = myViewAffinity;
 
-  if (anOwner->Mode() == AIS_MM_TranslationPlane && mySkinMode == ManipulatorSkin_Shaded)
+  if (anOwner->Mode() == AIS_ManipulatorMode::AIS_MM_TranslationPlane && mySkinMode == ManipulatorSkin_Shaded)
   {
     occ::handle<Prs3d_Drawer> aStyle = new Prs3d_Drawer();
     aStyle->SetColor(myAxes[anOwner->Index()].Color());
@@ -1393,16 +1393,17 @@ void AIS_Manipulator::HilightOwnerWithColor(const occ::handle<PrsMgr_Presentatio
 
 void AIS_Manipulator::RecomputeSelection(const AIS_ManipulatorMode theMode)
 {
-  if (theMode == AIS_MM_None)
+  if (theMode == AIS_ManipulatorMode::AIS_MM_None)
   {
     return;
   }
 
-  const occ::handle<SelectMgr_Selection>& aSelection = Object()->Selection(theMode);
+  const occ::handle<SelectMgr_Selection>& aSelection =
+    Object()->Selection(static_cast<int>(theMode));
   if (!aSelection.IsNull())
   {
     aSelection->Clear();
-    ComputeSelection(aSelection, theMode);
+    ComputeSelection(aSelection, static_cast<int>(theMode));
   }
 }
 
@@ -1413,7 +1414,7 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
 {
   // Check mode
   const AIS_ManipulatorMode aMode = (AIS_ManipulatorMode)theMode;
-  if (aMode == AIS_MM_None)
+  if (aMode == AIS_ManipulatorMode::AIS_MM_None)
   {
     return;
   }
@@ -1430,7 +1431,7 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
 
   switch (aMode)
   {
-    case AIS_MM_Translation: {
+    case AIS_ManipulatorMode::AIS_MM_Translation: {
       for (int anIt = 0; anIt < 3; ++anIt)
       {
         if (!myAxes[anIt].HasTranslation())
@@ -1438,7 +1439,7 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
           continue;
         }
         const Axis& anAxis = myAxes[anIt];
-        anOwner            = new AIS_ManipulatorOwner(this, anIt, AIS_MM_Translation, 9);
+        anOwner            = new AIS_ManipulatorOwner(this, anIt, AIS_ManipulatorMode::AIS_MM_Translation, 9);
 
         if (mySkinMode == ManipulatorSkin_Shaded)
         {
@@ -1463,7 +1464,7 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
       }
       break;
     }
-    case AIS_MM_Rotation: {
+    case AIS_ManipulatorMode::AIS_MM_Rotation: {
       for (int anIt = 0; anIt < 3; ++anIt)
       {
         if (!myAxes[anIt].HasRotation())
@@ -1471,7 +1472,7 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
           continue;
         }
         const Axis& anAxis = myAxes[anIt];
-        anOwner            = new AIS_ManipulatorOwner(this, anIt, AIS_MM_Rotation, 9);
+        anOwner            = new AIS_ManipulatorOwner(this, anIt, AIS_ManipulatorMode::AIS_MM_Rotation, 9);
 
         if (mySkinMode == ManipulatorSkin_Shaded)
         {
@@ -1495,14 +1496,14 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
       }
       break;
     }
-    case AIS_MM_Scaling: {
+    case AIS_ManipulatorMode::AIS_MM_Scaling: {
       for (int anIt = 0; anIt < 3; ++anIt)
       {
         if (!myAxes[anIt].HasScaling())
         {
           continue;
         }
-        anOwner = new AIS_ManipulatorOwner(this, anIt, AIS_MM_Scaling, 9);
+        anOwner = new AIS_ManipulatorOwner(this, anIt, AIS_ManipulatorMode::AIS_MM_Scaling, 9);
 
         if (mySkinMode == ManipulatorSkin_Shaded)
         {
@@ -1525,14 +1526,14 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
       }
       break;
     }
-    case AIS_MM_TranslationPlane: {
+    case AIS_ManipulatorMode::AIS_MM_TranslationPlane: {
       for (int anIt = 0; anIt < 3; ++anIt)
       {
         if (!myAxes[anIt].HasDragging())
         {
           continue;
         }
-        anOwner = new AIS_ManipulatorOwner(this, anIt, AIS_MM_TranslationPlane, 9);
+        anOwner = new AIS_ManipulatorOwner(this, anIt, AIS_ManipulatorMode::AIS_MM_TranslationPlane, 9);
 
         if (mySkinMode == ManipulatorSkin_Shaded)
         {

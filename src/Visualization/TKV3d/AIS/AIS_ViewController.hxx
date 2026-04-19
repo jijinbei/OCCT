@@ -64,13 +64,13 @@ public:
   //! Return input buffer.
   const AIS_ViewInputBuffer& InputBuffer(AIS_ViewInputBufferType theType) const
   {
-    return theType == AIS_ViewInputBufferType_UI ? myUI : myGL;
+    return theType == AIS_ViewInputBufferType::AIS_ViewInputBufferType_UI ? myUI : myGL;
   }
 
   //! Return input buffer.
   AIS_ViewInputBuffer& ChangeInputBuffer(AIS_ViewInputBufferType theType)
   {
-    return theType == AIS_ViewInputBufferType_UI ? myUI : myGL;
+    return theType == AIS_ViewInputBufferType::AIS_ViewInputBufferType_UI ? myUI : myGL;
   }
 
   //! Return view animation; empty (but not NULL) animation by default.
@@ -109,13 +109,13 @@ public:
   void SetContinuousRedraw(bool theToEnable) { myIsContinuousRedraw = theToEnable; }
 
 public: //! @name global parameters
-  //! Return camera rotation mode, AIS_RotationMode_BndBoxActive by default.
+  //! Return camera rotation mode, AIS_RotationMode::AIS_RotationMode_BndBoxActive by default.
   AIS_RotationMode RotationMode() const { return myRotationMode; }
 
   //! Set camera rotation mode.
   void SetRotationMode(AIS_RotationMode theMode) { myRotationMode = theMode; }
 
-  //! Return camera navigation mode; AIS_NavigationMode_Orbit by default.
+  //! Return camera navigation mode; AIS_NavigationMode::AIS_NavigationMode_Orbit by default.
   AIS_NavigationMode NavigationMode() const { return myNavigationMode; }
 
   //! Set camera navigation mode.
@@ -146,11 +146,11 @@ public: //! @name global parameters
   //! Set if rotation point should be displayed in 3D Viewer.
   void SetShowRotateCenter(bool theToShow) { myToShowRotateCenter = theToShow; }
 
-  //! Return TRUE if camera up orientation within AIS_NavigationMode_Orbit rotation mode should be
+  //! Return TRUE if camera up orientation within AIS_NavigationMode::AIS_NavigationMode_Orbit rotation mode should be
   //! forced Z up; FALSE by default.
   bool ToLockOrbitZUp() const { return myToLockOrbitZUp; }
 
-  //! Set if camera up orientation within AIS_NavigationMode_Orbit rotation mode should be forced Z
+  //! Set if camera up orientation within AIS_NavigationMode::AIS_NavigationMode_Orbit rotation mode should be forced Z
   //! up.
   void SetLockOrbitZUp(bool theToForceUp) { myToLockOrbitZUp = theToForceUp; }
 
@@ -321,7 +321,7 @@ public: //! @name mouse input
   //! @param theScheme selection scheme
   Standard_EXPORT virtual void SelectInViewer(
     const NCollection_Vec2<int>& thePnt,
-    const AIS_SelectionScheme    theScheme = AIS_SelectionScheme_Replace);
+    const AIS_SelectionScheme    theScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Perform selection in 3D viewer.
   //! This method is expected to be called from UI thread.
@@ -329,7 +329,7 @@ public: //! @name mouse input
   //! @param theScheme selection scheme
   Standard_EXPORT virtual void SelectInViewer(
     const NCollection_Sequence<NCollection_Vec2<int>>& thePnts,
-    const AIS_SelectionScheme                          theScheme = AIS_SelectionScheme_Replace);
+    const AIS_SelectionScheme                          theScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Update rectangle selection tool.
   //! This method is expected to be called from UI thread.
@@ -741,7 +741,7 @@ protected:
   float  myOrbitAccel;               //!< Orbit rotation acceleration ratio
   bool    myToShowPanAnchorPoint;     //!< option displaying panning  anchor point
   bool    myToShowRotateCenter;       //!< option displaying rotation center point
-  bool    myToLockOrbitZUp;           //!< force camera up orientation within AIS_NavigationMode_Orbit rotation mode
+  bool    myToLockOrbitZUp;           //!< force camera up orientation within AIS_NavigationMode::AIS_NavigationMode_Orbit rotation mode
   bool    myToInvertPitch;            //!< flag inverting pitch direction while processing Aspect_VKey_NavLookUp/Aspect_VKey_NavLookDown
   bool    myToAllowTouchZRotation;    //!< enable z-rotation two-touches gesture; FALSE by default
   bool    myToAllowRotation;          //!< enable rotation; TRUE by default

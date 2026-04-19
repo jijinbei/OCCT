@@ -1676,7 +1676,7 @@ static int OCC25340(Draw_Interpretor& /*theDI*/, int /*theArgNb*/, const char** 
     std::cerr << "Error: No opened viewer!\n";
     return 1;
   }
-  occ::handle<AIS_TypeFilter> aFilter = new AIS_TypeFilter(AIS_KindOfInteractive_Shape);
+  occ::handle<AIS_TypeFilter> aFilter = new AIS_TypeFilter(AIS_KindOfInteractive::AIS_KindOfInteractive_Shape);
   aCtx->AddFilter(aFilter);
   return 0;
 }
@@ -3239,9 +3239,9 @@ static int OCC26462(Draw_Interpretor& theDI, int /*theArgNb*/, const char** /*th
   aCtx->SetWidth(aBox2, 3, false);
 
   aCtx->MoveTo(305, 322, ViewerTest::CurrentView(), false);
-  aCtx->SelectDetected(AIS_SelectionScheme_XOR);
+  aCtx->SelectDetected(AIS_SelectionScheme::AIS_SelectionScheme_XOR);
   aCtx->MoveTo(103, 322, ViewerTest::CurrentView(), false);
-  aCtx->SelectDetected(AIS_SelectionScheme_XOR);
+  aCtx->SelectDetected(AIS_SelectionScheme::AIS_SelectionScheme_XOR);
   if (aCtx->NbSelected() != 0)
   {
     theDI << "ERROR: no boxes must be selected!\n";
@@ -3251,14 +3251,14 @@ static int OCC26462(Draw_Interpretor& theDI, int /*theArgNb*/, const char** /*th
   aCtx->SetSelectionSensitivity(aBox1, 2, 5);
 
   aCtx->MoveTo(305, 322, ViewerTest::CurrentView(), false);
-  aCtx->SelectDetected(AIS_SelectionScheme_XOR);
+  aCtx->SelectDetected(AIS_SelectionScheme::AIS_SelectionScheme_XOR);
   if (aCtx->NbSelected() != 1)
   {
     theDI << "ERROR: b1 was not selected\n";
     return 1;
   }
   aCtx->MoveTo(103, 322, ViewerTest::CurrentView(), false);
-  aCtx->SelectDetected(AIS_SelectionScheme_XOR);
+  aCtx->SelectDetected(AIS_SelectionScheme::AIS_SelectionScheme_XOR);
   if (aCtx->NbSelected() != 1)
   {
     theDI << "ERROR: b2 is selected after b1's tolerance increased\n";

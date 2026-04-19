@@ -531,7 +531,7 @@ public: //! @name Selection management
     SelectRectangle(const NCollection_Vec2<int>& thePntMin,
                     const NCollection_Vec2<int>& thePntMax,
                     const occ::handle<V3d_View>& theView,
-                    const AIS_SelectionScheme    theSelScheme = AIS_SelectionScheme_Replace);
+                    const AIS_SelectionScheme    theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Select everything found in the polygon defined by bounding polyline.
   //! Viewer should be explicitly redrawn after selection.
@@ -542,7 +542,7 @@ public: //! @name Selection management
   Standard_EXPORT AIS_StatusOfPick
     SelectPolygon(const NCollection_Array1<gp_Pnt2d>& thePolyline,
                   const occ::handle<V3d_View>&        theView,
-                  const AIS_SelectionScheme           theSelScheme = AIS_SelectionScheme_Replace);
+                  const AIS_SelectionScheme           theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Selects the topmost object picked by the point in the view,
   //! Viewer should be explicitly redrawn after selection.
@@ -553,7 +553,7 @@ public: //! @name Selection management
   Standard_EXPORT AIS_StatusOfPick
     SelectPoint(const NCollection_Vec2<int>& thePnt,
                 const occ::handle<V3d_View>& theView,
-                const AIS_SelectionScheme    theSelScheme = AIS_SelectionScheme_Replace);
+                const AIS_SelectionScheme    theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Select and hilights the previous detected via AIS_InteractiveContext::MoveTo() method;
   //! unhilights the previous picked.
@@ -568,7 +568,7 @@ public: //! @name Selection management
   //! For all selection schemes, allowing to select an object,
   //! HandleMouseClick is available
   Standard_EXPORT AIS_StatusOfPick
-    SelectDetected(const AIS_SelectionScheme theSelScheme = AIS_SelectionScheme_Replace);
+    SelectDetected(const AIS_SelectionScheme theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Returns bounding box of selected objects.
   Standard_EXPORT Bnd_Box BoundingBoxOfSelection(const occ::handle<V3d_View>& theView) const;
@@ -770,15 +770,15 @@ public: //! @name management of active Selection Modes
   //! @param theMode        selection mode to activate/deactivate;
   //!                       deactivation of -1 selection mode will effectively deactivate all
   //!                       selection modes; activation of -1 selection mode with
-  //!                       AIS_SelectionModesConcurrency_Single will deactivate all selection
+  //!                       AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single will deactivate all selection
   //!                       modes, and will has no effect otherwise
   //! @param theToActivate  activation/deactivation flag
   //! @param theConcurrency specifies how to handle already activated selection modes;
-  //!                       default value (AIS_SelectionModesConcurrency_Multiple) means active
+  //!                       default value (AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple) means active
   //!                       selection modes should be left as is,
-  //!                       AIS_SelectionModesConcurrency_Single can be used if only one selection
+  //!                       AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single can be used if only one selection
   //!                       mode is expected to be active and
-  //!                       AIS_SelectionModesConcurrency_GlobalOrLocal can be used if either
+  //!                       AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal can be used if either
   //!                       AIS_InteractiveObject::GlobalSelectionMode() or any combination of Local
   //!                       selection modes is acceptable; this value is considered only if
   //!                       theToActivate set to TRUE
@@ -788,7 +788,7 @@ public: //! @name management of active Selection Modes
     const occ::handle<AIS_InteractiveObject>& theObj,
     const int                                 theMode,
     const bool                                theToActivate,
-    const AIS_SelectionModesConcurrency theConcurrency = AIS_SelectionModesConcurrency_Multiple,
+    const AIS_SelectionModesConcurrency theConcurrency = AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple,
     const bool                          theIsForce     = false);
 
   //! Activates the selection mode aMode whose index is given, for the given interactive entity
@@ -800,7 +800,7 @@ public: //! @name management of active Selection Modes
     SetSelectionModeActive(theObj,
                            theMode,
                            true,
-                           AIS_SelectionModesConcurrency_GlobalOrLocal,
+                           AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal,
                            theIsForce);
   }
 
@@ -810,7 +810,7 @@ public: //! @name management of active Selection Modes
   //! Deactivates all the activated selection modes of an object.
   void Deactivate(const occ::handle<AIS_InteractiveObject>& theObj)
   {
-    SetSelectionModeActive(theObj, -1, false, AIS_SelectionModesConcurrency_Single);
+    SetSelectionModeActive(theObj, -1, false, AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single);
   }
 
   //! Deactivates all the activated selection modes of the interactive object anIobj with a given
@@ -966,11 +966,11 @@ public: //! @name common properties
 
   //! fills <aListOfIO> with objects of a particular Type and Signature with no consideration of
   //! display status. by Default, <WhichSignature> = -1 means control only on <WhichKind>. if
-  //! <WhichKind> = AIS_KindOfInteractive_None and <WhichSignature> = -1, all the objects are put
+  //! <WhichKind> = AIS_KindOfInteractive::AIS_KindOfInteractive_None and <WhichSignature> = -1, all the objects are put
   //! into the list.
   Standard_EXPORT void ObjectsInside(
     NCollection_List<occ::handle<AIS_InteractiveObject>>& aListOfIO,
-    const AIS_KindOfInteractive                           WhichKind = AIS_KindOfInteractive_None,
+    const AIS_KindOfInteractive                           WhichKind = AIS_KindOfInteractive::AIS_KindOfInteractive_None,
     const int                                             WhichSignature = -1) const;
 
   //! Create iterator through all objects registered in context.
@@ -1206,10 +1206,10 @@ public: //! @name HLR (Hidden Line Removal) display attributes
 
 public: //! @name iso-line display attributes
   //! Sets the number of U and V isoparameters displayed.
-  Standard_EXPORT void SetIsoNumber(const int NbIsos, const AIS_TypeOfIso WhichIsos = AIS_TOI_Both);
+  Standard_EXPORT void SetIsoNumber(const int NbIsos, const AIS_TypeOfIso WhichIsos = AIS_TypeOfIso::AIS_TOI_Both);
 
   //! Returns the number of U and V isoparameters displayed.
-  Standard_EXPORT int IsoNumber(const AIS_TypeOfIso WhichIsos = AIS_TOI_Both);
+  Standard_EXPORT int IsoNumber(const AIS_TypeOfIso WhichIsos = AIS_TypeOfIso::AIS_TOI_Both);
 
   //! Returns True if drawing isoparameters on planes is enabled.
   void IsoOnPlane(const bool theToSwitchOn) { myDefaultDrawer->SetIsoOnPlane(theToSwitchOn); }
@@ -1276,7 +1276,7 @@ public:
   //! XPMin, YPMin, XPMax, and YPMax in the view. The objects detected are passed to the main
   //! viewer, which is then updated.
   Standard_DEPRECATED("This method is deprecated - SelectRectangle() taking "
-                      "AIS_SelectionScheme_Replace should be called instead")
+                      "AIS_SelectionScheme::AIS_SelectionScheme_Replace should be called instead")
   Standard_EXPORT AIS_StatusOfPick Select(const int                    theXPMin,
                                           const int                    theYPMin,
                                           const int                    theXPMax,
@@ -1286,7 +1286,7 @@ public:
 
   //! polyline selection; clears the previous picked list
   Standard_DEPRECATED("This method is deprecated - SelectPolygon() taking "
-                      "AIS_SelectionScheme_Replace should be called instead")
+                      "AIS_SelectionScheme::AIS_SelectionScheme_Replace should be called instead")
   Standard_EXPORT AIS_StatusOfPick Select(const NCollection_Array1<gp_Pnt2d>& thePolyline,
                                           const occ::handle<V3d_View>&        theView,
                                           const bool                          theToUpdateViewer);
@@ -1294,19 +1294,19 @@ public:
   //! Stores and hilights the previous detected; Unhilights the previous picked.
   //! @sa MoveTo().
   Standard_DEPRECATED("This method is deprecated - SelectDetected() taking "
-                      "AIS_SelectionScheme_Replace should be called instead")
+                      "AIS_SelectionScheme::AIS_SelectionScheme_Replace should be called instead")
   Standard_EXPORT AIS_StatusOfPick Select(const bool theToUpdateViewer);
 
   //! Adds the last detected to the list of previous picked.
   //! If the last detected was already declared as picked, removes it from the Picked List.
   //! @sa MoveTo().
-  Standard_DEPRECATED("This method is deprecated - SelectDetected() taking AIS_SelectionScheme_XOR "
+  Standard_DEPRECATED("This method is deprecated - SelectDetected() taking AIS_SelectionScheme::AIS_SelectionScheme_XOR "
                       "should be called instead")
   Standard_EXPORT AIS_StatusOfPick ShiftSelect(const bool theToUpdateViewer);
 
   //! Adds the last detected to the list of previous picked.
   //! If the last detected was already declared as picked, removes it from the Picked List.
-  Standard_DEPRECATED("This method is deprecated - SelectPolygon() taking AIS_SelectionScheme_XOR "
+  Standard_DEPRECATED("This method is deprecated - SelectPolygon() taking AIS_SelectionScheme::AIS_SelectionScheme_XOR "
                       "should be called instead")
   Standard_EXPORT AIS_StatusOfPick ShiftSelect(const NCollection_Array1<gp_Pnt2d>& thePolyline,
                                                const occ::handle<V3d_View>&        theView,
@@ -1315,7 +1315,7 @@ public:
   //! Rectangle of selection; adds new detected entities into the picked list,
   //! removes the detected entities that were already stored.
   Standard_DEPRECATED("This method is deprecated - SelectRectangle() taking "
-                      "AIS_SelectionScheme_XOR should be called instead")
+                      "AIS_SelectionScheme::AIS_SelectionScheme_XOR should be called instead")
   Standard_EXPORT AIS_StatusOfPick ShiftSelect(const int                    theXPMin,
                                                const int                    theYPMin,
                                                const int                    theXPMax,

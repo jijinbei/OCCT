@@ -15,7 +15,7 @@
 #define _AIS_TrihedronSelectionMode_HeaderFile
 
 //! Enumeration defining selection modes supported by AIS_Trihedron.
-enum AIS_TrihedronSelectionMode
+enum class AIS_TrihedronSelectionMode
 {
   AIS_TrihedronSelectionMode_EntireObject = 0, //!< select trihedron as whole
   AIS_TrihedronSelectionMode_Origin       = 1, //!< origin

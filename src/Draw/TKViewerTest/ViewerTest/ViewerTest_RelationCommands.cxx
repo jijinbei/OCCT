@@ -1797,8 +1797,8 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
       return 1;
     }
 
-    if (aPickedObj->Type() != AIS_KindOfInteractive_Dimension
-        && aPickedObj->Type() != AIS_KindOfInteractive_Relation)
+    if (aPickedObj->Type() != AIS_KindOfInteractive::AIS_KindOfInteractive_Dimension
+        && aPickedObj->Type() != AIS_KindOfInteractive::AIS_KindOfInteractive_Relation)
     {
       theDi << theArgVec[0] << " error: no dimension or relation with this name.\n";
       return 1;
@@ -1826,8 +1826,8 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
       }
 
       isPicked = (!aPickedObj.IsNull()
-                  && (aPickedObj->Type() == AIS_KindOfInteractive_Dimension
-                      || aPickedObj->Type() == AIS_KindOfInteractive_Relation));
+                  && (aPickedObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Dimension
+                      || aPickedObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Relation));
       if (isPicked)
       {
         break;
@@ -1858,7 +1858,7 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
     }
 
     // Set text position, update relation or dimension.
-    if (aPickedObj->Type() == AIS_KindOfInteractive_Relation)
+    if (aPickedObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Relation)
     {
       occ::handle<PrsDim_Relation> aRelation = occ::down_cast<PrsDim_Relation>(aPickedObj);
       aPoint                                 = Get3DPointAtMousePosition();

@@ -188,7 +188,7 @@ public: //! @name Light properties
   void SetNbSplitsArrow(int theNbSplits) { myNbSplitsArrow = theNbSplits; }
 
   //! Returns kind of the object.
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive_LightSource; }
+  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_LightSource; }
 
 protected:
   //! Return true if specified display mode is supported: 0 for main presentation and 1 for
@@ -211,7 +211,7 @@ protected:
   //! @param[in] theDragFrom drag start point
   //! @param[in] theDragTo   drag end point
   //! @param[in] theAction   drag action
-  //! @return FALSE if object rejects dragging action (e.g. AIS_DragAction_Start)
+  //! @return FALSE if object rejects dragging action (e.g. AIS_DragAction::AIS_DragAction_Start)
   Standard_EXPORT bool ProcessDragging(const occ::handle<AIS_InteractiveContext>& theCtx,
                                        const occ::handle<V3d_View>&               theView,
                                        const occ::handle<SelectMgr_EntityOwner>&  theOwner,

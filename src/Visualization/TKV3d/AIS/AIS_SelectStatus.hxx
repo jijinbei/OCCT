@@ -17,7 +17,7 @@
 #ifndef _AIS_SelectStatus_HeaderFile
 #define _AIS_SelectStatus_HeaderFile
 
-enum AIS_SelectStatus
+enum class AIS_SelectStatus
 {
   AIS_SS_Added,
   AIS_SS_Removed,

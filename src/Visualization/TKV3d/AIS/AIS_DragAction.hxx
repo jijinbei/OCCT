@@ -15,7 +15,7 @@
 #define _AIS_DragAction_HeaderFile
 
 //! Dragging action.
-enum AIS_DragAction
+enum class AIS_DragAction
 {
   AIS_DragAction_Start,     //!< (try) start dragging object
   AIS_DragAction_Confirmed, //!< dragging interaction is confirmed.

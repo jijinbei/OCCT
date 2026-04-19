@@ -47,8 +47,8 @@ class AIS_InteractiveObject : public SelectMgr_SelectableObject
   friend class AIS_InteractiveContext;
   DEFINE_STANDARD_RTTIEXT(AIS_InteractiveObject, SelectMgr_SelectableObject)
 public:
-  //! Returns the kind of Interactive Object; AIS_KindOfInteractive_None by default.
-  virtual AIS_KindOfInteractive Type() const { return AIS_KindOfInteractive_None; }
+  //! Returns the kind of Interactive Object; AIS_KindOfInteractive::AIS_KindOfInteractive_None by default.
+  virtual AIS_KindOfInteractive Type() const { return AIS_KindOfInteractive::AIS_KindOfInteractive_None; }
 
   //! Specifies additional characteristics of Interactive Object of Type(); -1 by default.
   //! Among the datums, this signature is attributed to the shape.
@@ -116,7 +116,7 @@ public:
   //! @param[in] theDragFrom  drag start point
   //! @param[in] theDragTo    drag end point
   //! @param[in] theAction    drag action
-  //! @return FALSE if object rejects dragging action (e.g. AIS_DragAction_Start)
+  //! @return FALSE if object rejects dragging action (e.g. AIS_DragAction::AIS_DragAction_Start)
   Standard_EXPORT virtual bool ProcessDragging(const occ::handle<AIS_InteractiveContext>& theCtx,
                                                const occ::handle<V3d_View>&               theView,
                                                const occ::handle<SelectMgr_EntityOwner>&  theOwner,

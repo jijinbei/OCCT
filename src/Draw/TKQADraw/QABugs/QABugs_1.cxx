@@ -231,7 +231,7 @@ static int OCC10bug(Draw_Interpretor& di, int argc, const char** argv)
 
     // On verifie que l'AIS InteraciveObject est bien
     // un AIS_PlaneTrihedron
-    if (aShape->Type() == AIS_KindOfInteractive_Datum && aShape->Signature() == 4)
+    if (aShape->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum && aShape->Signature() == 4)
     {
       // On downcast aShape de AIS_InteractiveObject a AIS_PlaneTrihedron
       theAISPlaneTri = occ::down_cast<AIS_PlaneTrihedron>(aShape);

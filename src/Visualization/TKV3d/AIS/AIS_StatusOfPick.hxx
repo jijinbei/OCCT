@@ -17,7 +17,7 @@
 #ifndef _AIS_StatusOfPick_HeaderFile
 #define _AIS_StatusOfPick_HeaderFile
 
-enum AIS_StatusOfPick
+enum class AIS_StatusOfPick
 {
   AIS_SOP_Error,
   AIS_SOP_NothingSelected,

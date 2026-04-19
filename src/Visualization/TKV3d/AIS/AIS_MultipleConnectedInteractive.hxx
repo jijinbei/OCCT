@@ -45,7 +45,7 @@ public:
     return connect(theAnotherObj, theLocation, theTrsfPers);
   }
 
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive_Object; }
+  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Object; }
 
   int Signature() const override { return 1; }
 

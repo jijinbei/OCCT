@@ -17,7 +17,7 @@
 #ifndef _AIS_StatusOfDetection_HeaderFile
 #define _AIS_StatusOfDetection_HeaderFile
 
-enum AIS_StatusOfDetection
+enum class AIS_StatusOfDetection
 {
   AIS_SOD_Error,
   AIS_SOD_Nothing,

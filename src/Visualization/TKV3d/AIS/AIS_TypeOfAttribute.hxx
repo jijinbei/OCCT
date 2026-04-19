@@ -17,7 +17,7 @@
 #ifndef _AIS_TypeOfAttribute_HeaderFile
 #define _AIS_TypeOfAttribute_HeaderFile
 
-enum AIS_TypeOfAttribute
+enum class AIS_TypeOfAttribute
 {
   AIS_TOA_Line,
   AIS_TOA_Dimension,

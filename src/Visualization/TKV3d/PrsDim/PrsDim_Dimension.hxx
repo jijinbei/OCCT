@@ -297,7 +297,7 @@ public:
   PrsDim_KindOfDimension KindOfDimension() const { return myKindOfDimension; }
 
   //! @return the kind of interactive.
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive_Dimension; }
+  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Dimension; }
 
   //! Returns true if the class of objects accepts the display mode theMode.
   //! The interactive context can have a default mode of representation for

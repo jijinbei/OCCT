@@ -17,7 +17,7 @@
 #define _AIS_ManipulatorMode_HeaderFile
 
 //! Mode to make definite kind of transformations with AIS_Manipulator object.
-enum AIS_ManipulatorMode
+enum class AIS_ManipulatorMode
 {
   AIS_MM_None        = 0,
   AIS_MM_Translation = 1,

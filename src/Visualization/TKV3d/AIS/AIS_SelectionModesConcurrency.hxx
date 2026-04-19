@@ -16,7 +16,7 @@
 
 //! The mode specifying how multiple active Selection Modes should be treated during activation of
 //! new one.
-enum AIS_SelectionModesConcurrency
+enum class AIS_SelectionModesConcurrency
 {
   AIS_SelectionModesConcurrency_Single, //!< only one selection mode can be activated at the same
                                         //!< moment - previously activated should be deactivated

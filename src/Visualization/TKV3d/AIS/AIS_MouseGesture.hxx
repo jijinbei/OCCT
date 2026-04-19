@@ -18,7 +18,7 @@
 #include <NCollection_DataMap.hxx>
 
 //! Mouse gesture - only one can be active at one moment.
-enum AIS_MouseGesture
+enum class AIS_MouseGesture
 {
   AIS_MouseGesture_NONE, //!< no active gesture
   //

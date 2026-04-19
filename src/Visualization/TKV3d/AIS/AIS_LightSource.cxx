@@ -248,14 +248,14 @@ bool AIS_LightSource::ProcessDragging(const occ::handle<AIS_InteractiveContext>&
 
   switch (theAction)
   {
-    case AIS_DragAction_Start: {
+    case AIS_DragAction::AIS_DragAction_Start: {
       myLocTrsfStart = LocalTransformation();
       return true;
     }
-    case AIS_DragAction_Confirmed: {
+    case AIS_DragAction::AIS_DragAction_Confirmed: {
       return true;
     }
-    case AIS_DragAction_Update: {
+    case AIS_DragAction::AIS_DragAction_Update: {
       mySensSphere->ResetLastDetectedPoint();
       SetLocalTransformation(myLocTrsfStart);
       theCtx->MainSelector()->Pick(theDragFrom.x(), theDragFrom.y(), theView);
@@ -278,10 +278,10 @@ bool AIS_LightSource::ProcessDragging(const occ::handle<AIS_InteractiveContext>&
       }
       return true;
     }
-    case AIS_DragAction_Abort: {
+    case AIS_DragAction::AIS_DragAction_Abort: {
       return true;
     }
-    case AIS_DragAction_Stop: {
+    case AIS_DragAction::AIS_DragAction_Stop: {
       GetHilightPresentation(theCtx->MainPrsMgr())->Clear();
       break;
     }

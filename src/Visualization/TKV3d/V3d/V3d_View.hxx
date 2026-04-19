@@ -655,7 +655,7 @@ public:
   //! myViewer->SetGridEcho(true);
   //! 2) When application receive a move event:
   //! 2.1) Check if any object is detected
-  //! if( myInteractiveContext->MoveTo(x,y) == AIS_SOD_Nothing ) {
+  //! if( myInteractiveContext->MoveTo(x,y) == AIS_StatusOfDetection::AIS_SOD_Nothing ) {
   //! 2.2) Check if the grid is active
   //! if( myViewer->Grid()->IsActive() ) {
   //! 2.3) Display the grid echo and gets the grid point

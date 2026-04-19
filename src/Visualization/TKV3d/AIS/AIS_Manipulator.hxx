@@ -186,7 +186,7 @@ public:
   //! @param[in] theDragFrom  drag start point
   //! @param[in] theDragTo    drag end point
   //! @param[in] theAction    drag action
-  //! @return FALSE if object rejects dragging action (e.g. AIS_DragAction_Start)
+  //! @return FALSE if object rejects dragging action (e.g. AIS_DragAction::AIS_DragAction_Start)
   Standard_EXPORT bool ProcessDragging(const occ::handle<AIS_InteractiveContext>& theCtx,
                                        const occ::handle<V3d_View>&               theView,
                                        const occ::handle<SelectMgr_EntityOwner>&  theOwner,
@@ -266,7 +266,7 @@ public:
 
   //! @return true if some part of manipulator is selected (transformation mode is active, and
   //! owning object can be transformed).
-  bool HasActiveMode() const { return IsAttached() && myCurrentMode != AIS_MM_None; }
+  bool HasActiveMode() const { return IsAttached() && myCurrentMode != AIS_ManipulatorMode::AIS_MM_None; }
 
   bool HasActiveTransformation() { return myHasStartedTransformation; }
 

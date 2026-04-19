@@ -45,7 +45,7 @@ public:
     const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TOP_AllView);
 
   //! Returns KOI_Object
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive_Object; }
+  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Object; }
 
   //! Returns 0
   int Signature() const override { return 0; }

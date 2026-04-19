@@ -92,7 +92,7 @@ public:
 
   int Signature() const override { return 2; }
 
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive_Datum; }
+  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Datum; }
 
   Standard_EXPORT void SetColor(const Quantity_Color& aColor) override;
 

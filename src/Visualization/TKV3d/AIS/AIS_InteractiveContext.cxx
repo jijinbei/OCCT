@@ -326,7 +326,7 @@ void AIS_InteractiveContext::ObjectsInside(
   const AIS_KindOfInteractive                           theKind,
   const int                                             theSign) const
 {
-  if (theKind == AIS_KindOfInteractive_None && theSign == -1)
+  if (theKind == AIS_KindOfInteractive::AIS_KindOfInteractive_None && theSign == -1)
   {
     for (NCollection_DataMap<occ::handle<AIS_InteractiveObject>,
                              occ::handle<AIS_GlobalStatus>>::Iterator anObjIter(myObjects);
@@ -1321,8 +1321,8 @@ void AIS_InteractiveContext::SetDeviationCoefficient(
 
   // to be modified after the related methods of AIS_Shape are passed to InteractiveObject
   setContextToObject(theIObj);
-  if (theIObj->Type() != AIS_KindOfInteractive_Object
-      && theIObj->Type() != AIS_KindOfInteractive_Shape)
+  if (theIObj->Type() != AIS_KindOfInteractive::AIS_KindOfInteractive_Object
+      && theIObj->Type() != AIS_KindOfInteractive::AIS_KindOfInteractive_Shape)
   {
     return;
   }
@@ -1353,7 +1353,7 @@ void AIS_InteractiveContext::SetDeviationAngle(const occ::handle<AIS_Interactive
 
   // To be modified after the related methods of AIS_Shape are passed to InteractiveObject
   setContextToObject(theIObj);
-  if (theIObj->Type() != AIS_KindOfInteractive_Shape)
+  if (theIObj->Type() != AIS_KindOfInteractive::AIS_KindOfInteractive_Shape)
   {
     return;
   }
@@ -1384,7 +1384,7 @@ void AIS_InteractiveContext::SetAngleAndDeviation(const occ::handle<AIS_Interact
 
   // To be modified after the related methods of AIS_Shape are passed to InteractiveObject
   setContextToObject(theIObj);
-  if (theIObj->Type() != AIS_KindOfInteractive_Shape)
+  if (theIObj->Type() != AIS_KindOfInteractive::AIS_KindOfInteractive_Shape)
   {
     return;
   }
@@ -1902,13 +1902,13 @@ void AIS_InteractiveContext::SetIsoNumber(const int theNb, const AIS_TypeOfIso t
 {
   switch (theType)
   {
-    case AIS_TOI_IsoU:
+    case AIS_TypeOfIso::AIS_TOI_IsoU:
       myDefaultDrawer->UIsoAspect()->SetNumber(theNb);
       break;
-    case AIS_TOI_IsoV:
+    case AIS_TypeOfIso::AIS_TOI_IsoV:
       myDefaultDrawer->VIsoAspect()->SetNumber(theNb);
       break;
-    case AIS_TOI_Both:
+    case AIS_TypeOfIso::AIS_TOI_Both:
       myDefaultDrawer->UIsoAspect()->SetNumber(theNb);
       myDefaultDrawer->VIsoAspect()->SetNumber(theNb);
       break;
@@ -1921,11 +1921,11 @@ int AIS_InteractiveContext::IsoNumber(const AIS_TypeOfIso theType)
 {
   switch (theType)
   {
-    case AIS_TOI_IsoU:
+    case AIS_TypeOfIso::AIS_TOI_IsoU:
       return myDefaultDrawer->UIsoAspect()->Number();
-    case AIS_TOI_IsoV:
+    case AIS_TypeOfIso::AIS_TOI_IsoV:
       return myDefaultDrawer->VIsoAspect()->Number();
-    case AIS_TOI_Both:
+    case AIS_TypeOfIso::AIS_TOI_Both:
       return myDefaultDrawer->UIsoAspect()->Number() == myDefaultDrawer->VIsoAspect()->Number()
                ? myDefaultDrawer->UIsoAspect()->Number()
                : -1;
@@ -2002,8 +2002,8 @@ double AIS_InteractiveContext::TrihedronSize() const
 void AIS_InteractiveContext::SetTrihedronSize(const double theVal, const bool /*updateviewer*/)
 {
   myDefaultDrawer->DatumAspect()->SetAxisLength(theVal, theVal, theVal);
-  Redisplay(AIS_KindOfInteractive_Datum, 3, false);
-  Redisplay(AIS_KindOfInteractive_Datum, 4, true);
+  Redisplay(AIS_KindOfInteractive::AIS_KindOfInteractive_Datum, 3, false);
+  Redisplay(AIS_KindOfInteractive::AIS_KindOfInteractive_Datum, 4, true);
 }
 
 //=================================================================================================
@@ -2013,7 +2013,7 @@ void AIS_InteractiveContext::SetPlaneSize(const double theValX,
                                           const bool   theToUpdateViewer)
 {
   myDefaultDrawer->PlaneAspect()->SetPlaneLength(theValX, theValY);
-  Redisplay(AIS_KindOfInteractive_Datum, 7, theToUpdateViewer);
+  Redisplay(AIS_KindOfInteractive::AIS_KindOfInteractive_Datum, 7, theToUpdateViewer);
 }
 
 //=================================================================================================
@@ -2587,7 +2587,7 @@ AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>
   myLastActiveView = theView.get();
 
   // preliminaries
-  AIS_StatusOfDetection aStatus        = AIS_SOD_Nothing;
+  AIS_StatusOfDetection aStatus        = AIS_StatusOfDetection::AIS_SOD_Nothing;
   bool                  toUpdateViewer = false;
 
   // filling of myAISDetectedSeq sequence storing information about detected AIS objects
@@ -2628,7 +2628,7 @@ AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>
     occ::handle<SelectMgr_EntityOwner> aNewPickedOwner = MainSelector()->Picked(aNewDetected);
     if (aNewPickedOwner == myLastPicked && !aNewPickedOwner->IsForcedHilight())
     {
-      return myLastPicked->IsSelected() ? AIS_SOD_Selected : AIS_SOD_OnlyOneDetected;
+      return myLastPicked->IsSelected() ? AIS_StatusOfDetection::AIS_SOD_Selected : AIS_StatusOfDetection::AIS_SOD_OnlyOneDetected;
     }
 
     // Previously detected object is unhilighted if it is not selected or hilighted
@@ -2664,14 +2664,14 @@ AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>
         toUpdateViewer = true;
       }
 
-      aStatus = myLastPicked->IsSelected() ? AIS_SOD_Selected : AIS_SOD_OnlyOneDetected;
+      aStatus = myLastPicked->IsSelected() ? AIS_StatusOfDetection::AIS_SOD_Selected : AIS_StatusOfDetection::AIS_SOD_OnlyOneDetected;
     }
   }
   else
   {
     // previously detected object is unhighlighted if it is not selected or highlighted
     // with selection color if it is selected
-    aStatus = AIS_SOD_Nothing;
+    aStatus = AIS_StatusOfDetection::AIS_SOD_Nothing;
     if (myAutoHilight && !myLastPicked.IsNull() && myLastPicked->HasSelectable())
     {
       if (isSlowHiStyle(myLastPicked, theView->Viewer()))
@@ -2716,9 +2716,9 @@ AIS_StatusOfPick AIS_InteractiveContext::AddSelect(
   mySelection->AddSelect(theObject);
 
   int aSelNum = NbSelected();
-  return (aSelNum == 0)   ? AIS_SOP_NothingSelected
-         : (aSelNum == 1) ? AIS_SOP_OneSelected
-                          : AIS_SOP_SeveralSelected;
+  return (aSelNum == 0)   ? AIS_StatusOfPick::AIS_SOP_NothingSelected
+         : (aSelNum == 1) ? AIS_StatusOfPick::AIS_SOP_OneSelected
+                          : AIS_StatusOfPick::AIS_SOP_SeveralSelected;
 }
 
 //=================================================================================================
@@ -2810,7 +2810,7 @@ AIS_StatusOfPick AIS_InteractiveContext::SelectDetected(const AIS_SelectionSchem
 {
   // For all selection schemes, allowing to select an object,
   // HandleMouseClick is available
-  if (theSelScheme != AIS_SelectionScheme_Remove && theSelScheme != AIS_SelectionScheme_Clear
+  if (theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_Remove && theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_Clear
       && !myLastPicked.IsNull())
   {
     NCollection_Vec2<int> aMousePos(-1, -1);
@@ -2824,7 +2824,7 @@ AIS_StatusOfPick AIS_InteractiveContext::SelectDetected(const AIS_SelectionSchem
                                        Aspect_VKeyFlags_NONE,
                                        false))
     {
-      return AIS_SOP_NothingSelected;
+      return AIS_StatusOfPick::AIS_SOP_NothingSelected;
     }
   }
 
@@ -2882,7 +2882,7 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(const bool theToUpdateViewer)
 
 AIS_StatusOfPick AIS_InteractiveContext::ShiftSelect(const bool theToUpdateViewer)
 {
-  AIS_StatusOfPick aStatus = SelectDetected(AIS_SelectionScheme_XOR);
+  AIS_StatusOfPick aStatus = SelectDetected(AIS_SelectionScheme::AIS_SelectionScheme_XOR);
   if (theToUpdateViewer)
   {
     UpdateCurrentViewer();
@@ -2902,7 +2902,7 @@ AIS_StatusOfPick AIS_InteractiveContext::ShiftSelect(const int                  
   AIS_StatusOfPick aStatus = SelectRectangle(NCollection_Vec2<int>(theXPMin, theYPMin),
                                              NCollection_Vec2<int>(theXPMax, theYPMax),
                                              theView,
-                                             AIS_SelectionScheme_XOR);
+                                             AIS_SelectionScheme::AIS_SelectionScheme_XOR);
   if (theToUpdateViewer)
   {
     UpdateCurrentViewer();
@@ -2917,7 +2917,7 @@ AIS_StatusOfPick AIS_InteractiveContext::ShiftSelect(
   const occ::handle<V3d_View>&        theView,
   const bool                          theToUpdateViewer)
 {
-  AIS_StatusOfPick aStatus = SelectPolygon(thePolyline, theView, AIS_SelectionScheme_XOR);
+  AIS_StatusOfPick aStatus = SelectPolygon(thePolyline, theView, AIS_SelectionScheme::AIS_SelectionScheme_XOR);
   if (theToUpdateViewer)
   {
     UpdateCurrentViewer();
@@ -2971,8 +2971,8 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(
       else
       {
         // already selected owner
-        if (!anOwner->IsAutoHilight() && theSelScheme != AIS_SelectionScheme_XOR
-            && theSelScheme != AIS_SelectionScheme_Add)
+        if (!anOwner->IsAutoHilight() && theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_XOR
+            && theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_Add)
         {
           // hack to perform AIS_InteractiveObject::ClearSelected() before highlighting
           anOwnersToUnhighlight.Append(anOwner);
@@ -3000,9 +3000,9 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(
   }
 
   int aSelNum = NbSelected();
-  return (aSelNum == 0)   ? AIS_SOP_NothingSelected
-         : (aSelNum == 1) ? AIS_SOP_OneSelected
-                          : AIS_SOP_SeveralSelected;
+  return (aSelNum == 0)   ? AIS_StatusOfPick::AIS_SOP_NothingSelected
+         : (aSelNum == 1) ? AIS_StatusOfPick::AIS_SOP_OneSelected
+                          : AIS_StatusOfPick::AIS_SOP_SeveralSelected;
 }
 
 //=================================================================================================
@@ -3330,7 +3330,7 @@ void AIS_InteractiveContext::AddOrRemoveSelected(const occ::handle<SelectMgr_Ent
   }
 
   AIS_SelectionScheme aSelScheme =
-    theOwner->IsSelected() ? AIS_SelectionScheme_Remove : AIS_SelectionScheme_Add;
+    theOwner->IsSelected() ? AIS_SelectionScheme::AIS_SelectionScheme_Remove : AIS_SelectionScheme::AIS_SelectionScheme_Add;
   const occ::handle<AIS_InteractiveObject> anObj =
     occ::down_cast<AIS_InteractiveObject>(theOwner->Selectable());
   mySelection->Select(theOwner, myFilters, aSelScheme, isDetected(anObj));
@@ -3389,16 +3389,16 @@ bool AIS_InteractiveContext::SetSelectedState(const occ::handle<SelectMgr_Entity
   {
     const AIS_SelectStatus aSelStatus = mySelection->AddSelect(theEntity);
     theEntity->SetSelected(true);
-    return aSelStatus == AIS_SS_Added;
+    return aSelStatus == AIS_SelectStatus::AIS_SS_Added;
   }
   else
   {
     const occ::handle<AIS_InteractiveObject> anObj =
       occ::down_cast<AIS_InteractiveObject>(theEntity->Selectable());
     const AIS_SelectStatus aSelStatus =
-      mySelection->Select(theEntity, myFilters, AIS_SelectionScheme_Remove, isDetected(anObj));
+      mySelection->Select(theEntity, myFilters, AIS_SelectionScheme::AIS_SelectionScheme_Remove, isDetected(anObj));
     theEntity->SetSelected(false);
-    return aSelStatus == AIS_SS_Removed;
+    return aSelStatus == AIS_SelectStatus::AIS_SS_Removed;
   }
 }
 
@@ -3664,7 +3664,7 @@ void AIS_InteractiveContext::SetSelectionModeActive(
     return;
   }
 
-  if (!theIsActive || (theMode == -1 && theActiveFilter == AIS_SelectionModesConcurrency_Single))
+  if (!theIsActive || (theMode == -1 && theActiveFilter == AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single))
   {
     if (theObj->DisplayStatus() == PrsMgr_DisplayStatus_Displayed || theIsForce)
     {
@@ -3707,7 +3707,7 @@ void AIS_InteractiveContext::SetSelectionModeActive(
   {
     switch (theActiveFilter)
     {
-      case AIS_SelectionModesConcurrency_Single: {
+      case AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single: {
         for (NCollection_List<int>::Iterator aModeIter((*aStat)->SelectionModes());
              aModeIter.More();
              aModeIter.Next())
@@ -3717,7 +3717,7 @@ void AIS_InteractiveContext::SetSelectionModeActive(
         (*aStat)->ClearSelectionModes();
         break;
       }
-      case AIS_SelectionModesConcurrency_GlobalOrLocal: {
+      case AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal: {
         const int             aGlobSelMode = theObj->GlobalSelectionMode();
         NCollection_List<int> aRemovedModes;
         for (NCollection_List<int>::Iterator aModeIter((*aStat)->SelectionModes());
@@ -3745,7 +3745,7 @@ void AIS_InteractiveContext::SetSelectionModeActive(
         }
         break;
       }
-      case AIS_SelectionModesConcurrency_Multiple: {
+      case AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple: {
         break;
       }
     }

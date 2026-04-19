@@ -173,9 +173,9 @@ static int BUC60774(Draw_Interpretor& theDi, int theArgNb, const char** theArgv)
     anAISContext->SelectRectangle(NCollection_Vec2<int>(aXPixMin, aYPixMin),
                                   NCollection_Vec2<int>(aXPixMax, aYPixMax),
                                   aV3dView);
-  theDi << (aPickStatus == AIS_SOP_NothingSelected
-              ? "status = AIS_SOP_NothingSelected : OK"
-              : "status = AIS_SOP_NothingSelected : bugged - Faulty ");
+  theDi << (aPickStatus == AIS_StatusOfPick::AIS_SOP_NothingSelected
+              ? "status = AIS_StatusOfPick::AIS_SOP_NothingSelected : OK"
+              : "status = AIS_StatusOfPick::AIS_SOP_NothingSelected : bugged - Faulty ");
   theDi << "\n";
 
   theDi.Eval("box b 10 10 10");
@@ -184,8 +184,8 @@ static int BUC60774(Draw_Interpretor& theDi, int theArgNb, const char** theArgv)
   aPickStatus = anAISContext->SelectRectangle(NCollection_Vec2<int>(aXPixMin, aYPixMin),
                                               NCollection_Vec2<int>(aXPixMax, aYPixMax),
                                               aV3dView);
-  theDi << (aPickStatus == AIS_SOP_OneSelected ? "status = AIS_SOP_OneSelected : OK"
-                                               : "status = AIS_SOP_OneSelected : bugged - Faulty ");
+  theDi << (aPickStatus == AIS_StatusOfPick::AIS_SOP_OneSelected ? "status = AIS_StatusOfPick::AIS_SOP_OneSelected : OK"
+                                               : "status = AIS_StatusOfPick::AIS_SOP_OneSelected : bugged - Faulty ");
   theDi << "\n";
 
   theDi.Eval("box w 20 20 20 20 20 20");
@@ -195,9 +195,9 @@ static int BUC60774(Draw_Interpretor& theDi, int theArgNb, const char** theArgv)
                                               NCollection_Vec2<int>(aXPixMax, aYPixMax),
                                               aV3dView);
   anAISContext->UpdateCurrentViewer();
-  theDi << (aPickStatus == AIS_SOP_SeveralSelected
-              ? "status = AIS_SOP_SeveralSelected : OK"
-              : "status = AIS_SOP_SeveralSelected : bugged - Faulty ");
+  theDi << (aPickStatus == AIS_StatusOfPick::AIS_SOP_SeveralSelected
+              ? "status = AIS_StatusOfPick::AIS_SOP_SeveralSelected : OK"
+              : "status = AIS_StatusOfPick::AIS_SOP_SeveralSelected : bugged - Faulty ");
   theDi << "\n";
 
   return 0;
@@ -274,7 +274,7 @@ static int OCC218bug(Draw_Interpretor& di, int argc, const char** argv)
 
     // On verifie que l'AIS InteraciveObject est bien
     // un AIS_PlaneTrihedron
-    if (aShape->Type() == AIS_KindOfInteractive_Datum && aShape->Signature() == 4)
+    if (aShape->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum && aShape->Signature() == 4)
     {
       // On downcast aShape de AIS_InteractiveObject a AIS_PlaneTrihedron
       theAISPlaneTri = occ::down_cast<AIS_PlaneTrihedron>(aShape);

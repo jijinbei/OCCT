@@ -124,7 +124,7 @@ bool AIS_ExclusionFilter::IsStored(const AIS_KindOfInteractive aType) const
 bool AIS_ExclusionFilter::IsSignatureIn(const AIS_KindOfInteractive aType,
                                         const int                   SignatureInType) const
 {
-  if (!myStoredTypes.IsBound(aType))
+  if (!myStoredTypes.IsBound(static_cast<int>(aType)))
     return false;
   for (NCollection_List<int>::Iterator Lit(myStoredTypes((int)aType)); Lit.More(); Lit.Next())
   {
@@ -151,7 +151,8 @@ void AIS_ExclusionFilter::ListOfSignature(const AIS_KindOfInteractive aType,
 {
   TheStoredList.Clear();
   if (IsStored(aType))
-    for (NCollection_List<int>::Iterator it(myStoredTypes(aType)); it.More(); it.Next())
+    for (NCollection_List<int>::Iterator it(myStoredTypes(static_cast<int>(aType))); it.More();
+         it.Next())
       TheStoredList.Append(it.Value());
 }
 
@@ -169,10 +170,10 @@ bool AIS_ExclusionFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) con
     return false;
 
   // type of AIS is not in the map...
-  if (!myStoredTypes.IsBound(IO->Type()))
+  if (!myStoredTypes.IsBound(static_cast<int>(IO->Type())))
     return myIsExclusionFlagOn;
   // type of AIS is not in the map and there is no signature indicated
-  if (myStoredTypes(IO->Type()).IsEmpty())
+  if (myStoredTypes(static_cast<int>(IO->Type())).IsEmpty())
     return !myIsExclusionFlagOn;
   // one or several signatures are indicated...
   if (IsSignatureIn(IO->Type(), IO->Signature()))

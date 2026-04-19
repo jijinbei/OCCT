@@ -82,29 +82,29 @@ bool SelectMgr_EntityOwner::Select(const AIS_SelectionScheme theSelScheme,
 {
   switch (theSelScheme)
   {
-    case AIS_SelectionScheme_UNKNOWN: {
+    case AIS_SelectionScheme::AIS_SelectionScheme_UNKNOWN: {
       return myIsSelected;
     }
-    case AIS_SelectionScheme_Replace: {
+    case AIS_SelectionScheme::AIS_SelectionScheme_Replace: {
       return theIsDetected;
     }
-    case AIS_SelectionScheme_Add: {
+    case AIS_SelectionScheme::AIS_SelectionScheme_Add: {
       return !myIsSelected || theIsDetected || IsForcedHilight();
     }
-    case AIS_SelectionScheme_Remove: {
+    case AIS_SelectionScheme::AIS_SelectionScheme_Remove: {
       return myIsSelected && !theIsDetected;
     }
-    case AIS_SelectionScheme_XOR: {
+    case AIS_SelectionScheme::AIS_SelectionScheme_XOR: {
       if (theIsDetected)
       {
         return !myIsSelected && !IsForcedHilight();
       }
       return myIsSelected;
     }
-    case AIS_SelectionScheme_Clear: {
+    case AIS_SelectionScheme::AIS_SelectionScheme_Clear: {
       return false;
     }
-    case AIS_SelectionScheme_ReplaceExtra: {
+    case AIS_SelectionScheme::AIS_SelectionScheme_ReplaceExtra: {
       return theIsDetected;
     }
   }

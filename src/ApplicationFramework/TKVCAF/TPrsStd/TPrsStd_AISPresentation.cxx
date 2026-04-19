@@ -934,7 +934,7 @@ void TPrsStd_AISPresentation::ActivateSelectionMode()
             aContext->SetSelectionModeActive(myAIS,
                                              aSelectionMode,
                                              true,
-                                             AIS_SelectionModesConcurrency_Multiple);
+                                             AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple);
         }
       }
       else
@@ -945,8 +945,8 @@ void TPrsStd_AISPresentation::ActivateSelectionMode()
           aContext->SetSelectionModeActive(myAIS,
                                            aSelectionMode,
                                            true /*activate*/,
-                                           iSelMode == 1 ? AIS_SelectionModesConcurrency_Single
-                                                         : AIS_SelectionModesConcurrency_Multiple);
+                                           iSelMode == 1 ? AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single
+                                                         : AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple);
         }
       }
     }

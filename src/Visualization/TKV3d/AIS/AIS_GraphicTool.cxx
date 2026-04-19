@@ -30,37 +30,37 @@ static occ::handle<Prs3d_LineAspect> GetLineAspect(const occ::handle<Prs3d_Drawe
 {
   switch (Att)
   {
-    case AIS_TOA_Line:
+    case AIS_TypeOfAttribute::AIS_TOA_Line:
       return Dr->LineAspect();
-    case AIS_TOA_Dimension:
+    case AIS_TypeOfAttribute::AIS_TOA_Dimension:
       return Dr->DimensionAspect()->LineAspect();
-    case AIS_TOA_Wire:
+    case AIS_TypeOfAttribute::AIS_TOA_Wire:
       return Dr->WireAspect();
-    case AIS_TOA_Plane:
+    case AIS_TypeOfAttribute::AIS_TOA_Plane:
       return Dr->PlaneAspect()->EdgesAspect();
-    case AIS_TOA_Vector:
+    case AIS_TypeOfAttribute::AIS_TOA_Vector:
       return Dr->VectorAspect();
-    case AIS_TOA_UIso:
+    case AIS_TypeOfAttribute::AIS_TOA_UIso:
       return occ::handle<Prs3d_LineAspect>(Dr->UIsoAspect());
-    case AIS_TOA_VIso:
+    case AIS_TypeOfAttribute::AIS_TOA_VIso:
       return occ::handle<Prs3d_LineAspect>(Dr->VIsoAspect());
-    case AIS_TOA_Free:
+    case AIS_TypeOfAttribute::AIS_TOA_Free:
       return Dr->FreeBoundaryAspect();
-    case AIS_TOA_UnFree:
+    case AIS_TypeOfAttribute::AIS_TOA_UnFree:
       return Dr->UnFreeBoundaryAspect();
-    case AIS_TOA_Section:
+    case AIS_TypeOfAttribute::AIS_TOA_Section:
       return Dr->SectionAspect();
-    case AIS_TOA_Hidden:
+    case AIS_TypeOfAttribute::AIS_TOA_Hidden:
       return Dr->HiddenLineAspect();
-    case AIS_TOA_Seen:
+    case AIS_TypeOfAttribute::AIS_TOA_Seen:
       return Dr->SeenLineAspect();
-    case AIS_TOA_FaceBoundary:
+    case AIS_TypeOfAttribute::AIS_TOA_FaceBoundary:
       return Dr->FaceBoundaryAspect();
-    case AIS_TOA_FirstAxis:
+    case AIS_TypeOfAttribute::AIS_TOA_FirstAxis:
       return Dr->DatumAspect()->LineAspect(Prs3d_DatumParts_XAxis);
-    case AIS_TOA_SecondAxis:
+    case AIS_TypeOfAttribute::AIS_TOA_SecondAxis:
       return Dr->DatumAspect()->LineAspect(Prs3d_DatumParts_YAxis);
-    case AIS_TOA_ThirdAxis:
+    case AIS_TypeOfAttribute::AIS_TOA_ThirdAxis:
       return Dr->DatumAspect()->LineAspect(Prs3d_DatumParts_ZAxis);
   }
   occ::handle<Prs3d_LineAspect> bid;

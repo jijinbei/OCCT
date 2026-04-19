@@ -55,7 +55,7 @@ AIS_Plane::AIS_Plane(const occ::handle<Geom_Plane>& aComponent, const bool aCurr
       myCenter(gp_Pnt(0., 0., 0.)),
       myCurrentMode(aCurrentMode),
       myAutomaticPosition(true),
-      myTypeOfPlane(AIS_TOPL_Unknown),
+      myTypeOfPlane(AIS_TypeOfPlane::AIS_TOPL_Unknown),
       myIsXYZPlane(false),
       myTypeOfSensitivity(Select3D_TOS_BOUNDARY)
 {
@@ -71,7 +71,7 @@ AIS_Plane::AIS_Plane(const occ::handle<Geom_Plane>& aComponent,
       myCenter(aCenter),
       myCurrentMode(aCurrentMode),
       myAutomaticPosition(true),
-      myTypeOfPlane(AIS_TOPL_Unknown),
+      myTypeOfPlane(AIS_TypeOfPlane::AIS_TOPL_Unknown),
       myIsXYZPlane(false),
       myTypeOfSensitivity(Select3D_TOS_BOUNDARY)
 {
@@ -91,7 +91,7 @@ AIS_Plane::AIS_Plane(const occ::handle<Geom_Plane>& aComponent,
       myPmax(aPmax),
       myCurrentMode(aCurrentMode),
       myAutomaticPosition(false),
-      myTypeOfPlane(AIS_TOPL_Unknown),
+      myTypeOfPlane(AIS_TypeOfPlane::AIS_TOPL_Unknown),
       myIsXYZPlane(false),
       myTypeOfSensitivity(Select3D_TOS_BOUNDARY)
 {
@@ -121,7 +121,7 @@ AIS_Plane::AIS_Plane(const occ::handle<Geom_Axis2Placement>& aComponent,
 void AIS_Plane::SetComponent(const occ::handle<Geom_Plane>& aComponent)
 {
   myComponent   = aComponent;
-  myTypeOfPlane = AIS_TOPL_Unknown;
+  myTypeOfPlane = AIS_TypeOfPlane::AIS_TOPL_Unknown;
   myIsXYZPlane  = false;
   // myCenter = gp_Pnt(0.,0.,0.);
   myAutomaticPosition = true;
@@ -178,7 +178,7 @@ void AIS_Plane::SetPlaneAttributes(const occ::handle<Geom_Plane>& aComponent,
   myCenter            = aCenter;
   myPmin              = aPmin;
   myPmax              = aPmax;
-  myTypeOfPlane       = AIS_TOPL_Unknown;
+  myTypeOfPlane       = AIS_TypeOfPlane::AIS_TOPL_Unknown;
   myIsXYZPlane        = false;
 }
 
@@ -534,7 +534,7 @@ void AIS_Plane::ComputeFields()
 
     switch (myTypeOfPlane)
     {
-      case AIS_TOPL_XYPlane: {
+      case AIS_TypeOfPlane::AIS_TOPL_XYPlane: {
         gp_Pln XYP(0, 0, 1, 0);
         myComponent = new Geom_Plane(XYP);
         x4          = xo + x1 * DS1;
@@ -545,7 +545,7 @@ void AIS_Plane::ComputeFields()
         z5          = zo + z2 * DS2;
         break;
       }
-      case AIS_TOPL_XZPlane: {
+      case AIS_TypeOfPlane::AIS_TOPL_XZPlane: {
         gp_Pln XZP(0, 1, 0, 0);
         myComponent = new Geom_Plane(XZP);
         x4          = xo + x1 * DS1;
@@ -556,7 +556,7 @@ void AIS_Plane::ComputeFields()
         z5          = zo + z3 * DS3;
         break;
       }
-      case AIS_TOPL_YZPlane: {
+      case AIS_TypeOfPlane::AIS_TOPL_YZPlane: {
         gp_Pln XZP(1, 0, 0, 0);
         myComponent = new Geom_Plane(XZP);
         x4          = xo + x2 * DS2;

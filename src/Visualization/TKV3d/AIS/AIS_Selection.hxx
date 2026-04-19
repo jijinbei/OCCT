@@ -65,7 +65,7 @@ public:
                               const bool                                theIsDetected)
   {
     Clear();
-    Select(theObject, theFilter, AIS_SelectionScheme_Add, theIsDetected);
+    Select(theObject, theFilter, AIS_SelectionScheme::AIS_SelectionScheme_Add, theIsDetected);
   }
 
   //! checks if the object is in the selection.

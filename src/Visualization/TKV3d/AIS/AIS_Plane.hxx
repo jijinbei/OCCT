@@ -84,7 +84,7 @@ public:
 
   int Signature() const override { return 7; }
 
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive_Datum; }
+  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Datum; }
 
   //! Returns the component specified in SetComponent.
   const occ::handle<Geom_Plane>& Component() { return myComponent; }

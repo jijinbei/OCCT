@@ -120,7 +120,7 @@ void AIS_Line::SetColor(const Quantity_Color& aCol)
   myDrawer->SetColor(aCol);
 
   double WW = HasWidth()            ? myOwnWidth
-              : myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TOA_Line)
+              : myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Line)
                                     : 1.;
 
   if (!myDrawer->HasOwnLineAspect())
@@ -150,7 +150,7 @@ void AIS_Line::UnsetColor()
     if (HasColor())
       CC = myDrawer->Color();
     else if (myDrawer->HasLink())
-      AIS_GraphicTool::GetLineColor(myDrawer->Link(), AIS_TOA_Line, CC);
+      AIS_GraphicTool::GetLineColor(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Line, CC);
     myDrawer->LineAspect()->SetColor(CC);
     myDrawer->SetColor(CC);
     SynchronizeAspects();
@@ -169,7 +169,7 @@ void AIS_Line::SetWidth(const double aValue)
     if (HasColor())
       CC = myDrawer->Color();
     else if (myDrawer->HasLink())
-      AIS_GraphicTool::GetLineColor(myDrawer->Link(), AIS_TOA_Line, CC);
+      AIS_GraphicTool::GetLineColor(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Line, CC);
     replaceWithNewLineAspect(new Prs3d_LineAspect(CC, Aspect_TypeOfLine::Aspect_TOL_SOLID, aValue));
   }
   else
@@ -190,7 +190,7 @@ void AIS_Line::UnsetWidth()
   else
   {
     float WW = myDrawer->HasLink()
-                 ? (float)AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TOA_Line)
+                 ? (float)AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Line)
                  : 1.0f;
     myDrawer->LineAspect()->SetWidth(WW);
     myOwnWidth = WW;

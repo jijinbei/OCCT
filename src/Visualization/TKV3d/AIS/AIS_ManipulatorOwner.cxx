@@ -55,7 +55,7 @@ bool AIS_ManipulatorOwner::IsHilighted(const occ::handle<PrsMgr_PresentationMana
     return false;
   }
 
-  return thePM->IsHighlighted(Selectable(), myMode);
+  return thePM->IsHighlighted(Selectable(), static_cast<int>(myMode));
 }
 
 //=================================================================================================

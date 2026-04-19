@@ -18,7 +18,7 @@
 #define _AIS_TypeOfAxis_HeaderFile
 
 //! Declares the type of axis.
-enum AIS_TypeOfAxis
+enum class AIS_TypeOfAxis
 {
   AIS_TOAX_Unknown,
   AIS_TOAX_XAxis,

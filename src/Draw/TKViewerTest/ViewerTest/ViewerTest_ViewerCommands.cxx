@@ -6117,7 +6117,7 @@ static int VSelect(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 
   NCollection_Sequence<NCollection_Vec2<int>> aPnts;
   bool                                        toAllowOverlap = false;
-  AIS_SelectionScheme                         aSelScheme     = AIS_SelectionScheme_Replace;
+  AIS_SelectionScheme                         aSelScheme     = AIS_SelectionScheme::AIS_SelectionScheme_Replace;
   for (int anArgIter = 1; anArgIter < theNbArgs; ++anArgIter)
   {
     TCollection_AsciiString anArg(theArgVec[anArgIter]);
@@ -6132,23 +6132,23 @@ static int VSelect(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
     }
     else if (anArg == "-replace")
     {
-      aSelScheme = AIS_SelectionScheme_Replace;
+      aSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace;
     }
     else if (anArg == "-replaceextra")
     {
-      aSelScheme = AIS_SelectionScheme_ReplaceExtra;
+      aSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_ReplaceExtra;
     }
     else if (anArg == "-xor" || anArg == "-shift")
     {
-      aSelScheme = AIS_SelectionScheme_XOR;
+      aSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_XOR;
     }
     else if (anArg == "-add")
     {
-      aSelScheme = AIS_SelectionScheme_Add;
+      aSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Add;
     }
     else if (anArg == "-remove")
     {
-      aSelScheme = AIS_SelectionScheme_Remove;
+      aSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Remove;
     }
     else if (anArgIter + 1 < theNbArgs && anArg.IsIntegerValue()
              && TCollection_AsciiString(theArgVec[anArgIter + 1]).IsIntegerValue())
@@ -6160,7 +6160,7 @@ static int VSelect(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
     {
       if (anArg.IntegerValue() == 1)
       {
-        aSelScheme = AIS_SelectionScheme_XOR;
+        aSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_XOR;
       }
     }
     else
@@ -9008,28 +9008,28 @@ static int VCamera(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVe
     }
     else if (anArgCase == "-rotationmode" || anArgCase == "-rotmode")
     {
-      AIS_RotationMode        aRotMode = AIS_RotationMode_BndBoxActive;
+      AIS_RotationMode        aRotMode = AIS_RotationMode::AIS_RotationMode_BndBoxActive;
       TCollection_AsciiString aRotStr((anArgIter + 1 < theArgsNb) ? theArgVec[anArgIter + 1] : "");
       aRotStr.LowerCase();
       if (aRotStr == "bndboxactive" || aRotStr == "active")
       {
-        aRotMode = AIS_RotationMode_BndBoxActive;
+        aRotMode = AIS_RotationMode::AIS_RotationMode_BndBoxActive;
       }
       else if (aRotStr == "picklast" || aRotStr == "pick")
       {
-        aRotMode = AIS_RotationMode_PickLast;
+        aRotMode = AIS_RotationMode::AIS_RotationMode_PickLast;
       }
       else if (aRotStr == "pickcenter")
       {
-        aRotMode = AIS_RotationMode_PickCenter;
+        aRotMode = AIS_RotationMode::AIS_RotationMode_PickCenter;
       }
       else if (aRotStr == "cameraat" || aRotStr == "cameracenter")
       {
-        aRotMode = AIS_RotationMode_CameraAt;
+        aRotMode = AIS_RotationMode::AIS_RotationMode_CameraAt;
       }
       else if (aRotStr == "bndboxscene" || aRotStr == "boxscene")
       {
-        aRotMode = AIS_RotationMode_BndBoxScene;
+        aRotMode = AIS_RotationMode::AIS_RotationMode_BndBoxScene;
       }
       else
       {
@@ -9042,21 +9042,21 @@ static int VCamera(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVe
     }
     else if (anArgCase == "-navigationmode" || anArgCase == "-navmode")
     {
-      AIS_NavigationMode      aNavMode = AIS_NavigationMode_Orbit;
+      AIS_NavigationMode      aNavMode = AIS_NavigationMode::AIS_NavigationMode_Orbit;
       TCollection_AsciiString aNavStr((anArgIter + 1 < theArgsNb) ? theArgVec[anArgIter + 1] : "");
       aNavStr.LowerCase();
       if (aNavStr == "orbit")
       {
-        aNavMode = AIS_NavigationMode_Orbit;
+        aNavMode = AIS_NavigationMode::AIS_NavigationMode_Orbit;
       }
       else if (aNavStr == "flight" || aNavStr == "fly" || aNavStr == "copter"
                || aNavStr == "helicopter")
       {
-        aNavMode = AIS_NavigationMode_FirstPersonFlight;
+        aNavMode = AIS_NavigationMode::AIS_NavigationMode_FirstPersonFlight;
       }
       else if (aNavStr == "walk" || aNavStr == "shooter")
       {
-        aNavMode = AIS_NavigationMode_FirstPersonWalk;
+        aNavMode = AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk;
       }
       else
       {
@@ -9066,15 +9066,15 @@ static int VCamera(Draw_Interpretor& theDI, int theArgsNb, const char** theArgVe
 
       occ::handle<ViewerTest_EventManager> aViewMgr = ViewerTest::CurrentEventManager();
       aViewMgr->SetNavigationMode(aNavMode);
-      if (aNavMode == AIS_NavigationMode_Orbit)
+      if (aNavMode == AIS_NavigationMode::AIS_NavigationMode_Orbit)
       {
         aViewMgr->ChangeMouseGestureMap().Bind(Aspect_VKeyMouse_LeftButton,
-                                               AIS_MouseGesture_RotateOrbit);
+                                               AIS_MouseGesture::AIS_MouseGesture_RotateOrbit);
       }
       else
       {
         aViewMgr->ChangeMouseGestureMap().Bind(Aspect_VKeyMouse_LeftButton,
-                                               AIS_MouseGesture_RotateView);
+                                               AIS_MouseGesture::AIS_MouseGesture_RotateView);
       }
       ++anArgIter;
     }
@@ -10267,7 +10267,7 @@ static int VLight(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec
   };
 
   NCollection_List<occ::handle<AIS_InteractiveObject>> aPrsList;
-  aCtx->DisplayedObjects(AIS_KindOfInteractive_LightSource, -1, aPrsList);
+  aCtx->DisplayedObjects(AIS_KindOfInteractive::AIS_KindOfInteractive_LightSource, -1, aPrsList);
   if (!aPrsList.IsEmpty())
   {
     // update light source presentations
@@ -12037,7 +12037,7 @@ struct ManipAxisModeOnOff
 
   ManipAxisModeOnOff()
       : Axis(-1),
-        Mode(AIS_MM_None),
+        Mode(AIS_ManipulatorMode::AIS_MM_None),
         ToEnable(false)
   {
   }
@@ -13549,15 +13549,15 @@ static int VChangeMouseGesture(Draw_Interpretor&, int theArgsNb, const char** th
 
   NCollection_DoubleMap<TCollection_AsciiString, AIS_MouseGesture> aGestureMap;
   {
-    aGestureMap.Bind("none", AIS_MouseGesture_NONE);
-    aGestureMap.Bind("selectrectangle", AIS_MouseGesture_SelectRectangle);
-    aGestureMap.Bind("selectlasso", AIS_MouseGesture_SelectLasso);
-    aGestureMap.Bind("zoom", AIS_MouseGesture_Zoom);
-    aGestureMap.Bind("zoomwindow", AIS_MouseGesture_ZoomWindow);
-    aGestureMap.Bind("pan", AIS_MouseGesture_Pan);
-    aGestureMap.Bind("rotateorbit", AIS_MouseGesture_RotateOrbit);
-    aGestureMap.Bind("rotateview", AIS_MouseGesture_RotateView);
-    aGestureMap.Bind("drag", AIS_MouseGesture_Drag);
+    aGestureMap.Bind("none", AIS_MouseGesture::AIS_MouseGesture_NONE);
+    aGestureMap.Bind("selectrectangle", AIS_MouseGesture::AIS_MouseGesture_SelectRectangle);
+    aGestureMap.Bind("selectlasso", AIS_MouseGesture::AIS_MouseGesture_SelectLasso);
+    aGestureMap.Bind("zoom", AIS_MouseGesture::AIS_MouseGesture_Zoom);
+    aGestureMap.Bind("zoomwindow", AIS_MouseGesture::AIS_MouseGesture_ZoomWindow);
+    aGestureMap.Bind("pan", AIS_MouseGesture::AIS_MouseGesture_Pan);
+    aGestureMap.Bind("rotateorbit", AIS_MouseGesture::AIS_MouseGesture_RotateOrbit);
+    aGestureMap.Bind("rotateview", AIS_MouseGesture::AIS_MouseGesture_RotateView);
+    aGestureMap.Bind("drag", AIS_MouseGesture::AIS_MouseGesture_Drag);
   }
   NCollection_DoubleMap<TCollection_AsciiString, unsigned int> aMouseButtonMap;
   {
@@ -13568,7 +13568,7 @@ static int VChangeMouseGesture(Draw_Interpretor&, int theArgsNb, const char** th
   }
 
   unsigned int     aButton  = (unsigned int)Aspect_VKeyMouse_LeftButton;
-  AIS_MouseGesture aGesture = AIS_MouseGesture_RotateOrbit;
+  AIS_MouseGesture aGesture = AIS_MouseGesture::AIS_MouseGesture_RotateOrbit;
   for (int anArgIter = 1; anArgIter < theArgsNb; ++anArgIter)
   {
     const char*             anArg = theArgVec[anArgIter];

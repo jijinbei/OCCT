@@ -180,7 +180,7 @@ void AIS_Trihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
   occ::handle<Prs3d_DatumAspect> anAspect = myDrawer->DatumAspect();
   switch (theMode)
   {
-    case AIS_TrihedronSelectionMode_EntireObject: {
+    case static_cast<int>(AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_EntireObject): {
       occ::handle<SelectMgr_EntityOwner> anOwner =
         new SelectMgr_EntityOwner(this, mySelectionPriority[Prs3d_DatumParts_None]);
       const bool isShadingMode = myTrihDispMode == Prs3d_DM_Shaded;
@@ -197,7 +197,7 @@ void AIS_Trihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
       }
       break;
     }
-    case AIS_TrihedronSelectionMode_Origin: {
+    case static_cast<int>(AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_Origin): {
       const Prs3d_DatumParts aPart = Prs3d_DatumParts_Origin;
       if (anAspect->DrawDatumPart(aPart))
       {
@@ -208,7 +208,7 @@ void AIS_Trihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
       }
       break;
     }
-    case AIS_TrihedronSelectionMode_Axes: {
+    case static_cast<int>(AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_Axes): {
       for (int aPartIter = Prs3d_DatumParts_XAxis; aPartIter <= Prs3d_DatumParts_ZAxis; ++aPartIter)
       {
         const Prs3d_DatumParts aPart = (Prs3d_DatumParts)aPartIter;
@@ -222,7 +222,7 @@ void AIS_Trihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
       }
       break;
     }
-    case AIS_TrihedronSelectionMode_MainPlanes: {
+    case static_cast<int>(AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_MainPlanes): {
       // create owner for each trihedron plane
       {
         for (int aPartIter = Prs3d_DatumParts_XOYAxis; aPartIter <= Prs3d_DatumParts_XOZAxis;

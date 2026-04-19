@@ -15,7 +15,7 @@
 #define _AIS_NavigationMode_HeaderFile
 
 //! Camera navigation mode.
-enum AIS_NavigationMode
+enum class AIS_NavigationMode
 {
   AIS_NavigationMode_Orbit,             //!< orbit rotation
   AIS_NavigationMode_FirstPersonFlight, //!< flight rotation (first person)
@@ -25,7 +25,7 @@ enum AIS_NavigationMode
 enum
 {
   AIS_NavigationMode_LOWER = 0,
-  AIS_NavigationMode_UPPER = AIS_NavigationMode_FirstPersonWalk
+  AIS_NavigationMode_UPPER = static_cast<int>(AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk)
 };
 
 #endif // _V3d_NavigationMode_HeaderFile

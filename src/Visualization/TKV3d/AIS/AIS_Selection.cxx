@@ -58,7 +58,7 @@ AIS_SelectStatus AIS_Selection::Select(const occ::handle<SelectMgr_EntityOwner>&
 {
   if (theOwner.IsNull() || !theOwner->HasSelectable())
   {
-    return AIS_SS_NotDone;
+    return AIS_SelectStatus::AIS_SS_NotDone;
   }
 
   const bool isDetected = theIsDetected && (theFilter.IsNull() || theFilter->IsOk(theOwner));
@@ -69,13 +69,13 @@ AIS_SelectStatus AIS_Selection::Select(const occ::handle<SelectMgr_EntityOwner>&
   if (!wasSelected || !myResultMap.IsBound(theOwner))
   {
     if (!toSelect)
-      return AIS_SS_NotDone;
+      return AIS_SelectStatus::AIS_SS_NotDone;
 
     NCollection_List<occ::handle<SelectMgr_EntityOwner>>::Iterator aListIter;
     myresult.Append(theOwner, aListIter);
     myResultMap.Bind(theOwner, aListIter);
     theOwner->SetSelected(true);
-    return AIS_SS_Added;
+    return AIS_SelectStatus::AIS_SS_Added;
   }
 
   NCollection_List<occ::handle<SelectMgr_EntityOwner>>::Iterator aListIter =
@@ -98,7 +98,7 @@ AIS_SelectStatus AIS_Selection::Select(const occ::handle<SelectMgr_EntityOwner>&
   // (IsForcedHilight call)
   if (theOwner->IsForcedHilight())
   {
-    return AIS_SS_Added;
+    return AIS_SelectStatus::AIS_SS_Added;
   }
 
   myresult.Remove(aListIter);
@@ -118,7 +118,7 @@ AIS_SelectStatus AIS_Selection::Select(const occ::handle<SelectMgr_EntityOwner>&
       myResultMap.Bind(aNextObject, aListIter);
     }
   }
-  return AIS_SS_Removed;
+  return AIS_SelectStatus::AIS_SS_Removed;
 }
 
 //=================================================================================================
@@ -127,14 +127,14 @@ AIS_SelectStatus AIS_Selection::AddSelect(const occ::handle<SelectMgr_EntityOwne
 {
   if (theObject.IsNull() || !theObject->HasSelectable() || myResultMap.IsBound(theObject))
   {
-    return AIS_SS_NotDone;
+    return AIS_SelectStatus::AIS_SS_NotDone;
   }
 
   NCollection_List<occ::handle<SelectMgr_EntityOwner>>::Iterator aListIter;
   myresult.Append(theObject, aListIter);
   myResultMap.Bind(theObject, aListIter);
   theObject->SetSelected(true);
-  return AIS_SS_Added;
+  return AIS_SelectStatus::AIS_SS_Added;
 }
 
 //=================================================================================================
@@ -147,7 +147,7 @@ void AIS_Selection::SelectOwners(
 {
   (void)theToAllowSelOverlap;
 
-  if (theSelScheme == AIS_SelectionScheme_ReplaceExtra && thePickedOwners.Size() == myresult.Size())
+  if (theSelScheme == AIS_SelectionScheme::AIS_SelectionScheme_ReplaceExtra && thePickedOwners.Size() == myresult.Size())
   {
     // If picked owners is equivalent to the selected then just clear selected.
     bool isTheSame = true;
@@ -169,9 +169,9 @@ void AIS_Selection::SelectOwners(
     }
   }
 
-  if (theSelScheme == AIS_SelectionScheme_Replace
-      || theSelScheme == AIS_SelectionScheme_ReplaceExtra
-      || theSelScheme == AIS_SelectionScheme_Clear)
+  if (theSelScheme == AIS_SelectionScheme::AIS_SelectionScheme_Replace
+      || theSelScheme == AIS_SelectionScheme::AIS_SelectionScheme_ReplaceExtra
+      || theSelScheme == AIS_SelectionScheme::AIS_SelectionScheme_Clear)
   {
     Clear();
   }
@@ -193,7 +193,7 @@ AIS_SelectStatus AIS_Selection::appendOwner(const occ::handle<SelectMgr_EntityOw
 {
   if (theOwner.IsNull() || !theOwner->HasSelectable() || !theFilter->IsOk(theOwner))
   {
-    return AIS_SS_NotDone;
+    return AIS_SelectStatus::AIS_SS_NotDone;
   }
 
   return AddSelect(theOwner);

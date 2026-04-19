@@ -23,7 +23,7 @@
 #include <V3d_TypeOfOrientation.hxx>
 
 //! Selection mode
-enum AIS_ViewSelectionTool
+enum class AIS_ViewSelectionTool
 {
   AIS_ViewSelectionTool_Picking,    //!< pick to select
   AIS_ViewSelectionTool_RubberBand, //!< rubber-band to select
@@ -32,7 +32,7 @@ enum AIS_ViewSelectionTool
 };
 
 //! Input buffer type.
-enum AIS_ViewInputBufferType
+enum class AIS_ViewInputBufferType
 {
   AIS_ViewInputBufferType_UI, //!< input buffer for filling from UI thread
   AIS_ViewInputBufferType_GL, //!< input buffer accessible  from GL thread
@@ -79,8 +79,8 @@ public:
     bool                                        ToApplyTool; //!< apply rubber-band selection tool
 
     _selection()
-        : Tool(AIS_ViewSelectionTool_Picking),
-          Scheme(AIS_SelectionScheme_UNKNOWN),
+        : Tool(AIS_ViewSelectionTool::AIS_ViewSelectionTool_Picking),
+          Scheme(AIS_SelectionScheme::AIS_SelectionScheme_UNKNOWN),
           ToApplyTool(false)
     {
     }

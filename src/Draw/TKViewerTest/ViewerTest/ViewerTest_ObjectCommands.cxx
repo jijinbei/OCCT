@@ -1224,7 +1224,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     }
 
     // The first argument is an AIS_Point
-    if (!aShapeA.IsNull() && aShapeA->Type() == AIS_KindOfInteractive_Datum
+    if (!aShapeA.IsNull() && aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
         && aShapeA->Signature() == 1)
     {
       // The second argument must also be an AIS_Point
@@ -1236,7 +1236,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       }
 
       // If B is not an AIS_Point
-      if (aShapeB.IsNull() || aShapeB->Type() != AIS_KindOfInteractive_Datum
+      if (aShapeB.IsNull() || aShapeB->Type() != AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
           || aShapeB->Signature() != 1)
       {
         Message::SendFail("Syntax error: 2nd object is expected to be an AIS_Point");
@@ -1252,7 +1252,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       }
 
       // If C is not an AIS_Point
-      if (aShapeC.IsNull() || aShapeC->Type() != AIS_KindOfInteractive_Datum
+      if (aShapeC.IsNull() || aShapeC->Type() != AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
           || aShapeC->Signature() != 1)
       {
         Message::SendFail("Syntax error: 3d object is expected to be an AIS_Point");
@@ -1327,7 +1327,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     }
     // The first argument is an AIS_Axis
     // Creation of a plane orthogonal to the axis through a point
-    else if (aShapeA->Type() == AIS_KindOfInteractive_Datum && aShapeA->Signature() == 2)
+    else if (aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum && aShapeA->Signature() == 2)
     {
       // The second argument should be an AIS_Point
       occ::handle<AIS_InteractiveObject> aShapeB;
@@ -1337,7 +1337,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
       // If B is not an AIS_Point
-      if (aShapeB.IsNull() || aShapeB->Type() != AIS_KindOfInteractive_Datum
+      if (aShapeB.IsNull() || aShapeB->Type() != AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
           || aShapeB->Signature() != 1)
       {
         Message::SendFail("Syntax error: 2d object is expected to be an AIS_Point");
@@ -1382,7 +1382,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     }
     // The first argument is an AIS_Plane
     // Creation of a plane parallel to the plane passing through the point
-    else if (aShapeA->Type() == AIS_KindOfInteractive_Datum && aShapeA->Signature() == 7)
+    else if (aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum && aShapeA->Signature() == 7)
     {
       // The second argument should be an AIS_Point
       occ::handle<AIS_InteractiveObject> aShapeB;
@@ -1392,7 +1392,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
         return 1;
       }
       // B should be an AIS_Point
-      if (aShapeB.IsNull() || aShapeB->Type() != AIS_KindOfInteractive_Datum
+      if (aShapeB.IsNull() || aShapeB->Type() != AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
           || aShapeB->Signature() != 1)
       {
         Message::SendFail("Syntax error: 2d object is expected to be an AIS_Point");
@@ -2137,7 +2137,7 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     GetMapOfAIS().Find2(argv[3], aShapeB);
 
     // Arguments: AIS_Point AIS_Point AIS_Point
-    if (!aShapeA.IsNull() && !aShapeB.IsNull() && aShapeA->Type() == AIS_KindOfInteractive_Datum
+    if (!aShapeA.IsNull() && !aShapeB.IsNull() && aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
         && aShapeA->Signature() == 1)
     {
       occ::handle<AIS_InteractiveObject> aShapeC;
@@ -2200,7 +2200,7 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     }
 
     // Arguments: AIS_Plane AIS_Point Real
-    else if (aShapeA->Type() == AIS_KindOfInteractive_Datum && aShapeA->Signature() == 7)
+    else if (aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum && aShapeA->Signature() == 7)
     {
       occ::handle<AIS_Plane> anAISPlane  = occ::down_cast<AIS_Plane>(aShapeA);
       occ::handle<AIS_Point> anAISPointB = occ::down_cast<AIS_Point>(aShapeB);
@@ -4827,7 +4827,7 @@ static int VSetSelectionMode(Draw_Interpretor& /*di*/, int theNbArgs, const char
   NCollection_Sequence<TCollection_AsciiString> anObjNames;
   int                                           aSelectionMode = -1;
   bool                                          toTurnOn       = true;
-  AIS_SelectionModesConcurrency aSelModeConcurrency = AIS_SelectionModesConcurrency_GlobalOrLocal;
+  AIS_SelectionModesConcurrency aSelModeConcurrency = AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal;
   for (int anArgIter = 1; anArgIter < theNbArgs; ++anArgIter)
   {
     TCollection_AsciiString anArgCase(theArgv[anArgIter]);
@@ -4835,16 +4835,16 @@ static int VSetSelectionMode(Draw_Interpretor& /*di*/, int theNbArgs, const char
     if (anArgCase == "-set" || anArgCase == "-replace" || anArgCase == "-single"
         || anArgCase == "-exclusive")
     {
-      aSelModeConcurrency = AIS_SelectionModesConcurrency_Single;
+      aSelModeConcurrency = AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single;
     }
     else if (anArgCase == "-add" || anArgCase == "-combine" || anArgCase == "-combination"
              || anArgCase == "-multiple")
     {
-      aSelModeConcurrency = AIS_SelectionModesConcurrency_Multiple;
+      aSelModeConcurrency = AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple;
     }
     else if (anArgCase == "-globalorlocal" || anArgCase == "-localorglobal")
     {
-      aSelModeConcurrency = AIS_SelectionModesConcurrency_GlobalOrLocal;
+      aSelModeConcurrency = AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal;
     }
     else
     {

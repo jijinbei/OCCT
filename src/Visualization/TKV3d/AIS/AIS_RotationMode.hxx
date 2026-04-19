@@ -15,7 +15,7 @@
 #define _AIS_RotationMode_HeaderFile
 
 //! Camera rotation mode.
-enum AIS_RotationMode
+enum class AIS_RotationMode
 {
   AIS_RotationMode_BndBoxActive, //!< default OCCT rotation
   AIS_RotationMode_PickLast,     //!< rotate around last picked point
@@ -27,7 +27,7 @@ enum AIS_RotationMode
 enum
 {
   AIS_RotationMode_LOWER = 0,
-  AIS_RotationMode_UPPER = AIS_RotationMode_BndBoxScene,
+  AIS_RotationMode_UPPER = static_cast<int>(AIS_RotationMode::AIS_RotationMode_BndBoxScene),
 };
 
 #endif // _AIS_RotationMode_HeaderFile

@@ -19,7 +19,7 @@
 
 //! Declares the type of Interactive Object.
 //! This type can be used for fast pre-filtering of objects of specific group.
-enum AIS_KindOfInteractive
+enum class AIS_KindOfInteractive
 {
   AIS_KindOfInteractive_None,        //!< object of unknown type
   AIS_KindOfInteractive_Datum,       //!< presentation of construction element (datum)

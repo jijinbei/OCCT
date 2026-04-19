@@ -456,29 +456,29 @@ static void GetTypeAndSignfromString(const char*            theName,
 
   if (anIndex == -1)
   {
-    theType = AIS_KindOfInteractive_None;
+    theType = AIS_KindOfInteractive::AIS_KindOfInteractive_None;
     theSign = -1;
     return;
   }
 
   if (anIndex <= 6)
   {
-    theType = AIS_KindOfInteractive_Datum;
+    theType = AIS_KindOfInteractive::AIS_KindOfInteractive_Datum;
     theSign = anIndex + 1;
   }
   else if (anIndex <= 9)
   {
-    theType = AIS_KindOfInteractive_Shape;
+    theType = AIS_KindOfInteractive::AIS_KindOfInteractive_Shape;
     theSign = anIndex - 7;
   }
   else if (anIndex <= 11)
   {
-    theType = AIS_KindOfInteractive_Object;
+    theType = AIS_KindOfInteractive::AIS_KindOfInteractive_Object;
     theSign = anIndex - 10;
   }
   else
   {
-    theType = AIS_KindOfInteractive_Relation;
+    theType = AIS_KindOfInteractive::AIS_KindOfInteractive_Relation;
     theSign = anIndex - 12;
   }
 }
@@ -728,8 +728,8 @@ static int visos(Draw_Interpretor& di, int argc, const char** argv)
 
   if (argc <= 1)
   {
-    di << "Current number of isos : " << TheAISContext()->IsoNumber(AIS_TOI_IsoU) << " "
-       << TheAISContext()->IsoNumber(AIS_TOI_IsoV) << "\n";
+    di << "Current number of isos : " << TheAISContext()->IsoNumber(AIS_TypeOfIso::AIS_TOI_IsoU) << " "
+       << TheAISContext()->IsoNumber(AIS_TypeOfIso::AIS_TOI_IsoV) << "\n";
     di << "IsoOnPlane mode is " << (TheAISContext()->IsoOnPlane() ? "ON" : "OFF") << "\n";
     di << "IsoOnTriangulation mode is " << (TheAISContext()->IsoOnTriangulation() ? "ON" : "OFF")
        << "\n";
@@ -770,8 +770,8 @@ static int visos(Draw_Interpretor& di, int argc, const char** argv)
       if (aLastInd == 0)
       {
         // If there are no shapes provided set the default numbers.
-        TheAISContext()->SetIsoNumber(aNbUIsos, AIS_TOI_IsoU);
-        TheAISContext()->SetIsoNumber(aNbVIsos, AIS_TOI_IsoV);
+        TheAISContext()->SetIsoNumber(aNbUIsos, AIS_TypeOfIso::AIS_TOI_IsoU);
+        TheAISContext()->SetIsoNumber(aNbVIsos, AIS_TypeOfIso::AIS_TOI_IsoV);
       }
     }
   }
@@ -5170,7 +5170,7 @@ static int VDisplay2(Draw_Interpretor& theDI, int theArgNb, const char** theArgV
       aSelMode = aShape->GlobalSelectionMode();
     }
 
-    if (aShape->Type() == AIS_KindOfInteractive_Datum)
+    if (aShape->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum)
     {
       aCtx->Display(aShape, false);
     }
@@ -5345,7 +5345,7 @@ static void objInfo(const NCollection_Map<occ::handle<AIS_InteractiveObject>>& t
   theDI << (TheAISContext()->IsDisplayed(theObj) ? "Displayed" : "Hidden   ")
         << (TheAISContext()->IsSelected(theObj) ? " Selected" : "         ")
         << (theDetected.Contains(theObj) ? " Detected" : "         ") << " Type: ";
-  if (theObj->Type() == AIS_KindOfInteractive_Datum)
+  if (theObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum)
   {
     // AIS_Datum
     if (theObj->Signature() == 3)
@@ -5378,11 +5378,11 @@ static void objInfo(const NCollection_Map<occ::handle<AIS_InteractiveObject>>& t
     }
   }
   // AIS_Shape
-  else if (theObj->Type() == AIS_KindOfInteractive_Shape && theObj->Signature() == 0)
+  else if (theObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Shape && theObj->Signature() == 0)
   {
     theDI << " AIS_Shape";
   }
-  else if (theObj->Type() == AIS_KindOfInteractive_Relation)
+  else if (theObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Relation)
   {
     // PrsDim_Dimension and PrsDim_Relation
     occ::handle<PrsDim_Relation> aRelation = occ::down_cast<PrsDim_Relation>(theObj);
@@ -5729,7 +5729,7 @@ bool ViewerTest::PickShapes(const TopAbs_ShapeEnum                          theS
   aCtx->DisplayedObjects(aDispObjects);
   if (theShapeType == TopAbs_SHAPE)
   {
-    aCtx->AddFilter(new AIS_TypeFilter(AIS_KindOfInteractive_Shape));
+    aCtx->AddFilter(new AIS_TypeFilter(AIS_KindOfInteractive::AIS_KindOfInteractive_Shape));
   }
   else
   {
@@ -5743,7 +5743,7 @@ bool ViewerTest::PickShapes(const TopAbs_ShapeEnum                          theS
   {
     if (occ::handle<AIS_Shape> aShapePrs = occ::down_cast<AIS_Shape>(anObjIter.Value()))
     {
-      aCtx->SetSelectionModeActive(aShapePrs, aSelMode, true, AIS_SelectionModesConcurrency_Single);
+      aCtx->SetSelectionModeActive(aShapePrs, aSelMode, true, AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single);
     }
   }
 
@@ -5801,7 +5801,7 @@ bool ViewerTest::PickShapes(const TopAbs_ShapeEnum                          theS
         aCtx->SetSelectionModeActive(aShapePrs,
                                      aSelMode,
                                      true,
-                                     AIS_SelectionModesConcurrency_Single);
+                                     AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single);
       }
     }
   }
@@ -5955,7 +5955,7 @@ static int VSelFilter(Draw_Interpretor&, int theArgc, const char** theArgv)
       occ::handle<SelectMgr_Filter> aFilter;
       if (aShapeType == TopAbs_SHAPE)
       {
-        aFilter = new AIS_TypeFilter(AIS_KindOfInteractive_Shape);
+        aFilter = new AIS_TypeFilter(AIS_KindOfInteractive::AIS_KindOfInteractive_Shape);
       }
       else
       {
@@ -5976,7 +5976,7 @@ static int VSelFilter(Draw_Interpretor&, int theArgc, const char** theArgv)
       occ::handle<SelectMgr_Filter> aFilter;
       if (aShapeType == TopAbs_SHAPE)
       {
-        aFilter = new AIS_TypeFilter(AIS_KindOfInteractive_Shape);
+        aFilter = new AIS_TypeFilter(AIS_KindOfInteractive::AIS_KindOfInteractive_Shape);
       }
       else
       {
@@ -6164,7 +6164,7 @@ static int VEraseType(Draw_Interpretor&, int argc, const char** argv)
   // en attendant l'amelioration ais pour les dimensions...
   //
   int dimension_status(-1);
-  if (TheType == AIS_KindOfInteractive_Relation)
+  if (TheType == AIS_KindOfInteractive::AIS_KindOfInteractive_Relation)
   {
     dimension_status = TheSign == 1 ? 1 : 0;
     TheSign          = -1;
@@ -6202,7 +6202,7 @@ static int VDisplayType(Draw_Interpretor&, int argc, const char** argv)
   // en attendant l'amelioration ais pour les dimensions...
   //
   int dimension_status(-1);
-  if (TheType == AIS_KindOfInteractive_Relation)
+  if (TheType == AIS_KindOfInteractive::AIS_KindOfInteractive_Relation)
   {
     dimension_status = TheSign == 1 ? 1 : 0;
     TheSign          = -1;

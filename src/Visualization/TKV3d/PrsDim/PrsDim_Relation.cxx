@@ -224,7 +224,7 @@ void PrsDim_Relation::SetColor(const Quantity_Color& aCol)
   myDrawer->TextAspect()->SetColor(aCol);
 
   double WW = HasWidth()            ? Width()
-              : myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TOA_Line)
+              : myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Line)
                                     : 1.;
   if (!myDrawer->HasOwnLineAspect())
   {
@@ -255,7 +255,7 @@ void PrsDim_Relation::UnsetColor()
   Quantity_Color                       CC = Quantity_NOC_YELLOW;
   if (myDrawer->HasLink())
   {
-    AIS_GraphicTool::GetLineColor(myDrawer->Link(), AIS_TOA_Line, CC);
+    AIS_GraphicTool::GetLineColor(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Line, CC);
     myDrawer->SetTextAspect(myDrawer->Link()->TextAspect());
   }
   LA->SetColor(CC);

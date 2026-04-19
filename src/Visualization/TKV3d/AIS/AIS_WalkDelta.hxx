@@ -17,7 +17,7 @@
 #include <Standard_Real.hxx>
 
 //! Walking translation components.
-enum AIS_WalkTranslation
+enum class AIS_WalkTranslation
 {
   AIS_WalkTranslation_Forward = 0, //!< translation delta, Forward walk
   AIS_WalkTranslation_Side,        //!< translation delta, Side walk
@@ -25,7 +25,7 @@ enum AIS_WalkTranslation
 };
 
 //! Walking rotation components.
-enum AIS_WalkRotation
+enum class AIS_WalkRotation
 {
   AIS_WalkRotation_Yaw = 0, //!< yaw   rotation angle
   AIS_WalkRotation_Pitch,   //!< pitch rotation angle
@@ -66,17 +66,26 @@ struct AIS_WalkDelta
   //! Return translation component.
   const AIS_WalkPart& operator[](AIS_WalkTranslation thePart) const
   {
-    return myTranslation[thePart];
+    return myTranslation[static_cast<int>(thePart)];
   }
 
   //! Return translation component.
-  AIS_WalkPart& operator[](AIS_WalkTranslation thePart) { return myTranslation[thePart]; }
+  AIS_WalkPart& operator[](AIS_WalkTranslation thePart)
+  {
+    return myTranslation[static_cast<int>(thePart)];
+  }
 
   //! Return rotation component.
-  const AIS_WalkPart& operator[](AIS_WalkRotation thePart) const { return myRotation[thePart]; }
+  const AIS_WalkPart& operator[](AIS_WalkRotation thePart) const
+  {
+    return myRotation[static_cast<int>(thePart)];
+  }
 
   //! Return rotation component.
-  AIS_WalkPart& operator[](AIS_WalkRotation thePart) { return myRotation[thePart]; }
+  AIS_WalkPart& operator[](AIS_WalkRotation thePart)
+  {
+    return myRotation[static_cast<int>(thePart)];
+  }
 
   //! Return jumping state.
   bool IsJumping() const { return myIsJumping; }
@@ -108,17 +117,17 @@ struct AIS_WalkDelta
   //! Return TRUE if translation delta is defined.
   bool ToMove() const
   {
-    return !myTranslation[AIS_WalkTranslation_Forward].IsEmpty()
-           || !myTranslation[AIS_WalkTranslation_Side].IsEmpty()
-           || !myTranslation[AIS_WalkTranslation_Up].IsEmpty();
+    return !(*this)[AIS_WalkTranslation::AIS_WalkTranslation_Forward].IsEmpty()
+           || !(*this)[AIS_WalkTranslation::AIS_WalkTranslation_Side].IsEmpty()
+           || !(*this)[AIS_WalkTranslation::AIS_WalkTranslation_Up].IsEmpty();
   }
 
   //! Return TRUE if rotation delta is defined.
   bool ToRotate() const
   {
-    return !myRotation[AIS_WalkRotation_Yaw].IsEmpty()
-           || !myRotation[AIS_WalkRotation_Pitch].IsEmpty()
-           || !myRotation[AIS_WalkRotation_Roll].IsEmpty();
+    return !(*this)[AIS_WalkRotation::AIS_WalkRotation_Yaw].IsEmpty()
+           || !(*this)[AIS_WalkRotation::AIS_WalkRotation_Pitch].IsEmpty()
+           || !(*this)[AIS_WalkRotation::AIS_WalkRotation_Roll].IsEmpty();
   }
 
 private:
