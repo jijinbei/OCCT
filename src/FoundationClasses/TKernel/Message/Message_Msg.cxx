@@ -145,8 +145,7 @@ Message_Msg& Message_Msg::Arg(const char* const theString)
     return *this;
 
   // print string according to format
-  std::vector<char> sStringBuffer(
-    std::max(static_cast<int>(strlen(theString) + 1), 1024));
+  std::vector<char> sStringBuffer(std::max(static_cast<int>(strlen(theString) + 1), 1024));
   Sprintf(sStringBuffer.data(), aFormat.ToCString(), theString);
   TCollection_ExtendedString aStr(sStringBuffer.data(), true);
 
