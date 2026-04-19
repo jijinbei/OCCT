@@ -18,7 +18,7 @@
 #define _Graphic3d_TypeOfBackfacingModel_HeaderFile
 
 //! Modes of display of back faces in the view.
-enum Graphic3d_TypeOfBackfacingModel
+enum class Graphic3d_TypeOfBackfacingModel
 {
   Graphic3d_TypeOfBackfacingModel_Auto, //!< automatic back face culling enabled for opaque groups
                                         //!< with closed flag

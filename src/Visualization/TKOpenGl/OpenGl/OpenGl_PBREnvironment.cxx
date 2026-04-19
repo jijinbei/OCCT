@@ -277,13 +277,13 @@ bool OpenGl_PBREnvironment::initTextures(const occ::handle<OpenGl_Context>& theC
   myIBLMaps[OpenGl_TypeOfIBLMap_DiffuseSH].Sampler()->Parameters()->SetTextureUnit(
     theCtx->PBRDiffIBLMapSHTexUnit());
   myIBLMaps[OpenGl_TypeOfIBLMap_Specular].Sampler()->Parameters()->SetFilter(
-    Graphic3d_TOTF_TRILINEAR);
+    Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_TRILINEAR);
   myIBLMaps[OpenGl_TypeOfIBLMap_DiffuseSH].Sampler()->Parameters()->SetFilter(
-    Graphic3d_TOTF_NEAREST);
+    Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST);
   myIBLMaps[OpenGl_TypeOfIBLMap_Specular].Sampler()->Parameters()->SetLevelsRange(
     mySpecMapLevelsNumber - 1);
   myIBLMaps[OpenGl_TypeOfIBLMap_DiffuseFallback].Sampler()->Parameters()->SetFilter(
-    Graphic3d_TOTF_NEAREST);
+    Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST);
 
   // NVIDIA's driver didn't work properly with 3 channel texture for diffuse SH coefficients so that
   // alpha channel has been added
@@ -291,7 +291,7 @@ bool OpenGl_PBREnvironment::initTextures(const occ::handle<OpenGl_Context>& theC
         theCtx,
         OpenGl_TextureFormat::FindFormat(theCtx, Image_Format_RGBAF, false),
         NCollection_Vec2<int>(9, 1),
-        Graphic3d_TypeOfTexture_2D))
+        Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D))
   {
     Message::SendFail() << "OpenGl_PBREnvironment, DiffuseSH texture creation failed";
     return false;
@@ -312,7 +312,7 @@ bool OpenGl_PBREnvironment::initTextures(const occ::handle<OpenGl_Context>& theC
         theCtx,
         OpenGl_TextureFormat::FindFormat(theCtx, Image_Format_RGBA, false),
         NCollection_Vec2<int>(10, 4),
-        Graphic3d_TypeOfTexture_2D))
+        Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D))
   {
     Message::SendFail() << "OpenGl_PBREnvironment, DiffuseFallback texture creation failed";
     return false;
@@ -451,7 +451,7 @@ bool OpenGl_PBREnvironment::processDiffIBLMap(const occ::handle<OpenGl_Context>&
           theCtx,
           OpenGl_TextureFormat::FindFormat(theCtx, Image_Format_RGBAF, false),
           NCollection_Vec2<int>(9, 1),
-          Graphic3d_TypeOfTexture_2D,
+          Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D,
           &anImageF))
     {
       Message::SendFail() << "OpenGl_PBREnvironment, DiffuseSH texture update failed";

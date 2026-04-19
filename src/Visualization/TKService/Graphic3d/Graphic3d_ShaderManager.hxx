@@ -26,7 +26,7 @@ class Graphic3d_LightSet;
 class Graphic3d_ShaderProgram;
 
 //! GLSL syntax extensions.
-enum Graphic3d_GlslExtension
+enum class Graphic3d_GlslExtension
 {
   Graphic3d_GlslExtension_GL_OES_standard_derivatives, //!< OpenGL ES 2.0 extension
                                                        //!< GL_OES_standard_derivatives
@@ -38,7 +38,8 @@ enum Graphic3d_GlslExtension
 
 enum
 {
-  Graphic3d_GlslExtension_NB = Graphic3d_GlslExtension_GL_EXT_gpu_shader4 + 1
+  Graphic3d_GlslExtension_NB =
+    static_cast<int>(Graphic3d_GlslExtension::Graphic3d_GlslExtension_GL_EXT_gpu_shader4) + 1
 };
 
 //! This class is responsible for generation of shader programs.
@@ -98,12 +99,15 @@ public:
   void SetEmulateDepthClamp(bool theToEmulate) { myToEmulateDepthClamp = theToEmulate; }
 
   //! Return TRUE if specified extension is available.
-  bool HasGlslExtension(Graphic3d_GlslExtension theExt) const { return myGlslExtensions[theExt]; }
+  bool HasGlslExtension(Graphic3d_GlslExtension theExt) const
+  {
+    return myGlslExtensions[static_cast<int>(theExt)];
+  }
 
   //! Set if specified extension is available or not.
   void EnableGlslExtension(Graphic3d_GlslExtension theExt, bool theToEnable = true)
   {
-    myGlslExtensions[theExt] = theToEnable;
+    myGlslExtensions[static_cast<int>(theExt)] = theToEnable;
   }
 
 protected:

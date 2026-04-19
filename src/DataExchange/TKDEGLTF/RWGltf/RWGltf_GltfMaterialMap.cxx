@@ -453,10 +453,10 @@ void RWGltf_GltfMaterialMap::DefineMaterial(const XCAFPrs_Style& theStyle,
     // Solids with singleSided material and Shells with doubleSided material,
     // as both may share the same material having "auto" flag
     if (theStyle.Material().IsNull()
-        || theStyle.Material()->FaceCulling() == Graphic3d_TypeOfBackfacingModel_Auto
-        || theStyle.Material()->FaceCulling() == Graphic3d_TypeOfBackfacingModel_DoubleSided
+        || theStyle.Material()->FaceCulling() == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
+        || theStyle.Material()->FaceCulling() == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided
         || theStyle.Material()->FaceCulling()
-             == Graphic3d_TypeOfBackfacingModel_FrontCulled) // front culling flag cannot be
+             == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled) // front culling flag cannot be
                                                              // exported to glTF
     {
       myWriter->Key("doubleSided");
@@ -465,10 +465,10 @@ void RWGltf_GltfMaterialMap::DefineMaterial(const XCAFPrs_Style& theStyle,
 
     const Graphic3d_AlphaMode anAlphaMode = !theStyle.Material().IsNull()
                                               ? theStyle.Material()->AlphaMode()
-                                              : Graphic3d_AlphaMode_BlendAuto;
+                                              : Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
     switch (anAlphaMode)
     {
-      case Graphic3d_AlphaMode_BlendAuto: {
+      case Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto: {
         if (aPbrMat.BaseColor.Alpha() < 1.0f)
         {
           myWriter->Key("alphaMode");
@@ -476,16 +476,16 @@ void RWGltf_GltfMaterialMap::DefineMaterial(const XCAFPrs_Style& theStyle,
         }
         break;
       }
-      case Graphic3d_AlphaMode_Opaque: {
+      case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque: {
         break;
       }
-      case Graphic3d_AlphaMode_Mask: {
+      case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask: {
         myWriter->Key("alphaMode");
         myWriter->String("MASK");
         break;
       }
-      case Graphic3d_AlphaMode_Blend:
-      case Graphic3d_AlphaMode_MaskBlend: {
+      case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend:
+      case Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend: {
         myWriter->Key("alphaMode");
         myWriter->String("BLEND");
         break;

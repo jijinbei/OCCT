@@ -18,7 +18,7 @@
 #define _Graphic3d_TypeOfMaterial_HeaderFile
 
 //! Types of materials specifies if a material can change color.
-enum Graphic3d_TypeOfMaterial
+enum class Graphic3d_TypeOfMaterial
 {
   Graphic3d_MATERIAL_ASPECT, //!< aspect   material definition with configurable color (like
                              //!< plastic)

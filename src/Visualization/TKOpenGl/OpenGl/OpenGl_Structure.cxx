@@ -89,7 +89,7 @@ void OpenGl_Structure::renderBoundingBox(const occ::handle<OpenGl_Workspace>& th
     aCtx->ShaderManager()->BindLineProgram(occ::handle<OpenGl_TextureSet>(),
                                            Aspect_TypeOfLine::Aspect_TOL_SOLID,
                                            Graphic3d_TypeOfShadingModel_Unlit,
-                                           Graphic3d_AlphaMode_Opaque,
+                                           Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque,
                                            false,
                                            occ::handle<OpenGl_ShaderProgram>());
     aCtx->SetColor4fv(theWorkspace->InteriorColor());
@@ -523,7 +523,7 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
 
           // check for clipping
           const NCollection_Vec4<double> aCheckPnt(anAnchor.X(), anAnchor.Y(), anAnchor.Z(), 1.0);
-          if (aPlane->ProbePoint(aCheckPnt) == Graphic3d_ClipState_Out)
+          if (aPlane->ProbePoint(aCheckPnt) == Graphic3d_ClipState::Graphic3d_ClipState_Out)
           {
             isClipped = true;
             break;
@@ -548,12 +548,12 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
         }
 
         const Graphic3d_ClipState aBoxState = aPlane->ProbeBox(aBBox);
-        if (aBoxState == Graphic3d_ClipState_In)
+        if (aBoxState == Graphic3d_ClipState::Graphic3d_ClipState_In)
         {
           aCtx->ChangeClipping().SetEnabled(aPlaneIt, false);
           hasDisabled = true;
         }
-        else if (aBoxState == Graphic3d_ClipState_Out && myBndBoxClipCheck)
+        else if (aBoxState == Graphic3d_ClipState::Graphic3d_ClipState_Out && myBndBoxClipCheck)
         {
           isClipped = true;
           break;

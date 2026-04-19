@@ -183,7 +183,7 @@ OpenGl_View::OpenGl_View(const occ::handle<Graphic3d_StructureManager>& theMgr,
   myDepthPeelingFbos         = new OpenGl_DepthPeeling();
   myShadowMaps               = new OpenGl_ShadowMapArray();
 
-  myXrSceneFbo->ColorTexture()->Sampler()->Parameters()->SetFilter(Graphic3d_TOTF_BILINEAR);
+  myXrSceneFbo->ColorTexture()->Sampler()->Parameters()->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR);
 }
 
 //=================================================================================================
@@ -493,7 +493,7 @@ void OpenGl_View::GraduatedTrihedronMinMaxValues(const NCollection_Vec3<float> t
 bool OpenGl_View::BufferDump(Image_PixMap& theImage, const Graphic3d_BufferType& theBufferType)
 {
   const occ::handle<OpenGl_Context>& aCtx = myWorkspace->GetGlContext();
-  if (theBufferType != Graphic3d_BT_RGB_RayTraceHdrLeft)
+  if (theBufferType != Graphic3d_BufferType::Graphic3d_BT_RGB_RayTraceHdrLeft)
   {
     return myWorkspace->BufferDump(myFBO, theImage, theBufferType);
   }
@@ -709,7 +709,7 @@ void OpenGl_View::SetBackgroundImage(const occ::handle<Graphic3d_TextureMap>& th
   occ::handle<Graphic3d_AspectFillArea3d> anAspect    = new Graphic3d_AspectFillArea3d();
   occ::handle<Graphic3d_TextureSet>       aTextureSet = new Graphic3d_TextureSet(aNewMap);
   anAspect->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
-  anAspect->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_DoubleSided);
+  anAspect->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
   anAspect->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
   anAspect->SetTextureSet(aTextureSet);
   anAspect->SetTextureMapOn(true);
@@ -1196,7 +1196,7 @@ bool OpenGl_View::prepareFrameBuffers(Graphic3d_Camera::Projection& theProj)
   // main scene content and blit it into non-MSAA immediate FBO.
   const bool hasTextureMsaa = aCtx->HasTextureMultisampling();
 
-  bool toUseOit = myRenderParams.TransparencyMethod != Graphic3d_RTM_BLEND_UNORDERED
+  bool toUseOit = myRenderParams.TransparencyMethod != Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED
                   && !myIsSubviewComposer && checkOitCompatibility(aCtx, aNbSamples > 0);
 
   const bool toInitImmediateFbo =
@@ -1469,7 +1469,7 @@ bool OpenGl_View::prepareFrameBuffers(Graphic3d_Camera::Projection& theProj)
           }
 
           occ::handle<Graphic3d_TextureParams> aParams = new Graphic3d_TextureParams();
-          aParams->SetFilter(Graphic3d_TOTF_BILINEAR);
+          aParams->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR);
           aParams->SetRepeat(false);
           aParams->SetTextureUnit(aCtx->PBREnvLUTTexUnit());
           anEnvLUT = new OpenGl_Texture(THE_SHARED_ENV_LUT_KEY, aParams);
@@ -1477,7 +1477,7 @@ bool OpenGl_View::prepareFrameBuffers(Graphic3d_Camera::Projection& theProj)
               || !anEnvLUT->Init(aCtx,
                                  aTexFormat,
                                  NCollection_Vec2<int>((int)Textures_EnvLUTSize),
-                                 Graphic3d_TypeOfTexture_2D,
+                                 Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D,
                                  aPixMap.get()))
           {
             aCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
@@ -1500,7 +1500,7 @@ bool OpenGl_View::prepareFrameBuffers(Graphic3d_Camera::Projection& theProj)
   }
 
   // create color and coverage accumulation buffers required for OIT algorithm
-  if (toUseOit && myRenderParams.TransparencyMethod == Graphic3d_RTM_DEPTH_PEELING_OIT)
+  if (toUseOit && myRenderParams.TransparencyMethod == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT)
   {
     if (myDepthPeelingFbos->BlendBackFboOit()->GetSize() != aRendSize)
     {
@@ -1541,7 +1541,7 @@ bool OpenGl_View::prepareFrameBuffers(Graphic3d_Camera::Projection& theProj)
     myDepthPeelingFbos->Release(aCtx.operator->());
   }
 
-  if (toUseOit && myRenderParams.TransparencyMethod == Graphic3d_RTM_BLEND_OIT)
+  if (toUseOit && myRenderParams.TransparencyMethod == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT)
   {
     int anFboIt = 0;
     for (; anFboIt < 2; ++anFboIt)
@@ -1646,7 +1646,7 @@ bool OpenGl_View::prepareFrameBuffers(Graphic3d_Camera::Projection& theProj)
   }
   bool toUseShadowMap = myRenderParams.IsShadowEnabled && myRenderParams.ShadowMapResolution > 0
                         && !myLights.IsNull() && myLights->NbCastShadows() > 0
-                        && myRenderParams.Method != Graphic3d_RM_RAYTRACING;
+                        && myRenderParams.Method != Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING;
   if (toUseShadowMap)
   {
     if (myShadowMaps->Size() != myLights->NbCastShadows())
@@ -1696,7 +1696,7 @@ void OpenGl_View::Redraw()
 {
   const bool wasDisabledMSAA = myToDisableMSAA;
   const bool hadFboBlit      = myHasFboBlit;
-  if (myRenderParams.Method == Graphic3d_RM_RAYTRACING && !myCaps->vboDisable
+  if (myRenderParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING && !myCaps->vboDisable
       && !myCaps->keepArrayData)
   {
     // caps are shared across all views, thus we need to invalidate all of them
@@ -1959,7 +1959,7 @@ void OpenGl_View::Redraw()
     }
   }
 
-  if (myRenderParams.Method == Graphic3d_RM_RAYTRACING
+  if (myRenderParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING
       && myRenderParams.IsGlobalIlluminationEnabled)
   {
     myAccumFrames++;
@@ -2423,7 +2423,7 @@ void OpenGl_View::renderShadowMap(const occ::handle<OpenGl_ShadowMap>& theShadow
 
   // Image_AlienPixMap anImage; anImage.InitZero (Image_Format_Gray, aShadowBuffer->GetVPSizeX(),
   // aShadowBuffer->GetVPSizeY()); OpenGl_FrameBuffer::BufferDump (aCtx, aShadowBuffer, anImage,
-  // Graphic3d_BT_Depth); anImage.Save (TCollection_AsciiString ("shadow") +
+  // Graphic3d_BufferType::Graphic3d_BT_Depth); anImage.Save (TCollection_AsciiString ("shadow") +
   // theShadowMap->Texture()->Sampler()->Parameters()->TextureUnit() + ".png");
 
   bindDefaultFbo();
@@ -2637,7 +2637,7 @@ void OpenGl_View::renderStructs(Graphic3d_Camera::Projection theProjection,
   }
 
   occ::handle<OpenGl_Context> aCtx = myWorkspace->GetGlContext();
-  bool toRenderGL = theToDrawImmediate || myRenderParams.Method != Graphic3d_RM_RAYTRACING
+  bool toRenderGL = theToDrawImmediate || myRenderParams.Method != Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING
                     || myRaytraceInitStatus == OpenGl_RT_FAIL || aCtx->IsFeedback();
 
   if (!toRenderGL)
@@ -3011,9 +3011,9 @@ bool OpenGl_View::blitBuffers(OpenGl_FrameBuffer* theReadFbo,
     aCtx->BindTextures(occ::handle<OpenGl_TextureSet>(), occ::handle<OpenGl_ShaderProgram>());
 
     const Graphic3d_TypeOfTextureFilter aFilter =
-      (aDrawSizeX == aReadSizeX && aDrawSizeY == aReadSizeY) ? Graphic3d_TOTF_NEAREST
-                                                             : Graphic3d_TOTF_BILINEAR;
-    const GLint aFilterGl = aFilter == Graphic3d_TOTF_NEAREST ? GL_NEAREST : GL_LINEAR;
+      (aDrawSizeX == aReadSizeX && aDrawSizeY == aReadSizeY) ? Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST
+                                                             : Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR;
+    const GLint aFilterGl = aFilter == Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST ? GL_NEAREST : GL_LINEAR;
 
     OpenGl_VertexBuffer*                     aVerts   = initBlitQuad(theToFlip);
     const occ::handle<OpenGl_ShaderManager>& aManager = aCtx->ShaderManager();
@@ -3258,10 +3258,10 @@ void OpenGl_View::drawStereoPair(OpenGl_FrameBuffer* theDrawFbo)
     OpenGl_FrameBuffer* anEyeFbo = aPair[anEyeIter];
     anEyeFbo->ColorTexture()->Bind(aCtx,
                                    (Graphic3d_TextureUnit)(Graphic3d_TextureUnit_0 + anEyeIter));
-    if (anEyeFbo->ColorTexture()->Sampler()->Parameters()->Filter() != Graphic3d_TOTF_BILINEAR)
+    if (anEyeFbo->ColorTexture()->Sampler()->Parameters()->Filter() != Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR)
     {
       // force filtering
-      anEyeFbo->ColorTexture()->Sampler()->Parameters()->SetFilter(Graphic3d_TOTF_BILINEAR);
+      anEyeFbo->ColorTexture()->Sampler()->Parameters()->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR);
       aCtx->core20fwd->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
       aCtx->core20fwd->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     }
@@ -3431,13 +3431,13 @@ void OpenGl_View::updateSkydomeBg(const occ::handle<OpenGl_Context>& theCtx)
   occ::handle<OpenGl_VertexBuffer> aVBO        = new OpenGl_VertexBuffer();
   const float                      aTriangle[] = {-1.0, -1.0, 3.0, -1.0, -1.0, 3.0};
   aVBO->Init(theCtx, 2, 3, aTriangle);
-  aVBO->BindAttribute(theCtx, Graphic3d_TypeOfAttribute::Graphic3d_TOA_POS);
+  aVBO->BindAttribute(theCtx, Graphic3d_TOA_POS);
   aVBO->Bind(theCtx);
 
   if (mySkydomeTexture.IsNull())
   {
     mySkydomeTexture = new OpenGl_Texture();
-    mySkydomeTexture->Sampler()->Parameters()->SetFilter(Graphic3d_TOTF_BILINEAR);
+    mySkydomeTexture->Sampler()->Parameters()->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR);
   }
   if (mySkydomeTexture->SizeX() != mySkydomeAspect.Size())
   {
@@ -3450,7 +3450,7 @@ void OpenGl_View::updateSkydomeBg(const occ::handle<OpenGl_Context>& theCtx)
   if (myCubeMapParams->TextureSet(theCtx).IsNull())
   {
     myCubeMapParams->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
-    myCubeMapParams->Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_DoubleSided);
+    myCubeMapParams->Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
     myCubeMapParams->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
     myCubeMapParams->Aspect()->SetShaderProgram(theCtx->ShaderManager()->GetBgCubeMapProgram());
     occ::handle<Graphic3d_TextureSet> aTextureSet = new Graphic3d_TextureSet(1);

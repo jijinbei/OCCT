@@ -24,7 +24,7 @@ namespace
 inline Graphic3d_MaterialAspect initDefaultMaterial()
 {
   Graphic3d_MaterialAspect aMat;
-  aMat.SetMaterialType(Graphic3d_MATERIAL_ASPECT);
+  aMat.SetMaterialType(Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT);
   aMat.SetAmbientColor(Quantity_Color(NCollection_Vec3<float>(0.2f)));
   aMat.SetDiffuseColor(Quantity_Color(NCollection_Vec3<float>(0.8f)));
   aMat.SetEmissiveColor(Quantity_Color(NCollection_Vec3<float>(0.1f)));

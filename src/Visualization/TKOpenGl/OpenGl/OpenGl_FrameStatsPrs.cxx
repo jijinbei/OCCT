@@ -86,25 +86,25 @@ void OpenGl_FrameStatsPrs::Update(const occ::handle<OpenGl_Workspace>& theWorksp
 
   // adjust text alignment depending on corner
   Graphic3d_Text aParams((float)aRendParams.StatsTextHeight);
-  aParams.SetHorizontalAlignment(Graphic3d_HTA_CENTER);
-  aParams.SetVerticalAlignment(Graphic3d_VTA_CENTER);
+  aParams.SetHorizontalAlignment(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER);
+  aParams.SetVerticalAlignment(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER);
   if (!myCountersTrsfPers.IsNull() && (myCountersTrsfPers->Corner2d() & Aspect_TOTP_LEFT) != 0)
   {
-    aParams.SetHorizontalAlignment(Graphic3d_HTA_LEFT);
+    aParams.SetHorizontalAlignment(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT);
   }
   else if (!myCountersTrsfPers.IsNull()
            && (myCountersTrsfPers->Corner2d() & Aspect_TOTP_RIGHT) != 0)
   {
-    aParams.SetHorizontalAlignment(Graphic3d_HTA_RIGHT);
+    aParams.SetHorizontalAlignment(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT);
   }
   if (!myCountersTrsfPers.IsNull() && (myCountersTrsfPers->Corner2d() & Aspect_TOTP_TOP) != 0)
   {
-    aParams.SetVerticalAlignment(Graphic3d_VTA_TOP);
+    aParams.SetVerticalAlignment(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOP);
   }
   else if (!myCountersTrsfPers.IsNull()
            && (myCountersTrsfPers->Corner2d() & Aspect_TOTP_BOTTOM) != 0)
   {
-    aParams.SetVerticalAlignment(Graphic3d_VTA_BOTTOM);
+    aParams.SetVerticalAlignment(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM);
   }
   if (aParams.Height() != myCountersText.Text()->Height()
       || aParams.HorizontalAlignment() != myCountersText.Text()->HorizontalAlignment()
@@ -154,7 +154,7 @@ void OpenGl_FrameStatsPrs::updateChart(const occ::handle<OpenGl_Workspace>& theW
     {
       const Graphic3d_FrameStatsData& aFrame = aStats->DataFrames().Value(aFrameIter);
       aMaxDuration =
-        std::max(aMaxDuration, aFrame.TimerValue(Graphic3d_FrameStatsTimer_ElapsedFrame));
+        std::max(aMaxDuration, aFrame.TimerValue(Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_ElapsedFrame));
     }
     aMaxDuration = std::ceil(aMaxDuration * 1000.0 * 0.1) * 0.001 * 10.0; // round number
                                                                           // clang-format off
@@ -164,10 +164,10 @@ void OpenGl_FrameStatsPrs::updateChart(const occ::handle<OpenGl_Workspace>& theW
 
   const int                       aNbTimers  = 4;
   const Graphic3d_FrameStatsTimer aTimers[4] = {
-    Graphic3d_FrameStatsTimer_CpuDynamics,
-    Graphic3d_FrameStatsTimer_CpuPicking,
-    Graphic3d_FrameStatsTimer_CpuCulling,
-    Graphic3d_FrameStatsTimer_ElapsedFrame,
+    Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_CpuDynamics,
+    Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_CpuPicking,
+    Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_CpuCulling,
+    Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_ElapsedFrame,
   };
   const NCollection_Vec4<uint8_t> aColors[4] = {
     NCollection_Vec4<uint8_t>(255, 0, 0, 127),
@@ -244,7 +244,7 @@ void OpenGl_FrameStatsPrs::updateChart(const occ::handle<OpenGl_Workspace>& theW
     double                          aCurrY       = 0.0;
     for (int aTimerIter = 0; aTimerIter < aNbTimers; ++aTimerIter)
     {
-      if (aTimers[aTimerIter] == Graphic3d_FrameStatsTimer_ElapsedFrame)
+      if (aTimers[aTimerIter] == Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_ElapsedFrame)
       {
         aTimeElapsed = aFrame.TimerValue(aTimers[aTimerIter]);
       }
@@ -277,7 +277,7 @@ void OpenGl_FrameStatsPrs::updateChart(const occ::handle<OpenGl_Workspace>& theW
       }
       aVertLast += 4;
 
-      if (aTimers[aTimerIter] == Graphic3d_FrameStatsTimer_ElapsedFrame)
+      if (aTimers[aTimerIter] == Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_ElapsedFrame)
       {
         aTimeElapsed = 0.0;
         aCurrY       = 0.0;
@@ -335,14 +335,14 @@ void OpenGl_FrameStatsPrs::updateChart(const occ::handle<OpenGl_Workspace>& theW
     Graphic3d_Text aParams((float)aRendParams.StatsTextHeight);
     aParams.SetHorizontalAlignment((!myChartTrsfPers.IsNull() && myChartTrsfPers->IsTrihedronOr2d()
                                     && (myChartTrsfPers->Corner2d() & Aspect_TOTP_RIGHT) != 0)
-                                     ? Graphic3d_HTA_RIGHT
-                                     : Graphic3d_HTA_LEFT);
-    aParams.SetVerticalAlignment(Graphic3d_VTA_CENTER);
+                                     ? Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT
+                                     : Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT);
+    aParams.SetVerticalAlignment(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER);
     TCollection_AsciiString aLabels[3] = {TCollection_AsciiString() + 0 + " ms",
                                           formatTimeMs(aMaxDuration * 0.5),
                                           formatTimeMs(aMaxDuration)};
 
-    const float aLabX = aParams.HorizontalAlignment() == Graphic3d_HTA_RIGHT
+    const float aLabX = aParams.HorizontalAlignment() == Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT
                           ? float(anOffset.x())
                           : float(anOffset.x() + aCharSize.x());
 
@@ -421,7 +421,7 @@ void OpenGl_FrameStatsPrs::Render(const occ::handle<OpenGl_Workspace>& theWorksp
 
     aCtx->ShaderManager()->BindFaceProgram(occ::handle<OpenGl_TextureSet>(),
                                            Graphic3d_TypeOfShadingModel_Unlit,
-                                           Graphic3d_AlphaMode_Blend,
+                                           Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend,
                                            true,
                                            false,
                                            occ::handle<OpenGl_ShaderProgram>());

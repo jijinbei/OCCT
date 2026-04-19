@@ -75,7 +75,7 @@ void AIS_TexturedShape::SetTextureFileName(const TCollection_AsciiString& theTex
   else
   {
     myTextureFile   = theTextureFileName;
-    myPredefTexture = Graphic3d_NOT_2D_UNKNOWN;
+    myPredefTexture = Graphic3d_NameOfTexture2D::Graphic3d_NOT_2D_UNKNOWN;
   }
 }
 
@@ -84,7 +84,7 @@ void AIS_TexturedShape::SetTextureFileName(const TCollection_AsciiString& theTex
 void AIS_TexturedShape::SetTexturePixMap(const occ::handle<Image_PixMap>& theTexturePixMap)
 {
   myTextureFile   = "";
-  myPredefTexture = Graphic3d_NOT_2D_UNKNOWN;
+  myPredefTexture = Graphic3d_NameOfTexture2D::Graphic3d_NOT_2D_UNKNOWN;
   myTexturePixMap = theTexturePixMap;
 }
 
@@ -238,7 +238,7 @@ void AIS_TexturedShape::updateAttributes(const occ::handle<Prs3d_Presentation>& 
       myTexture    = new Graphic3d_Texture2D(myTexturePixMap);
       aTextureDesc = " (custom image)";
     }
-    else if (myPredefTexture != Graphic3d_NOT_2D_UNKNOWN)
+    else if (myPredefTexture != Graphic3d_NameOfTexture2D::Graphic3d_NOT_2D_UNKNOWN)
     {
       myTexture    = new Graphic3d_Texture2D(myPredefTexture);
       aTextureDesc = TCollection_AsciiString(" (predefined texture ") + myTexture->GetId() + ")";
@@ -314,7 +314,7 @@ void AIS_TexturedShape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     // TopAbs_WIRE -> 7, TopAbs_EDGE -> 8, TopAbs_VERTEX -> 9 (Graphic3d_DisplayPriority_Highlight)
     const int aPrior =
       (int)Graphic3d_DisplayPriority_Above1 + (int)myshape.ShapeType() - TopAbs_WIRE;
-    thePrs->SetVisual(Graphic3d_TOS_ALL);
+    thePrs->SetVisual(Graphic3d_TypeOfStructure::Graphic3d_TOS_ALL);
     thePrs->SetDisplayPriority((Graphic3d_DisplayPriority)aPrior);
   }
 

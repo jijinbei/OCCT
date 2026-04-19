@@ -19,8 +19,8 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Text, Standard_Transient)
 
 Graphic3d_Text::Graphic3d_Text(const float theHeight)
     : myHeight(theHeight),
-      myHAlign(Graphic3d_HTA_LEFT),
-      myVAlign(Graphic3d_VTA_BOTTOM),
+      myHAlign(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT),
+      myVAlign(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM),
       myHasPlane(false),
       myHasOwnAnchor(true)
 {

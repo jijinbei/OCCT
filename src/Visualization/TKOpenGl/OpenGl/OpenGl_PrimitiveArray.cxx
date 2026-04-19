@@ -549,7 +549,7 @@ void OpenGl_PrimitiveArray::drawEdges(const occ::handle<OpenGl_Workspace>& theWo
     aGlContext->ShaderManager()->BindLineProgram(occ::handle<OpenGl_TextureSet>(),
                                                  anAspect->Aspect()->EdgeLineType(),
                                                  Graphic3d_TypeOfShadingModel_Unlit,
-                                                 Graphic3d_AlphaMode_Opaque,
+                                                 Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque,
                                                  false,
                                                  anAspect->ShaderProgramRes(aGlContext));
   }
@@ -796,18 +796,18 @@ size_t OpenGl_PrimitiveArray::EstimatedDataSize() const
 void OpenGl_PrimitiveArray::UpdateDrawStats(Graphic3d_FrameStatsDataTmp& theStats,
                                             bool                         theIsDetailed) const
 {
-  ++theStats[Graphic3d_FrameStatsCounter_NbElemsNotCulled];
+  ++theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbElemsNotCulled];
   if (myIsFillType)
   {
-    ++theStats[Graphic3d_FrameStatsCounter_NbElemsFillNotCulled];
+    ++theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbElemsFillNotCulled];
   }
   else if (myDrawMode == GL_POINTS)
   {
-    ++theStats[Graphic3d_FrameStatsCounter_NbElemsPointNotCulled];
+    ++theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbElemsPointNotCulled];
   }
   else
   {
-    ++theStats[Graphic3d_FrameStatsCounter_NbElemsLineNotCulled];
+    ++theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbElemsLineNotCulled];
   }
 
   if (!theIsDetailed || myVboAttribs.IsNull() || !myVboAttribs->IsValid())
@@ -821,48 +821,48 @@ void OpenGl_PrimitiveArray::UpdateDrawStats(Graphic3d_FrameStatsDataTmp& theStat
   switch (myDrawMode)
   {
     case GL_POINTS: {
-      theStats[Graphic3d_FrameStatsCounter_NbPointsNotCulled] += aNbIndices;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbPointsNotCulled] += aNbIndices;
       break;
     }
     case GL_LINES: {
-      theStats[Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices / 2;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices / 2;
       break;
     }
     case GL_LINE_STRIP: {
-      theStats[Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices - aNbBounds;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices - aNbBounds;
       break;
     }
     case GL_LINES_ADJACENCY: {
-      theStats[Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices / 4;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices / 4;
       break;
     }
     case GL_LINE_STRIP_ADJACENCY: {
-      theStats[Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices - 4 * aNbBounds;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices - 4 * aNbBounds;
       break;
     }
     case GL_TRIANGLES: {
-      theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 3;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 3;
       break;
     }
     case GL_TRIANGLE_STRIP:
     case GL_TRIANGLE_FAN: {
-      theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices - 2 * aNbBounds;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices - 2 * aNbBounds;
       break;
     }
     case GL_TRIANGLES_ADJACENCY: {
-      theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 6;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 6;
       break;
     }
     case GL_TRIANGLE_STRIP_ADJACENCY: {
-      theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices - 4 * aNbBounds;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices - 4 * aNbBounds;
       break;
     }
     case GL_QUADS: {
-      theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 2;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 2;
       break;
     }
     case GL_QUAD_STRIP: {
-      theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] +=
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] +=
         (aNbIndices / 2 - aNbBounds) * 2;
       break;
     }
@@ -967,7 +967,7 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
                                                           hasVertNorm);
         aCtx->ShaderManager()->BindMarkerProgram(aTextureSet,
                                                  aShadingModel,
-                                                 Graphic3d_AlphaMode_Opaque,
+                                                 Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque,
                                                  hasVertColor,
                                                  anAspectFace->ShaderProgramRes(aCtx));
         break;
@@ -979,7 +979,7 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
         aCtx->ShaderManager()->BindLineProgram(occ::handle<OpenGl_TextureSet>(),
                                                anAspectFace->Aspect()->LineType(),
                                                aShadingModel,
-                                               Graphic3d_AlphaMode_Opaque,
+                                               Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque,
                                                hasVertColor,
                                                anAspectFace->ShaderProgramRes(aCtx));
         break;
@@ -990,8 +990,8 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
         aCtx->ShaderManager()->BindFaceProgram(
           aTextureSet,
           aShadingModel,
-          aCtx->ShaderManager()->MaterialState().HasAlphaCutoff() ? Graphic3d_AlphaMode_Mask
-                                                                  : Graphic3d_AlphaMode_Opaque,
+          aCtx->ShaderManager()->MaterialState().HasAlphaCutoff() ? Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask
+                                                                  : Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque,
           toDrawInteriorEdges == 1 ? anAspectFace->Aspect()->InteriorStyle() : Aspect_InteriorStyle::Aspect_IS_SOLID,
           hasVertColor,
           toEnableEnvMap,
@@ -1021,7 +1021,7 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
     }
     aCtx->SetSampleAlphaToCoverage(aCtx->ShaderManager()->MaterialState().HasAlphaCutoff());
 
-    const bool isForcedBlend = anAspectFace->Aspect()->AlphaMode() == Graphic3d_AlphaMode_MaskBlend;
+    const bool isForcedBlend = anAspectFace->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend;
     if (isForcedBlend)
     {
       aCtx->core11fwd->glEnable(GL_BLEND);
@@ -1075,9 +1075,9 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
                                    anOrthoScale);
       aCtx->SetColor4fv(anAspectFace->Aspect()->EdgeColorRGBA());
 
-      aCtx->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_FrontCulled);
+      aCtx->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled);
       drawArray(theWorkspace, nullptr, false);
-      aCtx->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_BackCulled);
+      aCtx->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
     }
 
     if (isForcedBlend)
@@ -1114,61 +1114,61 @@ void OpenGl_PrimitiveArray::setDrawMode(const Graphic3d_TypeOfPrimitiveArray the
 
   switch (theType)
   {
-    case Graphic3d_TOPA_POINTS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS:
       myDrawMode   = GL_POINTS;
       myIsFillType = false;
       break;
-    case Graphic3d_TOPA_SEGMENTS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS:
       myDrawMode   = GL_LINES;
       myIsFillType = false;
       break;
-    case Graphic3d_TOPA_POLYLINES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES:
       myDrawMode   = GL_LINE_STRIP;
       myIsFillType = false;
       break;
-    case Graphic3d_TOPA_TRIANGLES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES:
       myDrawMode   = GL_TRIANGLES;
       myIsFillType = true;
       break;
-    case Graphic3d_TOPA_TRIANGLESTRIPS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLESTRIPS:
       myDrawMode   = GL_TRIANGLE_STRIP;
       myIsFillType = true;
       break;
-    case Graphic3d_TOPA_TRIANGLEFANS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLEFANS:
       myDrawMode   = GL_TRIANGLE_FAN;
       myIsFillType = true;
       break;
     //
-    case Graphic3d_TOPA_LINES_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_LINES_ADJACENCY:
       myDrawMode   = GL_LINES_ADJACENCY;
       myIsFillType = false;
       break;
-    case Graphic3d_TOPA_LINE_STRIP_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_LINE_STRIP_ADJACENCY:
       myDrawMode   = GL_LINE_STRIP_ADJACENCY;
       myIsFillType = false;
       break;
-    case Graphic3d_TOPA_TRIANGLES_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES_ADJACENCY:
       myDrawMode   = GL_TRIANGLES_ADJACENCY;
       myIsFillType = true;
       break;
-    case Graphic3d_TOPA_TRIANGLE_STRIP_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLE_STRIP_ADJACENCY:
       myDrawMode   = GL_TRIANGLE_STRIP_ADJACENCY;
       myIsFillType = true;
       break;
     //
-    case Graphic3d_TOPA_QUADRANGLES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES:
       myDrawMode   = GL_QUADS;
       myIsFillType = true;
       break;
-    case Graphic3d_TOPA_QUADRANGLESTRIPS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLESTRIPS:
       myDrawMode   = GL_QUAD_STRIP;
       myIsFillType = true;
       break;
-    case Graphic3d_TOPA_POLYGONS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYGONS:
       myDrawMode   = GL_POLYGON;
       myIsFillType = true;
       break;
-    case Graphic3d_TOPA_UNDEFINED:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_UNDEFINED:
       myDrawMode   = DRAW_MODE_NONE;
       myIsFillType = false;
       break;

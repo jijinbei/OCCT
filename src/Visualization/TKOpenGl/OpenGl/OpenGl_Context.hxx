@@ -819,14 +819,14 @@ public: //! @name methods to alter or retrieve current state
   //! Return back face culling state.
   bool ToCullBackFaces() const
   {
-    return myFaceCulling == Graphic3d_TypeOfBackfacingModel_BackCulled;
+    return myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
   }
 
   //! Enable or disable back face culling (glCullFace() + glEnable(GL_CULL_FACE)).
   void SetCullBackFaces(bool theToEnable)
   {
-    SetFaceCulling(theToEnable ? Graphic3d_TypeOfBackfacingModel_BackCulled
-                               : Graphic3d_TypeOfBackfacingModel_DoubleSided);
+    SetFaceCulling(theToEnable ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled
+                               : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
   }
 
   //! Fetch OpenGl context state. This class tracks value of several OpenGl

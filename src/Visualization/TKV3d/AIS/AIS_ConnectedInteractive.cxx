@@ -93,7 +93,7 @@ void AIS_ConnectedInteractive::Disconnect()
     const occ::handle<PrsMgr_Presentation>& aPrs = aPrsIter.Value();
     if (!aPrs.IsNull())
     {
-      aPrs->DisconnectAll(Graphic3d_TOC_DESCENDANT);
+      aPrs->DisconnectAll(Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT);
     }
   }
 }
@@ -107,7 +107,7 @@ void AIS_ConnectedInteractive::Compute(const occ::handle<PrsMgr_PresentationMana
   if (HasConnection())
   {
     thePrs->Clear(false);
-    thePrs->DisconnectAll(Graphic3d_TOC_DESCENDANT);
+    thePrs->DisconnectAll(Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT);
 
     if (!myReference->HasInteractiveContext())
     {

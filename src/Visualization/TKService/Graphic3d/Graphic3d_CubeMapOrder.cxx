@@ -37,12 +37,12 @@ Graphic3d_CubeMapOrder::Graphic3d_CubeMapOrder(unsigned char thePosXLocation,
     : myConvolution(0),
       myHasOverflows(false)
 {
-  Set(Graphic3d_CMS_POS_X, thePosXLocation);
-  Set(Graphic3d_CMS_NEG_X, theNegXLocation);
-  Set(Graphic3d_CMS_POS_Y, thePosYLocation);
-  Set(Graphic3d_CMS_NEG_Y, theNegYLocation);
-  Set(Graphic3d_CMS_POS_Z, thePosZLocation);
-  Set(Graphic3d_CMS_NEG_Z, theNegZLocation);
+  Set(Graphic3d_CubeMapSide::Graphic3d_CMS_POS_X, thePosXLocation);
+  Set(Graphic3d_CubeMapSide::Graphic3d_CMS_NEG_X, theNegXLocation);
+  Set(Graphic3d_CubeMapSide::Graphic3d_CMS_POS_Y, thePosYLocation);
+  Set(Graphic3d_CubeMapSide::Graphic3d_CMS_NEG_Y, theNegYLocation);
+  Set(Graphic3d_CubeMapSide::Graphic3d_CMS_POS_Z, thePosZLocation);
+  Set(Graphic3d_CubeMapSide::Graphic3d_CMS_NEG_Z, theNegZLocation);
 }
 
 //=================================================================================================

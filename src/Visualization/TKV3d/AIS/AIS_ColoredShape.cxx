@@ -714,9 +714,9 @@ bool AIS_ColoredShape::dispatchColors(
         }
         else if (aFaceDrawer->HasOwnShadingAspect()
                  && aFaceDrawer->ShadingAspect()->Aspect()->AlphaMode()
-                      != Graphic3d_AlphaMode_Opaque)
+                      != Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque)
         {
-          if (aFaceDrawer->ShadingAspect()->Aspect()->AlphaMode() != Graphic3d_AlphaMode_BlendAuto
+          if (aFaceDrawer->ShadingAspect()->Aspect()->AlphaMode() != Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto
               || aFaceDrawer->ShadingAspect()->Aspect()->FrontMaterial().Alpha() < 1.0f
               || (aFaceDrawer->ShadingAspect()->Aspect()->Distinguish()
                   && aFaceDrawer->ShadingAspect()->Aspect()->BackMaterial().Alpha() < 1.0f))

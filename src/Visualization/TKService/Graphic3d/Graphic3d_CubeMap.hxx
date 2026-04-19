@@ -43,13 +43,13 @@ public:
   //! Uses OpenGL cubemap sides order +X -> -X -> +Y -> -Y -> +Z -> -Z.
   void Next()
   {
-    if (!myEndIsReached && myCurrentSide == Graphic3d_CMS_NEG_Z)
+    if (!myEndIsReached && myCurrentSide == Graphic3d_CubeMapSide::Graphic3d_CMS_NEG_Z)
     {
       myEndIsReached = true;
     }
     else
     {
-      myCurrentSide = Graphic3d_CubeMapSide(myCurrentSide + 1);
+      myCurrentSide = static_cast<Graphic3d_CubeMapSide>(static_cast<int>(myCurrentSide) + 1);
     }
   }
 
@@ -79,7 +79,7 @@ public:
   //! Sets iterator state to +X cubemap side.
   Graphic3d_CubeMap& Reset()
   {
-    myCurrentSide  = Graphic3d_CMS_POS_X;
+    myCurrentSide  = Graphic3d_CubeMapSide::Graphic3d_CMS_POS_X;
     myEndIsReached = false;
     return *this;
   }

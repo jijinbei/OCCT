@@ -940,7 +940,7 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   ViewerTest_StereoPair         aStereoPair = ViewerTest_SP_Single;
   V3d_ImageDumpOptions          aParams;
   occ::handle<Graphic3d_Camera> aCustomCam;
-  aParams.BufferType     = Graphic3d_BT_RGB;
+  aParams.BufferType     = Graphic3d_BufferType::Graphic3d_BT_RGB;
   aParams.StereoOptions  = V3d_SDO_MONO;
   aParams.TargetZLayerId = Graphic3d_ZLayerId_BotOSD;
   aParams.IsSingleLayer  = false;
@@ -961,19 +961,19 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
       aBufArg.LowerCase();
       if (aBufArg == "rgba")
       {
-        aParams.BufferType = Graphic3d_BT_RGBA;
+        aParams.BufferType = Graphic3d_BufferType::Graphic3d_BT_RGBA;
       }
       else if (aBufArg == "rgb")
       {
-        aParams.BufferType = Graphic3d_BT_RGB;
+        aParams.BufferType = Graphic3d_BufferType::Graphic3d_BT_RGB;
       }
       else if (aBufArg == "red")
       {
-        aParams.BufferType = Graphic3d_BT_Red;
+        aParams.BufferType = Graphic3d_BufferType::Graphic3d_BT_Red;
       }
       else if (aBufArg == "depth")
       {
-        aParams.BufferType = Graphic3d_BT_Depth;
+        aParams.BufferType = Graphic3d_BufferType::Graphic3d_BT_Depth;
       }
       else if (aBufArg == "shadowmap")
       {
@@ -982,7 +982,7 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
           Message::SendFail() << "Error: missing light name for shadowmap dump";
           return 1;
         }
-        aParams.BufferType = Graphic3d_BT_ShadowMap;
+        aParams.BufferType = Graphic3d_BufferType::Graphic3d_BT_ShadowMap;
         aParams.LightName  = theArgVec[anArgIter];
         bool isLightFound  = false;
         for (NCollection_List<occ::handle<Graphic3d_CLight>>::Iterator aLightIter(
@@ -1085,23 +1085,23 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
     }
     else if (anArg == "-rgba" || anArg == "rgba")
     {
-      aParams.BufferType = Graphic3d_BT_RGBA;
+      aParams.BufferType = Graphic3d_BufferType::Graphic3d_BT_RGBA;
     }
     else if (anArg == "-rgb" || anArg == "rgb")
     {
-      aParams.BufferType = Graphic3d_BT_RGB;
+      aParams.BufferType = Graphic3d_BufferType::Graphic3d_BT_RGB;
     }
     else if (anArg == "-red" || anArg == "red")
     {
-      aParams.BufferType = Graphic3d_BT_Red;
+      aParams.BufferType = Graphic3d_BufferType::Graphic3d_BT_Red;
     }
     else if (anArg == "-depth" || anArg == "depth")
     {
-      aParams.BufferType = Graphic3d_BT_Depth;
+      aParams.BufferType = Graphic3d_BufferType::Graphic3d_BT_Depth;
     }
     else if (anArg == "-shadowmap" || anArg == "shadowmap")
     {
-      aParams.BufferType = Graphic3d_BT_ShadowMap;
+      aParams.BufferType = Graphic3d_BufferType::Graphic3d_BT_ShadowMap;
     }
     else if (anArg == "-width" || anArg == "width" || anArg == "sizex")
     {
@@ -1195,22 +1195,22 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   Image_Format      aFormat = Image_Format_UNKNOWN;
   switch (aParams.BufferType)
   {
-    case Graphic3d_BT_RGB:
+    case Graphic3d_BufferType::Graphic3d_BT_RGB:
       aFormat = Image_Format_RGB;
       break;
-    case Graphic3d_BT_RGBA:
+    case Graphic3d_BufferType::Graphic3d_BT_RGBA:
       aFormat = Image_Format_RGBA;
       break;
-    case Graphic3d_BT_Depth:
+    case Graphic3d_BufferType::Graphic3d_BT_Depth:
       aFormat = Image_Format_GrayF;
       break;
-    case Graphic3d_BT_RGB_RayTraceHdrLeft:
+    case Graphic3d_BufferType::Graphic3d_BT_RGB_RayTraceHdrLeft:
       aFormat = Image_Format_RGBF;
       break;
-    case Graphic3d_BT_Red:
+    case Graphic3d_BufferType::Graphic3d_BT_Red:
       aFormat = Image_Format_Gray;
       break;
-    case Graphic3d_BT_ShadowMap:
+    case Graphic3d_BufferType::Graphic3d_BT_ShadowMap:
       aFormat = Image_Format_GrayF;
       break;
   }
@@ -1232,7 +1232,7 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
       else if (aPixMap.SizeX() != size_t(aParams.Width)
                || aPixMap.SizeY() != size_t(aParams.Height))
       {
-        if (aParams.BufferType != Graphic3d_BT_ShadowMap)
+        if (aParams.BufferType != Graphic3d_BufferType::Graphic3d_BT_ShadowMap)
         {
           theDI << "Fail: dumped dimensions " << (int)aPixMap.SizeX() << "x" << (int)aPixMap.SizeY()
                 << " are lesser than requested " << aParams.Width << "x" << aParams.Height << "\n";
@@ -1799,10 +1799,10 @@ struct ViewerTest_AspectsChangeSet
         ToSetTransparency(0),
         Transparency(0.0),
         ToSetAlphaMode(0),
-        AlphaMode(Graphic3d_AlphaMode_BlendAuto),
+        AlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto),
         AlphaCutoff(0.5f),
         ToSetFaceCulling(0),
-        FaceCulling(Graphic3d_TypeOfBackfacingModel_Auto),
+        FaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto),
         ToSetMaterial(0),
         Material(Graphic3d_NameOfMaterial_DEFAULT),
         ToSetShowFreeBoundary(0),
@@ -2512,23 +2512,23 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
         aParam.LowerCase();
         if (aParam == "opaque")
         {
-          aChangeSet->AlphaMode = Graphic3d_AlphaMode_Opaque;
+          aChangeSet->AlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque;
         }
         else if (aParam == "mask")
         {
-          aChangeSet->AlphaMode = Graphic3d_AlphaMode_Mask;
+          aChangeSet->AlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask;
         }
         else if (aParam == "blend")
         {
-          aChangeSet->AlphaMode = Graphic3d_AlphaMode_Blend;
+          aChangeSet->AlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend;
         }
         else if (aParam == "maskblend" || aParam == "blendmask")
         {
-          aChangeSet->AlphaMode = Graphic3d_AlphaMode_MaskBlend;
+          aChangeSet->AlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend;
         }
         else if (aParam == "blendauto" || aParam == "auto")
         {
-          aChangeSet->AlphaMode = Graphic3d_AlphaMode_BlendAuto;
+          aChangeSet->AlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
         }
         else
         {
@@ -2561,19 +2561,19 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
         aParam.LowerCase();
         if (aParam == "auto")
         {
-          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel_Auto;
+          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
         }
         else if (aParam == "backculled" || aParam == "backcull" || aParam == "back")
         {
-          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel_BackCulled;
+          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
         }
         else if (aParam == "frontculled" || aParam == "frontcull" || aParam == "front")
         {
-          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel_FrontCulled;
+          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled;
         }
         else if (aParam == "doublesided" || aParam == "off")
         {
-          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel_DoubleSided;
+          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
         }
         else
         {
@@ -3129,10 +3129,10 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
       aChangeSet->ToSetTransparency  = -1;
       aChangeSet->Transparency       = 0.0;
       aChangeSet->ToSetAlphaMode     = -1;
-      aChangeSet->AlphaMode          = Graphic3d_AlphaMode_BlendAuto;
+      aChangeSet->AlphaMode          = Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
       aChangeSet->AlphaCutoff        = 0.5f;
       aChangeSet->ToSetFaceCulling   = -1;
-      aChangeSet->FaceCulling        = Graphic3d_TypeOfBackfacingModel_Auto;
+      aChangeSet->FaceCulling        = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
       aChangeSet->ToSetColor         = -1;
       aChangeSet->Color              = DEFAULT_COLOR;
       // aChangeSet->ToSetBackFaceColor = -1; // should be reset by ToSetColor
@@ -4093,8 +4093,8 @@ int VTexture(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
   float                              aTrsfRotAngle = 0.0f;
   NCollection_Vec2<float>            aTrsfTrans(0.0f, 0.0f);
   NCollection_Vec2<float>            aTrsfScale(1.0f, 1.0f);
-  Graphic3d_TypeOfTextureFilter      aFilter       = Graphic3d_TOTF_NEAREST;
-  Graphic3d_LevelOfTextureAnisotropy anAnisoFilter = Graphic3d_LOTA_OFF;
+  Graphic3d_TypeOfTextureFilter      aFilter       = Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST;
+  Graphic3d_LevelOfTextureAnisotropy anAnisoFilter = Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_OFF;
 
   occ::handle<AIS_InteractiveObject>                    aTexturedIO;
   occ::handle<AIS_Shape>                                aTexturedShape;
@@ -4250,15 +4250,15 @@ int VTexture(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
       toSetFilter = true;
       if (aValue == "nearest")
       {
-        aFilter = Graphic3d_TOTF_NEAREST;
+        aFilter = Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST;
       }
       else if (aValue == "bilinear")
       {
-        aFilter = Graphic3d_TOTF_BILINEAR;
+        aFilter = Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR;
       }
       else if (aValue == "trilinear")
       {
-        aFilter = Graphic3d_TOTF_TRILINEAR;
+        aFilter = Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_TRILINEAR;
       }
       else
       {
@@ -4276,19 +4276,19 @@ int VTexture(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
       toSetAniso = true;
       if (aValue == "off")
       {
-        anAnisoFilter = Graphic3d_LOTA_OFF;
+        anAnisoFilter = Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_OFF;
       }
       else if (aValue == "fast")
       {
-        anAnisoFilter = Graphic3d_LOTA_FAST;
+        anAnisoFilter = Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_FAST;
       }
       else if (aValue == "middle")
       {
-        anAnisoFilter = Graphic3d_LOTA_MIDDLE;
+        anAnisoFilter = Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_MIDDLE;
       }
       else if (aValue == "quality" || aValue == "high")
       {
-        anAnisoFilter = Graphic3d_LOTA_QUALITY;
+        anAnisoFilter = Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_QUALITY;
       }
       else
       {
@@ -4412,7 +4412,7 @@ int VTexture(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
       }
       if (aTexIndex >= Graphic3d_TextureUnit_NB
           || aTexIndex >= aCtx->CurrentViewer()->Driver()->InquireLimit(
-               Graphic3d_TypeOfLimit_MaxCombinedTextureUnits))
+               Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxCombinedTextureUnits))
       {
         Message::SendFail("Error: too many textures specified");
         return 1;
@@ -4505,7 +4505,7 @@ int VTexture(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
             aTextureOld->Path().SystemName(aFilePathOld);
             aTextureNew->Path().SystemName(aFilePathNew);
             if (aTex2dNew->Name() == aTex2dOld->Name() && aFilePathOld == aFilePathNew
-                && (!aFilePathNew.IsEmpty() || aTex2dNew->Name() != Graphic3d_NOT_2D_UNKNOWN))
+                && (!aFilePathNew.IsEmpty() || aTex2dNew->Name() != Graphic3d_NameOfTexture2D::Graphic3d_NOT_2D_UNKNOWN))
             {
               --aNbChanged;
               aTextureNew = aTex2dOld;
@@ -4543,12 +4543,12 @@ int VTexture(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
     if (!toSetFilter)
     {
       toSetFilter = true;
-      aFilter     = Graphic3d_TOTF_BILINEAR;
+      aFilter     = Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR;
     }
     if (!toSetAniso)
     {
       toSetAniso    = true;
-      anAnisoFilter = Graphic3d_LOTA_OFF;
+      anAnisoFilter = Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_OFF;
     }
     if (!toSetTrsfAngle)
     {

@@ -671,12 +671,12 @@ public: //! @name optional array of Indices/Edges for using shared Vertex data
   }
 
   //! Convenience method, adds two vertex indices (a segment) in the range [1,VertexNumber()] in the
-  //! array of segments (Graphic3d_TOPA_SEGMENTS). Raises exception if array is not of type
-  //! Graphic3d_TOPA_SEGMENTS.
+  //! array of segments (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS). Raises exception if array is not of type
+  //! Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS.
   //! @return the actual edges number
   int AddSegmentEdges(int theVertexIndex1, int theVertexIndex2)
   {
-    Standard_TypeMismatch_Raise_if(myType != Graphic3d_TOPA_SEGMENTS, "Not array of segments");
+    Standard_TypeMismatch_Raise_if(myType != Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS, "Not array of segments");
     return AddEdges(theVertexIndex1, theVertexIndex2);
   }
 
@@ -691,30 +691,30 @@ public: //! @name optional array of Indices/Edges for using shared Vertex data
   }
 
   //! Convenience method, adds three vertex indices of triangle in the range [1,VertexNumber()] in
-  //! the array of triangles. Raises exception if array is not of type Graphic3d_TOPA_TRIANGLES.
+  //! the array of triangles. Raises exception if array is not of type Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES.
   //! @return the actual edges number
   int AddTriangleEdges(int theVertexIndex1, int theVertexIndex2, int theVertexIndex3)
   {
-    Standard_TypeMismatch_Raise_if(myType != Graphic3d_TOPA_TRIANGLES, "Not array of triangles");
+    Standard_TypeMismatch_Raise_if(myType != Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES, "Not array of triangles");
     return AddEdges(theVertexIndex1, theVertexIndex2, theVertexIndex3);
   }
 
   //! Convenience method, adds three vertex indices of triangle in the range [1,VertexNumber()] in
-  //! the array of triangles. Raises exception if array is not of type Graphic3d_TOPA_TRIANGLES.
+  //! the array of triangles. Raises exception if array is not of type Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES.
   //! @return the actual edges number
   int AddTriangleEdges(const NCollection_Vec3<int>& theIndexes)
   {
-    Standard_TypeMismatch_Raise_if(myType != Graphic3d_TOPA_TRIANGLES, "Not array of triangles");
+    Standard_TypeMismatch_Raise_if(myType != Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES, "Not array of triangles");
     return AddEdges(theIndexes[0], theIndexes[1], theIndexes[2]);
   }
 
   //! Convenience method, adds three vertex indices (4th component is ignored) of triangle in the
   //! range [1,VertexNumber()] in the array of triangles. Raises exception if array is not of type
-  //! Graphic3d_TOPA_TRIANGLES.
+  //! Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES.
   //! @return the actual edges number
   int AddTriangleEdges(const NCollection_Vec4<int>& theIndexes)
   {
-    Standard_TypeMismatch_Raise_if(myType != Graphic3d_TOPA_TRIANGLES, "Not array of triangles");
+    Standard_TypeMismatch_Raise_if(myType != Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES, "Not array of triangles");
     return AddEdges(theIndexes[0], theIndexes[1], theIndexes[2]);
   }
 
@@ -730,19 +730,19 @@ public: //! @name optional array of Indices/Edges for using shared Vertex data
   }
 
   //! Convenience method, adds four vertex indices (a quad) in the range [1,VertexNumber()] in the
-  //! array of quads. Raises exception if array is not of type Graphic3d_TOPA_QUADRANGLES.
+  //! array of quads. Raises exception if array is not of type Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES.
   //! @return the actual edges number
   int AddQuadEdges(int theVertexIndex1,
                    int theVertexIndex2,
                    int theVertexIndex3,
                    int theVertexIndex4)
   {
-    Standard_TypeMismatch_Raise_if(myType != Graphic3d_TOPA_QUADRANGLES, "Not array of quads");
+    Standard_TypeMismatch_Raise_if(myType != Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES, "Not array of quads");
     return AddEdges(theVertexIndex1, theVertexIndex2, theVertexIndex3, theVertexIndex4);
   }
 
   //! Convenience method, adds quad indices in the range [1,VertexNumber()] into array or triangles
-  //! as two triangles. Raises exception if array is not of type Graphic3d_TOPA_TRIANGLES.
+  //! as two triangles. Raises exception if array is not of type Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES.
   //! @return the actual edges number
   int AddQuadTriangleEdges(int theVertexIndex1,
                            int theVertexIndex2,
@@ -754,7 +754,7 @@ public: //! @name optional array of Indices/Edges for using shared Vertex data
   }
 
   //! Convenience method, adds quad indices in the range [1,VertexNumber()] into array or triangles
-  //! as two triangles. Raises exception if array is not of type Graphic3d_TOPA_TRIANGLES.
+  //! as two triangles. Raises exception if array is not of type Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES.
   //! @return the actual edges number
   int AddQuadTriangleEdges(const NCollection_Vec4<int>& theIndexes)
   {
@@ -763,14 +763,14 @@ public: //! @name optional array of Indices/Edges for using shared Vertex data
 
   //! Add triangle strip into indexed triangulation array.
   //! N-2 triangles are added from N input nodes.
-  //! Raises exception if array is not of type Graphic3d_TOPA_TRIANGLES.
+  //! Raises exception if array is not of type Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES.
   //! @param[in] theVertexLower  index of first node defining triangle strip
   //! @param[in] theVertexUpper  index of last  node defining triangle strip
   Standard_EXPORT void AddTriangleStripEdges(int theVertexLower, int theVertexUpper);
 
   //! Add triangle fan into indexed triangulation array.
   //! N-2 triangles are added from N input nodes (or N-1 with closed flag).
-  //! Raises exception if array is not of type Graphic3d_TOPA_TRIANGLES.
+  //! Raises exception if array is not of type Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES.
   //! @param[in] theVertexLower  index of first node defining triangle fun (center)
   //! @param[in] theVertexUpper  index of last  node defining triangle fun
   //! @param[in] theToClose  close triangle fan (connect first and last points)
@@ -778,7 +778,7 @@ public: //! @name optional array of Indices/Edges for using shared Vertex data
 
   //! Add line strip (polyline) into indexed segments array.
   //! N-1 segments are added from N input nodes (or N with closed flag).
-  //! Raises exception if array is not of type Graphic3d_TOPA_SEGMENTS.
+  //! Raises exception if array is not of type Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS.
   //! @param[in] theVertexLower  index of first node defining line strip fun (center)
   //! @param[in] theVertexUpper  index of last  node defining triangle fun
   //! @param[in] theToClose  close triangle fan (connect first and last points)
@@ -892,7 +892,7 @@ protected: //! @name protected constructors
         myNormStride(0),
         myTexStride(0),
         myColStride(0),
-        myType(Graphic3d_TOPA_UNDEFINED)
+        myType(Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_UNDEFINED)
   {
     init(theType, theMaxVertexs, theMaxBounds, theMaxEdges, theArrayFlags);
   }

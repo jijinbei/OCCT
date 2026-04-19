@@ -59,7 +59,7 @@ public:
   Standard_EXPORT bool IsRepeat() const;
 
   //! @return level of anisotropy texture filter.
-  //! Default value is Graphic3d_LOTA_OFF.
+  //! Default value is Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_OFF.
   Standard_EXPORT Graphic3d_LevelOfTextureAnisotropy AnisoFilter() const;
 
   //! @param theLevel level of anisotropy texture filter.

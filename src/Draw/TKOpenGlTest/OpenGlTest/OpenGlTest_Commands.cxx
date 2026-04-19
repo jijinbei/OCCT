@@ -180,7 +180,7 @@ void VUserDrawObj::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) con
   aCtx->ShaderManager()->BindLineProgram(occ::handle<OpenGl_TextureSet>(),
                                          Aspect_TypeOfLine::Aspect_TOL_SOLID,
                                          Graphic3d_TypeOfShadingModel_Unlit,
-                                         Graphic3d_AlphaMode_Opaque,
+                                         Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque,
                                          false,
                                          occ::handle<OpenGl_ShaderProgram>());
   aCtx->SetColor4fv(aColor);

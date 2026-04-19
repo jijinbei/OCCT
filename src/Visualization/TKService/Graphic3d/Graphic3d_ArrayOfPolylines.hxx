@@ -22,7 +22,7 @@ class Graphic3d_ArrayOfPolylines : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfPolylines, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of polylines (Graphic3d_TOPA_POLYLINES), a polyline can be filled as:
+  //! Creates an array of polylines (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES), a polyline can be filled as:
   //! 1) Creating a single polyline defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfPolylines (7);
@@ -93,7 +93,7 @@ public:
                              int                  theMaxBounds,
                              int                  theMaxEdges,
                              Graphic3d_ArrayFlags theArrayFlags)
-      : Graphic3d_ArrayOfPrimitives(Graphic3d_TOPA_POLYLINES,
+      : Graphic3d_ArrayOfPrimitives(Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES,
                                     theMaxVertexs,
                                     theMaxBounds,
                                     theMaxEdges,
@@ -101,7 +101,7 @@ public:
   {
   }
 
-  //! Creates an array of polylines (Graphic3d_TOPA_POLYLINES).
+  //! Creates an array of polylines (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES).
   //! @param theMaxVertexs defines the maximum allowed vertex number in the array
   //! @param theMaxBounds  defines the maximum allowed bound  number in the array
   //! @param theMaxEdges   defines the maximum allowed edge   number in the array
@@ -115,7 +115,7 @@ public:
                              bool theHasVColors = false,
                              bool theHasBColors = false)
       : Graphic3d_ArrayOfPrimitives(
-          Graphic3d_TOPA_POLYLINES,
+          Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES,
           theMaxVertexs,
           theMaxBounds,
           theMaxEdges,

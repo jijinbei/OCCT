@@ -238,7 +238,7 @@ OpenGl_Context::OpenGl_Context(const occ::handle<OpenGl_Caps>& theCaps)
       myRenderMode(GL_RENDER),
       myShadeModel(GL_SMOOTH),
       myPolygonMode(GL_FILL),
-      myFaceCulling(Graphic3d_TypeOfBackfacingModel_DoubleSided),
+      myFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided),
       myReadBuffer(0),
       myDrawBuffers(0, 7),
       myDefaultVao(0),
@@ -540,15 +540,15 @@ void OpenGl_Context::SetFaceCulling(Graphic3d_TypeOfBackfacingModel theMode)
     return;
   }
 
-  if (theMode == Graphic3d_TypeOfBackfacingModel_BackCulled)
+  if (theMode == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled)
   {
-    if (myFaceCulling == Graphic3d_TypeOfBackfacingModel_FrontCulled)
+    if (myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled)
     {
       core11fwd->glCullFace(GL_BACK);
     }
     core11fwd->glEnable(GL_CULL_FACE);
   }
-  else if (theMode == Graphic3d_TypeOfBackfacingModel_FrontCulled)
+  else if (theMode == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled)
   {
     core11fwd->glCullFace(GL_FRONT);
     core11fwd->glEnable(GL_CULL_FACE);
@@ -1335,7 +1335,8 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
   myShaderManager->SetUseRedAlpha(myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                                   && core11ffp == nullptr);
 #define checkGlslExtensionShort(theName)                                                           \
-  myShaderManager->EnableGlslExtension(Graphic3d_GlslExtension_##theName, CheckExtension(#theName))
+  myShaderManager->EnableGlslExtension(Graphic3d_GlslExtension::Graphic3d_GlslExtension_##theName, \
+                                       CheckExtension(#theName))
   if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     checkGlslExtensionShort(GL_OES_standard_derivatives);
@@ -2144,7 +2145,7 @@ occ::handle<OpenGl_TextureSet> OpenGl_Context::BindTextures(
     if (!myTextureRgbaBlack->Init(this,
                                   OpenGl_TextureFormat::Create<GLubyte, 4>(),
                                   NCollection_Vec2<int>(2, 2),
-                                  Graphic3d_TypeOfTexture_2D,
+                                  Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D,
                                   &anImage))
     {
       PushMessage(GL_DEBUG_SOURCE_APPLICATION,
@@ -2157,7 +2158,7 @@ occ::handle<OpenGl_TextureSet> OpenGl_Context::BindTextures(
     if (!myTextureRgbaWhite->Init(this,
                                   OpenGl_TextureFormat::Create<GLubyte, 4>(),
                                   NCollection_Vec2<int>(2, 2),
-                                  Graphic3d_TypeOfTexture_2D,
+                                  Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D,
                                   &anImage))
     {
       PushMessage(GL_DEBUG_SOURCE_APPLICATION,
@@ -2362,8 +2363,8 @@ void OpenGl_Context::SetShadingMaterial(
   // do not update material properties in case of zero reflection mode,
   // because GL lighting will be disabled by OpenGl_PrimitiveArray::DrawArray() anyway.
   const OpenGl_MaterialState& aMatState     = myShaderManager->MaterialState();
-  float                       anAlphaCutoff = (anAspect->AlphaMode() == Graphic3d_AlphaMode_Mask
-                         || anAspect->AlphaMode() == Graphic3d_AlphaMode_MaskBlend)
+  float                       anAlphaCutoff = (anAspect->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask
+                         || anAspect->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend)
                                                 ? anAspect->AlphaCutoff()
                                                 : ShortRealLast();
   if (anAspect->ToDrawEdges())
@@ -2421,12 +2422,12 @@ bool OpenGl_Context::CheckIsTransparent(
     theAlphaBack  = aMatBackSrc.Alpha();
   }
 
-  if (anAspect->AlphaMode() == Graphic3d_AlphaMode_BlendAuto)
+  if (anAspect->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto)
   {
     return theAlphaFront < 1.0f || theAlphaBack < 1.0f;
   }
-  // Graphic3d_AlphaMode_Mask and Graphic3d_AlphaMode_MaskBlend are not considered transparent here
-  return anAspect->AlphaMode() == Graphic3d_AlphaMode_Blend;
+  // Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask and Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend are not considered transparent here
+  return anAspect->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend;
 }
 
 //=================================================================================================

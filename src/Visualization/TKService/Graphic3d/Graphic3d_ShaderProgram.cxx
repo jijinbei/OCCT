@@ -82,7 +82,7 @@ Graphic3d_ShaderProgram::Graphic3d_ShaderProgram()
       myNbClipPlanesMax(THE_MAX_CLIP_PLANES_DEFAULT),
       myNbFragOutputs(THE_NB_FRAG_OUTPUTS),
       myTextureSetBits(Graphic3d_TextureSetBits_NONE),
-      myOitOutput(Graphic3d_RTM_BLEND_UNORDERED),
+      myOitOutput(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED),
       myHasDefSampler(true),
       myHasAlphaTest(false),
       myIsPBR(false)

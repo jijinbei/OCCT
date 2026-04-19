@@ -19,7 +19,7 @@
 
 //! Structural attribute indicating if it can be displayed
 //! in wireframe, shadow mode, or both.
-enum Graphic3d_TypeOfStructure
+enum class Graphic3d_TypeOfStructure
 {
   Graphic3d_TOS_WIREFRAME,
   Graphic3d_TOS_SHADING,

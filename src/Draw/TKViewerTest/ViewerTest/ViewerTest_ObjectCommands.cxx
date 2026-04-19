@@ -2437,7 +2437,7 @@ static int VDrawText(Draw_Interpretor& theDI, int theArgsNb, const char** theArg
       aType.LowerCase();
       if (aType == "left")
       {
-        aTextPrs->SetHJustification(Graphic3d_HTA_LEFT);
+        aTextPrs->SetHJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT);
         if (aParam == "-valign")
         {
           Message::SendFail() << "Syntax error at '" << aParam << "'";
@@ -2448,16 +2448,16 @@ static int VDrawText(Draw_Interpretor& theDI, int theArgsNb, const char** theArg
       {
         if (aParam == "-halign" || aParam == "-align")
         {
-          aTextPrs->SetHJustification(Graphic3d_HTA_CENTER);
+          aTextPrs->SetHJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER);
         }
         if (aParam == "-valign" || aParam == "-align")
         {
-          aTextPrs->SetVJustification(Graphic3d_VTA_CENTER);
+          aTextPrs->SetVJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER);
         }
       }
       else if (aType == "right")
       {
-        aTextPrs->SetHJustification(Graphic3d_HTA_RIGHT);
+        aTextPrs->SetHJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT);
         if (aParam == "-valign")
         {
           Message::SendFail() << "Syntax error at '" << aParam << "'";
@@ -2466,7 +2466,7 @@ static int VDrawText(Draw_Interpretor& theDI, int theArgsNb, const char** theArg
       }
       else if (aType == "top")
       {
-        aTextPrs->SetVJustification(Graphic3d_VTA_TOP);
+        aTextPrs->SetVJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOP);
         if (aParam == "-halign")
         {
           Message::SendFail() << "Syntax error at '" << aParam << "'";
@@ -2475,7 +2475,7 @@ static int VDrawText(Draw_Interpretor& theDI, int theArgsNb, const char** theArg
       }
       else if (aType == "bottom")
       {
-        aTextPrs->SetVJustification(Graphic3d_VTA_BOTTOM);
+        aTextPrs->SetVJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM);
         if (aParam == "-halign")
         {
           Message::SendFail() << "Syntax error at '" << aParam << "'";
@@ -2484,7 +2484,7 @@ static int VDrawText(Draw_Interpretor& theDI, int theArgsNb, const char** theArg
       }
       else if (aType == "topfirstline")
       {
-        aTextPrs->SetVJustification(Graphic3d_VTA_TOPFIRSTLINE);
+        aTextPrs->SetVJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOPFIRSTLINE);
         if (aParam == "-halign")
         {
           Message::SendFail() << "Syntax error at '" << aParam << "'";
@@ -3784,44 +3784,44 @@ static int VDrawPArray(Draw_Interpretor& di, int argc, const char** argv)
 
   bool hasVertex = false;
 
-  Graphic3d_TypeOfPrimitiveArray aPrimType = Graphic3d_TOPA_UNDEFINED;
+  Graphic3d_TypeOfPrimitiveArray aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_UNDEFINED;
   if (anArrayType == "points")
   {
-    aPrimType = Graphic3d_TOPA_POINTS;
+    aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS;
   }
   else if (anArrayType == "segments")
   {
-    aPrimType = Graphic3d_TOPA_SEGMENTS;
+    aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS;
   }
   else if (anArrayType == "polylines")
   {
-    aPrimType = Graphic3d_TOPA_POLYLINES;
+    aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES;
   }
   else if (anArrayType == "triangles")
   {
-    aPrimType = Graphic3d_TOPA_TRIANGLES;
+    aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES;
   }
   else if (anArrayType == "trianglefans")
   {
-    aPrimType = Graphic3d_TOPA_TRIANGLEFANS;
+    aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLEFANS;
   }
   else if (anArrayType == "trianglestrips")
   {
-    aPrimType = Graphic3d_TOPA_TRIANGLESTRIPS;
+    aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLESTRIPS;
   }
   else if (anArrayType == "quads")
   {
-    aPrimType = Graphic3d_TOPA_QUADRANGLES;
+    aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES;
   }
   else if (anArrayType == "quadstrips")
   {
-    aPrimType = Graphic3d_TOPA_QUADRANGLESTRIPS;
+    aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLESTRIPS;
   }
   else if (anArrayType == "polygons")
   {
-    aPrimType = Graphic3d_TOPA_POLYGONS;
+    aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYGONS;
   }
-  if (aPrimType == Graphic3d_TOPA_UNDEFINED)
+  if (aPrimType == Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_UNDEFINED)
   {
     Message::SendFail("Syntax error: unexpected type of primitives array");
     return 1;
@@ -3856,7 +3856,7 @@ static int VDrawPArray(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   occ::handle<Graphic3d_AspectMarker3d> anAspPoints;
-  if (aPrimType == Graphic3d_TOPA_POINTS)
+  if (aPrimType == Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS)
   {
     anAspPoints = new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_POINT, Quantity_NOC_YELLOW, 1.0f);
   }
@@ -5645,8 +5645,8 @@ static int TextToBRep(Draw_Interpretor& /*theDI*/, int theArgNb, const char** th
   gp_Dir                  aDirection(gp_Dir::D::X);
   gp_Pnt                  aPenLoc;
 
-  Graphic3d_HorizontalTextAlignment aHJustification = Graphic3d_HTA_LEFT;
-  Graphic3d_VerticalTextAlignment   aVJustification = Graphic3d_VTA_BOTTOM;
+  Graphic3d_HorizontalTextAlignment aHJustification = Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT;
+  Graphic3d_VerticalTextAlignment   aVJustification = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
   Font_StrictLevel                  aStrictLevel    = Font_StrictLevel_Any;
   for (; anArgIt < theArgNb; ++anArgIt)
   {
@@ -5677,15 +5677,15 @@ static int TextToBRep(Draw_Interpretor& /*theDI*/, int theArgNb, const char** th
       aType.LowerCase();
       if (aType == "left")
       {
-        aHJustification = Graphic3d_HTA_LEFT;
+        aHJustification = Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT;
       }
       else if (aType == "center")
       {
-        aHJustification = Graphic3d_HTA_CENTER;
+        aHJustification = Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER;
       }
       else if (aType == "right")
       {
-        aHJustification = Graphic3d_HTA_RIGHT;
+        aHJustification = Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT;
       }
       else
       {
@@ -5705,19 +5705,19 @@ static int TextToBRep(Draw_Interpretor& /*theDI*/, int theArgNb, const char** th
       aType.LowerCase();
       if (aType == "top")
       {
-        aVJustification = Graphic3d_VTA_TOP;
+        aVJustification = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOP;
       }
       else if (aType == "center")
       {
-        aVJustification = Graphic3d_VTA_CENTER;
+        aVJustification = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER;
       }
       else if (aType == "bottom")
       {
-        aVJustification = Graphic3d_VTA_BOTTOM;
+        aVJustification = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
       }
       else if (aType == "topfirstline")
       {
-        aVJustification = Graphic3d_VTA_TOPFIRSTLINE;
+        aVJustification = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOPFIRSTLINE;
       }
       else
       {

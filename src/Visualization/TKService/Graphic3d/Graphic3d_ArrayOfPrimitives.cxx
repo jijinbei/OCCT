@@ -54,37 +54,37 @@ occ::handle<Graphic3d_ArrayOfPrimitives> Graphic3d_ArrayOfPrimitives::CreateArra
 {
   switch (theType)
   {
-    case Graphic3d_TOPA_UNDEFINED:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_UNDEFINED:
       return occ::handle<Graphic3d_ArrayOfPrimitives>();
-    case Graphic3d_TOPA_POINTS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS:
       return new Graphic3d_ArrayOfPoints(theMaxVertexs, theArrayFlags);
-    case Graphic3d_TOPA_SEGMENTS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS:
       return new Graphic3d_ArrayOfSegments(theMaxVertexs, theMaxEdges, theArrayFlags);
-    case Graphic3d_TOPA_POLYLINES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES:
       return new Graphic3d_ArrayOfPolylines(theMaxVertexs,
                                             theMaxBounds,
                                             theMaxEdges,
                                             theArrayFlags);
-    case Graphic3d_TOPA_TRIANGLES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES:
       return new Graphic3d_ArrayOfTriangles(theMaxVertexs, theMaxEdges, theArrayFlags);
-    case Graphic3d_TOPA_TRIANGLESTRIPS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLESTRIPS:
       return new Graphic3d_ArrayOfTriangleStrips(theMaxVertexs, theMaxBounds, theArrayFlags);
-    case Graphic3d_TOPA_TRIANGLEFANS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLEFANS:
       return new Graphic3d_ArrayOfTriangleFans(theMaxVertexs, theMaxBounds, theArrayFlags);
-    case Graphic3d_TOPA_LINES_ADJACENCY:
-    case Graphic3d_TOPA_LINE_STRIP_ADJACENCY:
-    case Graphic3d_TOPA_TRIANGLES_ADJACENCY:
-    case Graphic3d_TOPA_TRIANGLE_STRIP_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_LINES_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_LINE_STRIP_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLE_STRIP_ADJACENCY:
       return new Graphic3d_ArrayOfPrimitives(theType,
                                              theMaxVertexs,
                                              theMaxBounds,
                                              theMaxEdges,
                                              theArrayFlags);
-    case Graphic3d_TOPA_QUADRANGLES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES:
       return new Graphic3d_ArrayOfQuadrangles(theMaxVertexs, theMaxEdges, theArrayFlags);
-    case Graphic3d_TOPA_QUADRANGLESTRIPS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLESTRIPS:
       return new Graphic3d_ArrayOfQuadrangleStrips(theMaxVertexs, theMaxBounds, theArrayFlags);
-    case Graphic3d_TOPA_POLYGONS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYGONS:
       return new Graphic3d_ArrayOfPolygons(theMaxVertexs, theMaxBounds, theMaxEdges, theArrayFlags);
   }
   return occ::handle<Graphic3d_ArrayOfPrimitives>();
@@ -265,7 +265,7 @@ int Graphic3d_ArrayOfPrimitives::AddEdge(const int theVertexIndex)
 
 void Graphic3d_ArrayOfPrimitives::AddTriangleStripEdges(int theVertexLower, int theVertexUpper)
 {
-  if (myType != Graphic3d_TOPA_TRIANGLES)
+  if (myType != Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES)
   {
     throw Standard_TypeMismatch("Not array of triangles");
   }
@@ -291,7 +291,7 @@ void Graphic3d_ArrayOfPrimitives::AddTriangleFanEdges(int  theVertexLower,
                                                       int  theVertexUpper,
                                                       bool theToClose)
 {
-  if (myType != Graphic3d_TOPA_TRIANGLES)
+  if (myType != Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES)
   {
     throw Standard_TypeMismatch("Not array of triangles");
   }
@@ -312,7 +312,7 @@ void Graphic3d_ArrayOfPrimitives::AddPolylineEdges(int  theVertexLower,
                                                    int  theVertexUpper,
                                                    bool theToClose)
 {
-  if (myType != Graphic3d_TOPA_SEGMENTS)
+  if (myType != Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS)
   {
     throw Standard_TypeMismatch("Not array of segments");
   }
@@ -333,33 +333,33 @@ const char* Graphic3d_ArrayOfPrimitives::StringType() const
 {
   switch (myType)
   {
-    case Graphic3d_TOPA_POINTS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS:
       return "ArrayOfPoints";
-    case Graphic3d_TOPA_SEGMENTS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS:
       return "ArrayOfSegments";
-    case Graphic3d_TOPA_POLYLINES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES:
       return "ArrayOfPolylines";
-    case Graphic3d_TOPA_TRIANGLES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES:
       return "ArrayOfTriangles";
-    case Graphic3d_TOPA_TRIANGLESTRIPS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLESTRIPS:
       return "ArrayOfTriangleStrips";
-    case Graphic3d_TOPA_TRIANGLEFANS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLEFANS:
       return "ArrayOfTriangleFans";
-    case Graphic3d_TOPA_LINES_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_LINES_ADJACENCY:
       return "ArrayOfLinesAdjacency";
-    case Graphic3d_TOPA_LINE_STRIP_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_LINE_STRIP_ADJACENCY:
       return "ArrayOfLineStripAdjacency";
-    case Graphic3d_TOPA_TRIANGLES_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES_ADJACENCY:
       return "ArrayOfTrianglesAdjacency";
-    case Graphic3d_TOPA_TRIANGLE_STRIP_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLE_STRIP_ADJACENCY:
       return "ArrayOfTriangleStripAdjacency";
-    case Graphic3d_TOPA_QUADRANGLES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES:
       return "ArrayOfQuadrangles";
-    case Graphic3d_TOPA_QUADRANGLESTRIPS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLESTRIPS:
       return "ArrayOfQuadrangleStrips";
-    case Graphic3d_TOPA_POLYGONS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYGONS:
       return "ArrayOfPolygons";
-    case Graphic3d_TOPA_UNDEFINED:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_UNDEFINED:
       return "UndefinedArray";
   }
   return "UndefinedArray";
@@ -376,42 +376,42 @@ int Graphic3d_ArrayOfPrimitives::ItemNumber() const
 
   switch (myType)
   {
-    case Graphic3d_TOPA_POINTS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS:
       return myAttribs->NbElements;
-    case Graphic3d_TOPA_POLYLINES:
-    case Graphic3d_TOPA_POLYGONS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYGONS:
       return !myBounds.IsNull() ? myBounds->NbBounds : 1;
-    case Graphic3d_TOPA_SEGMENTS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS:
       return myIndices.IsNull() || myIndices->NbElements < 1 ? myAttribs->NbElements / 2
                                                              : myIndices->NbElements / 2;
-    case Graphic3d_TOPA_TRIANGLES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES:
       return myIndices.IsNull() || myIndices->NbElements < 1 ? myAttribs->NbElements / 3
                                                              : myIndices->NbElements / 3;
-    case Graphic3d_TOPA_QUADRANGLES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES:
       return myIndices.IsNull() || myIndices->NbElements < 1 ? myAttribs->NbElements / 4
                                                              : myIndices->NbElements / 4;
-    case Graphic3d_TOPA_TRIANGLESTRIPS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLESTRIPS:
       return !myBounds.IsNull() ? myAttribs->NbElements - 2 * myBounds->NbBounds
                                 : myAttribs->NbElements - 2;
-    case Graphic3d_TOPA_QUADRANGLESTRIPS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLESTRIPS:
       return !myBounds.IsNull() ? myAttribs->NbElements / 2 - myBounds->NbBounds
                                 : myAttribs->NbElements / 2 - 1;
-    case Graphic3d_TOPA_TRIANGLEFANS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLEFANS:
       return !myBounds.IsNull() ? myAttribs->NbElements - 2 * myBounds->NbBounds
                                 : myAttribs->NbElements - 2;
-    case Graphic3d_TOPA_LINES_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_LINES_ADJACENCY:
       return myIndices.IsNull() || myIndices->NbElements < 1 ? myAttribs->NbElements / 4
                                                              : myIndices->NbElements / 4;
-    case Graphic3d_TOPA_LINE_STRIP_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_LINE_STRIP_ADJACENCY:
       return !myBounds.IsNull() ? myAttribs->NbElements - 4 * myBounds->NbBounds
                                 : myAttribs->NbElements - 4;
-    case Graphic3d_TOPA_TRIANGLES_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES_ADJACENCY:
       return myIndices.IsNull() || myIndices->NbElements < 1 ? myAttribs->NbElements / 6
                                                              : myIndices->NbElements / 6;
-    case Graphic3d_TOPA_TRIANGLE_STRIP_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLE_STRIP_ADJACENCY:
       return !myBounds.IsNull() ? myAttribs->NbElements - 4 * myBounds->NbBounds
                                 : myAttribs->NbElements - 4;
-    case Graphic3d_TOPA_UNDEFINED:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_UNDEFINED:
       return -1;
   }
   return -1;
@@ -431,13 +431,13 @@ bool Graphic3d_ArrayOfPrimitives::IsValid()
   int nedges   = myIndices.IsNull() ? 0 : myIndices->NbElements;
   switch (myType)
   {
-    case Graphic3d_TOPA_POINTS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS:
       if (nvertexs < 1)
       {
         return false;
       }
       break;
-    case Graphic3d_TOPA_POLYLINES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES:
       if (nedges > 0 && nedges < 2)
       {
         return false;
@@ -447,13 +447,13 @@ bool Graphic3d_ArrayOfPrimitives::IsValid()
         return false;
       }
       break;
-    case Graphic3d_TOPA_SEGMENTS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS:
       if (nvertexs < 2)
       {
         return false;
       }
       break;
-    case Graphic3d_TOPA_POLYGONS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYGONS:
       if (nedges > 0 && nedges < 3)
       {
         return false;
@@ -463,7 +463,7 @@ bool Graphic3d_ArrayOfPrimitives::IsValid()
         return false;
       }
       break;
-    case Graphic3d_TOPA_TRIANGLES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES:
       if (nedges > 0)
       {
         if (nedges < 3 || nedges % 3 != 0)
@@ -484,7 +484,7 @@ bool Graphic3d_ArrayOfPrimitives::IsValid()
         myAttribs->NbElements = 3 * (nvertexs / 3);
       }
       break;
-    case Graphic3d_TOPA_QUADRANGLES:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES:
       if (nedges > 0)
       {
         if (nedges < 4 || nedges % 4 != 0)
@@ -505,34 +505,34 @@ bool Graphic3d_ArrayOfPrimitives::IsValid()
         myAttribs->NbElements = 4 * (nvertexs / 4);
       }
       break;
-    case Graphic3d_TOPA_TRIANGLEFANS:
-    case Graphic3d_TOPA_TRIANGLESTRIPS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLEFANS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLESTRIPS:
       if (nvertexs < 3)
       {
         return false;
       }
       break;
-    case Graphic3d_TOPA_QUADRANGLESTRIPS:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLESTRIPS:
       if (nvertexs < 4)
       {
         return false;
       }
       break;
-    case Graphic3d_TOPA_LINES_ADJACENCY:
-    case Graphic3d_TOPA_LINE_STRIP_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_LINES_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_LINE_STRIP_ADJACENCY:
       if (nvertexs < 4)
       {
         return false;
       }
       break;
-    case Graphic3d_TOPA_TRIANGLES_ADJACENCY:
-    case Graphic3d_TOPA_TRIANGLE_STRIP_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES_ADJACENCY:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLE_STRIP_ADJACENCY:
       if (nvertexs < 6)
       {
         return false;
       }
       break;
-    case Graphic3d_TOPA_UNDEFINED:
+    case Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_UNDEFINED:
     default:
       return false;
   }

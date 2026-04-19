@@ -208,15 +208,15 @@ size_t OpenGl_Text::EstimatedDataSize() const
 
 void OpenGl_Text::UpdateDrawStats(Graphic3d_FrameStatsDataTmp& theStats, bool theIsDetailed) const
 {
-  ++theStats[Graphic3d_FrameStatsCounter_NbElemsNotCulled];
-  ++theStats[Graphic3d_FrameStatsCounter_NbElemsTextNotCulled];
+  ++theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbElemsNotCulled];
+  ++theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbElemsTextNotCulled];
   if (theIsDetailed)
   {
     for (int anIter = myVertsVbo.Lower(); anIter <= myVertsVbo.Upper(); ++anIter)
     {
       if (const occ::handle<OpenGl_VertexBuffer>& aVerts = myVertsVbo.Value(anIter))
       {
-        theStats[Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] +=
+        theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] +=
           aVerts->GetElemsNb() / 3; // 2 non-indexed triangles per glyph
       }
     }
@@ -632,7 +632,7 @@ void OpenGl_Text::drawRect(const occ::handle<OpenGl_Context>& theCtx,
   // bind unlit program
   theCtx->ShaderManager()->BindFaceProgram(occ::handle<OpenGl_TextureSet>(),
                                            Graphic3d_TypeOfShadingModel_Unlit,
-                                           Graphic3d_AlphaMode_Opaque,
+                                           Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque,
                                            false,
                                            false,
                                            occ::handle<OpenGl_ShaderProgram>());
@@ -790,7 +790,7 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
   }
 
   // setup blending
-  if (theTextAspect.Aspect()->AlphaMode() == Graphic3d_AlphaMode_MaskBlend)
+  if (theTextAspect.Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend)
   {
     theCtx->core11fwd->glEnable(GL_BLEND);
     theCtx->core11fwd->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -860,7 +860,7 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
 
   if (theTextAspect.Aspect()->TextDisplayType() == Aspect_TypeOfDisplayText::Aspect_TODT_DIMENSION)
   {
-    if (theTextAspect.Aspect()->AlphaMode() == Graphic3d_AlphaMode_MaskBlend)
+    if (theTextAspect.Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend)
     {
       theCtx->core11fwd->glDisable(GL_BLEND);
     }
@@ -888,7 +888,7 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
   }
 
   // reset OpenGL state
-  if (theTextAspect.Aspect()->AlphaMode() == Graphic3d_AlphaMode_MaskBlend)
+  if (theTextAspect.Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend)
   {
     theCtx->core11fwd->glDisable(GL_BLEND);
   }

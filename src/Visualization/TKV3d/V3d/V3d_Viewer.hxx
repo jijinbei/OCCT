@@ -54,7 +54,7 @@ public:
   //! Create a Viewer with the given graphic driver and with default parameters:
   //! - View orientation: V3d_XposYnegZpos
   //! - View background: Quantity_NOC_GRAY30
-  //! - Shading model: V3d_GOURAUD
+  //! - Shading model: Graphic3d_TypeOfShadingModel::V3d_GOURAUD
   Standard_EXPORT V3d_Viewer(const occ::handle<Graphic3d_GraphicDriver>& theDriver);
 
   //! Returns True if One View more can be defined in this Viewer.

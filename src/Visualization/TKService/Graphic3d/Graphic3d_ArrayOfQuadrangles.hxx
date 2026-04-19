@@ -24,7 +24,7 @@ class Graphic3d_ArrayOfQuadrangles : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfQuadrangles, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of quadrangles (Graphic3d_TOPA_QUADRANGLES), a quadrangle can be filled as:
+  //! Creates an array of quadrangles (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES), a quadrangle can be filled as:
   //! 1) Creating a set of quadrangles defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfQuadrangles (8);
@@ -48,7 +48,7 @@ public:
   Graphic3d_ArrayOfQuadrangles(int                  theMaxVertexs,
                                int                  theMaxEdges,
                                Graphic3d_ArrayFlags theArrayFlags)
-      : Graphic3d_ArrayOfPrimitives(Graphic3d_TOPA_QUADRANGLES,
+      : Graphic3d_ArrayOfPrimitives(Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES,
                                     theMaxVertexs,
                                     0,
                                     theMaxEdges,
@@ -56,7 +56,7 @@ public:
   {
   }
 
-  //! Creates an array of quadrangles (Graphic3d_TOPA_QUADRANGLES).
+  //! Creates an array of quadrangles (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES).
   //! @param theMaxVertexs defines the maximum allowed vertex number in the array
   //! @param theMaxEdges   defines the maximum allowed edge   number in the array (for indexed
   //! array)
@@ -66,7 +66,7 @@ public:
                                bool theHasVColors  = false,
                                bool theHasVTexels  = false)
       : Graphic3d_ArrayOfPrimitives(
-          Graphic3d_TOPA_QUADRANGLES,
+          Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES,
           theMaxVertexs,
           0,
           theMaxEdges,

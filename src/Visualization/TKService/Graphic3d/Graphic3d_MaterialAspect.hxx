@@ -35,7 +35,7 @@ public:
   DEFINE_STANDARD_ALLOC
 
   //! Returns the number of predefined textures.
-  static int NumberOfMaterials() { return Graphic3d_NameOfMaterial_DEFAULT; }
+  static int NumberOfMaterials() { return static_cast<int>(Graphic3d_NameOfMaterial_DEFAULT); }
 
   //! Returns the name of the predefined material of specified rank within range [1,
   //! NumberOfMaterials()].
@@ -100,12 +100,12 @@ public:
   void Reset() { init(myRequestedMaterialName); }
 
   //! Returns the diffuse color of the surface.
-  //! WARNING! This method does NOT return color for Graphic3d_MATERIAL_ASPECT material (color is
+  //! WARNING! This method does NOT return color for Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT material (color is
   //! defined by Graphic3d_Aspects::InteriorColor()).
-  const Quantity_Color& Color() const { return myColors[Graphic3d_TOR_DIFFUSE]; }
+  const Quantity_Color& Color() const { return myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_DIFFUSE)]; }
 
   //! Modifies the ambient and diffuse color of the surface.
-  //! WARNING! Has no effect for Graphic3d_MATERIAL_ASPECT material (color should be set to
+  //! WARNING! Has no effect for Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT material (color should be set to
   //! Graphic3d_Aspects::SetInteriorColor()).
   Standard_EXPORT void SetColor(const Quantity_Color& theColor);
 
@@ -129,25 +129,25 @@ public:
   void SetAlpha(float theValue) { SetTransparency(1.0f - theValue); }
 
   //! Returns the ambient color of the surface.
-  const Quantity_Color& AmbientColor() const { return myColors[Graphic3d_TOR_AMBIENT]; }
+  const Quantity_Color& AmbientColor() const { return myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_AMBIENT)]; }
 
   //! Modifies the ambient color of the surface.
   Standard_EXPORT void SetAmbientColor(const Quantity_Color& theColor);
 
   //! Returns the diffuse color of the surface.
-  const Quantity_Color& DiffuseColor() const { return myColors[Graphic3d_TOR_DIFFUSE]; }
+  const Quantity_Color& DiffuseColor() const { return myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_DIFFUSE)]; }
 
   //! Modifies the diffuse color of the surface.
   Standard_EXPORT void SetDiffuseColor(const Quantity_Color& theColor);
 
   //! Returns the specular color of the surface.
-  const Quantity_Color& SpecularColor() const { return myColors[Graphic3d_TOR_SPECULAR]; }
+  const Quantity_Color& SpecularColor() const { return myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_SPECULAR)]; }
 
   //! Modifies the specular color of the surface.
   Standard_EXPORT void SetSpecularColor(const Quantity_Color& theColor);
 
   //! Returns the emissive color of the surface.
-  const Quantity_Color& EmissiveColor() const { return myColors[Graphic3d_TOR_EMISSION]; }
+  const Quantity_Color& EmissiveColor() const { return myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_EMISSION)]; }
 
   //! Modifies the emissive color of the surface.
   Standard_EXPORT void SetEmissiveColor(const Quantity_Color& theColor);
@@ -189,7 +189,7 @@ public:
   //! Returns TRUE if the reflection mode is active, FALSE otherwise.
   bool ReflectionMode(const Graphic3d_TypeOfReflection theType) const
   {
-    return !myColors[theType].IsEqual(Quantity_NOC_BLACK);
+    return !myColors[static_cast<int>(theType)].IsEqual(Quantity_NOC_BLACK);
   }
 
   //! Returns material type.
@@ -216,10 +216,10 @@ public:
     return myTransparencyCoef == theOther.myTransparencyCoef
            && myRefractionIndex == theOther.myRefractionIndex && myBSDF == theOther.myBSDF
            && myPBRMaterial == theOther.myPBRMaterial && myShininess == theOther.myShininess
-           && myColors[Graphic3d_TOR_AMBIENT] == theOther.myColors[Graphic3d_TOR_AMBIENT]
-           && myColors[Graphic3d_TOR_DIFFUSE] == theOther.myColors[Graphic3d_TOR_DIFFUSE]
-           && myColors[Graphic3d_TOR_SPECULAR] == theOther.myColors[Graphic3d_TOR_SPECULAR]
-           && myColors[Graphic3d_TOR_EMISSION] == theOther.myColors[Graphic3d_TOR_EMISSION];
+           && myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_AMBIENT)] == theOther.myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_AMBIENT)]
+           && myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_DIFFUSE)] == theOther.myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_DIFFUSE)]
+           && myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_SPECULAR)] == theOther.myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_SPECULAR)]
+           && myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_EMISSION)] == theOther.myColors[static_cast<int>(Graphic3d_TypeOfReflection::Graphic3d_TOR_EMISSION)];
   }
 
   //! Returns TRUE if this material is identical to specified one.
@@ -241,16 +241,16 @@ public:
 
     switch (theType)
     {
-      case Graphic3d_TOR_AMBIENT:
+      case Graphic3d_TypeOfReflection::Graphic3d_TOR_AMBIENT:
         SetAmbientColor(Quantity_NOC_BLACK);
         break;
-      case Graphic3d_TOR_DIFFUSE:
+      case Graphic3d_TypeOfReflection::Graphic3d_TOR_DIFFUSE:
         SetDiffuseColor(Quantity_NOC_BLACK);
         break;
-      case Graphic3d_TOR_SPECULAR:
+      case Graphic3d_TypeOfReflection::Graphic3d_TOR_SPECULAR:
         SetSpecularColor(Quantity_NOC_BLACK);
         break;
-      case Graphic3d_TOR_EMISSION:
+      case Graphic3d_TypeOfReflection::Graphic3d_TOR_EMISSION:
         SetEmissiveColor(Quantity_NOC_BLACK);
         break;
     }

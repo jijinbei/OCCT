@@ -58,14 +58,14 @@ public:
   Standard_EXPORT void SetRepeat(const bool theToRepeat);
 
   //! @return texture interpolation filter.
-  //! Default value is Graphic3d_TOTF_NEAREST.
+  //! Default value is Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST.
   Graphic3d_TypeOfTextureFilter Filter() const { return myFilter; }
 
   //! @param theFilter texture interpolation filter.
   Standard_EXPORT void SetFilter(const Graphic3d_TypeOfTextureFilter theFilter);
 
   //! @return level of anisontropy texture filter.
-  //! Default value is Graphic3d_LOTA_OFF.
+  //! Default value is Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_OFF.
   Graphic3d_LevelOfTextureAnisotropy AnisoFilter() const { return myAnisoLevel; }
 
   //! @param theLevel level of anisontropy texture filter.
@@ -139,8 +139,8 @@ private:
   NCollection_Vec2<float>                     myTranslation;     //!< texture coordinates translation vector;  (0,0) by default
   unsigned int                       mySamplerRevision; //!< modification counter of parameters related to sampler state
   Graphic3d_TextureUnit              myTextureUnit;     //!< default texture unit to bind texture; Graphic3d_TextureUnit_BaseColor by default
-  Graphic3d_TypeOfTextureFilter      myFilter;          //!< texture filter, Graphic3d_TOTF_NEAREST by default
-  Graphic3d_LevelOfTextureAnisotropy myAnisoLevel;      //!< level of anisotropy filter, Graphic3d_LOTA_OFF by default
+  Graphic3d_TypeOfTextureFilter      myFilter;          //!< texture filter, Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST by default
+  Graphic3d_LevelOfTextureAnisotropy myAnisoLevel;      //!< level of anisotropy filter, Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_OFF by default
   Graphic3d_TypeOfTextureMode        myGenMode;         //!< texture coordinates generation mode, Graphic3d_TOTM_MANUAL by default
   int                   myBaseLevel;       //!< base texture mipmap level (0 by default)
   int                   myMaxLevel;        //!< maximum texture mipmap array level (1000 by default)

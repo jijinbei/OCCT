@@ -102,9 +102,9 @@ public:
 public:
   //! Creates default rendering parameters.
   Graphic3d_RenderingParams()
-      : Method(Graphic3d_RM_RASTERIZATION),
+      : Method(Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION),
         ShadingModel(Graphic3d_TypeOfShadingModel_Phong),
-        TransparencyMethod(Graphic3d_RTM_BLEND_UNORDERED),
+        TransparencyMethod(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED),
         Resolution(THE_DEFAULT_RESOLUTION),
         FontHinting(Font_Hinting_Off),
         LineFeather(1.0f),
@@ -145,7 +145,7 @@ public:
         CameraApertureRadius(0.0f),
         CameraFocalPlaneDist(1.0f),
         FrustumCullingState(FrustumCulling_On),
-        ToneMappingMethod(Graphic3d_ToneMappingMethod_Disabled),
+        ToneMappingMethod(Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Disabled),
         Exposure(0.f),
         WhitePoint(1.f),
         // stereoscopic parameters
@@ -197,7 +197,7 @@ public:
 
 public: //! @name general parameters
   // clang-format off
-  Graphic3d_RenderingMode           Method;                      //!< specifies rendering mode, Graphic3d_RM_RASTERIZATION by default
+  Graphic3d_RenderingMode           Method;                      //!< specifies rendering mode, Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION by default
   Graphic3d_TypeOfShadingModel      ShadingModel;                //!< specified default shading model, Graphic3d_TypeOfShadingModel_Phong by default
   Graphic3d_RenderTransparentMethod TransparencyMethod;          //!< specifies rendering method for transparent graphics
   unsigned int                      Resolution;                  //!< Pixels density (PPI), defines scaling factor for parameters like text size
@@ -221,8 +221,8 @@ public: //! @name rendering resolution parameters
   float                PbrEnvBakingProbability;     //!< controls strength of samples reducing strategy during specular IBL map's generation
                                                                  //!  (see 'SpecIBLMapSamplesFactor' function for detail explanation) [0.0, 1.0], 0.99 by default
 
-  float                OitDepthFactor;              //!< scalar factor [0-1] controlling influence of depth of a fragment to its final coverage (Graphic3d_RTM_BLEND_OIT), 0.0 by default
-  int                  NbOitDepthPeelingLayers;     //!< number of depth peeling (Graphic3d_RTM_DEPTH_PEELING_OIT) layers, 4 by default
+  float                OitDepthFactor;              //!< scalar factor [0-1] controlling influence of depth of a fragment to its final coverage (Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT), 0.0 by default
+  int                  NbOitDepthPeelingLayers;     //!< number of depth peeling (Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT) layers, 4 by default
   int                  NbMsaaSamples;               //!< number of MSAA samples (should be within 0..GL_MAX_SAMPLES, power-of-two number), 0 by default
   float                RenderResolutionScale;       //!< rendering resolution scale factor, 1 by default;
                                                                  //!  incompatible with MSAA (e.g. NbMsaaSamples should be set to 0)
@@ -257,7 +257,7 @@ public: //! @name Ray-Tracing/Path-Tracing parameters
   float                CameraFocalPlaneDist;        //!< focal  distance of perspective camera used for depth-of field, 1.0 by default (path tracing only)
   FrustumCulling                    FrustumCullingState;         //!< state of frustum culling optimization; FrustumCulling_On by default
 
-  Graphic3d_ToneMappingMethod       ToneMappingMethod;           //!< specifies tone mapping method for path tracing, Graphic3d_ToneMappingMethod_Disabled by default
+  Graphic3d_ToneMappingMethod       ToneMappingMethod;           //!< specifies tone mapping method for path tracing, Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Disabled by default
   float                Exposure;                    //!< exposure value used for tone mapping (path tracing), 0.0 by default
   float                WhitePoint;                  //!< white point value used in filmic tone mapping (path tracing), 1.0 by default
 

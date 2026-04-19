@@ -132,15 +132,15 @@ bool OpenGl_Font::createTexture(const occ::handle<OpenGl_Context>& theCtx)
   occ::handle<Graphic3d_TextureParams> aParams = new Graphic3d_TextureParams();
   aParams->SetModulate(false);
   aParams->SetRepeat(false);
-  aParams->SetFilter(Graphic3d_TOTF_BILINEAR);
-  aParams->SetAnisoFilter(Graphic3d_LOTA_OFF);
+  aParams->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR);
+  aParams->SetAnisoFilter(Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_OFF);
 
   myTextures.Append(new OpenGl_Texture(myKey + "_texture" + myTextures.Size(), aParams));
   occ::handle<OpenGl_Texture>& aTexture = myTextures.ChangeLast();
 
   Image_PixMap aBlackImg;
   if (!aBlackImg.InitZero(Image_Format_Alpha, size_t(aTextureSizeX), size_t(aTextureSizeY))
-      || !aTexture->Init(theCtx, aBlackImg, Graphic3d_TypeOfTexture_2D, true)) // myTextureFormat
+      || !aTexture->Init(theCtx, aBlackImg, Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D, true)) // myTextureFormat
   {
     theCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
                         GL_DEBUG_TYPE_ERROR,

@@ -615,7 +615,7 @@ void PrsMgr_PresentationManager::Connect(
 {
   occ::handle<PrsMgr_Presentation> aPrs      = Presentation(thePrsObject, theMode, true);
   occ::handle<PrsMgr_Presentation> aPrsOther = Presentation(theOtherObject, theOtherMode, true);
-  aPrs->Connect(aPrsOther.get(), Graphic3d_TOC_DESCENDANT);
+  aPrs->Connect(aPrsOther.get(), Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT);
 }
 
 //=================================================================================================

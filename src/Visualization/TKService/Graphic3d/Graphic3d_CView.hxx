@@ -104,7 +104,7 @@ public:
   //! Will throw an exception on attempt to set Graphic3d_TypeOfShadingModel_DEFAULT.
   Standard_EXPORT void SetShadingModel(Graphic3d_TypeOfShadingModel theModel);
 
-  //! Return backfacing model used for the view; Graphic3d_TypeOfBackfacingModel_Auto by default,
+  //! Return backfacing model used for the view; Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto by default,
   //! which means that backface culling is defined by each presentation.
   Graphic3d_TypeOfBackfacingModel BackfacingModel() const { return myBackfacing; }
 
@@ -142,14 +142,14 @@ public:
   bool ComputedMode() const { return myIsInComputedMode; }
 
   //! Computes the new presentation of the structure  displayed in this view with the type
-  //! Graphic3d_TOS_COMPUTED.
+  //! Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED.
   Standard_EXPORT void ReCompute(const occ::handle<Graphic3d_Structure>& theStructure);
 
   //! Invalidates bounding box of specified ZLayerId.
   Standard_EXPORT void Update(const Graphic3d_ZLayerId theLayerId = Graphic3d_ZLayerId_UNKNOWN);
 
   //! Computes the new presentation of the structures displayed in this view with the type
-  //! Graphic3d_TOS_COMPUTED.
+  //! Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED.
   Standard_EXPORT void Compute();
 
   //! Returns the set of structures displayed in this view.

@@ -185,7 +185,7 @@ public:
     }
 
     const int aBits = getProgramBits(occ::handle<OpenGl_TextureSet>(),
-                                     Graphic3d_AlphaMode_Opaque,
+                                     Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque,
                                      Aspect_InteriorStyle::Aspect_IS_SOLID,
                                      false,
                                      false,
@@ -439,7 +439,7 @@ public:
   //! Reset the state of OIT rendering pass (only on state change).
   void ResetOitState()
   {
-    myOitState.Set(Graphic3d_RTM_BLEND_UNORDERED, 0.0f);
+    myOitState.Set(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED, 0.0f);
     myOitState.Update();
   }
 
@@ -456,7 +456,7 @@ public:
   //! @param[in] theDepthFactor  the scalar factor of depth influence to the fragment's coverage
   void SetWeighedOitState(float theDepthFactor)
   {
-    myOitState.Set(Graphic3d_RTM_BLEND_OIT, theDepthFactor);
+    myOitState.Set(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT, theDepthFactor);
     myOitState.Update();
   }
 
@@ -600,7 +600,7 @@ protected:
                      bool                                  theEnableMeshEdges) const
   {
     int aBits = 0;
-    if (theAlphaMode == Graphic3d_AlphaMode_Mask || theAlphaMode == Graphic3d_AlphaMode_MaskBlend)
+    if (theAlphaMode == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask || theAlphaMode == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend)
     {
       aBits |= Graphic3d_ShaderFlags_AlphaTest;
     }
@@ -633,11 +633,11 @@ protected:
       aBits |= Graphic3d_ShaderFlags_VertColor;
     }
 
-    if (myOitState.ActiveMode() == Graphic3d_RTM_BLEND_OIT)
+    if (myOitState.ActiveMode() == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT)
     {
       aBits |= Graphic3d_ShaderFlags_WriteOit;
     }
-    else if (myOitState.ActiveMode() == Graphic3d_RTM_DEPTH_PEELING_OIT)
+    else if (myOitState.ActiveMode() == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT)
     {
       aBits |= Graphic3d_ShaderFlags_OitDepthPeeling;
     }

@@ -91,7 +91,7 @@ V3d_Trihedron::V3d_Trihedron()
   // Set material.
   Graphic3d_MaterialAspect aShadingMaterial;
   aShadingMaterial.SetSpecularColor(Quantity_NOC_BLACK);
-  aShadingMaterial.SetMaterialType(Graphic3d_MATERIAL_ASPECT);
+  aShadingMaterial.SetMaterialType(Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT);
 
   for (int anIt = 0; anIt < 3; ++anIt)
   {
@@ -105,8 +105,8 @@ V3d_Trihedron::V3d_Trihedron()
 
     myTextAspects[anIt]->SetFont(Font_NOF_ASCII_MONO);
     myTextAspects[anIt]->SetHeight(16);
-    myTextAspects[anIt]->SetHorizontalJustification(Graphic3d_HTA_LEFT);
-    myTextAspects[anIt]->SetVerticalJustification(Graphic3d_VTA_BOTTOM);
+    myTextAspects[anIt]->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT);
+    myTextAspects[anIt]->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM);
   }
   myArrowShadingAspects[V3d_X]->SetColor(Quantity_NOC_RED);
   myArrowShadingAspects[V3d_Y]->SetColor(Quantity_NOC_GREEN);

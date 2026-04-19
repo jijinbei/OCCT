@@ -185,7 +185,7 @@ class OpenGl_OitState : public OpenGl_StateInterface
 public:
   //! Creates new uniform state.
   OpenGl_OitState()
-      : myOitMode(Graphic3d_RTM_BLEND_UNORDERED),
+      : myOitMode(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED),
         myDepthFactor(0.5f)
   {
   }

@@ -16,7 +16,7 @@
 #define _Graphic3d_CubeMapSide_HeaderFile
 
 //! Sides of cubemap in order of OpenGL rules
-enum Graphic3d_CubeMapSide
+enum class Graphic3d_CubeMapSide
 {
   Graphic3d_CMS_POS_X, //!< X axis positive direction side
   Graphic3d_CMS_NEG_X, //!< X axis negative direction side

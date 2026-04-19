@@ -186,16 +186,16 @@ void OpenGl_Sampler::applySamplerParams(const occ::handle<OpenGl_Context>&      
   }
 
   // setup texture filtering
-  const GLenum aFilter = (theParams->Filter() == Graphic3d_TOTF_NEAREST) ? GL_NEAREST : GL_LINEAR;
+  const GLenum aFilter = (theParams->Filter() == Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST) ? GL_NEAREST : GL_LINEAR;
   GLenum       aFilterMin = aFilter;
   if (theMaxMipLevels > 0)
   {
     aFilterMin = GL_NEAREST_MIPMAP_NEAREST;
-    if (theParams->Filter() == Graphic3d_TOTF_BILINEAR)
+    if (theParams->Filter() == Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR)
     {
       aFilterMin = GL_LINEAR_MIPMAP_NEAREST;
     }
-    else if (theParams->Filter() == Graphic3d_TOTF_TRILINEAR)
+    else if (theParams->Filter() == Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_TRILINEAR)
     {
       aFilterMin = GL_LINEAR_MIPMAP_LINEAR;
     }
@@ -229,19 +229,19 @@ void OpenGl_Sampler::applySamplerParams(const occ::handle<OpenGl_Context>&      
     GLint       aDegree;
     switch (theParams->AnisoFilter())
     {
-      case Graphic3d_LOTA_QUALITY: {
+      case Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_QUALITY: {
         aDegree = aMaxDegree;
         break;
       }
-      case Graphic3d_LOTA_MIDDLE: {
+      case Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_MIDDLE: {
         aDegree = (aMaxDegree <= 4) ? 2 : (aMaxDegree / 2);
         break;
       }
-      case Graphic3d_LOTA_FAST: {
+      case Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_FAST: {
         aDegree = 2;
         break;
       }
-      case Graphic3d_LOTA_OFF:
+      case Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_OFF:
       default: {
         aDegree = 1;
         break;

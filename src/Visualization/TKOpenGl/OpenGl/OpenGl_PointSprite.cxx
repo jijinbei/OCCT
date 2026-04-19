@@ -27,7 +27,7 @@ OpenGl_PointSprite::OpenGl_PointSprite(const TCollection_AsciiString& theResourc
     : OpenGl_Texture(theResourceId, occ::handle<Graphic3d_TextureParams>()),
       myBitmapList(0)
 {
-  // mySampler->Parameters()->SetFilter (Graphic3d_TOTF_NEAREST);
+  // mySampler->Parameters()->SetFilter (Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST);
   mySampler->Parameters()->SetModulate(false);
   mySampler->Parameters()->SetGenMode(Graphic3d_TOTM_SPRITE,
                                       NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 0.0f),

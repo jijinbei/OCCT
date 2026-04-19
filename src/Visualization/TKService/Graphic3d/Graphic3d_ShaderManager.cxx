@@ -230,7 +230,7 @@ bool Graphic3d_ShaderManager::hasGlslBitwiseOps() const
   {
     case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL: {
       return IsGapiGreaterEqual(3, 0)
-             || myGlslExtensions[Graphic3d_GlslExtension_GL_EXT_gpu_shader4];
+             || myGlslExtensions[static_cast<int>(Graphic3d_GlslExtension::Graphic3d_GlslExtension_GL_EXT_gpu_shader4)];
     }
     case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES: {
       return IsGapiGreaterEqual(3, 0);
@@ -278,7 +278,7 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
           {
             theProgram->SetHeader("#version 130");
           }
-          else if (myGlslExtensions[Graphic3d_GlslExtension_GL_EXT_gpu_shader4])
+          else if (myGlslExtensions[static_cast<int>(Graphic3d_GlslExtension::Graphic3d_GlslExtension_GL_EXT_gpu_shader4)])
           {
             // GL_EXT_gpu_shader4 defines GLSL type "unsigned int", while core GLSL specs define
             // type "uint"
@@ -321,7 +321,7 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
           {
             theProgram->SetHeader("#version 300 es");
           }
-          else if (myGlslExtensions[Graphic3d_GlslExtension_GL_EXT_shader_texture_lod])
+          else if (myGlslExtensions[static_cast<int>(Graphic3d_GlslExtension::Graphic3d_GlslExtension_GL_EXT_shader_texture_lod)])
           {
             aGles2Extensions += "#extension GL_EXT_shader_texture_lod : enable\n"
                                 "#define textureCubeLod textureCubeLodEXT\n";
@@ -339,7 +339,7 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
           {
             aBits = aBits & ~Graphic3d_ShaderFlags_WriteOit;
             aBits = aBits & ~Graphic3d_ShaderFlags_OitDepthPeeling;
-            if (!myGlslExtensions[Graphic3d_GlslExtension_GL_OES_standard_derivatives])
+            if (!myGlslExtensions[static_cast<int>(Graphic3d_GlslExtension::Graphic3d_GlslExtension_GL_OES_standard_derivatives)])
             {
               aBits = aBits & ~Graphic3d_ShaderFlags_StippleLine;
             }
@@ -351,7 +351,7 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
           {
             theProgram->SetHeader("#version 300 es");
           }
-          else if (myGlslExtensions[Graphic3d_GlslExtension_GL_OES_standard_derivatives])
+          else if (myGlslExtensions[static_cast<int>(Graphic3d_GlslExtension::Graphic3d_GlslExtension_GL_OES_standard_derivatives)])
           {
             aGles2Extensions += "#extension GL_OES_standard_derivatives : enable\n";
           }
@@ -547,7 +547,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramFboBl
       {
         aProgramSrc->SetHeader("#version 300 es");
       }
-      else if (myGlslExtensions[Graphic3d_GlslExtension_GL_EXT_frag_depth])
+      else if (myGlslExtensions[static_cast<int>(Graphic3d_GlslExtension::Graphic3d_GlslExtension_GL_EXT_frag_depth)])
       {
         aProgramSrc->SetHeader("#extension GL_EXT_frag_depth : enable" EOL
                                "#define gl_FragDepth gl_FragDepthEXT");
@@ -1010,12 +1010,12 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramUnlit
   if ((theBits & Graphic3d_ShaderFlags_OitDepthPeeling) != 0)
   {
     aProgramSrc->SetNbFragmentOutputs(3);
-    aProgramSrc->SetOitOutput(Graphic3d_RTM_DEPTH_PEELING_OIT);
+    aProgramSrc->SetOitOutput(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT);
   }
   else if ((theBits & Graphic3d_ShaderFlags_WriteOit) != 0)
   {
     aProgramSrc->SetNbFragmentOutputs(2);
-    aProgramSrc->SetOitOutput(Graphic3d_RTM_BLEND_OIT);
+    aProgramSrc->SetOitOutput(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT);
   }
 
   if (theIsOutline)
@@ -1427,12 +1427,12 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramGoura
   if ((theBits & Graphic3d_ShaderFlags_OitDepthPeeling) != 0)
   {
     aProgramSrc->SetNbFragmentOutputs(3);
-    aProgramSrc->SetOitOutput(Graphic3d_RTM_DEPTH_PEELING_OIT);
+    aProgramSrc->SetOitOutput(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT);
   }
   else if ((theBits & Graphic3d_ShaderFlags_WriteOit) != 0)
   {
     aProgramSrc->SetNbFragmentOutputs(2);
-    aProgramSrc->SetOitOutput(Graphic3d_RTM_BLEND_OIT);
+    aProgramSrc->SetOitOutput(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT);
   }
 
   aStageInOuts.Append(
@@ -1632,12 +1632,12 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramPhong
   if ((theBits & Graphic3d_ShaderFlags_OitDepthPeeling) != 0)
   {
     aProgramSrc->SetNbFragmentOutputs(3);
-    aProgramSrc->SetOitOutput(Graphic3d_RTM_DEPTH_PEELING_OIT);
+    aProgramSrc->SetOitOutput(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT);
   }
   else if ((theBits & Graphic3d_ShaderFlags_WriteOit) != 0)
   {
     aProgramSrc->SetNbFragmentOutputs(2);
-    aProgramSrc->SetOitOutput(Graphic3d_RTM_BLEND_OIT);
+    aProgramSrc->SetOitOutput(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT);
   }
 
   if (isFlatNormal)
@@ -1969,7 +1969,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getPBREnvBakingPro
       {
         aProgramSrc->SetHeader("#version 300 es");
       }
-      else if (myGlslExtensions[Graphic3d_GlslExtension_GL_EXT_shader_texture_lod])
+      else if (myGlslExtensions[static_cast<int>(Graphic3d_GlslExtension::Graphic3d_GlslExtension_GL_EXT_shader_texture_lod)])
       {
         aProgramSrc->SetHeader("#extension GL_EXT_shader_texture_lod : enable\n"
                                "#define textureCubeLod textureCubeLodEXT");
@@ -2037,7 +2037,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getBgCubeMapProgra
       {
         aProgSrc->SetHeader("#version 300 es");
       }
-      else if (myGlslExtensions[Graphic3d_GlslExtension_GL_EXT_frag_depth])
+      else if (myGlslExtensions[static_cast<int>(Graphic3d_GlslExtension::Graphic3d_GlslExtension_GL_EXT_frag_depth)])
       {
         aProgSrc->SetHeader("#extension GL_EXT_frag_depth : enable" EOL
                             "#define gl_FragDepth gl_FragDepthEXT");

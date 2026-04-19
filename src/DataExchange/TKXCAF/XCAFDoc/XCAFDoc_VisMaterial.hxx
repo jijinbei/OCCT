@@ -114,7 +114,7 @@ public:
   //! Return base color.
   Standard_EXPORT Quantity_ColorRGBA BaseColor() const;
 
-  //! Return alpha mode; Graphic3d_AlphaMode_BlendAuto by default.
+  //! Return alpha mode; Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto by default.
   Graphic3d_AlphaMode AlphaMode() const { return myAlphaMode; }
 
   //! Return alpha cutoff value; 0.5 by default.
@@ -123,7 +123,7 @@ public:
   //! Set alpha mode.
   Standard_EXPORT void SetAlphaMode(Graphic3d_AlphaMode theMode, float theCutOff = 0.5f);
 
-  //! Returns if the material is double or single sided; Graphic3d_TypeOfBackfacingModel_Auto by
+  //! Returns if the material is double or single sided; Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto by
   //! default.
   Graphic3d_TypeOfBackfacingModel FaceCulling() const { return myFaceCulling; }
 
@@ -133,15 +133,15 @@ public:
   Standard_DEPRECATED("Deprecated method, FaceCulling() should be used instead")
   bool IsDoubleSided() const
   {
-    return myFaceCulling == Graphic3d_TypeOfBackfacingModel_DoubleSided;
+    return myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
   }
 
   Standard_DEPRECATED("Deprecated method, SetFaceCulling() should be used "
                       "instead")
   void SetDoubleSided(bool theIsDoubleSided)
   {
-    SetFaceCulling(theIsDoubleSided ? Graphic3d_TypeOfBackfacingModel_DoubleSided
-                                    : Graphic3d_TypeOfBackfacingModel_Auto);
+    SetFaceCulling(theIsDoubleSided ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided
+                                    : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto);
   }
 
   //! Return material name / tag (transient data, not stored in the document).
@@ -194,7 +194,7 @@ private:
   XCAFDoc_VisMaterialPBR                myPbrMat;    //!< metal-roughness material definition
   XCAFDoc_VisMaterialCommon             myCommonMat; //!< common material definition
   // clang-format off
-  Graphic3d_AlphaMode              myAlphaMode;     //!< alpha mode; Graphic3d_AlphaMode_BlendAuto by default
+  Graphic3d_AlphaMode              myAlphaMode;     //!< alpha mode; Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto by default
   float               myAlphaCutOff;   //!< alpha cutoff value; 0.5 by default
   Graphic3d_TypeOfBackfacingModel  myFaceCulling;   //!< specifies whether the material is double/single sided
   // clang-format on

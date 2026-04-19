@@ -86,7 +86,7 @@ V3d_View::V3d_View(const occ::handle<V3d_Viewer>& theViewer, const V3d_TypeOfVie
 
   myImmediateUpdate = false;
   SetAutoZFitMode(true, 1.0);
-  SetBackFacingModel(V3d_TOBM_AUTOMATIC);
+  SetBackFacingModel(Graphic3d_TypeOfBackfacingModel::V3d_TOBM_AUTOMATIC);
   SetCamera(aCamera);
   SetAxis(0., 0., 0., 1., 1., 1.);
   SetVisualization(theViewer->DefaultVisualization());
@@ -2659,22 +2659,22 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
       Image_Format aFormat = Image_Format_UNKNOWN;
       switch (theParams.BufferType)
       {
-        case Graphic3d_BT_RGB:
+        case Graphic3d_BufferType::Graphic3d_BT_RGB:
           aFormat = Image_Format_RGB;
           break;
-        case Graphic3d_BT_RGBA:
+        case Graphic3d_BufferType::Graphic3d_BT_RGBA:
           aFormat = Image_Format_RGBA;
           break;
-        case Graphic3d_BT_Depth:
+        case Graphic3d_BufferType::Graphic3d_BT_Depth:
           aFormat = Image_Format_GrayF;
           break;
-        case Graphic3d_BT_RGB_RayTraceHdrLeft:
+        case Graphic3d_BufferType::Graphic3d_BT_RGB_RayTraceHdrLeft:
           aFormat = Image_Format_RGBF;
           break;
-        case Graphic3d_BT_Red:
+        case Graphic3d_BufferType::Graphic3d_BT_Red:
           aFormat = Image_Format_Gray;
           break;
-        case Graphic3d_BT_ShadowMap:
+        case Graphic3d_BufferType::Graphic3d_BT_ShadowMap:
           aFormat = Image_Format_GrayF;
           break;
       }
@@ -2727,8 +2727,8 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
 
   if (aFBOPtr.IsNull())
   {
-    int aMaxTexSizeX = MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit_MaxViewDumpSizeX);
-    int aMaxTexSizeY = MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit_MaxViewDumpSizeY);
+    int aMaxTexSizeX = MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxViewDumpSizeX);
+    int aMaxTexSizeY = MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxViewDumpSizeY);
     if (theParams.TileSize > aMaxTexSizeX || theParams.TileSize > aMaxTexSizeY)
     {
       Message::SendFail(
@@ -2740,7 +2740,7 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
 
     if (aFBOVPSize.x() > aMaxTexSizeX || aFBOVPSize.y() > aMaxTexSizeY)
     {
-      if (MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit_IsWorkaroundFBO))
+      if (MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_IsWorkaroundFBO))
       {
         Message::SendWarning("Warning, workaround for Intel driver problem with empty FBO for "
                              "images with big width is applied");
@@ -2816,7 +2816,7 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
       myView->FBOChangeViewport(aFBOPtr, aTargetSize.x(), aTargetSize.y());
     }
     Redraw();
-    if (theParams.BufferType == Graphic3d_BT_ShadowMap)
+    if (theParams.BufferType == Graphic3d_BufferType::Graphic3d_BT_ShadowMap)
     {
       // draw shadow maps
       if (!myView->ShadowMapDump(theImage, theParams.LightName))

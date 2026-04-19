@@ -107,7 +107,7 @@ occ::handle<Image_CompressedPixMap> Graphic3d_CubeMapSeparate::CompressedValue(
     return occ::handle<Image_CompressedPixMap>();
   }
 
-  if (myCurrentSide == 0)
+  if (myCurrentSide == Graphic3d_CubeMapSide::Graphic3d_CMS_POS_X)
   {
     mySize      = anImage->SizeX();
     myFormat    = anImage->BaseFormat();
@@ -133,7 +133,7 @@ occ::handle<Image_PixMap> Graphic3d_CubeMapSeparate::Value(
   Graphic3d_CubeMapOrder anOrder = Graphic3d_CubeMapOrder::Default();
   if (!myIsTopDown)
   {
-    anOrder.Swap(Graphic3d_CMS_POS_Y, Graphic3d_CMS_NEG_Y);
+    anOrder.Swap(Graphic3d_CubeMapSide::Graphic3d_CMS_POS_Y, Graphic3d_CubeMapSide::Graphic3d_CMS_NEG_Y);
   }
 
   if (!myImages[anOrder[myCurrentSide]].IsNull())
@@ -152,7 +152,7 @@ occ::handle<Image_PixMap> Graphic3d_CubeMapSeparate::Value(
         convertToCompatible(theSupported, anImage);
         if (anImage->SizeX() == anImage->SizeY())
         {
-          if (myCurrentSide == 0)
+          if (myCurrentSide == Graphic3d_CubeMapSide::Graphic3d_CMS_POS_X)
           {
             mySize      = anImage->SizeX();
             myFormat    = anImage->Format();
@@ -183,7 +183,7 @@ occ::handle<Image_PixMap> Graphic3d_CubeMapSeparate::Value(
     }
     else
     {
-      Message::SendWarning(TCollection_AsciiString() + "[" + myCurrentSide
+      Message::SendWarning(TCollection_AsciiString() + "[" + static_cast<int>(myCurrentSide)
                            + "] path of Graphic3d_CubeMapSeparate is invalid");
     }
   }

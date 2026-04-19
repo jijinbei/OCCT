@@ -322,7 +322,7 @@ public:
   Standard_DEPRECATED("Deprecated short-cut")
   void Connect(const occ::handle<Graphic3d_Structure>& thePrs)
   {
-    Connect(thePrs.get(), Graphic3d_TOC_DESCENDANT);
+    Connect(thePrs.get(), Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT);
   }
 
   //! Returns the group of structures connected to <me>.
@@ -341,7 +341,7 @@ public:
   Standard_EXPORT void DisconnectAll(const Graphic3d_TypeOfConnection AType);
 
   Standard_DEPRECATED("Deprecated alias for DisconnectAll()")
-  void RemoveAll() { DisconnectAll(Graphic3d_TOC_DESCENDANT); }
+  void RemoveAll() { DisconnectAll(Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT); }
 
   //! Returns <ASet> the group of structures :
   //! - directly or indirectly connected to <AStructure> if the
@@ -449,7 +449,7 @@ public:
     // The ComputeVisual is saved only if the structure is declared TOS_ALL, TOS_WIREFRAME or
     // TOS_SHADING. This declaration permits to calculate proper representation of the structure
     // calculated by Compute instead of passage to TOS_COMPUTED.
-    if (theVisual != Graphic3d_TOS_COMPUTED)
+    if (theVisual != Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED)
     {
       myComputeVisual = theVisual;
     }

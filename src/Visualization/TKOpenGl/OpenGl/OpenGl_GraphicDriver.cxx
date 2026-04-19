@@ -524,52 +524,52 @@ int OpenGl_GraphicDriver::InquireLimit(const Graphic3d_TypeOfLimit theType) cons
   const occ::handle<OpenGl_Context>& aCtx = GetSharedContext();
   switch (theType)
   {
-    case Graphic3d_TypeOfLimit_MaxNbLights:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxNbLights:
       return Graphic3d_ShaderProgram::THE_MAX_LIGHTS_DEFAULT;
-    case Graphic3d_TypeOfLimit_MaxNbClipPlanes:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxNbClipPlanes:
       return !aCtx.IsNull() ? aCtx->MaxClipPlanes() : 0;
-    case Graphic3d_TypeOfLimit_MaxNbViews:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxNbViews:
       return 10000;
-    case Graphic3d_TypeOfLimit_MaxTextureSize:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxTextureSize:
       return !aCtx.IsNull() ? aCtx->MaxTextureSize() : 1024;
-    case Graphic3d_TypeOfLimit_MaxCombinedTextureUnits:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxCombinedTextureUnits:
       return !aCtx.IsNull() ? aCtx->MaxCombinedTextureUnits() : 1;
-    case Graphic3d_TypeOfLimit_MaxMsaa:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxMsaa:
       return !aCtx.IsNull() ? aCtx->MaxMsaaSamples() : 0;
-    case Graphic3d_TypeOfLimit_MaxViewDumpSizeX:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxViewDumpSizeX:
       return !aCtx.IsNull() ? aCtx->MaxDumpSizeX() : 1024;
-    case Graphic3d_TypeOfLimit_MaxViewDumpSizeY:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxViewDumpSizeY:
       return !aCtx.IsNull() ? aCtx->MaxDumpSizeY() : 1024;
-    case Graphic3d_TypeOfLimit_HasPBR:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasPBR:
       return (!aCtx.IsNull() && aCtx->HasPBR()) ? 1 : 0;
-    case Graphic3d_TypeOfLimit_HasRayTracing:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasRayTracing:
       return (!aCtx.IsNull() && aCtx->HasRayTracing()) ? 1 : 0;
-    case Graphic3d_TypeOfLimit_HasRayTracingTextures:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasRayTracingTextures:
       return (!aCtx.IsNull() && aCtx->HasRayTracingTextures()) ? 1 : 0;
-    case Graphic3d_TypeOfLimit_HasRayTracingAdaptiveSampling:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasRayTracingAdaptiveSampling:
       return (!aCtx.IsNull() && aCtx->HasRayTracingAdaptiveSampling()) ? 1 : 0;
-    case Graphic3d_TypeOfLimit_HasRayTracingAdaptiveSamplingAtomic:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasRayTracingAdaptiveSamplingAtomic:
       return (!aCtx.IsNull() && aCtx->HasRayTracingAdaptiveSamplingAtomic()) ? 1 : 0;
-    case Graphic3d_TypeOfLimit_HasSRGB:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasSRGB:
       return (!aCtx.IsNull() && aCtx->HasSRGB()) ? 1 : 0;
-    case Graphic3d_TypeOfLimit_HasBlendedOit:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasBlendedOit:
       return (!aCtx.IsNull() && aCtx->hasDrawBuffers != OpenGl_FeatureNotAvailable
               && (aCtx->hasFloatBuffer != OpenGl_FeatureNotAvailable
                   || aCtx->hasHalfFloatBuffer != OpenGl_FeatureNotAvailable))
                ? 1
                : 0;
-    case Graphic3d_TypeOfLimit_HasBlendedOitMsaa:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasBlendedOitMsaa:
       return (!aCtx.IsNull() && aCtx->hasSampleVariables != OpenGl_FeatureNotAvailable
-              && (InquireLimit(Graphic3d_TypeOfLimit_HasBlendedOit) == 1))
+              && (InquireLimit(Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasBlendedOit) == 1))
                ? 1
                : 0;
-    case Graphic3d_TypeOfLimit_HasFlatShading:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasFlatShading:
       return !aCtx.IsNull() && aCtx->hasFlatShading != OpenGl_FeatureNotAvailable ? 1 : 0;
-    case Graphic3d_TypeOfLimit_IsWorkaroundFBO:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_IsWorkaroundFBO:
       return !aCtx.IsNull() && aCtx->MaxTextureSize() != aCtx->MaxDumpSizeX() ? 1 : 0;
-    case Graphic3d_TypeOfLimit_HasMeshEdges:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_HasMeshEdges:
       return !aCtx.IsNull() && aCtx->hasGeometryStage != OpenGl_FeatureNotAvailable ? 1 : 0;
-    case Graphic3d_TypeOfLimit_NB:
+    case Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_NB:
       return 0;
   }
   return 0;

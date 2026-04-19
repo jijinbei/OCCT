@@ -178,8 +178,8 @@ AIS_ViewCube::AIS_ViewCube()
 
 void AIS_ViewCube::setDefaultAttributes()
 {
-  myDrawer->TextAspect()->SetHorizontalJustification(Graphic3d_HTA_CENTER);
-  myDrawer->TextAspect()->SetVerticalJustification(Graphic3d_VTA_CENTER);
+  myDrawer->TextAspect()->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER);
+  myDrawer->TextAspect()->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER);
   myDrawer->TextAspect()->SetColor(Quantity_NOC_BLACK);
   myDrawer->TextAspect()->SetFont(Font_NOF_SANS_SERIF);
   myDrawer->TextAspect()->SetHeight(16.0);
@@ -187,7 +187,7 @@ void AIS_ViewCube::setDefaultAttributes()
   myDrawer->TextAspect()->Aspect()->SetTextZoomable (true); // the whole object is drawn within transformation-persistence
   // this should be forced back-face culling regardless Closed flag
   // clang-format on
-  myDrawer->TextAspect()->Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_BackCulled);
+  myDrawer->TextAspect()->Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
 
   Graphic3d_MaterialAspect aMat(Graphic3d_NameOfMaterial_UserDefined);
   aMat.SetColor(Quantity_NOC_WHITE);
@@ -196,7 +196,7 @@ void AIS_ViewCube::setDefaultAttributes()
   const occ::handle<Graphic3d_AspectFillArea3d>& aShading = myDrawer->ShadingAspect()->Aspect();
   aShading->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   // this should be forced back-face culling regardless Closed flag
-  aShading->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_BackCulled);
+  aShading->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
   aShading->SetInteriorColor(aMat.Color());
   aShading->SetFrontMaterial(aMat);
   myDrawer->SetFaceBoundaryDraw(false);

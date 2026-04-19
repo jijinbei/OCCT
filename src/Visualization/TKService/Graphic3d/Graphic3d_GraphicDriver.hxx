@@ -42,13 +42,13 @@ public:
   virtual int InquireLimit(const Graphic3d_TypeOfLimit theType) const = 0;
 
   //! Request maximum number of active light sources supported by driver and hardware.
-  int InquireLightLimit() const { return InquireLimit(Graphic3d_TypeOfLimit_MaxNbLights); }
+  int InquireLightLimit() const { return InquireLimit(Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxNbLights); }
 
   //! Request maximum number of active clipping planes supported by driver and hardware.
-  int InquirePlaneLimit() const { return InquireLimit(Graphic3d_TypeOfLimit_MaxNbClipPlanes); }
+  int InquirePlaneLimit() const { return InquireLimit(Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxNbClipPlanes); }
 
   //! Request maximum number of views supported by driver.
-  int InquireViewLimit() const { return InquireLimit(Graphic3d_TypeOfLimit_MaxNbViews); }
+  int InquireViewLimit() const { return InquireLimit(Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxNbViews); }
 
 public:
   //! Creates new empty graphic structure

@@ -26,7 +26,7 @@
 //=================================================================================================
 
 OpenGl_BackgroundArray::OpenGl_BackgroundArray(const Graphic3d_TypeOfBackground theType)
-    : OpenGl_PrimitiveArray(nullptr, Graphic3d_TOPA_TRIANGLES, nullptr, nullptr, nullptr),
+    : OpenGl_PrimitiveArray(nullptr, Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES, nullptr, nullptr, nullptr),
       myType(theType),
       myFillMethod(Aspect_FillMethod::Aspect_FM_NONE),
       myViewWidth(0),

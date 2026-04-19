@@ -37,13 +37,13 @@ Graphic3d_Structure::Graphic3d_Structure(const occ::handle<Graphic3d_StructureMa
                                          const occ::handle<Graphic3d_Structure>&        theLinkPrs)
     : myStructureManager(theManager.get()),
       myOwner(nullptr),
-      myVisual(Graphic3d_TOS_ALL),
-      myComputeVisual(Graphic3d_TOS_ALL)
+      myVisual(Graphic3d_TypeOfStructure::Graphic3d_TOS_ALL),
+      myComputeVisual(Graphic3d_TypeOfStructure::Graphic3d_TOS_ALL)
 {
   if (!theLinkPrs.IsNull())
   {
     myOwner = theLinkPrs->myOwner;
-    if (theLinkPrs->myVisual != Graphic3d_TOS_COMPUTED)
+    if (theLinkPrs->myVisual != Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED)
     {
       myVisual = theLinkPrs->myVisual;
     }
@@ -118,12 +118,12 @@ void Graphic3d_Structure::Remove()
   // of the same structure.
   for (int aStructIdx = 1, aNbDesc = myDescendants.Size(); aStructIdx <= aNbDesc; ++aStructIdx)
   {
-    myDescendants.FindKey(aStructIdx)->Remove(this, Graphic3d_TOC_ANCESTOR);
+    myDescendants.FindKey(aStructIdx)->Remove(this, Graphic3d_TypeOfConnection::Graphic3d_TOC_ANCESTOR);
   }
 
   for (int aStructIdx = 1, aNbAnces = myAncestors.Size(); aStructIdx <= aNbAnces; ++aStructIdx)
   {
-    myAncestors.FindKey(aStructIdx)->Remove(this, Graphic3d_TOC_DESCENDANT);
+    myAncestors.FindKey(aStructIdx)->Remove(this, Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT);
   }
 
   // Destruction of me in the graphic library
@@ -489,7 +489,7 @@ void Graphic3d_Structure::Connect(Graphic3d_Structure*       theStructure,
     return;
   }
 
-  if (theType == Graphic3d_TOC_DESCENDANT)
+  if (theType == Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT)
   {
     if (!AppendDescendant(theStructure))
     {
@@ -497,14 +497,14 @@ void Graphic3d_Structure::Connect(Graphic3d_Structure*       theStructure,
     }
 
     CalculateBoundBox();
-    theStructure->Connect(this, Graphic3d_TOC_ANCESTOR);
+    theStructure->Connect(this, Graphic3d_TypeOfConnection::Graphic3d_TOC_ANCESTOR);
 
     GraphicConnect(theStructure);
     myStructureManager->Connect(this, theStructure);
 
     Update(true);
   }
-  else // Graphic3d_TOC_ANCESTOR
+  else // Graphic3d_TypeOfConnection::Graphic3d_TOC_ANCESTOR
   {
     if (!AppendAncestor(theStructure))
     {
@@ -512,7 +512,7 @@ void Graphic3d_Structure::Connect(Graphic3d_Structure*       theStructure,
     }
 
     CalculateBoundBox();
-    theStructure->Connect(this, Graphic3d_TOC_DESCENDANT);
+    theStructure->Connect(this, Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT);
 
     // myStructureManager->Connect is called in case if connection between parent and child
   }
@@ -555,7 +555,7 @@ void Graphic3d_Structure::DisconnectAll(const Graphic3d_TypeOfConnection theType
 
   switch (theType)
   {
-    case Graphic3d_TOC_DESCENDANT: {
+    case Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT: {
       for (int anIdx = 1, aLength = myDescendants.Size(); anIdx <= aLength; ++anIdx)
       {
         // Value (1) instead of Value (i) as myDescendants
@@ -566,7 +566,7 @@ void Graphic3d_Structure::DisconnectAll(const Graphic3d_TypeOfConnection theType
       }
       break;
     }
-    case Graphic3d_TOC_ANCESTOR: {
+    case Graphic3d_TypeOfConnection::Graphic3d_TOC_ANCESTOR: {
       for (int anIdx = 1, aLength = myAncestors.Size(); anIdx <= aLength; ++anIdx)
       {
         // Value (1) instead of Value (i) as myAncestors
@@ -659,7 +659,7 @@ void Graphic3d_Structure::SetTransformPersistence(
 void Graphic3d_Structure::Remove(Graphic3d_Structure*             thePtr,
                                  const Graphic3d_TypeOfConnection theType)
 {
-  if (theType == Graphic3d_TOC_DESCENDANT)
+  if (theType == Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT)
   {
     RemoveDescendant(thePtr);
   }
@@ -795,7 +795,7 @@ void Graphic3d_Structure::Network(Graphic3d_Structure*                   theStru
   theSet.Add(theStructure);
   switch (theType)
   {
-    case Graphic3d_TOC_DESCENDANT: {
+    case Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT: {
       for (NCollection_IndexedMap<Graphic3d_Structure*>::Iterator anIter(
              theStructure->myDescendants);
            anIter.More();
@@ -805,7 +805,7 @@ void Graphic3d_Structure::Network(Graphic3d_Structure*                   theStru
       }
       break;
     }
-    case Graphic3d_TOC_ANCESTOR: {
+    case Graphic3d_TypeOfConnection::Graphic3d_TOC_ANCESTOR: {
       for (NCollection_IndexedMap<Graphic3d_Structure*>::Iterator anIter(theStructure->myAncestors);
            anIter.More();
            anIter.Next())

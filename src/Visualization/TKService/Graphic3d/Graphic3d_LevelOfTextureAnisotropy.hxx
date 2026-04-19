@@ -19,7 +19,7 @@
 
 //! Level of anisotropy filter.
 //! Notice that actual quality depends on hardware capabilities!
-enum Graphic3d_LevelOfTextureAnisotropy
+enum class Graphic3d_LevelOfTextureAnisotropy
 {
   Graphic3d_LOTA_OFF,
   Graphic3d_LOTA_FAST,

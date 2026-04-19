@@ -30,8 +30,8 @@
 namespace
 {
 static float                             THE_LABEL_HEIGHT = 16;
-static Graphic3d_HorizontalTextAlignment THE_LABEL_HALIGH = Graphic3d_HTA_LEFT;
-static Graphic3d_VerticalTextAlignment   THE_LABEL_VALIGH = Graphic3d_VTA_BOTTOM;
+static Graphic3d_HorizontalTextAlignment THE_LABEL_HALIGH = Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT;
+static Graphic3d_VerticalTextAlignment   THE_LABEL_VALIGH = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
 } // namespace
 
 //=================================================================================================
@@ -90,13 +90,13 @@ void OpenGl_GraduatedTrihedron::initGlResources(const occ::handle<OpenGl_Context
 
   myLabelValues.SetFontSize(theCtx, myData.ValuesSize());
 
-  myAspectLabels.Aspect()->SetAlphaMode(Graphic3d_AlphaMode_MaskBlend, 0.285f);
+  myAspectLabels.Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend, 0.285f);
   myAspectLabels.Aspect()->SetTextFontAspect(myData.NamesFontAspect());
   myAspectLabels.Aspect()->SetTextFont(!myData.NamesFont().IsEmpty()
                                          ? new TCollection_HAsciiString(myData.NamesFont())
                                          : occ::handle<TCollection_HAsciiString>());
 
-  myAspectValues.Aspect()->SetAlphaMode(Graphic3d_AlphaMode_MaskBlend, 0.285f);
+  myAspectValues.Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend, 0.285f);
   myAspectValues.Aspect()->SetTextFontAspect(myData.ValuesFontAspect());
   myAspectValues.Aspect()->SetTextFont(!myData.ValuesFont().IsEmpty()
                                          ? new TCollection_HAsciiString(myData.ValuesFont())
@@ -731,17 +731,17 @@ OpenGl_GraduatedTrihedron::Axis& OpenGl_GraduatedTrihedron::Axis::operator=(cons
   Label      = theOther.Label;
 
   Line.InitBuffers(nullptr,
-                   Graphic3d_TOPA_SEGMENTS,
+                   Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS,
                    theOther.Line.Indices(),
                    theOther.Line.Attributes(),
                    theOther.Line.Bounds());
   Tickmark.InitBuffers(nullptr,
-                       Graphic3d_TOPA_SEGMENTS,
+                       Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS,
                        theOther.Tickmark.Indices(),
                        theOther.Tickmark.Attributes(),
                        theOther.Tickmark.Bounds());
   Arrow.InitBuffers(nullptr,
-                    Graphic3d_TOPA_POLYLINES,
+                    Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES,
                     theOther.Arrow.Indices(),
                     theOther.Arrow.Attributes(),
                     theOther.Arrow.Bounds());
@@ -778,7 +778,7 @@ void OpenGl_GraduatedTrihedron::Axis::InitArrow(const occ::handle<OpenGl_Context
   anArray->AddVertex(aPoint1);
 
   Arrow.InitBuffers(theContext,
-                    Graphic3d_TOPA_POLYLINES,
+                    Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES,
                     anArray->Indices(),
                     anArray->Attributes(),
                     anArray->Bounds());
@@ -794,7 +794,7 @@ void OpenGl_GraduatedTrihedron::Axis::InitTickmark(const occ::handle<OpenGl_Cont
   anArray->AddVertex(0.0f, 0.0f, 0.0f);
   anArray->AddVertex(theDir);
   Tickmark.InitBuffers(theContext,
-                       Graphic3d_TOPA_SEGMENTS,
+                       Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS,
                        anArray->Indices(),
                        anArray->Attributes(),
                        anArray->Bounds());
@@ -811,7 +811,7 @@ void OpenGl_GraduatedTrihedron::Axis::InitLine(const occ::handle<OpenGl_Context>
   anArray->AddVertex(theDir);
 
   Line.InitBuffers(theContext,
-                   Graphic3d_TOPA_SEGMENTS,
+                   Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS,
                    anArray->Indices(),
                    anArray->Attributes(),
                    anArray->Bounds());

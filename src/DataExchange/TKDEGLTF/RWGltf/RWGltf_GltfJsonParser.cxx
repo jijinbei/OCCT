@@ -910,11 +910,11 @@ void RWGltf_GltfJsonParser::gltfBindMaterial(
     aMatXde.Roughness                = theMatPbr->Roughness;
     aMat->SetPbrMaterial(aMatXde);
 
-    Graphic3d_AlphaMode anAlphaMode = Graphic3d_AlphaMode_BlendAuto;
+    Graphic3d_AlphaMode anAlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
     switch (theMatPbr->AlphaMode)
     {
       case RWGltf_GltfAlphaMode_Opaque: {
-        anAlphaMode = Graphic3d_AlphaMode_Opaque;
+        anAlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque;
         if (aMatXde.BaseColor.Alpha() < 1.0f)
         {
           Message::SendWarning(
@@ -923,19 +923,19 @@ void RWGltf_GltfJsonParser::gltfBindMaterial(
         break;
       }
       case RWGltf_GltfAlphaMode_Mask: {
-        anAlphaMode = Graphic3d_AlphaMode_Mask;
+        anAlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask;
         break;
       }
       case RWGltf_GltfAlphaMode_Blend: {
-        anAlphaMode = Graphic3d_AlphaMode_Blend;
+        anAlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend;
         break;
       }
     }
     aMat->SetAlphaMode(anAlphaMode, theMatPbr->AlphaCutOff);
     // consider "doubleSided" material flag as indication of automatically culled material
     // as glTF doesn't define closed/open flag and culling will be practically disabled
-    aMat->SetFaceCulling(theMatPbr->IsDoubleSided ? Graphic3d_TypeOfBackfacingModel_Auto
-                                                  : Graphic3d_TypeOfBackfacingModel_BackCulled);
+    aMat->SetFaceCulling(theMatPbr->IsDoubleSided ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
+                                                  : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
 
     if (!theMatPbr->Name.IsEmpty())
     {

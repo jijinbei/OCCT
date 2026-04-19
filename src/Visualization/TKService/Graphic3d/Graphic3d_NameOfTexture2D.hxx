@@ -18,7 +18,7 @@
 #define _Graphic3d_NameOfTexture2D_HeaderFile
 
 //! Types of standard textures.
-enum Graphic3d_NameOfTexture2D
+enum class Graphic3d_NameOfTexture2D
 {
   Graphic3d_NOT_2D_MATRA,
   Graphic3d_NOT_2D_ALIENSKIN,

@@ -63,7 +63,7 @@ public:
 
   //! Increment memory usage statistics.
   //! Default implementation puts EstimatedDataSize() into
-  //! Graphic3d_FrameStatsCounter_EstimatedBytesGeom.
+  //! Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_EstimatedBytesGeom.
   Standard_EXPORT virtual void UpdateMemStats(Graphic3d_FrameStatsDataTmp& theStats) const;
 
   //! Increment draw calls statistics.

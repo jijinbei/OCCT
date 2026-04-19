@@ -68,14 +68,14 @@ void OpenGl_Material::init(const OpenGl_Context&           theCtx,
   // clang-format on
   switch (theMat.MaterialType())
   {
-    case Graphic3d_MATERIAL_ASPECT: {
+    case Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT: {
       aCommon.Diffuse.SetValues(aSrcDif * theInteriorColor, theMat.Alpha());
       aCommon.Ambient.SetValues(aSrcAmb * theInteriorColor, 1.0f);
       aCommon.Emission.SetValues(aSrcEms * theInteriorColor, 1.0f);
       aPbr.BaseColor.SetValues(theInteriorColor, theMat.Alpha());
       break;
     }
-    case Graphic3d_MATERIAL_PHYSIC: {
+    case Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_PHYSIC: {
       aCommon.Diffuse.SetValues(aSrcDif, theMat.Alpha());
       aCommon.Ambient.SetValues(aSrcAmb, 1.0f);
       aCommon.Emission.SetValues(aSrcEms, 1.0f);
@@ -135,13 +135,13 @@ OpenGl_Workspace::OpenGl_Workspace(OpenGl_View*                      theView,
     }
   }
 
-  myNoneCulling.Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_DoubleSided);
+  myNoneCulling.Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
   myNoneCulling.Aspect()->SetDrawEdges(false);
-  myNoneCulling.Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Opaque);
+  myNoneCulling.Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque);
 
-  myFrontCulling.Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_BackCulled);
+  myFrontCulling.Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
   myFrontCulling.Aspect()->SetDrawEdges(false);
-  myFrontCulling.Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Opaque);
+  myFrontCulling.Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque);
 }
 
 //=================================================================================================
@@ -245,29 +245,29 @@ const OpenGl_Aspects* OpenGl_Workspace::SetAspects(const OpenGl_Aspects* theAspe
 const OpenGl_Aspects* OpenGl_Workspace::ApplyAspects(bool theToBindTextures)
 {
   // bool toSuppressBackFaces = myView->BackfacingModel() ==
-  // Graphic3d_TypeOfBackfacingModel_BackCulled;
+  // Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
   Graphic3d_TypeOfBackfacingModel aCullFacesMode = myView->BackfacingModel();
-  if (aCullFacesMode == Graphic3d_TypeOfBackfacingModel_Auto)
+  if (aCullFacesMode == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto)
   {
     aCullFacesMode = myAspectsSet->Aspect()->FaceCulling();
-    if (aCullFacesMode == Graphic3d_TypeOfBackfacingModel_Auto)
+    if (aCullFacesMode == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto)
     {
-      aCullFacesMode = Graphic3d_TypeOfBackfacingModel_DoubleSided;
+      aCullFacesMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
       if (myToAllowFaceCulling)
       {
         if (myAspectsSet->Aspect()->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_HATCH
-            || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode_Blend
-            || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode_Mask
-            || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode_MaskBlend
-            || (myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode_BlendAuto
+            || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend
+            || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask
+            || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend
+            || (myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto
                 && myAspectsSet->Aspect()->FrontMaterial().Transparency() != 0.0f))
         {
           // disable culling in case of translucent shading aspect
-          aCullFacesMode = Graphic3d_TypeOfBackfacingModel_DoubleSided;
+          aCullFacesMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
         }
         else
         {
-          aCullFacesMode = Graphic3d_TypeOfBackfacingModel_BackCulled;
+          aCullFacesMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
         }
       }
     }

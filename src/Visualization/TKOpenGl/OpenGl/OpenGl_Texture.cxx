@@ -230,21 +230,21 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
   GLenum aTarget = GL_TEXTURE_2D;
   switch (theType)
   {
-    case Graphic3d_TypeOfTexture_1D: {
+    case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D: {
       aTarget = theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES ? GL_TEXTURE_1D
                                                                              : GL_TEXTURE_2D;
       break;
     }
-    case Graphic3d_TypeOfTexture_2D:
-    case Graphic3d_TOT_2D_MIPMAP: {
+    case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D:
+    case Graphic3d_TypeOfTexture::Graphic3d_TOT_2D_MIPMAP: {
       aTarget = GL_TEXTURE_2D;
       break;
     }
-    case Graphic3d_TypeOfTexture_3D: {
+    case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_3D: {
       aTarget = GL_TEXTURE_3D;
       break;
     }
-    case Graphic3d_TypeOfTexture_CUBEMAP: {
+    case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_CUBEMAP: {
       aTarget = GL_TEXTURE_CUBE_MAP;
       break;
     }
@@ -252,7 +252,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
   const bool toPatchExisting =
     IsValid() && myTextFormat == theFormat.PixelFormat() && myTarget == aTarget
     && mySize.x() == theSizeXYZ.x()
-    && (mySize.y() == theSizeXYZ.y() || theType == Graphic3d_TypeOfTexture_1D)
+    && (mySize.y() == theSizeXYZ.y() || theType == Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D)
     && mySize.z() == theSizeXYZ.z();
   if (!Create(theCtx))
   {
@@ -321,7 +321,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
     const NCollection_Vec2<int> aSizeP2(OpenGl_Context::GetPowerOfTwo(theSizeXYZ.x(), aMaxSize),
                                         OpenGl_Context::GetPowerOfTwo(theSizeXYZ.y(), aMaxSize));
     if (theSizeXYZ.x() != aSizeP2.x()
-        || (theType != Graphic3d_TypeOfTexture_1D && theSizeXYZ.y() != aSizeP2.y()))
+        || (theType != Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D && theSizeXYZ.y() != aSizeP2.y()))
     {
       theCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
                           GL_DEBUG_TYPE_PORTABILITY,
@@ -374,7 +374,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
   myTarget = aTarget;
   switch (theType)
   {
-    case Graphic3d_TypeOfTexture_1D: {
+    case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D: {
       if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         theCtx->PushMessage(
@@ -445,8 +445,8 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
       mySize.SetValues(theSizeXYZ.x(), 1, 1);
       break;
     }
-    case Graphic3d_TypeOfTexture_2D:
-    case Graphic3d_TOT_2D_MIPMAP: {
+    case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D:
+    case Graphic3d_TypeOfTexture::Graphic3d_TOT_2D_MIPMAP: {
       Bind(theCtx);
       applyDefaultSamplerParams(theCtx);
       if (toPatchExisting)
@@ -527,7 +527,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
       mySize.SetValues(theSizeXYZ.xy(), 1);
       break;
     }
-    case Graphic3d_TypeOfTexture_3D: {
+    case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_3D: {
       if (theCtx->Functions()->glTexImage3D == nullptr)
       {
         theCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
@@ -612,7 +612,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
       mySize = theSizeXYZ;
       break;
     }
-    case Graphic3d_TypeOfTexture_CUBEMAP: {
+    case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_CUBEMAP: {
       Unbind(theCtx);
       Release(theCtx.get());
       return false;
@@ -749,7 +749,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>&        theCtx,
 
   switch (theTextureMap->Type())
   {
-    case Graphic3d_TypeOfTexture_CUBEMAP: {
+    case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_CUBEMAP: {
       return InitCubeMap(theCtx,
                          occ::down_cast<Graphic3d_CubeMap>(theTextureMap),
                          0,

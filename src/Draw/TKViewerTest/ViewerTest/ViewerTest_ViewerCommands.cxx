@@ -3114,7 +3114,7 @@ static int VBackground(Draw_Interpretor& theDI, int theNbArgs, const char** theA
     aCubeMap->SetZInversion(isCubeZInverted);
     aCubeMap->SetColorMap(isSRgb);
 
-    aCubeMap->GetParams()->SetFilter(Graphic3d_TOTF_BILINEAR);
+    aCubeMap->GetParams()->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR);
     aCubeMap->GetParams()->SetRepeat(false);
     aCubeMap->GetParams()->SetTextureUnit(Graphic3d_TextureUnit_EnvMap);
 
@@ -5526,7 +5526,7 @@ static int VFps(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 
   // compute additional statistics in ray-tracing mode
   const Graphic3d_RenderingParams& aParams = aView->RenderingParams();
-  if (aParams.Method == Graphic3d_RM_RAYTRACING)
+  if (aParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING)
   {
     NCollection_Vec2<int> aWinSize(0, 0);
     aView->Window()->Size(aWinSize.x(), aWinSize.y());
@@ -5599,7 +5599,7 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   }
 
   Image_Format         aFormat     = Image_Format_RGBA;
-  Graphic3d_BufferType aBufferType = Graphic3d_BT_RGBA;
+  Graphic3d_BufferType aBufferType = Graphic3d_BufferType::Graphic3d_BT_RGBA;
 
   int aWidth, aHeight;
   aView->Window()->Size(aWidth, aHeight);
@@ -5620,35 +5620,35 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     if (aParam == "-rgb" || aParam == "rgb" || aParam == "-srgb" || aParam == "srgb")
     {
       aFormat     = Image_Format_RGB;
-      aBufferType = Graphic3d_BT_RGB;
+      aBufferType = Graphic3d_BufferType::Graphic3d_BT_RGB;
       toShow_sRGB = aParam == "-srgb" || aParam == "srgb";
     }
     else if (aParam == "-hls" || aParam == "hls")
     {
       aFormat     = Image_Format_RGB;
-      aBufferType = Graphic3d_BT_RGB;
+      aBufferType = Graphic3d_BufferType::Graphic3d_BT_RGB;
       toShowHls   = true;
     }
     else if (aParam == "-rgbf" || aParam == "rgbf")
     {
       aFormat     = Image_Format_RGBF;
-      aBufferType = Graphic3d_BT_RGB;
+      aBufferType = Graphic3d_BufferType::Graphic3d_BT_RGB;
     }
     else if (aParam == "-rgba" || aParam == "rgba" || aParam == "-srgba" || aParam == "srgba")
     {
       aFormat     = Image_Format_RGBA;
-      aBufferType = Graphic3d_BT_RGBA;
+      aBufferType = Graphic3d_BufferType::Graphic3d_BT_RGBA;
       toShow_sRGB = aParam == "-srgba" || aParam == "srgba";
     }
     else if (aParam == "-rgbaf" || aParam == "rgbaf")
     {
       aFormat     = Image_Format_RGBAF;
-      aBufferType = Graphic3d_BT_RGBA;
+      aBufferType = Graphic3d_BufferType::Graphic3d_BT_RGBA;
     }
     else if (aParam == "-depth" || aParam == "depth")
     {
       aFormat     = Image_Format_GrayF;
-      aBufferType = Graphic3d_BT_Depth;
+      aBufferType = Graphic3d_BufferType::Graphic3d_BT_Depth;
     }
     else if (aParam == "-name" || aParam == "name")
     {
@@ -5690,7 +5690,7 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   Quantity_ColorRGBA aColor = anImage.PixelColor(anX, anY, true);
   if (toShowName)
   {
-    if (aBufferType == Graphic3d_BT_RGBA)
+    if (aBufferType == Graphic3d_BufferType::Graphic3d_BT_RGBA)
     {
       theDI << Quantity_Color::StringName(aColor.GetRGB().Name()) << " " << aColor.Alpha();
     }
@@ -5701,7 +5701,7 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   }
   else if (toShowHex)
   {
-    if (aBufferType == Graphic3d_BT_RGBA)
+    if (aBufferType == Graphic3d_BufferType::Graphic3d_BT_RGBA)
     {
       theDI << Quantity_ColorRGBA::ColorToHex(aColor);
     }
@@ -5715,7 +5715,7 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     switch (aBufferType)
     {
       default:
-      case Graphic3d_BT_RGB: {
+      case Graphic3d_BufferType::Graphic3d_BT_RGB: {
         if (toShowHls)
         {
           theDI << aColor.GetRGB().Hue() << " " << aColor.GetRGB().Light() << " "
@@ -5734,7 +5734,7 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
         }
         break;
       }
-      case Graphic3d_BT_RGBA: {
+      case Graphic3d_BufferType::Graphic3d_BT_RGBA: {
         const NCollection_Vec4<float> aVec4 =
           toShow_sRGB
             ? Quantity_ColorRGBA::Convert_LinearRGB_To_sRGB((NCollection_Vec4<float>)aColor)
@@ -5742,7 +5742,7 @@ static int VReadPixel(Draw_Interpretor& theDI, int theArgNb, const char** theArg
         theDI << aVec4.r() << " " << aVec4.g() << " " << aVec4.b() << " " << aVec4.a();
         break;
       }
-      case Graphic3d_BT_Depth: {
+      case Graphic3d_BufferType::Graphic3d_BT_Depth: {
         theDI << aColor.GetRGB().Red();
         break;
       }
@@ -5773,7 +5773,7 @@ public:
       const occ::handle<Graphic3d_AspectFillArea3d>& aFillAspect =
         myDrawer->ShadingAspect()->Aspect();
       Graphic3d_MaterialAspect aMat;
-      aMat.SetMaterialType(Graphic3d_MATERIAL_PHYSIC);
+      aMat.SetMaterialType(Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_PHYSIC);
       aMat.SetAmbientColor(Quantity_NOC_BLACK);
       aMat.SetDiffuseColor(Quantity_NOC_WHITE);
       aMat.SetSpecularColor(Quantity_NOC_BLACK);
@@ -5784,8 +5784,8 @@ public:
     }
     {
       occ::handle<Prs3d_TextAspect> aTextAspect = new Prs3d_TextAspect();
-      aTextAspect->SetHorizontalJustification(Graphic3d_HTA_CENTER);
-      aTextAspect->SetVerticalJustification(Graphic3d_VTA_CENTER);
+      aTextAspect->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER);
+      aTextAspect->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER);
       myDrawer->SetTextAspect(aTextAspect);
     }
     {
@@ -7773,7 +7773,7 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
       V3d_ImageDumpOptions aDumpParams;
       aDumpParams.Width          = aRecParams.Width;
       aDumpParams.Height         = aRecParams.Height;
-      aDumpParams.BufferType     = Graphic3d_BT_RGBA;
+      aDumpParams.BufferType     = Graphic3d_BufferType::Graphic3d_BT_RGBA;
       aDumpParams.StereoOptions  = V3d_SDO_MONO;
       aDumpParams.ToAdjustAspect = true;
       if (!aView->ToPixMap(aRecorder->ChangeFrame(), aDumpParams))
@@ -8043,7 +8043,7 @@ static int VTextureEnv(Draw_Interpretor& /*theDI*/, int theArgNb, const char** t
       TCollection_AsciiString aTextureOpt(theArgVec[2]);
       isOk = (!aTextureOpt.IsIntegerValue()
               || (aTextureOpt.IntegerValue() >= 0
-                  && aTextureOpt.IntegerValue() < Graphic3d_NOT_ENV_UNKNOWN));
+                  && aTextureOpt.IntegerValue() < Graphic3d_NameOfTextureEnv::Graphic3d_NOT_ENV_UNKNOWN));
 
       if (isOk && theArgNb == 11)
       {
@@ -8086,9 +8086,9 @@ static int VTextureEnv(Draw_Interpretor& /*theDI*/, int theArgNb, const char** t
         aFilterOpt(theArgVec[5]);
       aTexEnv->SetTextureParameters(aRepeatOpt.IsEqual("repeat"),
                                     aModulateOpt.IsEqual("modulate"),
-                                    aFilterOpt.IsEqual("nearest")    ? Graphic3d_TOTF_NEAREST
-                                    : aFilterOpt.IsEqual("bilinear") ? Graphic3d_TOTF_BILINEAR
-                                                                     : Graphic3d_TOTF_TRILINEAR,
+                                    aFilterOpt.IsEqual("nearest")    ? Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST
+                                    : aFilterOpt.IsEqual("bilinear") ? Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR
+                                                                     : Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_TRILINEAR,
                                     (float)Draw::Atof(theArgVec[6]),
                                     (float)Draw::Atof(theArgVec[7]),
                                     (float)Draw::Atof(theArgVec[8]),
@@ -8498,32 +8498,32 @@ static int VClipPlane(Draw_Interpretor& theDi, int theArgsNb, const char** theAr
       {
         Graphic3d_MaterialAspect aMat = aClipPlane->CappingMaterial();
         aMat.SetTransparency((float)aValStr.RealValue());
-        anAspect->SetAlphaMode(Graphic3d_AlphaMode_BlendAuto);
+        anAspect->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto);
         aClipPlane->SetCappingMaterial(aMat);
       }
       else
       {
         aValStr.LowerCase();
-        Graphic3d_AlphaMode aMode = Graphic3d_AlphaMode_BlendAuto;
+        Graphic3d_AlphaMode aMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
         if (aValStr == "opaque")
         {
-          aMode = Graphic3d_AlphaMode_Opaque;
+          aMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque;
         }
         else if (aValStr == "mask")
         {
-          aMode = Graphic3d_AlphaMode_Mask;
+          aMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask;
         }
         else if (aValStr == "blend")
         {
-          aMode = Graphic3d_AlphaMode_Blend;
+          aMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend;
         }
         else if (aValStr == "maskblend" || aValStr == "blendmask")
         {
-          aMode = Graphic3d_AlphaMode_MaskBlend;
+          aMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend;
         }
         else if (aValStr == "blendauto")
         {
-          aMode = Graphic3d_AlphaMode_BlendAuto;
+          aMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
         }
         else
         {
@@ -10483,7 +10483,7 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
   {
     if (theArgNb == 1)
     {
-      theDI << (aParams.Method == Graphic3d_RM_RAYTRACING ? "on" : "off") << " ";
+      theDI << (aParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING ? "on" : "off") << " ";
       return 0;
     }
     else if (theArgNb == 2)
@@ -10492,13 +10492,13 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
       aValue.LowerCase();
       if (aValue == "on" || aValue == "1")
       {
-        aParams.Method = Graphic3d_RM_RAYTRACING;
+        aParams.Method = Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING;
         aView->Redraw();
         return 0;
       }
       else if (aValue == "off" || aValue == "0")
       {
-        aParams.Method = Graphic3d_RM_RASTERIZATION;
+        aParams.Method = Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION;
         aView->Redraw();
         return 0;
       }
@@ -10520,10 +10520,10 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
     theDI << "renderMode:  ";
     switch (aParams.Method)
     {
-      case Graphic3d_RM_RASTERIZATION:
+      case Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION:
         theDI << "rasterization ";
         break;
-      case Graphic3d_RM_RAYTRACING:
+      case Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING:
         theDI << "raytrace ";
         break;
     }
@@ -10531,14 +10531,14 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
     theDI << "transparency:  ";
     switch (aParams.TransparencyMethod)
     {
-      case Graphic3d_RTM_BLEND_UNORDERED:
+      case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED:
         theDI << "Basic blended transparency with non-commuting operator ";
         break;
-      case Graphic3d_RTM_BLEND_OIT:
+      case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT:
         theDI << "Weighted Blended Order-Independent Transparency, depth weight factor: "
               << TCollection_AsciiString(aParams.OitDepthFactor);
         break;
-      case Graphic3d_RTM_DEPTH_PEELING_OIT:
+      case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT:
         theDI << "Depth Peeling Order-Independent Transparency, Nb.Layers: "
               << TCollection_AsciiString(aParams.NbOitDepthPeelingLayers);
         break;
@@ -10696,10 +10696,10 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
       {
         switch (aParams.Method)
         {
-          case Graphic3d_RM_RASTERIZATION:
+          case Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION:
             theDI << "rasterization ";
             break;
-          case Graphic3d_RM_RAYTRACING:
+          case Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING:
             theDI << "ray-tracing ";
             break;
         }
@@ -10715,7 +10715,7 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
     {
       if (toPrint)
       {
-        theDI << (aParams.Method == Graphic3d_RM_RAYTRACING ? "true" : "false") << " ";
+        theDI << (aParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING ? "true" : "false") << " ";
         continue;
       }
 
@@ -10724,13 +10724,13 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
       {
         ++anArgIter;
       }
-      aParams.Method = isRayTrace ? Graphic3d_RM_RAYTRACING : Graphic3d_RM_RASTERIZATION;
+      aParams.Method = isRayTrace ? Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING : Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION;
     }
     else if (aFlag == "-rast" || aFlag == "-raster" || aFlag == "-rasterization")
     {
       if (toPrint)
       {
-        theDI << (aParams.Method == Graphic3d_RM_RASTERIZATION ? "true" : "false") << " ";
+        theDI << (aParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION ? "true" : "false") << " ";
         continue;
       }
 
@@ -10739,7 +10739,7 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
       {
         ++anArgIter;
       }
-      aParams.Method = isRaster ? Graphic3d_RM_RASTERIZATION : Graphic3d_RM_RAYTRACING;
+      aParams.Method = isRaster ? Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION : Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING;
     }
     else if (aFlag == "-msaa")
     {
@@ -10792,12 +10792,12 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
     {
       if (toPrint)
       {
-        if (aParams.TransparencyMethod == Graphic3d_RTM_BLEND_OIT)
+        if (aParams.TransparencyMethod == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT)
         {
           theDI << "on, depth weight factor: " << TCollection_AsciiString(aParams.OitDepthFactor)
                 << " ";
         }
-        else if (aParams.TransparencyMethod == Graphic3d_RTM_DEPTH_PEELING_OIT)
+        else if (aParams.TransparencyMethod == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT)
         {
           theDI << "on, depth peeling layers: "
                 << TCollection_AsciiString(aParams.NbOitDepthPeelingLayers) << " ";
@@ -10819,7 +10819,7 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
       aParam.LowerCase();
       if (aParam == "peeling" || aParam == "peel")
       {
-        aParams.TransparencyMethod = Graphic3d_RTM_DEPTH_PEELING_OIT;
+        aParams.TransparencyMethod = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT;
         if (anArgIter + 1 < theArgNb
             && TCollection_AsciiString(theArgVec[anArgIter + 1]).IsIntegerValue())
         {
@@ -10838,7 +10838,7 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
       }
       else if (aParam == "weighted" || aParam == "weight")
       {
-        aParams.TransparencyMethod = Graphic3d_RTM_BLEND_OIT;
+        aParams.TransparencyMethod = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT;
         if (anArgIter + 1 < theArgNb
             && TCollection_AsciiString(theArgVec[anArgIter + 1]).IsRealValue())
         {
@@ -10865,12 +10865,12 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
           return 1;
         }
 
-        aParams.TransparencyMethod = Graphic3d_RTM_BLEND_OIT;
+        aParams.TransparencyMethod = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT;
         aParams.OitDepthFactor     = aWeight;
       }
       else if (aParam == "off")
       {
-        aParams.TransparencyMethod = Graphic3d_RTM_BLEND_UNORDERED;
+        aParams.TransparencyMethod = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
       }
       else
       {
@@ -11635,11 +11635,11 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
 
       if (aMode == "disabled")
       {
-        aView->ChangeRenderingParams().ToneMappingMethod = Graphic3d_ToneMappingMethod_Disabled;
+        aView->ChangeRenderingParams().ToneMappingMethod = Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Disabled;
       }
       else if (aMode == "filmic")
       {
-        aView->ChangeRenderingParams().ToneMappingMethod = Graphic3d_ToneMappingMethod_Filmic;
+        aView->ChangeRenderingParams().ToneMappingMethod = Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Filmic;
       }
       else
       {

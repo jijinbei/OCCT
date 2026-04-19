@@ -473,7 +473,7 @@ void SelectMgr_ViewerSelector::traverseObject(
         }
 
         const NCollection_Vec4<double> aCheckPnt(anAnchor.X(), anAnchor.Y(), anAnchor.Z(), 1.0);
-        if (aPlane->ProbePoint(aCheckPnt) == Graphic3d_ClipState_Out)
+        if (aPlane->ProbePoint(aCheckPnt) == Graphic3d_ClipState::Graphic3d_ClipState_Out)
         {
           return;
         }
@@ -507,7 +507,7 @@ void SelectMgr_ViewerSelector::traverseObject(
       }
 
       Graphic3d_ClipState aState = aPlane->ProbeBox(aBBox);
-      if (aState == Graphic3d_ClipState_Out) // do not process only whole trees, next check on the
+      if (aState == Graphic3d_ClipState::Graphic3d_ClipState_Out) // do not process only whole trees, next check on the
                                              // tree node
       {
         return;
@@ -576,12 +576,12 @@ void SelectMgr_ViewerSelector::traverseObject(
             continue;
           }
           Graphic3d_ClipState aState = aPlane->ProbeBox(aBBox);
-          if (aState == Graphic3d_ClipState_Out)
+          if (aState == Graphic3d_ClipState::Graphic3d_ClipState_Out)
           {
             aClipped = true;
             break;
           }
-          if (aState == Graphic3d_ClipState_On
+          if (aState == Graphic3d_ClipState::Graphic3d_ClipState_On
               && !mySelectingVolumeMgr.IsOverlapAllowed()) // partially clipped
           {
             if (aPlane->ProbeBoxTouch(aBBox))

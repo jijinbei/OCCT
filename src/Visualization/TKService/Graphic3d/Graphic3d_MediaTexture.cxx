@@ -39,13 +39,13 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_MediaTexture, Graphic3d_Texture2D)
 //=================================================================================================
 
 Graphic3d_MediaTexture::Graphic3d_MediaTexture(std::mutex& theMutex, int thePlane)
-    : Graphic3d_Texture2D("", Graphic3d_TypeOfTexture_2D),
+    : Graphic3d_Texture2D("", Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D),
       myMutex(theMutex),
       myPlane(thePlane)
 {
   myParams->SetModulate(false);
   myParams->SetRepeat(false);
-  myParams->SetFilter(Graphic3d_TOTF_BILINEAR);
+  myParams->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR);
   myParams->SetTextureUnit(Graphic3d_TextureUnit(int(Graphic3d_TextureUnit_0) + thePlane));
 }
 

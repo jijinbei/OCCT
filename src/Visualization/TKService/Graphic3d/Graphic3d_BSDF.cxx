@@ -25,7 +25,7 @@ NCollection_Vec4<float> Graphic3d_Fresnel::Serialize() const
 {
   NCollection_Vec4<float> aData = NCollection_Vec4<float>(myFresnelData, 0.f);
 
-  if (myFresnelType != Graphic3d_FM_SCHLICK)
+  if (myFresnelType != Graphic3d_FresnelModel::Graphic3d_FM_SCHLICK)
   {
     aData.x() = -static_cast<float>(myFresnelType);
   }
@@ -51,7 +51,7 @@ Graphic3d_Fresnel Graphic3d_Fresnel::CreateConductor(
     fresnelNormal(theRefractionIndex.y(), theAbsorptionIndex.y()),
     fresnelNormal(theRefractionIndex.z(), theAbsorptionIndex.z()));
 
-  return Graphic3d_Fresnel(Graphic3d_FM_SCHLICK, aFresnel);
+  return Graphic3d_Fresnel(Graphic3d_FresnelModel::Graphic3d_FM_SCHLICK, aFresnel);
 }
 
 //=================================================================================================

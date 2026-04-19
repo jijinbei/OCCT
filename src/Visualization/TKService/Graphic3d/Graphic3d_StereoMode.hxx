@@ -32,7 +32,7 @@ enum Graphic3d_StereoMode
 
 enum
 {
-  Graphic3d_StereoMode_NB = Graphic3d_StereoMode_OpenVR + 1
+  Graphic3d_StereoMode_NB = static_cast<int>(Graphic3d_StereoMode_OpenVR) + 1
 };
 
 #endif // _Graphic3d_StereoMode_HeaderFile

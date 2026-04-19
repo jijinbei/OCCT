@@ -294,7 +294,7 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
           || !aColorTexture->Init(theGlContext,
                                   aFormat,
                                   NCollection_Vec2<int>(aSizeX, aSizeY),
-                                  Graphic3d_TypeOfTexture_2D))
+                                  Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D))
       {
         Release(theGlContext.get());
         return false;
@@ -447,7 +447,7 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
           || !aColorTexture->Init(theGlContext,
                                   aFormat,
                                   NCollection_Vec2<int>(aSizeX, aSizeY),
-                                  Graphic3d_TypeOfTexture_2D))
+                                  Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D))
       {
         Release(theGlContext.operator->());
         return false;
@@ -462,7 +462,7 @@ bool OpenGl_FrameBuffer::Init(const occ::handle<OpenGl_Context>& theGlContext,
         && !myDepthStencilTexture->Init(theGlContext,
                                         aDepthFormat,
                                         NCollection_Vec2<int>(aSizeX, aSizeY),
-                                        Graphic3d_TypeOfTexture_2D))
+                                        Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D))
     {
       theGlContext->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
                                 GL_DEBUG_TYPE_PORTABILITY,
@@ -1070,7 +1070,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
         return false;
       }
 
-      aFormat = theBufferType == Graphic3d_BT_Depth || theBufferType == Graphic3d_BT_ShadowMap
+      aFormat = theBufferType == Graphic3d_BufferType::Graphic3d_BT_Depth || theBufferType == Graphic3d_BufferType::Graphic3d_BT_ShadowMap
                   ? GL_DEPTH_COMPONENT
                   : GL_RED;
       aType   = GL_UNSIGNED_BYTE;
@@ -1082,7 +1082,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
         return false;
       }
 
-      aFormat = theBufferType == Graphic3d_BT_Depth || theBufferType == Graphic3d_BT_ShadowMap
+      aFormat = theBufferType == Graphic3d_BufferType::Graphic3d_BT_Depth || theBufferType == Graphic3d_BufferType::Graphic3d_BT_ShadowMap
                   ? GL_DEPTH_COMPONENT
                   : GL_RED;
       aType   = GL_UNSIGNED_SHORT;
@@ -1094,7 +1094,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
         return false;
       }
 
-      aFormat = theBufferType == Graphic3d_BT_Depth || theBufferType == Graphic3d_BT_ShadowMap
+      aFormat = theBufferType == Graphic3d_BufferType::Graphic3d_BT_Depth || theBufferType == Graphic3d_BufferType::Graphic3d_BT_ShadowMap
                   ? GL_DEPTH_COMPONENT
                   : GL_RED;
       aType   = GL_FLOAT;
@@ -1203,7 +1203,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
 
   GLint aReadBufferPrev = GL_BACK;
   if (theGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
-      && (theBufferType == Graphic3d_BT_Depth || theBufferType == Graphic3d_BT_ShadowMap)
+      && (theBufferType == Graphic3d_BufferType::Graphic3d_BT_Depth || theBufferType == Graphic3d_BufferType::Graphic3d_BT_ShadowMap)
       && aFormat != GL_DEPTH_COMPONENT)
   {
     return false;

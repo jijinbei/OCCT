@@ -71,7 +71,8 @@ enum
 {
   //! Auxiliary value defining the overall number of values in enumeration
   //! Graphic3d_TypeOfShadingModel
-  Graphic3d_TypeOfShadingModel_NB = Graphic3d_TypeOfShadingModel_PbrFacet + 1
+  Graphic3d_TypeOfShadingModel_NB =
+    static_cast<int>(Graphic3d_TypeOfShadingModel_PbrFacet) + 1
 };
 
 #endif // _Graphic3d_TypeOfShadingModel_HeaderFile

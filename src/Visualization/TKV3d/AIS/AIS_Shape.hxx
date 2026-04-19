@@ -56,7 +56,7 @@
 //!   aPrs->Attributes()->SetupOwnShadingAspect();
 //!   aPrs->Attributes()->ShadingAspect()->Aspect()->SetTextureMapOn();
 //!   aPrs->Attributes()->ShadingAspect()->Aspect()->SetTextureMap (new Graphic3d_Texture2D
-//!   (Graphic3d_NOT_2D_ALUMINUM));
+//!   (Graphic3d_NameOfTexture2D::Graphic3d_NOT_2D_ALUMINUM));
 //! @endcode
 //! The texture itself is parametrized in (0,1)x(0,1).
 class AIS_Shape : public AIS_InteractiveObject

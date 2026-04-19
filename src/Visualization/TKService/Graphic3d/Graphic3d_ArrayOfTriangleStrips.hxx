@@ -22,7 +22,7 @@ class Graphic3d_ArrayOfTriangleStrips : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfTriangleStrips, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of triangle strips (Graphic3d_TOPA_TRIANGLESTRIPS), a polygon can be filled
+  //! Creates an array of triangle strips (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLESTRIPS), a polygon can be filled
   //! as: 1) Creating a single strip defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfTriangleStrips (7);
@@ -51,7 +51,7 @@ public:
   Graphic3d_ArrayOfTriangleStrips(int                  theMaxVertexs,
                                   int                  theMaxStrips,
                                   Graphic3d_ArrayFlags theArrayFlags)
-      : Graphic3d_ArrayOfPrimitives(Graphic3d_TOPA_TRIANGLESTRIPS,
+      : Graphic3d_ArrayOfPrimitives(Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLESTRIPS,
                                     theMaxVertexs,
                                     theMaxStrips,
                                     0,
@@ -59,7 +59,7 @@ public:
   {
   }
 
-  //! Creates an array of triangle strips (Graphic3d_TOPA_TRIANGLESTRIPS).
+  //! Creates an array of triangle strips (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLESTRIPS).
   //! @param theMaxVertexs defines the maximum allowed vertex number in the array
   //! @param theMaxStrips  defines the maximum allowed strip  number in the array;
   //!                      the number of triangle really drawn is: VertexNumber() - 2 * std::min(1,
@@ -81,7 +81,7 @@ public:
                                   bool theHasBColors  = false,
                                   bool theHasVTexels  = false)
       : Graphic3d_ArrayOfPrimitives(
-          Graphic3d_TOPA_TRIANGLESTRIPS,
+          Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLESTRIPS,
           theMaxVertexs,
           theMaxStrips,
           0,

@@ -131,7 +131,7 @@ void Graphic3d_PBRMaterial::SetBSDF(const Graphic3d_BSDF& theBSDF)
   {
     SetMetallic(0.f);
     SetColor(Quantity_Color(theBSDF.Absorption.rgb()));
-    if (theBSDF.FresnelCoat.FresnelType() == Graphic3d_FM_DIELECTRIC)
+    if (theBSDF.FresnelCoat.FresnelType() == Graphic3d_FresnelModel::Graphic3d_FM_DIELECTRIC)
     {
       SetIOR(theBSDF.FresnelCoat.Serialize().y());
       SetRoughness(0.f);
@@ -140,7 +140,7 @@ void Graphic3d_PBRMaterial::SetBSDF(const Graphic3d_BSDF& theBSDF)
     return;
   }
 
-  if (theBSDF.FresnelBase.FresnelType() == Graphic3d_FM_CONSTANT
+  if (theBSDF.FresnelBase.FresnelType() == Graphic3d_FresnelModel::Graphic3d_FM_CONSTANT
       && theBSDF.Kt != NCollection_Vec3<float>(0.f))
   {
     SetIOR(1.f);
@@ -152,14 +152,14 @@ void Graphic3d_PBRMaterial::SetBSDF(const Graphic3d_BSDF& theBSDF)
   }
 
   SetRoughness(sqrtf(theBSDF.Ks.w()));
-  if (theBSDF.FresnelBase.FresnelType() == Graphic3d_FM_DIELECTRIC
-      || theBSDF.FresnelBase.FresnelType() == Graphic3d_FM_CONSTANT)
+  if (theBSDF.FresnelBase.FresnelType() == Graphic3d_FresnelModel::Graphic3d_FM_DIELECTRIC
+      || theBSDF.FresnelBase.FresnelType() == Graphic3d_FresnelModel::Graphic3d_FM_CONSTANT)
   {
     SetIOR(1.5f);
     SetColor(Quantity_Color(theBSDF.Kd));
     SetMetallic(0.f);
   }
-  else if (theBSDF.FresnelBase.FresnelType() == Graphic3d_FM_SCHLICK)
+  else if (theBSDF.FresnelBase.FresnelType() == Graphic3d_FresnelModel::Graphic3d_FM_SCHLICK)
   {
     SetColor(Quantity_Color(theBSDF.FresnelBase.Serialize().rgb()));
     SetMetallic(1.f);

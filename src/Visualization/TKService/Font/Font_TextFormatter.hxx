@@ -233,13 +233,13 @@ public:
     switch (myAlignX)
     {
       default:
-      case Graphic3d_HTA_LEFT:
+      case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT:
         theBndBox.Right = myBndWidth;
         break;
-      case Graphic3d_HTA_RIGHT:
+      case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT:
         theBndBox.Right = -myBndWidth;
         break;
-      case Graphic3d_HTA_CENTER: {
+      case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER: {
         theBndBox.Left  = -0.5f * myBndWidth;
         theBndBox.Right = 0.5f * myBndWidth;
         break;

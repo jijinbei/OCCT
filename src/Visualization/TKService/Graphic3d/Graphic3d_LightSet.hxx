@@ -148,7 +148,7 @@ public:
   Standard_EXPORT bool Remove(const occ::handle<Graphic3d_CLight>& theLight);
 
   //! Returns total amount of lights of specified type.
-  int NbLightsOfType(Graphic3d_TypeOfLightSource theType) const { return myLightTypes[theType]; }
+  int NbLightsOfType(Graphic3d_TypeOfLightSource theType) const { return myLightTypes[static_cast<int>(theType)]; }
 
   //! @name cached state of lights set updated by UpdateRevision()
 public:
@@ -167,7 +167,7 @@ public:
   //! @sa UpdateRevision()
   int NbEnabledLightsOfType(Graphic3d_TypeOfLightSource theType) const
   {
-    return myLightTypesEnabled[theType];
+    return myLightTypesEnabled[static_cast<int>(theType)];
   }
 
   //! Returns total amount of enabled lights castings shadows.

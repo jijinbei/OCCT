@@ -22,7 +22,7 @@ class Graphic3d_ArrayOfTriangles : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfTriangles, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of triangles (Graphic3d_TOPA_TRIANGLES), a triangle can be filled as:
+  //! Creates an array of triangles (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES), a triangle can be filled as:
   //! 1) Creating a set of triangles defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfTriangles (6);
@@ -43,7 +43,7 @@ public:
   //! @param theMaxEdges    defines the maximum allowed edge   number in the array
   //! @param theArrayFlags array flags
   Graphic3d_ArrayOfTriangles(int theMaxVertexs, int theMaxEdges, Graphic3d_ArrayFlags theArrayFlags)
-      : Graphic3d_ArrayOfPrimitives(Graphic3d_TOPA_TRIANGLES,
+      : Graphic3d_ArrayOfPrimitives(Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES,
                                     theMaxVertexs,
                                     0,
                                     theMaxEdges,
@@ -51,7 +51,7 @@ public:
   {
   }
 
-  //! Creates an array of triangles (Graphic3d_TOPA_TRIANGLES).
+  //! Creates an array of triangles (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES).
   //! @param theMaxVertexs  defines the maximum allowed vertex number in the array
   //! @param theMaxEdges    defines the maximum allowed edge   number in the array
   //! @param theHasVNormals when TRUE,  AddVertex(Point,Normal), AddVertex(Point,Normal,Color) or
@@ -68,7 +68,7 @@ public:
                              bool theHasVColors  = false,
                              bool theHasVTexels  = false)
       : Graphic3d_ArrayOfPrimitives(
-          Graphic3d_TOPA_TRIANGLES,
+          Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES,
           theMaxVertexs,
           0,
           theMaxEdges,

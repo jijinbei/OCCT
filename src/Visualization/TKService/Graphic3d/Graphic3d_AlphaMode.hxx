@@ -15,7 +15,7 @@
 #define _Graphic3d_AlphaMode_HeaderFile
 
 //! Defines how alpha value of base color / texture should be treated.
-enum Graphic3d_AlphaMode
+enum class Graphic3d_AlphaMode
 {
   Graphic3d_AlphaMode_Opaque = 0, //!< rendered output is fully opaque and alpha value is ignored
   Graphic3d_AlphaMode_Mask,       //!< rendered output is either fully opaque or fully transparent

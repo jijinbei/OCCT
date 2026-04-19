@@ -15,7 +15,7 @@
 #define _Graphic3d_FrameStatsCounter_HeaderFile
 
 //! Stats counter.
-enum Graphic3d_FrameStatsCounter
+enum class Graphic3d_FrameStatsCounter
 {
   // overall scene counters
   Graphic3d_FrameStatsCounter_NbLayers = 0,           //!< number of ZLayers
@@ -63,13 +63,21 @@ enum Graphic3d_FrameStatsCounter
 
 enum
 {
-  Graphic3d_FrameStatsCounter_NB              = Graphic3d_FrameStatsCounter_NbPointsImmediate + 1,
-  Graphic3d_FrameStatsCounter_SCENE_LOWER     = Graphic3d_FrameStatsCounter_NbLayers,
-  Graphic3d_FrameStatsCounter_SCENE_UPPER     = Graphic3d_FrameStatsCounter_EstimatedBytesTextures,
-  Graphic3d_FrameStatsCounter_RENDERED_LOWER  = Graphic3d_FrameStatsCounter_NbLayersNotCulled,
-  Graphic3d_FrameStatsCounter_RENDERED_UPPER  = Graphic3d_FrameStatsCounter_NbPointsNotCulled,
-  Graphic3d_FrameStatsCounter_IMMEDIATE_LOWER = Graphic3d_FrameStatsCounter_NbLayersImmediate,
-  Graphic3d_FrameStatsCounter_IMMEDIATE_UPPER = Graphic3d_FrameStatsCounter_NbPointsImmediate,
+  Graphic3d_FrameStatsCounter_NB =
+    static_cast<int>(Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbPointsImmediate)
+    + 1,
+  Graphic3d_FrameStatsCounter_SCENE_LOWER =
+    static_cast<int>(Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayers),
+  Graphic3d_FrameStatsCounter_SCENE_UPPER = static_cast<int>(
+    Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_EstimatedBytesTextures),
+  Graphic3d_FrameStatsCounter_RENDERED_LOWER =
+    static_cast<int>(Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayersNotCulled),
+  Graphic3d_FrameStatsCounter_RENDERED_UPPER =
+    static_cast<int>(Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbPointsNotCulled),
+  Graphic3d_FrameStatsCounter_IMMEDIATE_LOWER =
+    static_cast<int>(Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayersImmediate),
+  Graphic3d_FrameStatsCounter_IMMEDIATE_UPPER =
+    static_cast<int>(Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbPointsImmediate),
 };
 
 #endif // _Graphic3d_FrameStatsCounter_HeaderFile

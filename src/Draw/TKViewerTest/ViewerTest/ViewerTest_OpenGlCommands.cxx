@@ -286,7 +286,7 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   bool                                                     isExplicitShaderType = false;
   occ::handle<Graphic3d_ShaderProgram>                     aProgram = new Graphic3d_ShaderProgram();
   NCollection_Sequence<occ::handle<AIS_InteractiveObject>> aPrsList;
-  Graphic3d_GroupAspect aGroupAspect     = Graphic3d_ASPECT_FILL_AREA;
+  Graphic3d_GroupAspect aGroupAspect     = Graphic3d_GroupAspect::Graphic3d_ASPECT_FILL_AREA;
   bool                  isSetGroupAspect = false;
   for (int anArgIter = 1; anArgIter < theArgNb; ++anArgIter)
   {
@@ -399,21 +399,21 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
       aPrimTypeStr.LowerCase();
       if (aPrimTypeStr == "line")
       {
-        aGroupAspect = Graphic3d_ASPECT_LINE;
+        aGroupAspect = Graphic3d_GroupAspect::Graphic3d_ASPECT_LINE;
       }
       else if (aPrimTypeStr == "tris" || aPrimTypeStr == "triangles" || aPrimTypeStr == "fill"
                || aPrimTypeStr == "fillarea" || aPrimTypeStr == "shading"
                || aPrimTypeStr == "shade")
       {
-        aGroupAspect = Graphic3d_ASPECT_FILL_AREA;
+        aGroupAspect = Graphic3d_GroupAspect::Graphic3d_ASPECT_FILL_AREA;
       }
       else if (aPrimTypeStr == "text")
       {
-        aGroupAspect = Graphic3d_ASPECT_TEXT;
+        aGroupAspect = Graphic3d_GroupAspect::Graphic3d_ASPECT_TEXT;
       }
       else if (aPrimTypeStr == "marker" || aPrimTypeStr == "point" || aPrimTypeStr == "pnt")
       {
-        aGroupAspect = Graphic3d_ASPECT_MARKER;
+        aGroupAspect = Graphic3d_GroupAspect::Graphic3d_ASPECT_MARKER;
       }
       else
       {
@@ -498,10 +498,10 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   }
 
   if (!aProgram.IsNull()
-      && ViewerTest::CurrentView()->RenderingParams().TransparencyMethod == Graphic3d_RTM_BLEND_OIT)
+      && ViewerTest::CurrentView()->RenderingParams().TransparencyMethod == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT)
   {
     aProgram->SetNbFragmentOutputs(2);
-    aProgram->SetOitOutput(Graphic3d_RTM_BLEND_OIT);
+    aProgram->SetOitOutput(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT);
   }
 
   NCollection_DoubleMap<occ::handle<AIS_InteractiveObject>, TCollection_AsciiString>::Iterator
@@ -569,13 +569,13 @@ static const char* fresnelModelString(const Graphic3d_FresnelModel theModel)
 {
   switch (theModel)
   {
-    case Graphic3d_FM_SCHLICK:
+    case Graphic3d_FresnelModel::Graphic3d_FM_SCHLICK:
       return "SCHLICK";
-    case Graphic3d_FM_CONSTANT:
+    case Graphic3d_FresnelModel::Graphic3d_FM_CONSTANT:
       return "CONSTANT";
-    case Graphic3d_FM_CONDUCTOR:
+    case Graphic3d_FresnelModel::Graphic3d_FM_CONDUCTOR:
       return "CONDUCTOR";
-    case Graphic3d_FM_DIELECTRIC:
+    case Graphic3d_FresnelModel::Graphic3d_FM_DIELECTRIC:
       return "DIELECTRIC";
   }
   return "N/A";
@@ -786,7 +786,7 @@ static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** th
       *aHtmlFile << "<tr>\n";
       *aHtmlFile << "<td>" << aMat.StringName() << "</td>\n";
       *aHtmlFile << "<td>"
-                 << (aMat.MaterialType() == Graphic3d_MATERIAL_PHYSIC ? "PHYSIC" : "ASPECT")
+                 << (aMat.MaterialType() == Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_PHYSIC ? "PHYSIC" : "ASPECT")
                  << "</td>\n";
       *aHtmlFile << "<td>" << aMat.Transparency() << "</td>\n";
       *aHtmlFile << "<td>" << formatSvgColoredRect(aMat.PBRMaterial().Color().GetRGB())
@@ -954,7 +954,7 @@ static int VListColors(Draw_Interpretor& theDI, int theArgNb, const char** theAr
   V3d_ImageDumpOptions anImgParams;
   anImgParams.Width          = 60;
   anImgParams.Height         = 30;
-  anImgParams.BufferType     = Graphic3d_BT_RGB;
+  anImgParams.BufferType     = Graphic3d_BufferType::Graphic3d_BT_RGB;
   anImgParams.StereoOptions  = V3d_SDO_MONO;
   anImgParams.ToAdjustAspect = true;
   occ::handle<V3d_View> aView;

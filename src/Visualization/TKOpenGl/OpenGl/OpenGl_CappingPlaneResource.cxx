@@ -64,7 +64,7 @@ OpenGl_CappingPlaneResource::OpenGl_CappingPlaneResource(
   if (anAttribs->Init(12, anAttribInfo, 3))
   {
     memcpy(anAttribs->ChangeData(), THE_CAPPING_PLN_VERTS, sizeof(THE_CAPPING_PLN_VERTS));
-    myPrimitives.InitBuffers(nullptr, Graphic3d_TOPA_TRIANGLES, nullptr, anAttribs, nullptr);
+    myPrimitives.InitBuffers(nullptr, Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES, nullptr, anAttribs, nullptr);
   }
 }
 

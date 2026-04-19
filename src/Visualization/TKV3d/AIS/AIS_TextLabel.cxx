@@ -377,19 +377,19 @@ bool AIS_TextLabel::calculateLabelParams(const gp_Pnt& thePosition,
   theHeight = std::abs(aBndBox.Height());
 
   theCenterOfLabel = thePosition;
-  if (anAsp->VerticalJustification() == Graphic3d_VTA_BOTTOM)
+  if (anAsp->VerticalJustification() == Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM)
   {
     theCenterOfLabel.ChangeCoord() += myOrientation3D.YDirection().XYZ() * theHeight * 0.5;
   }
-  else if (anAsp->VerticalJustification() == Graphic3d_VTA_TOP)
+  else if (anAsp->VerticalJustification() == Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOP)
   {
     theCenterOfLabel.ChangeCoord() -= myOrientation3D.YDirection().XYZ() * theHeight * 0.5;
   }
-  if (anAsp->HorizontalJustification() == Graphic3d_HTA_LEFT)
+  if (anAsp->HorizontalJustification() == Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT)
   {
     theCenterOfLabel.ChangeCoord() += myOrientation3D.XDirection().XYZ() * theWidth * 0.5;
   }
-  else if (anAsp->HorizontalJustification() == Graphic3d_HTA_RIGHT)
+  else if (anAsp->HorizontalJustification() == Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT)
   {
     theCenterOfLabel.ChangeCoord() -= myOrientation3D.XDirection().XYZ() * theWidth * 0.5;
   }

@@ -22,7 +22,7 @@ class Graphic3d_ArrayOfSegments : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfSegments, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of segments (Graphic3d_TOPA_SEGMENTS), a segment can be filled as:
+  //! Creates an array of segments (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS), a segment can be filled as:
   //! 1) Creating a set of segments defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfSegments (4);
@@ -45,7 +45,7 @@ public:
   //! @param theMaxEdges   defines the maximum allowed edge   number in the array
   //! @param theArrayFlags array flags
   Graphic3d_ArrayOfSegments(int theMaxVertexs, int theMaxEdges, Graphic3d_ArrayFlags theArrayFlags)
-      : Graphic3d_ArrayOfPrimitives(Graphic3d_TOPA_SEGMENTS,
+      : Graphic3d_ArrayOfPrimitives(Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS,
                                     theMaxVertexs,
                                     0,
                                     theMaxEdges,
@@ -53,13 +53,13 @@ public:
   {
   }
 
-  //! Creates an array of segments (Graphic3d_TOPA_SEGMENTS).
+  //! Creates an array of segments (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS).
   //! @param theMaxVertexs defines the maximum allowed vertex number in the array
   //! @param theMaxEdges   defines the maximum allowed edge   number in the array
   //! @param theHasVColors when TRUE, AddVertex(Point,Color) should be used for specifying vertex
   //! color
   Graphic3d_ArrayOfSegments(int theMaxVertexs, int theMaxEdges = 0, bool theHasVColors = false)
-      : Graphic3d_ArrayOfPrimitives(Graphic3d_TOPA_SEGMENTS,
+      : Graphic3d_ArrayOfPrimitives(Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS,
                                     theMaxVertexs,
                                     0,
                                     theMaxEdges,

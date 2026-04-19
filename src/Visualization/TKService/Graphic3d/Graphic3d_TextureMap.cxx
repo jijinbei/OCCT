@@ -41,21 +41,21 @@ Graphic3d_TextureMap::Graphic3d_TextureMap(const occ::handle<Image_PixMap>& theP
 
 void Graphic3d_TextureMap::EnableSmooth()
 {
-  myParams->SetFilter(Graphic3d_TOTF_TRILINEAR);
+  myParams->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_TRILINEAR);
 }
 
 //=================================================================================================
 
 void Graphic3d_TextureMap::DisableSmooth()
 {
-  myParams->SetFilter(Graphic3d_TOTF_NEAREST);
+  myParams->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST);
 }
 
 //=================================================================================================
 
 bool Graphic3d_TextureMap::IsSmoothed() const
 {
-  return myParams->Filter() != Graphic3d_TOTF_NEAREST;
+  return myParams->Filter() != Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST;
 }
 
 //=================================================================================================

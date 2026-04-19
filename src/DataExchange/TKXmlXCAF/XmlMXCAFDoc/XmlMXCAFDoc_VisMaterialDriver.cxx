@@ -54,15 +54,15 @@ static const char* alphaModeToString(Graphic3d_AlphaMode theMode)
 {
   switch (theMode)
   {
-    case Graphic3d_AlphaMode_Opaque:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque:
       return "Opaque";
-    case Graphic3d_AlphaMode_Mask:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask:
       return "Mask";
-    case Graphic3d_AlphaMode_Blend:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend:
       return "Blend";
-    case Graphic3d_AlphaMode_MaskBlend:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend:
       return "MaskBlend";
-    case Graphic3d_AlphaMode_BlendAuto:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto:
       return "Auto";
   }
   return "Auto";
@@ -73,25 +73,25 @@ static Graphic3d_AlphaMode alphaModeFromString(const char* theMode)
 {
   if (strcasecmp(theMode, "Opaque") == 0)
   {
-    return Graphic3d_AlphaMode_Opaque;
+    return Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque;
   }
   else if (strcasecmp(theMode, "Mask") == 0)
   {
-    return Graphic3d_AlphaMode_Mask;
+    return Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask;
   }
   else if (strcasecmp(theMode, "Blend") == 0)
   {
-    return Graphic3d_AlphaMode_Blend;
+    return Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend;
   }
   else if (strcasecmp(theMode, "MaskBlend") == 0)
   {
-    return Graphic3d_AlphaMode_MaskBlend;
+    return Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend;
   }
   else if (strcasecmp(theMode, "Auto") == 0)
   {
-    return Graphic3d_AlphaMode_BlendAuto;
+    return Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
   }
-  return Graphic3d_AlphaMode_BlendAuto;
+  return Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
 }
 
 //! Encode short real value.
@@ -309,17 +309,17 @@ bool XmlMXCAFDoc_VisMaterialDriver::Paste(const XmlObjMgt_Persistent&       theS
   switch (aDoubleSidedInt)
   {
     case 1:
-      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_DoubleSided);
+      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
       break;
     case 2:
-      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_BackCulled);
+      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
       break;
     case 3:
-      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_FrontCulled);
+      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled);
       break;
     case 0:
     default:
-      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_Auto);
+      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto);
       break;
   }
   aMat->SetAlphaMode(
@@ -373,16 +373,16 @@ void XmlMXCAFDoc_VisMaterialDriver::Paste(const occ::handle<TDF_Attribute>& theS
   int                              aDoubleSidedInt = 0;
   switch (aMat->FaceCulling())
   {
-    case Graphic3d_TypeOfBackfacingModel_DoubleSided:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided:
       aDoubleSidedInt = 1;
       break;
-    case Graphic3d_TypeOfBackfacingModel_BackCulled:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled:
       aDoubleSidedInt = 2;
       break;
-    case Graphic3d_TypeOfBackfacingModel_FrontCulled:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled:
       aDoubleSidedInt = 3;
       break;
-    case Graphic3d_TypeOfBackfacingModel_Auto:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto:
       aDoubleSidedInt = 0;
       break;
   }

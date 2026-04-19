@@ -51,7 +51,7 @@ PrsMgr_Presentation::PrsMgr_Presentation(const occ::handle<PrsMgr_PresentationMa
 {
   if (thePrsObject->TypeOfPresentation3d() == PrsMgr_TOP_ProjectorDependent)
   {
-    SetVisual(Graphic3d_TOS_COMPUTED);
+    SetVisual(Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED);
   }
   SetOwner(myPresentableObject);
   SetMutable(myPresentableObject->IsMutable());
@@ -95,7 +95,7 @@ void PrsMgr_Presentation::Erase()
   erase();
   clear(true);
   // Disconnect other structures
-  DisconnectAll(Graphic3d_TOC_DESCENDANT);
+  DisconnectAll(Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT);
   // Clear groups and remove graphic structure
   Remove();
 }
@@ -147,7 +147,7 @@ void PrsMgr_Presentation::Clear(const bool theWithDestruction)
   }
 
   clear(theWithDestruction);
-  DisconnectAll(Graphic3d_TOC_DESCENDANT);
+  DisconnectAll(Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT);
 }
 
 //=================================================================================================

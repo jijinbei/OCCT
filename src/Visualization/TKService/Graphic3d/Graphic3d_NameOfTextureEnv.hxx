@@ -18,7 +18,7 @@
 #define _Graphic3d_NameOfTextureEnv_HeaderFile
 
 //! Types of standard textures.
-enum Graphic3d_NameOfTextureEnv
+enum class Graphic3d_NameOfTextureEnv
 {
   Graphic3d_NOT_ENV_CLOUDS,
   Graphic3d_NOT_ENV_CV,

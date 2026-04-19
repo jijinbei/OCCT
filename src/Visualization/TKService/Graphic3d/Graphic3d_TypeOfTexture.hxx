@@ -18,7 +18,7 @@
 #define _Graphic3d_TypeOfTexture_HeaderFile
 
 //! Type of the texture file format.
-enum Graphic3d_TypeOfTexture
+enum class Graphic3d_TypeOfTexture
 {
   //! 1D texture (array).
   //! Note that this texture type might be unsupported by graphics API (emulated by 2D texture with

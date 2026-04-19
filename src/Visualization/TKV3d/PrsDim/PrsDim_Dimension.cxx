@@ -755,15 +755,15 @@ void PrsDim_Dimension::DrawLinearDimension(const occ::handle<Prs3d_Presentation>
         }
 
         // set text label justification
-        Graphic3d_VerticalTextAlignment aTextJustificaton = Graphic3d_VTA_BOTTOM;
+        Graphic3d_VerticalTextAlignment aTextJustificaton = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
         switch (aLabelPosition & LabelPosition_VMask)
         {
           case LabelPosition_Above:
           case LabelPosition_VCenter:
-            aTextJustificaton = Graphic3d_VTA_BOTTOM;
+            aTextJustificaton = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
             break;
           case LabelPosition_Below:
-            aTextJustificaton = Graphic3d_VTA_TOP;
+            aTextJustificaton = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOP;
             break;
         }
         aDimensionAspect->TextAspect()->SetVerticalJustification(aTextJustificaton);

@@ -22,26 +22,26 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Texture3D, Graphic3d_TextureMap)
 //=================================================================================================
 
 Graphic3d_Texture3D::Graphic3d_Texture3D(const TCollection_AsciiString& theFileName)
-    : Graphic3d_TextureMap(theFileName, Graphic3d_TypeOfTexture_3D)
+    : Graphic3d_TextureMap(theFileName, Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_3D)
 {
-  myParams->SetFilter(Graphic3d_TOTF_TRILINEAR);
+  myParams->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_TRILINEAR);
 }
 
 //=================================================================================================
 
 Graphic3d_Texture3D::Graphic3d_Texture3D(const occ::handle<Image_PixMap>& thePixMap)
-    : Graphic3d_TextureMap(thePixMap, Graphic3d_TypeOfTexture_3D)
+    : Graphic3d_TextureMap(thePixMap, Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_3D)
 {
-  myParams->SetFilter(Graphic3d_TOTF_TRILINEAR);
+  myParams->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_TRILINEAR);
 }
 
 //=================================================================================================
 
 Graphic3d_Texture3D::Graphic3d_Texture3D(
   const NCollection_Array1<TCollection_AsciiString>& theFiles)
-    : Graphic3d_TextureMap("", Graphic3d_TypeOfTexture_3D)
+    : Graphic3d_TextureMap("", Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_3D)
 {
-  myParams->SetFilter(Graphic3d_TOTF_TRILINEAR);
+  myParams->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_TRILINEAR);
   myPaths.Resize(theFiles.Lower(), theFiles.Upper(), false);
   myPaths.Assign(theFiles);
 }

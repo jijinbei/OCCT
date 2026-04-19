@@ -24,15 +24,15 @@ static uint8_t alphaModeToChar(Graphic3d_AlphaMode theMode)
 {
   switch (theMode)
   {
-    case Graphic3d_AlphaMode_Opaque:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque:
       return 'O';
-    case Graphic3d_AlphaMode_Mask:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask:
       return 'M';
-    case Graphic3d_AlphaMode_Blend:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend:
       return 'B';
-    case Graphic3d_AlphaMode_MaskBlend:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend:
       return 'b';
-    case Graphic3d_AlphaMode_BlendAuto:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto:
       return 'A';
   }
   return 'A';
@@ -44,17 +44,17 @@ static Graphic3d_AlphaMode alphaModeFromChar(uint8_t theMode)
   switch (theMode)
   {
     case 'O':
-      return Graphic3d_AlphaMode_Opaque;
+      return Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque;
     case 'M':
-      return Graphic3d_AlphaMode_Mask;
+      return Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask;
     case 'B':
-      return Graphic3d_AlphaMode_Blend;
+      return Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend;
     case 'b':
-      return Graphic3d_AlphaMode_MaskBlend;
+      return Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend;
     case 'A':
-      return Graphic3d_AlphaMode_BlendAuto;
+      return Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
   }
-  return Graphic3d_AlphaMode_BlendAuto;
+  return Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
 }
 
 //! Encode face culling mode into character.
@@ -62,13 +62,13 @@ static uint8_t faceCullToChar(Graphic3d_TypeOfBackfacingModel theMode)
 {
   switch (theMode)
   {
-    case Graphic3d_TypeOfBackfacingModel_Auto:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto:
       return '0';
-    case Graphic3d_TypeOfBackfacingModel_BackCulled:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled:
       return 'B';
-    case Graphic3d_TypeOfBackfacingModel_FrontCulled:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled:
       return 'F';
-    case Graphic3d_TypeOfBackfacingModel_DoubleSided:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided:
       return '1';
   }
   return '0';
@@ -80,15 +80,15 @@ static Graphic3d_TypeOfBackfacingModel faceCullFromChar(uint8_t theMode)
   switch (theMode)
   {
     case '0':
-      return Graphic3d_TypeOfBackfacingModel_Auto;
+      return Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
     case 'B':
-      return Graphic3d_TypeOfBackfacingModel_BackCulled;
+      return Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
     case 'F':
-      return Graphic3d_TypeOfBackfacingModel_FrontCulled;
+      return Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled;
     case '1':
-      return Graphic3d_TypeOfBackfacingModel_DoubleSided;
+      return Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
   }
-  return Graphic3d_TypeOfBackfacingModel_Auto;
+  return Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
 }
 
 //! Encode vec3.

@@ -62,7 +62,7 @@ void Graphic3d_Texture2Dplane::SetPlaneS(const float theA,
   const NCollection_Vec4<float> aPlaneS(theA, theB, theC, theD);
   const NCollection_Vec4<float> aPlaneT = myParams->GenPlaneT();
   myParams->SetGenMode(Graphic3d_TOTM_OBJECT, aPlaneS, aPlaneT);
-  myPlaneName = Graphic3d_NOTP_UNKNOWN;
+  myPlaneName = Graphic3d_NameOfTexturePlane::Graphic3d_NOTP_UNKNOWN;
 }
 
 //=================================================================================================
@@ -75,7 +75,7 @@ void Graphic3d_Texture2Dplane::SetPlaneT(const float theA,
   const NCollection_Vec4<float> aPlaneS = myParams->GenPlaneS();
   const NCollection_Vec4<float> aPlaneT(theA, theB, theC, theD);
   myParams->SetGenMode(Graphic3d_TOTM_OBJECT, aPlaneS, aPlaneT);
-  myPlaneName = Graphic3d_NOTP_UNKNOWN;
+  myPlaneName = Graphic3d_NameOfTexturePlane::Graphic3d_NOTP_UNKNOWN;
 }
 
 //=================================================================================================
@@ -84,19 +84,19 @@ void Graphic3d_Texture2Dplane::SetPlane(const Graphic3d_NameOfTexturePlane thePl
 {
   switch (thePlane)
   {
-    case Graphic3d_NOTP_XY: {
+    case Graphic3d_NameOfTexturePlane::Graphic3d_NOTP_XY: {
       myParams->SetGenMode(Graphic3d_TOTM_OBJECT,
                            NCollection_Vec4<float>(1.0f, 0.0f, 0.0f, 0.0f),
                            NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f));
       break;
     }
-    case Graphic3d_NOTP_YZ: {
+    case Graphic3d_NameOfTexturePlane::Graphic3d_NOTP_YZ: {
       myParams->SetGenMode(Graphic3d_TOTM_OBJECT,
                            NCollection_Vec4<float>(0.0f, 1.0f, 0.0f, 0.0f),
                            NCollection_Vec4<float>(0.0f, 0.0f, 1.0f, 0.0f));
       break;
     }
-    case Graphic3d_NOTP_ZX: {
+    case Graphic3d_NameOfTexturePlane::Graphic3d_NOTP_ZX: {
       myParams->SetGenMode(Graphic3d_TOTM_OBJECT,
                            NCollection_Vec4<float>(0.0f, 0.0f, 1.0f, 0.0f),
                            NCollection_Vec4<float>(1.0f, 0.0f, 0.0f, 0.0f));

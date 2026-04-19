@@ -19,7 +19,7 @@
 
 //! Defines the vertical position of the text
 //! relative to its anchor.
-enum Graphic3d_VerticalTextAlignment
+enum class Graphic3d_VerticalTextAlignment
 {
   Graphic3d_VTA_BOTTOM, //!< The anchor lies on the last line of the text.
   Graphic3d_VTA_CENTER, //!< The anchor lies on the center of the text (not bounding box).

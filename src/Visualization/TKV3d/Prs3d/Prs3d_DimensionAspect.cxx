@@ -39,8 +39,8 @@ Prs3d_DimensionAspect::Prs3d_DimensionAspect()
 {
   myTextAspect->Aspect()->SetTextZoomable(false);
   myTextAspect->SetColor(Quantity_NOC_LAWNGREEN);
-  myTextAspect->SetHorizontalJustification(Graphic3d_HTA_CENTER);
-  myTextAspect->SetVerticalJustification(Graphic3d_VTA_CENTER);
+  myTextAspect->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER);
+  myTextAspect->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER);
 
   myArrowAspect->SetColor(Quantity_NOC_LAWNGREEN);
   myArrowAspect->SetAngle(M_PI * 12.0 / 180.0);

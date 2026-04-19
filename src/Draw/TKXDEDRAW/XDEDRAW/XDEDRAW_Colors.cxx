@@ -79,15 +79,15 @@ static const char* alphaModeToString(Graphic3d_AlphaMode theMode)
 {
   switch (theMode)
   {
-    case Graphic3d_AlphaMode_Opaque:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque:
       return "Opaque";
-    case Graphic3d_AlphaMode_Mask:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask:
       return "Mask";
-    case Graphic3d_AlphaMode_Blend:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend:
       return "Blend";
-    case Graphic3d_AlphaMode_MaskBlend:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend:
       return "MaskBlend";
-    case Graphic3d_AlphaMode_BlendAuto:
+    case Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto:
       return "BlendAuto";
   }
   return "";
@@ -98,13 +98,13 @@ static const char* faceCullToString(Graphic3d_TypeOfBackfacingModel theMode)
 {
   switch (theMode)
   {
-    case Graphic3d_TypeOfBackfacingModel_Auto:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto:
       return "Auto";
-    case Graphic3d_TypeOfBackfacingModel_BackCulled:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled:
       return "BackCulled";
-    case Graphic3d_TypeOfBackfacingModel_FrontCulled:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled:
       return "FrontCulled";
-    case Graphic3d_TypeOfBackfacingModel_DoubleSided:
+    case Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided:
       return "DoubleSided";
   }
   return "";
@@ -983,26 +983,26 @@ static int XAddVisMaterial(Draw_Interpretor&, int theNbArgs, const char** theArg
     {
       TCollection_AsciiString aModeStr(theArgVec[anArgIter + 1]);
       aModeStr.LowerCase();
-      Graphic3d_AlphaMode anAlphaMode = Graphic3d_AlphaMode_Opaque;
+      Graphic3d_AlphaMode anAlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque;
       if (aModeStr == "opaque")
       {
-        anAlphaMode = Graphic3d_AlphaMode_Opaque;
+        anAlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque;
       }
       else if (aModeStr == "mask")
       {
-        anAlphaMode = Graphic3d_AlphaMode_Mask;
+        anAlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask;
       }
       else if (aModeStr == "blend")
       {
-        anAlphaMode = Graphic3d_AlphaMode_Blend;
+        anAlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend;
       }
       else if (aModeStr == "maskblend" || aModeStr == "blendmask")
       {
-        anAlphaMode = Graphic3d_AlphaMode_MaskBlend;
+        anAlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend;
       }
       else if (aModeStr == "blendauto")
       {
-        anAlphaMode = Graphic3d_AlphaMode_BlendAuto;
+        anAlphaMode = Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
       }
       else
       {
@@ -1123,30 +1123,30 @@ static int XAddVisMaterial(Draw_Interpretor&, int theNbArgs, const char** theArg
       {
         ++anArgIter;
       }
-      aMat->SetFaceCulling(isDoubleSided ? Graphic3d_TypeOfBackfacingModel_Auto
-                                         : Graphic3d_TypeOfBackfacingModel_BackCulled);
+      aMat->SetFaceCulling(isDoubleSided ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
+                                         : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
     }
     else if (anArgIter + 1 < theNbArgs && (anArg == "-faceculling" || anArg == "-facecull"))
     {
       aMatPbr.IsDefined = true;
       TCollection_AsciiString         aCullStr(theArgVec[++anArgIter]);
-      Graphic3d_TypeOfBackfacingModel aMode = Graphic3d_TypeOfBackfacingModel_Auto;
+      Graphic3d_TypeOfBackfacingModel aMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
       aCullStr.LowerCase();
       if (aCullStr == "auto")
       {
-        aMode = Graphic3d_TypeOfBackfacingModel_Auto;
+        aMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
       }
       else if (aCullStr == "backculled" || aCullStr == "backcull" || aCullStr == "back")
       {
-        aMode = Graphic3d_TypeOfBackfacingModel_BackCulled;
+        aMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
       }
       else if (aCullStr == "frontculled" || aCullStr == "frontcull" || aCullStr == "front")
       {
-        aMode = Graphic3d_TypeOfBackfacingModel_FrontCulled;
+        aMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled;
       }
       else if (aCullStr == "doublesided")
       {
-        aMode = Graphic3d_TypeOfBackfacingModel_DoubleSided;
+        aMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
       }
       else
       {

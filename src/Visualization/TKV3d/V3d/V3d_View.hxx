@@ -921,7 +921,7 @@ public:
   //! @param theBufferType buffer to dump
   //! @return FALSE when the dump has failed
   Standard_EXPORT bool Dump(const char* const           theFile,
-                            const Graphic3d_BufferType& theBufferType = Graphic3d_BT_RGB);
+                            const Graphic3d_BufferType& theBufferType = Graphic3d_BufferType::Graphic3d_BT_RGB);
 
   //! Dumps the full contents of the view to a pixmap with specified parameters.
   //! Internally this method calls Redraw() with an offscreen render buffer of requested target size
@@ -943,7 +943,7 @@ public:
   bool ToPixMap(Image_PixMap&               theImage,
                 const int                   theWidth,
                 const int                   theHeight,
-                const Graphic3d_BufferType& theBufferType     = Graphic3d_BT_RGB,
+                const Graphic3d_BufferType& theBufferType     = Graphic3d_BufferType::Graphic3d_BT_RGB,
                 const bool                  theToAdjustAspect = true,
                 const Graphic3d_ZLayerId    theTargetZLayerId = Graphic3d_ZLayerId_BotOSD,
                 const int                   theIsSingleLayer  = false,
@@ -964,9 +964,9 @@ public:
 
   //! Manages display of the back faces
   Standard_EXPORT void SetBackFacingModel(
-    const Graphic3d_TypeOfBackfacingModel theModel = Graphic3d_TypeOfBackfacingModel_Auto);
+    const Graphic3d_TypeOfBackfacingModel theModel = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto);
 
-  //! Returns current state of the back faces display; Graphic3d_TypeOfBackfacingModel_Auto by
+  //! Returns current state of the back faces display; Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto by
   //! default, which means that backface culling is defined by each presentation.
   Standard_EXPORT Graphic3d_TypeOfBackfacingModel BackFacingModel() const;
 

@@ -95,15 +95,15 @@ public:
   //! Returns TRUE if some Layers have been culled.
   bool HasCulledLayers() const
   {
-    return LastDataFrame()[Graphic3d_FrameStatsCounter_NbLayersNotCulled]
-           != LastDataFrame()[Graphic3d_FrameStatsCounter_NbLayers];
+    return LastDataFrame()[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayersNotCulled]
+           != LastDataFrame()[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayers];
   }
 
   //! Returns TRUE if some structures have been culled.
   bool HasCulledStructs() const
   {
-    return LastDataFrame()[Graphic3d_FrameStatsCounter_NbStructsNotCulled]
-           != LastDataFrame()[Graphic3d_FrameStatsCounter_NbStructs];
+    return LastDataFrame()[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbStructsNotCulled]
+           != LastDataFrame()[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbStructs];
   }
 
   //! Returns last data frame, cached between stats updates.

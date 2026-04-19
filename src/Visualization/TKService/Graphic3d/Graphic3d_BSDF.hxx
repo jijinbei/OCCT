@@ -23,7 +23,7 @@
 class Graphic3d_PBRMaterial;
 
 //! Type of the Fresnel model.
-enum Graphic3d_FresnelModel
+enum class Graphic3d_FresnelModel
 {
   Graphic3d_FM_SCHLICK    = 0,
   Graphic3d_FM_CONSTANT   = 1,
@@ -37,7 +37,7 @@ class Graphic3d_Fresnel
 public:
   //! Creates uninitialized Fresnel factor.
   Graphic3d_Fresnel()
-      : myFresnelType(Graphic3d_FM_CONSTANT)
+      : myFresnelType(Graphic3d_FresnelModel::Graphic3d_FM_CONSTANT)
   {
     // ideal specular reflector
     myFresnelData = NCollection_Vec3<float>(0.f, 1.f, 0.f);
@@ -46,27 +46,27 @@ public:
   //! Creates Schlick's approximation of Fresnel factor.
   static Graphic3d_Fresnel CreateSchlick(const NCollection_Vec3<float>& theSpecularColor)
   {
-    return Graphic3d_Fresnel(Graphic3d_FM_SCHLICK, theSpecularColor);
+    return Graphic3d_Fresnel(Graphic3d_FresnelModel::Graphic3d_FM_SCHLICK, theSpecularColor);
   }
 
   //! Creates Fresnel factor for constant reflection.
   static Graphic3d_Fresnel CreateConstant(const float theReflection)
   {
-    return Graphic3d_Fresnel(Graphic3d_FM_CONSTANT,
+    return Graphic3d_Fresnel(Graphic3d_FresnelModel::Graphic3d_FM_CONSTANT,
                              NCollection_Vec3<float>(0.f, 1.f, theReflection));
   }
 
   //! Creates Fresnel factor for physical-based dielectric model.
   static Graphic3d_Fresnel CreateDielectric(float theRefractionIndex)
   {
-    return Graphic3d_Fresnel(Graphic3d_FM_DIELECTRIC,
+    return Graphic3d_Fresnel(Graphic3d_FresnelModel::Graphic3d_FM_DIELECTRIC,
                              NCollection_Vec3<float>(0.f, theRefractionIndex, 0.f));
   }
 
   //! Creates Fresnel factor for physical-based conductor model.
   static Graphic3d_Fresnel CreateConductor(float theRefractionIndex, float theAbsorptionIndex)
   {
-    return Graphic3d_Fresnel(Graphic3d_FM_CONDUCTOR,
+    return Graphic3d_Fresnel(Graphic3d_FresnelModel::Graphic3d_FM_CONDUCTOR,
                              NCollection_Vec3<float>(0.f, theRefractionIndex, theAbsorptionIndex));
   }
 

@@ -27,7 +27,7 @@
 #include <Standard_Transient.hxx>
 
 //! Clipping state.
-enum Graphic3d_ClipState
+enum class Graphic3d_ClipState
 {
   Graphic3d_ClipState_Out, //!< fully outside (clipped) - should be discarded
   Graphic3d_ClipState_In,  //!< fully inside  (NOT clipped) - should NOT be discarded
@@ -161,7 +161,7 @@ public: // @name user-defined graphical attributes
   //! Return color for rendering capping surface.
   Quantity_Color CappingColor() const
   {
-    return myAspect->FrontMaterial().MaterialType() == Graphic3d_MATERIAL_ASPECT
+    return myAspect->FrontMaterial().MaterialType() == Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT
              ? myAspect->FrontMaterial().Color()
              : myAspect->InteriorColor();
   }
@@ -274,18 +274,18 @@ public:
   //! Check if the given point is outside / inside / on section.
   Graphic3d_ClipState ProbePoint(const NCollection_Vec4<double>& thePoint) const
   {
-    Graphic3d_ClipState aState = Graphic3d_ClipState_Out;
+    Graphic3d_ClipState aState = Graphic3d_ClipState::Graphic3d_ClipState_Out;
     for (const Graphic3d_ClipPlane* aPlaneIter = this; aPlaneIter != nullptr;
          aPlaneIter                            = aPlaneIter->myNextInChain.get())
     {
       Graphic3d_ClipState aPlnState = aPlaneIter->ProbePointHalfspace(thePoint);
-      if (aPlnState == Graphic3d_ClipState_In)
+      if (aPlnState == Graphic3d_ClipState::Graphic3d_ClipState_In)
       {
-        return Graphic3d_ClipState_In;
+        return Graphic3d_ClipState::Graphic3d_ClipState_In;
       }
-      else if (aPlnState != Graphic3d_ClipState_Out)
+      else if (aPlnState != Graphic3d_ClipState::Graphic3d_ClipState_Out)
       {
-        aState = Graphic3d_ClipState_On;
+        aState = Graphic3d_ClipState::Graphic3d_ClipState_On;
       }
     }
     return aState;
@@ -294,7 +294,7 @@ public:
   //! Check if the given bounding box is fully outside / fully inside.
   Graphic3d_ClipState ProbeBox(const Graphic3d_BndBox3d& theBox) const
   {
-    Graphic3d_ClipState aState = Graphic3d_ClipState_Out;
+    Graphic3d_ClipState aState = Graphic3d_ClipState::Graphic3d_ClipState_Out;
     for (const Graphic3d_ClipPlane* aPlaneIter = this; aPlaneIter != nullptr;
          aPlaneIter                            = aPlaneIter->myNextInChain.get())
     {
@@ -302,12 +302,12 @@ public:
       {
         // within union operation, if box is entirely inside at least one half-space, others can be
         // ignored
-        return Graphic3d_ClipState_In;
+        return Graphic3d_ClipState::Graphic3d_ClipState_In;
       }
       else if (!aPlaneIter->IsBoxFullOutHalfspace(theBox))
       {
         // if at least one full out test fail, clipping state is inconclusive (partially clipped)
-        aState = Graphic3d_ClipState_On;
+        aState = Graphic3d_ClipState::Graphic3d_ClipState_On;
       }
     }
     return aState;
@@ -328,7 +328,7 @@ public:
       else if (!aPlaneIter->IsBoxFullOutHalfspace(theBox))
       {
         // the box is not fully out, and not fully in, check is it on (but not intersect)
-        if (ProbeBoxMaxPointHalfspace(theBox) != Graphic3d_ClipState_Out)
+        if (ProbeBoxMaxPointHalfspace(theBox) != Graphic3d_ClipState::Graphic3d_ClipState_Out)
         {
           return true;
         }
@@ -343,8 +343,8 @@ public:
   Graphic3d_ClipState ProbePointHalfspace(const NCollection_Vec4<double>& thePoint) const
   {
     const double aVal = myEquation.Dot(thePoint);
-    return aVal < 0.0 ? Graphic3d_ClipState_Out
-                      : (aVal == 0.0 ? Graphic3d_ClipState_On : Graphic3d_ClipState_In);
+    return aVal < 0.0 ? Graphic3d_ClipState::Graphic3d_ClipState_Out
+                      : (aVal == 0.0 ? Graphic3d_ClipState::Graphic3d_ClipState_On : Graphic3d_ClipState::Graphic3d_ClipState_In);
   }
 
   //! Check if the given bounding box is fully outside / fully inside the half-space.
@@ -352,16 +352,16 @@ public:
   {
     if (IsBoxFullOutHalfspace(theBox))
     {
-      return Graphic3d_ClipState_Out;
+      return Graphic3d_ClipState::Graphic3d_ClipState_Out;
     }
-    return IsBoxFullInHalfspace(theBox) ? Graphic3d_ClipState_In : Graphic3d_ClipState_On;
+    return IsBoxFullInHalfspace(theBox) ? Graphic3d_ClipState::Graphic3d_ClipState_In : Graphic3d_ClipState::Graphic3d_ClipState_On;
   }
 
   //! Check if the given point is outside of the half-space (e.g. should be discarded by clipping
   //! plane).
   bool IsPointOutHalfspace(const NCollection_Vec4<double>& thePoint) const
   {
-    return ProbePointHalfspace(thePoint) == Graphic3d_ClipState_Out;
+    return ProbePointHalfspace(thePoint) == Graphic3d_ClipState::Graphic3d_ClipState_Out;
   }
 
   //! Check if the given bounding box is fully outside of the half-space (e.g. should be discarded

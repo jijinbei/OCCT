@@ -15,7 +15,7 @@
 #define _Graphic3d_TypeOfLimit_HeaderFile
 
 //! Type of graphic resource limit.
-enum Graphic3d_TypeOfLimit
+enum class Graphic3d_TypeOfLimit
 {
   Graphic3d_TypeOfLimit_MaxNbLights,             //!< maximum number of active light sources
   Graphic3d_TypeOfLimit_MaxNbClipPlanes,         //!< maximum number of active clipping planes

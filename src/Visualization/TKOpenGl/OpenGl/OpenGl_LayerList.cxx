@@ -522,7 +522,7 @@ void OpenGl_LayerList::UpdateCulling(const occ::handle<OpenGl_Workspace>& theWor
                                      const bool                           theToDrawImmediate)
 {
   const occ::handle<OpenGl_FrameStats>& aStats = theWorkspace->GetGlContext()->FrameStats();
-  OSD_Timer& aTimer = aStats->ActiveDataFrame().ChangeTimer(Graphic3d_FrameStatsTimer_CpuCulling);
+  OSD_Timer& aTimer = aStats->ActiveDataFrame().ChangeTimer(Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_CpuCulling);
   aTimer.Start();
 
   const int                    aViewId   = theWorkspace->View()->Identification();
@@ -543,7 +543,7 @@ void OpenGl_LayerList::UpdateCulling(const occ::handle<OpenGl_Workspace>& theWor
   }
 
   aTimer.Stop();
-  aStats->ActiveDataFrame()[Graphic3d_FrameStatsTimer_CpuCulling] = aTimer.UserTimeCPU();
+  aStats->ActiveDataFrame()[Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_CpuCulling] = aTimer.UserTimeCPU();
 }
 
 //=================================================================================================
@@ -921,7 +921,7 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
   OpenGl_View*                             aView      = theWorkspace->View();
 
   Graphic3d_RenderTransparentMethod anOitMode =
-    aView != nullptr ? aView->RenderingParams().TransparencyMethod : Graphic3d_RTM_BLEND_UNORDERED;
+    aView != nullptr ? aView->RenderingParams().TransparencyMethod : Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
 
   const int aPrevFilter =
     theWorkspace->RenderFilter()
@@ -942,20 +942,20 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
   // accumulated color channels, blended alpha channel and weight factors - these accumulation
   // buffers are required to implement commuting blend operator (at least OpenGl 2.0 should be
   // available).
-  if (anOitMode == Graphic3d_RTM_BLEND_OIT)
+  if (anOitMode == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT)
   {
     if (theOitAccumFbo == nullptr || theOitAccumFbo->NbColorBuffers() < 2
         || !theOitAccumFbo->ColorTexture(0)->IsValid()
         || !theOitAccumFbo->ColorTexture(1)->IsValid())
     {
-      anOitMode = Graphic3d_RTM_BLEND_UNORDERED;
+      anOitMode = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
     }
   }
-  else if (anOitMode == Graphic3d_RTM_DEPTH_PEELING_OIT)
+  else if (anOitMode == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT)
   {
     if (!aGlBlendBackFBO->IsValid())
     {
-      anOitMode = Graphic3d_RTM_BLEND_UNORDERED;
+      anOitMode = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
     }
   }
   const bool isMSAA              = theReadDrawFbo && theReadDrawFbo->NbSamples() > 0;
@@ -963,11 +963,11 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
 
   switch (anOitMode)
   {
-    case Graphic3d_RTM_BLEND_UNORDERED: {
+    case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED: {
       aCtx->core11fwd->glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       break;
     }
-    case Graphic3d_RTM_BLEND_OIT: {
+    case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT: {
       const float aDepthFactor = aView->RenderingParams().OitDepthFactor;
       aManager->SetWeighedOitState(aDepthFactor);
 
@@ -982,7 +982,7 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       aCtx->core15fwd->glBlendFuncSeparate(GL_ONE, GL_ONE, GL_ZERO, GL_ONE_MINUS_SRC_ALPHA);
       break;
     }
-    case Graphic3d_RTM_DEPTH_PEELING_OIT: {
+    case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT: {
       static const float THE_MIN_DEPTH = 0.0f;
       static const float THE_MAX_DEPTH = 1.0f;
 
@@ -1020,7 +1020,7 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       aCtx->core20fwd->glClear(GL_COLOR_BUFFER_BIT);
       aCtx->core20fwd->glBlendEquation(GL_MAX);
 
-      aManager->SetOitState(Graphic3d_RTM_DEPTH_PEELING_OIT);
+      aManager->SetOitState(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT);
 
       aGlDepthPeelFBOs[1]->ColorTexture(0)->Bind(aCtx, aCtx->DepthPeelingDepthTexUnit());
       aGlDepthPeelFBOs[1]->ColorTexture(1)->Bind(aCtx, aCtx->DepthPeelingFrontColorTexUnit());
@@ -1043,10 +1043,10 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
 
   switch (anOitMode)
   {
-    case Graphic3d_RTM_BLEND_UNORDERED: {
+    case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED: {
       break;
     }
-    case Graphic3d_RTM_BLEND_OIT: {
+    case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT: {
       // revert state of rendering
       aManager->ResetOitState();
       theOitAccumFbo->UnbindBuffer(aCtx);
@@ -1059,7 +1059,7 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       aCtx->SetColorMask(true); // update writes into alpha component
       break;
     }
-    case Graphic3d_RTM_DEPTH_PEELING_OIT: {
+    case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT: {
       // Dual Depth Peeling Ping-Pong
       const int            aNbPasses  = aView->RenderingParams().NbOitDepthPeelingLayers;
       OpenGl_VertexBuffer* aQuadVerts = aView->initBlitQuad(false);
@@ -1168,10 +1168,10 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
   theWorkspace->SetRenderFilter(aPrevFilter | OpenGl_RenderFilter_OpaqueOnly);
   switch (anOitMode)
   {
-    case Graphic3d_RTM_BLEND_UNORDERED: {
+    case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED: {
       break;
     }
-    case Graphic3d_RTM_BLEND_OIT: {
+    case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT: {
       // draw full screen quad with special shader to compose the buffers
       OpenGl_VertexBuffer* aVerts = aView->initBlitQuad(false);
       if (aVerts->IsValid() && aManager->BindOitCompositingProgram(isMSAA))
@@ -1215,7 +1215,7 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
       }
       break;
     }
-    case Graphic3d_RTM_DEPTH_PEELING_OIT: {
+    case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT: {
       // compose depth peeling results into destination FBO
       OpenGl_VertexBuffer* aVerts = aView->initBlitQuad(false);
       if (aVerts->IsValid() && aManager->BindOitDepthPeelingFlushProgram(isMSAA))

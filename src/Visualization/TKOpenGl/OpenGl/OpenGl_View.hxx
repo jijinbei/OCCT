@@ -103,7 +103,7 @@ public:
   bool IsInvalidated() override { return !myBackBufferRestored; }
 
   //! Dump active rendering buffer into specified memory buffer.
-  //! In Ray-Tracing allow to get a raw HDR buffer using Graphic3d_BT_RGB_RayTraceHdrLeft buffer
+  //! In Ray-Tracing allow to get a raw HDR buffer using Graphic3d_BufferType::Graphic3d_BT_RGB_RayTraceHdrLeft buffer
   //! type, only Left view will be dumped ignoring stereoscopic parameter.
   Standard_EXPORT bool BufferDump(Image_PixMap&               theImage,
                                   const Graphic3d_BufferType& theBufferType) override;
@@ -755,7 +755,7 @@ protected: //! @name data types related to ray-tracing
           RadianceClampingValue(30.0),
           DepthOfField(false),
           CubemapForBack(false),
-          ToneMappingMethod(Graphic3d_ToneMappingMethod_Disabled)
+          ToneMappingMethod(Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Disabled)
     {
     }
   };

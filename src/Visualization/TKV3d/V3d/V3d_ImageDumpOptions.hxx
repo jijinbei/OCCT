@@ -25,7 +25,7 @@ struct V3d_ImageDumpOptions
   // clang-format off
   int      Width;          //!< Width  of image dump to allocate an image, 0 by default (meaning that image should be already allocated).
   int      Height;         //!< Height of image dump to allocate an image, 0 by default (meaning that image should be already allocated).
-  Graphic3d_BufferType  BufferType;     //!< Which buffer to dump (color / depth), Graphic3d_BT_RGB by default.
+  Graphic3d_BufferType  BufferType;     //!< Which buffer to dump (color / depth), Graphic3d_BufferType::Graphic3d_BT_RGB by default.
   V3d_StereoDumpOptions StereoOptions;  //!< Dumping stereoscopic camera, V3d_SDO_MONO by default (middle-point monographic projection).
   int      TileSize;       //!< The view dimension limited for tiled dump, 0 by default (automatic tiling depending on hardware capabilities).
   bool      ToAdjustAspect; //!< Flag to override active view aspect ratio by (Width / Height) defined for image dump (TRUE by default).
@@ -39,7 +39,7 @@ public:
   V3d_ImageDumpOptions()
       : Width(0),
         Height(0),
-        BufferType(Graphic3d_BT_RGB),
+        BufferType(Graphic3d_BufferType::Graphic3d_BT_RGB),
         StereoOptions(V3d_SDO_MONO),
         TileSize(0),
         ToAdjustAspect(true),

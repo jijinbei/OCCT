@@ -32,9 +32,9 @@ const Standard_GUID& XCAFDoc_VisMaterial::GetID()
 //=================================================================================================
 
 XCAFDoc_VisMaterial::XCAFDoc_VisMaterial()
-    : myAlphaMode(Graphic3d_AlphaMode_BlendAuto),
+    : myAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto),
       myAlphaCutOff(0.5f),
-      myFaceCulling(Graphic3d_TypeOfBackfacingModel_Auto)
+      myFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto)
 {
   myPbrMat.IsDefined    = false;
   myCommonMat.IsDefined = false;

@@ -25,7 +25,7 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_Texture1Dsegment, Graphic3d_Texture1D)
 //=================================================================================================
 
 Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const TCollection_AsciiString& theFileName)
-    : Graphic3d_Texture1D(theFileName, Graphic3d_TypeOfTexture_1D),
+    : Graphic3d_Texture1D(theFileName, Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D),
       myX1(0.0f),
       myY1(0.0f),
       myZ1(0.0f),
@@ -42,7 +42,7 @@ Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const TCollection_AsciiSt
 //=================================================================================================
 
 Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const Graphic3d_NameOfTexture1D theNOT)
-    : Graphic3d_Texture1D(theNOT, Graphic3d_TypeOfTexture_1D),
+    : Graphic3d_Texture1D(theNOT, Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D),
       myX1(0.0f),
       myY1(0.0f),
       myZ1(0.0f),
@@ -59,7 +59,7 @@ Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const Graphic3d_NameOfTex
 //=================================================================================================
 
 Graphic3d_Texture1Dsegment::Graphic3d_Texture1Dsegment(const occ::handle<Image_PixMap>& thePixMap)
-    : Graphic3d_Texture1D(thePixMap, Graphic3d_TypeOfTexture_1D),
+    : Graphic3d_Texture1D(thePixMap, Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D),
       myX1(0.0f),
       myY1(0.0f),
       myZ1(0.0f),

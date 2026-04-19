@@ -27,9 +27,9 @@ Prs3d_TextAspect::Prs3d_TextAspect()
     : myTextAspect(
         new Graphic3d_AspectText3d(Quantity_Color(Quantity_NOC_YELLOW), Font_NOF_SERIF, 1.0, 0.0)),
       myHeight(16.0),
-      myHorizontalJustification(Graphic3d_HTA_LEFT),
-      myVerticalJustification(Graphic3d_VTA_BOTTOM),
-      myOrientation(Graphic3d_TP_RIGHT)
+      myHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT),
+      myVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM),
+      myOrientation(Graphic3d_TextPath::Graphic3d_TP_RIGHT)
 {
 }
 
@@ -38,9 +38,9 @@ Prs3d_TextAspect::Prs3d_TextAspect()
 Prs3d_TextAspect::Prs3d_TextAspect(const occ::handle<Graphic3d_AspectText3d>& theAspect)
     : myTextAspect(theAspect),
       myHeight(16.0),
-      myHorizontalJustification(Graphic3d_HTA_LEFT),
-      myVerticalJustification(Graphic3d_VTA_BOTTOM),
-      myOrientation(Graphic3d_TP_RIGHT)
+      myHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT),
+      myVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM),
+      myOrientation(Graphic3d_TextPath::Graphic3d_TP_RIGHT)
 {
 }
 

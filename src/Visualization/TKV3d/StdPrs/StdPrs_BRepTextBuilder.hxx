@@ -41,8 +41,8 @@ public:
     Perform(StdPrs_BRepFont&                        theFont,
             const NCollection_String&               theString,
             const gp_Ax3&                           thePenLoc = gp_Ax3(),
-            const Graphic3d_HorizontalTextAlignment theHAlign = Graphic3d_HTA_LEFT,
-            const Graphic3d_VerticalTextAlignment   theVAlign = Graphic3d_VTA_BOTTOM);
+            const Graphic3d_HorizontalTextAlignment theHAlign = Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT,
+            const Graphic3d_VerticalTextAlignment   theVAlign = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM);
 
 protected:
   BRep_Builder myBuilder;

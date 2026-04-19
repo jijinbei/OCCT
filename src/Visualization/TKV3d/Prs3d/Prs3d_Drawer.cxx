@@ -750,7 +750,7 @@ bool Prs3d_Drawer::SetShaderProgram(const occ::handle<Graphic3d_ShaderProgram>& 
   bool isUpdateNeeded = false;
   switch (theAspect)
   {
-    case Graphic3d_ASPECT_LINE: {
+    case Graphic3d_GroupAspect::Graphic3d_ASPECT_LINE: {
       if (theToOverrideDefaults)
       {
         isUpdateNeeded = SetOwnLineAspects() || isUpdateNeeded;
@@ -783,7 +783,7 @@ bool Prs3d_Drawer::SetShaderProgram(const occ::handle<Graphic3d_ShaderProgram>& 
       setAspectProgram(theProgram, myArrowAspect);
       return isUpdateNeeded;
     }
-    case Graphic3d_ASPECT_TEXT: {
+    case Graphic3d_GroupAspect::Graphic3d_ASPECT_TEXT: {
       if (theToOverrideDefaults && myTextAspect.IsNull())
       {
         isUpdateNeeded = true;
@@ -798,7 +798,7 @@ bool Prs3d_Drawer::SetShaderProgram(const occ::handle<Graphic3d_ShaderProgram>& 
       setAspectProgram(theProgram, myTextAspect);
       return isUpdateNeeded;
     }
-    case Graphic3d_ASPECT_MARKER: {
+    case Graphic3d_GroupAspect::Graphic3d_ASPECT_MARKER: {
       if (theToOverrideDefaults && SetupOwnPointAspect())
       {
         isUpdateNeeded = true;
@@ -807,7 +807,7 @@ bool Prs3d_Drawer::SetShaderProgram(const occ::handle<Graphic3d_ShaderProgram>& 
       setAspectProgram(theProgram, myPointAspect);
       return isUpdateNeeded;
     }
-    case Graphic3d_ASPECT_FILL_AREA: {
+    case Graphic3d_GroupAspect::Graphic3d_ASPECT_FILL_AREA: {
       if (theToOverrideDefaults && SetupOwnShadingAspect())
       {
         isUpdateNeeded = true;

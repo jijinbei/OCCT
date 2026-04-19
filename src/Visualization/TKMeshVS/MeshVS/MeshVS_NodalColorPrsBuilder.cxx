@@ -58,10 +58,10 @@ class MeshVS_ImageTexture2D : public Graphic3d_Texture2D
 {
 public:
   MeshVS_ImageTexture2D(const occ::handle<Image_PixMap>& theImg)
-      : Graphic3d_Texture2D(theImg, Graphic3d_TypeOfTexture_2D)
+      : Graphic3d_Texture2D(theImg, Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D)
   {
     myParams->SetModulate(true);
-    myParams->SetFilter(Graphic3d_TOTF_BILINEAR);
+    myParams->SetFilter(Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR);
   }
 
 public:

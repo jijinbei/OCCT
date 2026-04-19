@@ -212,8 +212,8 @@ AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
   myDrawer->SetTextAspect(new Prs3d_TextAspect());
   myDrawer->TextAspect()->Aspect()->SetDisplayType(Aspect_TypeOfDisplayText::Aspect_TODT_SHADOW);
   myDrawer->TextAspect()->Aspect()->SetColorSubTitle(Quantity_NOC_BLACK);
-  myDrawer->TextAspect()->SetHorizontalJustification(Graphic3d_HTA_LEFT);
-  myDrawer->TextAspect()->SetVerticalJustification(Graphic3d_VTA_TOPFIRSTLINE);
+  myDrawer->TextAspect()->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT);
+  myDrawer->TextAspect()->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOPFIRSTLINE);
 
   updateLightTransformPersistence();
 
@@ -227,8 +227,8 @@ AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
   {
     myDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
     myDynHilightDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
-    myDrawer->TextAspect()->SetHorizontalJustification(Graphic3d_HTA_CENTER);
-    myDrawer->TextAspect()->SetVerticalJustification(Graphic3d_VTA_TOP);
+    myDrawer->TextAspect()->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER);
+    myDrawer->TextAspect()->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOP);
   }
 }
 

@@ -99,7 +99,7 @@ public:
   const NCollection_IndexedMap<const Graphic3d_CStructure*>& Structures(
     Graphic3d_DisplayPriority thePriority) const
   {
-    return myArray[thePriority];
+    return myArray[static_cast<int>(thePriority)];
   }
 
   //! Marks BVH tree for given priority list as dirty and

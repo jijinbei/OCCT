@@ -100,7 +100,7 @@ enum Graphic3d_TextureUnit
 
 enum
 {
-  Graphic3d_TextureUnit_NB = Graphic3d_TextureUnit_15 + 1,
+  Graphic3d_TextureUnit_NB = static_cast<int>(Graphic3d_TextureUnit_15) + 1,
 };
 
 #endif // _Graphic3d_TextureUnit_HeaderFile

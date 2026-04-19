@@ -54,11 +54,11 @@ public:
     myShadingModel = theShadingModel;
   }
 
-  //! Returns the way how alpha value should be treated (Graphic3d_AlphaMode_BlendAuto by default,
+  //! Returns the way how alpha value should be treated (Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto by default,
   //! for backward compatibility).
   Graphic3d_AlphaMode AlphaMode() const { return myAlphaMode; }
 
-  //! Returns alpha cutoff threshold, for discarding fragments within Graphic3d_AlphaMode_Mask mode
+  //! Returns alpha cutoff threshold, for discarding fragments within Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask mode
   //! (0.5 by default). If the alpha value is greater than or equal to this value then it is
   //! rendered as fully opaque, otherwise, it is rendered as fully transparent.
   float AlphaCutoff() const { return myAlphaCutoff; }
@@ -550,30 +550,30 @@ public:
   Standard_DEPRECATED("Deprecated method, FaceCulling() should be used instead")
   bool ToSuppressBackFaces() const
   {
-    return myFaceCulling == Graphic3d_TypeOfBackfacingModel_BackCulled
-           || myFaceCulling == Graphic3d_TypeOfBackfacingModel_Auto;
+    return myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled
+           || myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
   }
 
   Standard_DEPRECATED("Deprecated method, SetFaceCulling() should be used "
                       "instead")
   void SetSuppressBackFaces(bool theToSuppress)
   {
-    myFaceCulling = theToSuppress ? Graphic3d_TypeOfBackfacingModel_Auto
-                                  : Graphic3d_TypeOfBackfacingModel_DoubleSided;
+    myFaceCulling = theToSuppress ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
+                                  : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
   }
 
   Standard_DEPRECATED("Deprecated method, FaceCulling() should be used instead")
   bool BackFace() const
   {
-    return myFaceCulling == Graphic3d_TypeOfBackfacingModel_BackCulled
-           || myFaceCulling == Graphic3d_TypeOfBackfacingModel_Auto;
+    return myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled
+           || myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
   }
 
   Standard_DEPRECATED("Deprecated method, SetFaceCulling() should be used instead")
-  void AllowBackFace() { myFaceCulling = Graphic3d_TypeOfBackfacingModel_DoubleSided; }
+  void AllowBackFace() { myFaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided; }
 
   Standard_DEPRECATED("Deprecated method, SetFaceCulling() should be used instead")
-  void SuppressBackFace() { myFaceCulling = Graphic3d_TypeOfBackfacingModel_Auto; }
+  void SuppressBackFace() { myFaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto; }
 
 protected:
   occ::handle<Graphic3d_ShaderProgram>  myProgram;

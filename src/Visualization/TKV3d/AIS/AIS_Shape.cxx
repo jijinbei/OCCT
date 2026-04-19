@@ -111,7 +111,7 @@ void AIS_Shape::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     // TopAbs_WIRE -> 7, TopAbs_EDGE -> 8, TopAbs_VERTEX -> 9 (Graphic3d_DisplayPriority_Highlight)
     const int aPrior =
       (int)Graphic3d_DisplayPriority_Above1 + (int)myshape.ShapeType() - TopAbs_WIRE;
-    thePrs->SetVisual(Graphic3d_TOS_ALL);
+    thePrs->SetVisual(Graphic3d_TypeOfStructure::Graphic3d_TOS_ALL);
     thePrs->SetDisplayPriority((Graphic3d_DisplayPriority)aPrior);
   }
 

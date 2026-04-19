@@ -188,7 +188,7 @@ OpenGl_ShaderProgram::OpenGl_ShaderProgram(const occ::handle<Graphic3d_ShaderPro
       myNbClipPlanesMax(0),
       myNbFragOutputs(1),
       myTextureSetBits(Graphic3d_TextureSetBits_NONE),
-      myOitOutput(Graphic3d_RTM_BLEND_UNORDERED),
+      myOitOutput(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED),
       myHasAlphaTest(false),
       myHasTessShader(false)
 {
@@ -223,14 +223,14 @@ bool OpenGl_ShaderProgram::Initialize(
   myNbFragOutputs  = !myProxy.IsNull() ? myProxy->NbFragmentOutputs() : 1;
   myTextureSetBits = Graphic3d_TextureSetBits_NONE;
   myHasAlphaTest   = !myProxy.IsNull() && myProxy->HasAlphaTest();
-  myOitOutput      = !myProxy.IsNull() ? myProxy->OitOutput() : Graphic3d_RTM_BLEND_UNORDERED;
-  if (myOitOutput == Graphic3d_RTM_BLEND_OIT && myNbFragOutputs < 2)
+  myOitOutput      = !myProxy.IsNull() ? myProxy->OitOutput() : Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
+  if (myOitOutput == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT && myNbFragOutputs < 2)
   {
-    myOitOutput = Graphic3d_RTM_BLEND_UNORDERED;
+    myOitOutput = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
   }
-  else if (myOitOutput == Graphic3d_RTM_DEPTH_PEELING_OIT && myNbFragOutputs < 3)
+  else if (myOitOutput == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT && myNbFragOutputs < 3)
   {
-    myOitOutput = Graphic3d_RTM_BLEND_UNORDERED;
+    myOitOutput = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
   }
 
   // detect the minimum GLSL version required for defined Shader Objects
@@ -386,12 +386,12 @@ bool OpenGl_ShaderProgram::Initialize(
         anExtensions += "#define OCC_ENABLE_draw_buffers\n";
         switch (myOitOutput)
         {
-          case Graphic3d_RTM_BLEND_UNORDERED:
+          case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED:
             break;
-          case Graphic3d_RTM_BLEND_OIT:
+          case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT:
             anExtensions += "#define OCC_WRITE_WEIGHT_OIT_COVERAGE\n";
             break;
-          case Graphic3d_RTM_DEPTH_PEELING_OIT:
+          case Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT:
             anExtensions += "#define OCC_DEPTH_PEEL_OIT\n";
             break;
         }

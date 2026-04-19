@@ -18,7 +18,7 @@
 #define _Graphic3d_TypeOfReflection_HeaderFile
 
 //! Nature of the reflection of a material.
-enum Graphic3d_TypeOfReflection
+enum class Graphic3d_TypeOfReflection
 {
   Graphic3d_TOR_AMBIENT = 0,
   Graphic3d_TOR_DIFFUSE,

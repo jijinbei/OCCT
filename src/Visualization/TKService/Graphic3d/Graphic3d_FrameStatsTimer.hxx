@@ -15,7 +15,7 @@
 #define _Graphic3d_FrameStatsTimer_HeaderFile
 
 //! Timers for collecting frame performance statistics.
-enum Graphic3d_FrameStatsTimer
+enum class Graphic3d_FrameStatsTimer
 {
   Graphic3d_FrameStatsTimer_ElapsedFrame,
   Graphic3d_FrameStatsTimer_CpuFrame,
@@ -26,7 +26,8 @@ enum Graphic3d_FrameStatsTimer
 
 enum
 {
-  Graphic3d_FrameStatsTimer_NB = Graphic3d_FrameStatsTimer_CpuDynamics + 1
+  Graphic3d_FrameStatsTimer_NB =
+    static_cast<int>(Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_CpuDynamics) + 1
 };
 
 #endif // _Graphic3d_FrameStatsTimer_HeaderFile

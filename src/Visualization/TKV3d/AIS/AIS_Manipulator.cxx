@@ -141,7 +141,7 @@ void AIS_Manipulator::init()
 
   Graphic3d_MaterialAspect aShadingMaterial;
   aShadingMaterial.SetSpecularColor(Quantity_NOC_BLACK);
-  aShadingMaterial.SetMaterialType(Graphic3d_MATERIAL_ASPECT);
+  aShadingMaterial.SetMaterialType(Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT);
 
   myDrawer->SetShadingAspect(new Prs3d_ShadingAspect());
   myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);

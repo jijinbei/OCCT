@@ -17,7 +17,7 @@
 #define _Graphic3d_RenderTransparentMethod_HeaderFile
 
 //! Enumerates transparency rendering methods supported by rasterization mode.
-enum Graphic3d_RenderTransparentMethod
+enum class Graphic3d_RenderTransparentMethod
 {
   Graphic3d_RTM_BLEND_UNORDERED, //!< Basic blend transparency with non-commuting blend operator
                                  //!< without sorting

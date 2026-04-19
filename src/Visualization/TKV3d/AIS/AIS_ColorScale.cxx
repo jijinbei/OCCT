@@ -127,7 +127,7 @@ AIS_ColorScale::AIS_ColorScale()
   SetDisplayMode(0);
   myDrawer->SetupOwnShadingAspect();
   myDrawer->ShadingAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
-  myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Opaque);
+  myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque);
   myDrawer->ShadingAspect()->Aspect()->SetInteriorColor(Quantity_NOC_WHITE);
 }
 
@@ -500,8 +500,8 @@ void AIS_ColorScale::updateTextAspect()
   const occ::handle<Prs3d_TextAspect>& anAspect = myDrawer->TextAspect();
   anAspect->SetColor(aFgColor);
   anAspect->SetHeight(myTextHeight);
-  anAspect->SetHorizontalJustification(Graphic3d_HTA_LEFT);
-  anAspect->SetVerticalJustification(Graphic3d_VTA_BOTTOM);
+  anAspect->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT);
+  anAspect->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM);
   anAspect->Aspect()->SetTextZoomable(true);
 }
 
@@ -567,7 +567,7 @@ void AIS_ColorScale::Compute(const occ::handle<PrsMgr_PresentationManager>&,
              myTitle,
              myXPos + mySpacing,
              aBarTop + aBarYOffset,
-             Graphic3d_VTA_BOTTOM);
+             Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM);
   }
 
   // draw colors
@@ -786,7 +786,7 @@ void AIS_ColorScale::drawLabels(const occ::handle<Graphic3d_Group>&             
                theLabels.Value(i1 + 1),
                anXLeft,
                anYBottom + int(i1 * aStepY + anAscent),
-               Graphic3d_VTA_CENTER);
+               Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER);
       aLast1 = i1;
     }
     if (aFilter && !(aPos2 % aFilter))
@@ -795,7 +795,7 @@ void AIS_ColorScale::drawLabels(const occ::handle<Graphic3d_Group>&             
                theLabels.Value(i2 + 1),
                anXLeft,
                anYBottom + int(i2 * aStepY + anAscent),
-               Graphic3d_VTA_CENTER);
+               Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER);
       aLast2 = i2;
     }
     i1++;
@@ -819,7 +819,7 @@ void AIS_ColorScale::drawLabels(const occ::handle<Graphic3d_Group>&             
              theLabels.Value(i0 + 1),
              anXLeft,
              anYBottom + int(i0 * aStepY + anAscent),
-             Graphic3d_VTA_CENTER);
+             Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER);
   }
 }
 

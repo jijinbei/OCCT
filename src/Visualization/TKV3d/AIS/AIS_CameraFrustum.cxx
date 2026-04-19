@@ -42,7 +42,7 @@ AIS_CameraFrustum::AIS_CameraFrustum()
 
   occ::handle<Prs3d_ShadingAspect> aShadingAspect = new Prs3d_ShadingAspect();
   aShadingAspect->SetMaterial(Graphic3d_NameOfMaterial_Plastified);
-  aShadingAspect->Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Blend);
+  aShadingAspect->Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend);
   aShadingAspect->SetTransparency(THE_DEFAULT_TRANSPARENCY);
   aShadingAspect->SetColor(THE_DEFAULT_COLOR);
   myDrawer->SetShadingAspect(aShadingAspect);

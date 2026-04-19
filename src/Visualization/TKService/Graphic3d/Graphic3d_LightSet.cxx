@@ -57,7 +57,7 @@ bool Graphic3d_LightSet::Add(const occ::handle<Graphic3d_CLight>& theLight)
     return false;
   }
 
-  myLightTypes[theLight->Type()] += 1;
+  myLightTypes[static_cast<int>(theLight->Type())] += 1;
   myLights.ChangeFromIndex(anIndex) = theLight->Revision();
   ++myRevision;
   return true;
@@ -75,7 +75,7 @@ bool Graphic3d_LightSet::Remove(const occ::handle<Graphic3d_CLight>& theLight)
 
   ++myRevision;
   myLights.RemoveFromIndex(anIndToRemove);
-  myLightTypes[theLight->Type()] -= 1;
+  myLightTypes[static_cast<int>(theLight->Type())] -= 1;
   return true;
 }
 
@@ -122,7 +122,7 @@ size_t Graphic3d_LightSet::UpdateRevision()
       continue;
     }
 
-    myLightTypesEnabled[aLight->Type()] += 1;
+    myLightTypesEnabled[static_cast<int>(aLight->Type())] += 1;
     if (aLight->Type() == Graphic3d_TypeOfLightSource_Ambient)
     {
       myAmbient += aLight->PackedColor() * aLight->Intensity();
@@ -132,29 +132,29 @@ size_t Graphic3d_LightSet::UpdateRevision()
       if (aLight->ToCastShadows())
       {
         ++myNbCastShadows;
-        aKeyLong[aLightLast++] = UpperCase(THE_LIGHT_KEY_LETTERS[aLight->Type()]);
+        aKeyLong[aLightLast++] = UpperCase(THE_LIGHT_KEY_LETTERS[static_cast<int>(aLight->Type())]);
       }
       else
       {
-        aKeyLong[aLightLast++] = THE_LIGHT_KEY_LETTERS[aLight->Type()];
+        aKeyLong[aLightLast++] = THE_LIGHT_KEY_LETTERS[static_cast<int>(aLight->Type())];
       }
     }
   }
   aKeyLong[aLightLast] = '\0';
   myAmbient.a()        = 1.0f;
-  myNbEnabled          = myLightTypesEnabled[Graphic3d_TypeOfLightSource_Directional]
-                + myLightTypesEnabled[Graphic3d_TypeOfLightSource_Positional]
-                + myLightTypesEnabled[Graphic3d_TypeOfLightSource_Spot];
+  myNbEnabled          = myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Directional)]
+                + myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Positional)]
+                + myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Spot)];
   myKeyEnabledLong = aKeyLong;
   myKeyEnabledShort =
-    TCollection_AsciiString(myLightTypesEnabled[Graphic3d_TypeOfLightSource_Directional] > 0
-                              ? THE_LIGHT_KEY_LETTERS[Graphic3d_TypeOfLightSource_Directional]
+    TCollection_AsciiString(myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Directional)] > 0
+                              ? THE_LIGHT_KEY_LETTERS[static_cast<int>(Graphic3d_TypeOfLightSource_Directional)]
                               : '\0')
-    + TCollection_AsciiString(myLightTypesEnabled[Graphic3d_TypeOfLightSource_Positional] > 0
-                                ? THE_LIGHT_KEY_LETTERS[Graphic3d_TypeOfLightSource_Positional]
+    + TCollection_AsciiString(myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Positional)] > 0
+                                ? THE_LIGHT_KEY_LETTERS[static_cast<int>(Graphic3d_TypeOfLightSource_Positional)]
                                 : '\0')
-    + TCollection_AsciiString(myLightTypesEnabled[Graphic3d_TypeOfLightSource_Spot] > 0
-                                ? THE_LIGHT_KEY_LETTERS[Graphic3d_TypeOfLightSource_Spot]
+    + TCollection_AsciiString(myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Spot)] > 0
+                                ? THE_LIGHT_KEY_LETTERS[static_cast<int>(Graphic3d_TypeOfLightSource_Spot)]
                                 : '\0');
   return myRevision;
 }

@@ -218,7 +218,7 @@ bool D3DHost_FrameBuffer::InitD3dInterop(const occ::handle<OpenGl_Context>& theC
       && !myDepthStencilTexture->Init(theCtx,
                                       aDepthFormat,
                                       NCollection_Vec2<int>(aSizeX, aSizeY),
-                                      Graphic3d_TypeOfTexture_2D))
+                                      Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D))
   {
     Release(theCtx.get());
     theCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
@@ -419,7 +419,7 @@ void D3DHost_FrameBuffer::UnlockSurface(const occ::handle<OpenGl_Context>& theCt
     {
       anImg.SetTopDown(!IsValid()); // flip in software if OpenGL FBO is unavailable
       myLockCount = 1;
-      if (!BufferDump(theCtx, this, anImg, Graphic3d_BT_RGBA))
+      if (!BufferDump(theCtx, this, anImg, Graphic3d_BufferType::Graphic3d_BT_RGBA))
       {
         theCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
                             GL_DEBUG_TYPE_ERROR,

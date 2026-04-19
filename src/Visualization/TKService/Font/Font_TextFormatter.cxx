@@ -54,8 +54,8 @@ inline void moveY(NCollection_Vector<Vec2f>& theCorners,
 //=================================================================================================
 
 Font_TextFormatter::Font_TextFormatter()
-    : myAlignX(Graphic3d_HTA_LEFT),
-      myAlignY(Graphic3d_VTA_TOP),
+    : myAlignX(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT),
+      myAlignY(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOP),
       myTabSize(8),
       myWrappingWidth(0.0f),
       myIsWordWrapping(true),
@@ -178,13 +178,13 @@ void Font_TextFormatter::newLine(const int theLastRect, const float theMaxLineWi
   switch (myAlignX)
   {
     default:
-    case Graphic3d_HTA_LEFT:
+    case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT:
       myMoveVec.x() = -aXMin;
       break;
-    case Graphic3d_HTA_RIGHT:
+    case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT:
       myMoveVec.x() = -aXMin + (theMaxLineWidth - (aXMax - aXMin)) - theMaxLineWidth;
       break;
-    case Graphic3d_HTA_CENTER:
+    case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER:
       myMoveVec.x() = -aXMin + 0.5f * (theMaxLineWidth - (aXMax - aXMin)) - 0.5f * theMaxLineWidth;
       break;
   }
@@ -293,20 +293,20 @@ void Font_TextFormatter::Format()
   newLine(myCorners.Length() - 1, aMaxLineWidth);
 
   // apply vertical alignment style
-  if (myAlignY == Graphic3d_VTA_BOTTOM)
+  if (myAlignY == Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM)
   {
     myBndTop = -myLineSpacing - myPenCurrLine;
   }
-  else if (myAlignY == Graphic3d_VTA_CENTER)
+  else if (myAlignY == Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER)
   {
     myBndTop = 0.5f * (myLineSpacing * float(myLinesNb));
   }
-  else if (myAlignY == Graphic3d_VTA_TOPFIRSTLINE)
+  else if (myAlignY == Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOPFIRSTLINE)
   {
     myBndTop = myAscender;
   }
 
-  if (myAlignY != Graphic3d_VTA_TOP)
+  if (myAlignY != Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOP)
   {
     moveY(myCorners, myBndTop, 0, myCorners.Length() - 1);
   }
@@ -344,13 +344,13 @@ bool Font_TextFormatter::GlyphBoundingBox(const int theIndex, Font_Rect& theBndB
     theBndBox.Left   = aLeftCorner.x();
     switch (myAlignX)
     {
-      case Graphic3d_HTA_LEFT:
+      case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT:
         theBndBox.Right = aLineWidth;
         break;
-      case Graphic3d_HTA_RIGHT:
+      case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT:
         theBndBox.Right = myBndWidth;
         break;
-      case Graphic3d_HTA_CENTER:
+      case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER:
         theBndBox.Right = 0.5f * (myBndWidth + aLineWidth);
         break;
     }
@@ -378,11 +378,11 @@ float Font_TextFormatter::FirstPosition() const
   switch (myAlignX)
   {
     default:
-    case Graphic3d_HTA_LEFT:
+    case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT:
       return 0;
-    case Graphic3d_HTA_RIGHT:
+    case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT:
       return myBndWidth;
-    case Graphic3d_HTA_CENTER:
+    case Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER:
       return 0.5f * myBndWidth;
   }
 }

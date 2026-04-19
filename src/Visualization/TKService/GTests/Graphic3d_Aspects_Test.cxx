@@ -148,10 +148,10 @@ TEST(Graphic3d_AspectsTest, ReflectionMode_IndependentOfShadingModel)
 
   // Verify material has no reflection
   const Graphic3d_MaterialAspect& aStoredMat = anAspect->FrontMaterial();
-  EXPECT_FALSE(aStoredMat.ReflectionMode(Graphic3d_TOR_AMBIENT));
-  EXPECT_FALSE(aStoredMat.ReflectionMode(Graphic3d_TOR_DIFFUSE));
-  EXPECT_FALSE(aStoredMat.ReflectionMode(Graphic3d_TOR_SPECULAR));
-  EXPECT_FALSE(aStoredMat.ReflectionMode(Graphic3d_TOR_EMISSION));
+  EXPECT_FALSE(aStoredMat.ReflectionMode(Graphic3d_TypeOfReflection::Graphic3d_TOR_AMBIENT));
+  EXPECT_FALSE(aStoredMat.ReflectionMode(Graphic3d_TypeOfReflection::Graphic3d_TOR_DIFFUSE));
+  EXPECT_FALSE(aStoredMat.ReflectionMode(Graphic3d_TypeOfReflection::Graphic3d_TOR_SPECULAR));
+  EXPECT_FALSE(aStoredMat.ReflectionMode(Graphic3d_TypeOfReflection::Graphic3d_TOR_EMISSION));
 
   // But shading model is still Phong (not implicitly forced to UNLIT)
   EXPECT_EQ(anAspect->ShadingModel(), Graphic3d_TypeOfShadingModel_Phong);

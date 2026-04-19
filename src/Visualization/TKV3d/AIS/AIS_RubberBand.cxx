@@ -40,7 +40,7 @@ AIS_RubberBand::AIS_RubberBand()
   myDrawer->ShadingAspect()->SetMaterial(Graphic3d_NameOfMaterial_Plastified);
   myDrawer->ShadingAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
   myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_EMPTY);
-  myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Blend);
+  myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend);
   myDrawer->ShadingAspect()->SetTransparency(1.0);
   myDrawer->ShadingAspect()->SetColor(Quantity_NOC_WHITE);
 
@@ -61,7 +61,7 @@ AIS_RubberBand::AIS_RubberBand(const Quantity_Color&   theLineColor,
   myDrawer->ShadingAspect()->SetMaterial(Graphic3d_NameOfMaterial_Plastified);
   myDrawer->ShadingAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
   myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_EMPTY);
-  myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Blend);
+  myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend);
   myDrawer->ShadingAspect()->SetTransparency(1.0);
   myDrawer->ShadingAspect()->SetColor(Quantity_NOC_WHITE);
 
@@ -85,7 +85,7 @@ AIS_RubberBand::AIS_RubberBand(const Quantity_Color&   theLineColor,
   myDrawer->ShadingAspect()->SetColor(theFillColor);
   myDrawer->ShadingAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
   myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
-  myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Blend);
+  myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend);
   myDrawer->ShadingAspect()->SetTransparency(theTransparency);
 
   SetTransformPersistence(new Graphic3d_TransformPers(Graphic3d_TMF_2d, Aspect_TOTP_LEFT_LOWER));

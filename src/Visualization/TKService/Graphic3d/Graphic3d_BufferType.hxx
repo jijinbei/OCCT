@@ -15,7 +15,7 @@
 #define Graphic3d_BufferType_HeaderFile
 
 //! Define buffers available for dump
-enum Graphic3d_BufferType
+enum class Graphic3d_BufferType
 {
   Graphic3d_BT_RGB,                 //!< color buffer without alpha component
   Graphic3d_BT_RGBA,                //!< color buffer

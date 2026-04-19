@@ -316,7 +316,7 @@ bool OpenGl_TileSampler::upload(const occ::handle<OpenGl_Context>& theContext,
             theContext,
             OpenGl_TextureFormat::FindSizedFormat(theContext, GL_RG32I),
             NCollection_Vec2<int>((int)anOffsets.SizeX, (int)anOffsets.SizeY),
-            Graphic3d_TypeOfTexture_2D))
+            Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D))
       {
         hasErrors = true;
       }

@@ -356,13 +356,13 @@ OpenGl_RaytraceMaterial OpenGl_View::convertMaterial(
   const NCollection_Vec3<float>& aSrcEms = aSrcMat.EmissiveColor();
   switch (aSrcMat.MaterialType())
   {
-    case Graphic3d_MATERIAL_ASPECT: {
+    case Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT: {
       aResMat.Ambient.SetValues(aSrcAmb * aMatCol, 1.0f);
       aResMat.Diffuse.SetValues(aSrcDif * aMatCol, -1.0f); // -1 is no texture
       aResMat.Emission.SetValues(aSrcEms * aMatCol, 1.0f);
       break;
     }
-    case Graphic3d_MATERIAL_PHYSIC: {
+    case Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_PHYSIC: {
       aResMat.Ambient.SetValues(aSrcAmb, 1.0f);
       aResMat.Diffuse.SetValues(aSrcDif, -1.0f); // -1 is no texture
       aResMat.Emission.SetValues(aSrcEms, 1.0f);
@@ -1192,9 +1192,9 @@ TCollection_AsciiString OpenGl_View::generateShaderPrefix(
 
     switch (myRaytraceParameters.ToneMappingMethod)
     {
-      case Graphic3d_ToneMappingMethod_Disabled:
+      case Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Disabled:
         break;
-      case Graphic3d_ToneMappingMethod_Filmic:
+      case Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Filmic:
         aPrefixString += "\n#define TONE_MAPPING_FILMIC";
         break;
     }
@@ -2039,14 +2039,14 @@ bool OpenGl_View::updateRaytraceBuffers(const int                          theSi
         theGlContext,
         OpenGl_TextureFormat::FindSizedFormat(theGlContext, GL_R32I),
         NCollection_Vec2<int>(myTileSampler.NbTilesX(), myTileSampler.NbTilesY()),
-        Graphic3d_TypeOfTexture_2D);
+        Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D);
       if (!myRaytraceParameters.AdaptiveScreenSamplingAtomic)
       {
         myRaytraceTileSamplesTexture[aViewIter]->Init(
           theGlContext,
           OpenGl_TextureFormat::FindSizedFormat(theGlContext, GL_R32I),
           NCollection_Vec2<int>(myTileSampler.NbTilesX(), myTileSampler.NbTilesY()),
-          Graphic3d_TypeOfTexture_2D);
+          Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D);
       }
     }
     else // non-adaptive mode
@@ -3322,9 +3322,9 @@ bool OpenGl_View::runPathtraceOut(const Graphic3d_Camera::Projection theProjecti
     myOutImageProgram->SetUniform(theGlContext, "uExposure", myRenderParams.Exposure);
     switch (myRaytraceParameters.ToneMappingMethod)
     {
-      case Graphic3d_ToneMappingMethod_Disabled:
+      case Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Disabled:
         break;
-      case Graphic3d_ToneMappingMethod_Filmic:
+      case Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Filmic:
         myOutImageProgram->SetUniform(theGlContext, "uWhitePoint", myRenderParams.WhitePoint);
         break;
     }

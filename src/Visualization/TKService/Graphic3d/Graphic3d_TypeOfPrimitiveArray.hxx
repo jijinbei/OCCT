@@ -18,7 +18,7 @@
 #define _Graphic3d_TypeOfPrimitiveArray_HeaderFile
 
 //! The type of primitive array in a group in a structure.
-enum Graphic3d_TypeOfPrimitiveArray
+enum class Graphic3d_TypeOfPrimitiveArray
 {
   Graphic3d_TOPA_UNDEFINED, //!< undefined primitive type
   // main rendering types
