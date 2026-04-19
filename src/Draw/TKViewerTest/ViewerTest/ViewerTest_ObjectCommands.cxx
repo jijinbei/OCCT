@@ -5597,7 +5597,7 @@ static int VMarkersTest(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   occ::handle<Graphic3d_AspectMarker3d> anAspect;
   occ::handle<Image_AlienPixMap>        anImage;
   Quantity_Color                        aColor(Quantity_NOC_GREEN1);
-  if ((aMarkerType == Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED || aMarkerType < 0)
+  if ((aMarkerType == static_cast<int>(Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED) || aMarkerType < 0)
       && !aFileName.IsEmpty())
   {
     anImage = new Image_AlienPixMap();
