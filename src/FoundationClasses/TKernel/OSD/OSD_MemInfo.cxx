@@ -59,9 +59,9 @@ OSD_MemInfo::OSD_MemInfo(const bool theImmediateUpdate)
 
 void OSD_MemInfo::SetActive(const bool theActive)
 {
-  for (int anIter = 0; anIter < MemCounter_NB; ++anIter)
+  for (size_t anIter = 0; anIter < static_cast<size_t>(Counter::MemCounter_NB); ++anIter)
   {
-    SetActive((Counter)anIter, theActive);
+    SetActive(static_cast<Counter>(anIter), theActive);
   }
 }
 
@@ -69,7 +69,7 @@ void OSD_MemInfo::SetActive(const bool theActive)
 
 void OSD_MemInfo::Clear()
 {
-  for (int anIter = 0; anIter < MemCounter_NB; ++anIter)
+  for (size_t anIter = 0; anIter < static_cast<size_t>(Counter::MemCounter_NB); ++anIter)
   {
     myCounters[anIter] = size_t(-1);
   }
@@ -83,25 +83,25 @@ void OSD_MemInfo::Update()
 #ifndef OCCT_UWP
   #if defined(_WIN32)
     #if (_WIN32_WINNT >= 0x0500)
-  if (IsActive(MemVirtual))
+  if (IsActive(Counter::MemVirtual))
   {
     MEMORYSTATUSEX aStatEx;
     aStatEx.dwLength = sizeof(aStatEx);
     GlobalMemoryStatusEx(&aStatEx);
-    myCounters[MemVirtual] = size_t(aStatEx.ullTotalVirtual - aStatEx.ullAvailVirtual);
+    myCounters[size_t(Counter::MemVirtual)] = size_t(aStatEx.ullTotalVirtual - aStatEx.ullAvailVirtual);
   }
     #else
-  if (IsActive(MemVirtual))
+  if (IsActive(Counter::MemVirtual))
   {
     MEMORYSTATUS aStat;
     aStat.dwLength = sizeof(aStat);
     GlobalMemoryStatus(&aStat);
-    myCounters[MemVirtual] = size_t(aStat.dwTotalVirtual - aStat.dwAvailVirtual);
+    myCounters[size_t(Counter::MemVirtual)] = size_t(aStat.dwTotalVirtual - aStat.dwAvailVirtual);
   }
     #endif
 
-  if (IsActive(MemPrivate) || IsActive(MemWorkingSet) || IsActive(MemWorkingSetPeak)
-      || IsActive(MemSwapUsage) || IsActive(MemSwapUsagePeak))
+  if (IsActive(Counter::MemPrivate) || IsActive(Counter::MemWorkingSet) || IsActive(Counter::MemWorkingSetPeak)
+      || IsActive(Counter::MemSwapUsage) || IsActive(Counter::MemSwapUsagePeak))
   {
     // use Psapi library
     HANDLE aProcess = GetCurrentProcess();
@@ -115,55 +115,55 @@ void OSD_MemInfo::Update()
                              sizeof(aProcMemCnts)))
     {
     #if (_WIN32_WINNT >= 0x0501)
-      myCounters[MemPrivate] = aProcMemCnts.PrivateUsage;
+      myCounters[size_t(Counter::MemPrivate)] = aProcMemCnts.PrivateUsage;
     #endif
-      myCounters[MemWorkingSet]     = aProcMemCnts.WorkingSetSize;
-      myCounters[MemWorkingSetPeak] = aProcMemCnts.PeakWorkingSetSize;
-      myCounters[MemSwapUsage]      = aProcMemCnts.PagefileUsage;
-      myCounters[MemSwapUsagePeak]  = aProcMemCnts.PeakPagefileUsage;
+      myCounters[size_t(Counter::MemWorkingSet)]     = aProcMemCnts.WorkingSetSize;
+      myCounters[size_t(Counter::MemWorkingSetPeak)] = aProcMemCnts.PeakWorkingSetSize;
+      myCounters[size_t(Counter::MemSwapUsage)]      = aProcMemCnts.PagefileUsage;
+      myCounters[size_t(Counter::MemSwapUsagePeak)]  = aProcMemCnts.PeakPagefileUsage;
     }
   }
 
-  if (IsActive(MemHeapUsage))
+  if (IsActive(Counter::MemHeapUsage))
   {
     _HEAPINFO hinfo;
     int       heapstatus;
     hinfo._pentry = nullptr;
 
-    myCounters[MemHeapUsage] = 0;
+    myCounters[size_t(Counter::MemHeapUsage)] = 0;
     while ((heapstatus = _heapwalk(&hinfo)) == _HEAPOK)
     {
       if (hinfo._useflag == _USEDENTRY)
       {
-        myCounters[MemHeapUsage] += hinfo._size;
+        myCounters[size_t(Counter::MemHeapUsage)] += hinfo._size;
       }
     }
   }
 
   #elif defined(__EMSCRIPTEN__)
-  if (IsActive(MemHeapUsage) || IsActive(MemWorkingSet) || IsActive(MemWorkingSetPeak))
+  if (IsActive(Counter::MemHeapUsage) || IsActive(Counter::MemWorkingSet) || IsActive(Counter::MemWorkingSetPeak))
   {
     // /proc/%d/status is not emulated - get more info from mallinfo()
     const struct mallinfo aMI = mallinfo();
-    if (IsActive(MemHeapUsage))
+    if (IsActive(Counter::MemHeapUsage))
     {
-      myCounters[MemHeapUsage] = aMI.uordblks;
+      myCounters[size_t(Counter::MemHeapUsage)] = aMI.uordblks;
     }
-    if (IsActive(MemWorkingSet))
+    if (IsActive(Counter::MemWorkingSet))
     {
-      myCounters[MemWorkingSet] = aMI.uordblks;
+      myCounters[size_t(Counter::MemWorkingSet)] = aMI.uordblks;
     }
-    if (IsActive(MemWorkingSetPeak))
+    if (IsActive(Counter::MemWorkingSetPeak))
     {
-      myCounters[MemWorkingSetPeak] = aMI.usmblks;
+      myCounters[size_t(Counter::MemWorkingSetPeak)] = aMI.usmblks;
     }
   }
-  if (IsActive(MemVirtual))
+  if (IsActive(Counter::MemVirtual))
   {
-    myCounters[MemVirtual] = (size_t)OSD_MemInfo_getModuleHeapLength();
+    myCounters[size_t(Counter::MemVirtual)] = (size_t)OSD_MemInfo_getModuleHeapLength();
   }
   #elif (defined(__linux__) || defined(__linux))
-  if (IsActive(MemHeapUsage))
+  if (IsActive(Counter::MemHeapUsage))
   {
     #if defined(__GLIBC__)
       #define HAS_MALLINFO
@@ -178,14 +178,14 @@ void OSD_MemInfo::Update()
       #else
     const struct mallinfo aMI = mallinfo();
       #endif
-    myCounters[MemHeapUsage] = aMI.uordblks;
+    myCounters[size_t(Counter::MemHeapUsage)] = aMI.uordblks;
     #else
-    myCounters[MemHeapUsage] = 0;
+    myCounters[size_t(Counter::MemHeapUsage)] = 0;
     #endif
   }
 
-  if (!IsActive(MemVirtual) && !IsActive(MemWorkingSet) && !IsActive(MemWorkingSetPeak)
-      && !IsActive(MemPrivate))
+  if (!IsActive(Counter::MemVirtual) && !IsActive(Counter::MemWorkingSet) && !IsActive(Counter::MemWorkingSetPeak)
+      && !IsActive(Counter::MemPrivate))
   {
     return;
   }
@@ -209,39 +209,39 @@ void OSD_MemInfo::Update()
       continue;
     }
 
-    if (IsActive(MemVirtual) && strncmp(aBuff, "VmSize:", strlen("VmSize:")) == 0)
+    if (IsActive(Counter::MemVirtual) && strncmp(aBuff, "VmSize:", strlen("VmSize:")) == 0)
     {
-      myCounters[MemVirtual] = atol(aBuff + strlen("VmSize:")) * 1024;
+      myCounters[size_t(Counter::MemVirtual)] = atol(aBuff + strlen("VmSize:")) * 1024;
     }
     // else if (strncmp (aBuff, "VmPeak:", strlen ("VmPeak:")) == 0)
     //   myVirtualPeak = atol (aBuff + strlen ("VmPeak:")) * 1024;
-    else if (IsActive(MemWorkingSet) && strncmp(aBuff, "VmRSS:", strlen("VmRSS:")) == 0)
+    else if (IsActive(Counter::MemWorkingSet) && strncmp(aBuff, "VmRSS:", strlen("VmRSS:")) == 0)
     {
       // clang-format off
-      myCounters[MemWorkingSet] = atol (aBuff + strlen ("VmRSS:")) * 1024; // RSS - resident set size
+      myCounters[size_t(Counter::MemWorkingSet)] = atol (aBuff + strlen ("VmRSS:")) * 1024; // RSS - resident set size
     }
-    else if (IsActive (MemWorkingSetPeak)
+    else if (IsActive (Counter::MemWorkingSetPeak)
           && strncmp (aBuff, "VmHWM:", strlen ("VmHWM:")) == 0)
     {
-      myCounters[MemWorkingSetPeak] = atol (aBuff + strlen ("VmHWM:")) * 1024; // HWM - high water mark
+      myCounters[size_t(Counter::MemWorkingSetPeak)] = atol (aBuff + strlen ("VmHWM:")) * 1024; // HWM - high water mark
       // clang-format on
     }
-    else if (IsActive(MemPrivate) && strncmp(aBuff, "VmData:", strlen("VmData:")) == 0)
+    else if (IsActive(Counter::MemPrivate) && strncmp(aBuff, "VmData:", strlen("VmData:")) == 0)
     {
-      if (myCounters[MemPrivate] == size_t(-1))
-        ++myCounters[MemPrivate];
-      myCounters[MemPrivate] += atol(aBuff + strlen("VmData:")) * 1024;
+      if (myCounters[size_t(Counter::MemPrivate)] == size_t(-1))
+        ++myCounters[size_t(Counter::MemPrivate)];
+      myCounters[size_t(Counter::MemPrivate)] += atol(aBuff + strlen("VmData:")) * 1024;
     }
-    else if (IsActive(MemPrivate) && strncmp(aBuff, "VmStk:", strlen("VmStk:")) == 0)
+    else if (IsActive(Counter::MemPrivate) && strncmp(aBuff, "VmStk:", strlen("VmStk:")) == 0)
     {
-      if (myCounters[MemPrivate] == size_t(-1))
-        ++myCounters[MemPrivate];
-      myCounters[MemPrivate] += atol(aBuff + strlen("VmStk:")) * 1024;
+      if (myCounters[size_t(Counter::MemPrivate)] == size_t(-1))
+        ++myCounters[size_t(Counter::MemPrivate)];
+      myCounters[size_t(Counter::MemPrivate)] += atol(aBuff + strlen("VmStk:")) * 1024;
     }
   }
   aFile.close();
   #elif (defined(__APPLE__))
-  if (IsActive(MemVirtual) || IsActive(MemWorkingSet) || IsActive(MemHeapUsage))
+  if (IsActive(Counter::MemVirtual) || IsActive(Counter::MemWorkingSet) || IsActive(Counter::MemHeapUsage))
   {
     struct task_basic_info aTaskInfo;
     mach_msg_type_number_t aTaskInfoCount = TASK_BASIC_INFO_COUNT;
@@ -249,14 +249,14 @@ void OSD_MemInfo::Update()
         == KERN_SUCCESS)
     {
       // On Mac OS X, these values in bytes, not pages!
-      myCounters[MemVirtual]    = aTaskInfo.virtual_size;
-      myCounters[MemWorkingSet] = aTaskInfo.resident_size;
+      myCounters[size_t(Counter::MemVirtual)]    = aTaskInfo.virtual_size;
+      myCounters[size_t(Counter::MemWorkingSet)] = aTaskInfo.resident_size;
 
       // Getting malloc statistics
       malloc_statistics_t aStats;
       malloc_zone_statistics(nullptr, &aStats);
 
-      myCounters[MemHeapUsage] = aStats.size_in_use;
+      myCounters[size_t(Counter::MemHeapUsage)] = aStats.size_in_use;
     }
   }
   #endif
@@ -268,40 +268,40 @@ void OSD_MemInfo::Update()
 TCollection_AsciiString OSD_MemInfo::ToString() const
 {
   TCollection_AsciiString anInfo;
-  if (hasValue(MemPrivate))
+  if (hasValue(Counter::MemPrivate))
   {
     anInfo +=
-      TCollection_AsciiString("  Private memory:     ") + int(ValueMiB(MemPrivate)) + " MiB\n";
+      TCollection_AsciiString("  Private memory:     ") + int(ValueMiB(Counter::MemPrivate)) + " MiB\n";
   }
-  if (hasValue(MemWorkingSet))
+  if (hasValue(Counter::MemWorkingSet))
   {
     anInfo +=
-      TCollection_AsciiString("  Working Set:        ") + int(ValueMiB(MemWorkingSet)) + " MiB";
-    if (hasValue(MemWorkingSetPeak))
+      TCollection_AsciiString("  Working Set:        ") + int(ValueMiB(Counter::MemWorkingSet)) + " MiB";
+    if (hasValue(Counter::MemWorkingSetPeak))
     {
-      anInfo += TCollection_AsciiString(" (peak: ") + int(ValueMiB(MemWorkingSetPeak)) + " MiB)";
+      anInfo += TCollection_AsciiString(" (peak: ") + int(ValueMiB(Counter::MemWorkingSetPeak)) + " MiB)";
     }
     anInfo += "\n";
   }
-  if (hasValue(MemSwapUsage))
+  if (hasValue(Counter::MemSwapUsage))
   {
     anInfo +=
-      TCollection_AsciiString("  Pagefile usage:     ") + int(ValueMiB(MemSwapUsage)) + " MiB";
-    if (hasValue(MemSwapUsagePeak))
+      TCollection_AsciiString("  Pagefile usage:     ") + int(ValueMiB(Counter::MemSwapUsage)) + " MiB";
+    if (hasValue(Counter::MemSwapUsagePeak))
     {
-      anInfo += TCollection_AsciiString(" (peak: ") + int(ValueMiB(MemSwapUsagePeak)) + " MiB)";
+      anInfo += TCollection_AsciiString(" (peak: ") + int(ValueMiB(Counter::MemSwapUsagePeak)) + " MiB)";
     }
     anInfo += "\n";
   }
-  if (hasValue(MemVirtual))
+  if (hasValue(Counter::MemVirtual))
   {
     anInfo +=
-      TCollection_AsciiString("  Virtual memory:     ") + int(ValueMiB(MemVirtual)) + " MiB\n";
+      TCollection_AsciiString("  Virtual memory:     ") + int(ValueMiB(Counter::MemVirtual)) + " MiB\n";
   }
-  if (hasValue(MemHeapUsage))
+  if (hasValue(Counter::MemHeapUsage))
   {
     anInfo +=
-      TCollection_AsciiString("  Heap memory:     ") + int(ValueMiB(MemHeapUsage)) + " MiB\n";
+      TCollection_AsciiString("  Heap memory:     ") + int(ValueMiB(Counter::MemHeapUsage)) + " MiB\n";
   }
   return anInfo;
 }
@@ -310,36 +310,36 @@ TCollection_AsciiString OSD_MemInfo::ToString() const
 
 size_t OSD_MemInfo::Value(const OSD_MemInfo::Counter theCounter) const
 {
-  if (theCounter < 0 || theCounter >= MemCounter_NB || !IsActive(theCounter))
+  if (theCounter >= Counter::MemCounter_NB || !IsActive(theCounter))
   {
     return size_t(-1);
   }
-  return myCounters[theCounter];
+  return myCounters[size_t(theCounter)];
 }
 
 //=================================================================================================
 
 size_t OSD_MemInfo::ValueMiB(const OSD_MemInfo::Counter theCounter) const
 {
-  if (theCounter < 0 || theCounter >= MemCounter_NB || !IsActive(theCounter))
+  if (theCounter >= Counter::MemCounter_NB || !IsActive(theCounter))
   {
     return size_t(-1);
   }
-  return (myCounters[theCounter] == size_t(-1)) ? size_t(-1)
-                                                : (myCounters[theCounter] / (1024 * 1024));
+  return (myCounters[size_t(theCounter)] == size_t(-1)) ? size_t(-1)
+                                                : (myCounters[size_t(theCounter)] / (1024 * 1024));
 }
 
 //=================================================================================================
 
 double OSD_MemInfo::ValuePreciseMiB(const OSD_MemInfo::Counter theCounter) const
 {
-  if (theCounter < 0 || theCounter >= MemCounter_NB || !IsActive(theCounter))
+  if (theCounter >= Counter::MemCounter_NB || !IsActive(theCounter))
   {
     return -1.0;
   }
-  return (myCounters[theCounter] == size_t(-1))
+  return (myCounters[size_t(theCounter)] == size_t(-1))
            ? -1.0
-           : ((double)myCounters[theCounter] / (1024.0 * 1024.0));
+           : ((double)myCounters[size_t(theCounter)] / (1024.0 * 1024.0));
 }
 
 //=================================================================================================

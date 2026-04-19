@@ -50,7 +50,7 @@ class OSD_MemInfo
 {
 
 public:
-  enum Counter
+  enum class Counter
   {
     MemPrivate = 0,    //!< Virtual memory allocated for data and stack excluding libraries
     MemVirtual,        //!< Reserved and committed memory of the virtual address space
@@ -69,7 +69,7 @@ public:
   //! Return true if the counter is active
   bool IsActive(const OSD_MemInfo::Counter theCounter) const
   {
-    return myActiveCounters[theCounter];
+    return myActiveCounters[static_cast<size_t>(theCounter)];
   }
 
   //! Set all counters active. The information is collected for active counters.
@@ -81,7 +81,7 @@ public:
   //! @param theActive state for the counter
   void SetActive(const OSD_MemInfo::Counter theCounter, const bool theActive)
   {
-    myActiveCounters[theCounter] = theActive;
+    myActiveCounters[static_cast<size_t>(theCounter)] = theActive;
   }
 
   //! Clear counters
@@ -116,12 +116,12 @@ protected:
   //! Return true if the counter is active and the value is valid
   bool hasValue(const OSD_MemInfo::Counter theCounter) const
   {
-    return IsActive(theCounter) && myCounters[theCounter] != size_t(-1);
+    return IsActive(theCounter) && myCounters[static_cast<size_t>(theCounter)] != size_t(-1);
   }
 
 private:
-  size_t myCounters[MemCounter_NB];       //!< Counters' values, in bytes
-  bool   myActiveCounters[MemCounter_NB]; //!< container of active state for a counter
+  size_t myCounters[static_cast<size_t>(Counter::MemCounter_NB)];       //!< Counters' values, in bytes
+  bool   myActiveCounters[static_cast<size_t>(Counter::MemCounter_NB)]; //!< container of active state for a counter
 };
 
 #endif // _OSD_MemInfo_H__

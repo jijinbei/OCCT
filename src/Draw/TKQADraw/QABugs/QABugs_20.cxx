@@ -2918,7 +2918,7 @@ void AllocDummyArr(Draw_Interpretor& theDI, int theN1, int theN2)
   NCollection_Array1<T> aMapArr1(0, theN1), aMapArr2(0, theN2);
 
   OSD_MemInfo aMemTool;
-  size_t      aMem0 = aMemTool.Value(OSD_MemInfo::MemHeapUsage);
+  size_t      aMem0 = aMemTool.Value(OSD_MemInfo::Counter::MemHeapUsage);
 
   for (int i = 1; i < theN1; i++)
     aMapArr1(i) = aMapArr1(i - 1);
@@ -2926,7 +2926,7 @@ void AllocDummyArr(Draw_Interpretor& theDI, int theN1, int theN2)
     aMapArr2(i) = aMapArr2(0);
 
   aMemTool.Update();
-  size_t aMem1 = aMemTool.Value(OSD_MemInfo::MemHeapUsage);
+  size_t aMem1 = aMemTool.Value(OSD_MemInfo::Counter::MemHeapUsage);
 
   theDI << "Heap usage before copy = " << (int)aMem0 << ", after = " << (int)aMem1 << "\n";
 

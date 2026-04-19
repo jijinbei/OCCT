@@ -103,25 +103,25 @@ bool Message::ToOSDMetric(const Message_MetricType theMetric, OSD_MemInfo::Count
   switch (theMetric)
   {
     case Message_MetricType_MemPrivate:
-      theMemInfo = OSD_MemInfo::MemPrivate;
+      theMemInfo = OSD_MemInfo::Counter::MemPrivate;
       break;
     case Message_MetricType_MemVirtual:
-      theMemInfo = OSD_MemInfo::MemVirtual;
+      theMemInfo = OSD_MemInfo::Counter::MemVirtual;
       break;
     case Message_MetricType_MemWorkingSet:
-      theMemInfo = OSD_MemInfo::MemWorkingSet;
+      theMemInfo = OSD_MemInfo::Counter::MemWorkingSet;
       break;
     case Message_MetricType_MemWorkingSetPeak:
-      theMemInfo = OSD_MemInfo::MemWorkingSetPeak;
+      theMemInfo = OSD_MemInfo::Counter::MemWorkingSetPeak;
       break;
     case Message_MetricType_MemSwapUsage:
-      theMemInfo = OSD_MemInfo::MemSwapUsage;
+      theMemInfo = OSD_MemInfo::Counter::MemSwapUsage;
       break;
     case Message_MetricType_MemSwapUsagePeak:
-      theMemInfo = OSD_MemInfo::MemSwapUsagePeak;
+      theMemInfo = OSD_MemInfo::Counter::MemSwapUsagePeak;
       break;
     case Message_MetricType_MemHeapUsage:
-      theMemInfo = OSD_MemInfo::MemHeapUsage;
+      theMemInfo = OSD_MemInfo::Counter::MemHeapUsage;
       break;
     default:
       return false;
@@ -135,25 +135,25 @@ bool Message::ToMessageMetric(const OSD_MemInfo::Counter theMemInfo, Message_Met
 {
   switch (theMemInfo)
   {
-    case OSD_MemInfo::MemPrivate:
+    case OSD_MemInfo::Counter::MemPrivate:
       theMetric = Message_MetricType_MemPrivate;
       break;
-    case OSD_MemInfo::MemVirtual:
+    case OSD_MemInfo::Counter::MemVirtual:
       theMetric = Message_MetricType_MemVirtual;
       break;
-    case OSD_MemInfo::MemWorkingSet:
+    case OSD_MemInfo::Counter::MemWorkingSet:
       theMetric = Message_MetricType_MemWorkingSet;
       break;
-    case OSD_MemInfo::MemWorkingSetPeak:
+    case OSD_MemInfo::Counter::MemWorkingSetPeak:
       theMetric = Message_MetricType_MemWorkingSetPeak;
       break;
-    case OSD_MemInfo::MemSwapUsage:
+    case OSD_MemInfo::Counter::MemSwapUsage:
       theMetric = Message_MetricType_MemSwapUsage;
       break;
-    case OSD_MemInfo::MemSwapUsagePeak:
+    case OSD_MemInfo::Counter::MemSwapUsagePeak:
       theMetric = Message_MetricType_MemSwapUsagePeak;
       break;
-    case OSD_MemInfo::MemHeapUsage:
+    case OSD_MemInfo::Counter::MemHeapUsage:
       theMetric = Message_MetricType_MemHeapUsage;
       break;
     default:

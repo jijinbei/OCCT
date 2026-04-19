@@ -23,13 +23,13 @@ enum Message_MetricType
   Message_MetricType_ProcessCPUUserTime,   //!< OSD_Chronometer::GetProcessCPU user time
   Message_MetricType_ProcessCPUSystemTime, //!< OSD_Chronometer::GetProcessCPU system time
   Message_MetricType_WallClock,            //!< OSD_Timer elapsed time
-  Message_MetricType_MemPrivate,           //!< OSD_MemInfo::MemPrivate
-  Message_MetricType_MemVirtual,           //!< OSD_MemInfo::MemVirtual
-  Message_MetricType_MemWorkingSet,        //!< OSD_MemInfo::MemWorkingSet
-  Message_MetricType_MemWorkingSetPeak,    //!< OSD_MemInfo::MemWorkingSetPeak
-  Message_MetricType_MemSwapUsage,         //!< OSD_MemInfo::MemSwapUsage
-  Message_MetricType_MemSwapUsagePeak,     //!< OSD_MemInfo::MemSwapUsagePeak
-  Message_MetricType_MemHeapUsage          //!< OSD_MemInfo::MemHeapUsage
+  Message_MetricType_MemPrivate,           //!< OSD_MemInfo::Counter::MemPrivate
+  Message_MetricType_MemVirtual,           //!< OSD_MemInfo::Counter::MemVirtual
+  Message_MetricType_MemWorkingSet,        //!< OSD_MemInfo::Counter::MemWorkingSet
+  Message_MetricType_MemWorkingSetPeak,    //!< OSD_MemInfo::Counter::MemWorkingSetPeak
+  Message_MetricType_MemSwapUsage,         //!< OSD_MemInfo::Counter::MemSwapUsage
+  Message_MetricType_MemSwapUsagePeak,     //!< OSD_MemInfo::Counter::MemSwapUsagePeak
+  Message_MetricType_MemHeapUsage          //!< OSD_MemInfo::Counter::MemHeapUsage
 };
 
 #endif // _Message_MetricType_HeaderFile

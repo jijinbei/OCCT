@@ -725,31 +725,31 @@ static int dmeminfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     anArg.LowerCase();
     if (anArg == "virt" || anArg == "v")
     {
-      aCounters.Add(OSD_MemInfo::MemVirtual);
+      aCounters.Add(OSD_MemInfo::Counter::MemVirtual);
     }
     else if (anArg == "heap" || anArg == "h")
     {
-      aCounters.Add(OSD_MemInfo::MemHeapUsage);
+      aCounters.Add(OSD_MemInfo::Counter::MemHeapUsage);
     }
     else if (anArg == "wset" || anArg == "w")
     {
-      aCounters.Add(OSD_MemInfo::MemWorkingSet);
+      aCounters.Add(OSD_MemInfo::Counter::MemWorkingSet);
     }
     else if (anArg == "wsetpeak")
     {
-      aCounters.Add(OSD_MemInfo::MemWorkingSetPeak);
+      aCounters.Add(OSD_MemInfo::Counter::MemWorkingSetPeak);
     }
     else if (anArg == "swap")
     {
-      aCounters.Add(OSD_MemInfo::MemSwapUsage);
+      aCounters.Add(OSD_MemInfo::Counter::MemSwapUsage);
     }
     else if (anArg == "swappeak")
     {
-      aCounters.Add(OSD_MemInfo::MemSwapUsagePeak);
+      aCounters.Add(OSD_MemInfo::Counter::MemSwapUsagePeak);
     }
     else if (anArg == "private")
     {
-      aCounters.Add(OSD_MemInfo::MemPrivate);
+      aCounters.Add(OSD_MemInfo::Counter::MemPrivate);
     }
     else
     {
