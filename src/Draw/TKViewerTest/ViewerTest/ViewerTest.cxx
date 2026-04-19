@@ -273,7 +273,7 @@ bool ViewerTest::ParseMarkerType(const char*                theArg,
   else if (aTypeStr.IsIntegerValue())
   {
     const int aTypeInt = aTypeStr.IntegerValue();
-    if (aTypeInt < -1 || aTypeInt >= Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED)
+    if (aTypeInt < -1 || aTypeInt >= static_cast<int>(Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED))
     {
       return false;
     }
@@ -1672,8 +1672,8 @@ static bool parseInteriorStyle(const TCollection_AsciiString& theArg,
   else if (theArg.IsIntegerValue())
   {
     const int anIntStyle = theArg.IntegerValue();
-    if (anIntStyle < Aspect_InteriorStyle::Aspect_IS_EMPTY
-        || anIntStyle > Aspect_InteriorStyle::Aspect_IS_POINT)
+    if (anIntStyle < static_cast<int>(Aspect_InteriorStyle::Aspect_IS_EMPTY)
+        || anIntStyle > static_cast<int>(Aspect_InteriorStyle::Aspect_IS_POINT))
     {
       return false;
     }
@@ -3021,10 +3021,10 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
       if (anArgHatch.Length() <= 2)
       {
         const int anIntStyle = Draw::Atoi(anArgHatch.ToCString());
-        if (anIntStyle < 0 || anIntStyle >= Aspect_HatchStyle::Aspect_HS_NB)
+        if (anIntStyle < 0 || anIntStyle >= static_cast<int>(Aspect_HatchStyle::Aspect_HS_NB))
         {
           Message::SendFail() << "Error: hatch style is out of range [0, "
-                              << (Aspect_HatchStyle::Aspect_HS_NB - 1) << "]!";
+                              << (static_cast<int>(Aspect_HatchStyle::Aspect_HS_NB) - 1) << "]!";
           return 1;
         }
         aChangeSet->StdHatchStyle = anIntStyle;
