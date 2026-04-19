@@ -306,7 +306,7 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
   int NbUPoles = SetSameDistribution(CC1, CC3);
   int NbVPoles = SetSameDistribution(CC2, CC4);
 
-  if (Type == GeomFill_CoonsStyle)
+  if (Type == GeomFill_FillingStyle::GeomFill_CoonsStyle)
   {
     if (NbUPoles < 4 || NbVPoles < 4)
       throw Standard_ConstructionError("GeomFill_BSplineCurves: invalid filling style");
@@ -330,13 +330,13 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
   {
     switch (Type)
     {
-      case GeomFill_StretchStyle:
+      case GeomFill_FillingStyle::GeomFill_StretchStyle:
         Caro = GeomFill_Stretch(P1, P2, P3, P4, W1, W2, W3, W4);
         break;
-      case GeomFill_CoonsStyle:
+      case GeomFill_FillingStyle::GeomFill_CoonsStyle:
         Caro = GeomFill_Coons(P1, P4, P3, P2, W1, W4, W3, W2);
         break;
-      case GeomFill_CurvedStyle:
+      case GeomFill_FillingStyle::GeomFill_CurvedStyle:
         Caro = GeomFill_Curved(P1, P2, P3, P4, W1, W2, W3, W4);
         break;
     }
@@ -345,13 +345,13 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
   {
     switch (Type)
     {
-      case GeomFill_StretchStyle:
+      case GeomFill_FillingStyle::GeomFill_StretchStyle:
         Caro = GeomFill_Stretch(P1, P2, P3, P4);
         break;
-      case GeomFill_CoonsStyle:
+      case GeomFill_FillingStyle::GeomFill_CoonsStyle:
         Caro = GeomFill_Coons(P1, P4, P3, P2);
         break;
-      case GeomFill_CurvedStyle:
+      case GeomFill_FillingStyle::GeomFill_CurvedStyle:
         Caro = GeomFill_Curved(P1, P2, P3, P4);
         break;
     }
@@ -436,7 +436,7 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
 
   bool isRat = (CC1->IsRational() || CC2->IsRational());
 
-  if (Type != GeomFill_CurvedStyle)
+  if (Type != GeomFill_FillingStyle::GeomFill_CurvedStyle)
   {
     int DegU = std::max(Deg1, Deg2);
 

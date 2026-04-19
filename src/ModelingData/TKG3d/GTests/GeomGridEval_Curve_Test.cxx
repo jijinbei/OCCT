@@ -261,7 +261,7 @@ TEST(GeomGridEval_CurveTest, LineDispatch)
   GeomAdaptor_Curve      anAdaptor(aGeomLine);
 
   GeomGridEval_Curve anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Line);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_CurveType::GeomAbs_Line);
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 10.0, 11);
 
@@ -283,7 +283,7 @@ TEST(GeomGridEval_CurveTest, CircleDispatch)
   GeomAdaptor_Curve anAdaptor(aGeomCircle);
 
   GeomGridEval_Curve anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Circle);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_CurveType::GeomAbs_Circle);
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 2 * M_PI, 17);
 
@@ -303,7 +303,7 @@ TEST(GeomGridEval_CurveTest, BSplineDispatch)
   GeomAdaptor_Curve              anAdaptor(aCurve);
 
   GeomGridEval_Curve anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_BSplineCurve);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_CurveType::GeomAbs_BSplineCurve);
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 1.0, 21);
 
@@ -324,7 +324,7 @@ TEST(GeomGridEval_CurveTest, EllipseDispatch)
   GeomAdaptor_Curve anAdaptor(anEllipse);
 
   GeomGridEval_Curve anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Ellipse);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_CurveType::GeomAbs_Ellipse);
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 2 * M_PI, 13);
 
@@ -345,7 +345,7 @@ TEST(GeomGridEval_CurveTest, HyperbolaDispatch)
   GeomAdaptor_Curve anAdaptor(aHypr);
 
   GeomGridEval_Curve anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Hyperbola);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_CurveType::GeomAbs_Hyperbola);
 
   NCollection_Array1<double> aParams = CreateUniformParams(-2.0, 2.0, 11);
 
@@ -366,7 +366,7 @@ TEST(GeomGridEval_CurveTest, ParabolaDispatch)
   GeomAdaptor_Curve anAdaptor(aParab);
 
   GeomGridEval_Curve anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Parabola);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_CurveType::GeomAbs_Parabola);
 
   NCollection_Array1<double> aParams = CreateUniformParams(-2.0, 2.0, 11);
 
@@ -392,7 +392,7 @@ TEST(GeomGridEval_CurveTest, BezierCurveDispatch)
   GeomAdaptor_Curve             anAdaptor(aBezier);
 
   GeomGridEval_Curve anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_BezierCurve);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_CurveType::GeomAbs_BezierCurve);
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 1.0, 11);
 
@@ -414,7 +414,7 @@ TEST(GeomGridEval_CurveTest, OffsetCurveFallbackDispatch)
   GeomAdaptor_Curve             anAdaptor(anOffset);
 
   GeomGridEval_Curve anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_OffsetCurve);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_CurveType::GeomAbs_OffsetCurve);
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 5.0, 6);
 
@@ -433,7 +433,7 @@ TEST(GeomGridEval_CurveTest, DirectHandleInit)
   occ::handle<Geom_Line> aGeomLine = new Geom_Line(gp_Pnt(0, 0, 0), gp_Dir(1, 0, 0));
 
   GeomGridEval_Curve anEval(aGeomLine);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Line);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_CurveType::GeomAbs_Line);
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 10.0, 11);
 
@@ -834,7 +834,7 @@ TEST(GeomGridEval_CurveTest, OffsetCurveDerivativeD3)
   GeomAdaptor_Curve             anAdaptor(anOffset);
 
   GeomGridEval_Curve anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_OffsetCurve);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_CurveType::GeomAbs_OffsetCurve);
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 5.0, 6);
 

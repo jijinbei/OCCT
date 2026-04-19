@@ -1061,7 +1061,7 @@ static int reperageshape(Draw_Interpretor& di, int narg, const char** a)
         // std::cout<<" w:"<<PMin<<std::endl;
         di << " w:" << PMin << "\n";
       }
-      if (Inter.Transition(i) == IntCurveSurface_In)
+      if (Inter.Transition(i) == IntCurveSurface_TransitionOnCurve::IntCurveSurface_In)
       {
         if (Inter.State(i) == TopAbs_IN)
         {
@@ -1078,7 +1078,7 @@ static int reperageshape(Draw_Interpretor& di, int narg, const char** a)
       }
       else
       {
-        if (Inter.Transition(i) == IntCurveSurface_Out)
+        if (Inter.Transition(i) == IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out)
         {
           if (Inter.State(i) == TopAbs_IN)
           {

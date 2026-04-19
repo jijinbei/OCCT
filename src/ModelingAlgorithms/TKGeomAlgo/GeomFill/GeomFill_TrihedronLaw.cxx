@@ -32,7 +32,7 @@ bool GeomFill_TrihedronLaw::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
 
 GeomFill_PipeError GeomFill_TrihedronLaw::ErrorStatus() const
 {
-  return GeomFill_PipeOk;
+  return GeomFill_PipeError::GeomFill_PipeOk;
 }
 
 bool GeomFill_TrihedronLaw::D1(const double, gp_Vec&, gp_Vec&, gp_Vec&, gp_Vec&, gp_Vec&, gp_Vec&)

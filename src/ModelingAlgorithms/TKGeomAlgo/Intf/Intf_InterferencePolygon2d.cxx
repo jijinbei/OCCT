@@ -239,7 +239,7 @@ void Intf_InterferencePolygon2d::Clean()
       }
       PI1.InfoFirst(dim1, addr1, par);
       PI1.InfoSecond(dim2, addr2, par);
-      if (dim1 == Intf_EDGE && dim2 == Intf_EDGE)
+      if (dim1 == Intf_PIType::Intf_EDGE && dim2 == Intf_PIType::Intf_EDGE)
       {
         tsps = 0;
         if (tsp > 0)
@@ -250,7 +250,7 @@ void Intf_InterferencePolygon2d::Clean()
         }
         tsp = lpi;
       }
-      else if (dim1 != Intf_EXTERNAL && dim2 != Intf_EXTERNAL)
+      else if (dim1 != Intf_PIType::Intf_EXTERNAL && dim2 != Intf_PIType::Intf_EXTERNAL)
       {
         tsps = lpi;
       }
@@ -342,7 +342,7 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       parO[nbpi] = 0.;
       parT[nbpi] = 0.;
       thePi.Append(
-        Intf_SectionPoint(BegO, Intf_VERTEX, iObje1, 0., Intf_VERTEX, iObje2, 0., sinTeta));
+        Intf_SectionPoint(BegO, Intf_PIType::Intf_VERTEX, iObje1, 0., Intf_PIType::Intf_VERTEX, iObje2, 0., sinTeta));
     }
     if (dbOeT <= Tolerance)
     {
@@ -350,7 +350,7 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       parO[nbpi] = 0.;
       parT[nbpi] = 1.;
       thePi.Append(
-        Intf_SectionPoint(BegO, Intf_VERTEX, iObje1, 0., Intf_VERTEX, iObje2 + 1, 0., sinTeta));
+        Intf_SectionPoint(BegO, Intf_PIType::Intf_VERTEX, iObje1, 0., Intf_PIType::Intf_VERTEX, iObje2 + 1, 0., sinTeta));
     }
     if (dbObT > Tolerance && dbOeT > Tolerance && dbObT + dbOeT <= (lgT + Tolerance))
     {
@@ -358,7 +358,7 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       parO[nbpi] = 0.;
       parT[nbpi] = dbObT / lgT;
       thePi.Append(
-        Intf_SectionPoint(BegO, Intf_VERTEX, iObje1, 0., Intf_EDGE, iObje2, parT[nbpi], sinTeta));
+        Intf_SectionPoint(BegO, Intf_PIType::Intf_VERTEX, iObje1, 0., Intf_PIType::Intf_EDGE, iObje2, parT[nbpi], sinTeta));
     }
   }
 
@@ -374,7 +374,7 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       parO[nbpi] = 1.;
       parT[nbpi] = 0.;
       thePi.Append(
-        Intf_SectionPoint(EndO, Intf_VERTEX, iObje1 + 1, 0., Intf_VERTEX, iObje2, 0., sinTeta));
+        Intf_SectionPoint(EndO, Intf_PIType::Intf_VERTEX, iObje1 + 1, 0., Intf_PIType::Intf_VERTEX, iObje2, 0., sinTeta));
     }
     if (deOeT <= Tolerance)
     {
@@ -382,7 +382,7 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       parO[nbpi] = 1.;
       parT[nbpi] = 1.;
       thePi.Append(
-        Intf_SectionPoint(EndO, Intf_VERTEX, iObje1 + 1, 0., Intf_VERTEX, iObje2 + 1, 0., sinTeta));
+        Intf_SectionPoint(EndO, Intf_PIType::Intf_VERTEX, iObje1 + 1, 0., Intf_PIType::Intf_VERTEX, iObje2 + 1, 0., sinTeta));
     }
     if (deObT > Tolerance && deOeT > Tolerance && deObT + deOeT <= (lgT + Tolerance))
     {
@@ -390,10 +390,10 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       parO[nbpi] = 1.;
       parT[nbpi] = deObT / lgT;
       thePi.Append(Intf_SectionPoint(EndO,
-                                     Intf_VERTEX,
+                                     Intf_PIType::Intf_VERTEX,
                                      iObje1 + 1,
                                      0.,
-                                     Intf_EDGE,
+                                     Intf_PIType::Intf_EDGE,
                                      iObje2,
                                      parT[nbpi],
                                      sinTeta));
@@ -410,7 +410,7 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       parO[nbpi] = dbObT / lgO;
       parT[nbpi] = 0.;
       thePi.Append(
-        Intf_SectionPoint(BegT, Intf_EDGE, iObje1, parO[nbpi], Intf_VERTEX, iObje2, 0., sinTeta));
+        Intf_SectionPoint(BegT, Intf_PIType::Intf_EDGE, iObje1, parO[nbpi], Intf_PIType::Intf_VERTEX, iObje2, 0., sinTeta));
     }
   }
 
@@ -424,10 +424,10 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       parO[nbpi] = dbOeT / lgO;
       parT[nbpi] = 1.;
       thePi.Append(Intf_SectionPoint(EndT,
-                                     Intf_EDGE,
+                                     Intf_PIType::Intf_EDGE,
                                      iObje1,
                                      parO[nbpi],
-                                     Intf_VERTEX,
+                                     Intf_PIType::Intf_VERTEX,
                                      iObje2 + 1,
                                      0.,
                                      sinTeta));
@@ -456,10 +456,10 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       parT[nbpi] = parTSP;
       thePi.Append(
         Intf_SectionPoint(gp_Pnt2d(BegO.X() + (segO.X() * parOSP), BegO.Y() + (segO.Y() * parOSP)),
-                          Intf_EDGE,
+                          Intf_PIType::Intf_EDGE,
                           iObje1,
                           parOSP,
-                          Intf_EDGE,
+                          Intf_PIType::Intf_EDGE,
                           iObje2,
                           parTSP,
                           sinTeta));
@@ -487,10 +487,10 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
           x = BegO.X() + (segO.X() * parO[nbpi]);
           y = BegO.Y() + (segO.Y() * parO[nbpi]);
           thePi.Append(Intf_SectionPoint(gp_Pnt2d(x, y),
-                                         Intf_EXTERNAL,
+                                         Intf_PIType::Intf_EXTERNAL,
                                          iObje1,
                                          parO[nbpi],
-                                         Intf_EXTERNAL,
+                                         Intf_PIType::Intf_EXTERNAL,
                                          iObje2,
                                          parT[nbpi],
                                          sinTeta));
@@ -524,10 +524,10 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
             {
               nbpi++;
               thePi.Append(Intf_SectionPoint(gp_Pnt2d(x, y),
-                                             Intf_EXTERNAL,
+                                             Intf_PIType::Intf_EXTERNAL,
                                              iObje1,
                                              parO[nbpi],
-                                             Intf_EXTERNAL,
+                                             Intf_PIType::Intf_EXTERNAL,
                                              iObje2,
                                              parT[nbpi],
                                              sinTeta));
@@ -602,10 +602,10 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
             x          = BegO.X() + (segO.X() * parO[nbpi]);
             y          = BegO.Y() + (segO.Y() * parO[nbpi]);
             thePi.Append(Intf_SectionPoint(gp_Pnt2d(x, y),
-                                           Intf_EXTERNAL,
+                                           Intf_PIType::Intf_EXTERNAL,
                                            iObje1,
                                            parO[nbpi],
-                                           Intf_EXTERNAL,
+                                           Intf_PIType::Intf_EXTERNAL,
                                            iObje2,
                                            parT[nbpi],
                                            sinTeta));
@@ -621,10 +621,10 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
             x          = BegO.X() + (segO.X() * parO[nbpi]);
             y          = BegO.Y() + (segO.Y() * parO[nbpi]);
             thePi.Append(Intf_SectionPoint(gp_Pnt2d(x, y),
-                                           Intf_EXTERNAL,
+                                           Intf_PIType::Intf_EXTERNAL,
                                            iObje1,
                                            parO[nbpi],
-                                           Intf_EXTERNAL,
+                                           Intf_PIType::Intf_EXTERNAL,
                                            iObje2,
                                            parT[nbpi],
                                            sinTeta));
@@ -663,10 +663,10 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
     {
       thePi(1) =
         Intf_SectionPoint(gp_Pnt2d(BegO.X() + (segO.X() * parOSP), BegO.Y() + (segO.Y() * parOSP)),
-                          Intf_EDGE,
+                          Intf_PIType::Intf_EDGE,
                           iObje1,
                           parOSP,
-                          Intf_EDGE,
+                          Intf_PIType::Intf_EDGE,
                           iObje2,
                           parTSP,
                           sinTeta);
@@ -732,10 +732,10 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
     if (edgeSP)
       TheTZ.PolygonInsert(
         Intf_SectionPoint(gp_Pnt2d(BegO.X() + (segO.X() * parOSP), BegO.Y() + (segO.Y() * parOSP)),
-                          Intf_EDGE,
+                          Intf_PIType::Intf_EDGE,
                           iObje1,
                           parOSP,
-                          Intf_EDGE,
+                          Intf_PIType::Intf_EDGE,
                           iObje2,
                           parTSP,
                           sinTeta));

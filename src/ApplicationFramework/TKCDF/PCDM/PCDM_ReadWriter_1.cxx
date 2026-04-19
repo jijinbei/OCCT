@@ -239,7 +239,7 @@ int PCDM_ReadWriter_1::ReadReferenceCounter(
   int                             i;
   occ::handle<Storage_BaseDriver> theFileDriver;
   TCollection_AsciiString         aFileNameU(aFileName);
-  if (PCDM::FileDriverType(aFileNameU, theFileDriver) == PCDM_TOFD_Unknown)
+  if (PCDM::FileDriverType(aFileNameU, theFileDriver) == PCDM_TypeOfFileDriver::PCDM_TOFD_Unknown)
     return theReferencesCounter;
 
   bool theFileIsOpen(false);
@@ -365,7 +365,7 @@ void PCDM_ReadWriter_1::ReadUserInfo(const TCollection_ExtendedString&          
   int                             i;
   occ::handle<Storage_BaseDriver> theFileDriver;
   TCollection_AsciiString         aFileNameU(aFileName);
-  if (PCDM::FileDriverType(aFileNameU, theFileDriver) == PCDM_TOFD_Unknown)
+  if (PCDM::FileDriverType(aFileNameU, theFileDriver) == PCDM_TypeOfFileDriver::PCDM_TOFD_Unknown)
     return;
 
   PCDM_ReadWriter::Open(theFileDriver, aFileName, Storage_VSRead);
@@ -404,7 +404,7 @@ int PCDM_ReadWriter_1::ReadDocumentVersion(const TCollection_ExtendedString&    
   int                             theVersion(-1);
   occ::handle<Storage_BaseDriver> theFileDriver;
   TCollection_AsciiString         aFileNameU(aFileName);
-  if (PCDM::FileDriverType(aFileNameU, theFileDriver) == PCDM_TOFD_Unknown)
+  if (PCDM::FileDriverType(aFileNameU, theFileDriver) == PCDM_TypeOfFileDriver::PCDM_TOFD_Unknown)
     return theVersion;
 
   bool theFileIsOpen(false);

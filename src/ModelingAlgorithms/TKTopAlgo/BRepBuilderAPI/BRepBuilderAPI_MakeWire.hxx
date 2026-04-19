@@ -72,7 +72,7 @@ public:
   //! with the use of the function Wire.
   //! Warning
   //! The function Error will return
-  //! BRepBuilderAPI_EmptyWire if it is called before at
+  //! BRepBuilderAPI_WireError::BRepBuilderAPI_EmptyWire if it is called before at
   //! least one edge is added to the wire under construction.
   Standard_EXPORT BRepBuilderAPI_MakeWire();
 
@@ -105,7 +105,7 @@ public:
   //! Warning
   //! If an edge is not connectable to the wire under
   //! construction it is not added. The function Error will
-  //! return BRepBuilderAPI_DisconnectedWire, the
+  //! return BRepBuilderAPI_WireError::BRepBuilderAPI_DisconnectedWire, the
   //! function IsDone will return false and the function Wire
   //! will raise an error, until a new connectable edge is added.
   Standard_EXPORT BRepBuilderAPI_MakeWire(const TopoDS_Edge& E1,
@@ -129,7 +129,7 @@ public:
   //! Warning
   //! If E is not connectable to the wire under construction it is not
   //! added. The function Error will return
-  //! BRepBuilderAPI_DisconnectedWire, the function IsDone will return
+  //! BRepBuilderAPI_WireError::BRepBuilderAPI_DisconnectedWire, the function IsDone will return
   //! false and the function Wire will raise an error, until a new
   //! connectable edge is added.
   Standard_EXPORT void Add(const TopoDS_Edge& E);
@@ -153,7 +153,7 @@ public:
   Standard_EXPORT bool IsDone() const override;
 
   //! Returns the construction status
-  //! -   BRepBuilderAPI_WireDone if the wire is built, or
+  //! -   BRepBuilderAPI_WireError::BRepBuilderAPI_WireDone if the wire is built, or
   //! -   another value of the BRepBuilderAPI_WireError
   //! enumeration indicating why the construction failed.
   Standard_EXPORT BRepBuilderAPI_WireError Error() const;

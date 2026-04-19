@@ -20,7 +20,7 @@
 //! Errors that can occur at face construction.
 //! no error
 //! not initialised
-enum BRepLib_FaceError
+enum class BRepLib_FaceError
 {
   BRepLib_FaceDone,
   BRepLib_NoFace,

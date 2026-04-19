@@ -1024,7 +1024,7 @@ bool ShapeCustom_BSplineRestriction::ConvertCurve(const occ::handle<Geom_Curve>&
     if (approx.HasResult())
       aBSpline = approx.Curve();
     else
-      aBSpline = GeomConvert::CurveToBSplineCurve(tcurve, Convert_QuasiAngular);
+      aBSpline = GeomConvert::CurveToBSplineCurve(tcurve, Convert_ParameterisationType::Convert_QuasiAngular);
 
     double Shift = First - aBSpline->FirstParameter();
     if (std::abs(Shift) > Precision::PConfusion())
@@ -1051,7 +1051,7 @@ bool ShapeCustom_BSplineRestriction::ConvertCurve(const occ::handle<Geom_Curve>&
   if (aCurve->IsKind(STANDARD_TYPE(Geom_BezierCurve)) && myParameters->ConvertCurve3d())
   {
     occ::handle<Geom_Curve> aBSpline =
-      GeomConvert::CurveToBSplineCurve(aCurve, Convert_QuasiAngular);
+      GeomConvert::CurveToBSplineCurve(aCurve, Convert_ParameterisationType::Convert_QuasiAngular);
     occ::handle<Geom_Curve> ResCurve;
     if (ConvertCurve(aBSpline, ResCurve, IsConvert, First, Last, TolCur, false))
     {
@@ -1396,7 +1396,7 @@ bool ShapeCustom_BSplineRestriction::ConvertCurve2d(const occ::handle<Geom2d_Cur
     if (approx.HasResult())
       aBSpline2d = approx.Curve();
     else
-      aBSpline2d = Geom2dConvert::CurveToBSplineCurve(tcurve, Convert_QuasiAngular);
+      aBSpline2d = Geom2dConvert::CurveToBSplineCurve(tcurve, Convert_ParameterisationType::Convert_QuasiAngular);
 
     double Shift = First - aBSpline2d->FirstParameter();
     if (std::abs(Shift) > Precision::PConfusion())
@@ -1423,7 +1423,7 @@ bool ShapeCustom_BSplineRestriction::ConvertCurve2d(const occ::handle<Geom2d_Cur
   if (aCurve->IsKind(STANDARD_TYPE(Geom2d_BezierCurve)) && myParameters->ConvertCurve2d())
   {
     occ::handle<Geom2d_Curve> aBSpline2d =
-      Geom2dConvert::CurveToBSplineCurve(aCurve, Convert_QuasiAngular);
+      Geom2dConvert::CurveToBSplineCurve(aCurve, Convert_ParameterisationType::Convert_QuasiAngular);
     occ::handle<Geom2d_Curve> ResCurve;
     if (ConvertCurve2d(aBSpline2d, ResCurve, IsConvert, First, Last, TolCur, false))
     {

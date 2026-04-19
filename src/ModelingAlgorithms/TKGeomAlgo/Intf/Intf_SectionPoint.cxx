@@ -76,24 +76,24 @@ double Intf_SectionPoint::Incidence() const
 bool Intf_SectionPoint::IsOnSameEdge(const Intf_SectionPoint& Other) const
 {
   bool isOn = false;
-  if (DimenObje == Intf_EDGE)
+  if (DimenObje == Intf_PIType::Intf_EDGE)
   {
-    if (Other.DimenObje == Intf_EDGE)
+    if (Other.DimenObje == Intf_PIType::Intf_EDGE)
     {
       isOn = (IndexO1 == Other.IndexO1 && IndexO2 == Other.IndexO2);
     }
-    else if (Other.DimenObje == Intf_VERTEX)
+    else if (Other.DimenObje == Intf_PIType::Intf_VERTEX)
     {
       isOn = (IndexO1 == Other.IndexO1 || IndexO2 == Other.IndexO1);
     }
   }
-  else if (DimenObje == Intf_VERTEX)
+  else if (DimenObje == Intf_PIType::Intf_VERTEX)
   {
-    if (Other.DimenObje == Intf_EDGE)
+    if (Other.DimenObje == Intf_PIType::Intf_EDGE)
     {
       isOn = (IndexO1 == Other.IndexO1 || IndexO1 == Other.IndexO2);
     }
-    else if (Other.DimenObje == Intf_VERTEX)
+    else if (Other.DimenObje == Intf_PIType::Intf_VERTEX)
     {
 #if DEBUG_INTFSECTIONPOINT
       std::cout << " IsOnSameEdge on Intersection VERTEX VERTEX Obje !" << std::endl;
@@ -103,24 +103,24 @@ bool Intf_SectionPoint::IsOnSameEdge(const Intf_SectionPoint& Other) const
   }
   if (!isOn)
   {
-    if (DimenTool == Intf_EDGE)
+    if (DimenTool == Intf_PIType::Intf_EDGE)
     {
-      if (Other.DimenTool == Intf_EDGE)
+      if (Other.DimenTool == Intf_PIType::Intf_EDGE)
       {
         isOn = (IndexT1 == Other.IndexT1 && IndexT2 == Other.IndexT2);
       }
-      else if (Other.DimenTool == Intf_VERTEX)
+      else if (Other.DimenTool == Intf_PIType::Intf_VERTEX)
       {
         isOn = (IndexT1 == Other.IndexT1 || IndexT2 == Other.IndexT1);
       }
     }
-    else if (DimenTool == Intf_VERTEX)
+    else if (DimenTool == Intf_PIType::Intf_VERTEX)
     {
-      if (Other.DimenTool == Intf_EDGE)
+      if (Other.DimenTool == Intf_PIType::Intf_EDGE)
       {
         isOn = (IndexT1 == Other.IndexT1 || IndexT1 == Other.IndexT2);
       }
-      else if (Other.DimenTool == Intf_VERTEX)
+      else if (Other.DimenTool == Intf_PIType::Intf_VERTEX)
       {
 #if DEBUG_INTFSECTIONPOINT
         std::cout << " IsOnSameEdge on Intersection VERTEX VERTEX Tool !" << std::endl;
@@ -136,11 +136,11 @@ bool Intf_SectionPoint::IsOnSameEdge(const Intf_SectionPoint& Other) const
 
 Intf_SectionPoint::Intf_SectionPoint()
     : myPnt(0., 0., 0.),
-      DimenObje(Intf_EXTERNAL),
+      DimenObje(Intf_PIType::Intf_EXTERNAL),
       IndexO1(0),
       IndexO2(0),
       ParamObje(0.),
-      DimenTool(Intf_EXTERNAL),
+      DimenTool(Intf_PIType::Intf_EXTERNAL),
       IndexT1(0),
       IndexT2(0),
       ParamTool(0.),

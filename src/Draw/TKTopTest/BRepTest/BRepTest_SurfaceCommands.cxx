@@ -221,19 +221,19 @@ static int mkplane(Draw_Interpretor& theDI, int n, const char** a)
 
   switch (aMF.Error())
   {
-    case BRepBuilderAPI_FaceDone:
+    case BRepBuilderAPI_FaceError::BRepBuilderAPI_FaceDone:
       DBRep::Set(a[1], aMF.Face());
       break;
-    case BRepBuilderAPI_NoFace:
+    case BRepBuilderAPI_FaceError::BRepBuilderAPI_NoFace:
       theDI << "Error. mkplane has been finished with \"No Face\" status.\n";
       break;
-    case BRepBuilderAPI_NotPlanar:
+    case BRepBuilderAPI_FaceError::BRepBuilderAPI_NotPlanar:
       theDI << "Error. mkplane has been finished with \"Not Planar\" status.\n";
       break;
-    case BRepBuilderAPI_CurveProjectionFailed:
+    case BRepBuilderAPI_FaceError::BRepBuilderAPI_CurveProjectionFailed:
       theDI << "Error. mkplane has been finished with \"Fail in projection curve\" status.\n";
       break;
-    case BRepBuilderAPI_ParametersOutOfRange:
+    case BRepBuilderAPI_FaceError::BRepBuilderAPI_ParametersOutOfRange:
       theDI << "Error. mkplane has been finished with \"Parameters are out of range\" status.\n";
       break;
     default:
@@ -706,30 +706,30 @@ static int projponf(Draw_Interpretor& di, int n, const char** a)
   //
   // get projection options
   // default values;
-  Extrema_ExtAlgo anExtAlgo = Extrema_ExtAlgo_Grad;
-  Extrema_ExtFlag anExtFlag = Extrema_ExtFlag_MINMAX;
+  Extrema_ExtAlgo anExtAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad;
+  Extrema_ExtFlag anExtFlag = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX;
   //
   for (int i = 3; i < n; ++i)
   {
     if (!strcasecmp(a[i], "-min"))
     {
-      anExtFlag = Extrema_ExtFlag_MIN;
+      anExtFlag = Extrema_ExtFlag::Extrema_ExtFlag_MIN;
     }
     else if (!strcasecmp(a[i], "-max"))
     {
-      anExtFlag = Extrema_ExtFlag_MAX;
+      anExtFlag = Extrema_ExtFlag::Extrema_ExtFlag_MAX;
     }
     else if (!strcasecmp(a[i], "-minmax"))
     {
-      anExtFlag = Extrema_ExtFlag_MINMAX;
+      anExtFlag = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX;
     }
     else if (!strcasecmp(a[i], "-t"))
     {
-      anExtAlgo = Extrema_ExtAlgo_Tree;
+      anExtAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Tree;
     }
     else if (!strcasecmp(a[i], "-g"))
     {
-      anExtAlgo = Extrema_ExtAlgo_Grad;
+      anExtAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad;
     }
   }
   //

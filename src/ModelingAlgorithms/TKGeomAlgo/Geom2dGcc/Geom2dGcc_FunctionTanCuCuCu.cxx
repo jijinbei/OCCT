@@ -38,33 +38,33 @@ void Geom2dGcc_FunctionTanCuCuCu::InitDerivative(const math_Vector& X,
 {
   switch (TheType)
   {
-    case Geom2dGcc_CiCuCu: {
+    case Geom2dGcc_Type1::Geom2dGcc_CiCuCu: {
       ElCLib::D2(X(1), Circ1, Point1, Tan1, D21);
       Geom2dGcc_CurveTool::D2(Curv2, X(2), Point2, Tan2, D22);
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    case Geom2dGcc_CiCiCu: {
+    case Geom2dGcc_Type1::Geom2dGcc_CiCiCu: {
       ElCLib::D2(X(1), Circ1, Point1, Tan1, D21);
       ElCLib::D2(X(2), Circ2, Point2, Tan2, D22);
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    case Geom2dGcc_CiLiCu: {
+    case Geom2dGcc_Type1::Geom2dGcc_CiLiCu: {
       ElCLib::D2(X(1), Circ1, Point1, Tan1, D21);
       ElCLib::D1(X(2), Lin2, Point2, Tan2);
       D22 = gp_Vec2d(0., 0.);
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    case Geom2dGcc_LiCuCu: {
+    case Geom2dGcc_Type1::Geom2dGcc_LiCuCu: {
       ElCLib::D1(X(1), Lin1, Point1, Tan1);
       D21 = gp_Vec2d(0., 0.);
       Geom2dGcc_CurveTool::D2(Curv2, X(2), Point2, Tan2, D22);
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    case Geom2dGcc_LiLiCu: {
+    case Geom2dGcc_Type1::Geom2dGcc_LiLiCu: {
       ElCLib::D1(X(1), Lin1, Point1, Tan1);
       D21 = gp_Vec2d(0., 0.);
       ElCLib::D1(X(2), Lin2, Point2, Tan2);
@@ -72,7 +72,7 @@ void Geom2dGcc_FunctionTanCuCuCu::InitDerivative(const math_Vector& X,
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
     }
     break;
-    case Geom2dGcc_CuCuCu: {
+    case Geom2dGcc_Type1::Geom2dGcc_CuCuCu: {
       Geom2dGcc_CurveTool::D2(Curv1, X(1), Point1, Tan1, D21);
       Geom2dGcc_CurveTool::D2(Curv2, X(2), Point2, Tan2, D22);
       Geom2dGcc_CurveTool::D2(Curv3, X(3), Point3, Tan3, D23);
@@ -91,7 +91,7 @@ Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const Geom2dAdaptor_Cur
   Curv1   = C1;
   Curv2   = C2;
   Curv3   = C3;
-  TheType = Geom2dGcc_CuCuCu;
+  TheType = Geom2dGcc_Type1::Geom2dGcc_CuCuCu;
 }
 
 Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Circ2d&           C1,
@@ -101,7 +101,7 @@ Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Circ2d&       
   Circ1   = C1;
   Curv2   = C2;
   Curv3   = C3;
-  TheType = Geom2dGcc_CiCuCu;
+  TheType = Geom2dGcc_Type1::Geom2dGcc_CiCuCu;
 }
 
 Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Circ2d&           C1,
@@ -111,7 +111,7 @@ Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Circ2d&       
   Circ1   = C1;
   Circ2   = C2;
   Curv3   = C3;
-  TheType = Geom2dGcc_CiCiCu;
+  TheType = Geom2dGcc_Type1::Geom2dGcc_CiCiCu;
 }
 
 Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Circ2d&           C1,
@@ -121,7 +121,7 @@ Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Circ2d&       
   Circ1   = C1;
   Lin2    = L2;
   Curv3   = C3;
-  TheType = Geom2dGcc_CiLiCu;
+  TheType = Geom2dGcc_Type1::Geom2dGcc_CiLiCu;
 }
 
 Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Lin2d&            L1,
@@ -131,7 +131,7 @@ Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Lin2d&        
   Lin1    = L1;
   Lin2    = L2;
   Curv3   = C3;
-  TheType = Geom2dGcc_LiLiCu;
+  TheType = Geom2dGcc_Type1::Geom2dGcc_LiLiCu;
 }
 
 Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Lin2d&            L1,
@@ -141,7 +141,7 @@ Geom2dGcc_FunctionTanCuCuCu::Geom2dGcc_FunctionTanCuCuCu(const gp_Lin2d&        
   Lin1    = L1;
   Curv2   = C2;
   Curv3   = C3;
-  TheType = Geom2dGcc_LiCuCu;
+  TheType = Geom2dGcc_Type1::Geom2dGcc_LiCuCu;
 }
 
 //==========================================================================

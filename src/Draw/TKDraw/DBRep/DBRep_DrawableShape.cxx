@@ -240,7 +240,7 @@ static void PlotIso(Draw_Display&            dis,
 
   gp_Pnt Pl, Pr, Pm;
 
-  if (T == GeomAbs_IsoU)
+  if (T == GeomAbs_IsoType::GeomAbs_IsoU)
   {
     S.D0(U, V, Pl);
     S.D0(U, V + Step / 2., Pm);
@@ -259,8 +259,8 @@ static void PlotIso(Draw_Display&            dis,
     if (dis.HasPicked())
     {
       pickshape = F->Face();
-      upick     = (T == GeomAbs_IsoU) ? U : U + Step;
-      vpick     = (T == GeomAbs_IsoU) ? V + Step : V;
+      upick     = (T == GeomAbs_IsoType::GeomAbs_IsoU) ? U : U + Step;
+      vpick     = (T == GeomAbs_IsoType::GeomAbs_IsoU) ? V + Step : V;
       halt      = true;
     };
     return;
@@ -272,12 +272,12 @@ static void PlotIso(Draw_Display&            dis,
     if (dis.HasPicked())
     {
       pickshape = F->Face();
-      upick     = (T == GeomAbs_IsoU) ? U : U + Step;
-      vpick     = (T == GeomAbs_IsoU) ? V + Step : V;
+      upick     = (T == GeomAbs_IsoType::GeomAbs_IsoU) ? U : U + Step;
+      vpick     = (T == GeomAbs_IsoType::GeomAbs_IsoU) ? V + Step : V;
       halt      = true;
     };
   }
-  else if (T == GeomAbs_IsoU)
+  else if (T == GeomAbs_IsoType::GeomAbs_IsoU)
   {
     PlotIso(dis, F, S, T, U, V, Step / 2, halt);
     double aLocalV = V + Step / 2;
@@ -425,11 +425,11 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
 
       GeomAbs_SurfaceType SurfType = S.GetType();
 
-// If the type of the surface is GeomAbs_SurfaceOfExtrusion or GeomAbs_SurfaceOfRevolution
+// If the type of the surface is GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion or GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution
 #ifdef OCCT_DEBUG
       GeomAbs_CurveType CurvType;
 #else
-      GeomAbs_CurveType CurvType = GeomAbs_OtherCurve;
+      GeomAbs_CurveType CurvType = GeomAbs_CurveType::GeomAbs_OtherCurve;
 #endif
 
       int N = F->NbIsos();
@@ -443,7 +443,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
       {
 
         F->GetIso(i, T, Par, T1, T2);
-        if (T == GeomAbs_IsoU)
+        if (T == GeomAbs_IsoType::GeomAbs_IsoU)
         {
           S.VIntervals(TI, GeomAbs_CN);
           V1     = std::max(T1, TI(1));
@@ -474,7 +474,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
             continue;
           if (TI(Intrv) >= T2 && TI(Intrv + 1) >= T2)
             continue;
-          if (T == GeomAbs_IsoU)
+          if (T == GeomAbs_IsoType::GeomAbs_IsoU)
           {
             V1    = std::max(T1, TI(Intrv));
             V2    = std::min(T2, TI(Intrv + 1));
@@ -489,13 +489,13 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
 
           switch (SurfType)
           {
-              //-------------GeomAbs_Plane---------------
-            case GeomAbs_Plane:
+              //-------------GeomAbs_SurfaceType::GeomAbs_Plane---------------
+            case GeomAbs_SurfaceType::GeomAbs_Plane:
               break;
-              //----GeomAbs_Cylinder   GeomAbs_Cone------
-            case GeomAbs_Cylinder:
-            case GeomAbs_Cone:
-              if (T == GeomAbs_IsoV)
+              //----GeomAbs_SurfaceType::GeomAbs_Cylinder   GeomAbs_SurfaceType::GeomAbs_Cone------
+            case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+            case GeomAbs_SurfaceType::GeomAbs_Cone:
+              if (T == GeomAbs_IsoType::GeomAbs_IsoV)
               {
                 for (j = 1; j < myDiscret; j++)
                 {
@@ -513,12 +513,12 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
                 }
               }
               break;
-              //---GeomAbs_Sphere   GeomAbs_Torus--------
-              // GeomAbs_BezierSurface GeomAbs_BezierSurface
-            case GeomAbs_Sphere:
-            case GeomAbs_Torus:
-            case GeomAbs_OffsetSurface:
-            case GeomAbs_OtherSurface:
+              //---GeomAbs_SurfaceType::GeomAbs_Sphere   GeomAbs_SurfaceType::GeomAbs_Torus--------
+              // GeomAbs_SurfaceType::GeomAbs_BezierSurface GeomAbs_SurfaceType::GeomAbs_BezierSurface
+            case GeomAbs_SurfaceType::GeomAbs_Sphere:
+            case GeomAbs_SurfaceType::GeomAbs_Torus:
+            case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
+            case GeomAbs_SurfaceType::GeomAbs_OtherSurface:
               for (j = 1; j < myDiscret; j++)
               {
                 U1 += stepU;
@@ -534,9 +534,9 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
                 }
               }
               break;
-              //-------------GeomAbs_BSplineSurface------
-            case GeomAbs_BezierSurface:
-            case GeomAbs_BSplineSurface:
+              //-------------GeomAbs_SurfaceType::GeomAbs_BSplineSurface------
+            case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
+            case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
               for (j = 1; j <= myDiscret / 2; j++)
               {
                 occ::handle<DBRep_Face> aLocalFace = F;
@@ -549,20 +549,20 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
                         T,
                         U1,
                         V1,
-                        (T == GeomAbs_IsoV) ? stepU * 2. : stepV * 2.,
+                        (T == GeomAbs_IsoType::GeomAbs_IsoV) ? stepU * 2. : stepV * 2.,
                         halt);
                 U1 += stepU * 2.;
                 V1 += stepV * 2.;
               }
               break;
-              //-------------GeomAbs_SurfaceOfExtrusion--
-              //-------------GeomAbs_SurfaceOfRevolution-
-            case GeomAbs_SurfaceOfExtrusion:
-            case GeomAbs_SurfaceOfRevolution:
-              if ((T == GeomAbs_IsoV && SurfType == GeomAbs_SurfaceOfRevolution)
-                  || (T == GeomAbs_IsoU && SurfType == GeomAbs_SurfaceOfExtrusion))
+              //-------------GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion--
+              //-------------GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution-
+            case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
+            case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+              if ((T == GeomAbs_IsoType::GeomAbs_IsoV && SurfType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
+                  || (T == GeomAbs_IsoType::GeomAbs_IsoU && SurfType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion))
               {
-                if (SurfType == GeomAbs_SurfaceOfExtrusion)
+                if (SurfType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
                   break;
                 for (j = 1; j < myDiscret; j++)
                 {
@@ -584,10 +584,10 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
                 CurvType = (S.BasisCurve())->GetType();
                 switch (CurvType)
                 {
-                  case GeomAbs_Line:
+                  case GeomAbs_CurveType::GeomAbs_Line:
                     break;
-                  case GeomAbs_Circle:
-                  case GeomAbs_Ellipse:
+                  case GeomAbs_CurveType::GeomAbs_Circle:
+                  case GeomAbs_CurveType::GeomAbs_Ellipse:
                     for (j = 1; j < myDiscret; j++)
                     {
                       U1 += stepU;
@@ -603,12 +603,12 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
                       }
                     }
                     break;
-                  case GeomAbs_Parabola:
-                  case GeomAbs_Hyperbola:
-                  case GeomAbs_BezierCurve:
-                  case GeomAbs_BSplineCurve:
-                  case GeomAbs_OffsetCurve:
-                  case GeomAbs_OtherCurve:
+                  case GeomAbs_CurveType::GeomAbs_Parabola:
+                  case GeomAbs_CurveType::GeomAbs_Hyperbola:
+                  case GeomAbs_CurveType::GeomAbs_BezierCurve:
+                  case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+                  case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+                  case GeomAbs_CurveType::GeomAbs_OtherCurve:
                     for (j = 1; j <= myDiscret / 2; j++)
                     {
                       occ::handle<DBRep_Face> aLocalFace = F;
@@ -621,7 +621,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
                               T,
                               U1,
                               V1,
-                              (T == GeomAbs_IsoV) ? stepU * 2. : stepV * 2.,
+                              (T == GeomAbs_IsoType::GeomAbs_IsoV) ? stepU * 2. : stepV * 2.,
                               halt);
                       U1 += stepU * 2.;
                       V1 += stepV * 2.;
@@ -731,10 +731,10 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
 
         switch (CurvType)
         {
-          case GeomAbs_Line:
+          case GeomAbs_CurveType::GeomAbs_Line:
             break;
-          case GeomAbs_Circle:
-          case GeomAbs_Ellipse:
+          case GeomAbs_CurveType::GeomAbs_Circle:
+          case GeomAbs_CurveType::GeomAbs_Ellipse:
             for (j = 1; j < myDiscret; j++)
             {
               t += step;
@@ -749,12 +749,12 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
               }
             }
             break;
-          case GeomAbs_Parabola:
-          case GeomAbs_Hyperbola:
-          case GeomAbs_BezierCurve:
-          case GeomAbs_BSplineCurve:
-          case GeomAbs_OffsetCurve:
-          case GeomAbs_OtherCurve:
+          case GeomAbs_CurveType::GeomAbs_Parabola:
+          case GeomAbs_CurveType::GeomAbs_Hyperbola:
+          case GeomAbs_CurveType::GeomAbs_BezierCurve:
+          case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+          case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+          case GeomAbs_CurveType::GeomAbs_OtherCurve:
             for (j = 1; j <= myDiscret / 2; j++)
             {
               occ::handle<DBRep_Edge> aLocaLEdge(E);

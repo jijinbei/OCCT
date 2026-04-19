@@ -18,13 +18,13 @@
 #define _BRepOffset_Mode_HeaderFile
 
 //! Lists the offset modes. These are the following:
-//! - BRepOffset_Skin which describes the offset along
+//! - BRepOffset_Mode::BRepOffset_Skin which describes the offset along
 //! the surface of a solid, used to obtain a manifold topological space,
-//! - BRepOffset_Pipe which describes the offset of a
+//! - BRepOffset_Mode::BRepOffset_Pipe which describes the offset of a
 //! curve, used to obtain a pre-surface,
-//! - BRepOffset_RectoVerso which describes the offset
+//! - BRepOffset_Mode::BRepOffset_RectoVerso which describes the offset
 //! of a given surface shell along both sides of the surface.
-enum BRepOffset_Mode
+enum class BRepOffset_Mode
 {
   BRepOffset_Skin,
   BRepOffset_Pipe,

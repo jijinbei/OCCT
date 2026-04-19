@@ -62,10 +62,10 @@ public:
         myDerOrder(N),
         myCN(4),
         myLinTol(Resolution),
-        myUTangentStatus(LProp_Undecided),
-        myVTangentStatus(LProp_Undecided),
-        myNormalStatus(LProp_Undecided),
-        myCurvatureStatus(LProp_Undecided)
+        myUTangentStatus(LProp_Status::LProp_Undecided),
+        myVTangentStatus(LProp_Status::LProp_Undecided),
+        myNormalStatus(LProp_Status::LProp_Undecided),
+        myCurvatureStatus(LProp_Status::LProp_Undecided)
   {
     Standard_OutOfRange_Raise_if(N < 0 || N > 2, "GeomLProp_SLPropsBase::GeomLProp_SLPropsBase()");
     SetParameters(U, V);
@@ -80,10 +80,10 @@ public:
         myDerOrder(N),
         myCN(4),
         myLinTol(Resolution),
-        myUTangentStatus(LProp_Undecided),
-        myVTangentStatus(LProp_Undecided),
-        myNormalStatus(LProp_Undecided),
-        myCurvatureStatus(LProp_Undecided)
+        myUTangentStatus(LProp_Status::LProp_Undecided),
+        myVTangentStatus(LProp_Status::LProp_Undecided),
+        myNormalStatus(LProp_Status::LProp_Undecided),
+        myCurvatureStatus(LProp_Status::LProp_Undecided)
   {
     Standard_OutOfRange_Raise_if(N < 0 || N > 2, "GeomLProp_SLPropsBase::GeomLProp_SLPropsBase()");
   }
@@ -98,10 +98,10 @@ public:
         myDerOrder(N),
         myCN(0),
         myLinTol(Resolution),
-        myUTangentStatus(LProp_Undecided),
-        myVTangentStatus(LProp_Undecided),
-        myNormalStatus(LProp_Undecided),
-        myCurvatureStatus(LProp_Undecided)
+        myUTangentStatus(LProp_Status::LProp_Undecided),
+        myVTangentStatus(LProp_Status::LProp_Undecided),
+        myNormalStatus(LProp_Status::LProp_Undecided),
+        myCurvatureStatus(LProp_Status::LProp_Undecided)
   {
     Standard_OutOfRange_Raise_if(N < 0 || N > 2,
                                  "GeomLProp_SLPropsBase::GeomLProp_SLPropsBase() bad level");

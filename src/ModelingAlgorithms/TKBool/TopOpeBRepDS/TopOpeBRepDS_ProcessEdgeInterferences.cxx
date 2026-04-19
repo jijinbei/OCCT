@@ -186,7 +186,7 @@ BDS,const int SIX)
     occ::handle<TopOpeBRepDS_Interference>& I1 = it1.Value();
     TopOpeBRepDS_Kind GT1,ST1; int G1,S1; FDS_data(I1,GT1,G1,ST1,S1);
 
-    if ( GT1 == TopOpeBRepDS_VERTEX ) {
+    if ( GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX ) {
       TopOpeBRepDS_Transition& T1 = I1->ChangeTransition();
       TopAbs_ShapeEnum shab1 = T1.ShapeBefore(), shaa1 = T1.ShapeAfter();
       TopAbs_State     stab1 = T1.Before(), staa1 = T1.After();
@@ -491,8 +491,8 @@ Standard_EXPORT void FUN_resolveEUNKNOWN
     TopAbs_ShapeEnum  tsb1, tsa1;
     int               isb1, isa1;
     FDS_Idata(I1, tsb1, isb1, tsa1, isa1, GT1, G1, ST1, S1);
-    bool idt  = (tsb1 == TopAbs_FACE && tsa1 == TopAbs_FACE && GT1 == TopOpeBRepDS_POINT
-                && ST1 == TopOpeBRepDS_FACE);
+    bool idt  = (tsb1 == TopAbs_FACE && tsa1 == TopAbs_FACE && GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT
+                && ST1 == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE);
     bool idi  = (isb1 == S1 && isa1 == S1);
     bool etgf = idt && idi; // edge tangent a une face en 1 point
     if (!etgf)
@@ -601,7 +601,7 @@ Standard_EXPORT void FUN_purgeDSonSE(const occ::handle<TopOpeBRepDS_HDataStructu
     //    if (!hasfsdmFanc)
     //      {newLI.Append(loi); continue;}
     //    NCollection_List<occ::handle<TopOpeBRepDS_Interference>> LIface; int nfound =
-    //    FUN_selectSIinterference(loi,TopOpeBRepDS_FACE,LIface);
+    //    FUN_selectSIinterference(loi,TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,LIface);
 
     // - cto 900 D1 - : we need interference I''=(T(face),G,face), face !sdmFancSE
     //                  to compute spOUT(e9)
@@ -622,7 +622,7 @@ Standard_EXPORT void FUN_purgeDSonSE(const occ::handle<TopOpeBRepDS_HDataStructu
         newLI.Append(I);
         continue;
       }
-      if (ST != TopOpeBRepDS_FACE)
+      if (ST != TopOpeBRepDS_Kind::TopOpeBRepDS_FACE)
       {
         newLI.Append(I);
         continue;

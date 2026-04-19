@@ -34,8 +34,8 @@ TopOpeBRepBuild_GTopo TopOpeBRepBuild_GTool::GFusUnsh(const TopAbs_ShapeEnum t1,
                                false,
                                t1,
                                t2,
-                               TopOpeBRepDS_UNSHGEOMETRY,
-                               TopOpeBRepDS_UNSHGEOMETRY);
+                               TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
+                               TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
 }
 
 //=================================================================================================
@@ -54,8 +54,8 @@ TopOpeBRepBuild_GTopo TopOpeBRepBuild_GTool::GFusSame(const TopAbs_ShapeEnum t1,
                                false,
                                t1,
                                t2,
-                               TopOpeBRepDS_SAMEORIENTED,
-                               TopOpeBRepDS_SAMEORIENTED);
+                               TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED,
+                               TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
 }
 
 //=================================================================================================
@@ -74,8 +74,8 @@ TopOpeBRepBuild_GTopo TopOpeBRepBuild_GTool::GFusDiff(const TopAbs_ShapeEnum t1,
                                false,
                                t1,
                                t2,
-                               TopOpeBRepDS_DIFFORIENTED,
-                               TopOpeBRepDS_SAMEORIENTED);
+                               TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED,
+                               TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
 }
 
 //=================================================================================================
@@ -94,8 +94,8 @@ TopOpeBRepBuild_GTopo TopOpeBRepBuild_GTool::GCutUnsh(const TopAbs_ShapeEnum t1,
                                false,
                                t1,
                                t2,
-                               TopOpeBRepDS_UNSHGEOMETRY,
-                               TopOpeBRepDS_UNSHGEOMETRY);
+                               TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
+                               TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
 }
 
 //=================================================================================================
@@ -114,8 +114,8 @@ TopOpeBRepBuild_GTopo TopOpeBRepBuild_GTool::GCutSame(const TopAbs_ShapeEnum t1,
                                false,
                                t1,
                                t2,
-                               TopOpeBRepDS_SAMEORIENTED,
-                               TopOpeBRepDS_SAMEORIENTED);
+                               TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED,
+                               TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
 }
 
 //=================================================================================================
@@ -134,8 +134,8 @@ TopOpeBRepBuild_GTopo TopOpeBRepBuild_GTool::GCutDiff(const TopAbs_ShapeEnum t1,
                                false,
                                t1,
                                t2,
-                               TopOpeBRepDS_DIFFORIENTED,
-                               TopOpeBRepDS_SAMEORIENTED);
+                               TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED,
+                               TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
 }
 
 //=================================================================================================
@@ -154,8 +154,8 @@ TopOpeBRepBuild_GTopo TopOpeBRepBuild_GTool::GComUnsh(const TopAbs_ShapeEnum t1,
                                false,
                                t1,
                                t2,
-                               TopOpeBRepDS_UNSHGEOMETRY,
-                               TopOpeBRepDS_UNSHGEOMETRY);
+                               TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
+                               TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
 }
 
 //=================================================================================================
@@ -174,8 +174,8 @@ TopOpeBRepBuild_GTopo TopOpeBRepBuild_GTool::GComSame(const TopAbs_ShapeEnum t1,
                                false,
                                t1,
                                t2,
-                               TopOpeBRepDS_SAMEORIENTED,
-                               TopOpeBRepDS_SAMEORIENTED);
+                               TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED,
+                               TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
 }
 
 //=================================================================================================
@@ -194,8 +194,8 @@ TopOpeBRepBuild_GTopo TopOpeBRepBuild_GTool::GComDiff(const TopAbs_ShapeEnum t1,
                                false,
                                t1,
                                t2,
-                               TopOpeBRepDS_DIFFORIENTED,
-                               TopOpeBRepDS_SAMEORIENTED);
+                               TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED,
+                               TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
 }
 
 //=================================================================================================

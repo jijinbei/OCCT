@@ -24,8 +24,8 @@
 static occ::handle<Resource_Manager> CurrentUnits, SICurrentUnits, MDTVCurrentUnits;
 static Units_UnitsSystem             LocalSystemUnits, SILocalSystemUnits, MDTVLocalSystemUnits;
 static TCollection_AsciiString       rstring;
-static UnitsAPI_SystemUnits          localSystem   = UnitsAPI_SI;
-static UnitsAPI_SystemUnits          currentSystem = UnitsAPI_DEFAULT;
+static UnitsAPI_SystemUnits          localSystem   = UnitsAPI_SystemUnits::UnitsAPI_SI;
+static UnitsAPI_SystemUnits          currentSystem = UnitsAPI_SystemUnits::UnitsAPI_DEFAULT;
 static std::recursive_mutex          THE_UNITS_API_MUTEX;
 
 //=================================================================================================
@@ -36,12 +36,12 @@ void UnitsAPI::CheckLoading(const UnitsAPI_SystemUnits aSystemUnits)
   {
     switch (aSystemUnits)
     {
-      case UnitsAPI_DEFAULT:
+      case UnitsAPI_SystemUnits::UnitsAPI_DEFAULT:
         if (!CurrentUnits.IsNull())
           break;
         [[fallthrough]];
-      case UnitsAPI_SI:
-        currentSystem = UnitsAPI_SI;
+      case UnitsAPI_SystemUnits::UnitsAPI_SI:
+        currentSystem = UnitsAPI_SystemUnits::UnitsAPI_SI;
         if (SICurrentUnits.IsNull())
         {
 #ifdef _WIN32
@@ -58,8 +58,8 @@ void UnitsAPI::CheckLoading(const UnitsAPI_SystemUnits aSystemUnits)
         CurrentUnits     = SICurrentUnits;
         LocalSystemUnits = SILocalSystemUnits;
         break;
-      case UnitsAPI_MDTV:
-        currentSystem = UnitsAPI_MDTV;
+      case UnitsAPI_SystemUnits::UnitsAPI_MDTV:
+        currentSystem = UnitsAPI_SystemUnits::UnitsAPI_MDTV;
         if (MDTVCurrentUnits.IsNull())
         {
 #ifdef _WIN32
@@ -164,7 +164,7 @@ double UnitsAPI::CurrentToSI(const double aData, const char* const aQuantity)
 {
   std::lock_guard<std::recursive_mutex> aLock(THE_UNITS_API_MUTEX);
   double                                aValue = aData;
-  CheckLoading(UnitsAPI_DEFAULT);
+  CheckLoading(UnitsAPI_SystemUnits::UnitsAPI_DEFAULT);
   if (CurrentUnits->Find(aQuantity))
   {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
@@ -211,7 +211,7 @@ double UnitsAPI::CurrentFromSI(const double aData, const char* const aQuantity)
 {
   std::lock_guard<std::recursive_mutex> aLock(THE_UNITS_API_MUTEX);
   double                                aValue = aData;
-  CheckLoading(UnitsAPI_DEFAULT);
+  CheckLoading(UnitsAPI_SystemUnits::UnitsAPI_DEFAULT);
   if (CurrentUnits->Find(aQuantity))
   {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
@@ -236,7 +236,7 @@ double UnitsAPI::CurrentToAny(const double      aData,
 {
   std::lock_guard<std::recursive_mutex> aLock(THE_UNITS_API_MUTEX);
   double                                aValue = aData;
-  CheckLoading(UnitsAPI_DEFAULT);
+  CheckLoading(UnitsAPI_SystemUnits::UnitsAPI_DEFAULT);
   if (CurrentUnits->Find(aQuantity))
   {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
@@ -261,7 +261,7 @@ double UnitsAPI::CurrentFromAny(const double      aData,
 {
   std::lock_guard<std::recursive_mutex> aLock(THE_UNITS_API_MUTEX);
   double                                aValue = aData;
-  CheckLoading(UnitsAPI_DEFAULT);
+  CheckLoading(UnitsAPI_SystemUnits::UnitsAPI_DEFAULT);
   if (CurrentUnits->Find(aQuantity))
   {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));
@@ -333,7 +333,7 @@ double UnitsAPI::AnyToSI(const double aData, const char* const aUnit)
 {
   std::lock_guard<std::recursive_mutex> aLock(THE_UNITS_API_MUTEX);
   double                                aValue;
-  CheckLoading(UnitsAPI_DEFAULT);
+  CheckLoading(UnitsAPI_SystemUnits::UnitsAPI_DEFAULT);
   aValue = Units::ToSI(aData, aUnit);
   return aValue;
 }
@@ -346,7 +346,7 @@ double UnitsAPI::AnyToSI(const double                   aData,
 {
   std::lock_guard<std::recursive_mutex> aLock(THE_UNITS_API_MUTEX);
   double                                aValue;
-  CheckLoading(UnitsAPI_DEFAULT);
+  CheckLoading(UnitsAPI_SystemUnits::UnitsAPI_DEFAULT);
   aValue = Units::ToSI(aData, aUnit, aDim);
   return aValue;
 }
@@ -380,7 +380,7 @@ double UnitsAPI::AnyFromSI(const double aData, const char* const aUnit)
 {
   std::lock_guard<std::recursive_mutex> aLock(THE_UNITS_API_MUTEX);
   double                                aValue;
-  CheckLoading(UnitsAPI_DEFAULT);
+  CheckLoading(UnitsAPI_SystemUnits::UnitsAPI_DEFAULT);
   aValue = Units::FromSI(aData, aUnit);
   return aValue;
 }
@@ -391,7 +391,7 @@ double UnitsAPI::AnyToAny(const double aData, const char* const aUnit1, const ch
 {
   std::lock_guard<std::recursive_mutex> aLock(THE_UNITS_API_MUTEX);
   double                                aValue = aData;
-  CheckLoading(UnitsAPI_DEFAULT);
+  CheckLoading(UnitsAPI_SystemUnits::UnitsAPI_DEFAULT);
   aValue = Units::Convert(aValue, aUnit1, aUnit2);
   return aValue;
 }
@@ -480,7 +480,7 @@ void UnitsAPI::Save()
 void UnitsAPI::Reload()
 {
   std::lock_guard<std::recursive_mutex> aLock(THE_UNITS_API_MUTEX);
-  currentSystem = UnitsAPI_DEFAULT;
+  currentSystem = UnitsAPI_SystemUnits::UnitsAPI_DEFAULT;
   CheckLoading(localSystem);
 }
 
@@ -579,7 +579,7 @@ bool UnitsAPI::Check(const char* const aQuantity, const char* const /*aUnit*/)
 {
   std::lock_guard<std::recursive_mutex> aLock(THE_UNITS_API_MUTEX);
   bool                                  status = false;
-  CheckLoading(UnitsAPI_DEFAULT);
+  CheckLoading(UnitsAPI_SystemUnits::UnitsAPI_DEFAULT);
   if (CurrentUnits->Find(aQuantity))
   {
     TCollection_AsciiString current(CurrentUnits->Value(aQuantity));

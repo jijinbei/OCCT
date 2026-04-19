@@ -145,8 +145,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::TryCylinerCone(
                                                                           cf1,
                                                                           cl1,
                                                                           aGap1,
-                                                                          GeomConvert_Target,
-                                                                          GeomAbs_Circle));
+                                                                          GeomConvert_ConvType::GeomConvert_Target,
+                                                                          GeomAbs_CurveType::GeomAbs_Circle));
   lastisocirc =
     occ::down_cast<Geom_Circle>(GeomConvert_CurveToAnaCurve::ComputeCurve(lastiso,
                                                                           theToler,
@@ -155,8 +155,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::TryCylinerCone(
                                                                           cf2,
                                                                           cl2,
                                                                           aGap2,
-                                                                          GeomConvert_Target,
-                                                                          GeomAbs_Circle));
+                                                                          GeomConvert_ConvType::GeomConvert_Target,
+                                                                          GeomAbs_CurveType::GeomAbs_Circle));
   if (!firstisocirc.IsNull() || !lastisocirc.IsNull())
   {
     double R1, R2, R3;
@@ -532,8 +532,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::TryTorusSphere(
                                                                            cf,
                                                                            cl,
                                                                            aGap1,
-                                                                           GeomConvert_Target,
-                                                                           GeomAbs_Circle);
+                                                                           GeomConvert_ConvType::GeomConvert_Target,
+                                                                           GeomAbs_CurveType::GeomAbs_Circle);
   occ::handle<Geom_Curve> Crv2 = GeomConvert_CurveToAnaCurve::ComputeCurve(IsoCrv2,
                                                                            toler,
                                                                            aParam1ToCrv,
@@ -541,8 +541,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::TryTorusSphere(
                                                                            cf,
                                                                            cl,
                                                                            aGap2,
-                                                                           GeomConvert_Target,
-                                                                           GeomAbs_Circle);
+                                                                           GeomConvert_ConvType::GeomConvert_Target,
+                                                                           GeomAbs_CurveType::GeomAbs_Circle);
   if (Crv1.IsNull() || Crv2.IsNull() || !Crv1->IsKind(STANDARD_TYPE(Geom_Circle))
       || !Crv2->IsKind(STANDARD_TYPE(Geom_Circle)))
     return newSurface;
@@ -609,19 +609,19 @@ double GeomConvert_SurfToAnaSurf::ComputeGap(const occ::handle<Geom_Surface>& th
   gp_Torus            aTor;
   switch (aSType)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       aPln = aGAS.Plane();
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       aCyl = aGAS.Cylinder();
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       aCon = aGAS.Cone();
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       aSphere = aGAS.Sphere();
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       aTor = aGAS.Torus();
       break;
     default:
@@ -652,27 +652,27 @@ double GeomConvert_SurfToAnaSurf::ComputeGap(const occ::handle<Geom_Surface>& th
       switch (aSType)
       {
 
-        case GeomAbs_Plane: {
+        case GeomAbs_SurfaceType::GeomAbs_Plane: {
           ElSLib::Parameters(aPln, P3d, S, T);
           P3d2 = ElSLib::Value(S, T, aPln);
           break;
         }
-        case GeomAbs_Cylinder: {
+        case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
           ElSLib::Parameters(aCyl, P3d, S, T);
           P3d2 = ElSLib::Value(S, T, aCyl);
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_SurfaceType::GeomAbs_Cone: {
           ElSLib::Parameters(aCon, P3d, S, T);
           P3d2 = ElSLib::Value(S, T, aCon);
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_SurfaceType::GeomAbs_Sphere: {
           ElSLib::Parameters(aSphere, P3d, S, T);
           P3d2 = ElSLib::Value(S, T, aSphere);
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_SurfaceType::GeomAbs_Torus: {
           ElSLib::Parameters(aTor, P3d, S, T);
           P3d2 = ElSLib::Value(S, T, aTor);
           break;
@@ -702,8 +702,8 @@ double GeomConvert_SurfToAnaSurf::ComputeGap(const occ::handle<Geom_Surface>& th
 
 GeomConvert_SurfToAnaSurf::GeomConvert_SurfToAnaSurf()
     : myGap(-1.),
-      myConvType(GeomConvert_Simplest),
-      myTarget(GeomAbs_Plane)
+      myConvType(GeomConvert_ConvType::GeomConvert_Simplest),
+      myTarget(GeomAbs_SurfaceType::GeomAbs_Plane)
 {
 }
 
@@ -711,8 +711,8 @@ GeomConvert_SurfToAnaSurf::GeomConvert_SurfToAnaSurf()
 
 GeomConvert_SurfToAnaSurf::GeomConvert_SurfToAnaSurf(const occ::handle<Geom_Surface>& S)
     : myGap(-1.),
-      myConvType(GeomConvert_Simplest),
-      myTarget(GeomAbs_Plane)
+      myConvType(GeomConvert_ConvType::GeomConvert_Simplest),
+      myTarget(GeomAbs_SurfaceType::GeomAbs_Plane)
 {
   Init(S);
 }
@@ -762,23 +762,23 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
   GeomAbs_SurfaceType aSType = aGAS.GetType();
   switch (aSType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       myGap = 0.;
       return new Geom_Plane(aGAS.Plane());
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       myGap = 0.;
       return new Geom_CylindricalSurface(aGAS.Cylinder());
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       myGap = 0.;
       return new Geom_ConicalSurface(aGAS.Cone());
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       myGap = 0.;
       return new Geom_SphericalSurface(aGAS.Sphere());
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       myGap = 0.;
       return new Geom_ToroidalSurface(aGAS.Torus());
     }
@@ -789,11 +789,11 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
   double                    toler = InitialToler;
   occ::handle<Geom_Surface> newSurf[5];
   double                    dd[5] = {RealLast(), RealLast(), RealLast(), RealLast(), RealLast()};
-  GeomAbs_SurfaceType       aSTypes[5] = {GeomAbs_Plane,
-                                          GeomAbs_Cylinder,
-                                          GeomAbs_Cone,
-                                          GeomAbs_Sphere,
-                                          GeomAbs_Torus};
+  GeomAbs_SurfaceType       aSTypes[5] = {GeomAbs_SurfaceType::GeomAbs_Plane,
+                                          GeomAbs_SurfaceType::GeomAbs_Cylinder,
+                                          GeomAbs_SurfaceType::GeomAbs_Cone,
+                                          GeomAbs_SurfaceType::GeomAbs_Sphere,
+                                          GeomAbs_SurfaceType::GeomAbs_Torus};
 
   // Check boundaries
   double U1, U2, V1, V2;
@@ -829,8 +829,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
     }
   }
 
-  bool IsBz = aSType == GeomAbs_BezierSurface;
-  bool IsBs = aSType == GeomAbs_BSplineSurface;
+  bool IsBz = aSType == GeomAbs_SurfaceType::GeomAbs_BezierSurface;
+  bool IsBs = aSType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface;
 
   occ::handle<Geom_Surface> aTempS = mySurf;
   if (IsBs)
@@ -863,8 +863,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
     gp_Pln newPln  = GeomIsPlanar.Plan();
     newSurf[isurf] = new Geom_Plane(newPln);
     dd[isurf]      = ComputeGap(aTempS, U1, U2, V1, V2, newSurf[isurf]);
-    if (myConvType == GeomConvert_Simplest
-        || (myConvType == GeomConvert_Target && myTarget == GeomAbs_Plane))
+    if (myConvType == GeomConvert_ConvType::GeomConvert_Simplest
+        || (myConvType == GeomConvert_ConvType::GeomConvert_Target && myTarget == GeomAbs_SurfaceType::GeomAbs_Plane))
     {
       myGap = dd[isurf];
       return newSurf[isurf];
@@ -872,7 +872,7 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
   }
   else
   {
-    if (myConvType == GeomConvert_Target && myTarget == GeomAbs_Plane)
+    if (myConvType == GeomConvert_ConvType::GeomConvert_Target && myTarget == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       myGap = dd[isurf];
       return newSurf[isurf];
@@ -905,7 +905,7 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
                                                                               cuf,
                                                                               cul,
                                                                               aGap1,
-                                                                              GeomConvert_Simplest);
+                                                                              GeomConvert_ConvType::GeomConvert_Simplest);
   if (!umidiso.IsNull())
   {
     aLineIso = umidiso->IsKind(STANDARD_TYPE(Geom_Line));
@@ -917,7 +917,7 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
                                                                               cvf,
                                                                               cvl,
                                                                               aGap2,
-                                                                              GeomConvert_Simplest);
+                                                                              GeomConvert_ConvType::GeomConvert_Simplest);
   if (!vmidiso.IsNull() && !aLineIso)
   {
     aLineIso = vmidiso->IsKind(STANDARD_TYPE(Geom_Line));
@@ -930,8 +930,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
     if (umidiso->IsKind(STANDARD_TYPE(Geom_Circle)) && vmidiso->IsKind(STANDARD_TYPE(Geom_Circle)))
     {
       aToroidSphere = true;
-      if (myConvType == GeomConvert_Target
-          && (myTarget == GeomAbs_Cylinder || myTarget == GeomAbs_Cone))
+      if (myConvType == GeomConvert_ConvType::GeomConvert_Target
+          && (myTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder || myTarget == GeomAbs_SurfaceType::GeomAbs_Cone))
       {
         isurf = 1;
         myGap = dd[isurf];
@@ -944,8 +944,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
     {
       aCylinderConus = true;
       VCase          = true;
-      if (myConvType == GeomConvert_Target
-          && (myTarget == GeomAbs_Sphere || myTarget == GeomAbs_Torus))
+      if (myConvType == GeomConvert_ConvType::GeomConvert_Target
+          && (myTarget == GeomAbs_SurfaceType::GeomAbs_Sphere || myTarget == GeomAbs_SurfaceType::GeomAbs_Torus))
       {
         isurf = 3;
         myGap = dd[isurf];
@@ -957,8 +957,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
              && vmidiso->IsKind(STANDARD_TYPE(Geom_Line)))
     {
       aCylinderConus = true;
-      if (myConvType == GeomConvert_Target
-          && (myTarget == GeomAbs_Sphere || myTarget == GeomAbs_Torus))
+      if (myConvType == GeomConvert_ConvType::GeomConvert_Target
+          && (myTarget == GeomAbs_SurfaceType::GeomAbs_Sphere || myTarget == GeomAbs_SurfaceType::GeomAbs_Torus))
       {
         isurf = 3;
         myGap = dd[isurf];
@@ -989,7 +989,7 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
           isurf = 4; // set torus
         }
         newSurf[isurf] = anObject;
-        if (myConvType == GeomConvert_Target && (myTarget != aSTypes[isurf]))
+        if (myConvType == GeomConvert_ConvType::GeomConvert_Target && (myTarget != aSTypes[isurf]))
         {
           myGap = RealLast();
           return nullptr;
@@ -1012,7 +1012,7 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
         {
           isurf = 2; // set conical surface
         }
-        if (myConvType == GeomConvert_Target && (myTarget != aSTypes[isurf]))
+        if (myConvType == GeomConvert_ConvType::GeomConvert_Target && (myTarget != aSTypes[isurf]))
         {
           myGap = RealLast();
           return nullptr;
@@ -1054,13 +1054,13 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
     dd[isurf] = ComputeGap(aTempS, U1, U2, V1, V2, newSurf[isurf], toler);
     if (dd[isurf] <= toler)
     {
-      if (myConvType == GeomConvert_Simplest
-          || (myConvType == GeomConvert_Target && myTarget == aSTypes[isurf]))
+      if (myConvType == GeomConvert_ConvType::GeomConvert_Simplest
+          || (myConvType == GeomConvert_ConvType::GeomConvert_Target && myTarget == aSTypes[isurf]))
       {
         myGap = dd[isurf];
         return newSurf[isurf];
       }
-      else if (myConvType == GeomConvert_MinGap)
+      else if (myConvType == GeomConvert_ConvType::GeomConvert_MinGap)
       {
         if (dd[isurf] < aDmin)
         {
@@ -1103,23 +1103,23 @@ bool GeomConvert_SurfToAnaSurf::IsSame(const occ::handle<Geom_Surface>& S1,
   }
 
   IntAna_QuadQuadGeo interii;
-  if (aST1 == GeomAbs_Plane)
+  if (aST1 == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     interii.Perform(anAdaptor1->Plane(), anAdaptor2->Plane(), tol, tol);
   }
-  else if (aST1 == GeomAbs_Cylinder)
+  else if (aST1 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     interii.Perform(anAdaptor1->Cylinder(), anAdaptor2->Cylinder(), tol);
   }
-  else if (aST1 == GeomAbs_Cone)
+  else if (aST1 == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     interii.Perform(anAdaptor1->Cone(), anAdaptor2->Cone(), tol);
   }
-  else if (aST1 == GeomAbs_Sphere)
+  else if (aST1 == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     interii.Perform(anAdaptor1->Sphere(), anAdaptor2->Sphere(), tol);
   }
-  else if (aST1 == GeomAbs_Torus)
+  else if (aST1 == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     interii.Perform(anAdaptor1->Torus(), anAdaptor2->Torus(), tol);
   }
@@ -1129,7 +1129,7 @@ bool GeomConvert_SurfToAnaSurf::IsSame(const occ::handle<Geom_Surface>& S1,
 
   IntAna_ResultType aTypeRes = interii.TypeInter();
 
-  return aTypeRes == IntAna_Same;
+  return aTypeRes == IntAna_ResultType::IntAna_Same;
 }
 
 //=================================================================================================

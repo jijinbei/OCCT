@@ -87,7 +87,7 @@ inline void Compare(int&                      theClosest,
   {
     const IntRes2d_IntersectionPoint& aPInter = theIntersector.Point(aPoint);
     // Test for ON.
-    if (aPInter.TransitionOfFirst().PositionOnCurve() == IntRes2d_Head)
+    if (aPInter.TransitionOfFirst().PositionOnCurve() == IntRes2d_Position::IntRes2d_Head)
     {
       theClosest = aPoint;
       theState   = TopAbs_ON;
@@ -108,7 +108,7 @@ inline void Compare(int&                      theClosest,
   {
     const IntRes2d_IntersectionSegment& aSegInter = theIntersector.Segment(aSegment);
     const IntRes2d_IntersectionPoint&   aPInter   = aSegInter.FirstPoint();
-    if (aPInter.TransitionOfFirst().PositionOnCurve() == IntRes2d_Head)
+    if (aPInter.TransitionOfFirst().PositionOnCurve() == IntRes2d_Position::IntRes2d_Head)
     {
       theClosest = aNbPoints + aSegment + aSegment - 1;
       theState   = TopAbs_ON;
@@ -154,7 +154,7 @@ inline void Compare(int&                      theClosest,
   theParam                       = aDMin;
   const IntRes2d_Transition& aT2 = aPClosest->TransitionOfSecond();
   theIsHeadOrEnd =
-    (aT2.PositionOnCurve() == IntRes2d_Head) || (aT2.PositionOnCurve() == IntRes2d_End);
+    (aT2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Head) || (aT2.PositionOnCurve() == IntRes2d_Position::IntRes2d_End);
 
   // Transition on the segment.
   TopAbs_Orientation aSegTrans = TopAbs_FORWARD;
@@ -162,26 +162,26 @@ inline void Compare(int&                      theClosest,
   const IntRes2d_Transition& aT1 = aPClosest->TransitionOfFirst();
   switch (aT1.TransitionType())
   {
-    case IntRes2d_In:
+    case IntRes2d_TypeTrans::IntRes2d_In:
       aSegTrans = (theOr == TopAbs_REVERSED) ? TopAbs_REVERSED : TopAbs_FORWARD;
       break;
-    case IntRes2d_Out:
+    case IntRes2d_TypeTrans::IntRes2d_Out:
       aSegTrans = (theOr == TopAbs_REVERSED) ? TopAbs_FORWARD : TopAbs_REVERSED;
       break;
-    case IntRes2d_Touch:
+    case IntRes2d_TypeTrans::IntRes2d_Touch:
       switch (aT1.Situation())
       {
-        case IntRes2d_Inside:
+        case IntRes2d_Situation::IntRes2d_Inside:
           aSegTrans = (theOr == TopAbs_REVERSED) ? TopAbs_EXTERNAL : TopAbs_INTERNAL;
           break;
-        case IntRes2d_Outside:
+        case IntRes2d_Situation::IntRes2d_Outside:
           aSegTrans = (theOr == TopAbs_REVERSED) ? TopAbs_INTERNAL : TopAbs_EXTERNAL;
           break;
-        case IntRes2d_Unknown:
+        case IntRes2d_Situation::IntRes2d_Unknown:
           return;
       }
       break;
-    case IntRes2d_Undecided:
+    case IntRes2d_TypeTrans::IntRes2d_Undecided:
       return;
   }
 
@@ -218,7 +218,7 @@ inline void Compare(int&                      theClosest,
     }
 
     const TopAbs_Orientation aOrt =
-      (aT2.PositionOnCurve() == IntRes2d_Head) ? TopAbs_FORWARD : TopAbs_REVERSED;
+      (aT2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Head) ? TopAbs_FORWARD : TopAbs_REVERSED;
     theTrans.Compare(RealEpsilon(), aTang, aNorm, aCurv, aSegTrans, aOrt);
     theState = theTrans.StateBefore();
   }

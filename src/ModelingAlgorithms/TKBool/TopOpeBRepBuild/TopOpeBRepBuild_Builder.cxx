@@ -1733,7 +1733,7 @@ void TopOpeBRepBuild_Builder::FillShape(const TopoDS_Shape&                   S1
   if (hsd)
   {
     TopOpeBRepDS_Config ssc = myDataStructure->SameDomainOrientation(S1);
-    if (ssc == TopOpeBRepDS_DIFFORIENTED)
+    if (ssc == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED)
     {
       RevOri = !RevOri;
 #ifdef OCCT_DEBUG

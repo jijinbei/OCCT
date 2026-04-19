@@ -213,7 +213,7 @@ occ::handle<Geom2d_BSplineCurve> Geom2dConvert::CurveToBSplineCurve(
     {
       occ::handle<Geom2d_Circle> TheConic = occ::down_cast<Geom2d_Circle>(Curv);
       Circ2d                     C2d(gp::OX2d(), TheConic->Radius());
-      if (Parameterisation != Convert_RationalC1)
+      if (Parameterisation != Convert_ParameterisationType::Convert_RationalC1)
       {
         Convert_CircleToBSplineCurve Convert(C2d, U1, U2, Parameterisation);
         TheCurve = BSplineCurveBuilder(TheConic, Convert);
@@ -252,7 +252,7 @@ occ::handle<Geom2d_BSplineCurve> Geom2dConvert::CurveToBSplineCurve(
       occ::handle<Geom2d_Ellipse> TheConic = occ::down_cast<Geom2d_Ellipse>(Curv);
 
       Elips2d E2d(gp::OX2d(), TheConic->MajorRadius(), TheConic->MinorRadius());
-      if (Parameterisation != Convert_RationalC1)
+      if (Parameterisation != Convert_ParameterisationType::Convert_RationalC1)
       {
         Convert_EllipseToBSplineCurve Convert(E2d, U1, U2, Parameterisation);
         TheCurve = BSplineCurveBuilder(TheConic, Convert);

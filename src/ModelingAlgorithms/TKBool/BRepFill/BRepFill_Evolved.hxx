@@ -53,7 +53,7 @@ public:
   Standard_EXPORT BRepFill_Evolved(const TopoDS_Wire&     Spine,
                                    const TopoDS_Wire&     Profile,
                                    const gp_Ax3&          AxeProf,
-                                   const GeomAbs_JoinType Join  = GeomAbs_Arc,
+                                   const GeomAbs_JoinType Join  = GeomAbs_JoinType::GeomAbs_Arc,
                                    const bool             Solid = false);
 
   //! Creates an evolved shape by sweeping the <Profile>
@@ -61,7 +61,7 @@ public:
   Standard_EXPORT BRepFill_Evolved(const TopoDS_Face&     Spine,
                                    const TopoDS_Wire&     Profile,
                                    const gp_Ax3&          AxeProf,
-                                   const GeomAbs_JoinType Join  = GeomAbs_Arc,
+                                   const GeomAbs_JoinType Join  = GeomAbs_JoinType::GeomAbs_Arc,
                                    const bool             Solid = false);
 
   //! Performs an evolved shape by sweeping the <Profile>
@@ -69,7 +69,7 @@ public:
   Standard_EXPORT void Perform(const TopoDS_Wire&     Spine,
                                const TopoDS_Wire&     Profile,
                                const gp_Ax3&          AxeProf,
-                               const GeomAbs_JoinType Join  = GeomAbs_Arc,
+                               const GeomAbs_JoinType Join  = GeomAbs_JoinType::GeomAbs_Arc,
                                const bool             Solid = false);
 
   //! Performs an evolved shape by sweeping the <Profile>
@@ -77,7 +77,7 @@ public:
   Standard_EXPORT void Perform(const TopoDS_Face&     Spine,
                                const TopoDS_Wire&     Profile,
                                const gp_Ax3&          AxeProf,
-                               const GeomAbs_JoinType Join  = GeomAbs_Arc,
+                               const GeomAbs_JoinType Join  = GeomAbs_JoinType::GeomAbs_Arc,
                                const bool             Solid = false);
 
   Standard_EXPORT bool IsDone() const;
@@ -104,7 +104,7 @@ private:
   Standard_EXPORT void PrivatePerform(const TopoDS_Face&     Spine,
                                       const TopoDS_Wire&     Profile,
                                       const gp_Ax3&          AxeProf,
-                                      const GeomAbs_JoinType Join  = GeomAbs_Arc,
+                                      const GeomAbs_JoinType Join  = GeomAbs_JoinType::GeomAbs_Arc,
                                       const bool             Solid = false);
 
   Standard_EXPORT void SetWork(const TopoDS_Face& Spine, const TopoDS_Wire& Profile);
@@ -113,19 +113,19 @@ private:
                                          const TopoDS_Wire&              Profile,
                                          const BRepMAT2d_BisectingLocus& Locus,
                                          BRepMAT2d_LinkTopoBilo&         Link,
-                                         const GeomAbs_JoinType          Join = GeomAbs_Arc);
+                                         const GeomAbs_JoinType          Join = GeomAbs_JoinType::GeomAbs_Arc);
 
   Standard_EXPORT void PlanarPerform(const TopoDS_Face&              Spine,
                                      const TopoDS_Wire&              Profile,
                                      const BRepMAT2d_BisectingLocus& Locus,
                                      BRepMAT2d_LinkTopoBilo&         Link,
-                                     const GeomAbs_JoinType          Join = GeomAbs_Arc);
+                                     const GeomAbs_JoinType          Join = GeomAbs_JoinType::GeomAbs_Arc);
 
   Standard_EXPORT void VerticalPerform(const TopoDS_Face&              Spine,
                                        const TopoDS_Wire&              Profile,
                                        const BRepMAT2d_BisectingLocus& Locus,
                                        BRepMAT2d_LinkTopoBilo&         Link,
-                                       const GeomAbs_JoinType          Join = GeomAbs_Arc);
+                                       const GeomAbs_JoinType          Join = GeomAbs_JoinType::GeomAbs_Arc);
 
   Standard_EXPORT NCollection_DataMap<
     TopoDS_Shape,

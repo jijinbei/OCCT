@@ -15,7 +15,7 @@
 #define _BRepFill_ThruSectionErrorStatus_HeaderFile
 
 //! Errors that can occur at thrusection algorithm.
-enum BRepFill_ThruSectionErrorStatus
+enum class BRepFill_ThruSectionErrorStatus
 {
   BRepFill_ThruSectionErrorStatus_Done,            //!< Thrusection algorithm is done
   BRepFill_ThruSectionErrorStatus_NotDone,         //!< Thrusection algorithm is not done

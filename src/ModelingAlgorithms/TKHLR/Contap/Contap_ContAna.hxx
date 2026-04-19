@@ -62,7 +62,7 @@ public:
 
   int NbContours() const;
 
-  //! Returns GeomAbs_Line or GeomAbs_Circle, when
+  //! Returns GeomAbs_CurveType::GeomAbs_Line or GeomAbs_CurveType::GeomAbs_Circle, when
   //! IsDone() returns True.
   GeomAbs_CurveType TypeContour() const;
 

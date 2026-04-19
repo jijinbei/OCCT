@@ -1166,7 +1166,7 @@ void GeomLib::AdjustExtremity(occ::handle<Geom_BoundedCurve>& Curve,
 {
   // Convert the input (preserving the parameterization if possible)
   occ::handle<Geom_BSplineCurve> aIn, aDef;
-  aIn = GeomConvert::CurveToBSplineCurve(Curve, Convert_QuasiAngular);
+  aIn = GeomConvert::CurveToBSplineCurve(Curve, Convert_ParameterisationType::Convert_QuasiAngular);
 
   int                        ii, jj;
   gp_Pnt                     P;
@@ -1265,7 +1265,7 @@ void GeomLib::ExtendCurveToPoint(occ::handle<Geom_BoundedCurve>& Curve,
   gp_Vec      d1, d2, d3;
   gp_Pnt      p0;
   // Convert the input (preserving the parameterization if possible)
-  GeomConvert_CompCurveToBSplineCurve Concat(Curve, Convert_QuasiAngular);
+  GeomConvert_CompCurveToBSplineCurve Concat(Curve, Convert_ParameterisationType::Convert_QuasiAngular);
 
   // Construction constraints
   NCollection_Array1<gp_XYZ> Cont(1, size);
@@ -1411,7 +1411,7 @@ static bool ExtendKPart(occ::handle<Geom_RectangularTrimmedSurface>& Surface,
   {
     switch (Type)
     {
-      case GeomAbs_Plane: {
+      case GeomAbs_SurfaceType::GeomAbs_Plane: {
         if (After)
           Ul += Length;
         else
@@ -1428,9 +1428,9 @@ static bool ExtendKPart(occ::handle<Geom_RectangularTrimmedSurface>& Surface,
   {
     switch (Type)
     {
-      case GeomAbs_Plane:
-      case GeomAbs_Cylinder:
-      case GeomAbs_SurfaceOfExtrusion: {
+      case GeomAbs_SurfaceType::GeomAbs_Plane:
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
         if (After)
           Vl += Length;
         else
@@ -2483,7 +2483,7 @@ int GeomLib::NormEstim(const occ::handle<Geom_Surface>& theSurf,
   if (!isDone)
   {
     // computation is impossible
-    return aStatus == CSLib_D1NIsNull ? 2 : 3;
+    return aStatus == CSLib_NormalStatus::CSLib_D1NIsNull ? 2 : 3;
   }
 
   double Umin, Umax, Vmin, Vmax;
@@ -2567,14 +2567,14 @@ int GeomLib::NormEstim(const occ::handle<Geom_Surface>& theSurf,
   }
 
   // quasysingular
-  if (aStatus == CSLib_D1NuIsNull || aStatus == CSLib_D1NvIsNull
-      || aStatus == CSLib_D1NuIsParallelD1Nv)
+  if (aStatus == CSLib_NormalStatus::CSLib_D1NuIsNull || aStatus == CSLib_NormalStatus::CSLib_D1NvIsNull
+      || aStatus == CSLib_NormalStatus::CSLib_D1NuIsParallelD1Nv)
   {
     theNorm.SetXYZ(aNormal.XYZ());
     return 1;
   }
 
-  return aStatus == CSLib_InfinityOfSolutions ? 2 : 3;
+  return aStatus == CSLib_NormalStatus::CSLib_InfinityOfSolutions ? 2 : 3;
 }
 
 //=================================================================================================
@@ -2599,10 +2599,10 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
   double Tol2 = Tol * Tol;
   switch (aSType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       return;
     }
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
       if (Precision::IsInfinite(u1) || Precision::IsInfinite(u2))
       {
         // not closed
@@ -2610,7 +2610,7 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       }
     }
       [[fallthrough]];
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       if (Precision::IsInfinite(v1))
         v1 = 0.;
       gp_Pnt p1 = aGAS.Value(u1, v1);
@@ -2618,7 +2618,7 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       isUClosed = p1.SquareDistance(p2) <= Tol2;
       return;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       // find v with maximal distance from axis
       if (!(Precision::IsInfinite(v1) || Precision::IsInfinite(v2)))
       {
@@ -2640,7 +2640,7 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       isUClosed = p1.SquareDistance(p2) <= Tol2;
       return;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       // find v with maximal distance from axis
       if (v1 * v2 <= 0.)
       {
@@ -2658,7 +2658,7 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       isUClosed = p1.SquareDistance(p2) <= Tol2;
       return;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       double ures = aGAS.UResolution(Tol);
       double vres = aGAS.VResolution(Tol);
       //
@@ -2666,21 +2666,21 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
       isVClosed = (v2 - v1) >= aGAS.VPeriod() - vres;
       return;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       occ::handle<Geom_BSplineSurface> aBSpl = aGAS.BSpline();
       isUClosed                              = GeomLib::IsBSplUClosed(aBSpl, u1, u2, Tol);
       isVClosed                              = GeomLib::IsBSplVClosed(aBSpl, v1, v2, Tol);
       return;
     }
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       occ::handle<Geom_BezierSurface> aBz = aGAS.Bezier();
       isUClosed                           = GeomLib::IsBzUClosed(aBz, u1, u2, Tol);
       isVClosed                           = GeomLib::IsBzVClosed(aBz, v1, v2, Tol);
       return;
     }
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_OffsetSurface:
-    case GeomAbs_OtherSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
+    case GeomAbs_SurfaceType::GeomAbs_OtherSurface: {
       int nbp = 23;
       if (Precision::IsInfinite(v1))
       {
@@ -2691,7 +2691,7 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
         v2 = std::copysign(1., v2);
       }
       //
-      if (aSType == GeomAbs_OffsetSurface || aSType == GeomAbs_OtherSurface)
+      if (aSType == GeomAbs_SurfaceType::GeomAbs_OffsetSurface || aSType == GeomAbs_SurfaceType::GeomAbs_OtherSurface)
       {
         if (Precision::IsInfinite(u1))
         {
@@ -2877,14 +2877,14 @@ bool GeomLib::isIsoLine(const occ::handle<Adaptor2d_Curve2d>& theC2D,
 
   // Test type.
   const GeomAbs_CurveType aType = theC2D->GetType();
-  if (aType == GeomAbs_Line)
+  if (aType == GeomAbs_CurveType::GeomAbs_Line)
   {
     gp_Lin2d aLin2d   = theC2D->Line();
     aLoc2d            = aLin2d.Location();
     aDir2d            = aLin2d.Direction();
     isAppropriateType = true;
   }
-  else if (aType == GeomAbs_BSplineCurve)
+  else if (aType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom2d_BSplineCurve> aBSpline2d = theC2D->BSpline();
     if (aBSpline2d->Degree() != 1 || aBSpline2d->NbPoles() != 2)
@@ -2900,7 +2900,7 @@ bool GeomLib::isIsoLine(const occ::handle<Adaptor2d_Curve2d>& theC2D,
 
     isAppropriateType = true;
   }
-  else if (aType == GeomAbs_BezierCurve)
+  else if (aType == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     occ::handle<Geom2d_BezierCurve> aBezier2d = theC2D->Bezier();
     if (aBezier2d->Degree() != 1 || aBezier2d->NbPoles() != 2)
@@ -2957,7 +2957,7 @@ occ::handle<Geom_Curve> GeomLib::buildC3dOnIsoLine(const occ::handle<Adaptor2d_C
   if (aGeomAdapter.IsNull())
     return occ::handle<Geom_Curve>();
 
-  if (theSurf->GetType() == GeomAbs_Sphere)
+  if (theSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
     return occ::handle<Geom_Curve>();
 
   // Extract isoline
@@ -3034,7 +3034,7 @@ occ::handle<Geom_Curve> GeomLib::buildC3dOnIsoLine(const occ::handle<Adaptor2d_C
 
   // Convert arbitrary curve type to the b-spline.
   occ::handle<Geom_BSplineCurve> aCurve3d =
-    GeomConvert::CurveToBSplineCurve(aC3d, Convert_QuasiAngular);
+    GeomConvert::CurveToBSplineCurve(aC3d, Convert_ParameterisationType::Convert_QuasiAngular);
   if (!theIsForward)
     aCurve3d->Reverse();
 

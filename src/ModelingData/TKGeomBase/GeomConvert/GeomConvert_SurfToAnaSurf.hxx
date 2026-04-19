@@ -47,12 +47,12 @@ public:
 
   Standard_EXPORT void Init(const occ::handle<Geom_Surface>& S);
 
-  void SetConvType(const GeomConvert_ConvType theConvType = GeomConvert_Simplest)
+  void SetConvType(const GeomConvert_ConvType theConvType = GeomConvert_ConvType::GeomConvert_Simplest)
   {
     myConvType = theConvType;
   }
 
-  void SetTarget(const GeomAbs_SurfaceType theSurfType = GeomAbs_Plane) { myTarget = theSurfType; }
+  void SetTarget(const GeomAbs_SurfaceType theSurfType = GeomAbs_SurfaceType::GeomAbs_Plane) { myTarget = theSurfType; }
 
   //! Returns maximal deviation of converted surface from the original
   //! one computed by last call to ConvertToAnalytical

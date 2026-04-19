@@ -64,7 +64,7 @@ BRepAlgoAPI_Section::BRepAlgoAPI_Section(const BOPAlgo_PaveFiller& aPF)
 BRepAlgoAPI_Section::BRepAlgoAPI_Section(const TopoDS_Shape& Sh1,
                                          const TopoDS_Shape& Sh2,
                                          const bool          PerformNow)
-    : BRepAlgoAPI_BooleanOperation(Sh1, Sh2, BOPAlgo_SECTION)
+    : BRepAlgoAPI_BooleanOperation(Sh1, Sh2, BOPAlgo_Operation::BOPAlgo_SECTION)
 {
   Init(PerformNow);
 }
@@ -75,7 +75,7 @@ BRepAlgoAPI_Section::BRepAlgoAPI_Section(const TopoDS_Shape&       aS1,
                                          const TopoDS_Shape&       aS2,
                                          const BOPAlgo_PaveFiller& aDSF,
                                          const bool                PerformNow)
-    : BRepAlgoAPI_BooleanOperation(aS1, aS2, aDSF, BOPAlgo_SECTION)
+    : BRepAlgoAPI_BooleanOperation(aS1, aS2, aDSF, BOPAlgo_Operation::BOPAlgo_SECTION)
 {
   Init(PerformNow);
 }
@@ -85,7 +85,7 @@ BRepAlgoAPI_Section::BRepAlgoAPI_Section(const TopoDS_Shape&       aS1,
 BRepAlgoAPI_Section::BRepAlgoAPI_Section(const TopoDS_Shape& Sh,
                                          const gp_Pln&       Pl,
                                          const bool          PerformNow)
-    : BRepAlgoAPI_BooleanOperation(Sh, MakeShape(new Geom_Plane(Pl)), BOPAlgo_SECTION)
+    : BRepAlgoAPI_BooleanOperation(Sh, MakeShape(new Geom_Plane(Pl)), BOPAlgo_Operation::BOPAlgo_SECTION)
 {
   Init(PerformNow);
 }
@@ -95,7 +95,7 @@ BRepAlgoAPI_Section::BRepAlgoAPI_Section(const TopoDS_Shape& Sh,
 BRepAlgoAPI_Section::BRepAlgoAPI_Section(const TopoDS_Shape&              Sh,
                                          const occ::handle<Geom_Surface>& Sf,
                                          const bool                       PerformNow)
-    : BRepAlgoAPI_BooleanOperation(Sh, MakeShape(Sf), BOPAlgo_SECTION)
+    : BRepAlgoAPI_BooleanOperation(Sh, MakeShape(Sf), BOPAlgo_Operation::BOPAlgo_SECTION)
 {
   Init(PerformNow);
 }
@@ -105,7 +105,7 @@ BRepAlgoAPI_Section::BRepAlgoAPI_Section(const TopoDS_Shape&              Sh,
 BRepAlgoAPI_Section::BRepAlgoAPI_Section(const occ::handle<Geom_Surface>& Sf,
                                          const TopoDS_Shape&              Sh,
                                          const bool                       PerformNow)
-    : BRepAlgoAPI_BooleanOperation(MakeShape(Sf), Sh, BOPAlgo_SECTION)
+    : BRepAlgoAPI_BooleanOperation(MakeShape(Sf), Sh, BOPAlgo_Operation::BOPAlgo_SECTION)
 {
   Init(PerformNow);
 }
@@ -115,7 +115,7 @@ BRepAlgoAPI_Section::BRepAlgoAPI_Section(const occ::handle<Geom_Surface>& Sf,
 BRepAlgoAPI_Section::BRepAlgoAPI_Section(const occ::handle<Geom_Surface>& Sf1,
                                          const occ::handle<Geom_Surface>& Sf2,
                                          const bool                       PerformNow)
-    : BRepAlgoAPI_BooleanOperation(MakeShape(Sf1), MakeShape(Sf2), BOPAlgo_SECTION)
+    : BRepAlgoAPI_BooleanOperation(MakeShape(Sf1), MakeShape(Sf2), BOPAlgo_Operation::BOPAlgo_SECTION)
 {
   Init(PerformNow);
 }
@@ -128,7 +128,7 @@ BRepAlgoAPI_Section::~BRepAlgoAPI_Section() = default;
 
 void BRepAlgoAPI_Section::Init(const bool bFlag)
 {
-  myOperation      = BOPAlgo_SECTION;
+  myOperation      = BOPAlgo_Operation::BOPAlgo_SECTION;
   myApprox         = false;
   myComputePCurve1 = false;
   myComputePCurve2 = false;

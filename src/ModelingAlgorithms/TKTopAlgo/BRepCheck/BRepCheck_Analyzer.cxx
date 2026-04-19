@@ -80,7 +80,7 @@ public:
             occ::handle<BRepCheck_Edge> aResEdge = occ::down_cast<BRepCheck_Edge>(aResult);
             const BRepCheck_Status      ste =
               aResEdge->CheckPolygonOnTriangulation(TopoDS::Edge(aShape));
-            if (ste != BRepCheck_NoError)
+            if (ste != BRepCheck_Status::BRepCheck_NoError)
             {
               aResEdge->SetStatus(ste);
             }
@@ -182,9 +182,9 @@ public:
                     for (; itl.More(); itl.Next())
                     {
                       const BRepCheck_Status ste = itl.Value();
-                      if (ste == BRepCheck_NoCurveOnSurface
-                          || ste == BRepCheck_InvalidCurveOnSurface || ste == BRepCheck_InvalidRange
-                          || ste == BRepCheck_InvalidCurveOnClosedSurface)
+                      if (ste == BRepCheck_Status::BRepCheck_NoCurveOnSurface
+                          || ste == BRepCheck_Status::BRepCheck_InvalidCurveOnSurface || ste == BRepCheck_Status::BRepCheck_InvalidRange
+                          || ste == BRepCheck_Status::BRepCheck_InvalidCurveOnClosedSurface)
                       {
                         performwire = false;
                         break;
@@ -233,7 +233,7 @@ public:
                   for (; itl.More(); itl.Next())
                   {
                     BRepCheck_Status ste = itl.Value();
-                    if (ste != BRepCheck_NoError)
+                    if (ste != BRepCheck_Status::BRepCheck_NoError)
                     {
                       orientofwires = false;
                       break;
@@ -263,7 +263,7 @@ public:
             const occ::handle<BRepCheck_Face> aFaceRes = occ::down_cast<BRepCheck_Face>(aResult);
             if (isInvalidTolerance)
             {
-              aFaceRes->SetStatus(BRepCheck_InvalidToleranceValue);
+              aFaceRes->SetStatus(BRepCheck_Status::BRepCheck_InvalidToleranceValue);
             }
             else if (performwire)
             {
@@ -461,7 +461,7 @@ bool BRepCheck_Analyzer::IsValid(const TopoDS_Shape& S) const
   {
     NCollection_List<BRepCheck_Status>::Iterator itl;
     itl.Initialize(myMap.FindFromKey(S)->Status());
-    if (itl.Value() != BRepCheck_NoError)
+    if (itl.Value() != BRepCheck_Status::BRepCheck_NoError)
     { // a voir
       return false;
     }
@@ -527,7 +527,7 @@ bool BRepCheck_Analyzer::ValidSub(const TopoDS_Shape& S, const TopAbs_ShapeEnum 
 
     for (itl.Initialize(RV->StatusOnShape()); itl.More(); itl.Next())
     {
-      if (itl.Value() != BRepCheck_NoError)
+      if (itl.Value() != BRepCheck_Status::BRepCheck_NoError)
       {
         return false;
       }

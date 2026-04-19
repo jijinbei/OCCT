@@ -502,7 +502,7 @@ static void ChFi3d_Recale(const BRepAdaptor_Surface& Bs,
 
 //=======================================================================
 // function : ChFi3d_SelectStripe
-// purpose  : find stripe with ChFiDS_OnSame state if <thePrepareOnSame> is True
+// purpose  : find stripe with ChFiDS_State::ChFiDS_OnSame state if <thePrepareOnSame> is True
 //=======================================================================
 
 bool ChFi3d_SelectStripe(NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator& It,
@@ -522,7 +522,7 @@ bool ChFi3d_SelectStripe(NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator&
       stat = stripe->Spine()->FirstStatus();
     else
       stat = stripe->Spine()->LastStatus();
-    if (stat == ChFiDS_OnSame)
+    if (stat == ChFiDS_State::ChFiDS_OnSame)
       return true;
   }
 
@@ -605,7 +605,7 @@ void ChFi3d_Builder::PerformOneCorner(const int Index, const bool thePrepareOnSa
     stat = spine->FirstStatus();
   else
     stat = spine->LastStatus();
-  bool        onsame = (stat == ChFiDS_OnSame);
+  bool        onsame = (stat == ChFiDS_State::ChFiDS_OnSame);
   TopoDS_Face Fv, Fad, Fop;
   TopoDS_Edge Arcpiv, Arcprol, Arcspine;
   if (isfirst)
@@ -664,7 +664,7 @@ void ChFi3d_Builder::PerformOneCorner(const int Index, const bool thePrepareOnSa
         E[0] = CV1.Arc();
         E[1] = CV2.Arc();
         E[2] = Arcspine;
-        if (ChFi3d_EdgeState(E, myEFMap) != ChFiDS_OnDiff)
+        if (ChFi3d_EdgeState(E, myEFMap) != ChFiDS_State::ChFiDS_OnDiff)
           IFadArc = 2;
       }
       else if (sur2)
@@ -1650,14 +1650,14 @@ static bool IsShrink(const Geom2dAdaptor_Curve& PC,
 {
   switch (PC.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       gp_Pnt2d P1 = PC.Value(Pf);
       gp_Pnt2d P2 = PC.Value(Pl);
       return std::abs(P1.Coord(isU ? 1 : 2) - Param) <= tol
              && std::abs(P2.Coord(isU ? 1 : 2) - Param) <= tol;
     }
-    case GeomAbs_BezierCurve:
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       math_FunctionSample aSample(Pf, Pl, 10);
       int                 i;
       for (i = 1; i <= aSample.NbPoints(); i++)
@@ -1831,7 +1831,7 @@ void ChFi3d_Builder::PerformIntersectionAtEnd(const int Index)
       return;
     }
   }
-  if (!onecorner && (reg1 || reg2) && !couture && state != ChFiDS_OnSame)
+  if (!onecorner && (reg1 || reg2) && !couture && state != ChFiDS_State::ChFiDS_OnSame)
   {
     PerformMoreThreeCorner(Index, 1);
     return;
@@ -2113,13 +2113,13 @@ void ChFi3d_Builder::PerformIntersectionAtEnd(const int Index)
       }
 
       // detect and process OnSame situatuation
-      if (state == ChFiDS_OnSame)
+      if (state == ChFiDS_State::ChFiDS_OnSame)
       {
         TopoDS_Edge threeE[3];
         ChFi3d_cherche_element(Vtx, EdgeSpine, F1, threeE[0], V2);
         ChFi3d_cherche_element(Vtx, EdgeSpine, F2, threeE[1], V2);
         threeE[2] = EdgeSpine;
-        if (ChFi3d_EdgeState(threeE, myEFMap) == ChFiDS_OnSame)
+        if (ChFi3d_EdgeState(threeE, myEFMap) == ChFiDS_State::ChFiDS_OnSame)
         {
           isOnSame1 = true;
           nb        = 1;
@@ -2440,7 +2440,7 @@ void ChFi3d_Builder::PerformIntersectionAtEnd(const int Index)
             {
               GeomAdaptor_Surface Asurf;
               Asurf.Load(Sfacemoins1);
-              Extrema_ExtPS ext(CV1.Point(), Asurf, tol, tol, Extrema_ExtFlag_MIN);
+              Extrema_ExtPS ext(CV1.Point(), Asurf, tol, tol, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
               double        uc1, vc1;
               if (ext.IsDone())
               {
@@ -2664,7 +2664,7 @@ void ChFi3d_Builder::PerformIntersectionAtEnd(const int Index)
           BRE.MakeFace(faceprol[nb - 1], Sfacemoins1, F.Location(), tol);
           GeomAdaptor_Surface Asurf;
           Asurf.Load(Sfacemoins1);
-          Extrema_ExtPS ext(CV2.Point(), Asurf, tol, tol, Extrema_ExtFlag_MIN);
+          Extrema_ExtPS ext(CV2.Point(), Asurf, tol, tol, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
           double        uc2, vc2;
           if (ext.IsDone())
           {
@@ -3770,9 +3770,9 @@ void ChFi3d_Builder::PerformMoreSurfdata(const int Index)
     DStr.ChangeShapeInterferences(indSol);
   occ::handle<TopOpeBRepDS_SolidSurfaceInterference> SSI =
     new TopOpeBRepDS_SolidSurfaceInterference(TopOpeBRepDS_Transition(anOrSD1),
-                                              TopOpeBRepDS_SOLID,
+                                              TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID,
                                               indSol,
-                                              TopOpeBRepDS_SURFACE,
+                                              TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE,
                                               indSurf1);
   SolidInterfs.Append(SSI);
 

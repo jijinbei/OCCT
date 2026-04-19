@@ -889,7 +889,7 @@ void BRepFill::SearchOrigin(TopoDS_Wire& W, const gp_Pnt& P, const gp_Vec& Dir, 
         isol = iss;
       }
     TopoDS_Shape supp = DSS.SupportOnShape2(isol);
-    if (DSS.SupportTypeShape2(isol) == BRepExtrema_IsVertex)
+    if (DSS.SupportTypeShape2(isol) == BRepExtrema_SupportType::BRepExtrema_IsVertex)
     {
       V = TopoDS::Vertex(supp);
     }

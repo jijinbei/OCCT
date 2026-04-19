@@ -112,7 +112,7 @@ void BOPAlgo_MakeConnected::MakeConnected()
     // Glue the shapes
     BOPAlgo_Builder aGluer;
     aGluer.SetArguments(myArguments);
-    aGluer.SetGlue(BOPAlgo_GlueShift);
+    aGluer.SetGlue(BOPAlgo_GlueEnum::BOPAlgo_GlueShift);
     aGluer.SetRunParallel(myRunParallel);
     aGluer.SetNonDestructive(true);
     aGluer.Perform();

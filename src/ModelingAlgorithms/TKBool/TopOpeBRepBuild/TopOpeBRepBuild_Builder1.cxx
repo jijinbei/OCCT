@@ -1143,7 +1143,7 @@ void TopOpeBRepBuild_Builder1::PerformONParts(
     TopOpeBRepDS_Kind GT, ST;
     int               GI, SI;
     FDS_data(SSI, GT, GI, ST, SI);
-    if (GT != TopOpeBRepDS_EDGE || ST != TopOpeBRepDS_FACE)
+    if (GT != TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE || ST != TopOpeBRepDS_Kind::TopOpeBRepDS_FACE)
       continue;
 
     const TopoDS_Edge& EG = TopoDS::Edge(myDataStructure->DS().Shape(GI, false));

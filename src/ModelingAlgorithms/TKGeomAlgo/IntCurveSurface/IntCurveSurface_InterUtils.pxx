@@ -87,15 +87,15 @@ inline void ProjectIntersectAndEstLim(const gp_Lin&        theLine,
 
   switch (theBasCurvProj.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       anIntersectSym.Perform(theBasCurvProj.Line(), aConSym);
       anIntersect.Perform(theBasCurvProj.Line(), aCon);
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       anIntersectSym.Perform(theBasCurvProj.Hyperbola(), aConSym);
       anIntersect.Perform(theBasCurvProj.Hyperbola(), aCon);
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       anIntersectSym.Perform(theBasCurvProj.Parabola(), aConSym);
       anIntersect.Perform(theBasCurvProj.Parabola(), aCon);
       break;
@@ -250,7 +250,7 @@ void EstLimForInfExtr(const gp_Lin&      Line,
 
     GeomAbs_CurveType aCurvTyp = aBasCurv->GetType();
 
-    if (aCurvTyp == GeomAbs_Line)
+    if (aCurvTyp == GeomAbs_CurveType::GeomAbs_Line)
     {
       Projector.Project(aBasCurv->Line());
 
@@ -273,12 +273,12 @@ void EstLimForInfExtr(const gp_Lin&      Line,
       const IntAna2d_IntPoint& anIntPnt = anInter.Point(1);
       umin = umax = anIntPnt.ParamOnSecond();
     }
-    else if (aCurvTyp == GeomAbs_Parabola || aCurvTyp == GeomAbs_Hyperbola)
+    else if (aCurvTyp == GeomAbs_CurveType::GeomAbs_Parabola || aCurvTyp == GeomAbs_CurveType::GeomAbs_Hyperbola)
     {
       IntAna2d_Conic           aCon(Line2d);
       IntAna2d_AnaIntersection anInter;
 
-      if (aCurvTyp == GeomAbs_Parabola)
+      if (aCurvTyp == GeomAbs_CurveType::GeomAbs_Parabola)
       {
         Projector.Project(aBasCurv->Parabola());
         if (!Projector.IsDone())
@@ -398,13 +398,13 @@ void EstLimForInfRevl(const gp_Lin&      Line,
   ProjLib_Plane aBasCurvProj(aPln);
   switch (aBasisCurve->GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       aBasCurvProj.Project(aBasisCurve->Line());
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       aBasCurvProj.Project(aBasisCurve->Hyperbola());
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       aBasCurvProj.Project(aBasisCurve->Parabola());
       break;
     default:
@@ -480,7 +480,7 @@ void EstLimForInfOffs(const gp_Lin&      Line,
   GeomAbs_SurfaceType aTypeOfBasSurf = aBasSurf->GetType();
 
   //  case for plane, cylinder and cone - make equivalent surface;
-  if (aTypeOfBasSurf == GeomAbs_Plane)
+  if (aTypeOfBasSurf == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     gp_Pln aPln = aBasSurf->Plane();
     gp_Vec aT   = aPln.Position().XDirection() ^ aPln.Position().YDirection();
@@ -504,7 +504,7 @@ void EstLimForInfOffs(const gp_Lin&      Line,
     V1new = std::max(V1new, v - 10.);
     V2new = std::min(V2new, v + 10.);
   }
-  else if (aTypeOfBasSurf == GeomAbs_Cylinder)
+  else if (aTypeOfBasSurf == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     gp_Cylinder aCyl = aBasSurf->Cylinder();
 
@@ -556,7 +556,7 @@ void EstLimForInfOffs(const gp_Lin&      Line,
     V1new = std::max(V1new, vmin - std::abs(vmin) - 10.);
     V2new = std::min(V2new, vmax + std::abs(vmax) + 10.);
   }
-  else if (aTypeOfBasSurf == GeomAbs_Cone)
+  else if (aTypeOfBasSurf == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     gp_Cone aCon  = aBasSurf->Cone();
     double  anAng = aCon.SemiAngle();
@@ -600,7 +600,7 @@ void EstLimForInfOffs(const gp_Lin&      Line,
     V1new = std::max(V1new, vmin - std::abs(vmin) - 10.);
     V2new = std::min(V2new, vmax + std::abs(vmax) + 10.);
   }
-  else if (aTypeOfBasSurf == GeomAbs_SurfaceOfExtrusion)
+  else if (aTypeOfBasSurf == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
   {
     double anU1 = U1new, anU2 = U2new;
 
@@ -624,12 +624,12 @@ void EstLimForInfOffs(const gp_Lin&      Line,
     if (U1inf || U2inf)
     {
       GeomAbs_CurveType aBasCurvType = aBasSurf->BasisCurve()->GetType();
-      if (aBasCurvType == GeomAbs_Line)
+      if (aBasCurvType == GeomAbs_CurveType::GeomAbs_Line)
       {
         U1new = std::max(anU1, -1.e10);
         U2new = std::min(anU2, 1.e10);
       }
-      else if (aBasCurvType == GeomAbs_Parabola)
+      else if (aBasCurvType == GeomAbs_CurveType::GeomAbs_Parabola)
       {
         gp_Parab aPrb = aBasSurf->BasisCurve()->Parabola();
         double   aF   = aPrb.Focal();
@@ -637,7 +637,7 @@ void EstLimForInfOffs(const gp_Lin&      Line,
         U1new         = std::max(anU1, -dU);
         U2new         = std::min(anU2, dU);
       }
-      else if (aBasCurvType == GeomAbs_Hyperbola)
+      else if (aBasCurvType == GeomAbs_CurveType::GeomAbs_Hyperbola)
       {
         U1new = std::max(anU1, -30.);
         U2new = std::min(anU2, 30.);
@@ -649,15 +649,15 @@ void EstLimForInfOffs(const gp_Lin&      Line,
       }
     }
   }
-  else if (aTypeOfBasSurf == GeomAbs_SurfaceOfRevolution)
+  else if (aTypeOfBasSurf == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
   {
     GeomAbs_CurveType aBasCurvType = aBasSurf->BasisCurve()->GetType();
-    if (aBasCurvType == GeomAbs_Line)
+    if (aBasCurvType == GeomAbs_CurveType::GeomAbs_Line)
     {
       V1new = std::max(V1new, -1.e10);
       V2new = std::min(V2new, 1.e10);
     }
-    else if (aBasCurvType == GeomAbs_Parabola)
+    else if (aBasCurvType == GeomAbs_CurveType::GeomAbs_Parabola)
     {
       gp_Parab aPrb = aBasSurf->BasisCurve()->Parabola();
       double   aF   = aPrb.Focal();
@@ -665,7 +665,7 @@ void EstLimForInfOffs(const gp_Lin&      Line,
       V1new         = std::max(V1new, -dV);
       V2new         = std::min(V2new, dV);
     }
-    else if (aBasCurvType == GeomAbs_Hyperbola)
+    else if (aBasCurvType == GeomAbs_CurveType::GeomAbs_Hyperbola)
     {
       V1new = std::max(V1new, -30.);
       V2new = std::min(V2new, 30.);
@@ -708,19 +708,19 @@ void SectionPointToParameters(const Intf_SectionPoint& Sp,
   Sp.InfoSecond(typ, Adr1, Adr2, Param);
   switch (typ)
   {
-    case Intf_VERTEX: //-- Adr1 is the vertex number
+    case Intf_PIType::Intf_VERTEX: //-- Adr1 is the vertex number
     {
       Polyhedron.Parameters(Adr1, u1, v1);
       break;
     }
-    case Intf_EDGE: {
+    case Intf_PIType::Intf_EDGE: {
       Polyhedron.Parameters(Adr1, u1, v1);
       Polyhedron.Parameters(Adr2, u, v);
       u1 += Param * (u - u1);
       v1 += Param * (v - v1);
       break;
     }
-    case Intf_FACE: {
+    case Intf_PIType::Intf_FACE: {
       double ua, va, ub, vb, uc, vc, ca, cb, cc, cabc;
       Polyhedron.Triangle(Adr1, Pt1, Pt2, Pt3);
       gp_Pnt PA(Polyhedron.Point(Pt1));
@@ -826,21 +826,21 @@ void ComputeTransitions(const CurveType&                   curve,
     if (-CosDir > THE_TOLERANCE_ANGULAIRE)
     {
       //--  --Curve--->    <----Surface----
-      TransOnCurve = IntCurveSurface_In;
+      TransOnCurve = IntCurveSurface_TransitionOnCurve::IntCurveSurface_In;
     }
     else if (CosDir > THE_TOLERANCE_ANGULAIRE)
     {
       //--  --Curve--->  ----Surface-->
-      TransOnCurve = IntCurveSurface_Out;
+      TransOnCurve = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out;
     }
     else
     {
-      TransOnCurve = IntCurveSurface_Tangent;
+      TransOnCurve = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent;
     }
   }
   else
   {
-    TransOnCurve = IntCurveSurface_Tangent;
+    TransOnCurve = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent;
   }
 }
 
@@ -853,19 +853,19 @@ void ComputeParamsOnQuadric(const SurfaceType& surface, const gp_Pnt& P, double&
   GeomAbs_SurfaceType SurfaceType_ = SurfaceTool::GetType(surface);
   switch (SurfaceType_)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       ElSLib::Parameters(SurfaceTool::Plane(surface), P, u, v);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       ElSLib::Parameters(SurfaceTool::Cylinder(surface), P, u, v);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       ElSLib::Parameters(SurfaceTool::Cone(surface), P, u, v);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       ElSLib::Parameters(SurfaceTool::Sphere(surface), P, u, v);
       break;
     }
@@ -1054,7 +1054,7 @@ bool ComputeAppendPoint(const CurveType&                   theCurve,
 
   GeomAbs_CurveType aCType = CurveTool::GetType(theCurve);
 
-  if (CurveTool::IsPeriodic(theCurve) || aCType == GeomAbs_Circle || aCType == GeomAbs_Ellipse)
+  if (CurveTool::IsPeriodic(theCurve) || aCType == GeomAbs_CurveType::GeomAbs_Circle || aCType == GeomAbs_CurveType::GeomAbs_Ellipse)
   {
     w = ElCLib::InPeriod(w, W0, W0 + CurveTool::Period(theCurve));
   }
@@ -1063,8 +1063,8 @@ bool ComputeAppendPoint(const CurveType&                   theCurve,
     return false;
 
   GeomAbs_SurfaceType aSType = SurfaceTool::GetType(theSurface);
-  if (SurfaceTool::IsUPeriodic(theSurface) || aSType == GeomAbs_Cylinder || aSType == GeomAbs_Cone
-      || aSType == GeomAbs_Sphere)
+  if (SurfaceTool::IsUPeriodic(theSurface) || aSType == GeomAbs_SurfaceType::GeomAbs_Cylinder || aSType == GeomAbs_SurfaceType::GeomAbs_Cone
+      || aSType == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     u = ElCLib::InPeriod(u, U0, U0 + SurfaceTool::UPeriod(theSurface));
   }

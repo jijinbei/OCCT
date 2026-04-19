@@ -18,7 +18,7 @@
 #define _ChFiDS_ErrorStatus_HeaderFile
 
 //! --- Purpose status concerning the cause of the error
-enum ChFiDS_ErrorStatus
+enum class ChFiDS_ErrorStatus
 {
   ChFiDS_Ok,
   ChFiDS_Error,

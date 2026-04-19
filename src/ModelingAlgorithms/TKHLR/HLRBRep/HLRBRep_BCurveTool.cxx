@@ -28,11 +28,11 @@ int HLRBRep_BCurveTool::NbSamples(const BRepAdaptor_Curve& C, const double U0, c
   static double     nbsOther = 10.0;
   double            nbs      = nbsOther;
 
-  if (typC == GeomAbs_Line)
+  if (typC == GeomAbs_CurveType::GeomAbs_Line)
     nbs = 2;
-  else if (typC == GeomAbs_BezierCurve)
+  else if (typC == GeomAbs_CurveType::GeomAbs_BezierCurve)
     nbs = 3 + C.NbPoles();
-  else if (typC == GeomAbs_BSplineCurve)
+  else if (typC == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     nbs = C.NbKnots();
     nbs *= C.Degree();
@@ -50,14 +50,14 @@ int HLRBRep_BCurveTool::NbSamples(const BRepAdaptor_Curve& C, const double U0, c
 
 void HLRBRep_BCurveTool::Poles(const BRepAdaptor_Curve& C, NCollection_Array1<gp_Pnt>& T)
 {
-  if (C.GetType() == GeomAbs_BezierCurve)
+  if (C.GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     occ::handle<Geom_BezierCurve>     aBez      = C.Bezier();
     const NCollection_Array1<gp_Pnt>& aSrcPoles = aBez->Poles();
     for (int i = T.Lower(); i <= T.Upper(); i++)
       T(i) = aSrcPoles(i);
   }
-  else if (C.GetType() == GeomAbs_BSplineCurve)
+  else if (C.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom_BSplineCurve>    aBSpl     = C.BSpline();
     const NCollection_Array1<gp_Pnt>& aSrcPoles = aBSpl->Poles();
@@ -72,7 +72,7 @@ void HLRBRep_BCurveTool::PolesAndWeights(const BRepAdaptor_Curve&    C,
                                          NCollection_Array1<gp_Pnt>& T,
                                          NCollection_Array1<double>& W)
 {
-  if (C.GetType() == GeomAbs_BezierCurve)
+  if (C.GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     const occ::handle<Geom_BezierCurve> HB          = C.Bezier();
     const NCollection_Array1<gp_Pnt>&   aSrcPoles   = HB->Poles();
@@ -82,7 +82,7 @@ void HLRBRep_BCurveTool::PolesAndWeights(const BRepAdaptor_Curve&    C,
     for (int i = W.Lower(); i <= W.Upper(); i++)
       W(i) = aSrcWeights(i);
   }
-  else if (C.GetType() == GeomAbs_BSplineCurve)
+  else if (C.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     const occ::handle<Geom_BSplineCurve> HB          = C.BSpline();
     const NCollection_Array1<gp_Pnt>&    aSrcPoles   = HB->Poles();

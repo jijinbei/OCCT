@@ -22,7 +22,7 @@ TopOpeBRepDS_SurfaceIterator::TopOpeBRepDS_SurfaceIterator(
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& L)
     : TopOpeBRepDS_InterferenceIterator(L)
 {
-  TopOpeBRepDS_InterferenceIterator::GeometryKind(TopOpeBRepDS_SURFACE);
+  TopOpeBRepDS_InterferenceIterator::GeometryKind(TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE);
 }
 
 //=================================================================================================

@@ -64,19 +64,19 @@ void PerformIntersection(const SurfaceType&            theSurface,
 
   switch (aQuadricType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       aQuadric.SetValue(SurfaceTool::Plane(theSurface));
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       aQuadric.SetValue(SurfaceTool::Cylinder(theSurface));
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       aQuadric.SetValue(SurfaceTool::Cone(theSurface));
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       aQuadric.SetValue(SurfaceTool::Sphere(theSurface));
       break;
     }

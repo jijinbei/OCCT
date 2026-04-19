@@ -27,7 +27,7 @@ GccInt_BPoint::GccInt_BPoint(const gp_Pnt2d& Point)
 
 GccInt_IType GccInt_BPoint::ArcType() const
 {
-  return GccInt_Pnt;
+  return GccInt_IType::GccInt_Pnt;
 }
 
 gp_Pnt2d GccInt_BPoint::Point() const

@@ -43,8 +43,8 @@ TopOpeBRepDS_TKI::TopOpeBRepDS_TKI()
 
 void TopOpeBRepDS_TKI::Reset()
 {
-  int ip = (int)TopOpeBRepDS_POINT;
-  int is = (int)TopOpeBRepDS_SOLID;
+  int ip = (int)TopOpeBRepDS_Kind::TopOpeBRepDS_POINT;
+  int is = (int)TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID;
   if (ip > is)
   {
     throw Standard_ProgramError("TopOpeBRepDS_TKI : enumeration badly ordered");
@@ -53,11 +53,11 @@ void TopOpeBRepDS_TKI::Reset()
   int f   = 1;             // first index of table
   int l   = f + (is - ip); // last index of table
   mydelta = f - ip;
-  // k + mydelta = i in [f,l]; TopOpeBRepDS_POINT,SOLID + mydelta = f,l
+  // k + mydelta = i in [f,l]; TopOpeBRepDS_Kind::TopOpeBRepDS_POINT,SOLID + mydelta = f,l
   if (myT.IsNull())
     myT = new MDShaodmoiloi(f, l);
   Clear();
-  myK = TopOpeBRepDS_UNKNOWN;
+  myK = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
   myG = 0;
 }
 
@@ -207,7 +207,7 @@ void TopOpeBRepDS_TKI::DumpTKIIterator(const TCollection_AsciiString& s1,
 
 void TopOpeBRepDS_TKI::Init()
 {
-  myK = TopOpeBRepDS_UNKNOWN;
+  myK = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
   myG = 0;
   if (myT.IsNull())
     return;
@@ -380,7 +380,7 @@ bool TopOpeBRepDS_TKI::IsValidTI(const int TI) const
 
 bool TopOpeBRepDS_TKI::IsValidK(const TopOpeBRepDS_Kind K) const
 {
-  bool nok = (K < TopOpeBRepDS_POINT || K > TopOpeBRepDS_SOLID);
+  bool nok = (K < TopOpeBRepDS_Kind::TopOpeBRepDS_POINT || K > TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID);
   return !nok;
 }
 

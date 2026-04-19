@@ -35,7 +35,7 @@ public:
   //! Returns a 2D line which is the geometry of this bisecting line.
   Standard_EXPORT gp_Lin2d Line() const override;
 
-  //! Returns GccInt_Lin, which is the type of any GccInt_BLine bisecting line.
+  //! Returns GccInt_IType::GccInt_Lin, which is the type of any GccInt_BLine bisecting line.
   Standard_EXPORT GccInt_IType ArcType() const override;
 
   DEFINE_STANDARD_RTTIEXT(GccInt_BLine, GccInt_Bisec)

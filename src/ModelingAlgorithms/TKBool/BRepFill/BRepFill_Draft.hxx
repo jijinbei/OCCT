@@ -41,7 +41,7 @@ public:
 
   Standard_EXPORT BRepFill_Draft(const TopoDS_Shape& Shape, const gp_Dir& Dir, const double Angle);
 
-  Standard_EXPORT void SetOptions(const BRepFill_TransitionStyle Style    = BRepFill_Right,
+  Standard_EXPORT void SetOptions(const BRepFill_TransitionStyle Style    = BRepFill_TransitionStyle::BRepFill_Right,
                                   const double                   AngleMin = 0.01,
                                   const double                   AngleMax = 3.0);
 

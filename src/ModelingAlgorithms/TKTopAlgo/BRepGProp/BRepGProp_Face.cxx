@@ -43,17 +43,17 @@ int BRepGProp_Face::UIntegrationOrder() const
   switch (mySurface.GetType())
   {
 
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       Nu = 4;
       break;
 
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       Nu =
         (*((occ::handle<Geom_BezierSurface>*)&((mySurface.GeomSurfaceOriginal()))))->UDegree() + 1;
       Nu = std::max(4, Nu);
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       int a =
         (*((occ::handle<Geom_BSplineSurface>*)&((mySurface.GeomSurfaceOriginal()))))->UDegree() + 1;
       int b =
@@ -78,18 +78,18 @@ int BRepGProp_Face::VIntegrationOrder() const
   switch (mySurface.GetType())
   {
 
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       Nv = 4;
       break;
 
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       Nv =
         (*((occ::handle<Geom_BezierSurface>*)&((mySurface.GeomSurfaceOriginal()))))->VDegree() + 1;
       Nv = std::max(4, Nv);
     }
     break;
 
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       int a =
         (*((occ::handle<Geom_BSplineSurface>*)&((mySurface.GeomSurfaceOriginal()))))->VDegree() + 1;
       int b =
@@ -115,26 +115,26 @@ int BRepGProp_Face::IntegrationOrder() const
   switch (myCurve.GetType())
   {
 
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       N = 2;
       break;
 
-    case GeomAbs_Circle:
-    case GeomAbs_Ellipse:
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       N = 9;
       break;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       N = 9;
       break;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       N = (*((occ::handle<Geom2d_BezierCurve>*)&(myCurve.Curve())))->Degree() + 1;
     }
     break;
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       int a = (*((occ::handle<Geom2d_BSplineCurve>*)&(myCurve.Curve())))->Degree() + 1;
       int b = (*((occ::handle<Geom2d_BSplineCurve>*)&(myCurve.Curve())))->NbKnots() - 1;
       N     = a * b;
@@ -229,31 +229,31 @@ int BRepGProp_Face::SIntOrder(const double Eps) const
   int Nv, Nu;
   switch (mySurface.GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       Nu = 1;
       Nv = 1;
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       Nu = 2;
       Nv = 1;
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       Nu = 2;
       Nv = 1;
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       Nu = 2;
       Nv = 2;
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       Nu = 2;
       Nv = 2;
       break;
-    case GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
       Nv = (*(occ::handle<Geom_BezierSurface>*)&mySurface.GeomSurfaceOriginal())->VDegree();
       Nu = (*(occ::handle<Geom_BezierSurface>*)&mySurface.GeomSurfaceOriginal())->UDegree();
       break;
-    case GeomAbs_BSplineSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
       Nv = (*(occ::handle<Geom_BSplineSurface>*)&mySurface.GeomSurfaceOriginal())->VDegree();
       Nu = (*(occ::handle<Geom_BSplineSurface>*)&mySurface.GeomSurfaceOriginal())->UDegree();
       break;
@@ -273,25 +273,25 @@ int BRepGProp_Face::SUIntSubs() const
   int N;
   switch (mySurface.GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       N = 2;
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       N = 4;
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       N = 4;
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       N = 4;
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       N = 4;
       break;
-    case GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
       N = 2;
       break;
-    case GeomAbs_BSplineSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
       N = (*(occ::handle<Geom_BSplineSurface>*)&mySurface.GeomSurfaceOriginal())->NbUKnots();
       break;
     default:
@@ -308,25 +308,25 @@ int BRepGProp_Face::SVIntSubs() const
   int N;
   switch (mySurface.GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       N = 2;
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       N = 2;
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       N = 2;
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       N = 3;
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       N = 4;
       break;
-    case GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
       N = 2;
       break;
-    case GeomAbs_BSplineSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
       N = (*(occ::handle<Geom_BSplineSurface>*)&mySurface.GeomSurfaceOriginal())->NbVKnots();
       break;
     default:
@@ -342,20 +342,20 @@ void BRepGProp_Face::UKnots(NCollection_Array1<double>& Knots) const
 {
   switch (mySurface.GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       Knots(1) = mySurface.FirstUParameter();
       Knots(2) = mySurface.LastUParameter();
       break;
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       Knots(1) = 0.0;
       Knots(2) = M_PI * 2.0 / 3.0;
       Knots(3) = M_PI * 4.0 / 3.0;
       Knots(4) = M_PI * 6.0 / 3.0;
       break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       const NCollection_Array1<double>& aSrcKnots =
         (*((occ::handle<Geom_BSplineSurface>*)&((mySurface.GeomSurfaceOriginal()))))->UKnots();
       for (int i = Knots.Lower(); i <= Knots.Upper(); i++)
@@ -375,24 +375,24 @@ void BRepGProp_Face::VKnots(NCollection_Array1<double>& Knots) const
 {
   switch (mySurface.GetType())
   {
-    case GeomAbs_Plane:
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       Knots(1) = mySurface.FirstUParameter();
       Knots(2) = mySurface.LastUParameter();
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       Knots(1) = -M_PI / 2.0;
       Knots(2) = 0.0;
       Knots(3) = +M_PI / 2.0;
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       Knots(1) = 0.0;
       Knots(2) = M_PI * 2.0 / 3.0;
       Knots(3) = M_PI * 4.0 / 3.0;
       Knots(4) = M_PI * 6.0 / 3.0;
       break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       const NCollection_Array1<double>& aSrcKnots =
         (*((occ::handle<Geom_BSplineSurface>*)&((mySurface.GeomSurfaceOriginal()))))->VKnots();
       for (int i = Knots.Lower(); i <= Knots.Upper(); i++)
@@ -428,25 +428,25 @@ int BRepGProp_Face::LIntOrder(const double Eps) const
   double NL, NS = std::max(SIntOrder(1.) * anRInt / aLSubs, 1);
   switch (myCurve.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       NL = 1;
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       NL = 2 * 3;
       break; // correction for the spans of converted curve
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       NL = 2 * 3;
       break; //
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       NL = 2 * 3;
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       NL = 3 * 3;
       break;
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       NL = (*((occ::handle<Geom2d_BezierCurve>*)&(myCurve.Curve())))->Degree();
       break;
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       NL = (*((occ::handle<Geom2d_BSplineCurve>*)&(myCurve.Curve())))->Degree();
       break;
     default:
@@ -468,18 +468,18 @@ int BRepGProp_Face::LIntSubs() const
   int N;
   switch (myCurve.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       N = 2;
       break;
-    case GeomAbs_Circle:
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       N = 4;
       break;
-    case GeomAbs_Parabola:
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       N = 2;
       break;
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       N = (*((occ::handle<Geom2d_BSplineCurve>*)&(myCurve.Curve())))->NbKnots();
       break;
     default:
@@ -495,23 +495,23 @@ void BRepGProp_Face::LKnots(NCollection_Array1<double>& Knots) const
 {
   switch (myCurve.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       Knots(1) = myCurve.FirstParameter();
       Knots(2) = myCurve.LastParameter();
       break;
-    case GeomAbs_Circle:
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       Knots(1) = 0.0;
       Knots(2) = M_PI * 2.0 / 3.0;
       Knots(3) = M_PI * 4.0 / 3.0;
       Knots(4) = M_PI * 6.0 / 3.0;
       break;
-    case GeomAbs_Parabola:
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       Knots(1) = myCurve.FirstParameter();
       Knots(2) = myCurve.LastParameter();
       break;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       const NCollection_Array1<double>& aSrcKnots =
         (*((occ::handle<Geom2d_BSplineCurve>*)&(myCurve.Curve())))->Knots();
       for (int i = Knots.Lower(); i <= Knots.Upper(); i++)
@@ -539,7 +539,7 @@ void BRepGProp_Face::Load(const bool IsFirstParam, const GeomAbs_IsoType theIsoT
 
   Bounds(aU1, aU2, aV1, aV2);
 
-  if (theIsoType == GeomAbs_IsoU)
+  if (theIsoType == GeomAbs_IsoType::GeomAbs_IsoU)
   {
     aLen = aV2 - aV1;
 
@@ -554,7 +554,7 @@ void BRepGProp_Face::Load(const bool IsFirstParam, const GeomAbs_IsoType theIsoT
       aDir.SetCoord(0., 1.);
     }
   }
-  else if (theIsoType == GeomAbs_IsoV)
+  else if (theIsoType == GeomAbs_IsoType::GeomAbs_IsoV)
   {
     aLen = aU2 - aU1;
 
@@ -623,7 +623,7 @@ static void GetCurveKnots(const double                              theMin,
                           const Geom2dAdaptor_Curve&                theCurve,
                           occ::handle<NCollection_HArray1<double>>& theKnots)
 {
-  bool isSBSpline = theCurve.GetType() == GeomAbs_BSplineCurve;
+  bool isSBSpline = theCurve.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve;
 
   if (isSBSpline)
   {
@@ -648,18 +648,18 @@ occ::handle<NCollection_HArray1<double>> BRepGProp_Face::GetUKnots(const double 
                                                                    const double theUMax) const
 {
   occ::handle<NCollection_HArray1<double>> theUKnots;
-  bool isSBSpline = mySurface.GetType() == GeomAbs_BSplineSurface;
+  bool isSBSpline = mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface;
   bool isCBSpline = false;
 
   if (!isSBSpline)
   {
-    if (mySurface.GetType() == GeomAbs_SurfaceOfExtrusion)
+    if (mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
     {
       GeomAdaptor_Curve         aCurve;
       occ::handle<Geom_Surface> aSurf = mySurface.GeomSurfaceOriginal();
 
       aCurve.Load(occ::down_cast<Geom_SurfaceOfLinearExtrusion>(aSurf)->BasisCurve());
-      isCBSpline = aCurve.GetType() == GeomAbs_BSplineCurve;
+      isCBSpline = aCurve.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve;
     }
   }
 
@@ -712,7 +712,7 @@ occ::handle<NCollection_HArray1<double>> BRepGProp_Face::GetTKnots(const double 
                                                                    const double theTMax) const
 {
   occ::handle<NCollection_HArray1<double>> theTKnots;
-  bool isBSpline = mySurface.GetType() == GeomAbs_BSplineSurface;
+  bool isBSpline = mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface;
 
   if (myIsUseSpan && isBSpline)
   {

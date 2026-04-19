@@ -746,7 +746,7 @@ bool PrsDim::GetPlaneFromFace(const TopoDS_Face&         aFace,
   bool                           isOffset = false;
   Offset                                  = 0.0;
 
-  if (surf1.GetType() == GeomAbs_OffsetSurface)
+  if (surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
   {
     // Extracting Basis Surface
     surf2    = surf1.BasisSurface();
@@ -757,17 +757,17 @@ bool PrsDim::GetPlaneFromFace(const TopoDS_Face&         aFace,
 
   aSurf = surf1.GeomSurfaceTransformed();
 
-  if (surf2->GetType() == GeomAbs_Plane)
+  if (surf2->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     aPlane    = surf2->Plane();
     aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_Plane;
     Result    = true;
   }
-  else if (surf2->GetType() == GeomAbs_SurfaceOfExtrusion)
+  else if (surf2->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
   {
     occ::handle<Adaptor3d_Curve> BasisCurve   = surf2->BasisCurve();
     gp_Dir                       ExtrusionDir = surf2->Direction();
-    if (BasisCurve->GetType() == GeomAbs_Line)
+    if (BasisCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       gp_Lin BasisLine = BasisCurve->Line();
       gp_Dir LineDir   = BasisLine.Direction();

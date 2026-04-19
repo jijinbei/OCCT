@@ -186,13 +186,13 @@ void TopOpeBRep_EdgesIntersector::ForceTolerances(const double Tol1, const doubl
 static bool TransitionEqualAndExtremity(const IntRes2d_Transition& T1,
                                         const IntRes2d_Transition& T2)
 {
-  if (T1.PositionOnCurve() == IntRes2d_Head || T1.PositionOnCurve() == IntRes2d_End)
+  if (T1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Head || T1.PositionOnCurve() == IntRes2d_Position::IntRes2d_End)
   {
     if (T1.PositionOnCurve() == T2.PositionOnCurve())
     {
       if (T1.TransitionType() == T2.TransitionType())
       {
-        if (T1.TransitionType() == IntRes2d_Touch)
+        if (T1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch)
         {
           if (T1.IsTangent() == T2.IsTangent())
           {
@@ -227,7 +227,7 @@ static bool IsTangentSegment(const IntRes2d_IntersectionPoint& P1,
   const IntRes2d_Transition& aTrans1 = P1.TransitionOfFirst();
   const IntRes2d_Transition& aTrans2 = P2.TransitionOfFirst();
 
-  if (aTrans1.TransitionType() == IntRes2d_Touch || aTrans2.TransitionType() == IntRes2d_Touch)
+  if (aTrans1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch || aTrans2.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch)
   {
     double aSqrDistPP = aP2d1.SquareDistance(aP2d2);
 
@@ -276,13 +276,13 @@ bool EdgesIntersector_checkT1D(const TopoDS_Edge&       E1,
   bool first = (ovine == FIRST);
   bool last  = (ovine == LAST);
 
-  TopOpeBRepDS_Config C   = TopOpeBRepDS_SAMEORIENTED;
+  TopOpeBRepDS_Config C   = TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED;
   bool                sso = TopOpeBRepTool_ShapeTool::ShapesSameOriented(E1, E2);
   if (!sso)
-    C = TopOpeBRepDS_DIFFORIENTED;
+    C = TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
 
-  bool               SO = (C == TopOpeBRepDS_SAMEORIENTED);
-  bool               DO = (C == TopOpeBRepDS_DIFFORIENTED);
+  bool               SO = (C == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
+  bool               DO = (C == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
   TopAbs_Orientation o1 = E1.Orientation();
   if (o1 == TopAbs_REVERSED)
   {
@@ -324,7 +324,7 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
   BRepAdaptor_Surface aSurface1(myFace1), aSurface2(myFace2);
   GeomAbs_SurfaceType aSurfaceType1 = aSurface1.GetType(), aSurfaceType2 = aSurface2.GetType();
 
-  if (aSurfaceType1 == GeomAbs_Sphere && aSurfaceType2 == GeomAbs_Sphere)
+  if (aSurfaceType1 == GeomAbs_SurfaceType::GeomAbs_Sphere && aSurfaceType2 == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     PC1 = FC2D_MakeCurveOnSurface(myEdge1, myFace1, first, last, tolpc, true);
   }
@@ -361,7 +361,7 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
   if (S1 == S2 && L1 == L2)
     memesupport = true;
 
-  if (mySurfaceType1 == GeomAbs_Plane || memesfaces || memesupport)
+  if (mySurfaceType1 == GeomAbs_SurfaceType::GeomAbs_Plane || memesfaces || memesupport)
   {
     occ::handle<Geom2d_Curve> PC2 = FC2D_CurveOnSurface(myEdge2, myFace1, first, last, tolpc);
     myCurve2.Load(PC2);
@@ -440,7 +440,7 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
       double tolreached2d;
 
       // modified by NIZNHY-PKV Fri Nov  5 12:29:13 1999 from
-      if (aSurfaceType1 == GeomAbs_Sphere && aSurfaceType2 == GeomAbs_Sphere)
+      if (aSurfaceType1 == GeomAbs_SurfaceType::GeomAbs_Sphere && aSurfaceType2 == GeomAbs_SurfaceType::GeomAbs_Sphere)
       {
         PC2on1 = FC2D_MakeCurveOnSurface(myEdge2, myFace1, first, last, tolpc, true);
       }
@@ -557,7 +557,7 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
           const IntRes2d_Transition& aTrans = P2.TransitionOfFirst();
 
           fin = false;
-          if (aTrans.TransitionType() == IntRes2d_Touch)
+          if (aTrans.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch)
             mylpnt.Remove(p);
           else
             mylpnt.Remove(p + 1);
@@ -683,10 +683,10 @@ bool TopOpeBRep_EdgesIntersector::ComputeSameDomain()
   if (!tt)
     return SetSameDomain(false);
 
-  if (t1 == GeomAbs_Line)
+  if (t1 == GeomAbs_CurveType::GeomAbs_Line)
     return SetSameDomain(true);
 
-  if (t1 != GeomAbs_Circle)
+  if (t1 != GeomAbs_CurveType::GeomAbs_Circle)
   {
 #ifdef OCCT_DEBUG
     if (TopOpeBRepTool_GettraceNYI())
@@ -792,8 +792,8 @@ bool TopOpeBRep_EdgesIntersector::ReduceSegment(TopOpeBRep_Point2d& psa,
   const TopOpeBRepDS_Transition& Tpsb1  = psb.Transition(1);
   const TopOpeBRepDS_Transition& Tpsb2  = psb.Transition(2);
 
-  bool conda = (pospsa && (stspsa == TopOpeBRep_P2DSGF));
-  bool condb = (pospsb && (stspsb == TopOpeBRep_P2DSGL));
+  bool conda = (pospsa && (stspsa == TopOpeBRep_P2Dstatus::TopOpeBRep_P2DSGF));
+  bool condb = (pospsb && (stspsb == TopOpeBRep_P2Dstatus::TopOpeBRep_P2DSGL));
   bool cond  = (conda && condb);
 
   if (cond)
@@ -1095,7 +1095,7 @@ void TopOpeBRep_EdgesIntersector::Dump(const TCollection_AsciiString& str,
   {
     const TopOpeBRep_Point2d P2d = Point();
     P2d.Dump(E1index, E2index);
-    if (P2d.Status() == TopOpeBRep_P2DNEW)
+    if (P2d.Status() == TopOpeBRep_P2Dstatus::TopOpeBRep_P2DNEW)
     {
       int ip1, ip2;
       P2d.SegmentAncestors(ip1, ip2);

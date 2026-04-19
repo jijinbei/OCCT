@@ -17,7 +17,7 @@
 #ifndef _FilletSurf_StatusDone_HeaderFile
 #define _FilletSurf_StatusDone_HeaderFile
 
-enum FilletSurf_StatusDone
+enum class FilletSurf_StatusDone
 {
   FilletSurf_IsOk,
   FilletSurf_IsNotOk,

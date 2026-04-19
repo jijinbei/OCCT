@@ -536,7 +536,7 @@ TEST_F(Geom_BSplineCurve_Test, KnotDistribution)
 {
   GeomAbs_BSplKnotDistribution aDistr = myOriginalCurve->KnotDistribution();
   // Single span with end mults = degree+1 -> PiecewiseBezier
-  EXPECT_EQ(aDistr, GeomAbs_PiecewiseBezier);
+  EXPECT_EQ(aDistr, GeomAbs_BSplKnotDistribution::GeomAbs_PiecewiseBezier);
 }
 
 TEST_F(Geom_BSplineCurve_Test, RationalCurveSegment)

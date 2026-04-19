@@ -160,15 +160,15 @@ void TopOpeBRep_EdgesFiller::Insert(const TopoDS_Shape&                         
     if (!found)
       MakeGeometry(P2D, G, K);
 
-    bool foundpoint  = (found) && (K == TopOpeBRepDS_POINT);
-    bool isnewpoint  = (!found) && (K == TopOpeBRepDS_POINT);
-    bool isnewvertex = (!found) && (K == TopOpeBRepDS_VERTEX);
+    bool foundpoint  = (found) && (K == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT);
+    bool isnewpoint  = (!found) && (K == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT);
+    bool isnewvertex = (!found) && (K == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
 
     bool faulty = (isvertex && isnewpoint) || (!isvertex && isnewvertex);
     if (faulty)
     {
 #ifdef OCCT_DEBUG
-      bool foundvertex = (found) && (K == TopOpeBRepDS_VERTEX);
+      bool foundvertex = (found) && (K == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
       std::cout << "- - - faulty EdgesFiller : G " << G << " K ";
       TopOpeBRepDS::Print(K, std::cout);
       std::cout.flush();
@@ -203,7 +203,7 @@ void TopOpeBRep_EdgesFiller::Insert(const TopoDS_Shape&                         
           int                                    gi  = I->Geometry();
           occ::handle<Standard_Type>             DTI = I->DynamicType();
           bool iscpi   = (DTI == STANDARD_TYPE(TopOpeBRepDS_CurvePointInterference));
-          bool condcpi = ((ki == TopOpeBRepDS_POINT) && (gi == G) && iscpi);
+          bool condcpi = ((ki == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT) && (gi == G) && iscpi);
           if (condcpi)
           { // remplacer G,K de I par le vertex courant
 
@@ -222,7 +222,7 @@ void TopOpeBRep_EdgesFiller::Insert(const TopoDS_Shape&                         
             else if (isvertex2)
               gevi = myPDS->AddShape(V2, 2);
             bool                bevi = false;
-            TopOpeBRepDS_Config cevi = TopOpeBRepDS_UNSHGEOMETRY;
+            TopOpeBRepDS_Config cevi = TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY;
             double              pevi = epi->Parameter();
 
             occ::handle<TopOpeBRepDS_Interference> evi;
@@ -237,7 +237,7 @@ void TopOpeBRep_EdgesFiller::Insert(const TopoDS_Shape&                         
 
 #ifdef OCCT_DEBUG
             TopOpeBRepDS::Print(K, G, std::cout, "TopOpeBRep_EdgesFiller : remplacer ", " ");
-            TopOpeBRepDS::Print(TopOpeBRepDS_VERTEX,
+            TopOpeBRepDS::Print(TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
                                 gevi,
                                 std::cout,
                                 "par ",
@@ -293,16 +293,16 @@ void TopOpeBRep_EdgesFiller::Insert(const TopoDS_Shape&                         
 
       SetShapeTransition(P2D, T1, T2);
 
-      if (KKK == TopOpeBRepDS_POINT)
+      if (KKK == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
       {
         EPI = StorePI(P2D, T1, E2index, DSPindex, par1, 1);
         EPI = StorePI(P2D, T2, E1index, DSPindex, par2, 2);
       }
-      else if (KKK == TopOpeBRepDS_VERTEX)
+      else if (KKK == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
       {
         int                 Vindex = DSPindex;
         bool                bevi   = false;
-        TopOpeBRepDS_Config cevi   = TopOpeBRepDS_UNSHGEOMETRY;
+        TopOpeBRepDS_Config cevi   = TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY;
         EVI                        = StoreVI(P2D, T1, E2index, Vindex, bevi, cevi, par1, 1);
         EVI                        = StoreVI(P2D, T2, E1index, Vindex, bevi, cevi, par2, 2);
       }
@@ -414,22 +414,22 @@ bool TopOpeBRep_EdgesFiller::MakeGeometry(const TopOpeBRep_Point2d& P2D,
     int G1 = myPDS->AddShape(P2D.Vertex(1), 1);
     myPDS->AddShape(P2D.Vertex(2), 2);
     G = G1;
-    K = TopOpeBRepDS_VERTEX;
+    K = TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX;
   }
   else if (isvertex1)
   {
     G = myPDS->AddShape(P2D.Vertex(1), 1);
-    K = TopOpeBRepDS_VERTEX;
+    K = TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX;
   }
   else if (isvertex2)
   {
     G = myPDS->AddShape(P2D.Vertex(2), 2);
-    K = TopOpeBRepDS_VERTEX;
+    K = TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX;
   }
   else
   {
     G = myPDS->AddPoint(TopOpeBRep_PointGeomTool::MakePoint(P2D));
-    K = TopOpeBRepDS_POINT;
+    K = TopOpeBRepDS_Kind::TopOpeBRepDS_POINT;
   }
   return true;
 }
@@ -470,9 +470,9 @@ occ::handle<TopOpeBRepDS_Interference> TopOpeBRep_EdgesFiller::StorePI(
 {
   occ::handle<TopOpeBRepDS_Interference> I =
     TopOpeBRepDS_InterferenceTool::MakeEdgeInterference(T,
-                                                        TopOpeBRepDS_EDGE,
+                                                        TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE,
                                                         SI,
-                                                        TopOpeBRepDS_POINT,
+                                                        TopOpeBRepDS_Kind::TopOpeBRepDS_POINT,
                                                         GI,
                                                         param);
   TopoDS_Shape Emother;

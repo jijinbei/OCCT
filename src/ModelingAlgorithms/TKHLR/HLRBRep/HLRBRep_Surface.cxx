@@ -26,7 +26,7 @@
 //=================================================================================================
 
 HLRBRep_Surface::HLRBRep_Surface()
-    : myType(GeomAbs_OtherSurface),
+    : myType(GeomAbs_SurfaceType::GeomAbs_OtherSurface),
       myProj(nullptr)
 {
 }
@@ -41,26 +41,26 @@ void HLRBRep_Surface::Surface(const TopoDS_Face& F)
   switch (typ)
   {
 
-    case GeomAbs_Plane:
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       // unchanged type
       myType = typ;
       break;
 
-    case GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
       if (HLRBRep_BSurfaceTool::UDegree(mySurf) == 1 && HLRBRep_BSurfaceTool::VDegree(mySurf) == 1)
       {
-        myType = GeomAbs_Plane;
+        myType = GeomAbs_SurfaceType::GeomAbs_Plane;
       }
       else
         myType = typ;
       break;
 
     default:
-      myType = GeomAbs_OtherSurface;
+      myType = GeomAbs_SurfaceType::GeomAbs_OtherSurface;
       break;
   }
 }
@@ -142,7 +142,7 @@ bool HLRBRep_Surface::IsSide(const double tolF, const double toler) const
   gp_Vec D;
   double r;
 
-  if (myType == GeomAbs_Plane)
+  if (myType == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     gp_Pln Pl = Plane();
     gp_Ax1 A  = Pl.Axis();
@@ -158,7 +158,7 @@ bool HLRBRep_Surface::IsSide(const double tolF, const double toler) const
       r = D.Z();
     return std::abs(r) < toler;
   }
-  else if (myType == GeomAbs_Cylinder)
+  else if (myType == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     if (myProj->Perspective())
       return false;
@@ -169,7 +169,7 @@ bool HLRBRep_Surface::IsSide(const double tolF, const double toler) const
     r = std::sqrt(D.X() * D.X() + D.Y() * D.Y());
     return r < toler;
   }
-  else if (myType == GeomAbs_Cone)
+  else if (myType == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     if (!myProj->Perspective())
       return false;
@@ -179,7 +179,7 @@ bool HLRBRep_Surface::IsSide(const double tolF, const double toler) const
     double tol = 0.001;
     return Pt.IsEqual(gp_Pnt(0, 0, myProj->Focus()), tol);
   }
-  else if (myType == GeomAbs_BezierSurface)
+  else if (myType == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     if (myProj->Perspective())
       return false;
@@ -192,7 +192,7 @@ bool HLRBRep_Surface::IsSide(const double tolF, const double toler) const
         Pnt(iu, iv) = aSrcPoles(iu, iv);
     return SideRowsOfPoles(tolF, nu, nv, Pnt);
   }
-  else if (myType == GeomAbs_BSplineSurface)
+  else if (myType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     if (myProj->Perspective())
       return false;
@@ -213,7 +213,7 @@ bool HLRBRep_Surface::IsSide(const double tolF, const double toler) const
 
 bool HLRBRep_Surface::IsAbove(const bool back, const HLRBRep_Curve* A, const double tol) const
 {
-  bool planar = (myType == GeomAbs_Plane);
+  bool planar = (myType == GeomAbs_SurfaceType::GeomAbs_Plane);
   if (planar)
   {
     gp_Pln Pl = Plane();
@@ -231,7 +231,7 @@ bool HLRBRep_Surface::IsAbove(const bool back, const HLRBRep_Curve* A, const dou
       dd = -dd;
     if (dd < -tol)
       return false;
-    if (A->GetType() != GeomAbs_Line)
+    if (A->GetType() != GeomAbs_CurveType::GeomAbs_Line)
     {
       int    nbPnt = 30;
       double step  = (u2 - u1) / (nbPnt + 1);
@@ -277,7 +277,7 @@ gp_Pln HLRBRep_Surface::Plane() const
   GeomAbs_SurfaceType typ = HLRBRep_BSurfaceTool::GetType(mySurf);
   switch (typ)
   {
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       gp_Pnt P;
       gp_Vec D1U;
       gp_Vec D1V;

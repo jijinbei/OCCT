@@ -60,7 +60,7 @@ public:
   //! RightCorner transition can be performed.
   //! AngleMin and AngleMax are expressed in radians.
   Standard_EXPORT void SetOptions(
-    const BRepBuilderAPI_TransitionMode Style    = BRepBuilderAPI_RightCorner,
+    const BRepBuilderAPI_TransitionMode Style    = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RightCorner,
     const double                        AngleMin = 0.01,
     const double                        AngleMax = 3.0);
 

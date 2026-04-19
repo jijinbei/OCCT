@@ -77,7 +77,7 @@ public:
   //! Add a line <L> to be trimmed. <T> the type is
   //! only kept from information. It is not used in the
   //! computation.
-  Standard_EXPORT void AddLine(const gp_Lin2d& L, const Hatch_LineForm T = Hatch_ANYLINE);
+  Standard_EXPORT void AddLine(const gp_Lin2d& L, const Hatch_LineForm T = Hatch_LineForm::Hatch_ANYLINE);
 
   //! Add an infinite line on direction <D> at distance
   //! <Dist> from the origin to be trimmed. <Dist> may

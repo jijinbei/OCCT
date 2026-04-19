@@ -17,7 +17,7 @@
 #ifndef _CDF_TypeOfActivation_HeaderFile
 #define _CDF_TypeOfActivation_HeaderFile
 
-enum CDF_TypeOfActivation
+enum class CDF_TypeOfActivation
 {
   CDF_TOA_New,
   CDF_TOA_Modified,

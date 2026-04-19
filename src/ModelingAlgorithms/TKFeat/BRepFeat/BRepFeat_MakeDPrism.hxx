@@ -75,7 +75,7 @@ public:
 
   BRepFeat_MakeDPrism()
       : myAngle(RealLast()),
-        myStatusError(BRepFeat_OK)
+        myStatusError(BRepFeat_StatusError::BRepFeat_OK)
   {
   }
 

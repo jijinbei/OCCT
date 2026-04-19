@@ -17,7 +17,7 @@
 #ifndef _GccInt_IType_HeaderFile
 #define _GccInt_IType_HeaderFile
 
-enum GccInt_IType
+enum class GccInt_IType
 {
   GccInt_Lin,
   GccInt_Cir,

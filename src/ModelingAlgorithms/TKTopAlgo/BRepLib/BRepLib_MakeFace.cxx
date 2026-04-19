@@ -54,7 +54,7 @@
 //=================================================================================================
 
 BRepLib_MakeFace::BRepLib_MakeFace()
-    : myError(BRepLib_NoFace)
+    : myError(BRepLib_FaceError::BRepLib_NoFace)
 {
 }
 
@@ -193,13 +193,13 @@ BRepLib_MakeFace::BRepLib_MakeFace(const TopoDS_Wire& W, const bool OnlyPlane)
   BRepLib_FindSurface FS(W, -1, OnlyPlane, true);
   if (!FS.Found())
   {
-    myError = BRepLib_NotPlanar;
+    myError = BRepLib_FaceError::BRepLib_NotPlanar;
     return;
   }
 
   // build the face and add the wire
   BRep_Builder B;
-  myError = BRepLib_FaceDone;
+  myError = BRepLib_FaceError::BRepLib_FaceDone;
 
   double tol = std::max(1.2 * FS.ToleranceReached(), FS.Tolerance());
 
@@ -336,7 +336,7 @@ void BRepLib_MakeFace::Init(const TopoDS_Face& F)
 {
   // copy the face
   myShape = F.EmptyCopied();
-  myError = BRepLib_FaceDone;
+  myError = BRepLib_FaceError::BRepLib_FaceDone;
 
   BRep_Builder    B;
   TopoDS_Iterator It(F);
@@ -353,7 +353,7 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& S,
                             const bool                       Bound,
                             const double                     TolDegen)
 {
-  myError = BRepLib_FaceDone;
+  myError = BRepLib_FaceError::BRepLib_FaceDone;
   if (Bound)
   {
     double UMin, UMax, VMin, VMax;
@@ -384,7 +384,7 @@ bool BRepLib_MakeFace::IsDegenerated(const occ::handle<Geom_Curve>& theCurve,
   theActTol                    = aConfusion;
   GeomAbs_CurveType Type       = AC.GetType();
 
-  if (Type == GeomAbs_Circle)
+  if (Type == GeomAbs_CurveType::GeomAbs_Circle)
   {
     gp_Circ Circ = AC.Circle();
     if (Circ.Radius() > theMaxTol)
@@ -392,7 +392,7 @@ bool BRepLib_MakeFace::IsDegenerated(const occ::handle<Geom_Curve>& theCurve,
     theActTol = std::max(Circ.Radius(), aConfusion);
     return true;
   }
-  else if (Type == GeomAbs_BSplineCurve)
+  else if (Type == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom_BSplineCurve> BS            = AC.BSpline();
     int                            NbPoles       = BS->NbPoles();
@@ -411,7 +411,7 @@ bool BRepLib_MakeFace::IsDegenerated(const occ::handle<Geom_Curve>& theCurve,
     theActTol = std::max(1.000001 * std::sqrt(aMaxPoleDist2), aConfusion);
     return true;
   }
-  else if (Type == GeomAbs_BezierCurve)
+  else if (Type == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     occ::handle<Geom_BezierCurve> BZ            = AC.Bezier();
     int                           NbPoles       = BZ->NbPoles();
@@ -443,7 +443,7 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& SS,
                             const double                     VM,
                             const double                     TolDegen)
 {
-  myError = BRepLib_FaceDone;
+  myError = BRepLib_FaceError::BRepLib_FaceDone;
 
   double UMin = Um;
   double UMax = UM;
@@ -496,7 +496,7 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& SS,
     UMax = T;
     if ((umin - UMin > epsilon) || (UMax - umax > epsilon))
     {
-      myError = BRepLib_ParametersOutOfRange;
+      myError = BRepLib_FaceError::BRepLib_ParametersOutOfRange;
       return;
     }
   }
@@ -512,7 +512,7 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& SS,
     VMax = T;
     if ((vmin - VMin > epsilon) || (VMax - vmax > epsilon))
     {
-      myError = BRepLib_ParametersOutOfRange;
+      myError = BRepLib_FaceError::BRepLib_ParametersOutOfRange;
       return;
     }
   }

@@ -167,7 +167,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsElementarySurf(const GeomAbs_SurfaceT
   if (mySType == TopAbs_FACE)
   {
     occ::handle<Geom_Surface> anElemSurf =
-      GetSurface(TopoDS::Face(myShape), theTol, GeomConvert_Target, theTarget, myGap, myStatus);
+      GetSurface(TopoDS::Face(myShape), theTol, GeomConvert_ConvType::GeomConvert_Target, theTarget, myGap, myStatus);
     if (anElemSurf.IsNull())
       return false;
     //
@@ -182,7 +182,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsElementarySurf(const GeomAbs_SurfaceT
   else if (mySType == TopAbs_SHELL)
   {
     occ::handle<Geom_Surface> anElemSurf =
-      GetSurface(TopoDS::Shell(myShape), theTol, GeomConvert_Target, theTarget, myGap, myStatus);
+      GetSurface(TopoDS::Shell(myShape), theTol, GeomConvert_ConvType::GeomConvert_Target, theTarget, myGap, myStatus);
     if (anElemSurf.IsNull())
     {
       return false;
@@ -199,7 +199,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsElementarySurf(const GeomAbs_SurfaceT
   {
     occ::handle<Geom_Surface> anElemSurf = GetSurface(TopoDS::Edge(myShape),
                                                       theTol,
-                                                      GeomConvert_Target,
+                                                      GeomConvert_ConvType::GeomConvert_Target,
                                                       theTarget,
                                                       thePos,
                                                       theParams,
@@ -218,7 +218,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsElementarySurf(const GeomAbs_SurfaceT
   {
     occ::handle<Geom_Surface> anElemSurf = GetSurface(TopoDS::Wire(myShape),
                                                       theTol,
-                                                      GeomConvert_Target,
+                                                      GeomConvert_ConvType::GeomConvert_Target,
                                                       theTarget,
                                                       thePos,
                                                       theParams,
@@ -243,7 +243,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsPlane(const double theTol, gp_Pln& th
   gp_Ax3                     aPos = thePln.Position();
   NCollection_Array1<double> aParams(1, 1);
   //
-  GeomAbs_SurfaceType aTarget = GeomAbs_Plane;
+  GeomAbs_SurfaceType aTarget = GeomAbs_SurfaceType::GeomAbs_Plane;
   if (IsElementarySurf(aTarget, theTol, aPos, aParams))
   {
     thePln.SetPosition(aPos);
@@ -275,7 +275,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsCylinder(const double theTol, gp_Cyli
   NCollection_Array1<double> aParams(1, 1);
   aParams(1) = theCyl.Radius();
   //
-  GeomAbs_SurfaceType aTarget = GeomAbs_Cylinder;
+  GeomAbs_SurfaceType aTarget = GeomAbs_SurfaceType::GeomAbs_Cylinder;
   if (IsElementarySurf(aTarget, theTol, aPos, aParams))
   {
     theCyl.SetPosition(aPos);
@@ -322,7 +322,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsCone(const double theTol, gp_Cone& th
   aParams(1) = theCone.SemiAngle();
   aParams(2) = theCone.RefRadius();
   //
-  GeomAbs_SurfaceType aTarget = GeomAbs_Cone;
+  GeomAbs_SurfaceType aTarget = GeomAbs_SurfaceType::GeomAbs_Cone;
   if (IsElementarySurf(aTarget, theTol, aPos, aParams))
   {
     theCone.SetPosition(aPos);
@@ -370,7 +370,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsSphere(const double theTol, gp_Sphere
   NCollection_Array1<double> aParams(1, 1);
   aParams(1) = theSphere.Radius();
   //
-  GeomAbs_SurfaceType aTarget = GeomAbs_Sphere;
+  GeomAbs_SurfaceType aTarget = GeomAbs_SurfaceType::GeomAbs_Sphere;
   if (IsElementarySurf(aTarget, theTol, aPos, aParams))
   {
     theSphere.SetPosition(aPos);
@@ -421,7 +421,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsConic(const GeomAbs_CurveType     the
   if (mySType == TopAbs_EDGE)
   {
     occ::handle<Geom_Curve> aConic =
-      GetCurve(TopoDS::Edge(myShape), theTol, GeomConvert_Target, theTarget, myGap, myStatus);
+      GetCurve(TopoDS::Edge(myShape), theTol, GeomConvert_ConvType::GeomConvert_Target, theTarget, myGap, myStatus);
 
     if (aConic.IsNull())
       return false;
@@ -448,7 +448,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsConic(const GeomAbs_CurveType     the
     const TopoDS_Shape&        anEdge = anIter.Value();
 
     occ::handle<Geom_Curve> aConic =
-      GetCurve(TopoDS::Edge(anEdge), theTol, GeomConvert_Target, theTarget, myGap, myStatus);
+      GetCurve(TopoDS::Edge(anEdge), theTol, GeomConvert_ConvType::GeomConvert_Target, theTarget, myGap, myStatus);
     if (aConic.IsNull())
     {
       return false;
@@ -471,7 +471,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsConic(const GeomAbs_CurveType     the
     {
       aConic = GetCurve(TopoDS::Edge(anIter.Value()),
                         theTol,
-                        GeomConvert_Target,
+                        GeomConvert_ConvType::GeomConvert_Target,
                         theTarget,
                         myGap,
                         myStatus);
@@ -500,7 +500,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsLine(const double theTol, gp_Lin& the
   gp_Ax2                     aPos;
   NCollection_Array1<double> aParams(1, 1);
 
-  GeomAbs_CurveType aTarget = GeomAbs_Line;
+  GeomAbs_CurveType aTarget = GeomAbs_CurveType::GeomAbs_Line;
   bool              isOK    = IsConic(aTarget, theTol, aPos, aParams);
   if (isOK)
   {
@@ -516,7 +516,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsCircle(const double theTol, gp_Circ& 
   gp_Ax2                     aPos;
   NCollection_Array1<double> aParams(1, 1);
 
-  GeomAbs_CurveType aTarget = GeomAbs_Circle;
+  GeomAbs_CurveType aTarget = GeomAbs_CurveType::GeomAbs_Circle;
   bool              isOK    = IsConic(aTarget, theTol, aPos, aParams);
   if (isOK)
   {
@@ -533,7 +533,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsEllipse(const double theTol, gp_Elips
   gp_Ax2                     aPos;
   NCollection_Array1<double> aParams(1, 2);
 
-  GeomAbs_CurveType aTarget = GeomAbs_Ellipse;
+  GeomAbs_CurveType aTarget = GeomAbs_CurveType::GeomAbs_Ellipse;
   bool              isOK    = IsConic(aTarget, theTol, aPos, aParams);
   if (isOK)
   {
@@ -811,11 +811,11 @@ bool ShapeAnalysis_CanonicalRecognition::GetSurfaceByLS(const TopoDS_Wire&      
   }
 
   int aNbVar = 0;
-  if (theTarget == GeomAbs_Sphere)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Sphere)
     aNbVar = 4;
-  else if (theTarget == GeomAbs_Cylinder)
+  else if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder)
     aNbVar = 4;
-  else if (theTarget == GeomAbs_Cone)
+  else if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cone)
     aNbVar = 5;
   else
     return false;
@@ -836,15 +836,15 @@ bool ShapeAnalysis_CanonicalRecognition::GetSurfaceByLS(const TopoDS_Wire&      
   GeomConvert_FuncSphereLSDist   aFuncSph(aPoints);
   GeomConvert_FuncCylinderLSDist aFuncCyl(aPoints, thePos.Direction());
   GeomConvert_FuncConeLSDist     aFuncCon(aPoints, thePos.Direction());
-  if (theTarget == GeomAbs_Sphere)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     aPFunc = (math_MultipleVarFunction*)&aFuncSph;
   }
-  else if (theTarget == GeomAbs_Cylinder)
+  else if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     aPFunc = (math_MultipleVarFunction*)&aFuncCyl;
   }
-  else if (theTarget == GeomAbs_Cone)
+  else if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     aPFunc = (math_MultipleVarFunction*)&aFuncCon;
   }
@@ -874,7 +874,7 @@ bool ShapeAnalysis_CanonicalRecognition::GetSurfaceByLS(const TopoDS_Wire&      
   for (i = 1; i <= aNbVar; i++)
     aDirMatrix(i, i) = 1.0;
 
-  if (theTarget == GeomAbs_Cylinder || theTarget == GeomAbs_Cone)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder || theTarget == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     // Set search direction for location to be perpendicular to axis to avoid
     // searching along axis
@@ -952,13 +952,13 @@ int GetNbPars(const GeomAbs_CurveType theTarget)
   int aNbPars = 0;
   switch (theTarget)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       aNbPars = 0;
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       aNbPars = 1;
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       aNbPars = 2;
       break;
     default:
@@ -976,14 +976,14 @@ int GetNbPars(const GeomAbs_SurfaceType theTarget)
   int aNbPars = 0;
   switch (theTarget)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       aNbPars = 0;
       break;
-    case GeomAbs_Cylinder:
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       aNbPars = 1;
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       aNbPars = 2;
       break;
     default:
@@ -1007,18 +1007,18 @@ bool SetConicParameters(const GeomAbs_CurveType        theTarget,
   if (aGAC.GetType() != theTarget)
     return false;
 
-  if (theTarget == GeomAbs_Line)
+  if (theTarget == GeomAbs_CurveType::GeomAbs_Line)
   {
     gp_Lin aLin = aGAC.Line();
     thePos.SetAxis(aLin.Position());
   }
-  else if (theTarget == GeomAbs_Circle)
+  else if (theTarget == GeomAbs_CurveType::GeomAbs_Circle)
   {
     gp_Circ aCirc = aGAC.Circle();
     thePos        = aCirc.Position();
     theParams(1)  = aCirc.Radius();
   }
-  else if (theTarget == GeomAbs_Ellipse)
+  else if (theTarget == GeomAbs_CurveType::GeomAbs_Ellipse)
   {
     gp_Elips anElips = aGAC.Ellipse();
     thePos           = anElips.Position();
@@ -1049,7 +1049,7 @@ bool CompareConicParams(const GeomAbs_CurveType           theTarget,
 
   double anAngTol = theTol / (2. * M_PI);
   double aTol     = theTol;
-  if (theTarget == GeomAbs_Line)
+  if (theTarget == GeomAbs_CurveType::GeomAbs_Line)
     aTol = Precision::Infinite();
 
   const gp_Ax1& aRef     = theRefPos.Axis();
@@ -1077,25 +1077,25 @@ bool SetSurfParams(const GeomAbs_SurfaceType        theTarget,
   if (theParams.Length() < aNbPars)
     return false;
 
-  if (theTarget == GeomAbs_Plane)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     gp_Pln aPln = aGAS.Plane();
     thePos      = aPln.Position();
   }
-  else if (theTarget == GeomAbs_Cylinder)
+  else if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     gp_Cylinder aCyl = aGAS.Cylinder();
     thePos           = aCyl.Position();
     theParams(1)     = aCyl.Radius();
   }
-  else if (theTarget == GeomAbs_Cone)
+  else if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     gp_Cone aCon = aGAS.Cone();
     thePos       = aCon.Position();
     theParams(1) = aCon.SemiAngle();
     theParams(2) = aCon.RefRadius();
   }
-  else if (theTarget == GeomAbs_Sphere)
+  else if (theTarget == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     gp_Sphere aSph = aGAS.Sphere();
     thePos         = aSph.Position();
@@ -1117,7 +1117,7 @@ bool CompareSurfParams(const GeomAbs_SurfaceType         theTarget,
                        const gp_Ax3&                     thePos,
                        const NCollection_Array1<double>& theParams)
 {
-  if (theTarget != GeomAbs_Plane)
+  if (theTarget != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     if (std::abs(theRefParams(1) - theParams(1)) > theTol)
     {
@@ -1125,7 +1125,7 @@ bool CompareSurfParams(const GeomAbs_SurfaceType         theTarget,
     }
   }
   //
-  if (theTarget == GeomAbs_Sphere)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     gp_Pnt aRefLoc = theRefPos.Location(), aLoc = thePos.Location();
     return aRefLoc.SquareDistance(aLoc) <= theTol * theTol;
@@ -1133,7 +1133,7 @@ bool CompareSurfParams(const GeomAbs_SurfaceType         theTarget,
   //
   double anAngTol = theTol / (2. * M_PI);
   double aTol     = theTol;
-  if (theTarget == GeomAbs_Cylinder || theTarget == GeomAbs_Cone)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder || theTarget == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     aTol = Precision::Infinite();
   }
@@ -1146,7 +1146,7 @@ bool CompareSurfParams(const GeomAbs_SurfaceType         theTarget,
     return false;
   }
 
-  if (theTarget == GeomAbs_Cone)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     gp_Cone aRefCone(theRefPos, theRefParams(1), theRefParams(2));
     gp_Cone aCone(thePos, theParams(1), theParams(2));
@@ -1167,12 +1167,12 @@ double DeviationSurfParams(const GeomAbs_SurfaceType         theTarget,
                            const NCollection_Array1<double>& theParams)
 {
   double aDevPars = 0.;
-  if (theTarget != GeomAbs_Plane)
+  if (theTarget != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     aDevPars = std::abs(theRefParams(1) - theParams(1));
   }
   //
-  if (theTarget == GeomAbs_Sphere)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     gp_Pnt aRefLoc = theRefPos.Location(), aLoc = thePos.Location();
     aDevPars += aRefLoc.Distance(aLoc);
@@ -1261,7 +1261,7 @@ static double GetLSGap(const occ::handle<NCollection_HArray1<gp_XYZ>>& thePoints
   gp_Vec aDir(thePos.Direction());
 
   int i;
-  if (theTarget == GeomAbs_Sphere)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     double anR = theParams(1);
     for (i = thePoints->Lower(); i <= thePoints->Upper(); ++i)
@@ -1270,7 +1270,7 @@ static double GetLSGap(const occ::handle<NCollection_HArray1<gp_XYZ>>& thePoints
       aGap      = std::max(aGap, std::abs((aD.Modulus() - anR)));
     }
   }
-  else if (theTarget == GeomAbs_Cylinder)
+  else if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     double anR = theParams(1);
     for (i = thePoints->Lower(); i <= thePoints->Upper(); ++i)
@@ -1280,7 +1280,7 @@ static double GetLSGap(const occ::handle<NCollection_HArray1<gp_XYZ>>& thePoints
       aGap = std::max(aGap, std::abs((aD.Magnitude() - anR)));
     }
   }
-  else if (theTarget == GeomAbs_Cone)
+  else if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     double anAng = theParams(1);
     double anR   = theParams(2);
@@ -1309,7 +1309,7 @@ void FillSolverData(const GeomAbs_SurfaceType         theTarget,
                     math_Vector&                      theLBnd,
                     const double                      theRelDev)
 {
-  if (theTarget == GeomAbs_Sphere || theTarget == GeomAbs_Cylinder)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Sphere || theTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     theStartPoint(1) = thePos.Location().X();
     theStartPoint(2) = thePos.Location().Y();
@@ -1326,7 +1326,7 @@ void FillSolverData(const GeomAbs_SurfaceType         theTarget,
     theFBnd(4) = theStartPoint(4) - aDR;
     theLBnd(4) = theStartPoint(4) + aDR;
   }
-  if (theTarget == GeomAbs_Cone)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     theStartPoint(1) = thePos.Location().X();
     theStartPoint(2) = thePos.Location().Y();
@@ -1370,11 +1370,11 @@ void SetCanonicParameters(const GeomAbs_SurfaceType   theTarget,
 {
   gp_Pnt aLoc(theSol(1), theSol(2), theSol(3));
   thePos.SetLocation(aLoc);
-  if (theTarget == GeomAbs_Sphere || theTarget == GeomAbs_Cylinder)
+  if (theTarget == GeomAbs_SurfaceType::GeomAbs_Sphere || theTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     theParams(1) = theSol(4); // radius
   }
-  else if (theTarget == GeomAbs_Cone)
+  else if (theTarget == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     theParams(1) = theSol(4); // semiangle
     theParams(2) = theSol(5); // radius

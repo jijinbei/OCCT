@@ -140,7 +140,7 @@ void BRepIntCurveSurface_Inter::Find()
       BRepBndLib::Add(aCurface, aFaceBox);
       aFaceBox.SetGap(myTolerance); // Precision::Confusion());
     }
-    bool isOut = (myCurve->GetType() == GeomAbs_Line
+    bool isOut = (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line
                     ? aFaceBox.IsOut(myCurve->Line())
                     : (!myCurveBox.IsVoid() ? aFaceBox.IsOut(myCurveBox) : false));
     if (isOut)

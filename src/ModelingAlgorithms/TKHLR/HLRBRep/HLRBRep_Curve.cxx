@@ -57,7 +57,7 @@ double HLRBRep_Curve::Parameter2d(const double P3d) const
 
   switch (myType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       if (((HLRAlgo_Projector*)myProj)->Perspective())
       {
         const double FmOZ = myOF - myOZ;
@@ -65,7 +65,7 @@ double HLRBRep_Curve::Parameter2d(const double P3d) const
       }
       return P3d * myVX;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       return P3d + myOX;
 
     default: // implemented to avoid gcc compiler warnings
@@ -85,7 +85,7 @@ double HLRBRep_Curve::Parameter3d(const double P2d) const
   // P3d -> -----------------------------------------------------
   //        (myOF - myOZ) (myOF myVX + P2d myVZ) + myOF myOX myVZ
 
-  if (myType == GeomAbs_Line)
+  if (myType == GeomAbs_CurveType::GeomAbs_Line)
   {
     if (((HLRAlgo_Projector*)myProj)->Perspective())
     {
@@ -95,7 +95,7 @@ double HLRBRep_Curve::Parameter3d(const double P2d) const
     return ((myVX <= gp::Resolution()) ? P2d : (P2d / myVX));
   }
 
-  else if (myType == GeomAbs_Ellipse)
+  else if (myType == GeomAbs_CurveType::GeomAbs_Ellipse)
   {
     return P2d - myOX;
   }
@@ -108,29 +108,29 @@ double HLRBRep_Curve::Parameter3d(const double P2d) const
 double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
 {
   GeomAbs_CurveType typ = HLRBRep_BCurveTool::GetType(myCurve);
-  myType                = GeomAbs_OtherCurve;
+  myType                = GeomAbs_CurveType::GeomAbs_OtherCurve;
 
   switch (typ)
   {
 
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       myType = typ;
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       if (!((HLRAlgo_Projector*)myProj)->Perspective())
       {
         gp_Dir D1 = HLRBRep_BCurveTool::Circle(myCurve).Axis().Direction();
         D1.Transform(((HLRAlgo_Projector*)myProj)->Transformation());
         if (D1.IsParallel(gp::DZ(), Precision::Angular()))
-          myType = GeomAbs_Circle;
+          myType = GeomAbs_CurveType::GeomAbs_Circle;
         else if (std::abs(D1.Dot(gp::DZ()))
                  < Precision::Angular()
                      * 10) //*10: The minor radius of ellipse should not be too small.
-          myType = GeomAbs_OtherCurve;
+          myType = GeomAbs_CurveType::GeomAbs_OtherCurve;
         else
         {
-          myType = GeomAbs_Ellipse;
+          myType = GeomAbs_CurveType::GeomAbs_Ellipse;
           // compute the angle offset
           gp_Dir D3 = D1.Crossed(gp::DZ());
           gp_Dir D2 = HLRBRep_BCurveTool::Circle(myCurve).XAxis().Direction();
@@ -140,7 +140,7 @@ double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
       }
       break;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       if (!((HLRAlgo_Projector*)myProj)->Perspective())
       {
         gp_Dir D1 = HLRBRep_BCurveTool::Ellipse(myCurve).Axis().Direction();
@@ -148,19 +148,19 @@ double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
         if (D1.IsParallel(gp::DZ(), Precision::Angular()))
         {
           myOX   = 0.; // no offset on the angle
-          myType = GeomAbs_Ellipse;
+          myType = GeomAbs_CurveType::GeomAbs_Ellipse;
         }
       }
       break;
 
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       if (HLRBRep_BCurveTool::Degree(myCurve) == 1)
-        myType = GeomAbs_Line;
+        myType = GeomAbs_CurveType::GeomAbs_Line;
       else if (!((HLRAlgo_Projector*)myProj)->Perspective())
         myType = typ;
       break;
 
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       if (!((HLRAlgo_Projector*)myProj)->Perspective())
         myType = typ;
       break;
@@ -169,12 +169,12 @@ double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
       break;
   }
 
-  if (myType == GeomAbs_Line)
+  if (myType == GeomAbs_CurveType::GeomAbs_Line)
   {
     // compute the values for a line
     gp_Lin L;
     double l3d = 1.; // length of the 3d bezier curve
-    if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_Line)
+    if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_CurveType::GeomAbs_Line)
     {
       L = HLRBRep_BCurveTool::Line(myCurve);
     }
@@ -223,7 +223,7 @@ double HLRBRep_Curve::UpdateMinMax(double TotMin[16], double TotMax[16])
   ((HLRAlgo_Projector*)myProj)->Project(Value3D(a), x, y, z);
   HLRAlgo::UpdateMinMax(x, y, z, TotMin, TotMax);
 
-  if (myType != GeomAbs_Line)
+  if (myType != GeomAbs_CurveType::GeomAbs_Line)
   {
     int    nbPnt = 30;
     int    i;
@@ -423,7 +423,7 @@ gp_Circ2d HLRBRep_Curve::Circle() const
 
 gp_Elips2d HLRBRep_Curve::Ellipse() const
 {
-  if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_Ellipse)
+  if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_CurveType::GeomAbs_Ellipse)
   {
     gp_Elips E = HLRBRep_BCurveTool::Ellipse(myCurve);
     E.Transform(myProj->Transformation());
@@ -466,7 +466,7 @@ void HLRBRep_Curve::Poles(NCollection_Array1<gp_Pnt2d>& TP) const
   int                        i2 = TP.Upper();
   NCollection_Array1<gp_Pnt> TP3(i1, i2);
   //-- HLRBRep_BCurveTool::Poles(myCurve,TP3);
-  if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_BSplineCurve)
+  if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom_BSplineCurve>    aBSpl     = HLRBRep_BCurveTool::BSpline(myCurve);
     const NCollection_Array1<gp_Pnt>& aSrcPoles = aBSpl->Poles();
@@ -517,7 +517,7 @@ void HLRBRep_Curve::PolesAndWeights(NCollection_Array1<gp_Pnt2d>& TP,
   NCollection_Array1<gp_Pnt> TP3(i1, i2);
   //-- HLRBRep_BCurveTool::PolesAndWeights(myCurve,TP3,TW);
 
-  if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_BSplineCurve)
+  if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom_BSplineCurve>    HB          = (HLRBRep_BCurveTool::BSpline(myCurve));
     const NCollection_Array1<gp_Pnt>& aSrcPoles   = HB->Poles();
@@ -573,7 +573,7 @@ void HLRBRep_Curve::PolesAndWeights(const occ::handle<Geom_BSplineCurve>& aCurve
 
 void HLRBRep_Curve::Knots(NCollection_Array1<double>& kn) const
 {
-  if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_BSplineCurve)
+  if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom_BSplineCurve>    aBSpl     = HLRBRep_BCurveTool::BSpline(myCurve);
     const NCollection_Array1<double>& aSrcKnots = aBSpl->Knots();
@@ -586,7 +586,7 @@ void HLRBRep_Curve::Knots(NCollection_Array1<double>& kn) const
 
 void HLRBRep_Curve::Multiplicities(NCollection_Array1<int>& mu) const
 {
-  if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_BSplineCurve)
+  if (HLRBRep_BCurveTool::GetType(myCurve) == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom_BSplineCurve> aBSpl     = HLRBRep_BCurveTool::BSpline(myCurve);
     const NCollection_Array1<int>& aSrcMults = aBSpl->Multiplicities();

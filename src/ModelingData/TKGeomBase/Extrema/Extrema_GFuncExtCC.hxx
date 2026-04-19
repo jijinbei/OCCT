@@ -262,10 +262,10 @@ Extrema_GFuncExtCC<TheCurve1,
 
   switch (TheCurveTool1::GetType(*((TheCurve1*)myC1)))
   {
-    case GeomAbs_BezierCurve:
-    case GeomAbs_BSplineCurve:
-    case GeomAbs_OffsetCurve:
-    case GeomAbs_OtherCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+    case GeomAbs_CurveType::GeomAbs_OtherCurve:
       myMaxDerivOrderC1 = THE_MAX_ORDER;
       myTolC1           = SearchOfTolerance((void*)&theC1);
       break;
@@ -277,10 +277,10 @@ Extrema_GFuncExtCC<TheCurve1,
 
   switch (TheCurveTool2::GetType(*((TheCurve2*)myC2)))
   {
-    case GeomAbs_BezierCurve:
-    case GeomAbs_BSplineCurve:
-    case GeomAbs_OffsetCurve:
-    case GeomAbs_OtherCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+    case GeomAbs_CurveType::GeomAbs_OtherCurve:
       myMaxDerivOrderC2 = THE_MAX_ORDER;
       myTolC2           = SearchOfTolerance((void*)&theC2);
       break;
@@ -317,10 +317,10 @@ void Extrema_GFuncExtCC<TheCurve1,
     myC1 = (void*)&theC;
     switch (theC.GetType())
     {
-      case GeomAbs_BezierCurve:
-      case GeomAbs_BSplineCurve:
-      case GeomAbs_OffsetCurve:
-      case GeomAbs_OtherCurve:
+      case GeomAbs_CurveType::GeomAbs_BezierCurve:
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+      case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+      case GeomAbs_CurveType::GeomAbs_OtherCurve:
         myMaxDerivOrderC1 = THE_MAX_ORDER;
         myTolC1           = SearchOfTolerance((void*)&theC);
         break;
@@ -335,10 +335,10 @@ void Extrema_GFuncExtCC<TheCurve1,
     myC2 = (void*)&theC;
     switch (theC.GetType())
     {
-      case GeomAbs_BezierCurve:
-      case GeomAbs_BSplineCurve:
-      case GeomAbs_OffsetCurve:
-      case GeomAbs_OtherCurve:
+      case GeomAbs_CurveType::GeomAbs_BezierCurve:
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+      case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+      case GeomAbs_CurveType::GeomAbs_OtherCurve:
         myMaxDerivOrderC2 = THE_MAX_ORDER;
         myTolC2           = SearchOfTolerance((void*)&theC);
         break;

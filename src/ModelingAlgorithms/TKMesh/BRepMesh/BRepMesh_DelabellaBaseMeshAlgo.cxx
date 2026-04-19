@@ -92,22 +92,22 @@ void BRepMesh_DelabellaBaseMeshAlgo::buildBaseTriangulation()
   aPoints[2 * aNodesNb + 0] = aMin.X();
   aPoints[2 * aNodesNb + 1] = aMin.Y();
   aStructure->AddNode(
-    BRepMesh_Vertex(aPoints[2 * aNodesNb + 0], aPoints[2 * aNodesNb + 1], BRepMesh_Free));
+    BRepMesh_Vertex(aPoints[2 * aNodesNb + 0], aPoints[2 * aNodesNb + 1], BRepMesh_DegreeOfFreedom::BRepMesh_Free));
 
   aPoints[2 * aNodesNb + 2] = aMax.X();
   aPoints[2 * aNodesNb + 3] = aMin.Y();
   aStructure->AddNode(
-    BRepMesh_Vertex(aPoints[2 * aNodesNb + 2], aPoints[2 * aNodesNb + 3], BRepMesh_Free));
+    BRepMesh_Vertex(aPoints[2 * aNodesNb + 2], aPoints[2 * aNodesNb + 3], BRepMesh_DegreeOfFreedom::BRepMesh_Free));
 
   aPoints[2 * aNodesNb + 4] = aMax.X();
   aPoints[2 * aNodesNb + 5] = aMax.Y();
   aStructure->AddNode(
-    BRepMesh_Vertex(aPoints[2 * aNodesNb + 4], aPoints[2 * aNodesNb + 5], BRepMesh_Free));
+    BRepMesh_Vertex(aPoints[2 * aNodesNb + 4], aPoints[2 * aNodesNb + 5], BRepMesh_DegreeOfFreedom::BRepMesh_Free));
 
   aPoints[2 * aNodesNb + 6] = aMin.X();
   aPoints[2 * aNodesNb + 7] = aMax.Y();
   aStructure->AddNode(
-    BRepMesh_Vertex(aPoints[2 * aNodesNb + 6], aPoints[2 * aNodesNb + 7], BRepMesh_Free));
+    BRepMesh_Vertex(aPoints[2 * aNodesNb + 6], aPoints[2 * aNodesNb + 7], BRepMesh_DegreeOfFreedom::BRepMesh_Free));
 
   const double aDiffX = (aMax.X() - aMin.X());
   const double aDiffY = (aMax.Y() - aMin.Y());
@@ -145,14 +145,14 @@ void BRepMesh_DelabellaBaseMeshAlgo::buildBaseTriangulation()
         bool aOrientations[3];
         for (int k = 0; k < 3; ++k)
         {
-          const BRepMesh_Edge aLink(aNodes[k], aNodes[(k + 1) % 3], BRepMesh_Free);
+          const BRepMesh_Edge aLink(aNodes[k], aNodes[(k + 1) % 3], BRepMesh_DegreeOfFreedom::BRepMesh_Free);
 
           const int aLinkInfo = aStructure->AddLink(aLink);
           aEdges[k]           = std::abs(aLinkInfo);
           aOrientations[k]    = aLinkInfo > 0;
         }
 
-        const BRepMesh_Triangle aTriangle(aEdges, aOrientations, BRepMesh_Free);
+        const BRepMesh_Triangle aTriangle(aEdges, aOrientations, BRepMesh_DegreeOfFreedom::BRepMesh_Free);
         aStructure->AddElement(aTriangle);
 
         aTrianglePtr = aTrianglePtr->next;

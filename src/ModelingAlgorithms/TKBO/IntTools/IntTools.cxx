@@ -36,12 +36,12 @@
 int IntTools::GetRadius(const BRepAdaptor_Curve& C, const double t1, const double t3, double& aR)
 {
   GeomAbs_CurveType aType = C.GetType();
-  if (aType == GeomAbs_Line)
+  if (aType == GeomAbs_CurveType::GeomAbs_Line)
   {
     return 1;
   }
 
-  if (aType == GeomAbs_Circle)
+  if (aType == GeomAbs_CurveType::GeomAbs_Circle)
   {
     gp_Circ aCrc = C.Circle();
     aR           = aCrc.Radius();
@@ -113,9 +113,9 @@ int IntTools::PrepareArgs(BRepAdaptor_Curve&          C,
     {
       continue;
     }
-    if (aCurveType == GeomAbs_BSplineCurve || aCurveType == GeomAbs_BezierCurve
-        || aCurveType == GeomAbs_OffsetCurve || aCurveType == GeomAbs_Ellipse
-        || aCurveType == GeomAbs_OtherCurve)
+    if (aCurveType == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCurveType == GeomAbs_CurveType::GeomAbs_BezierCurve
+        || aCurveType == GeomAbs_CurveType::GeomAbs_OffsetCurve || aCurveType == GeomAbs_CurveType::GeomAbs_Ellipse
+        || aCurveType == GeomAbs_CurveType::GeomAbs_OtherCurve)
     { // modified by NIZNHY-PKV Fri Sep 24 09:52:42 2004ft
       continue;
     }
@@ -331,34 +331,34 @@ int IntTools::Parameter(const gp_Pnt& aP, const occ::handle<Geom_Curve>& aCurve,
   switch (aCurveType)
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       gp_Lin aLin = aGAC.Line();
       aParameter  = ElCLib::Parameter(aLin, aP);
       return 0;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       gp_Circ aCircle = aGAC.Circle();
       aParameter      = ElCLib::Parameter(aCircle, aP);
       return 0;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       gp_Elips aElips = aGAC.Ellipse();
       aParameter      = ElCLib::Parameter(aElips, aP);
       return 0;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       gp_Hypr aHypr = aGAC.Hyperbola();
       aParameter    = ElCLib::Parameter(aHypr, aP);
       return 0;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       gp_Parab aParab = aGAC.Parabola();
       aParameter      = ElCLib::Parameter(aParab, aP);
       return 0;
     }
 
-    case GeomAbs_BezierCurve:
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       GeomAPI_ProjectPointOnCurve aProjector;
 
       aProjector.Init(aP, aCurve, aFirst, aLast);

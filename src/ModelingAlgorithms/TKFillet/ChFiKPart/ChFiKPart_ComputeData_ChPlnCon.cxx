@@ -68,9 +68,9 @@ bool ChFiKPart_MakeChamfer(TopOpeBRepDS_DataStructure&         DStr,
   double Dis1 = theDis1, Dis2 = theDis2;
   double Alpha        = M_PI / 2 - angcon;
   double CosHalfAlpha = std::cos(Alpha / 2);
-  if (theMode == ChFiDS_ConstThroatChamfer)
+  if (theMode == ChFiDS_ChamfMode::ChFiDS_ConstThroatChamfer)
     Dis1 = Dis2 = theDis1 / CosHalfAlpha;
-  else if (theMode == ChFiDS_ConstThroatWithPenetrationChamfer)
+  else if (theMode == ChFiDS_ChamfMode::ChFiDS_ConstThroatWithPenetrationChamfer)
   {
     double aDis1    = std::min(theDis1, theDis2);
     double aDis2    = std::max(theDis1, theDis2);

@@ -396,7 +396,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
   NCollection_Sequence<double>                  LparSeq;
   NCollection_Sequence<double>                  TolSeq;
   NCollection_Sequence<bool>                    IsFwdSeq;
-  GeomAbs_CurveType                             CurType = GeomAbs_OtherCurve;
+  GeomAbs_CurveType                             CurType = GeomAbs_CurveType::GeomAbs_OtherCurve;
   TopoDS_Vertex                                 FirstVertex, LastVertex;
 
   BRepTools_WireExplorer wexp(theWire);
@@ -449,7 +449,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
       {
         switch (aType)
         {
-          case GeomAbs_Line: {
+          case GeomAbs_CurveType::GeomAbs_Line: {
             gp_Lin aLine    = aGACurve.Line();
             gp_Lin PrevLine = GAprevcurve.Line();
 
@@ -465,7 +465,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
             }
             break;
           }
-          case GeomAbs_Circle: {
+          case GeomAbs_CurveType::GeomAbs_Circle: {
             gp_Circ aCircle    = aGACurve.Circle();
             gp_Circ PrevCircle = GAprevcurve.Circle();
 
@@ -482,7 +482,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
             }
             break;
           }
-          case GeomAbs_Ellipse: {
+          case GeomAbs_CurveType::GeomAbs_Ellipse: {
             gp_Elips anEllipse   = aGACurve.Ellipse();
             gp_Elips PrevEllipse = GAprevcurve.Ellipse();
 
@@ -501,7 +501,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
             }
             break;
           }
-          case GeomAbs_Hyperbola: {
+          case GeomAbs_CurveType::GeomAbs_Hyperbola: {
             gp_Hypr aHypr    = aGACurve.Hyperbola();
             gp_Hypr PrevHypr = GAprevcurve.Hyperbola();
 
@@ -520,7 +520,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
             }
             break;
           }
-          case GeomAbs_Parabola: {
+          case GeomAbs_CurveType::GeomAbs_Parabola: {
             gp_Parab aParab    = aGACurve.Parabola();
             gp_Parab PrevParab = GAprevcurve.Parabola();
 

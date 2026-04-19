@@ -80,7 +80,7 @@ IntAna_Curve::IntAna_Curve()
       RestrictedSup(false),
       firstbounded(false),
       lastbounded(false),
-      typequadric(GeomAbs_OtherSurface),
+      typequadric(GeomAbs_SurfaceType::GeomAbs_OtherSurface),
       RCyl(0.0),
       Angle(0.0),
       myFirstParameter(0.0),
@@ -116,7 +116,7 @@ void IntAna_Curve::SetConeQuadValues(const gp_Cone& Cone,
   Angle               = Cone.SemiAngle();
   double UnSurTgAngle = 1.0 / (std::tan(Cone.SemiAngle()));
 
-  typequadric = GeomAbs_Cone;
+  typequadric = GeomAbs_SurfaceType::GeomAbs_Cone;
 
   TwoCurves     = twocurves;     //-- two Z values for the same parameter
   TakeZPositive = takezpositive; //-- Take the positive Z on the curve
@@ -178,7 +178,7 @@ void IntAna_Curve::SetCylinderQuadValues(const gp_Cylinder& Cyl,
 
   Ax3         = Cyl.Position();
   RCyl        = Cyl.Radius();
-  typequadric = GeomAbs_Cylinder;
+  typequadric = GeomAbs_SurfaceType::GeomAbs_Cylinder;
 
   TwoCurves       = twocurves;     //-- two Z values for the same parameter
   TakeZPositive   = takezpositive; //-- Take the positive Z on the curve
@@ -445,13 +445,13 @@ void IntAna_Curve::FindParameter(const gp_Pnt& theP, NCollection_List<double>& t
   //
   switch (typequadric)
   {
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       double aZ;
       ElSLib::CylinderParameters(Ax3, RCyl, theP, aTheta, aZ);
     }
     break;
 
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       double aZ;
       ElSLib::ConeParameters(Ax3, RCyl, Angle, theP, aTheta, aZ);
     }
@@ -533,7 +533,7 @@ gp_Pnt IntAna_Curve::InternalValue(const double U, const double _V) const
 
   switch (typequadric)
   {
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       //------------------------------------------------
       //-- Parametrage : X = V * std::cos(U)              ---
       //--               Y = V * std::sin(U)              ---
@@ -544,9 +544,9 @@ gp_Pnt IntAna_Curve::InternalValue(const double U, const double _V) const
     }
     break;
 
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       return (ElSLib::CylinderValue(U, V, Ax3, RCyl));
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       return (ElSLib::SphereValue(U, V, Ax3, RCyl));
     default:
       return (gp_Pnt(0.0, 0.0, 0.0));

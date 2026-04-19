@@ -41,11 +41,11 @@ double IntCurve_ProjectOnPConicTool::FindParameter(const IntCurve_PConic& ThePCo
   switch (ThePConic.TypeCurve())
   {
 
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       Param = ElCLib::LineParameter(ThePConic.Axis2().XAxis(), P);
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       Param = ElCLib::CircleParameter(ThePConic.Axis2(), P);
       if (Param < 0.0)
       {
@@ -53,7 +53,7 @@ double IntCurve_ProjectOnPConicTool::FindParameter(const IntCurve_PConic& ThePCo
       }
       break;
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       Param =
         ElCLib::EllipseParameter(ThePConic.Axis2(), ThePConic.Param1(), ThePConic.Param2(), P);
       if (Param < 0.0)
@@ -63,11 +63,11 @@ double IntCurve_ProjectOnPConicTool::FindParameter(const IntCurve_PConic& ThePCo
       break;
     }
 
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       Param = ElCLib::ParabolaParameter(ThePConic.Axis2(), P);
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       Param =
         ElCLib::HyperbolaParameter(ThePConic.Axis2(), ThePConic.Param1(), ThePConic.Param2(), P);
       break;
@@ -97,11 +97,11 @@ double IntCurve_ProjectOnPConicTool::FindParameter(const IntCurve_PConic& ThePCo
   switch (ThePConic.TypeCurve())
   {
 
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       Param = ElCLib::LineParameter(ThePConic.Axis2().XAxis(), P);
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       Param = ElCLib::CircleParameter(ThePConic.Axis2(), P);
       if (Param < 0.0)
       {
@@ -109,7 +109,7 @@ double IntCurve_ProjectOnPConicTool::FindParameter(const IntCurve_PConic& ThePCo
       }
       break;
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       Param =
         ElCLib::EllipseParameter(ThePConic.Axis2(), ThePConic.Param1(), ThePConic.Param2(), P);
       if (Param < 0.0)
@@ -119,11 +119,11 @@ double IntCurve_ProjectOnPConicTool::FindParameter(const IntCurve_PConic& ThePCo
       break;
     }
 
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       Param = ElCLib::ParabolaParameter(ThePConic.Axis2(), P);
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       Param =
         ElCLib::HyperbolaParameter(ThePConic.Axis2(), ThePConic.Param1(), ThePConic.Param2(), P);
       break;

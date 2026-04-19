@@ -333,7 +333,7 @@ static void reparamBSpline(occ::handle<Geom_Curve>& curve, const double First, c
   {
     if (curve->FirstParameter() < First || curve->LastParameter() > Last)
       curve = new Geom_TrimmedCurve(curve, First, Last);
-    bscurve = GeomConvert::CurveToBSplineCurve(curve, Convert_RationalC1);
+    bscurve = GeomConvert::CurveToBSplineCurve(curve, Convert_ParameterisationType::Convert_RationalC1);
   }
   else
   {
@@ -612,7 +612,7 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferRuledSurface(
       {
         if (curve->FirstParameter() < First || curve->LastParameter() > Last)
           curve = new Geom_TrimmedCurve(curve, First, Last);
-        bscurve = GeomConvert::CurveToBSplineCurve(curve, Convert_RationalC1);
+        bscurve = GeomConvert::CurveToBSplineCurve(curve, Convert_ParameterisationType::Convert_RationalC1);
       }
       else
       {

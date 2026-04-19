@@ -72,9 +72,9 @@ occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeFaceCu
   const occ::handle<Geom2d_Curve>& PC)
 {
   return new TopOpeBRepDS_SurfaceCurveInterference(Transition,
-                                                   TopOpeBRepDS_FACE,
+                                                   TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
                                                    FaceI,
-                                                   TopOpeBRepDS_CURVE,
+                                                   TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE,
                                                    CurveI,
                                                    PC);
 }
@@ -87,9 +87,9 @@ occ::handle<TopOpeBRepDS_Interference> TopOpeBRepDS_InterferenceTool::MakeSolidS
   const int                      SurfaceI)
 {
   return new TopOpeBRepDS_SolidSurfaceInterference(Transition,
-                                                   TopOpeBRepDS_SOLID,
+                                                   TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID,
                                                    SolidI,
-                                                   TopOpeBRepDS_SURFACE,
+                                                   TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE,
                                                    SurfaceI);
 }
 

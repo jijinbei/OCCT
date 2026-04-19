@@ -201,7 +201,7 @@ void BRepCheck_Solid::Minimum()
   occ::handle<NCollection_Shared<NCollection_List<BRepCheck_Status>>> aNewList =
     new NCollection_Shared<NCollection_List<BRepCheck_Status>>();
   NCollection_List<BRepCheck_Status>& aLST = **myMap.Bound(myShape, aNewList);
-  aLST.Append(BRepCheck_NoError);
+  aLST.Append(BRepCheck_Status::BRepCheck_NoError);
   //
   //-------------------------------------------------
   // 1. InvalidImbricationOfShells
@@ -212,7 +212,7 @@ void BRepCheck_Solid::Minimum()
     const TopoDS_Shape& aF = aExp.Current();
     if (!aMSS.Add(aF))
     {
-      BRepCheck::Add(aLST, BRepCheck_InvalidImbricationOfShells);
+      BRepCheck::Add(aLST, BRepCheck_Status::BRepCheck_InvalidImbricationOfShells);
       bFound = !bFound;
     }
   }
@@ -233,7 +233,7 @@ void BRepCheck_Solid::Minimum()
       aOr = aSx.Orientation();
       if (aOr != TopAbs_INTERNAL)
       {
-        BRepCheck::Add(aLST, BRepCheck_BadOrientationOfSubshape);
+        BRepCheck::Add(aLST, BRepCheck_Status::BRepCheck_BadOrientationOfSubshape);
       }
       continue;
     }
@@ -278,7 +278,7 @@ void BRepCheck_Solid::Minimum()
   if (!iCntSh && iCntShInt)
   {
     // all shells in the solid are internal
-    BRepCheck::Add(aLST, BRepCheck_BadOrientationOfSubshape);
+    BRepCheck::Add(aLST, BRepCheck_Status::BRepCheck_BadOrientationOfSubshape);
   }
   //
   aNbVTS = aVTS.Size();
@@ -300,7 +300,7 @@ void BRepCheck_Solid::Minimum()
       if (aNbVTS1 > 1)
       {
         // Too many growths
-        BRepCheck::Add(aLST, BRepCheck_EnclosedRegion);
+        BRepCheck::Add(aLST, BRepCheck_Status::BRepCheck_EnclosedRegion);
         break;
       }
     }
@@ -320,7 +320,7 @@ void BRepCheck_Solid::Minimum()
       if (bFlag)
       {
         // smt of solid is out of solid
-        BRepCheck::Add(aLST, BRepCheck_SubshapeNotInShape);
+        BRepCheck::Add(aLST, BRepCheck_Status::BRepCheck_SubshapeNotInShape);
         bFound = !bFound;
       }
     }

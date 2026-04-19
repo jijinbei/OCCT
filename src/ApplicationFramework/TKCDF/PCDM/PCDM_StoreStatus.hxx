@@ -18,9 +18,9 @@
 #define _PCDM_StoreStatus_HeaderFile
 
 //! Status of storage of a document on disk.
-//! If it is PCDM_SS_OK, the document is successfully saved on disk.
+//! If it is PCDM_StoreStatus::PCDM_SS_OK, the document is successfully saved on disk.
 //! Else - there is an error.
-enum PCDM_StoreStatus
+enum class PCDM_StoreStatus
 {
   PCDM_SS_OK,                 //!< Document is saved successfully
   PCDM_SS_DriverFailure,      //!< Storage driver is not found

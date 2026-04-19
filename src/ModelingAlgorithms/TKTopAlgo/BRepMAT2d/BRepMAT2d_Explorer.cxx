@@ -497,7 +497,7 @@ TopoDS_Edge MakeEdge(const occ::handle<Geom2d_Curve>& theCurve,
 
 GeomAbs_CurveType GetCurveType(const occ::handle<Geom2d_Curve>& theC2d)
 {
-  GeomAbs_CurveType          aTypeCurve = GeomAbs_OtherCurve;
+  GeomAbs_CurveType          aTypeCurve = GeomAbs_CurveType::GeomAbs_OtherCurve;
   occ::handle<Standard_Type> TheType    = theC2d->DynamicType();
   if (TheType == STANDARD_TYPE(Geom2d_TrimmedCurve))
   {
@@ -506,39 +506,39 @@ GeomAbs_CurveType GetCurveType(const occ::handle<Geom2d_Curve>& theC2d)
 
   if (TheType == STANDARD_TYPE(Geom2d_Circle))
   {
-    aTypeCurve = GeomAbs_Circle;
+    aTypeCurve = GeomAbs_CurveType::GeomAbs_Circle;
   }
   else if (TheType == STANDARD_TYPE(Geom2d_Line))
   {
-    aTypeCurve = GeomAbs_Line;
+    aTypeCurve = GeomAbs_CurveType::GeomAbs_Line;
   }
   else if (TheType == STANDARD_TYPE(Geom2d_Ellipse))
   {
-    aTypeCurve = GeomAbs_Ellipse;
+    aTypeCurve = GeomAbs_CurveType::GeomAbs_Ellipse;
   }
   else if (TheType == STANDARD_TYPE(Geom2d_Parabola))
   {
-    aTypeCurve = GeomAbs_Parabola;
+    aTypeCurve = GeomAbs_CurveType::GeomAbs_Parabola;
   }
   else if (TheType == STANDARD_TYPE(Geom2d_Hyperbola))
   {
-    aTypeCurve = GeomAbs_Hyperbola;
+    aTypeCurve = GeomAbs_CurveType::GeomAbs_Hyperbola;
   }
   else if (TheType == STANDARD_TYPE(Geom2d_BezierCurve))
   {
-    aTypeCurve = GeomAbs_BezierCurve;
+    aTypeCurve = GeomAbs_CurveType::GeomAbs_BezierCurve;
   }
   else if (TheType == STANDARD_TYPE(Geom2d_BSplineCurve))
   {
-    aTypeCurve = GeomAbs_BSplineCurve;
+    aTypeCurve = GeomAbs_CurveType::GeomAbs_BSplineCurve;
   }
   else if (TheType == STANDARD_TYPE(Geom2d_OffsetCurve))
   {
-    aTypeCurve = GeomAbs_OffsetCurve;
+    aTypeCurve = GeomAbs_CurveType::GeomAbs_OffsetCurve;
   }
   else
   {
-    aTypeCurve = GeomAbs_OtherCurve;
+    aTypeCurve = GeomAbs_CurveType::GeomAbs_OtherCurve;
   }
   return aTypeCurve;
 }
@@ -550,7 +550,7 @@ occ::handle<Geom2d_TrimmedCurve> AdjustCurveEnd(const occ::handle<Geom2d_Bounded
                                                 const bool                              isFirst)
 {
   GeomAbs_CurveType aType = GetCurveType(theC2d);
-  if (aType == GeomAbs_Line)
+  if (aType == GeomAbs_CurveType::GeomAbs_Line)
   {
     // create new line
     if (isFirst)
@@ -568,7 +568,7 @@ occ::handle<Geom2d_TrimmedCurve> AdjustCurveEnd(const occ::handle<Geom2d_Bounded
   {
     // Convert to BSpline and adjust first pole
     occ::handle<Geom2d_BSplineCurve> BCurve =
-      Geom2dConvert::CurveToBSplineCurve(theC2d, Convert_QuasiAngular);
+      Geom2dConvert::CurveToBSplineCurve(theC2d, Convert_ParameterisationType::Convert_QuasiAngular);
     if (isFirst)
     {
       BCurve->SetPole(1, theP);

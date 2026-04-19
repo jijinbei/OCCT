@@ -373,7 +373,7 @@ static void Perform(BRepIntCurveSurface_Inter&            theInt,
 
     switch (theInt.Transition())
     {
-      case IntCurveSurface_In:
+      case IntCurveSurface_TransitionOnCurve::IntCurveSurface_In:
         if (orface == TopAbs_FORWARD)
         {
           theor = TopAbs_FORWARD;
@@ -387,7 +387,7 @@ static void Perform(BRepIntCurveSurface_Inter&            theInt,
           theor = TopAbs_EXTERNAL;
         }
         break;
-      case IntCurveSurface_Out:
+      case IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out:
         if (orface == TopAbs_FORWARD)
         {
           theor = TopAbs_REVERSED;
@@ -401,7 +401,7 @@ static void Perform(BRepIntCurveSurface_Inter&            theInt,
           theor = TopAbs_EXTERNAL;
         }
         break;
-      case IntCurveSurface_Tangent:
+      case IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent:
         theor = TopAbs_EXTERNAL;
         break;
     }

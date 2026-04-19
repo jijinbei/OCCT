@@ -37,7 +37,7 @@ Extrema_ExtSS::Extrema_ExtSS()
       myvsup2(0.0),
       mytolS1(0.0),
       mytolS2(0.0),
-      myStype(GeomAbs_OtherSurface)
+      myStype(GeomAbs_SurfaceType::GeomAbs_OtherSurface)
 {
 }
 
@@ -119,11 +119,11 @@ void Extrema_ExtSS::Perform(const Adaptor3d_Surface& S1,
   switch (myS1type)
   {
 
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
 
       switch (myStype)
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_SurfaceType::GeomAbs_Plane: {
           myExtElSS.Perform(S1.Plane(), myS2->Plane());
         }
         break;

@@ -231,7 +231,7 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
         GC->Range(f, l);
         if (SameRange && (f != First || l != Last))
         {
-          return; // BRepCheck_InvalidSameRangeFlag;
+          return; // BRepCheck_Status::BRepCheck_InvalidSameRangeFlag;
         }
 
         occ::handle<Geom_Surface> Sb = cr->Surface();
@@ -278,7 +278,7 @@ void CorrectEdgeTolerance(const TopoDS_Edge& myShape, const TopoDS_Face& S, cons
       }
       if (P.IsNull())
       {         // not a plane
-        return; // BRepCheck::Add(lst,BRepCheck_NoCurveOnSurface);
+        return; // BRepCheck::Add(lst,BRepCheck_Status::BRepCheck_NoCurveOnSurface);
       }
       else
       { // on fait la projection a la volee, comme BRep_Tool
@@ -534,7 +534,7 @@ bool TopOpeBRepBuild_Tools::CheckFaceClosed2d(const TopoDS_Face& theFace)
     const TopoDS_Wire& aW = TopoDS::Wire(ex.Current());
     BRepCheck_Wire     aWChk(aW);
     BRepCheck_Status   aStatus = aWChk.Orientation(theFace);
-    if (aStatus != BRepCheck_NoError)
+    if (aStatus != BRepCheck_Status::BRepCheck_NoError)
       isClosed = false;
   }
   return isClosed;

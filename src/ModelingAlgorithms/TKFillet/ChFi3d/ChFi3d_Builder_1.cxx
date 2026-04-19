@@ -301,7 +301,7 @@ static TopoDS_Edge MakeOffsetEdge(const TopoDS_Edge&         theEdge,
 
 static TopOpeBRepDS_BuildTool mkbuildtool()
 {
-  TopOpeBRepTool_GeomTool GT2(TopOpeBRepTool_BSPLINE1, true, false, false);
+  TopOpeBRepTool_GeomTool GT2(TopOpeBRepTool_OutCurveType::TopOpeBRepTool_BSPLINE1, true, false, false);
   TopOpeBRepDS_BuildTool  BT(GT2);
   BT.OverWrite(false);
   BT.Translate(false);
@@ -684,7 +684,7 @@ void ChFi3d_Builder::PerformExtremity(const occ::handle<ChFiDS_Spine>& Spine)
       Spine->SetTangencyExtremity(true, (ii == 1));
     }
 
-    if (sst == ChFiDS_BreakPoint)
+    if (sst == ChFiDS_State::ChFiDS_BreakPoint)
     {
       int                                                    aLocNbG1Connections = 0;
       NCollection_List<TopoDS_Shape>::Iterator               It; //,Jt;
@@ -777,7 +777,7 @@ void ChFi3d_Builder::PerformExtremity(const occ::handle<ChFiDS_Spine>& Spine)
     nbf -= NbG1Connections;
     if (nbf > 3)
     {
-      Spine->SetFirstStatus(ChFiDS_BreakPoint);
+      Spine->SetFirstStatus(ChFiDS_State::ChFiDS_BreakPoint);
     }
     nbf = 0, jf = 0;
     for (It.Initialize(myVFMap(Spine->LastVertex())); It.More(); It.Next())
@@ -796,7 +796,7 @@ void ChFi3d_Builder::PerformExtremity(const occ::handle<ChFiDS_Spine>& Spine)
     nbf -= NbG1Connections;
     if (nbf > 3)
     {
-      Spine->SetLastStatus(ChFiDS_BreakPoint);
+      Spine->SetLastStatus(ChFiDS_State::ChFiDS_BreakPoint);
     }
   }
 }
@@ -864,7 +864,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
 
   bool         Fini = false;
   int          Nb;
-  ChFiDS_State CurSt = ChFiDS_Closed;
+  ChFiDS_State CurSt = ChFiDS_State::ChFiDS_Closed;
   if (VStart.IsSame(LVEc))
   { // case if only one edge is closed
     CEc.Initialize(Ec);
@@ -877,16 +877,16 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
     {
       if (IsFaceTangency)
       {
-        CurSt = ChFiDS_Closed;
+        CurSt = ChFiDS_State::ChFiDS_Closed;
       }
       else
       {
-        CurSt = ChFiDS_BreakPoint;
+        CurSt = ChFiDS_State::ChFiDS_BreakPoint;
       }
     }
     else
     {
-      CurSt = ChFiDS_BreakPoint;
+      CurSt = ChFiDS_State::ChFiDS_BreakPoint;
     }
     Spine->SetLastStatus(CurSt);
     Spine->SetFirstStatus(CurSt);
@@ -897,7 +897,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
     TopAbs_Orientation Or1;
     while (!Fini)
     {
-      CurSt      = ChFiDS_FreeBoundary;
+      CurSt      = ChFiDS_State::ChFiDS_FreeBoundary;
       Wl         = BRep_Tool::Parameter(LVEc, Ec);
       degeneOnEc = TangentOnVertex(LVEc, Ec, myEFMap, ta);
       CEc.Initialize(Ec);
@@ -965,12 +965,12 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
             {
               if (FaceTangency(Ev, Spine->Edges(1), LVEv))
               {
-                CurSt = ChFiDS_Closed;
+                CurSt = ChFiDS_State::ChFiDS_Closed;
                 Fini  = true;
               }
               else
               {
-                CurSt = ChFiDS_BreakPoint;
+                CurSt = ChFiDS_State::ChFiDS_BreakPoint;
                 Fini  = true;
               }
             }
@@ -982,7 +982,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
             {
             }
             if (Nbface > 1)
-              CurSt = ChFiDS_BreakPoint;
+              CurSt = ChFiDS_State::ChFiDS_BreakPoint;
             Fini = ((!rev && av1v2 < ta) || (rev && (M_PI - av1v2) < ta));
           }
         }
@@ -990,7 +990,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
       Fini = Fini || (Nb == Spine->NbEdges());
     }
     Spine->SetLastStatus(CurSt);
-    if (CurSt == ChFiDS_Closed)
+    if (CurSt == ChFiDS_State::ChFiDS_Closed)
     {
       Spine->SetFirstStatus(CurSt);
     }
@@ -1003,7 +1003,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
       FVEc      = VStart;
       while (!Fini)
       {
-        CurSt      = ChFiDS_FreeBoundary;
+        CurSt      = ChFiDS_State::ChFiDS_FreeBoundary;
         Wl         = BRep_Tool::Parameter(FVEc, Ec);
         degeneOnEc = TangentOnVertex(FVEc, Ec, myEFMap, ta);
         CEc.Initialize(Ec);
@@ -1071,7 +1071,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
               {
               }
               if (Nbface > 1)
-                CurSt = ChFiDS_BreakPoint;
+                CurSt = ChFiDS_State::ChFiDS_BreakPoint;
               Fini = ((!rev && av1v2 < ta) || (rev && (M_PI - av1v2) < ta));
             }
           }

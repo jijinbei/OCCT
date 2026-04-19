@@ -83,15 +83,15 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
 
     Invert = false;
     NbrSol = 0;
-    if ((Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle)
-        && (Type2 == GeomAbs_Line || Type2 == GeomAbs_Circle))
+    if ((Type1 == GeomAbs_CurveType::GeomAbs_Line || Type1 == GeomAbs_CurveType::GeomAbs_Circle)
+        && (Type2 == GeomAbs_CurveType::GeomAbs_Line || Type2 == GeomAbs_CurveType::GeomAbs_Circle))
     {
-      if (Type1 == GeomAbs_Circle)
+      if (Type1 == GeomAbs_CurveType::GeomAbs_Circle)
       {
         occ::handle<Geom2d_Circle> CCC1 = occ::down_cast<Geom2d_Circle>(CC1);
         gp_Circ2d                  c1(CCC1->Circ2d());
         GccEnt_QualifiedCirc       Qc1 = GccEnt_QualifiedCirc(c1, Qualified1.Qualifier());
-        if (Type2 == GeomAbs_Circle)
+        if (Type2 == GeomAbs_CurveType::GeomAbs_Circle)
         {
           occ::handle<Geom2d_Circle> CCC2 = occ::down_cast<Geom2d_Circle>(CC2);
           gp_Circ2d                  c2(CCC2->Circ2d());
@@ -144,7 +144,7 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
         else
         {
           GccEnt_QualifiedLin Ql1 = GccEnt_QualifiedLin(l1, Qualified1.Qualifier());
-          if (Type2 == GeomAbs_Circle)
+          if (Type2 == GeomAbs_CurveType::GeomAbs_Circle)
           {
             occ::handle<Geom2d_Circle> CCC2 = occ::down_cast<Geom2d_Circle>(CC2);
             gp_Circ2d                  c2(CCC2->Circ2d());
@@ -193,7 +193,7 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
     //=============================================================================
     else
     {
-      if (Type1 == GeomAbs_Line)
+      if (Type1 == GeomAbs_CurveType::GeomAbs_Line)
       {
         occ::handle<Geom2d_Line> LL1 = occ::down_cast<Geom2d_Line>(CC1);
         gp_Lin2d                 l1(LL1->Lin2d());
@@ -216,7 +216,7 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
           Results(CircGeo);
         }
       }
-      else if (Type1 == GeomAbs_Circle)
+      else if (Type1 == GeomAbs_CurveType::GeomAbs_Circle)
       {
         occ::handle<Geom2d_Circle> CCC1 = occ::down_cast<Geom2d_Circle>(CC1);
         gp_Circ2d                  c1(CCC1->Circ2d());
@@ -231,7 +231,7 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
         }
         Results(CircGeo);
       }
-      else if (Type2 == GeomAbs_Line)
+      else if (Type2 == GeomAbs_CurveType::GeomAbs_Line)
       {
         Invert                       = true;
         occ::handle<Geom2d_Line> LL2 = occ::down_cast<Geom2d_Line>(CC2);
@@ -255,7 +255,7 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
           Results(CircGeo);
         }
       }
-      else if (Type2 == GeomAbs_Circle)
+      else if (Type2 == GeomAbs_CurveType::GeomAbs_Circle)
       {
         Invert                          = true;
         occ::handle<Geom2d_Circle> CCC2 = occ::down_cast<Geom2d_Circle>(CC2);
@@ -320,9 +320,9 @@ Geom2dGcc_Circ2d2TanRad::Geom2dGcc_Circ2d2TanRad(const Geom2dGcc_QualifiedCurve&
 
     Invert = false;
     NbrSol = 0;
-    if (Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle)
+    if (Type1 == GeomAbs_CurveType::GeomAbs_Line || Type1 == GeomAbs_CurveType::GeomAbs_Circle)
     {
-      if (Type1 == GeomAbs_Circle)
+      if (Type1 == GeomAbs_CurveType::GeomAbs_Circle)
       {
         occ::handle<Geom2d_Circle> CCC1 = occ::down_cast<Geom2d_Circle>(CC1);
         gp_Circ2d                  c1(CCC1->Circ2d());

@@ -49,7 +49,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Lin&           L,
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Lin;
+  typ = IntPatch_IType::IntPatch_Lin;
   pos = gp_Pln(L.Location(), L.Direction()).Position().Ax2();
 }
 
@@ -71,7 +71,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Lin&           L,
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Lin;
+  typ = IntPatch_IType::IntPatch_Lin;
   pos = gp_Pln(L.Location(), L.Direction()).Position().Ax2();
 }
 
@@ -90,7 +90,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Lin& L, const bool Tang)
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Lin;
+  typ = IntPatch_IType::IntPatch_Lin;
   pos = gp_Pln(L.Location(), L.Direction()).Position().Ax2();
 }
 
@@ -113,7 +113,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Circ&          C,
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Circle;
+  typ = IntPatch_IType::IntPatch_Circle;
 }
 
 //=======================================================================
@@ -135,7 +135,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Circ&          C,
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Circle;
+  typ = IntPatch_IType::IntPatch_Circle;
 }
 
 //=======================================================================
@@ -154,7 +154,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Circ& C, const bool Tang)
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Circle;
+  typ = IntPatch_IType::IntPatch_Circle;
 }
 
 //=======================================================================
@@ -176,7 +176,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Elips&         E,
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Ellipse;
+  typ = IntPatch_IType::IntPatch_Ellipse;
 }
 
 //=======================================================================
@@ -198,7 +198,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Elips&         E,
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Ellipse;
+  typ = IntPatch_IType::IntPatch_Ellipse;
 }
 
 //=======================================================================
@@ -217,7 +217,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Elips& E, const bool Tang)
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Ellipse;
+  typ = IntPatch_IType::IntPatch_Ellipse;
 }
 
 //=======================================================================
@@ -239,7 +239,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Parab&         P,
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Parabola;
+  typ = IntPatch_IType::IntPatch_Parabola;
 }
 
 //=======================================================================
@@ -261,7 +261,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Parab&         P,
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Parabola;
+  typ = IntPatch_IType::IntPatch_Parabola;
 }
 
 //=======================================================================
@@ -280,7 +280,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Parab& P, const bool Tang)
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Parabola;
+  typ = IntPatch_IType::IntPatch_Parabola;
 }
 
 //=======================================================================
@@ -302,7 +302,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Hypr&          H,
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Hyperbola;
+  typ = IntPatch_IType::IntPatch_Hyperbola;
 }
 
 //=======================================================================
@@ -324,7 +324,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Hypr&          H,
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Hyperbola;
+  typ = IntPatch_IType::IntPatch_Hyperbola;
 }
 
 //=======================================================================
@@ -343,7 +343,7 @@ IntPatch_GLine::IntPatch_GLine(const gp_Hypr& H, const bool Tang)
       indf(0),
       indl(0)
 {
-  typ = IntPatch_Hyperbola;
+  typ = IntPatch_IType::IntPatch_Hyperbola;
 }
 
 //=======================================================================
@@ -370,7 +370,7 @@ void IntPatch_GLine::AddVertex(const IntPatch_Point& Pnt)
     const double pf  = (fipt ? svtx.Value(indf).ParameterOnLine() : 0.0);
     const double pl  = (lapt ? svtx.Value(indl).ParameterOnLine() : 0.0);
     double       par = Pnt.ParameterOnLine();
-    if (ArcType() == IntPatch_Circle || ArcType() == IntPatch_Ellipse)
+    if (ArcType() == IntPatch_IType::IntPatch_Circle || ArcType() == IntPatch_IType::IntPatch_Ellipse)
     {
       if (fipt && lapt)
       {
@@ -797,7 +797,7 @@ void IntPatch_GLine::ComputeVertexParameters(const double /*Tol*/)
               svtx.Remove(j);
               nbvtx--;
             } //	    else
-            else if (ArcType() == IntPatch_Circle || ArcType() == IntPatch_Ellipse) // eap
+            else if (ArcType() == IntPatch_IType::IntPatch_Circle || ArcType() == IntPatch_IType::IntPatch_Ellipse) // eap
             {
               //-- deux points de meme parametre qui ne peuvent etre confondus
               //-- On change les parametres d un des points si les points UV sont
@@ -872,7 +872,7 @@ void IntPatch_GLine::ComputeVertexParameters(const double /*Tol*/)
               };
 
               // eap
-              // if(ArcType()==IntPatch_Circle || ArcType()==IntPatch_Ellipse) {}
+              // if(ArcType()==IntPatch_IType::IntPatch_Circle || ArcType()==IntPatch_IType::IntPatch_Ellipse) {}
               if (TestOn1)
               {
                 //// modified by jgv, 2.11.01 for BUC61033 ////

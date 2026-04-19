@@ -156,28 +156,28 @@ void GeomAdaptor_TransformedSurface::initTransformedCache() const
   occ::handle<Geom_Surface> aSurface;
   switch (mySurf.GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       aSurface = isIdentity
                    ? mySurf.Surface()
                    : occ::handle<Geom_Surface>(new Geom_Plane(mySurf.Plane().Transformed(aTrsf)));
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       aSurface = isIdentity ? mySurf.Surface()
                             : occ::handle<Geom_Surface>(
                                 new Geom_CylindricalSurface(mySurf.Cylinder().Transformed(aTrsf)));
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       aSurface =
         isIdentity
           ? mySurf.Surface()
           : occ::handle<Geom_Surface>(new Geom_ConicalSurface(mySurf.Cone().Transformed(aTrsf)));
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       aSurface = isIdentity ? mySurf.Surface()
                             : occ::handle<Geom_Surface>(
                                 new Geom_SphericalSurface(mySurf.Sphere().Transformed(aTrsf)));
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       aSurface =
         isIdentity
           ? mySurf.Surface()

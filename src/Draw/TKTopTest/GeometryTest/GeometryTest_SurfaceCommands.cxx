@@ -56,7 +56,7 @@ Standard_IMPORT Draw_Viewer dout;
 
 static int sweep(Draw_Interpretor& di, int n, const char** a)
 {
-  GeomFill_Trihedron Option = GeomFill_IsCorrectedFrenet;
+  GeomFill_Trihedron Option = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet;
   int                ipath = 2, isection = 4, NbSeg = 30, MaxDegree = 10;
   double             Tol = 1.e-4;
 
@@ -66,35 +66,35 @@ static int sweep(Draw_Interpretor& di, int n, const char** a)
   if (!strcmp(a[2], "-FX"))
   {
     ipath  = 3;
-    Option = GeomFill_IsFixed;
+    Option = GeomFill_Trihedron::GeomFill_IsFixed;
   }
   if (!strcmp(a[2], "-FR"))
   {
     ipath  = 3;
-    Option = GeomFill_IsFrenet;
+    Option = GeomFill_Trihedron::GeomFill_IsFrenet;
   }
   if (!strcmp(a[2], "-CF"))
   {
     ipath  = 3;
-    Option = GeomFill_IsCorrectedFrenet;
+    Option = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet;
   }
   if (!strcmp(a[2], "-CN"))
   {
     ipath    = 3;
     isection = 7;
-    Option   = GeomFill_IsConstantNormal;
+    Option   = GeomFill_Trihedron::GeomFill_IsConstantNormal;
   }
   if (!strcmp(a[2], "-DX"))
   {
     ipath    = 3;
     isection = 5;
-    Option   = GeomFill_IsDarboux;
+    Option   = GeomFill_Trihedron::GeomFill_IsDarboux;
   }
 
   GeomFill_Pipe Pipe;
   Pipe.GenerateParticularCase(true);
 
-  if (Option == GeomFill_IsDarboux)
+  if (Option == GeomFill_Trihedron::GeomFill_IsDarboux)
   {
     occ::handle<Geom2d_Curve> path = DrawTrSurf::GetCurve2d(a[ipath]);
     if (path.IsNull())
@@ -110,7 +110,7 @@ static int sweep(Draw_Interpretor& di, int n, const char** a)
 
     Pipe.Init(path, Support, firstS);
   }
-  else if (Option == GeomFill_IsConstantNormal)
+  else if (Option == GeomFill_Trihedron::GeomFill_IsConstantNormal)
   {
     gp_Dir                  D(Draw::Atof(a[3]), Draw::Atof(a[4]), Draw::Atof(a[5]));
     occ::handle<Geom_Curve> path   = DrawTrSurf::GetCurve(a[6]);
@@ -192,7 +192,7 @@ static int tuyau(Draw_Interpretor& di, int n, const char** a)
     if (narg == 4)
     {
       // tuyau a section constante.
-      Pipe.Init(path, firstS, GeomFill_IsCorrectedFrenet);
+      Pipe.Init(path, firstS, GeomFill_Trihedron::GeomFill_IsCorrectedFrenet);
     }
     else
     {
@@ -337,20 +337,20 @@ static int fillcurves(Draw_Interpretor& /*di*/, int n, const char** a)
     aC = DrawTrSurf::GetCurve(a[i]);
     if (aC.IsNull())
       return 1;
-    C[i - 2] = GeomConvert::CurveToBSplineCurve(aC, Convert_RationalC1);
+    C[i - 2] = GeomConvert::CurveToBSplineCurve(aC, Convert_ParameterisationType::Convert_RationalC1);
   }
 
   int                   ist   = 2;
-  GeomFill_FillingStyle Style = GeomFill_CoonsStyle;
+  GeomFill_FillingStyle Style = GeomFill_FillingStyle::GeomFill_CoonsStyle;
   if (n > 6)
     ist = Draw::Atoi(a[6]);
 
   if (ist == 1)
-    Style = GeomFill_StretchStyle;
+    Style = GeomFill_FillingStyle::GeomFill_StretchStyle;
   if (ist == 2)
-    Style = GeomFill_CoonsStyle;
+    Style = GeomFill_FillingStyle::GeomFill_CoonsStyle;
   if (ist == 3)
-    Style = GeomFill_CurvedStyle;
+    Style = GeomFill_FillingStyle::GeomFill_CurvedStyle;
 
   GeomFill_BSplineCurves aFilling(C[0], C[1], C[2], C[3], Style);
 

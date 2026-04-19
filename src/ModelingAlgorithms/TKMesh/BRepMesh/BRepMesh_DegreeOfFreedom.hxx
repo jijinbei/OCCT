@@ -14,7 +14,7 @@
 #ifndef _BRepMesh_DegreeOfFreedom_HeaderFile
 #define _BRepMesh_DegreeOfFreedom_HeaderFile
 
-enum BRepMesh_DegreeOfFreedom
+enum class BRepMesh_DegreeOfFreedom
 {
   BRepMesh_Free,
   BRepMesh_InVolume,

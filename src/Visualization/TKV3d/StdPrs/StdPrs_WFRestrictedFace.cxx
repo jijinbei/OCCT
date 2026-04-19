@@ -117,7 +117,7 @@ void StdPrs_WFRestrictedFace::Add(
     const Adaptor2d_Curve2d* aRCurve       = &aToolRst.Value();
     anU1                                   = aRCurve->FirstParameter();
     anU2                                   = aRCurve->LastParameter();
-    if (aRCurve->GetType() != GeomAbs_Line)
+    if (aRCurve->GetType() != GeomAbs_CurveType::GeomAbs_Line)
     {
       aDU     = (anU2 - anU1) / (aNbPoints - 1);
       aPoint2 = aRCurve->Value(anU1);
@@ -152,11 +152,11 @@ void StdPrs_WFRestrictedFace::Add(
 
   int                       aNbLines = anIsoBuild.NbLines();
   occ::handle<Geom_Surface> aGeomBSurface;
-  if (aFaceType == GeomAbs_BezierSurface)
+  if (aFaceType == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     aGeomBSurface = aBSurface.Bezier();
   }
-  else if (aFaceType == GeomAbs_BSplineSurface)
+  else if (aFaceType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     aGeomBSurface = aBSurface.BSpline();
   }
@@ -199,11 +199,11 @@ void StdPrs_WFRestrictedFace::Add(
       {
         if (anIsoBuild.IsXLine(anI))
         {
-          anIsoCurve.Load(GeomAbs_IsoU, anIsoCoord, b1, b2);
+          anIsoCurve.Load(GeomAbs_IsoType::GeomAbs_IsoU, anIsoCoord, b1, b2);
         }
         else
         {
-          anIsoCurve.Load(GeomAbs_IsoV, anIsoCoord, b1, b2);
+          anIsoCurve.Load(GeomAbs_IsoType::GeomAbs_IsoV, anIsoCoord, b1, b2);
         }
         StdPrs_Curve::Add(thePresentation, anIsoCurve, theDrawer, aPoints->ChangeSequence(), false);
         theCurves.Append(aPoints);
@@ -243,7 +243,7 @@ bool StdPrs_WFRestrictedFace::Match(const double                            theX
     const Adaptor2d_Curve2d* aRCurve = &aToolRst.Value();
     anU                              = aRCurve->FirstParameter();
     aV                               = aRCurve->LastParameter();
-    if (aRCurve->GetType() != GeomAbs_Line)
+    if (aRCurve->GetType() != GeomAbs_CurveType::GeomAbs_Line)
     {
       aStep = (aV - anU) / anNbP;
       for (anI = 0; anI <= anNbP; ++anI)
@@ -335,7 +335,7 @@ bool StdPrs_WFRestrictedFace::Match(const double                            theX
     const Adaptor2d_Curve2d* aRCurve = &aToolRst.Value();
     anU1                             = aRCurve->FirstParameter();
     anU2                             = aRCurve->LastParameter();
-    if (aRCurve->GetType() != GeomAbs_Line)
+    if (aRCurve->GetType() != GeomAbs_CurveType::GeomAbs_Line)
     {
       aDU     = (anU2 - anU1) / (aNbPoints - 1);
       aPoint2 = aRCurve->Value(anU1);
@@ -379,9 +379,9 @@ bool StdPrs_WFRestrictedFace::Match(const double                            theX
       anIsoEnd   = anIsoEnd == RealLast() ? aLimit : anIsoEnd;
 
       if (anIsoBuild.IsXLine(anI))
-        anIso.Load(GeomAbs_IsoU, aCoord, anIsoStart, anIsoEnd);
+        anIso.Load(GeomAbs_IsoType::GeomAbs_IsoU, aCoord, anIsoStart, anIsoEnd);
       else
-        anIso.Load(GeomAbs_IsoV, aCoord, anIsoStart, anIsoEnd);
+        anIso.Load(GeomAbs_IsoType::GeomAbs_IsoV, aCoord, anIsoStart, anIsoEnd);
 
       if (StdPrs_Curve::Match(theX,
                               theY,

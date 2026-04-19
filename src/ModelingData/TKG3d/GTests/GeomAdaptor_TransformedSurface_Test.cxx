@@ -169,7 +169,7 @@ TEST(GeomAdaptor_TransformedSurfaceTest, LoadRebuildsCache)
 
   const occ::handle<Geom_Surface> aSecond = anAdaptor.GeomSurfaceTransformed();
   EXPECT_NE(aFirst, aSecond);
-  EXPECT_EQ(anAdaptor.GetType(), GeomAbs_Sphere);
+  EXPECT_EQ(anAdaptor.GetType(), GeomAbs_SurfaceType::GeomAbs_Sphere);
   EXPECT_NEAR(anAdaptor.Sphere().Radius(), 3.0, THE_TOLERANCE);
 }
 
@@ -190,7 +190,7 @@ TEST(GeomAdaptor_TransformedSurfaceTest, ExtrusionCachesDirectionAndBasisCurve)
 
   const occ::handle<Adaptor3d_Curve> aCurve = anAdaptor.BasisCurve();
   ASSERT_FALSE(aCurve.IsNull());
-  EXPECT_EQ(aCurve->GetType(), GeomAbs_Line);
+  EXPECT_EQ(aCurve->GetType(), GeomAbs_CurveType::GeomAbs_Line);
 }
 
 //=================================================================================================
@@ -210,7 +210,7 @@ TEST(GeomAdaptor_TransformedSurfaceTest, RevolutionCachesAxisAndBasisCurve)
 
   const occ::handle<Adaptor3d_Curve> aCurve = anAdaptor.BasisCurve();
   ASSERT_FALSE(aCurve.IsNull());
-  EXPECT_EQ(aCurve->GetType(), GeomAbs_Line);
+  EXPECT_EQ(aCurve->GetType(), GeomAbs_CurveType::GeomAbs_Line);
 }
 
 //=================================================================================================
@@ -224,7 +224,7 @@ TEST(GeomAdaptor_TransformedSurfaceTest, OffsetCachesBasisSurfaceAndOffsetValue)
 
   const occ::handle<Adaptor3d_Surface> aBasis = anAdaptor.BasisSurface();
   ASSERT_FALSE(aBasis.IsNull());
-  EXPECT_EQ(aBasis->GetType(), GeomAbs_Plane);
+  EXPECT_EQ(aBasis->GetType(), GeomAbs_SurfaceType::GeomAbs_Plane);
   EXPECT_NEAR(anAdaptor.OffsetValue(), 2.5, THE_TOLERANCE);
 }
 

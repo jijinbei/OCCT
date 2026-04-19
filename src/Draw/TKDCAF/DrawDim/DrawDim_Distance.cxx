@@ -83,7 +83,7 @@ void DrawDim_Distance::DrawOn(Draw_Display& dis) const
   BRepAdaptor_Surface surf1(myPlane1);
 
   // today we process only planar faces
-  if (surf1.GetType() != GeomAbs_Plane)
+  if (surf1.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
     return;
 
   gp_Ax1 anAx1 = surf1.Plane().Axis();

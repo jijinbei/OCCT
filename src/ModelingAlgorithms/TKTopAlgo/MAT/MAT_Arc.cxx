@@ -98,7 +98,7 @@ occ::handle<MAT_Node> MAT_Arc::TheOtherNode(const occ::handle<MAT_Node>& aNode) 
 
 bool MAT_Arc::HasNeighbour(const occ::handle<MAT_Node>& aNode, const MAT_Side aSide) const
 {
-  if (aSide == MAT_Left)
+  if (aSide == MAT_Side::MAT_Left)
   {
     //    if (aNode == FirstNode())  return (!firstArcLeft  == NULL);
     if (aNode == FirstNode())
@@ -125,7 +125,7 @@ occ::handle<MAT_Arc> MAT_Arc::Neighbour(const occ::handle<MAT_Node>& aNode,
                                         const MAT_Side               aSide) const
 
 {
-  if (aSide == MAT_Left)
+  if (aSide == MAT_Side::MAT_Left)
   {
     if (aNode == FirstNode())
       return (MAT_Arc*)firstArcLeft;
@@ -188,7 +188,7 @@ void MAT_Arc::SetSecondNode(const occ::handle<MAT_Node>& aNode)
 
 void MAT_Arc::SetFirstArc(const MAT_Side aSide, const occ::handle<MAT_Arc>& anArc)
 {
-  if (aSide == MAT_Left)
+  if (aSide == MAT_Side::MAT_Left)
     firstArcLeft = anArc.get();
   else
     firstArcRight = anArc.get();
@@ -198,7 +198,7 @@ void MAT_Arc::SetFirstArc(const MAT_Side aSide, const occ::handle<MAT_Arc>& anAr
 
 void MAT_Arc::SetSecondArc(const MAT_Side aSide, const occ::handle<MAT_Arc>& anArc)
 {
-  if (aSide == MAT_Left)
+  if (aSide == MAT_Side::MAT_Left)
     secondArcLeft = anArc.get();
   else
     secondArcRight = anArc.get();
@@ -210,7 +210,7 @@ void MAT_Arc::SetNeighbour(const MAT_Side               aSide,
                            const occ::handle<MAT_Node>& aNode,
                            const occ::handle<MAT_Arc>&  anArc)
 {
-  if (aSide == MAT_Left)
+  if (aSide == MAT_Side::MAT_Left)
   {
     if (aNode == FirstNode())
       firstArcLeft = anArc.get();

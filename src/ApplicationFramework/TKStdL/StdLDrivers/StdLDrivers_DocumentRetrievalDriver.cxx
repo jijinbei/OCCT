@@ -71,9 +71,9 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
 
   // Create a driver appropriate for the given file
   occ::handle<Storage_BaseDriver> aFileDriver;
-  if (PCDM::FileDriverType(TCollection_AsciiString(theFileName), aFileDriver) == PCDM_TOFD_Unknown)
+  if (PCDM::FileDriverType(TCollection_AsciiString(theFileName), aFileDriver) == PCDM_TypeOfFileDriver::PCDM_TOFD_Unknown)
   {
-    myReaderStatus = PCDM_RS_UnknownFileDriver;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UnknownFileDriver;
     return nullptr;
   }
 
@@ -82,11 +82,11 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
   {
     OCC_CATCH_SIGNALS
     PCDM_ReadWriter::Open(aFileDriver, theFileName, Storage_VSRead);
-    myReaderStatus = PCDM_RS_OK;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_OK;
   }
   catch (Standard_Failure const& anException)
   {
-    myReaderStatus = PCDM_RS_OpenError;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_OpenError;
 
     Standard_SStream aMsg;
     aMsg << anException << std::endl;
@@ -109,7 +109,7 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
 
   if (aRootData.NumberOfRoots() < 1)
   {
-    myReaderStatus = PCDM_RS_NoDocument;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_NoDocument;
 
     Standard_SStream aMsg;
     aMsg << "could not find any document in this file" << std::endl;
@@ -152,7 +152,7 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
 
     if (!anUnknownTypes.IsEmpty())
     {
-      myReaderStatus = PCDM_RS_TypeNotFoundInSchema;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_TypeNotFoundInSchema;
 
       Standard_SStream aMsg;
       aMsg << "cannot read: `" << theFileName
@@ -263,37 +263,37 @@ void StdLDrivers_DocumentRetrievalDriver::raiseOnStorageError(Storage_Error theE
     case Storage_VSOpenError:
     case Storage_VSNotOpen:
     case Storage_VSAlreadyOpen:
-      myReaderStatus = PCDM_RS_OpenError;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_OpenError;
       aMsg << "Stream Open Error" << std::endl;
       throw Standard_Failure(aMsg.str().c_str());
 
     case Storage_VSModeError:
-      myReaderStatus = PCDM_RS_WrongStreamMode;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_WrongStreamMode;
       aMsg << "Stream is opened with a wrong mode for operation" << std::endl;
       throw Standard_Failure(aMsg.str().c_str());
 
     case Storage_VSSectionNotFound:
-      myReaderStatus = PCDM_RS_FormatFailure;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_FormatFailure;
       aMsg << "Section is not found" << std::endl;
       throw Standard_Failure(aMsg.str().c_str());
 
     case Storage_VSFormatError:
-      myReaderStatus = PCDM_RS_FormatFailure;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_FormatFailure;
       aMsg << "Wrong format error" << std::endl;
       throw Standard_Failure(aMsg.str().c_str());
 
     case Storage_VSUnknownType:
-      myReaderStatus = PCDM_RS_TypeFailure;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_TypeFailure;
       aMsg << "Try to read an unknown type" << std::endl;
       throw Standard_Failure(aMsg.str().c_str());
 
     case Storage_VSTypeMismatch:
-      myReaderStatus = PCDM_RS_TypeFailure;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_TypeFailure;
       aMsg << "Try to read a wrong primitive type" << std::endl;
       throw Standard_Failure(aMsg.str().c_str());
 
     default:
-      myReaderStatus = PCDM_RS_DriverFailure;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_DriverFailure;
       aMsg << "Retrieval Driver Failure" << std::endl;
       throw Standard_Failure(aMsg.str().c_str());
   }

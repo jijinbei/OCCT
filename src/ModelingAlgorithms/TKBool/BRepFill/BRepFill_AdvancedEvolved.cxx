@@ -187,13 +187,13 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
 
   if (aDistMin < Precision::Confusion())
   {
-    anExtrType2 = BRepExtrema_IsInFace;
+    anExtrType2 = BRepExtrema_SupportType::BRepExtrema_IsInFace;
   }
 
   switch (anExtrType2)
   {
-    case BRepExtrema_IsInFace:
-      if (anExtr.SupportTypeShape1(anIdxMin) == BRepExtrema_IsVertex)
+    case BRepExtrema_SupportType::BRepExtrema_IsInFace:
+      if (anExtr.SupportTypeShape1(anIdxMin) == BRepExtrema_SupportType::BRepExtrema_IsVertex)
       {
         const TopoDS_Vertex aV = TopoDS::Vertex(anExtr.SupportOnShape1(anIdxMin));
         NCollection_IndexedDataMap<TopoDS_Shape,
@@ -240,7 +240,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
           }
         }
       }
-      else // if (... == BRepExtrema_IsOnEdge)
+      else // if (... == BRepExtrema_SupportType::BRepExtrema_IsOnEdge)
       {
         const TopoDS_Edge       anE = TopoDS::Edge(anExtr.SupportOnShape1(anIdxMin));
         const BRepAdaptor_Curve anAC(anE);
@@ -258,8 +258,8 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
       }
       break;
 
-    case BRepExtrema_IsOnEdge:
-    case BRepExtrema_IsVertex: {
+    case BRepExtrema_SupportType::BRepExtrema_IsOnEdge:
+    case BRepExtrema_SupportType::BRepExtrema_IsVertex: {
       const BRepLib_MakeFace aMkFSpine(theSpine, true);
       if (!aMkFSpine.IsDone())
         return;
@@ -270,7 +270,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
       const gp_Vec aN1(aPlnSpine->Axis().Direction());
       gp_Vec       aTanV;
 
-      if (anExtr.SupportTypeShape2(anIdxMin) == BRepExtrema_IsVertex)
+      if (anExtr.SupportTypeShape2(anIdxMin) == BRepExtrema_SupportType::BRepExtrema_IsVertex)
       {
         const TopoDS_Vertex aV = TopoDS::Vertex(anExtr.SupportOnShape2(anIdxMin));
         NCollection_IndexedDataMap<TopoDS_Shape,
@@ -318,7 +318,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
           aTanV = aT2;
         }
       }
-      else // if(anExtr.SupportTypeShape2(anIdxMin) == BRepExtrema_IsOnEdge)
+      else // if(anExtr.SupportTypeShape2(anIdxMin) == BRepExtrema_SupportType::BRepExtrema_IsOnEdge)
       {
         const TopoDS_Edge       anE = TopoDS::Edge(anExtr.SupportOnShape2(anIdxMin));
         const BRepAdaptor_Curve anAC(anE);
@@ -485,7 +485,7 @@ void BRepFill_AdvancedEvolved::PerformSweep()
 
   occ::handle<BRepFill_PipeShell> aPipe = new BRepFill_PipeShell(mySpine);
   aPipe->SetTolerance(aPipeLinearTolerance, aPipeLinearTolerance, aPipeAngularTolerance);
-  aPipe->SetTransition(BRepFill_Round);
+  aPipe->SetTransition(BRepFill_TransitionStyle::BRepFill_Round);
   aPipe->Add(myProfile, false, false);
 
   if (aPipe->Build())
@@ -1368,12 +1368,12 @@ bool BRepFill_AdvancedEvolved::CheckSingularityAndAdd(
   const BRepAdaptor_Surface anAS(theF, false);
   GeomAbs_SurfaceType       aSType = anAS.GetType();
 
-  if (aSType == GeomAbs_OffsetSurface)
+  if (aSType == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
   {
     aSType = anAS.BasisSurface()->GetType();
   }
 
-  if (aSType == GeomAbs_Plane)
+  if (aSType == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aME;
     NCollection_List<TopoDS_Shape>                         aLE;
@@ -1436,8 +1436,8 @@ bool BRepFill_AdvancedEvolved::CheckSingularityAndAdd(
     return true;
   }
 
-  if ((aSType != GeomAbs_Cone) && (aSType != GeomAbs_Sphere) && (aSType != GeomAbs_BezierSurface)
-      && (aSType != GeomAbs_BSplineSurface) && (aSType != GeomAbs_SurfaceOfRevolution))
+  if ((aSType != GeomAbs_SurfaceType::GeomAbs_Cone) && (aSType != GeomAbs_SurfaceType::GeomAbs_Sphere) && (aSType != GeomAbs_SurfaceType::GeomAbs_BezierSurface)
+      && (aSType != GeomAbs_SurfaceType::GeomAbs_BSplineSurface) && (aSType != GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution))
   {
     theListOfFaces.Append(theF);
     return false;

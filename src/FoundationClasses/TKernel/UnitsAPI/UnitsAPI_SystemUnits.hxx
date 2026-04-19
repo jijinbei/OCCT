@@ -19,15 +19,15 @@
 
 //! Identifies unit systems which may be defined as a
 //! basis system in the user's session:
-//! -   UnitsAPI_DEFAULT : default system (this is the SI system)
-//! -   UnitsAPI_SI : the SI unit system
-//! -   UnitsAPI_MDTV : the MDTV unit system; it
+//! -   UnitsAPI_SystemUnits::UnitsAPI_DEFAULT : default system (this is the SI system)
+//! -   UnitsAPI_SystemUnits::UnitsAPI_SI : the SI unit system
+//! -   UnitsAPI_SystemUnits::UnitsAPI_MDTV : the MDTV unit system; it
 //! is equivalent to the SI unit system but the
 //! length unit and all its derivatives use
 //! millimeters instead of meters.
 //! Use the function SetLocalSystem to set up one
 //! of these unit systems as working environment.
-enum UnitsAPI_SystemUnits
+enum class UnitsAPI_SystemUnits
 {
   UnitsAPI_DEFAULT,
   UnitsAPI_SI,

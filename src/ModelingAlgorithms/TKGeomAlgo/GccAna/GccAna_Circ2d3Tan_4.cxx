@@ -105,78 +105,78 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       {
         occ::handle<GccInt_Bisec> Sol2 = Bis2.ThisSolution(k);
         GccInt_IType              typ2 = Sol2->ArcType();
-        if (typ1 == GccInt_Cir)
+        if (typ1 == GccInt_IType::GccInt_Cir)
         {
-          if (typ2 == GccInt_Cir)
+          if (typ2 == GccInt_IType::GccInt_Cir)
           {
             Intp.Perform(Sol1->Circle(), Sol2->Circle());
           }
-          else if (typ2 == GccInt_Lin)
+          else if (typ2 == GccInt_IType::GccInt_Lin)
           {
             Intp.Perform(Sol2->Line(), Sol1->Circle());
           }
-          else if (typ2 == GccInt_Hpr)
+          else if (typ2 == GccInt_IType::GccInt_Hpr)
           {
             Intp.Perform(Sol1->Circle(), IntAna2d_Conic(Sol2->Hyperbola()));
           }
-          else if (typ2 == GccInt_Ell)
+          else if (typ2 == GccInt_IType::GccInt_Ell)
           {
             Intp.Perform(Sol1->Circle(), IntAna2d_Conic(Sol2->Ellipse()));
           }
         }
-        else if (typ1 == GccInt_Ell)
+        else if (typ1 == GccInt_IType::GccInt_Ell)
         {
-          if (typ2 == GccInt_Cir)
+          if (typ2 == GccInt_IType::GccInt_Cir)
           {
             Intp.Perform(Sol2->Circle(), IntAna2d_Conic(Sol1->Ellipse()));
           }
-          else if (typ2 == GccInt_Lin)
+          else if (typ2 == GccInt_IType::GccInt_Lin)
           {
             Intp.Perform(Sol2->Line(), IntAna2d_Conic(Sol1->Ellipse()));
           }
-          else if (typ2 == GccInt_Hpr)
+          else if (typ2 == GccInt_IType::GccInt_Hpr)
           {
             Intp.Perform(Sol1->Ellipse(), IntAna2d_Conic(Sol2->Hyperbola()));
           }
-          else if (typ2 == GccInt_Ell)
+          else if (typ2 == GccInt_IType::GccInt_Ell)
           {
             Intp.Perform(Sol1->Ellipse(), IntAna2d_Conic(Sol2->Ellipse()));
           }
         }
-        else if (typ1 == GccInt_Lin)
+        else if (typ1 == GccInt_IType::GccInt_Lin)
         {
-          if (typ2 == GccInt_Cir)
+          if (typ2 == GccInt_IType::GccInt_Cir)
           {
             Intp.Perform(Sol1->Line(), Sol2->Circle());
           }
-          else if (typ2 == GccInt_Lin)
+          else if (typ2 == GccInt_IType::GccInt_Lin)
           {
             Intp.Perform(Sol1->Line(), Sol2->Line());
           }
-          else if (typ2 == GccInt_Hpr)
+          else if (typ2 == GccInt_IType::GccInt_Hpr)
           {
             Intp.Perform(Sol1->Line(), IntAna2d_Conic(Sol2->Hyperbola()));
           }
-          else if (typ2 == GccInt_Ell)
+          else if (typ2 == GccInt_IType::GccInt_Ell)
           {
             Intp.Perform(Sol1->Line(), IntAna2d_Conic(Sol2->Ellipse()));
           }
         }
-        else if (typ1 == GccInt_Hpr)
+        else if (typ1 == GccInt_IType::GccInt_Hpr)
         {
-          if (typ2 == GccInt_Cir)
+          if (typ2 == GccInt_IType::GccInt_Cir)
           {
             Intp.Perform(Sol2->Circle(), IntAna2d_Conic(Sol1->Hyperbola()));
           }
-          else if (typ2 == GccInt_Lin)
+          else if (typ2 == GccInt_IType::GccInt_Lin)
           {
             Intp.Perform(Sol2->Line(), IntAna2d_Conic(Sol1->Hyperbola()));
           }
-          else if (typ2 == GccInt_Hpr)
+          else if (typ2 == GccInt_IType::GccInt_Hpr)
           {
             Intp.Perform(Sol2->Hyperbola(), IntAna2d_Conic(Sol1->Hyperbola()));
           }
-          else if (typ2 == GccInt_Ell)
+          else if (typ2 == GccInt_IType::GccInt_Ell)
           {
             Intp.Perform(Sol2->Ellipse(), IntAna2d_Conic(Sol1->Hyperbola()));
           }

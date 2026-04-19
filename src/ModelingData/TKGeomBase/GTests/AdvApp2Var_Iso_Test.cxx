@@ -18,8 +18,8 @@
 
 TEST(AdvApp2Var_IsoTest, ConstructorWithOrders_AssignsOrdersByIsoType)
 {
-  const AdvApp2Var_Iso anIsoU(GeomAbs_IsoU, 3, 1);
-  EXPECT_EQ(anIsoU.Type(), GeomAbs_IsoU);
+  const AdvApp2Var_Iso anIsoU(GeomAbs_IsoType::GeomAbs_IsoU, 3, 1);
+  EXPECT_EQ(anIsoU.Type(), GeomAbs_IsoType::GeomAbs_IsoU);
   EXPECT_EQ(anIsoU.UOrder(), 3);
   EXPECT_EQ(anIsoU.VOrder(), 1);
   EXPECT_DOUBLE_EQ(anIsoU.Constante(), 0.5);
@@ -31,8 +31,8 @@ TEST(AdvApp2Var_IsoTest, ConstructorWithOrders_AssignsOrdersByIsoType)
   EXPECT_DOUBLE_EQ(anIsoU.T1(), 1.0);
   EXPECT_EQ(anIsoU.Position(), 0);
 
-  const AdvApp2Var_Iso anIsoV(GeomAbs_IsoV, 3, 1);
-  EXPECT_EQ(anIsoV.Type(), GeomAbs_IsoV);
+  const AdvApp2Var_Iso anIsoV(GeomAbs_IsoType::GeomAbs_IsoV, 3, 1);
+  EXPECT_EQ(anIsoV.Type(), GeomAbs_IsoType::GeomAbs_IsoV);
   EXPECT_EQ(anIsoV.UOrder(), 3);
   EXPECT_EQ(anIsoV.VOrder(), 1);
 }

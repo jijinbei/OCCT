@@ -503,7 +503,7 @@ static void CalculBatten(const occ::handle<GeomAdaptor_Surface>& ASurf,
 {
   bool isplane;
   bool anglebig = false;
-  isplane       = ASurf->GetType() == GeomAbs_Plane;
+  isplane       = ASurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane;
   gp_Dir2d            dir1(xdir, ydir);
   GeomLProp_CLProps2d CL1(curv2d1, picicplus, 1, 1.e-4);
   GeomLProp_CLProps2d CL2(curv2d2, picplusic, 1, 1.e-4);
@@ -1459,9 +1459,9 @@ void ChFi3d_Builder::PerformMoreThreeCorner(const int Jndex, const int nconges)
       else
         stat = CD.Value(ic)->Spine()->LastStatus();
 
-      if (stat == ChFiDS_OnSame)
+      if (stat == ChFiDS_State::ChFiDS_OnSame)
         isOnSame = true;
-      else if (stat == ChFiDS_OnDiff)
+      else if (stat == ChFiDS_State::ChFiDS_OnDiff)
         isOnDiff = true;
     }
     isOnSameDiff = isOnSame && isOnDiff;
@@ -3219,9 +3219,9 @@ void ChFi3d_Builder::PerformMoreThreeCorner(const int Jndex, const int nconges)
     //  creation of solidinterderence for Plate
     occ::handle<TopOpeBRepDS_SolidSurfaceInterference> SSI =
       new TopOpeBRepDS_SolidSurfaceInterference(TopOpeBRepDS_Transition(orplate),
-                                                TopOpeBRepDS_SOLID,
+                                                TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID,
                                                 SolInd,
-                                                TopOpeBRepDS_SURFACE,
+                                                TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE,
                                                 Isurf);
     SolidInterfs.Append(SSI);
 

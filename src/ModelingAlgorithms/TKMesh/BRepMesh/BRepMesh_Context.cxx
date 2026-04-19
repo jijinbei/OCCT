@@ -32,17 +32,17 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_Context, IMeshTools_Context)
 
 BRepMesh_Context::BRepMesh_Context(IMeshTools_MeshAlgoType theMeshType)
 {
-  if (theMeshType == IMeshTools_MeshAlgoType_DEFAULT)
+  if (theMeshType == IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_DEFAULT)
   {
     TCollection_AsciiString aValue = OSD_Environment("CSF_MeshAlgo").Value();
     aValue.LowerCase();
     if (aValue == "watson" || aValue == "0")
     {
-      theMeshType = IMeshTools_MeshAlgoType_Watson;
+      theMeshType = IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_Watson;
     }
     else if (aValue == "delabella" || aValue == "1")
     {
-      theMeshType = IMeshTools_MeshAlgoType_Delabella;
+      theMeshType = IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_Delabella;
     }
     else
     {
@@ -51,18 +51,18 @@ BRepMesh_Context::BRepMesh_Context(IMeshTools_MeshAlgoType theMeshType)
         Message::SendWarning(TCollection_AsciiString("BRepMesh_Context, ignore unknown algorithm '")
                              + aValue + "' specified in CSF_MeshAlgo variable");
       }
-      theMeshType = IMeshTools_MeshAlgoType_Watson;
+      theMeshType = IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_Watson;
     }
   }
 
   occ::handle<IMeshTools_MeshAlgoFactory> aAlgoFactory;
   switch (theMeshType)
   {
-    case IMeshTools_MeshAlgoType_DEFAULT:
-    case IMeshTools_MeshAlgoType_Watson:
+    case IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_DEFAULT:
+    case IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_Watson:
       aAlgoFactory = new BRepMesh_MeshAlgoFactory();
       break;
-    case IMeshTools_MeshAlgoType_Delabella:
+    case IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_Delabella:
       aAlgoFactory = new BRepMesh_DelabellaMeshAlgoFactory();
       break;
   }

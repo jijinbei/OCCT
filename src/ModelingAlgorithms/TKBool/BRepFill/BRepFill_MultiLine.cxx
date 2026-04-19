@@ -152,7 +152,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
     {
       UU1 = S->UIso(Umin);
       GeomAdaptor_Curve Dummy(UU1);
-      if (Dummy.GetType() == GeomAbs_Circle && Dummy.Circle().Radius() < eps)
+      if (Dummy.GetType() == GeomAbs_CurveType::GeomAbs_Circle && Dummy.Circle().Radius() < eps)
       {
         UU1 = S->UIso(Umax);
       }
@@ -161,7 +161,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
     {
       UU1 = S->UIso(Umax);
       GeomAdaptor_Curve Dummy(UU1);
-      if (Dummy.GetType() == GeomAbs_Circle && Dummy.Circle().Radius() < eps)
+      if (Dummy.GetType() == GeomAbs_CurveType::GeomAbs_Circle && Dummy.Circle().Radius() < eps)
       {
         UU1 = S->UIso(Umin);
       }
@@ -174,7 +174,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
     {
       UU1 = S->VIso(Vmin);
       GeomAdaptor_Curve Dummy(UU1);
-      if (Dummy.GetType() == GeomAbs_Circle && Dummy.Circle().Radius() < eps)
+      if (Dummy.GetType() == GeomAbs_CurveType::GeomAbs_Circle && Dummy.Circle().Radius() < eps)
       {
         UU1 = S->VIso(Vmax);
       }
@@ -183,7 +183,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
     {
       UU1 = S->VIso(Vmax);
       GeomAdaptor_Curve Dummy(UU1);
-      if (Dummy.GetType() == GeomAbs_Circle && Dummy.Circle().Radius() < eps)
+      if (Dummy.GetType() == GeomAbs_CurveType::GeomAbs_Circle && Dummy.Circle().Radius() < eps)
       {
         UU1 = S->VIso(Vmin);
       }
@@ -269,7 +269,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
     {
       UU2 = S->UIso(Umin);
       GeomAdaptor_Curve Dummy(UU2);
-      if (Dummy.GetType() == GeomAbs_Circle && Dummy.Circle().Radius() < eps)
+      if (Dummy.GetType() == GeomAbs_CurveType::GeomAbs_Circle && Dummy.Circle().Radius() < eps)
       {
         UU2 = S->UIso(Umax);
       }
@@ -278,7 +278,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
     {
       UU2 = S->UIso(Umax);
       GeomAdaptor_Curve Dummy(UU2);
-      if (Dummy.GetType() == GeomAbs_Circle && Dummy.Circle().Radius() < eps)
+      if (Dummy.GetType() == GeomAbs_CurveType::GeomAbs_Circle && Dummy.Circle().Radius() < eps)
       {
         UU2 = S->UIso(Umin);
       }
@@ -291,7 +291,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
     {
       UU2 = S->VIso(Vmin);
       GeomAdaptor_Curve Dummy(UU2);
-      if (Dummy.GetType() == GeomAbs_Circle && Dummy.Circle().Radius() < eps)
+      if (Dummy.GetType() == GeomAbs_CurveType::GeomAbs_Circle && Dummy.Circle().Radius() < eps)
       {
         UU2 = S->VIso(Vmax);
       }
@@ -300,7 +300,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
     {
       UU2 = S->VIso(Vmax);
       GeomAdaptor_Curve Dummy(UU2);
-      if (Dummy.GetType() == GeomAbs_Circle && Dummy.Circle().Radius() < eps)
+      if (Dummy.GetType() == GeomAbs_CurveType::GeomAbs_Circle && Dummy.Circle().Radius() < eps)
       {
         UU2 = S->VIso(Vmin);
       }
@@ -354,7 +354,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
   //        - 2 surfaces are planes.
   myCont = GeomAbs_C0;
 
-  if (myBis.GetType() == GeomAbs_Line)
+  if (myBis.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     double   DeltaU = myBis.LastParameter() - myBis.FirstParameter();
     gp_Pnt2d aPnt1  = ValueOnF1(myBis.FirstParameter() + 0.1 * DeltaU);
@@ -373,7 +373,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
     if (myKPart == 1)
       myCont = GeomAbs_G1;
 
-    if ((Type1 == GeomAbs_Plane) && (Type2 == GeomAbs_Plane))
+    if ((Type1 == GeomAbs_SurfaceType::GeomAbs_Plane) && (Type2 == GeomAbs_SurfaceType::GeomAbs_Plane))
     {
       myKPart = 2;
     }
@@ -564,7 +564,7 @@ static gp_Pnt2d ValueOnFace(const double               U,
   {
     if (std::abs(D1 - D2) < eps)
     {
-      if (TheU.GetType() == GeomAbs_Circle)
+      if (TheU.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
       {
         gp_Vec2d Axis = TheU.Circle().XAxis().Direction();
         gp_Vec2d D12d = TheBis.DN(TheBis.FirstParameter(), 1);

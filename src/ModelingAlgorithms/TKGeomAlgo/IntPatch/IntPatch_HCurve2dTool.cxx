@@ -24,13 +24,13 @@ int IntPatch_HCurve2dTool::NbSamples(const occ::handle<Adaptor2d_Curve2d>& C,
   double nbs;
   switch (C->GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       return 2;
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       nbs = (3 + C->NbPoles());
     }
     break;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       nbs = C->NbKnots();
       nbs *= C->Degree();
       // szv:nbs *= C->LastParameter() - C->FirstParameter();

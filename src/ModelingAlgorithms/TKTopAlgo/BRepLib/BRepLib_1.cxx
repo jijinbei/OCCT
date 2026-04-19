@@ -63,13 +63,13 @@ static bool findNearestValidPoint(const Adaptor3d_Curve& theCurve,
   // this is actual for bezier and b-spline types only
   double            aD1Mag = 0.;
   GeomAbs_CurveType aType  = theCurve.GetType();
-  if (aType == GeomAbs_OffsetCurve)
+  if (aType == GeomAbs_CurveType::GeomAbs_OffsetCurve)
   {
     occ::handle<Geom_OffsetCurve> anOffsetCurve = theCurve.OffsetCurve();
     occ::handle<Geom_Curve>       aBaseCurve    = anOffsetCurve->BasisCurve();
     aType                                       = GeomAdaptor_Curve(aBaseCurve).GetType();
   }
-  if (aType == GeomAbs_BezierCurve || aType == GeomAbs_BSplineCurve)
+  if (aType == GeomAbs_CurveType::GeomAbs_BezierCurve || aType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     aD1Mag = 1. / theCurve.Resolution(1.) * 0.01;
     aD1Mag *= aD1Mag;

@@ -121,7 +121,7 @@ public:
         myVLast(0.),
         myTolU(0.),
         myTolV(0.),
-        mySurfaceType(GeomAbs_OtherSurface)
+        mySurfaceType(GeomAbs_SurfaceType::GeomAbs_OtherSurface)
   {
   }
 

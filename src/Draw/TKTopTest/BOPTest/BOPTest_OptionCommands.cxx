@@ -153,7 +153,7 @@ int boptions(Draw_Interpretor& di, int n, const char** a)
   di << buf;
   Sprintf(buf,
           " GlueOption: %s \t\t(%s)\n",
-          ((aGlue == BOPAlgo_GlueOff) ? "Off" : ((aGlue == BOPAlgo_GlueFull) ? "Full" : "Shift")),
+          ((aGlue == BOPAlgo_GlueEnum::BOPAlgo_GlueOff) ? "Off" : ((aGlue == BOPAlgo_GlueEnum::BOPAlgo_GlueFull) ? "Full" : "Shift")),
           "use \"bglue\" command to change");
   di << buf;
   Sprintf(buf,

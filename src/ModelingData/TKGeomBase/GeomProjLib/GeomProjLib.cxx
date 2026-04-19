@@ -77,31 +77,31 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
   switch (Proj.GetType())
   {
 
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       G2dC = new Geom2d_Line(Proj.Line());
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       G2dC = new Geom2d_Circle(Proj.Circle());
       break;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       G2dC = new Geom2d_Ellipse(Proj.Ellipse());
       break;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       G2dC = new Geom2d_Parabola(Proj.Parabola());
       break;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       G2dC = new Geom2d_Hyperbola(Proj.Hyperbola());
       break;
 
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       G2dC = Proj.Bezier();
       break;
 
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       G2dC = Proj.BSpline();
       break;
 
@@ -212,7 +212,7 @@ occ::handle<Geom_Curve> GeomProjLib::Project(const occ::handle<Geom_Curve>&   C,
 
   occ::handle<Geom_Curve> GC;
 
-  if (AS.GetType() == GeomAbs_Plane)
+  if (AS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     ProjLib_ProjectOnPlane         Proj(AS.Plane().Position());
     occ::handle<GeomAdaptor_Curve> HC = new GeomAdaptor_Curve(AC);
@@ -220,31 +220,31 @@ occ::handle<Geom_Curve> GeomProjLib::Project(const occ::handle<Geom_Curve>&   C,
 
     switch (Proj.GetType())
     {
-      case GeomAbs_Line:
+      case GeomAbs_CurveType::GeomAbs_Line:
         GC = new Geom_Line(Proj.Line());
         break;
 
-      case GeomAbs_Circle:
+      case GeomAbs_CurveType::GeomAbs_Circle:
         GC = new Geom_Circle(Proj.Circle());
         break;
 
-      case GeomAbs_Ellipse:
+      case GeomAbs_CurveType::GeomAbs_Ellipse:
         GC = new Geom_Ellipse(Proj.Ellipse());
         break;
 
-      case GeomAbs_Parabola:
+      case GeomAbs_CurveType::GeomAbs_Parabola:
         GC = new Geom_Parabola(Proj.Parabola());
         break;
 
-      case GeomAbs_Hyperbola:
+      case GeomAbs_CurveType::GeomAbs_Hyperbola:
         GC = new Geom_Hyperbola(Proj.Hyperbola());
         break;
 
-      case GeomAbs_BezierCurve:
+      case GeomAbs_CurveType::GeomAbs_BezierCurve:
         GC = Proj.Bezier();
         break;
 
-      case GeomAbs_BSplineCurve:
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve:
         GC = Proj.BSpline();
         break;
 
@@ -303,31 +303,31 @@ occ::handle<Geom_Curve> GeomProjLib::ProjectOnPlane(const occ::handle<Geom_Curve
 
   switch (Proj.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       GC = new Geom_Line(Proj.Line());
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       GC = new Geom_Circle(Proj.Circle());
       break;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       GC = new Geom_Ellipse(Proj.Ellipse());
       break;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       GC = new Geom_Parabola(Proj.Parabola());
       break;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       GC = new Geom_Hyperbola(Proj.Hyperbola());
       break;
 
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       GC = Proj.Bezier();
       break;
 
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       GC = Proj.BSpline();
       break;
     default:

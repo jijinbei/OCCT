@@ -152,14 +152,14 @@ void MAT_Graph::Perform(const bool                             SemiInfinite,
     {
       CurrentArc = MakeArc(TheRoots->Current(), theBasicElts, theArcs, IndTabArcs);
       CurrentArc->SetSecondNode(Extremite);
-      CurrentArc->SetNeighbour(MAT_Left, Extremite, PreviousArc);
-      PreviousArc->SetNeighbour(MAT_Right, Extremite, CurrentArc);
+      CurrentArc->SetNeighbour(MAT_Side::MAT_Left, Extremite, PreviousArc);
+      PreviousArc->SetNeighbour(MAT_Side::MAT_Right, Extremite, CurrentArc);
 
       PreviousArc = CurrentArc;
       TheRoots->Next();
     }
-    FirstArc->SetNeighbour(MAT_Left, Extremite, CurrentArc);
-    CurrentArc->SetNeighbour(MAT_Right, Extremite, FirstArc);
+    FirstArc->SetNeighbour(MAT_Side::MAT_Left, Extremite, CurrentArc);
+    CurrentArc->SetNeighbour(MAT_Side::MAT_Right, Extremite, FirstArc);
   }
 
   // ----------------------------------------------------
@@ -336,19 +336,19 @@ void MAT_Graph::FusionOfArcs(const occ::handle<MAT_Arc>& Arc1, const occ::handle
   //--------------------------------------------------------------------
   if (!Arc2->SecondNode()->Infinite())
   {
-    occ::handle<MAT_Arc> LNeighbour = Arc2->Neighbour(Arc2->SecondNode(), MAT_Left);
-    occ::handle<MAT_Arc> RNeighbour = Arc2->Neighbour(Arc2->SecondNode(), MAT_Right);
+    occ::handle<MAT_Arc> LNeighbour = Arc2->Neighbour(Arc2->SecondNode(), MAT_Side::MAT_Left);
+    occ::handle<MAT_Arc> RNeighbour = Arc2->Neighbour(Arc2->SecondNode(), MAT_Side::MAT_Right);
 
-    Arc1->SetFirstArc(MAT_Left, LNeighbour);
-    Arc1->SetFirstArc(MAT_Right, RNeighbour);
-    theArcs(LNeighbour->Index())->SetNeighbour(MAT_Right, Arc2->SecondNode(), Arc1);
-    theArcs(RNeighbour->Index())->SetNeighbour(MAT_Left, Arc2->SecondNode(), Arc1);
+    Arc1->SetFirstArc(MAT_Side::MAT_Left, LNeighbour);
+    Arc1->SetFirstArc(MAT_Side::MAT_Right, RNeighbour);
+    theArcs(LNeighbour->Index())->SetNeighbour(MAT_Side::MAT_Right, Arc2->SecondNode(), Arc1);
+    theArcs(RNeighbour->Index())->SetNeighbour(MAT_Side::MAT_Left, Arc2->SecondNode(), Arc1);
   }
   else
   {
     occ::handle<MAT_Arc> EmptyArc;
-    Arc1->SetFirstArc(MAT_Left, EmptyArc);
-    Arc1->SetFirstArc(MAT_Right, EmptyArc);
+    Arc1->SetFirstArc(MAT_Side::MAT_Left, EmptyArc);
+    Arc1->SetFirstArc(MAT_Side::MAT_Right, EmptyArc);
   }
 
   //-------------------------------------------------------------------
@@ -554,13 +554,13 @@ static occ::handle<MAT_Arc> MakeArc(
     {
       NextArc = MakeArc(BisectorList->Current(), TheBasicElts, TheArcs, IndTabArcs);
       NextArc->SetSecondNode(Extremite);
-      NextArc->SetNeighbour(MAT_Left, Extremite, PrevArc);
-      PrevArc->SetNeighbour(MAT_Right, Extremite, NextArc);
+      NextArc->SetNeighbour(MAT_Side::MAT_Left, Extremite, PrevArc);
+      PrevArc->SetNeighbour(MAT_Side::MAT_Right, Extremite, NextArc);
       PrevArc = NextArc;
       BisectorList->Next();
     }
-    CurrentArc->SetNeighbour(MAT_Left, Extremite, NextArc);
-    NextArc->SetNeighbour(MAT_Right, Extremite, CurrentArc);
+    CurrentArc->SetNeighbour(MAT_Side::MAT_Left, Extremite, NextArc);
+    NextArc->SetNeighbour(MAT_Side::MAT_Right, Extremite, CurrentArc);
   }
 
 #ifdef OCCT_DEBUG_Graph

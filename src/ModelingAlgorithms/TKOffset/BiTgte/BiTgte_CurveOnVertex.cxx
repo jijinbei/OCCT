@@ -172,7 +172,7 @@ double BiTgte_CurveOnVertex::Resolution(const double) const
 
 GeomAbs_CurveType BiTgte_CurveOnVertex::GetType() const
 {
-  return GeomAbs_OtherCurve;
+  return GeomAbs_CurveType::GeomAbs_OtherCurve;
 }
 
 //=================================================================================================

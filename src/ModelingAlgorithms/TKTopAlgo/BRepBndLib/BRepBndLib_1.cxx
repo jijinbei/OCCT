@@ -38,12 +38,12 @@
 static bool IsLinear(const Adaptor3d_Curve& theC)
 {
   const GeomAbs_CurveType aCT = theC.GetType();
-  if (aCT == GeomAbs_OffsetCurve)
+  if (aCT == GeomAbs_CurveType::GeomAbs_OffsetCurve)
   {
     return IsLinear(GeomAdaptor_Curve(theC.OffsetCurve()->BasisCurve()));
   }
 
-  if ((aCT == GeomAbs_BSplineCurve) || (aCT == GeomAbs_BezierCurve))
+  if ((aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve) || (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve))
   {
     // Indeed, curves with C0-continuity and degree==1, may be
     // represented with set of points. It will be possible made
@@ -52,7 +52,7 @@ static bool IsLinear(const Adaptor3d_Curve& theC)
     return ((theC.Degree() == 1) && (theC.Continuity() != GeomAbs_C0));
   }
 
-  if (aCT == GeomAbs_Line)
+  if (aCT == GeomAbs_CurveType::GeomAbs_Line)
   {
     return true;
   }
@@ -67,17 +67,17 @@ static bool IsLinear(const Adaptor3d_Curve& theC)
 static bool IsPlanar(const Adaptor3d_Surface& theS)
 {
   const GeomAbs_SurfaceType aST = theS.GetType();
-  if (aST == GeomAbs_OffsetSurface)
+  if (aST == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
   {
     return IsPlanar(*theS.BasisSurface());
   }
 
-  if (aST == GeomAbs_SurfaceOfExtrusion)
+  if (aST == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
   {
     return IsLinear(*theS.BasisCurve());
   }
 
-  if ((aST == GeomAbs_BSplineSurface) || (aST == GeomAbs_BezierSurface))
+  if ((aST == GeomAbs_SurfaceType::GeomAbs_BSplineSurface) || (aST == GeomAbs_SurfaceType::GeomAbs_BezierSurface))
   {
     if ((theS.UDegree() != 1) || (theS.VDegree() != 1))
       return false;
@@ -89,7 +89,7 @@ static bool IsPlanar(const Adaptor3d_Surface& theS)
     return ((theS.UContinuity() != GeomAbs_C0) && (theS.VContinuity() != GeomAbs_C0));
   }
 
-  if (aST == GeomAbs_Plane)
+  if (aST == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     return true;
   }

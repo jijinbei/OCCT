@@ -279,12 +279,12 @@ static int evaluateMaxSegment(const int                       aMaxSegment,
 
   double aNbSKnots = 0, aNbC2dKnots = 0;
 
-  if (aSurf->GetType() == GeomAbs_BSplineSurface)
+  if (aSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     occ::handle<Geom_BSplineSurface> aBSpline = aSurf->BSpline();
     aNbSKnots = std::max(aBSpline->NbUKnots(), aBSpline->NbVKnots());
   }
-  if (aCurv2d->GetType() == GeomAbs_BSplineCurve)
+  if (aCurv2d->GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     aNbC2dKnots = aCurv2d->NbKnots();
   }
@@ -926,7 +926,7 @@ static void InternalSameParameter(const TopoDS_Shape& theSh,
     if (!Done.Add(curface))
       continue;
     BS.Initialize(curface);
-    if (BS.GetType() != GeomAbs_Plane)
+    if (BS.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
       continue;
     TopExp_Explorer ex2;
     for (ex2.Init(curface, TopAbs_EDGE); ex2.More(); ex2.Next())
@@ -1325,7 +1325,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
           break;
         }
 
-        if (GAC2d.GetType() == GeomAbs_BSplineCurve && GAC2d.Continuity() == GeomAbs_C0)
+        if (GAC2d.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve && GAC2d.Continuity() == GeomAbs_C0)
         {
           double UResol                            = GAS.UResolution(theTolerance);
           double VResol                            = GAS.VResolution(theTolerance);
@@ -1665,14 +1665,14 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
         GeomAdaptor_Surface AS(S);
         switch (AS.GetType())
         {
-          case GeomAbs_Plane:
-          case GeomAbs_Cylinder:
-          case GeomAbs_Cone: {
+          case GeomAbs_SurfaceType::GeomAbs_Plane:
+          case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+          case GeomAbs_SurfaceType::GeomAbs_Cone: {
             tol = Precision::Confusion();
             break;
           }
-          case GeomAbs_Sphere:
-          case GeomAbs_Torus: {
+          case GeomAbs_SurfaceType::GeomAbs_Sphere:
+          case GeomAbs_SurfaceType::GeomAbs_Torus: {
             tol = Precision::Confusion() * 2;
             break;
           }
@@ -2712,23 +2712,23 @@ void BRepLib::SortFaces(const TopoDS_Shape& Sh, NCollection_List<TopoDS_Shape>& 
       GeomAdaptor_Surface AS(S);
       switch (AS.GetType())
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_SurfaceType::GeomAbs_Plane: {
           LPlan.Append(F);
           break;
         }
-        case GeomAbs_Cylinder: {
+        case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
           LCyl.Append(F);
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_SurfaceType::GeomAbs_Cone: {
           LCon.Append(F);
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_SurfaceType::GeomAbs_Sphere: {
           LSphere.Append(F);
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_SurfaceType::GeomAbs_Torus: {
           LTor.Append(F);
           break;
         }
@@ -2768,23 +2768,23 @@ void BRepLib::ReverseSortFaces(const TopoDS_Shape& Sh, NCollection_List<TopoDS_S
       GeomAdaptor_Surface AS(S);
       switch (AS.GetType())
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_SurfaceType::GeomAbs_Plane: {
           LPlan.Append(F);
           break;
         }
-        case GeomAbs_Cylinder: {
+        case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
           LCyl.Append(F);
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_SurfaceType::GeomAbs_Cone: {
           LCon.Append(F);
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_SurfaceType::GeomAbs_Sphere: {
           LSphere.Append(F);
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_SurfaceType::GeomAbs_Torus: {
           LTor.Append(F);
           break;
         }
@@ -2939,8 +2939,8 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
 
   const GeomAbs_SurfaceType aType = aBAS.GetType();
   // treat analytical surfaces first
-  if (aType == GeomAbs_Plane || aType == GeomAbs_Sphere || aType == GeomAbs_Cylinder
-      || aType == GeomAbs_Torus || aType == GeomAbs_Cone)
+  if (aType == GeomAbs_SurfaceType::GeomAbs_Plane || aType == GeomAbs_SurfaceType::GeomAbs_Sphere || aType == GeomAbs_SurfaceType::GeomAbs_Cylinder
+      || aType == GeomAbs_SurfaceType::GeomAbs_Torus || aType == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     // Get basis transformed basis surface
     occ::handle<Geom_Surface> aSurf = aBAS.GeomSurfaceTransformed();

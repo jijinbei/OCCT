@@ -42,7 +42,7 @@ bool TransitionEqual(const IntRes2d_Transition& T1, const IntRes2d_Transition& T
   {
     if (T1.TransitionType() == T2.TransitionType())
     {
-      if (T1.TransitionType() == IntRes2d_Touch)
+      if (T1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch)
       {
         if (T1.IsTangent() == T2.IsTangent())
         {
@@ -391,15 +391,15 @@ void AffPosition(IntRes2d_Transition& T, const double u, const char* Texte);
 
 void AffPosition(IntRes2d_Transition& T, const double u, const char* Texte)
 {
-  if (T.PositionOnCurve() == IntRes2d_End)
+  if (T.PositionOnCurve() == IntRes2d_Position::IntRes2d_End)
   {
     std::cout << Texte << " Param :" << u << " End " << std::endl;
   }
-  if (T.PositionOnCurve() == IntRes2d_Middle)
+  if (T.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
   {
     std::cout << Texte << " Param :" << u << " Middle " << std::endl;
   }
-  if (T.PositionOnCurve() == IntRes2d_Head)
+  if (T.PositionOnCurve() == IntRes2d_Position::IntRes2d_Head)
   {
     std::cout << Texte << " Param :" << u << " Head " << std::endl;
   }
@@ -419,20 +419,20 @@ void InternalVerifyPosition(IntRes2d_Transition& T1,
   AffPosition(T1, PParamOnFirst, " Point 1 ");
   AffPosition(T2, PParamOnSecond, " Point 2 ");
 #endif
-  if (T1.PositionOnCurve() != IntRes2d_Middle)
+  if (T1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
   {
     if (!(PARAMEQUAL(PParamOnFirst, FirstParam1) || PARAMEQUAL(PParamOnFirst, LastParam1)))
     {
       if ((PParamOnFirst > FirstParam1) && (PParamOnFirst < LastParam1))
-        T1.SetPosition(IntRes2d_Middle);
+        T1.SetPosition(IntRes2d_Position::IntRes2d_Middle);
     }
   }
-  if (T2.PositionOnCurve() != IntRes2d_Middle)
+  if (T2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
   {
     if (!(PARAMEQUAL(PParamOnSecond, FirstParam2) || PARAMEQUAL(PParamOnSecond, LastParam2)))
     {
       if ((PParamOnSecond > FirstParam2) && (PParamOnSecond < LastParam2))
-        T2.SetPosition(IntRes2d_Middle);
+        T2.SetPosition(IntRes2d_Position::IntRes2d_Middle);
     }
   }
 }

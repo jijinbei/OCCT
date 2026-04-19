@@ -48,8 +48,8 @@ Standard_EXPORT void FDS_repvg2(const TopOpeBRepDS_DataStructure&               
   if (isEd)
     return;
 
-  bool ispoint  = (GT == TopOpeBRepDS_POINT);
-  bool isvertex = (GT == TopOpeBRepDS_VERTEX);
+  bool ispoint  = (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT);
+  bool isvertex = (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
 
   int nLI = LI.Extent();
 

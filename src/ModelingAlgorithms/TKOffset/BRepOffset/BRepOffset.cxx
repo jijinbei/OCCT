@@ -48,7 +48,7 @@ occ::handle<Geom_Surface> BRepOffset::Surface(const occ::handle<Geom_Surface>& S
 {
   constexpr double Tol = Precision::Confusion();
 
-  theStatus = BRepOffset_Good;
+  theStatus = BRepOffset_Status::BRepOffset_Good;
   occ::handle<Geom_Surface> Result;
 
   occ::handle<Standard_Type> TheType = Surface->DynamicType();
@@ -77,11 +77,11 @@ occ::handle<Geom_Surface> BRepOffset::Surface(const occ::handle<Geom_Surface>& S
     {
       Axis.Rotate(gp_Ax1(Axis.Location(), Axis.Direction()), M_PI);
       Result    = new Geom_CylindricalSurface(Axis, std::abs(Radius));
-      theStatus = BRepOffset_Reversed;
+      theStatus = BRepOffset_Status::BRepOffset_Reversed;
     }
     else
     {
-      theStatus = BRepOffset_Degenerated;
+      theStatus = BRepOffset_Status::BRepOffset_Degenerated;
     }
   }
   else if (TheType == STANDARD_TYPE(Geom_ConicalSurface))
@@ -125,11 +125,11 @@ occ::handle<Geom_Surface> BRepOffset::Surface(const occ::handle<Geom_Surface>& S
       Axis.Rotate(gp_Ax1(Axis.Location(), Axis.Direction()), M_PI);
       Axis.ZReverse();
       Result    = new Geom_SphericalSurface(Axis, -Radius);
-      theStatus = BRepOffset_Reversed;
+      theStatus = BRepOffset_Status::BRepOffset_Reversed;
     }
     else
     {
-      theStatus = BRepOffset_Degenerated;
+      theStatus = BRepOffset_Status::BRepOffset_Degenerated;
     }
   }
   else if (TheType == STANDARD_TYPE(Geom_ToroidalSurface))
@@ -150,11 +150,11 @@ occ::handle<Geom_Surface> BRepOffset::Surface(const occ::handle<Geom_Surface>& S
       }
       else if (MinorRadius <= -Tol)
       {
-        theStatus = BRepOffset_Reversed;
+        theStatus = BRepOffset_Status::BRepOffset_Reversed;
       }
       else
       {
-        theStatus = BRepOffset_Degenerated;
+        theStatus = BRepOffset_Status::BRepOffset_Degenerated;
       }
     }
   }

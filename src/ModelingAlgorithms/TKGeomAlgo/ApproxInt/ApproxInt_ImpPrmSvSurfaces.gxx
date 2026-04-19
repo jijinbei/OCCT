@@ -575,7 +575,7 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
         u2 = X(1) - TranslationU;
         v2 = X(2) - TranslationV;
 
-        if (aQSurf.TypeQuadric() != GeomAbs_Plane)
+        if (aQSurf.TypeQuadric() != GeomAbs_SurfaceType::GeomAbs_Plane)
         {
           while (u1 - tu1 > M_PI)
             u1 -= M_PI + M_PI;
@@ -599,7 +599,7 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
         u1 = X(1) - TranslationU;
         v1 = X(2) - TranslationV;
         // aQSurf.Parameters(P, u2, v2);
-        if (aQSurf.TypeQuadric() != GeomAbs_Plane)
+        if (aQSurf.TypeQuadric() != GeomAbs_SurfaceType::GeomAbs_Plane)
         {
           while (u2 - tu2 > M_PI)
             u2 -= M_PI + M_PI;
@@ -831,7 +831,7 @@ bool ApproxInt_ImpPrmSvSurfaces::SeekPoint(const double     u1,
 
       aQSurf.Parameters(MyPnt, NewU1, NewV1);
       // adjust U
-      if (aQSurf.TypeQuadric() != GeomAbs_Plane)
+      if (aQSurf.TypeQuadric() != GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         double sign = (NewU1 > u1) ? -1 : 1;
         while (std::abs(u1 - NewU1) > M_PI)
@@ -845,7 +845,7 @@ bool ApproxInt_ImpPrmSvSurfaces::SeekPoint(const double     u1,
 
       aQSurf.Parameters(MyPnt, NewU2, NewV2);
       // adjust U
-      if (aQSurf.TypeQuadric() != GeomAbs_Plane)
+      if (aQSurf.TypeQuadric() != GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         double sign = (NewU2 > u2) ? -1 : 1;
         while (std::abs(u2 - NewU2) > M_PI)

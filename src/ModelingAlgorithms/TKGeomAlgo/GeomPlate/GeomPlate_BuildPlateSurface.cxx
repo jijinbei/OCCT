@@ -2174,7 +2174,7 @@ void GeomPlate_BuildPlateSurface::Discretise(
         else
         {
           if (((!mySurfInitIsGive)
-               && (Geom2dAdaptor_Curve(LinCont->Curve2dOnSurf()).GetType() != GeomAbs_Circle))
+               && (Geom2dAdaptor_Curve(LinCont->Curve2dOnSurf()).GetType() != GeomAbs_CurveType::GeomAbs_Circle))
               || ((j > 1) && (j < NbPnt_i)))           // exclude extremities
             myPlateCont->ChangeValue(i).Append(Inter); // add the point
         }

@@ -38,11 +38,11 @@ class GeomFill_CircularBlendFunc : public Approx_SweepFunction
 public:
   //! Create a Blend with a constant radius with 2
   //! guide-line. <FShape> sets the type of fillet
-  //! surface. The default value is Convert_TgtThetaOver2
+  //! surface. The default value is Convert_ParameterisationType::Convert_TgtThetaOver2
   //! (classical nurbs representation of circles).
-  //! ChFi3d_QuasiAngular corresponds to a nurbs
+  //! ChFi3d_FilletShape::ChFi3d_QuasiAngular corresponds to a nurbs
   //! representation of circles which parameterisation
-  //! matches the circle one. ChFi3d_Polynomial
+  //! matches the circle one. ChFi3d_FilletShape::ChFi3d_Polynomial
   //! corresponds to a polynomial representation of
   //! circles.
   Standard_EXPORT GeomFill_CircularBlendFunc(const occ::handle<Adaptor3d_Curve>& Path,

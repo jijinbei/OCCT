@@ -104,7 +104,7 @@ bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
       if (!ana.IsValid())
       {
 
-        // Check if the problem is not just BRepCheck_InvalidSameParameterFlag
+        // Check if the problem is not just BRepCheck_Status::BRepCheck_InvalidSameParameterFlag
         NCollection_List<BRepCheck_Status>::Iterator itl;
         BRepCheck_Status                             sta;
         for (tEx.Init(toCheck, TopAbs_FACE); tEx.More(); tEx.Next())
@@ -115,7 +115,7 @@ bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
             {
               sta = itl.Value();
               // If a face is incorrect
-              if (sta != BRepCheck_NoError)
+              if (sta != BRepCheck_Status::BRepCheck_NoError)
               {
                 NCollection_List<BRepCheck_Status>::Iterator ilt;
                 TopExp_Explorer                              exp;
@@ -130,10 +130,10 @@ bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
                       for (ilt.Initialize(res->StatusOnShape()); ilt.More(); ilt.Next())
                       {
                         sta = ilt.Value();
-                        // If an edge is BRepCheck_InvalidSameParameterFlag or
-                        // BRepCheck_InvalidSameRangeFlag, it is forced
-                        if (sta == BRepCheck_InvalidSameParameterFlag
-                            || sta == BRepCheck_InvalidSameRangeFlag)
+                        // If an edge is BRepCheck_Status::BRepCheck_InvalidSameParameterFlag or
+                        // BRepCheck_Status::BRepCheck_InvalidSameRangeFlag, it is forced
+                        if (sta == BRepCheck_Status::BRepCheck_InvalidSameParameterFlag
+                            || sta == BRepCheck_Status::BRepCheck_InvalidSameRangeFlag)
                         {
                           bB.SameRange(TopoDS::Edge(exp.Current()), false);
                           bB.SameParameter(TopoDS::Edge(exp.Current()), false);
@@ -166,13 +166,13 @@ bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
       HR = new BRepCheck_Shell(TopoDS::Shell(tEx.Current()));
     else
       HR->Init(tEx.Current());
-    if (HR->Status().First() != BRepCheck_NoError)
+    if (HR->Status().First() != BRepCheck_Status::BRepCheck_NoError)
       return false;
-    if (HR->Orientation(false) != BRepCheck_NoError)
+    if (HR->Orientation(false) != BRepCheck_Status::BRepCheck_NoError)
       return false;
     if (closedSolid)
     {
-      if (HR->Closed() != BRepCheck_NoError)
+      if (HR->Closed() != BRepCheck_Status::BRepCheck_NoError)
         return false;
     }
   }

@@ -1104,7 +1104,7 @@ void Geom_BSplineSurface::updateUKnots()
   int MaxKnotMult = 0;
   BSplCLib::KnotAnalysis(myUDeg, myUPeriodic, myUKnots, myUMults, myUKnotSet, MaxKnotMult);
 
-  if (myUKnotSet == GeomAbs_Uniform && !myUPeriodic)
+  if (myUKnotSet == GeomAbs_BSplKnotDistribution::GeomAbs_Uniform && !myUPeriodic)
   {
     myUFlatKnots.Resize(myUKnots.Lower(), myUKnots.Upper(), false);
     myUFlatKnots.Assign(myUKnots);
@@ -1150,7 +1150,7 @@ void Geom_BSplineSurface::updateVKnots()
   int MaxKnotMult = 0;
   BSplCLib::KnotAnalysis(myVDeg, myVPeriodic, myVKnots, myVMults, myVKnotSet, MaxKnotMult);
 
-  if (myVKnotSet == GeomAbs_Uniform && !myVPeriodic)
+  if (myVKnotSet == GeomAbs_BSplKnotDistribution::GeomAbs_Uniform && !myVPeriodic)
   {
     myVFlatKnots.Resize(myVKnots.Lower(), myVKnots.Upper(), false);
     myVFlatKnots.Assign(myVKnots);

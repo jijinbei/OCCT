@@ -178,7 +178,7 @@ void Adaptor3d_TopolTool::Initialize(const occ::handle<Adaptor3d_Surface>& S)
 
   myS = S;
 
-  if (nbRestr == 2 && S->GetType() == GeomAbs_Cone)
+  if (nbRestr == 2 && S->GetType() == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     double U = 0., V = 0.;
     GetConeApexParam(S->Cone(), U, V);
@@ -798,17 +798,17 @@ void Adaptor3d_TopolTool::ComputeSamplePoints()
   GeomAbs_SurfaceType typS = myS->GetType();
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       nbsv = 2;
       nbsu = 2;
     }
     break;
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       nbsv = 3 + myS->NbVPoles();
       nbsu = 3 + myS->NbUPoles();
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       nbsv = myS->NbVKnots();
       nbsv *= myS->VDegree();
       if (nbsv < 4)
@@ -819,12 +819,12 @@ void Adaptor3d_TopolTool::ComputeSamplePoints()
         nbsu = 4;
     }
     break;
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
       nbsv = 15;
       nbsu = 15;
     }
@@ -845,7 +845,7 @@ void Adaptor3d_TopolTool::ComputeSamplePoints()
   if (nbsv < 6)
     nbsv = 6;
 
-  if (typS == GeomAbs_BSplineSurface)
+  if (typS == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     if (nbsu > 8 || nbsv > 8)
     {
@@ -870,7 +870,7 @@ void Adaptor3d_TopolTool::ComputeSamplePoints()
       nbsv = std::min(nbsv, aMaxNbSample);
     }
   }
-  else if (typS == GeomAbs_BezierSurface)
+  else if (typS == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     if (nbsu > 8 || nbsv > 8)
     {
@@ -1048,8 +1048,8 @@ void Adaptor3d_TopolTool::SamplePnts(const double theDefl, const int theNUmin, c
   //   int nbsu,nbsv;
   GeomAbs_SurfaceType typS = myS->GetType();
   //   switch(typS) {
-  //   case GeomAbs_Plane:          { nbsv=2; nbsu=2; } break;
-  //   case GeomAbs_BezierSurface:  {
+  //   case GeomAbs_SurfaceType::GeomAbs_Plane:          { nbsv=2; nbsu=2; } break;
+  //   case GeomAbs_SurfaceType::GeomAbs_BezierSurface:  {
   //     nbsv=myS->NbVPoles();
   //     nbsu=myS->NbUPoles();
   //     nbsu = std::max(nbsu, theNUmin);
@@ -1064,8 +1064,8 @@ void Adaptor3d_TopolTool::SamplePnts(const double theDefl, const int theNUmin, c
   //     }
   //   }
   //     break;
-  //   case GeomAbs_BSplineSurface: {
-  if (typS == GeomAbs_BSplineSurface)
+  //   case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
+  if (typS == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     // Processing BSpline surface
     BSplSamplePnts(theDefl, theNUmin, theNVmin);
@@ -1075,12 +1075,12 @@ void Adaptor3d_TopolTool::SamplePnts(const double theDefl, const int theNUmin, c
   {
     ComputeSamplePoints();
   }
-  //   case GeomAbs_Cylinder:
-  //   case GeomAbs_Cone:
-  //   case GeomAbs_Sphere:
-  //   case GeomAbs_Torus:
-  //   case GeomAbs_SurfaceOfRevolution:
-  //   case GeomAbs_SurfaceOfExtrusion:    { nbsv = std::max(15,theNVmin); nbsu=Max(15,theNUmin); }
+  //   case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+  //   case GeomAbs_SurfaceType::GeomAbs_Cone:
+  //   case GeomAbs_SurfaceType::GeomAbs_Sphere:
+  //   case GeomAbs_SurfaceType::GeomAbs_Torus:
+  //   case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+  //   case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:    { nbsv = std::max(15,theNVmin); nbsu=Max(15,theNUmin); }
   //   break; default:                            { nbsu = std::max(10,theNUmin);
   //   nbsv=Max(10,theNVmin); } break;
   //   }
@@ -1594,7 +1594,7 @@ bool Adaptor3d_TopolTool::IsUniformSampling() const
 {
   GeomAbs_SurfaceType typS = myS->GetType();
 
-  return typS != GeomAbs_BSplineSurface;
+  return typS != GeomAbs_SurfaceType::GeomAbs_BSplineSurface;
 }
 
 //=======================================================================

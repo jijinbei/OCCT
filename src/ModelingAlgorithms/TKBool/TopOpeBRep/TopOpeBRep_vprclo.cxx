@@ -180,7 +180,7 @@ void TopOpeBRep_FacesFiller::ProcessVPonclosingR(
   const occ::handle<TopOpeBRepDS_Interference>&)
 {
   //  bool isvertex = VP.IsVertex(ShapeIndex);
-  bool isvertex     = (PVKind == TopOpeBRepDS_VERTEX);
+  bool isvertex     = (PVKind == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
   int  absindex     = VP.ShapeIndex(); // 0,1,2,3
   int  OOShapeIndex = (ShapeIndex == 1) ? 2 : 1;
   bool on2edges     = (absindex == 3);
@@ -241,7 +241,7 @@ void TopOpeBRep_FacesFiller::ProcessVPonclosingR(
     TopOpeBRepDS_Transition T = transAdd;
     T.Index(iOOFace);
     occ::handle<TopOpeBRepDS_Interference> EPI =
-      ::MakeEPVInterference(T, iOOFace, PVIndex, paredge, PVKind, TopOpeBRepDS_FACE, isvertex);
+      ::MakeEPVInterference(T, iOOFace, PVIndex, paredge, PVKind, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, isvertex);
     myHDS->StoreInterference(EPI, edge);
   }
   if (hasOOedge)

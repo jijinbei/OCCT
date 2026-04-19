@@ -51,7 +51,7 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Standard_EXPORT ChFi3d_FilBuilder(const TopoDS_Shape&      S,
-                                    const ChFi3d_FilletShape FShape = ChFi3d_Rational,
+                                    const ChFi3d_FilletShape FShape = ChFi3d_FilletShape::ChFi3d_Rational,
                                     const double             Ta     = 1.0e-2);
 
   //! Sets the type of fillet surface.

@@ -24,14 +24,14 @@
 //=================================================================================================
 
 HatchGen_PointOnElement::HatchGen_PointOnElement()
-    : myType(HatchGen_UNDETERMINED)
+    : myType(HatchGen_IntersectionType::HatchGen_UNDETERMINED)
 {
 }
 
 //=================================================================================================
 
 HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoint& Point)
-    : myType(HatchGen_UNDETERMINED)
+    : myType(HatchGen_IntersectionType::HatchGen_UNDETERMINED)
 {
   const IntRes2d_Transition& TrsH = Point.TransitionOfFirst();
   const IntRes2d_Transition& TrsE = Point.TransitionOfSecond();
@@ -42,37 +42,37 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
 
   switch (TrsE.PositionOnCurve())
   {
-    case IntRes2d_Head:
+    case IntRes2d_Position::IntRes2d_Head:
       myPosit = TopAbs_FORWARD;
       break;
-    case IntRes2d_Middle:
+    case IntRes2d_Position::IntRes2d_Middle:
       myPosit = TopAbs_INTERNAL;
       break;
-    case IntRes2d_End:
+    case IntRes2d_Position::IntRes2d_End:
       myPosit = TopAbs_REVERSED;
       break;
   }
 
   switch (TrsH.TransitionType())
   {
-    case IntRes2d_In: {
+    case IntRes2d_TypeTrans::IntRes2d_In: {
       myBefore = TopAbs_OUT;
       myAfter  = TopAbs_IN;
-      myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_TRUE : HatchGen_TOUCH;
+      myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_IntersectionType::HatchGen_TRUE : HatchGen_IntersectionType::HatchGen_TOUCH;
       break;
     }
-    case IntRes2d_Out: {
+    case IntRes2d_TypeTrans::IntRes2d_Out: {
       myBefore = TopAbs_IN;
       myAfter  = TopAbs_OUT;
-      myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_TRUE : HatchGen_TOUCH;
+      myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_IntersectionType::HatchGen_TRUE : HatchGen_IntersectionType::HatchGen_TOUCH;
       break;
     }
       //  Modified by Sergey KHROMOV - Fri Jan  5 12:07:34 2001 Begin
-    case IntRes2d_Touch: {
+    case IntRes2d_TypeTrans::IntRes2d_Touch: {
       switch (TrsH.Situation())
       {
-        case IntRes2d_Inside: {
-          myType = HatchGen_TANGENT;
+        case IntRes2d_Situation::IntRes2d_Inside: {
+          myType = HatchGen_IntersectionType::HatchGen_TANGENT;
           switch (myPosit)
           {
             case TopAbs_FORWARD: {
@@ -111,8 +111,8 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
           }
           break;
         }
-        case IntRes2d_Outside: {
-          myType = HatchGen_TANGENT;
+        case IntRes2d_Situation::IntRes2d_Outside: {
+          myType = HatchGen_IntersectionType::HatchGen_TANGENT;
           switch (myPosit)
           {
             case TopAbs_FORWARD: {
@@ -151,20 +151,20 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
           }
           break;
         }
-        case IntRes2d_Unknown: {
+        case IntRes2d_Situation::IntRes2d_Unknown: {
           myBefore = TopAbs_UNKNOWN;
           myAfter  = TopAbs_UNKNOWN;
-          myType   = HatchGen_TANGENT;
+          myType   = HatchGen_IntersectionType::HatchGen_TANGENT;
           break;
         }
       }
       break;
     }
       //  Modified by Sergey KHROMOV - Fri Jan  5 12:07:46 2001 End
-    case IntRes2d_Undecided: {
+    case IntRes2d_TypeTrans::IntRes2d_Undecided: {
       myBefore = TopAbs_UNKNOWN;
       myAfter  = TopAbs_UNKNOWN;
-      myType   = HatchGen_UNDETERMINED;
+      myType   = HatchGen_IntersectionType::HatchGen_UNDETERMINED;
       break;
     }
   }
@@ -238,16 +238,16 @@ void HatchGen_PointOnElement::Dump(const int Index) const
   std::cout << "        Intersection Type    = ";
   switch (myType)
   {
-    case HatchGen_TRUE:
+    case HatchGen_IntersectionType::HatchGen_TRUE:
       std::cout << "TRUE";
       break;
-    case HatchGen_TOUCH:
+    case HatchGen_IntersectionType::HatchGen_TOUCH:
       std::cout << "TOUCH";
       break;
-    case HatchGen_TANGENT:
+    case HatchGen_IntersectionType::HatchGen_TANGENT:
       std::cout << "TANGENT";
       break;
-    case HatchGen_UNDETERMINED:
+    case HatchGen_IntersectionType::HatchGen_UNDETERMINED:
       std::cout << "UNDETERMINED";
       break;
   }

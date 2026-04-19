@@ -110,7 +110,7 @@ static int NumberOfPoles(const TopoDS_Wire& W)
 
     switch (c.GetType())
     {
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_CurveType::GeomAbs_BezierCurve: {
         // Put all poles for bezier
         occ::handle<Geom_BezierCurve> GC     = c.Bezier();
         int                           iNbPol = GC->NbPoles();
@@ -118,7 +118,7 @@ static int NumberOfPoles(const TopoDS_Wire& W)
           NbPoints += iNbPol;
         break;
       }
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
         // Put all poles for bspline
         occ::handle<Geom_BSplineCurve> GC     = c.BSpline();
         int                            iNbPol = GC->NbPoles();
@@ -126,14 +126,14 @@ static int NumberOfPoles(const TopoDS_Wire& W)
           NbPoints += iNbPol;
         break;
       }
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Line: {
         NbPoints += 2;
         break;
       }
-      case GeomAbs_Circle:
-      case GeomAbs_Ellipse:
-      case GeomAbs_Hyperbola:
-      case GeomAbs_Parabola: {
+      case GeomAbs_CurveType::GeomAbs_Circle:
+      case GeomAbs_CurveType::GeomAbs_Ellipse:
+      case GeomAbs_CurveType::GeomAbs_Hyperbola:
+      case GeomAbs_CurveType::GeomAbs_Parabola: {
         NbPoints += 4;
         break;
       }
@@ -659,7 +659,7 @@ static void BuildFace(
     if (NS.Dot(NP) < 0.)
       thePlane->UReverse();
     BRepLib_MakeFace MkF(thePlane, WW);
-    if (MkF.Error() != BRepLib_FaceDone)
+    if (MkF.Error() != BRepLib_FaceError::BRepLib_FaceDone)
     {
 #ifdef OCCT_DEBUG
       BRepLib_FaceError Err = MkF.Error();
@@ -1830,7 +1830,7 @@ BRepFill_Sweep::BRepFill_Sweep(const occ::handle<BRepFill_SectionLaw>&  Section,
   SetAngularControl();
   myAuxShape.Clear();
 
-  myApproxStyle   = GeomFill_Location;
+  myApproxStyle   = GeomFill_ApproxStyle::GeomFill_Location;
   myContinuity    = GeomAbs_C2;
   myDegmax        = 11;
   mySegmax        = 30;
@@ -3258,7 +3258,7 @@ bool BRepFill_Sweep::PerformCorner(const int                                    
                                    const occ::handle<NCollection_HArray2<TopoDS_Shape>>& Bounds)
 {
 
-  if (Transition == BRepFill_Modified)
+  if (Transition == BRepFill_TransitionStyle::BRepFill_Modified)
     return true; // Do nothing.
 
   const double anAngularTol = 0.025;
@@ -3320,9 +3320,9 @@ bool BRepFill_Sweep::PerformCorner(const int                                    
   {
     return false;
   }
-  if ((TheTransition == BRepFill_Right) && (T1.Angle(T2) > myAngMax))
+  if ((TheTransition == BRepFill_TransitionStyle::BRepFill_Right) && (T1.Angle(T2) > myAngMax))
   {
-    TheTransition = BRepFill_Round;
+    TheTransition = BRepFill_TransitionStyle::BRepFill_Round;
   }
 
   Tang                                  = T1 + T2; // Average direction
@@ -3370,7 +3370,7 @@ bool BRepFill_Sweep::PerformCorner(const int                                    
     gp_Pln           pl(P1, gp_Dir(aNormal));
     BRepLib_MakeFace aFMaker(pl);
 
-    if (aFMaker.Error() == BRepLib_FaceDone)
+    if (aFMaker.Error() == BRepLib_FaceError::BRepLib_FaceDone)
     {
       aPlaneF = aFMaker.Face();
       BRep_Builder aBB;
@@ -3430,7 +3430,7 @@ bool BRepFill_Sweep::PerformCorner(const int                                    
       }
     }
   }
-  else if ((TheTransition == BRepFill_Right) || aTrim.HasSection())
+  else if ((TheTransition == BRepFill_TransitionStyle::BRepFill_Right) || aTrim.HasSection())
   {
 #ifdef OCCT_DEBUG
     std::cout << "Fail of TrimCorner" << std::endl;
@@ -3444,7 +3444,7 @@ bool BRepFill_Sweep::PerformCorner(const int                                    
     myUEdges->SetValue(1, I2, myUEdges->Value(mySec->NbLaw() + 1, I2));
   }
 
-  if (TheTransition == BRepFill_Round)
+  if (TheTransition == BRepFill_TransitionStyle::BRepFill_Round)
   {
     // Filling
     NCollection_List<TopoDS_Shape> list1, list2;
@@ -3560,7 +3560,7 @@ double BRepFill_Sweep::EvalExtrapol(const int                      Index,
                                     const BRepFill_TransitionStyle Transition) const
 {
   double Extrap = 0.0;
-  if (Transition == BRepFill_Right)
+  if (Transition == BRepFill_TransitionStyle::BRepFill_Right)
   {
     int I1, I2;
     if ((Index == 1) || (Index == myLoc->NbLaw() + 1))

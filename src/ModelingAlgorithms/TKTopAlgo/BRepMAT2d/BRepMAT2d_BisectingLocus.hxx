@@ -46,7 +46,7 @@ class MAT_Arc;
 //! One map can be computed for each area.
 //!
 //! Bisecting locus computes a map in an area.
-//! The area is defined by a side (MAT_Left,MAT_Right)
+//! The area is defined by a side (MAT_Side::MAT_Left,MAT_Side::MAT_Right)
 //! on one of the closed lines.
 //!
 //! If the set of lines contains only open lines:
@@ -84,8 +84,8 @@ public:
   //! from the line <LineIndex> in <anExplo>.
   Standard_EXPORT void Compute(BRepMAT2d_Explorer&    anExplo,
                                const int              LineIndex    = 1,
-                               const MAT_Side         aSide        = MAT_Left,
-                               const GeomAbs_JoinType aJoinType    = GeomAbs_Arc,
+                               const MAT_Side         aSide        = MAT_Side::MAT_Left,
+                               const GeomAbs_JoinType aJoinType    = GeomAbs_JoinType::GeomAbs_Arc,
                                const bool             IsOpenResult = false);
 
   //! Returns True if Compute has succeeded.

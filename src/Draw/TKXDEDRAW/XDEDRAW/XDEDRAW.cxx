@@ -164,7 +164,7 @@ static int saveDoc(Draw_Interpretor& di, int argc, const char** argv)
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di);
 
-  PCDM_StoreStatus aStatus = PCDM_SS_Doc_IsNull;
+  PCDM_StoreStatus aStatus = PCDM_StoreStatus::PCDM_SS_Doc_IsNull;
   if (argc == 3)
   {
     TCollection_ExtendedString path(argv[2]);
@@ -182,30 +182,30 @@ static int saveDoc(Draw_Interpretor& di, int argc, const char** argv)
 
   switch (aStatus)
   {
-    case PCDM_SS_OK:
+    case PCDM_StoreStatus::PCDM_SS_OK:
       break;
-    case PCDM_SS_DriverFailure:
+    case PCDM_StoreStatus::PCDM_SS_DriverFailure:
       di << "Storage error: driver failure\n";
       break;
-    case PCDM_SS_WriteFailure:
+    case PCDM_StoreStatus::PCDM_SS_WriteFailure:
       di << "Storage error: write failure\n";
       break;
-    case PCDM_SS_Failure:
+    case PCDM_StoreStatus::PCDM_SS_Failure:
       di << "Storage error: general failure\n";
       break;
-    case PCDM_SS_Doc_IsNull:
+    case PCDM_StoreStatus::PCDM_SS_Doc_IsNull:
       di << "Storage error: document is NULL\n";
       break;
-    case PCDM_SS_No_Obj:
+    case PCDM_StoreStatus::PCDM_SS_No_Obj:
       di << "Storage error: no object\n";
       break;
-    case PCDM_SS_Info_Section_Error:
+    case PCDM_StoreStatus::PCDM_SS_Info_Section_Error:
       di << "Storage error: section error\n";
       break;
-    case PCDM_SS_UserBreak:
+    case PCDM_StoreStatus::PCDM_SS_UserBreak:
       di << "Storage error: user break\n";
       break;
-    case PCDM_SS_UnrecognizedFormat:
+    case PCDM_StoreStatus::PCDM_SS_UnrecognizedFormat:
       di << "Storage error: unrecognized document storage format " << D->StorageFormat() << "\n";
       break;
   }
@@ -269,7 +269,7 @@ static int openDoc(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di);
-  if (A->Open(Filename, D, aFilter, aProgress->Start()) != PCDM_RS_OK)
+  if (A->Open(Filename, D, aFilter, aProgress->Start()) != PCDM_ReaderStatus::PCDM_RS_OK)
   {
     di << "cannot open XDE document\n";
     return 1;

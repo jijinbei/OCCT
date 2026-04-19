@@ -118,7 +118,7 @@ void GeomInt_LineConstructor::Perform(const occ::handle<IntPatch_Line>& L)
   constexpr double Tol = Precision::PConfusion() * 35.0;
 
   const IntPatch_IType typl = L->ArcType();
-  if (typl == IntPatch_Analytic)
+  if (typl == IntPatch_IType::IntPatch_Analytic)
   {
     double                      u1, v1, u2, v2;
     occ::handle<IntPatch_ALine> ALine(occ::down_cast<IntPatch_ALine>(L));
@@ -148,8 +148,8 @@ void GeomInt_LineConstructor::Perform(const occ::handle<IntPatch_Line>& L)
     }
     done = true;
     return;
-  } // if(typl == IntPatch_Analytic)  {
-  else if (typl == IntPatch_Walking)
+  } // if(typl == IntPatch_IType::IntPatch_Analytic)  {
+  else if (typl == IntPatch_IType::IntPatch_Walking)
   {
     double                      u1, v1, u2, v2;
     occ::handle<IntPatch_WLine> WLine(occ::down_cast<IntPatch_WLine>(L));
@@ -273,16 +273,16 @@ void GeomInt_LineConstructor::Perform(const occ::handle<IntPatch_Line>& L)
       aST2 = myHS2->GetType();
       //
       bCond = false;
-      if (aST1 == GeomAbs_Plane)
+      if (aST1 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
-        if (aST2 == GeomAbs_SurfaceOfExtrusion || aST2 == GeomAbs_SurfaceOfRevolution)
+        if (aST2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion || aST2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
         { //+zft
           bCond = !bCond;
         }
       }
-      else if (aST2 == GeomAbs_Plane)
+      else if (aST2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
-        if (aST1 == GeomAbs_SurfaceOfExtrusion || aST1 == GeomAbs_SurfaceOfRevolution)
+        if (aST1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion || aST1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
         { //+zft
           bCond = !bCond;
         }
@@ -326,16 +326,16 @@ void GeomInt_LineConstructor::Perform(const occ::handle<IntPatch_Line>& L)
     }
     done = true;
     return;
-  } // else if(typl == IntPatch_Walking)  {
+  } // else if(typl == IntPatch_IType::IntPatch_Walking)  {
   //
   //-----------------------------------------------------------
-  else if (typl != IntPatch_Restriction)
+  else if (typl != IntPatch_IType::IntPatch_Restriction)
   {
     seqp.Clear();
     //
     occ::handle<IntPatch_GLine> GLine(occ::down_cast<IntPatch_GLine>(L));
     //
-    if (typl == IntPatch_Circle || typl == IntPatch_Ellipse)
+    if (typl == IntPatch_IType::IntPatch_Circle || typl == IntPatch_IType::IntPatch_Ellipse)
     {
       TreatCircle(L, Tol);
       done = true;
@@ -383,7 +383,7 @@ void GeomInt_LineConstructor::Perform(const occ::handle<IntPatch_Line>& L)
     //
     done = true;
     return;
-  } // else if (typl != IntPatch_Restriction)  {
+  } // else if (typl != IntPatch_IType::IntPatch_Restriction)  {
 
   done = false;
   seqp.Clear();
@@ -408,16 +408,16 @@ void GeomInt_LineConstructor::Perform(const occ::handle<IntPatch_Line>& L)
     {
       switch (thevtx.TransitionLineArc1().TransitionType())
       {
-        case IntSurf_In:
+        case IntSurf_TypeTrans::IntSurf_In:
           or1 = TopAbs_FORWARD;
           break;
-        case IntSurf_Out:
+        case IntSurf_TypeTrans::IntSurf_Out:
           or1 = TopAbs_REVERSED;
           break;
-        case IntSurf_Touch:
+        case IntSurf_TypeTrans::IntSurf_Touch:
           or1 = TopAbs_INTERNAL;
           break;
-        case IntSurf_Undecided:
+        case IntSurf_TypeTrans::IntSurf_Undecided:
           or1 = TopAbs_INTERNAL;
           break;
       }
@@ -431,16 +431,16 @@ void GeomInt_LineConstructor::Perform(const occ::handle<IntPatch_Line>& L)
     {
       switch (thevtx.TransitionLineArc2().TransitionType())
       {
-        case IntSurf_In:
+        case IntSurf_TypeTrans::IntSurf_In:
           or2 = TopAbs_FORWARD;
           break;
-        case IntSurf_Out:
+        case IntSurf_TypeTrans::IntSurf_Out:
           or2 = TopAbs_REVERSED;
           break;
-        case IntSurf_Touch:
+        case IntSurf_TypeTrans::IntSurf_Touch:
           or2 = TopAbs_INTERNAL;
           break;
-        case IntSurf_Undecided:
+        case IntSurf_TypeTrans::IntSurf_Undecided:
           or2 = TopAbs_INTERNAL;
           break;
       }
@@ -743,14 +743,14 @@ void AdjustPeriodic(const occ::handle<GeomAdaptor_Surface>& myHS1,
   const GeomAbs_SurfaceType typs1 = myHS1->GetType();
   switch (typs1)
   {
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       myHS1IsUPeriodic = true;
       myHS1IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       myHS1IsUPeriodic = myHS1IsVPeriodic = true;
       break;
     }
@@ -764,14 +764,14 @@ void AdjustPeriodic(const occ::handle<GeomAdaptor_Surface>& myHS1,
   const GeomAbs_SurfaceType typs2 = myHS2->GetType();
   switch (typs2)
   {
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       myHS2IsUPeriodic = true;
       myHS2IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       myHS2IsUPeriodic = myHS2IsVPeriodic = true;
       break;
     }
@@ -838,19 +838,19 @@ void Parameters(const occ::handle<GeomAdaptor_Surface>& myHS1,
   //
   switch (myHS1->GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       quad1.SetValue(myHS1->Plane());
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       quad1.SetValue(myHS1->Cylinder());
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       quad1.SetValue(myHS1->Cone());
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       quad1.SetValue(myHS1->Sphere());
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       quad1.SetValue(myHS1->Torus());
       break;
     default:
@@ -868,19 +868,19 @@ void GLinePoint(const IntPatch_IType               typl,
 {
   switch (typl)
   {
-    case IntPatch_Lin:
+    case IntPatch_IType::IntPatch_Lin:
       aP = ElCLib::Value(aT, GLine->Line());
       break;
-    case IntPatch_Circle:
+    case IntPatch_IType::IntPatch_Circle:
       aP = ElCLib::Value(aT, GLine->Circle());
       break;
-    case IntPatch_Ellipse:
+    case IntPatch_IType::IntPatch_Ellipse:
       aP = ElCLib::Value(aT, GLine->Ellipse());
       break;
-    case IntPatch_Hyperbola:
+    case IntPatch_IType::IntPatch_Hyperbola:
       aP = ElCLib::Value(aT, GLine->Hyperbola());
       break;
-    case IntPatch_Parabola:
+    case IntPatch_IType::IntPatch_Parabola:
       aP = ElCLib::Value(aT, GLine->Parabola());
       break;
     default:
@@ -899,12 +899,12 @@ bool RejectMicroCircle(const occ::handle<IntPatch_GLine>& aGLine,
   //
   bRet = false;
   //
-  if (aType == IntPatch_Circle)
+  if (aType == IntPatch_IType::IntPatch_Circle)
   {
     aR   = aGLine->Circle().Radius();
     bRet = (aR < aTol3D);
   }
-  else if (aType == IntPatch_Ellipse)
+  else if (aType == IntPatch_IType::IntPatch_Ellipse)
   {
     aR   = aGLine->Ellipse().MajorRadius();
     bRet = (aR < aTol3D);

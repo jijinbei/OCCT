@@ -853,7 +853,7 @@ static void Locate2Coord(const int                               Index,
 //=================================================================================================
 
 Adaptor3d_CurveOnSurface::Adaptor3d_CurveOnSurface()
-    : myType(GeomAbs_OtherCurve),
+    : myType(GeomAbs_CurveType::GeomAbs_OtherCurve),
       myIntCont(GeomAbs_CN)
 {
 }
@@ -861,7 +861,7 @@ Adaptor3d_CurveOnSurface::Adaptor3d_CurveOnSurface()
 //=================================================================================================
 
 Adaptor3d_CurveOnSurface::Adaptor3d_CurveOnSurface(const occ::handle<Adaptor3d_Surface>& S)
-    : myType(GeomAbs_OtherCurve),
+    : myType(GeomAbs_CurveType::GeomAbs_OtherCurve),
       myIntCont(GeomAbs_CN)
 {
   Load(S);
@@ -871,7 +871,7 @@ Adaptor3d_CurveOnSurface::Adaptor3d_CurveOnSurface(const occ::handle<Adaptor3d_S
 
 Adaptor3d_CurveOnSurface::Adaptor3d_CurveOnSurface(const occ::handle<Adaptor2d_Curve2d>& C,
                                                    const occ::handle<Adaptor3d_Surface>& S)
-    : myType(GeomAbs_OtherCurve),
+    : myType(GeomAbs_CurveType::GeomAbs_OtherCurve),
       myIntCont(GeomAbs_CN)
 {
   Load(S);
@@ -931,13 +931,13 @@ void Adaptor3d_CurveOnSurface::Load(const occ::handle<Adaptor2d_Curve2d>& C)
   EvalKPart();
 
   GeomAbs_SurfaceType SType = mySurface->GetType();
-  if (SType == GeomAbs_OffsetSurface)
+  if (SType == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
   {
     SType = mySurface->BasisSurface()->GetType();
   }
 
-  if (SType == GeomAbs_BSplineSurface || SType == GeomAbs_SurfaceOfExtrusion
-      || SType == GeomAbs_SurfaceOfRevolution)
+  if (SType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface || SType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion
+      || SType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
   {
     EvalFirstLastSurf();
   }
@@ -1118,7 +1118,7 @@ bool Adaptor3d_CurveOnSurface::IsClosed() const
 
 bool Adaptor3d_CurveOnSurface::IsPeriodic() const
 {
-  if (myType == GeomAbs_Circle || myType == GeomAbs_Ellipse)
+  if (myType == GeomAbs_CurveType::GeomAbs_Circle || myType == GeomAbs_CurveType::GeomAbs_Ellipse)
     return true;
 
   return myCurve->IsPeriodic();
@@ -1128,7 +1128,7 @@ bool Adaptor3d_CurveOnSurface::IsPeriodic() const
 
 double Adaptor3d_CurveOnSurface::Period() const
 {
-  if (myType == GeomAbs_Circle || myType == GeomAbs_Ellipse)
+  if (myType == GeomAbs_CurveType::GeomAbs_Circle || myType == GeomAbs_CurveType::GeomAbs_Ellipse)
     return (2. * M_PI);
 
   return myCurve->Period();
@@ -1141,9 +1141,9 @@ gp_Pnt Adaptor3d_CurveOnSurface::EvalD0(const double theU) const
   gp_Pnt   P;
   gp_Pnt2d Puv;
 
-  if (myType == GeomAbs_Line)
+  if (myType == GeomAbs_CurveType::GeomAbs_Line)
     P = ElCLib::Value(theU, myLin);
-  else if (myType == GeomAbs_Circle)
+  else if (myType == GeomAbs_CurveType::GeomAbs_Circle)
     P = ElCLib::Value(theU, myCirc);
   else
   {
@@ -1180,9 +1180,9 @@ Geom_Curve::ResD1 Adaptor3d_CurveOnSurface::EvalD1(const double theU) const
     myLastSurf->D1(Puv.X(), Puv.Y(), aRes.Point, D1U, D1V);
     aRes.D1.SetLinearForm(Duv.X(), D1U, Duv.Y(), D1V);
   }
-  else if (myType == GeomAbs_Line)
+  else if (myType == GeomAbs_CurveType::GeomAbs_Line)
     ElCLib::D1(theU, myLin, aRes.Point, aRes.D1);
-  else if (myType == GeomAbs_Circle)
+  else if (myType == GeomAbs_CurveType::GeomAbs_Circle)
     ElCLib::D1(theU, myCirc, aRes.Point, aRes.D1);
   else
   {
@@ -1223,12 +1223,12 @@ Geom_Curve::ResD2 Adaptor3d_CurveOnSurface::EvalD2(const double theU) const
     aRes.D2.SetLinearForm(D2W.X(), D1U, D2W.Y(), D1V, 2. * DW.X() * DW.Y(), D2UV);
     aRes.D2.SetLinearForm(DW.X() * DW.X(), D2U, DW.Y() * DW.Y(), D2V, aRes.D2);
   }
-  else if (myType == GeomAbs_Line)
+  else if (myType == GeomAbs_CurveType::GeomAbs_Line)
   {
     ElCLib::D1(theU, myLin, aRes.Point, aRes.D1);
     aRes.D2.SetCoord(0., 0., 0.);
   }
-  else if (myType == GeomAbs_Circle)
+  else if (myType == GeomAbs_CurveType::GeomAbs_Circle)
     ElCLib::D2(theU, myCirc, aRes.Point, aRes.D1, aRes.D2);
   else
   {
@@ -1273,13 +1273,13 @@ Geom_Curve::ResD3 Adaptor3d_CurveOnSurface::EvalD3(const double theU) const
     aRes.D2.SetLinearForm(DW.X() * DW.X(), D2U, DW.Y() * DW.Y(), D2V, aRes.D2);
     aRes.D3 = SetLinearForm(DW, D2W, D3W, D1U, D1V, D2U, D2V, D2UV, D3U, D3V, D3UUV, D3UVV);
   }
-  else if (myType == GeomAbs_Line)
+  else if (myType == GeomAbs_CurveType::GeomAbs_Line)
   {
     ElCLib::D1(theU, myLin, aRes.Point, aRes.D1);
     aRes.D2.SetCoord(0., 0., 0.);
     aRes.D3.SetCoord(0., 0., 0.);
   }
-  else if (myType == GeomAbs_Circle)
+  else if (myType == GeomAbs_CurveType::GeomAbs_Circle)
     ElCLib::D3(theU, myCirc, aRes.Point, aRes.D1, aRes.D2, aRes.D3);
   else
   {
@@ -1332,7 +1332,7 @@ GeomAbs_CurveType Adaptor3d_CurveOnSurface::GetType() const
 gp_Lin Adaptor3d_CurveOnSurface::Line() const
 {
   Standard_NoSuchObject_Raise_if(
-    myType != GeomAbs_Line,
+    myType != GeomAbs_CurveType::GeomAbs_Line,
     "Adaptor3d_CurveOnSurface::Line(): curve is not a line") return myLin;
 }
 
@@ -1341,7 +1341,7 @@ gp_Lin Adaptor3d_CurveOnSurface::Line() const
 gp_Circ Adaptor3d_CurveOnSurface::Circle() const
 {
   Standard_NoSuchObject_Raise_if(
-    myType != GeomAbs_Circle,
+    myType != GeomAbs_CurveType::GeomAbs_Circle,
     "Adaptor3d_CurveOnSurface::Line(): curve is not a circle") return myCirc;
 }
 
@@ -1394,7 +1394,7 @@ int Adaptor3d_CurveOnSurface::NbPoles() const
 
 int Adaptor3d_CurveOnSurface::NbKnots() const
 {
-  if (mySurface->GetType() == GeomAbs_Plane)
+  if (mySurface->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     return myCurve->NbKnots();
   else
   {
@@ -1406,7 +1406,7 @@ int Adaptor3d_CurveOnSurface::NbKnots() const
 
 occ::handle<Geom_BezierCurve> Adaptor3d_CurveOnSurface::Bezier() const
 {
-  Standard_NoSuchObject_Raise_if(mySurface->GetType() != GeomAbs_Plane,
+  Standard_NoSuchObject_Raise_if(mySurface->GetType() != GeomAbs_SurfaceType::GeomAbs_Plane,
                                  "Adaptor3d_CurveOnSurface : Bezier");
 
   occ::handle<Geom2d_BezierCurve> Bez2d   = myCurve->Bezier();
@@ -1437,7 +1437,7 @@ occ::handle<Geom_BezierCurve> Adaptor3d_CurveOnSurface::Bezier() const
 
 occ::handle<Geom_BSplineCurve> Adaptor3d_CurveOnSurface::BSpline() const
 {
-  Standard_NoSuchObject_Raise_if(mySurface->GetType() != GeomAbs_Plane,
+  Standard_NoSuchObject_Raise_if(mySurface->GetType() != GeomAbs_SurfaceType::GeomAbs_Plane,
                                  "Adaptor3d_CurveOnSurface : BSpline");
 
   occ::handle<Geom2d_BSplineCurve> Bsp2d   = myCurve->BSpline();
@@ -1500,16 +1500,16 @@ occ::handle<Adaptor3d_Surface>& Adaptor3d_CurveOnSurface::ChangeSurface()
 
 void Adaptor3d_CurveOnSurface::EvalKPart()
 {
-  myType = GeomAbs_OtherCurve;
+  myType = GeomAbs_CurveType::GeomAbs_OtherCurve;
 
   GeomAbs_SurfaceType STy = mySurface->GetType();
   GeomAbs_CurveType   CTy = myCurve->GetType();
-  if (STy == GeomAbs_Plane)
+  if (STy == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     myType = CTy;
-    if (myType == GeomAbs_Circle)
+    if (myType == GeomAbs_CurveType::GeomAbs_Circle)
       myCirc = to3d(mySurface->Plane(), myCurve->Circle());
-    else if (myType == GeomAbs_Line)
+    else if (myType == GeomAbs_CurveType::GeomAbs_Line)
     {
       gp_Pnt   P;
       gp_Vec   V;
@@ -1524,17 +1524,17 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
   }
   else
   {
-    if (CTy == GeomAbs_Line)
+    if (CTy == GeomAbs_CurveType::GeomAbs_Line)
     {
       gp_Dir2d D = myCurve->Line().Direction();
       if (D.IsParallel(gp::DX2d(), Precision::Angular()))
       { // Iso V.
-        if (STy == GeomAbs_Sphere)
+        if (STy == GeomAbs_SurfaceType::GeomAbs_Sphere)
         {
           gp_Pnt2d P = myCurve->Line().Location();
           if (std::abs(std::abs(P.Y()) - M_PI / 2.) >= Precision::PConfusion())
           {
-            myType         = GeomAbs_Circle;
+            myType         = GeomAbs_CurveType::GeomAbs_Circle;
             gp_Sphere Sph  = mySurface->Sphere();
             gp_Ax3    Axis = Sph.Position();
             myCirc         = ElSLib::SphereVIso(Axis, Sph.Radius(), P.Y());
@@ -1549,9 +1549,9 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
             }
           }
         }
-        else if (STy == GeomAbs_Cylinder)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cylinder)
         {
-          myType           = GeomAbs_Circle;
+          myType           = GeomAbs_CurveType::GeomAbs_Circle;
           gp_Cylinder Cyl  = mySurface->Cylinder();
           gp_Pnt2d    P    = myCurve->Line().Location();
           gp_Ax3      Axis = Cyl.Position();
@@ -1566,9 +1566,9 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
             myCirc.SetPosition(Ax);
           }
         }
-        else if (STy == GeomAbs_Cone)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cone)
         {
-          myType        = GeomAbs_Circle;
+          myType        = GeomAbs_CurveType::GeomAbs_Circle;
           gp_Cone  Cone = mySurface->Cone();
           gp_Pnt2d P    = myCurve->Line().Location();
           gp_Ax3   Axis = Cone.Position();
@@ -1583,9 +1583,9 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
             myCirc.SetPosition(Ax);
           }
         }
-        else if (STy == GeomAbs_Torus)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Torus)
         {
-          myType        = GeomAbs_Circle;
+          myType        = GeomAbs_CurveType::GeomAbs_Circle;
           gp_Torus Tore = mySurface->Torus();
           gp_Pnt2d P    = myCurve->Line().Location();
           gp_Ax3   Axis = Tore.Position();
@@ -1603,9 +1603,9 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
       }
       else if (D.IsParallel(gp::DY2d(), Precision::Angular()))
       { // Iso U.
-        if (STy == GeomAbs_Sphere)
+        if (STy == GeomAbs_SurfaceType::GeomAbs_Sphere)
         {
-          myType         = GeomAbs_Circle;
+          myType         = GeomAbs_CurveType::GeomAbs_Circle;
           gp_Sphere Sph  = mySurface->Sphere();
           gp_Pnt2d  P    = myCurve->Line().Location();
           gp_Ax3    Axis = Sph.Position();
@@ -1629,9 +1629,9 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
             myCirc.SetPosition(Ax);
           }
         }
-        else if (STy == GeomAbs_Cylinder)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cylinder)
         {
-          myType          = GeomAbs_Line;
+          myType          = GeomAbs_CurveType::GeomAbs_Line;
           gp_Cylinder Cyl = mySurface->Cylinder();
           gp_Pnt2d    P   = myCurve->Line().Location();
           myLin           = ElSLib::CylinderUIso(Cyl.Position(), Cyl.Radius(), P.X());
@@ -1641,9 +1641,9 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
           if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
             myLin.Reverse();
         }
-        else if (STy == GeomAbs_Cone)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cone)
         {
-          myType        = GeomAbs_Line;
+          myType        = GeomAbs_CurveType::GeomAbs_Line;
           gp_Cone  Cone = mySurface->Cone();
           gp_Pnt2d P    = myCurve->Line().Location();
           myLin = ElSLib::ConeUIso(Cone.Position(), Cone.RefRadius(), Cone.SemiAngle(), P.X());
@@ -1653,9 +1653,9 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
           if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
             myLin.Reverse();
         }
-        else if (STy == GeomAbs_Torus)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Torus)
         {
-          myType        = GeomAbs_Circle;
+          myType        = GeomAbs_CurveType::GeomAbs_Circle;
           gp_Torus Tore = mySurface->Torus();
           gp_Pnt2d P    = myCurve->Line().Location();
           gp_Ax3   Axis = Tore.Position();
@@ -1695,14 +1695,14 @@ void Adaptor3d_CurveOnSurface::EvalFirstLastSurf()
 
     switch (mySurface->GetType())
     {
-      case GeomAbs_BSplineSurface:
+      case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
         LocatePart(UV, DUV, mySurface, LeftBot, RightTop);
         break;
-      case GeomAbs_SurfaceOfRevolution:
-      case GeomAbs_SurfaceOfExtrusion:
+      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
         Ok = LocatePart_RevExt(UV, DUV, mySurface, LeftBot, RightTop);
         break;
-      case GeomAbs_OffsetSurface:
+      case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
         Ok = LocatePart_Offset(UV, DUV, mySurface, LeftBot, RightTop);
         break;
       default:
@@ -1737,14 +1737,14 @@ void Adaptor3d_CurveOnSurface::EvalFirstLastSurf()
 
     switch (mySurface->GetType())
     {
-      case GeomAbs_BSplineSurface:
+      case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
         LocatePart(UV, DUV, mySurface, LeftBot, RightTop);
         break;
-      case GeomAbs_SurfaceOfRevolution:
-      case GeomAbs_SurfaceOfExtrusion:
+      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
         Ok = LocatePart_RevExt(UV, DUV, mySurface, LeftBot, RightTop);
         break;
-      case GeomAbs_OffsetSurface:
+      case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
         Ok = LocatePart_Offset(UV, DUV, mySurface, LeftBot, RightTop);
         break;
       default:
@@ -1777,17 +1777,17 @@ bool Adaptor3d_CurveOnSurface::LocatePart_RevExt(const gp_Pnt2d&                
 {
   occ::handle<Adaptor3d_Curve> AHC = S->BasisCurve();
 
-  if (AHC->GetType() == GeomAbs_BSplineCurve)
+  if (AHC->GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom_BSplineCurve> BSplC;
     BSplC = AHC->BSpline();
 
-    if ((S->GetType()) == GeomAbs_SurfaceOfExtrusion)
+    if ((S->GetType()) == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
     {
       Locate1Coord(1, UV, DUV, BSplC, LeftBot, RightTop);
       Locate2Coord(2, UV, DUV, S->FirstVParameter(), S->LastVParameter(), LeftBot, RightTop);
     }
-    else if ((S->GetType()) == GeomAbs_SurfaceOfRevolution)
+    else if ((S->GetType()) == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
     {
       Locate1Coord(2, UV, DUV, BSplC, LeftBot, RightTop);
       Locate2Coord(1, UV, DUV, S->FirstUParameter(), S->LastUParameter(), LeftBot, RightTop);
@@ -1820,12 +1820,12 @@ bool Adaptor3d_CurveOnSurface::LocatePart_Offset(const gp_Pnt2d&                
   GeomAbs_SurfaceType BasisSType = AHS->GetType();
   switch (BasisSType)
   {
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
       Ok = LocatePart_RevExt(UV, DUV, AHS, LeftBot, RightTop);
       break;
 
-    case GeomAbs_BSplineSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
       LocatePart(UV, DUV, AHS, LeftBot, RightTop);
       break;
 

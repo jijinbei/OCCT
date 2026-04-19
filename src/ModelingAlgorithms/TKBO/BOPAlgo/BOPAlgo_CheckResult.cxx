@@ -19,7 +19,7 @@
 //=================================================================================================
 
 BOPAlgo_CheckResult::BOPAlgo_CheckResult()
-    : myStatus(BOPAlgo_CheckUnknown),
+    : myStatus(BOPAlgo_CheckStatus::BOPAlgo_CheckUnknown),
       myMaxDist1(0.),
       myMaxDist2(0.),
       myMaxPar1(0.),

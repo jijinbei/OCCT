@@ -71,7 +71,7 @@ bool IntTools_EdgeFace::IsCoincident()
   GeomAPI_ProjectPointOnSurf& aProjector = myContext->ProjPS(myFace);
 
   int aNbSeg = 23;
-  if (myC.GetType() == GeomAbs_Line && myS.GetType() == GeomAbs_Plane)
+  if (myC.GetType() == GeomAbs_CurveType::GeomAbs_Line && myS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     aNbSeg = 2; // Check only three points for Line/Plane intersection
 
   const double aTresh                   = 0.5;
@@ -232,7 +232,7 @@ bool IntTools_EdgeFace::IsEqDistance(const gp_Pnt&              aP,
 
   GeomAbs_SurfaceType aSurfType = aBAS.GetType();
 
-  if (aSurfType == GeomAbs_Cylinder)
+  if (aSurfType == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     gp_Cylinder   aCyl  = aBAS.Cylinder();
     const gp_Ax1& anAx1 = aCyl.Axis();
@@ -246,7 +246,7 @@ bool IntTools_EdgeFace::IsEqDistance(const gp_Pnt&              aP,
     }
   }
 
-  if (aSurfType == GeomAbs_Cone)
+  if (aSurfType == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     gp_Cone       aCone = aBAS.Cone();
     const gp_Ax1& anAx1 = aCone.Axis();
@@ -265,7 +265,7 @@ bool IntTools_EdgeFace::IsEqDistance(const gp_Pnt&              aP,
     }
   }
 
-  if (aSurfType == GeomAbs_Torus)
+  if (aSurfType == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     double aMajorRadius, aMinorRadius, aDC;
 
@@ -513,7 +513,7 @@ void IntTools_EdgeFace::Perform()
   double aFuzz = myFuzzyValue / 2.;
   double aTolF = BRep_Tool::Tolerance(myFace) + aFuzz;
   double aTolE = BRep_Tool::Tolerance(myEdge) + aFuzz;
-  if (aCurveType == GeomAbs_BSplineCurve || aCurveType == GeomAbs_BezierCurve)
+  if (aCurveType == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCurveType == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     //--- 5112
     double diff1 = (aTolE / aTolF);
@@ -597,7 +597,7 @@ void IntTools_EdgeFace::Perform()
     aCType = myC.GetType();
     aSType = myS.GetType();
 
-    if (aCType == GeomAbs_Line && aSType == GeomAbs_Cylinder)
+    if (aCType == GeomAbs_CurveType::GeomAbs_Line && aSType == GeomAbs_SurfaceType::GeomAbs_Cylinder)
     {
       for (i = 1; i <= aNb; i++)
       {
@@ -627,7 +627,7 @@ void IntTools_EdgeFace::Perform()
 
     // Circle\Plane's Common Parts treatment
 
-    if (aCType == GeomAbs_Circle && aSType == GeomAbs_Plane)
+    if (aCType == GeomAbs_CurveType::GeomAbs_Circle && aSType == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       bool bIsCoplanar, bIsRadius;
       bIsCoplanar = IsCoplanar(myC, myS);
@@ -678,7 +678,7 @@ bool IntTools_EdgeFace::CheckTouchVertex(const IntTools_CommonPrt& aCP, double& 
   aType = myC.GetType();
   //
   aEpsT = 8.e-5;
-  if (aType == GeomAbs_Line)
+  if (aType == GeomAbs_CurveType::GeomAbs_Line)
   {
     aEpsT = 9.e-5;
   }
@@ -775,7 +775,7 @@ bool IsCoplanar(const BRepAdaptor_Curve& aCurve, const BRepAdaptor_Surface& aSur
   aCType = aCurve.GetType();
   aSType = aSurface.GetType();
 
-  if (aCType == GeomAbs_Circle && aSType == GeomAbs_Plane)
+  if (aCType == GeomAbs_CurveType::GeomAbs_Circle && aSType == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     gp_Circ       aCirc   = aCurve.Circle();
     const gp_Ax1& anAx1   = aCirc.Axis();
@@ -804,7 +804,7 @@ bool IsRadius(const BRepAdaptor_Curve&   aCurve,
   aCType = aCurve.GetType();
   aSType = aSurface.GetType();
 
-  if (aCType == GeomAbs_Circle && aSType == GeomAbs_Plane)
+  if (aCType == GeomAbs_CurveType::GeomAbs_Circle && aSType == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     gp_Circ      aCirc   = aCurve.Circle();
     const gp_Pnt aCenter = aCirc.Location();
@@ -834,7 +834,7 @@ int AdaptiveDiscret(const int                  iDiscret,
 
   aSType = aSurface.GetType();
 
-  if (aSType == GeomAbs_Cylinder)
+  if (aSType == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     double aELength, aRadius, dLR;
 

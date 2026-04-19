@@ -31,7 +31,7 @@ static const double Tolpetit = 1.e-8;
 Contap_ContAna::Contap_ContAna()
     : done(false),
       nbSol(0),
-      typL(GeomAbs_OtherCurve),
+      typL(GeomAbs_CurveType::GeomAbs_OtherCurve),
       prm(0.0)
 {
 }
@@ -39,7 +39,7 @@ Contap_ContAna::Contap_ContAna()
 void Contap_ContAna::Perform(const gp_Sphere& S, const gp_Dir& D)
 {
   done = false;
-  typL = GeomAbs_Circle;
+  typL = GeomAbs_CurveType::GeomAbs_Circle;
   pt1  = S.Location();
   dir1 = D;
   if (std::abs(D.Dot(S.XAxis().Direction())) < 0.9999999999999)
@@ -58,7 +58,7 @@ void Contap_ContAna::Perform(const gp_Sphere& S, const gp_Dir& D)
 void Contap_ContAna::Perform(const gp_Sphere& S, const gp_Dir& D, const double Angle)
 {
   done = false;
-  typL = GeomAbs_Circle;
+  typL = GeomAbs_CurveType::GeomAbs_Circle;
 
   dir1 = D;
   if (std::abs(D.Dot(S.XAxis().Direction())) < 0.9999999999999)
@@ -107,7 +107,7 @@ void Contap_ContAna::Perform(const gp_Sphere& S, const gp_Pnt& Eye)
         dir2 = dir1.Crossed(S.YAxis().Direction());
       }
       nbSol = 1;
-      typL  = GeomAbs_Circle;
+      typL  = GeomAbs_CurveType::GeomAbs_Circle;
     }
   }
   done = true;
@@ -126,7 +126,7 @@ void Contap_ContAna::Perform(const gp_Cylinder& C, const gp_Dir& D)
   else
   {
     normale.Normalize();
-    typL = GeomAbs_Line;
+    typL = GeomAbs_CurveType::GeomAbs_Line;
     dir1 = C.Position().Direction();
     dir2 = dir1;
     pt1.SetXYZ(C.Location().XYZ() + C.Radius() * normale);
@@ -150,7 +150,7 @@ void Contap_ContAna::Perform(const gp_Cylinder& C, const gp_Dir& D, const double
 
   if (std::abs(Coefcst) < norm2)
   {
-    typL  = GeomAbs_Line;
+    typL  = GeomAbs_CurveType::GeomAbs_Line;
     nbSol = 2;
     dir1 = dir2 = C.Position().Direction();
 
@@ -210,7 +210,7 @@ void Contap_ContAna::Perform(const gp_Cylinder& C, const gp_Pnt& Eye)
   }
   else
   {
-    typL = GeomAbs_Line;
+    typL = GeomAbs_CurveType::GeomAbs_Line;
     prm  = radius * sqrt(1. - radius * radius / (dist * dist));
     dir1 = C.Axis().Direction();
     dir2 = dir1;
@@ -238,7 +238,7 @@ void Contap_ContAna::Perform(const gp_Cone& C, const gp_Dir& D)
   double norm1 = Coefcos * Coefcos + Coefsin * Coefsin;
   double norm2 = std::sqrt(norm1);
   //  if (std::abs(std::abs(Coefcst)-norm2) <= Tolpetit) { // tol angulaire 1.e-8
-  //    typL = GeomAbs_Line;
+  //    typL = GeomAbs_CurveType::GeomAbs_Line;
   //    nbSol = 1;
   //    pt1 = C.Apex();
   //    dir1 = D;
@@ -247,7 +247,7 @@ void Contap_ContAna::Perform(const gp_Cone& C, const gp_Dir& D)
 
   if (std::abs(Coefcst) < norm2)
   {
-    typL  = GeomAbs_Line;
+    typL  = GeomAbs_CurveType::GeomAbs_Line;
     nbSol = 2;
     pt1   = C.Apex();
     pt2   = pt1;
@@ -308,7 +308,7 @@ void Contap_ContAna::Perform(const gp_Cone& C, const gp_Dir& D, const double Ang
 
   if (std::abs(Coefcst) < norm2)
   {
-    typL = GeomAbs_Line;
+    typL = GeomAbs_CurveType::GeomAbs_Line;
     nbSol += 2;
     pt1 = C.Apex();
     pt2 = pt1;
@@ -350,7 +350,7 @@ void Contap_ContAna::Perform(const gp_Cone& C, const gp_Dir& D, const double Ang
 
   if (std::abs(Coefcst) < norm2)
   {
-    typL = GeomAbs_Line;
+    typL = GeomAbs_CurveType::GeomAbs_Line;
     nbSol += 2;
     pt3 = C.Apex();
     pt4 = pt3;
@@ -406,7 +406,7 @@ void Contap_ContAna::Perform(const gp_Cone& C, const gp_Pnt& Eye)
   double norm1 = Coefcos * Coefcos + Coefsin * Coefsin;
   double norm2 = std::sqrt(Coefcos * Coefcos + Coefsin * Coefsin);
   //  if (std::abs(std::abs(Coefcst)-norm2) <= Tolpetit) { // tol angulaire 1.e-8
-  //    typL = GeomAbs_Line;
+  //    typL = GeomAbs_CurveType::GeomAbs_Line;
   //    nbSol = 1;
   //    pt1 = C.Apex();
   //    dir1.SetXYZ(apexeye);
@@ -415,7 +415,7 @@ void Contap_ContAna::Perform(const gp_Cone& C, const gp_Pnt& Eye)
 
   if (std::abs(Coefcst) < norm2)
   {
-    typL  = GeomAbs_Line;
+    typL  = GeomAbs_CurveType::GeomAbs_Line;
     nbSol = 2;
     pt1   = C.Apex();
     pt2   = pt1;
@@ -460,7 +460,7 @@ gp_Lin Contap_ContAna::Line(const int Index) const
   {
     throw StdFail_NotDone();
   }
-  if (typL != GeomAbs_Line || nbSol == 0)
+  if (typL != GeomAbs_CurveType::GeomAbs_Line || nbSol == 0)
   {
     throw Standard_DomainError();
   }

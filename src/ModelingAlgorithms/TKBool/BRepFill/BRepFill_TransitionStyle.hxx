@@ -17,7 +17,7 @@
 #ifndef _BRepFill_TransitionStyle_HeaderFile
 #define _BRepFill_TransitionStyle_HeaderFile
 
-enum BRepFill_TransitionStyle
+enum class BRepFill_TransitionStyle
 {
   BRepFill_Modified,
   BRepFill_Right,

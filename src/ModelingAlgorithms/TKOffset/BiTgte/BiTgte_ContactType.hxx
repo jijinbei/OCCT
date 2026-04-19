@@ -17,7 +17,7 @@
 #ifndef _BiTgte_ContactType_HeaderFile
 #define _BiTgte_ContactType_HeaderFile
 
-enum BiTgte_ContactType
+enum class BiTgte_ContactType
 {
   BiTgte_FaceFace,
   BiTgte_FaceEdge,

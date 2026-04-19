@@ -17,7 +17,7 @@
 #ifndef _IntSurf_Situation_HeaderFile
 #define _IntSurf_Situation_HeaderFile
 
-enum IntSurf_Situation
+enum class IntSurf_Situation
 {
   IntSurf_Inside,
   IntSurf_Outside,

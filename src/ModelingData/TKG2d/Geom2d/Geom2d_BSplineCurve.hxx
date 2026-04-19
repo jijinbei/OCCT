@@ -876,7 +876,7 @@ private:
   int                                        myDeg           = 0;
   bool                                       myPeriodic      = false;
   bool                                       myRational      = false;
-  GeomAbs_BSplKnotDistribution               myKnotSet       = GeomAbs_NonUniform;
+  GeomAbs_BSplKnotDistribution               myKnotSet       = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
   GeomAbs_Shape                              mySmooth        = GeomAbs_C0;
   double                                     myMaxDerivInv   = 0.0;
   bool                                       myMaxDerivInvOk = false;

@@ -17,7 +17,7 @@
 #ifndef _TopOpeBRep_TypeLineCurve_HeaderFile
 #define _TopOpeBRep_TypeLineCurve_HeaderFile
 
-enum TopOpeBRep_TypeLineCurve
+enum class TopOpeBRep_TypeLineCurve
 {
   TopOpeBRep_ANALYTIC,
   TopOpeBRep_RESTRICTION,

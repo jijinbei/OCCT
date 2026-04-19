@@ -135,18 +135,18 @@ static int incrementalmesh(Draw_Interpretor& theDI, int theNbArgs, const char** 
       anAlgoStr.LowerCase();
       if (anAlgoStr == "watson" || anAlgoStr == "0")
       {
-        aMeshParams.MeshAlgo = IMeshTools_MeshAlgoType_Watson;
+        aMeshParams.MeshAlgo = IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_Watson;
         aContext->SetFaceDiscret(new BRepMesh_FaceDiscret(new BRepMesh_MeshAlgoFactory()));
       }
       else if (anAlgoStr == "delabella" || anAlgoStr == "1")
       {
-        aMeshParams.MeshAlgo = IMeshTools_MeshAlgoType_Delabella;
+        aMeshParams.MeshAlgo = IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_Delabella;
         aContext->SetFaceDiscret(new BRepMesh_FaceDiscret(new BRepMesh_DelabellaMeshAlgoFactory()));
       }
       else if (anAlgoStr == "-1" || anAlgoStr == "default")
       {
         // already handled by BRepMesh_Context constructor
-        // aMeshParams.MeshAlgo = IMeshTools_MeshAlgoType_DEFAULT;
+        // aMeshParams.MeshAlgo = IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_DEFAULT;
       }
       else
       {
@@ -1378,7 +1378,7 @@ static int wavefront(Draw_Interpretor&, int nbarg, const char** argv)
 
           BS.D1(U, V, P, D1U, D1V);
           CSLib::Normal(D1U, D1V, Precision::Angular(), aStatus, Nor);
-          if (aStatus != CSLib_Done)
+          if (aStatus != CSLib_DerivativeStatus::CSLib_Done)
           {
             BS.D2(U, V, P, D1U, D1V, D2U, D2V, D2UV);
             CSLib::Normal(D1U, D1V, D2U, D2V, D2UV, Precision::Angular(), OK, NStat, Nor);

@@ -64,7 +64,7 @@
 #include <cstdio>
 
 // Number of BRepCheck_Statuses in BRepCheck_Status.hxx file
-//(BRepCheck_NoError is not considered, i.e. general status
+//(BRepCheck_Status::BRepCheck_NoError is not considered, i.e. general status
 // is smaller by one specified in file)
 static const int NumberOfStatus = 36;
 
@@ -151,7 +151,7 @@ static void PrintSub(Standard_OStream&         OS,
       {
         theMap(sub).Append(S);
         itl.Initialize(res->StatusOnShape());
-        if (itl.Value() != BRepCheck_NoError)
+        if (itl.Value() != BRepCheck_Status::BRepCheck_NoError)
         {
           if (!FindNamed(sub, Name))
           {
@@ -198,7 +198,7 @@ static void Print(Standard_OStream& OS, const BRepCheck_Analyzer& Ana, const Top
   if (!Ana.Result(S).IsNull() && !theMap.IsBound(S))
   {
     itl.Initialize(Ana.Result(S)->Status());
-    if (itl.Value() != BRepCheck_NoError)
+    if (itl.Value() != BRepCheck_Status::BRepCheck_NoError)
     {
       if (!FindNamed(S, Name))
       {
@@ -212,7 +212,7 @@ static void Print(Standard_OStream& OS, const BRepCheck_Analyzer& Ana, const Top
 
       for (; itl.More(); itl.Next())
       {
-        if (itl.Value() != BRepCheck_NoError)
+        if (itl.Value() != BRepCheck_Status::BRepCheck_NoError)
           BRepCheck::Print(itl.Value(), OS);
       }
     }
@@ -503,7 +503,7 @@ static void GetProblemSub(const BRepCheck_Analyzer&                         Ana,
         theMap(sub).Append(Shape);
         itl.Initialize(res->StatusOnShape());
 
-        if (itl.Value() != BRepCheck_NoError)
+        if (itl.Value() != BRepCheck_Status::BRepCheck_NoError)
         {
           int ii = 0;
 
@@ -548,7 +548,7 @@ static void GetProblemShapes(const BRepCheck_Analyzer&                         A
   {
     itl.Initialize(Ana.Result(Shape)->Status());
 
-    if (itl.Value() != BRepCheck_NoError)
+    if (itl.Value() != BRepCheck_Status::BRepCheck_NoError)
     {
       sl->Append(Shape);
       FillProblems(itl.Value(), NbProblems);
@@ -605,182 +605,182 @@ void StructuralDump(Draw_Interpretor&         theCommands,
   GetProblemShapes(theAna, theShape, sl, NbProblems);
   theMap.Clear();
 
-  int aProblemID = static_cast<int>(BRepCheck_InvalidPointOnCurve);
+  int aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidPointOnCurve);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid Point on Curve ................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidPointOnCurveOnSurface);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidPointOnCurveOnSurface);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid Point on CurveOnSurface .......... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidPointOnSurface);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidPointOnSurface);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid Point on Surface ................. " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_No3DCurve);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_No3DCurve);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  No 3D Curve .............................. " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_Multiple3DCurve);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_Multiple3DCurve);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Multiple 3D Curve ........................ " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_Invalid3DCurve);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_Invalid3DCurve);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid 3D Curve ......................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_NoCurveOnSurface);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_NoCurveOnSurface);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  No Curve on Surface ...................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidCurveOnSurface);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidCurveOnSurface);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid Curve on Surface ................. " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidCurveOnClosedSurface);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidCurveOnClosedSurface);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid Curve on closed Surface .......... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidSameRangeFlag);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidSameRangeFlag);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid SameRange Flag ................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidSameParameterFlag);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidSameParameterFlag);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid SameParameter Flag ............... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidDegeneratedFlag);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidDegeneratedFlag);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid Degenerated Flag ................. " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_FreeEdge);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_FreeEdge);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Free Edge ................................ " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidMultiConnexity);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidMultiConnexity);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid MultiConnexity ................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidRange);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidRange);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid Range ............................ " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_EmptyWire);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_EmptyWire);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Empty Wire ............................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_RedundantEdge);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_RedundantEdge);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Redundant Edge ........................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_SelfIntersectingWire);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_SelfIntersectingWire);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Self Intersecting Wire ................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_NoSurface);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_NoSurface);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  No Surface ............................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidWire);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidWire);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid Wire ............................. " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_RedundantWire);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_RedundantWire);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Redundant Wire ........................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_IntersectingWires);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_IntersectingWires);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Intersecting Wires ....................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidImbricationOfWires);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidImbricationOfWires);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid Imbrication of Wires ............. " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_EmptyShell);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_EmptyShell);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Empty Shell .............................. " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_RedundantFace);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_RedundantFace);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Redundant Face ........................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_UnorientableShape);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_UnorientableShape);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Unorientable Shape ....................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_NotClosed);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_NotClosed);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Not Closed ............................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_NotConnected);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_NotConnected);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Not Connected ............................ " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_SubshapeNotInShape);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_SubshapeNotInShape);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Subshape not in Shape .................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_BadOrientation);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_BadOrientation);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Bad Orientation .......................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_BadOrientationOfSubshape);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_BadOrientationOfSubshape);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Bad Orientation of Subshape .............. " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidToleranceValue);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidToleranceValue);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid tolerance value................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidPolygonOnTriangulation);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidPolygonOnTriangulation);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid polygon on triangulation.......... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_InvalidImbricationOfShells);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_InvalidImbricationOfShells);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Invalid Imbrication of Shells............. " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_EnclosedRegion);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_EnclosedRegion);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  Enclosed Region........................... " << NbProblems->Value(aProblemID)
                 << "\n";
 
-  aProblemID = static_cast<int>(BRepCheck_CheckFail);
+  aProblemID = static_cast<int>(BRepCheck_Status::BRepCheck_CheckFail);
   if (NbProblems->Value(aProblemID) > 0)
     theCommands << "  checkshape failure........................ " << NbProblems->Value(aProblemID)
                 << "\n";

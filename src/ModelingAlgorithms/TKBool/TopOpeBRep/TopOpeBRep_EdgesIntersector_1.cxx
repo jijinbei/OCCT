@@ -93,15 +93,15 @@ TopOpeBRep_P2Dstatus TopOpeBRep_EdgesIntersector::Status1() const
 {
   if (!IsPointOfSegment1())
   { // point is an intersection point
-    return TopOpeBRep_P2DINT;
+    return TopOpeBRep_P2Dstatus::TopOpeBRep_P2DINT;
   }
   else
   { // point is a point of segment
     int i = myPointIndex - myNbPoints - 1;
     if (i % 2 == 0)
-      return TopOpeBRep_P2DSGF;
+      return TopOpeBRep_P2Dstatus::TopOpeBRep_P2DSGF;
     else
-      return TopOpeBRep_P2DSGL;
+      return TopOpeBRep_P2Dstatus::TopOpeBRep_P2DSGL;
   }
 }
 
@@ -124,13 +124,13 @@ int TopOpeBRep_EdgesIntersector::Index1() const
 
 TopOpeBRepDS_Config TopOpeBRep_EdgesIntersector::EdgesConfig1() const
 {
-  TopOpeBRepDS_Config c  = TopOpeBRepDS_UNSHGEOMETRY;
+  TopOpeBRepDS_Config c  = TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY;
   bool                ps = IsPointOfSegment1();
   if (ps)
   {
     bool so;
     so = TopOpeBRepTool_ShapeTool::EdgesSameOriented(myEdge2, myEdge1);
-    c  = (so) ? TopOpeBRepDS_SAMEORIENTED : TopOpeBRepDS_DIFFORIENTED;
+    c  = (so) ? TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED : TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
   }
   return c;
 }
@@ -178,31 +178,31 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
   switch (T.TransitionType())
   {
 
-    case IntRes2d_In:
+    case IntRes2d_TypeTrans::IntRes2d_In:
       staB = TopAbs_OUT;
       staA = staINON;
       break;
 
-    case IntRes2d_Out:
+    case IntRes2d_TypeTrans::IntRes2d_Out:
       staB = staINON;
       staA = TopAbs_OUT;
       break;
 
-    case IntRes2d_Touch:
+    case IntRes2d_TypeTrans::IntRes2d_Touch:
       switch (T.Situation())
       {
 
-        case IntRes2d_Inside:
+        case IntRes2d_Situation::IntRes2d_Inside:
           staB = staINON;
           staA = staINON;
           break;
 
-        case IntRes2d_Outside:
+        case IntRes2d_Situation::IntRes2d_Outside:
           staB = TopAbs_OUT;
           staA = TopAbs_OUT;
           break;
 
-        case IntRes2d_Unknown: {
+        case IntRes2d_Situation::IntRes2d_Unknown: {
 
           // get posindex = position on of point on edge <Index>
           IntRes2d_Position posindex = (Index == 1) ? IP.TransitionOfFirst().PositionOnCurve()
@@ -215,9 +215,9 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
             IntRes2d_Position posother = (Index == 1) ? IP.TransitionOfSecond().PositionOnCurve()
                                                       : IP.TransitionOfFirst().PositionOnCurve();
 
-            if (posother == IntRes2d_Middle)
+            if (posother == IntRes2d_Position::IntRes2d_Middle)
             {
-              if (posindex != IntRes2d_Middle)
+              if (posindex != IntRes2d_Position::IntRes2d_Middle)
               {
                 staB = staINON;
                 staA = staINON;
@@ -230,12 +230,12 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
               bool opposite = IsOpposite1();
               if (opposite)
               {
-                if (posother == IntRes2d_Head)
+                if (posother == IntRes2d_Position::IntRes2d_Head)
                 {
                   staB = staINON;
                   staA = TopAbs_OUT;
                 }
-                else if (posother == IntRes2d_End)
+                else if (posother == IntRes2d_Position::IntRes2d_End)
                 {
                   staB = TopAbs_OUT;
                   staA = staINON;
@@ -243,12 +243,12 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
               }
               else
               {
-                if (posother == IntRes2d_Head)
+                if (posother == IntRes2d_Position::IntRes2d_Head)
                 {
                   staB = TopAbs_OUT;
                   staA = staINON;
                 }
-                else if (posother == IntRes2d_End)
+                else if (posother == IntRes2d_Position::IntRes2d_End)
                 {
                   staB = staINON;
                   staA = TopAbs_OUT;
@@ -265,12 +265,12 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
             pextremity = true;
             shaA = shaB = TopAbs_EDGE;
 
-            if (posindex == IntRes2d_Head)
+            if (posindex == IntRes2d_Position::IntRes2d_Head)
             {
               staB = staINON;
               staA = TopAbs_OUT;
             }
-            else if (posindex == IntRes2d_End)
+            else if (posindex == IntRes2d_Position::IntRes2d_End)
             {
               staB = TopAbs_OUT;
               staA = staINON;
@@ -281,13 +281,13 @@ TopOpeBRepDS_Transition TopOpeBRep_EdgesIntersector::Transition1(
             }
           } // point is not a segment point
 
-        } // T.Situation == IntRes2d_Unknown
+        } // T.Situation == IntRes2d_Situation::IntRes2d_Unknown
         break;
 
       } // switch T.Situation()
       break;
 
-    case IntRes2d_Undecided:
+    case IntRes2d_TypeTrans::IntRes2d_Undecided:
       throw Standard_Failure("TopOpeBRep_EdgesIntersector : TransitionType Undecided");
       break;
 
@@ -357,7 +357,7 @@ bool TopOpeBRep_EdgesIntersector::IsVertex1(const int Index)
   else
     pos = Point1().TransitionOfSecond().PositionOnCurve();
 
-  if (pos == IntRes2d_Middle)
+  if (pos == IntRes2d_Position::IntRes2d_Middle)
   {
     // search for an INTERNAL vertex on edge <Index> with
     // a 2d parameter <parV> equal to current point parameter <par>
@@ -389,12 +389,12 @@ bool TopOpeBRep_EdgesIntersector::IsVertex1(const int Index)
       TopExp::Vertices(myEdge1, V1, V2);
     else
       TopExp::Vertices(myEdge2, V1, V2);
-    if (pos == IntRes2d_Head && !V1.IsNull())
+    if (pos == IntRes2d_Position::IntRes2d_Head && !V1.IsNull())
     {
       myIsVertexValue  = true;
       myIsVertexVertex = V1;
     }
-    else if (pos == IntRes2d_End && !V2.IsNull())
+    else if (pos == IntRes2d_Position::IntRes2d_End && !V2.IsNull())
     {
       myIsVertexValue  = true;
       myIsVertexVertex = V2;

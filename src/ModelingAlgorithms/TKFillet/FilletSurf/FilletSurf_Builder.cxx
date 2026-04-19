@@ -35,24 +35,24 @@ FilletSurf_Builder::FilletSurf_Builder(const TopoDS_Shape&                   S,
                                        const double                          Ta,
                                        const double                          Tapp3d,
                                        const double                          Tapp2d)
-    : myIntBuild(S, ChFi3d_Polynomial, Ta, Tapp3d, Tapp2d)
+    : myIntBuild(S, ChFi3d_FilletShape::ChFi3d_Polynomial, Ta, Tapp3d, Tapp2d)
 {
-  myisdone      = FilletSurf_IsOk;
-  myerrorstatus = FilletSurf_EmptyList;
+  myisdone      = FilletSurf_StatusDone::FilletSurf_IsOk;
+  myerrorstatus = FilletSurf_ErrorTypeStatus::FilletSurf_EmptyList;
   int add       = myIntBuild.Add(E, R);
   if (add != 0)
   {
-    myisdone = FilletSurf_IsNotOk;
+    myisdone = FilletSurf_StatusDone::FilletSurf_IsNotOk;
     if (add == 1)
-      myerrorstatus = FilletSurf_EmptyList;
+      myerrorstatus = FilletSurf_ErrorTypeStatus::FilletSurf_EmptyList;
     else if (add == 2)
-      myerrorstatus = FilletSurf_EdgeNotG1;
+      myerrorstatus = FilletSurf_ErrorTypeStatus::FilletSurf_EdgeNotG1;
     else if (add == 3)
-      myerrorstatus = FilletSurf_FacesNotG1;
+      myerrorstatus = FilletSurf_ErrorTypeStatus::FilletSurf_FacesNotG1;
     else if (add == 4)
-      myerrorstatus = FilletSurf_EdgeNotOnShape;
+      myerrorstatus = FilletSurf_ErrorTypeStatus::FilletSurf_EdgeNotOnShape;
     else if (add == 5)
-      myerrorstatus = FilletSurf_NotSharpEdge;
+      myerrorstatus = FilletSurf_ErrorTypeStatus::FilletSurf_NotSharpEdge;
   }
 }
 
@@ -62,20 +62,20 @@ FilletSurf_Builder::FilletSurf_Builder(const TopoDS_Shape&                   S,
 
 void FilletSurf_Builder::Perform()
 {
-  if (myisdone == FilletSurf_IsOk)
+  if (myisdone == FilletSurf_StatusDone::FilletSurf_IsOk)
   {
     myIntBuild.Perform();
     if (myIntBuild.Done())
-      myisdone = FilletSurf_IsOk;
+      myisdone = FilletSurf_StatusDone::FilletSurf_IsOk;
     else if (myIntBuild.NbSurface() != 0)
     {
-      myisdone      = FilletSurf_IsPartial;
-      myerrorstatus = FilletSurf_PbFilletCompute;
+      myisdone      = FilletSurf_StatusDone::FilletSurf_IsPartial;
+      myerrorstatus = FilletSurf_ErrorTypeStatus::FilletSurf_PbFilletCompute;
     }
     else
     {
-      myisdone      = FilletSurf_IsNotOk;
-      myerrorstatus = FilletSurf_PbFilletCompute;
+      myisdone      = FilletSurf_StatusDone::FilletSurf_IsNotOk;
+      myerrorstatus = FilletSurf_ErrorTypeStatus::FilletSurf_PbFilletCompute;
     }
   }
 }
@@ -105,7 +105,7 @@ FilletSurf_ErrorTypeStatus FilletSurf_Builder::StatusError() const
 
 int FilletSurf_Builder::NbSurface() const
 {
-  if (IsDone() != FilletSurf_IsNotOk)
+  if (IsDone() != FilletSurf_StatusDone::FilletSurf_IsNotOk)
     return myIntBuild.NbSurface();
   throw StdFail_NotDone("FilletSurf_Builder::NbSurface");
 }
@@ -227,7 +227,7 @@ const occ::handle<Geom2d_Curve>& FilletSurf_Builder::PCurve2OnFillet(const int I
 //=======================================================================
 double FilletSurf_Builder::FirstParameter() const
 {
-  if (IsDone() == FilletSurf_IsNotOk)
+  if (IsDone() == FilletSurf_StatusDone::FilletSurf_IsNotOk)
     throw StdFail_NotDone("FilletSurf_Builder::FirstParameter");
   return myIntBuild.FirstParameter();
 }
@@ -238,7 +238,7 @@ double FilletSurf_Builder::FirstParameter() const
 //=======================================================================
 double FilletSurf_Builder::LastParameter() const
 {
-  if (IsDone() == FilletSurf_IsNotOk)
+  if (IsDone() == FilletSurf_StatusDone::FilletSurf_IsNotOk)
     throw StdFail_NotDone("FilletSurf_Builder::LastParameter");
   return myIntBuild.LastParameter();
 }
@@ -255,7 +255,7 @@ double FilletSurf_Builder::LastParameter() const
 //=======================================================================
 FilletSurf_StatusType FilletSurf_Builder::StartSectionStatus() const
 {
-  if (IsDone() == FilletSurf_IsNotOk)
+  if (IsDone() == FilletSurf_StatusDone::FilletSurf_IsNotOk)
     throw StdFail_NotDone("FilletSurf_Builder::StartSectionStatus");
   return myIntBuild.StartSectionStatus();
 }
@@ -272,7 +272,7 @@ FilletSurf_StatusType FilletSurf_Builder::StartSectionStatus() const
 //=======================================================================
 FilletSurf_StatusType FilletSurf_Builder::EndSectionStatus() const
 {
-  if (IsDone() == FilletSurf_IsNotOk)
+  if (IsDone() == FilletSurf_StatusDone::FilletSurf_IsNotOk)
     throw StdFail_NotDone("FilletSurf_Builder::StartSectionStatus");
   return myIntBuild.EndSectionStatus();
 }
@@ -283,16 +283,16 @@ FilletSurf_StatusType FilletSurf_Builder::EndSectionStatus() const
 //=======================================================================
 void FilletSurf_Builder::Simulate()
 {
-  if (myisdone == FilletSurf_IsOk)
+  if (myisdone == FilletSurf_StatusDone::FilletSurf_IsOk)
   {
     myIntBuild.Simulate();
 
     if (myIntBuild.Done())
-      myisdone = FilletSurf_IsOk;
+      myisdone = FilletSurf_StatusDone::FilletSurf_IsOk;
     else
     {
-      myisdone      = FilletSurf_IsNotOk;
-      myerrorstatus = FilletSurf_PbFilletCompute;
+      myisdone      = FilletSurf_StatusDone::FilletSurf_IsNotOk;
+      myerrorstatus = FilletSurf_ErrorTypeStatus::FilletSurf_PbFilletCompute;
     }
   }
 }
@@ -303,7 +303,7 @@ void FilletSurf_Builder::Simulate()
 //=======================================================================
 int FilletSurf_Builder::NbSection(const int IndexSurf) const
 {
-  if (IsDone() == FilletSurf_IsNotOk)
+  if (IsDone() == FilletSurf_StatusDone::FilletSurf_IsNotOk)
     throw StdFail_NotDone("FilletSurf_Builder::NbSection)");
   else if ((IndexSurf < 1) || (IndexSurf > NbSurface()))
     throw Standard_OutOfRange("FilletSurf_Builder::NbSection");

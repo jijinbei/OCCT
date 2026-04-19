@@ -92,7 +92,7 @@ static bool IsoIsDeg(const Adaptor3d_Surface& S,
   gp_Vec D1U, D1V;
   gp_Pnt P;
   double Step, D1NormMax;
-  if (IT == GeomAbs_IsoV)
+  if (IT == GeomAbs_IsoType::GeomAbs_IsoV)
   {
     Step      = (U2 - U1) / 10;
     D1NormMax = 0.;
@@ -172,7 +172,7 @@ static void ExtendC2d(occ::handle<Geom2d_BSplineCurve>& aRes,
   gp_Vec2d                              aVBnd;
   gp_Dir2d                              aDBnd;
   occ::handle<Geom2d_TrimmedCurve>      aSegment;
-  Geom2dConvert_CompCurveToBSplineCurve aCompCurve(aRes, Convert_RationalC1);
+  Geom2dConvert_CompCurveToBSplineCurve aCompCurve(aRes, Convert_ParameterisationType::Convert_RationalC1);
   constexpr double                      aTol = Precision::Confusion();
 
   aRes->D1(theParam, aPBnd, aVBnd);
@@ -240,25 +240,25 @@ static void Project(ProjLib_Projector& P, occ::handle<Adaptor3d_Curve>& C)
   GeomAbs_CurveType CType = C->GetType();
   switch (CType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       P.Project(C->Line());
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       P.Project(C->Circle());
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       P.Project(C->Ellipse());
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       P.Project(C->Hyperbola());
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       P.Project(C->Parabola());
       break;
-    case GeomAbs_BSplineCurve:
-    case GeomAbs_BezierCurve:
-    case GeomAbs_OffsetCurve:
-    case GeomAbs_OtherCurve: // try the approximation
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+    case GeomAbs_CurveType::GeomAbs_OtherCurve: // try the approximation
       break;
     default:
       throw Standard_NoSuchObject(" ");
@@ -384,28 +384,28 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
 
   switch (SType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       ProjLib_Plane P(mySurface->Plane());
       Project(P, myCurve);
       myResult = P;
     }
     break;
 
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       ProjLib_Cylinder P(mySurface->Cylinder());
       Project(P, myCurve);
       myResult = P;
     }
     break;
 
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       ProjLib_Cone P(mySurface->Cone());
       Project(P, myCurve);
       myResult = P;
     }
     break;
 
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       ProjLib_Sphere P(mySurface->Sphere());
       Project(P, myCurve);
       if (P.IsDone())
@@ -440,15 +440,15 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
     }
     break;
 
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       ProjLib_Torus P(mySurface->Torus());
       Project(P, myCurve);
       myResult = P;
     }
     break;
 
-    case GeomAbs_BezierSurface:
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       isAnalyticalSurf = false;
       double f, l;
       f  = myCurve->FirstParameter();
@@ -461,28 +461,28 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
       V1                         = S.FirstVParameter();
       V2                         = S.LastVParameter();
 
-      if (IsoIsDeg(S, U1, GeomAbs_IsoU, 0., myTolerance))
+      if (IsoIsDeg(S, U1, GeomAbs_IsoType::GeomAbs_IsoU, 0., myTolerance))
       {
         // Surface has pole at U = Umin
         gp_Pnt Pole = mySurface->Value(U1, V1);
         TrimC3d(myCurve, IsTrimmed, dt, Pole, SingularCase, 1, TolConf);
       }
 
-      if (IsoIsDeg(S, U2, GeomAbs_IsoU, 0., myTolerance))
+      if (IsoIsDeg(S, U2, GeomAbs_IsoType::GeomAbs_IsoU, 0., myTolerance))
       {
         // Surface has pole at U = Umax
         gp_Pnt Pole = mySurface->Value(U2, V1);
         TrimC3d(myCurve, IsTrimmed, dt, Pole, SingularCase, 2, TolConf);
       }
 
-      if (IsoIsDeg(S, V1, GeomAbs_IsoV, 0., myTolerance))
+      if (IsoIsDeg(S, V1, GeomAbs_IsoType::GeomAbs_IsoV, 0., myTolerance))
       {
         // Surface has pole at V = Vmin
         gp_Pnt Pole = mySurface->Value(U1, V1);
         TrimC3d(myCurve, IsTrimmed, dt, Pole, SingularCase, 3, TolConf);
       }
 
-      if (IsoIsDeg(S, V2, GeomAbs_IsoV, 0., myTolerance))
+      if (IsoIsDeg(S, V2, GeomAbs_IsoType::GeomAbs_IsoV, 0., myTolerance))
       {
         // Surface has pole at V = Vmax
         gp_Pnt Pole = mySurface->Value(U1, V2);
@@ -528,7 +528,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
         }
         myResult.SetBSpline(aRes);
         myResult.Done();
-        myResult.SetType(GeomAbs_BSplineCurve);
+        myResult.SetType(GeomAbs_CurveType::GeomAbs_BSplineCurve);
       }
     }
     break;
@@ -539,7 +539,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
       double f = 0.0, l = 0.0;
       dt = 0.0;
 
-      if (mySurface->GetType() == GeomAbs_SurfaceOfRevolution)
+      if (mySurface->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
       {
         // Check possible singularity
 
@@ -701,7 +701,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
 
         myResult.SetBSpline(aRes);
         myResult.Done();
-        myResult.SetType(GeomAbs_BSplineCurve);
+        myResult.SetType(GeomAbs_CurveType::GeomAbs_BSplineCurve);
       }
     }
   }
@@ -751,24 +751,24 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
                          NewCurve2d);
       aRes = occ::down_cast<Geom2d_BSplineCurve>(NewCurve2d);
       myResult.SetBSpline(aRes);
-      myResult.SetType(GeomAbs_BSplineCurve);
+      myResult.SetType(GeomAbs_CurveType::GeomAbs_BSplineCurve);
     }
     else
     {
       // set the type
-      if (SType == GeomAbs_Plane && CType == GeomAbs_BezierCurve)
+      if (SType == GeomAbs_SurfaceType::GeomAbs_Plane && CType == GeomAbs_CurveType::GeomAbs_BezierCurve)
       {
-        myResult.SetType(GeomAbs_BezierCurve);
+        myResult.SetType(GeomAbs_CurveType::GeomAbs_BezierCurve);
         myResult.SetBezier(Comp.Bezier());
       }
       else
       {
-        myResult.SetType(GeomAbs_BSplineCurve);
+        myResult.SetType(GeomAbs_CurveType::GeomAbs_BSplineCurve);
         myResult.SetBSpline(Comp.BSpline());
       }
     }
     // set the periodicity flag
-    if (SType == GeomAbs_Plane && CType == GeomAbs_BSplineCurve && myCurve->IsPeriodic())
+    if (SType == GeomAbs_SurfaceType::GeomAbs_Plane && CType == GeomAbs_CurveType::GeomAbs_BSplineCurve && myCurve->IsPeriodic())
     {
       myResult.SetPeriodic();
     }
@@ -793,7 +793,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
       if (!isPeriodic[anIdx - 1])
         continue;
 
-      if (myResult.GetType() == GeomAbs_BSplineCurve)
+      if (myResult.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
       {
         NCollection_DataMap<int, int>    aMap;
         occ::handle<Geom2d_BSplineCurve> aRes = myResult.BSpline();
@@ -843,7 +843,7 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
         }
       }
 
-      if (myResult.GetType() == GeomAbs_Line)
+      if (myResult.GetType() == GeomAbs_CurveType::GeomAbs_Line)
       {
         double aT1 = myCurve->FirstParameter();
         double aT2 = myCurve->LastParameter();
@@ -1066,14 +1066,14 @@ gp_Parab2d ProjLib_ProjectedCurve::Parabola() const
 
 int ProjLib_ProjectedCurve::Degree() const
 {
-  Standard_NoSuchObject_Raise_if((GetType() != GeomAbs_BSplineCurve)
-                                   && (GetType() != GeomAbs_BezierCurve),
+  Standard_NoSuchObject_Raise_if((GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve)
+                                   && (GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve),
                                  "ProjLib_ProjectedCurve:Degree");
-  if (GetType() == GeomAbs_BSplineCurve)
+  if (GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     return myResult.BSpline()->Degree();
   }
-  else if (GetType() == GeomAbs_BezierCurve)
+  else if (GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     return myResult.Bezier()->Degree();
   }
@@ -1086,14 +1086,14 @@ int ProjLib_ProjectedCurve::Degree() const
 
 bool ProjLib_ProjectedCurve::IsRational() const
 {
-  Standard_NoSuchObject_Raise_if((GetType() != GeomAbs_BSplineCurve)
-                                   && (GetType() != GeomAbs_BezierCurve),
+  Standard_NoSuchObject_Raise_if((GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve)
+                                   && (GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve),
                                  "ProjLib_ProjectedCurve:IsRational");
-  if (GetType() == GeomAbs_BSplineCurve)
+  if (GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     return myResult.BSpline()->IsRational();
   }
-  else if (GetType() == GeomAbs_BezierCurve)
+  else if (GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     return myResult.Bezier()->IsRational();
   }
@@ -1105,14 +1105,14 @@ bool ProjLib_ProjectedCurve::IsRational() const
 
 int ProjLib_ProjectedCurve::NbPoles() const
 {
-  Standard_NoSuchObject_Raise_if((GetType() != GeomAbs_BSplineCurve)
-                                   && (GetType() != GeomAbs_BezierCurve),
+  Standard_NoSuchObject_Raise_if((GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve)
+                                   && (GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve),
                                  "ProjLib_ProjectedCurve:NbPoles");
-  if (GetType() == GeomAbs_BSplineCurve)
+  if (GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     return myResult.BSpline()->NbPoles();
   }
-  else if (GetType() == GeomAbs_BezierCurve)
+  else if (GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     return myResult.Bezier()->NbPoles();
   }
@@ -1125,7 +1125,7 @@ int ProjLib_ProjectedCurve::NbPoles() const
 
 int ProjLib_ProjectedCurve::NbKnots() const
 {
-  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_BSplineCurve,
+  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve,
                                  "ProjLib_ProjectedCurve:NbKnots");
   return myResult.BSpline()->NbKnots();
 }

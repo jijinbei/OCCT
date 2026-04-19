@@ -208,7 +208,7 @@ public:
   //! -      The parameter values must be in the parametric range of the
   //! surface (or the basis surface, if the surface is trimmed). If this
   //! condition is not satisfied, the face is not built, and the Error
-  //! function will return BRepBuilderAPI_ParametersOutOfRange.
+  //! function will return BRepBuilderAPI_FaceError::BRepBuilderAPI_ParametersOutOfRange.
   //! -      The bounding parameters p1 and p2 are adjusted on a periodic
   //! surface in a given parametric direction by adding or subtracting
   //! the period to obtain p1 in the parametric range of the surface and
@@ -244,7 +244,7 @@ public:
   //! v parametric direction by the two parameter values VMin and VMax.
   //! Warning
   //! Error returns:
-  //! -      BRepBuilderAPI_ParametersOutOfRange
+  //! -      BRepBuilderAPI_FaceError::BRepBuilderAPI_ParametersOutOfRange
   //! when the parameters given are outside the bounds of the
   //! surface or the basis surface of a trimmed surface.
   //! TolDegen parameter is used for resolution of degenerated edges.
@@ -274,7 +274,7 @@ public:
   Standard_EXPORT bool IsDone() const override;
 
   //! Returns the construction status
-  //! BRepBuilderAPI_FaceDone if the face is built, or
+  //! BRepBuilderAPI_FaceError::BRepBuilderAPI_FaceDone if the face is built, or
   //! -   another value of the BRepBuilderAPI_FaceError
   //! enumeration indicating why the construction failed, in
   //! particular when the given parameters are outside the

@@ -41,7 +41,7 @@ public:
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& L);
 
   //! Returns True if the Interference <I> has a
-  //! GeometryType() TopOpeBRepDS_CURVE
+  //! GeometryType() TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE
   //! returns False else.
   Standard_EXPORT bool MatchInterference(
     const occ::handle<TopOpeBRepDS_Interference>& I) const override;

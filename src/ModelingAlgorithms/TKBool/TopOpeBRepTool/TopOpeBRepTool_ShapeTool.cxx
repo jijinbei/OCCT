@@ -410,7 +410,7 @@ bool TopOpeBRepTool_ShapeTool::SurfacesSameOriented(const BRepAdaptor_Surface& S
 
   bool so = true;
 
-  if (ST1 == GeomAbs_Plane && ST2 == GeomAbs_Plane)
+  if (ST1 == GeomAbs_SurfaceType::GeomAbs_Plane && ST2 == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
 
     double u1 = S1.FirstUParameter();
@@ -430,7 +430,7 @@ bool TopOpeBRepTool_ShapeTool::SurfacesSameOriented(const BRepAdaptor_Surface& S
     double d = n1.Dot(n2);
     so       = (d > 0.);
   }
-  else if (ST1 == GeomAbs_Cylinder && ST2 == GeomAbs_Cylinder)
+  else if (ST1 == GeomAbs_SurfaceType::GeomAbs_Cylinder && ST2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
 
     // On peut projeter n'importe quel point.
@@ -510,7 +510,7 @@ bool TopOpeBRepTool_ShapeTool::CurvesSameOriented(const BRepAdaptor_Curve& C1,
   GeomAbs_CurveType        CT2 = C2.GetType();
   bool                     so  = true;
 
-  if (CT1 == GeomAbs_Line && CT2 == GeomAbs_Line)
+  if (CT1 == GeomAbs_CurveType::GeomAbs_Line && CT2 == GeomAbs_CurveType::GeomAbs_Line)
   {
     double p1 = C1.FirstParameter();
     gp_Dir t1, n1;

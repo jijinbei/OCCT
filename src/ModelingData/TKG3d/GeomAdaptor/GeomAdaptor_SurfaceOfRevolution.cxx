@@ -100,7 +100,7 @@ void GeomAdaptor_SurfaceOfRevolution::Load(const gp_Ax1& V)
   myHaveAxis = true;
   myAxis     = V;
 
-  mySurfaceType = GeomAbs_SurfaceOfRevolution;
+  mySurfaceType = GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution;
 
   // Populate revolution surface data for fast evaluation
   GeomAdaptor_Surface::RevolutionData aRevData;
@@ -114,7 +114,7 @@ void GeomAdaptor_SurfaceOfRevolution::Load(const gp_Ax1& V)
   gp_Dir Ox;
   gp_Dir Oz   = myAxis.Direction();
   bool   yrev = false;
-  if (myBasisCurve->GetType() == GeomAbs_Line)
+  if (myBasisCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     if ((myBasisCurve->Line().Direction()).Dot(Oz) < 0.)
     {
@@ -123,7 +123,7 @@ void GeomAdaptor_SurfaceOfRevolution::Load(const gp_Ax1& V)
     }
   }
 
-  if (myBasisCurve->GetType() == GeomAbs_Circle)
+  if (myBasisCurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     Q = P = (myBasisCurve->Circle()).Location();
   }
@@ -131,7 +131,7 @@ void GeomAdaptor_SurfaceOfRevolution::Load(const gp_Ax1& V)
   {
     double First = myBasisCurve->FirstParameter();
     P            = Value(0., 0.); // which does not mean much
-    if (GetType() == GeomAbs_Cone)
+    if (GetType() == GeomAbs_SurfaceType::GeomAbs_Cone)
     {
       if (gp_Lin(myAxis).Distance(P) <= Precision::Confusion())
         Q = ElCLib::Value(1., myBasisCurve->Line());
@@ -178,7 +178,7 @@ void GeomAdaptor_SurfaceOfRevolution::Load(const gp_Ax1& V)
   {
     myAxeRev.YReverse();
   }
-  else if (myBasisCurve->GetType() == GeomAbs_Circle)
+  else if (myBasisCurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     gp_Dir DC = (myBasisCurve->Circle()).Axis().Direction();
     if ((Ox.Crossed(Oz)).Dot(DC) < 0.)
@@ -363,7 +363,7 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfRevolution::GetType() const
 
   switch (myBasisCurve->GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       gp_Ax1 Axe = myBasisCurve->Line().Position();
 
       if (myAxis.IsParallel(Axe, TolAng))
@@ -372,11 +372,11 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfRevolution::GetType() const
         double R = gp_Vec(myAxeRev.Location(), P) * myAxeRev.XDirection();
         if (R > TolConf)
         {
-          return GeomAbs_Cylinder;
+          return GeomAbs_SurfaceType::GeomAbs_Cylinder;
         }
       }
       else if (myAxis.IsNormal(Axe, TolAng))
-        return GeomAbs_Plane;
+        return GeomAbs_SurfaceType::GeomAbs_Plane;
       else
       {
         double uf     = myBasisCurve->FirstParameter();
@@ -397,11 +397,11 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfRevolution::GetType() const
             double R = gp_Vec(myAxeRev.Location(), P) * myAxeRev.XDirection();
             if (R > TolConf)
             {
-              return GeomAbs_Cylinder;
+              return GeomAbs_SurfaceType::GeomAbs_Cylinder;
             }
           }
           else if (projlen <= TolConf)
-            return GeomAbs_Plane;
+            return GeomAbs_SurfaceType::GeomAbs_Plane;
         }
         gp_Vec V(myAxis.Location(), myBasisCurve->Line().Location());
         gp_Vec W(Axe.Direction());
@@ -410,13 +410,13 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfRevolution::GetType() const
         if (std::abs(V.DotCross(AxisDir, W)) <= TolConf
             && (proj >= TolConeSemiAng && proj <= 1. - TolConeSemiAng))
         {
-          return GeomAbs_Cone;
+          return GeomAbs_SurfaceType::GeomAbs_Cone;
         }
       }
       break;
-    } // case GeomAbs_Line:
+    } // case GeomAbs_CurveType::GeomAbs_Line:
     //
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       double MajorRadius, aR;
       gp_Lin aLin(myAxis);
       //
@@ -426,15 +426,15 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfRevolution::GetType() const
       //
 
       if (!C.Position().IsCoplanar(myAxis, TolConf, TolAng))
-        return GeomAbs_SurfaceOfRevolution;
+        return GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution;
       else if (aLin.Distance(aLC) <= TolConf)
-        return GeomAbs_Sphere;
+        return GeomAbs_SurfaceType::GeomAbs_Sphere;
       else
       {
         MajorRadius = aLin.Distance(aLC);
         if (MajorRadius > aR)
         {
-          return GeomAbs_Torus;
+          return GeomAbs_SurfaceType::GeomAbs_Torus;
         }
       }
       break;
@@ -444,14 +444,14 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfRevolution::GetType() const
       break;
   }
 
-  return GeomAbs_SurfaceOfRevolution;
+  return GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution;
 }
 
 //=================================================================================================
 
 gp_Pln GeomAdaptor_SurfaceOfRevolution::Plane() const
 {
-  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_Plane,
+  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_SurfaceType::GeomAbs_Plane,
                                  "GeomAdaptor_SurfaceOfRevolution:Plane");
 
   gp_Ax3 Axe       = myAxeRev;
@@ -470,7 +470,7 @@ gp_Pln GeomAdaptor_SurfaceOfRevolution::Plane() const
 
 gp_Cylinder GeomAdaptor_SurfaceOfRevolution::Cylinder() const
 {
-  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_Cylinder,
+  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_SurfaceType::GeomAbs_Cylinder,
                                  "GeomAdaptor_SurfaceOfRevolution::Cylinder");
 
   gp_Pnt P = Value(0., 0.);
@@ -482,7 +482,7 @@ gp_Cylinder GeomAdaptor_SurfaceOfRevolution::Cylinder() const
 
 gp_Cone GeomAdaptor_SurfaceOfRevolution::Cone() const
 {
-  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_Cone, "GeomAdaptor_SurfaceOfRevolution:Cone");
+  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_SurfaceType::GeomAbs_Cone, "GeomAdaptor_SurfaceOfRevolution:Cone");
 
   gp_Ax3 Axe   = myAxeRev;
   gp_Dir ldir  = (myBasisCurve->Line()).Direction();
@@ -506,7 +506,7 @@ gp_Cone GeomAdaptor_SurfaceOfRevolution::Cone() const
 
 gp_Sphere GeomAdaptor_SurfaceOfRevolution::Sphere() const
 {
-  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_Sphere,
+  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_SurfaceType::GeomAbs_Sphere,
                                  "GeomAdaptor_SurfaceOfRevolution:Sphere");
 
   gp_Circ C   = myBasisCurve->Circle();
@@ -519,7 +519,7 @@ gp_Sphere GeomAdaptor_SurfaceOfRevolution::Sphere() const
 
 gp_Torus GeomAdaptor_SurfaceOfRevolution::Torus() const
 {
-  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_Torus,
+  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_SurfaceType::GeomAbs_Torus,
                                  "GeomAdaptor_SurfaceOfRevolution:Torus");
 
   gp_Circ C           = myBasisCurve->Circle();

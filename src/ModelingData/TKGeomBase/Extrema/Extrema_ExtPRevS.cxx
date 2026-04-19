@@ -43,7 +43,7 @@ static gp_Ax2 GetPosition(
   switch (C->GetType())
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       gp_Lin L = C->Line();
       gp_Dir N = S.AxeOfRevolution().Direction();
       if (N.IsParallel(L.Direction(), Precision::Angular()))
@@ -63,13 +63,13 @@ static gp_Ax2 GetPosition(
       }
       return gp_Ax2(L.Location(), N, L.Direction());
     }
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       return C->Circle().Position();
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       return C->Ellipse().Position();
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       return C->Hyperbola().Position();
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       return C->Parabola().Position();
     default:
       return gp_Ax2();
@@ -106,19 +106,19 @@ static void PerformExtPElC(Extrema_ExtPElC&                    E,
 {
   switch (C->GetType())
   {
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       E.Perform(P, C->Hyperbola(), Tol, -Precision::Infinite(), Precision::Infinite());
       return;
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       E.Perform(P, C->Line(), Tol, -Precision::Infinite(), Precision::Infinite());
       return;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       E.Perform(P, C->Circle(), Tol, 0.0, 2.0 * M_PI);
       return;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       E.Perform(P, C->Ellipse(), Tol, 0.0, 2.0 * M_PI);
       return;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       E.Perform(P, C->Parabola(), Tol, -Precision::Infinite(), Precision::Infinite());
       return;
     default:
@@ -135,11 +135,11 @@ static bool IsCaseAnalyticallyComputable(const GeomAbs_CurveType& theType,
   // check type
   switch (theType)
   {
-    case GeomAbs_Line:
-    case GeomAbs_Circle:
-    case GeomAbs_Ellipse:
-    case GeomAbs_Hyperbola:
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       break;
     default:
       return false;
@@ -366,7 +366,7 @@ void Extrema_ExtPRevS::Perform(const gp_Pnt& P)
         // 			   true, anExt.IsMin(i))) continue;
         double newV = myvsup;
 
-        if ((anACurve->GetType() == GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_Ellipse))
+        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
         {
           newV = ElCLib::InPeriod(V, myvinf, myvinf + 2. * M_PI);
 
@@ -398,7 +398,7 @@ void Extrema_ExtPRevS::Perform(const gp_Pnt& P)
 
         double newV = myvinf;
 
-        if ((anACurve->GetType() == GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_Ellipse))
+        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
         {
           newV = ElCLib::InPeriod(V, myvsup - 2. * M_PI, myvsup);
 
@@ -455,7 +455,7 @@ void Extrema_ExtPRevS::Perform(const gp_Pnt& P)
 
         double newV = myvsup;
 
-        if ((anACurve->GetType() == GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_Ellipse))
+        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
         {
           newV = ElCLib::InPeriod(V, myvinf, myvinf + 2. * M_PI);
 
@@ -484,7 +484,7 @@ void Extrema_ExtPRevS::Perform(const gp_Pnt& P)
         // 			  false, anExt.IsMin(i))) continue;
         double newV = myvinf;
 
-        if ((anACurve->GetType() == GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_Ellipse))
+        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
         {
           newV = ElCLib::InPeriod(V, myvsup - 2. * M_PI, myvsup);
 

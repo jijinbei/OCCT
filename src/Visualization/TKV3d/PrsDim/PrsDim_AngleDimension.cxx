@@ -840,7 +840,7 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
   BRepAdaptor_Curve aMakeFirstLine(aFirstEdge);
   BRepAdaptor_Curve aMakeSecondLine(aSecondEdge);
 
-  if (aMakeFirstLine.GetType() != GeomAbs_Line || aMakeSecondLine.GetType() != GeomAbs_Line)
+  if (aMakeFirstLine.GetType() != GeomAbs_CurveType::GeomAbs_Line || aMakeSecondLine.GetType() != GeomAbs_CurveType::GeomAbs_Line)
   {
     return false;
   }

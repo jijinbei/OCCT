@@ -625,16 +625,16 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
     GeomAbs_SurfaceType  surftype  = SurfAdapt.GetType();
     if (mySurf->IsKind(STANDARD_TYPE(Geom_RectangularTrimmedSurface)))
     {
-      surftype = GeomAbs_OtherSurface;
+      surftype = GeomAbs_SurfaceType::GeomAbs_OtherSurface;
     }
 
     switch (surftype)
     {
-      case GeomAbs_Plane: {
+      case GeomAbs_SurfaceType::GeomAbs_Plane: {
         myUCloseVal = RealLast();
         break;
       }
-      case GeomAbs_SurfaceOfExtrusion: { //: c8 abv 03 Mar 98: UKI60094 #753: process
+      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: { //: c8 abv 03 Mar 98: UKI60094 #753: process
                                          //: Geom_SurfaceOfLinearExtrusion
         occ::handle<Geom_SurfaceOfLinearExtrusion> extr =
           occ::down_cast<Geom_SurfaceOfLinearExtrusion>(mySurf);
@@ -656,7 +656,7 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
         }
         break;
       }
-      case GeomAbs_BSplineSurface: {
+      case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
         occ::handle<Geom_BSplineSurface> bs      = occ::down_cast<Geom_BSplineSurface>(mySurf);
         int                              nbup    = bs->NbUPoles();
         double                           distmin = RealLast();
@@ -727,7 +727,7 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
         }
         break;
       }
-      case GeomAbs_BezierSurface: {
+      case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
         occ::handle<Geom_BezierSurface> bz      = occ::down_cast<Geom_BezierSurface>(mySurf);
         int                             nbup    = bz->NbUPoles();
         double                          distmin = RealLast();
@@ -832,20 +832,20 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
     GeomAbs_SurfaceType  surftype  = SurfAdapt.GetType();
     if (mySurf->IsKind(STANDARD_TYPE(Geom_RectangularTrimmedSurface)))
     {
-      surftype = GeomAbs_OtherSurface;
+      surftype = GeomAbs_SurfaceType::GeomAbs_OtherSurface;
     }
 
     switch (surftype)
     {
-      case GeomAbs_Plane:
-      case GeomAbs_Cone:
-      case GeomAbs_Cylinder:
-      case GeomAbs_Sphere:
-      case GeomAbs_SurfaceOfExtrusion: {
+      case GeomAbs_SurfaceType::GeomAbs_Plane:
+      case GeomAbs_SurfaceType::GeomAbs_Cone:
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+      case GeomAbs_SurfaceType::GeomAbs_Sphere:
+      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
         myVCloseVal = RealLast();
         break;
       }
-      case GeomAbs_SurfaceOfRevolution: {
+      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution: {
         occ::handle<Geom_SurfaceOfRevolution> revol =
           occ::down_cast<Geom_SurfaceOfRevolution>(mySurf);
         occ::handle<Geom_Curve> crv = revol->BasisCurve();
@@ -854,7 +854,7 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
         myVCloseVal                 = p1.SquareDistance(p2);
         break;
       }
-      case GeomAbs_BSplineSurface: {
+      case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
         occ::handle<Geom_BSplineSurface> bs      = occ::down_cast<Geom_BSplineSurface>(mySurf);
         int                              nbvp    = bs->NbVPoles();
         double                           distmin = RealLast();
@@ -922,7 +922,7 @@ bool ShapeAnalysis_Surface::IsVClosed(const double preci)
         }
         break;
       }
-      case GeomAbs_BezierSurface: {
+      case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
         occ::handle<Geom_BezierSurface> bz      = occ::down_cast<Geom_BezierSurface>(mySurf);
         int                             nbvp    = bz->NbVPoles();
         double                          distmin = RealLast();
@@ -1099,14 +1099,14 @@ gp_Pnt2d ShapeAnalysis_Surface::NextValueOfUV(const gp_Pnt2d& p2dPrev,
 
   switch (surftype)
   {
-    case GeomAbs_BezierSurface:
-    case GeomAbs_BSplineSurface:
-    case GeomAbs_SurfaceOfExtrusion:
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_OffsetSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
 
     {
-      if (surftype == GeomAbs_BSplineSurface)
+      if (surftype == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
       {
         occ::handle<Geom_BSplineSurface> aBSpline = SurfAdapt.BSpline();
 
@@ -1183,46 +1183,46 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
       switch (surftype)
       {
 
-        case GeomAbs_Plane: {
+        case GeomAbs_SurfaceType::GeomAbs_Plane: {
           gp_Pln Plane = SurfAdapt.Plane();
           ElSLib::Parameters(Plane, P3D, S, T);
           break;
         }
-        case GeomAbs_Cylinder: {
+        case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
           gp_Cylinder Cylinder = SurfAdapt.Cylinder();
           ElSLib::Parameters(Cylinder, P3D, S, T);
           S += ShapeAnalysis::AdjustByPeriod(S, 0.5 * (uf + ul), 2 * M_PI);
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_SurfaceType::GeomAbs_Cone: {
           gp_Cone Cone = SurfAdapt.Cone();
           ElSLib::Parameters(Cone, P3D, S, T);
           S += ShapeAnalysis::AdjustByPeriod(S, 0.5 * (uf + ul), 2 * M_PI);
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_SurfaceType::GeomAbs_Sphere: {
           gp_Sphere Sphere = SurfAdapt.Sphere();
           ElSLib::Parameters(Sphere, P3D, S, T);
           S += ShapeAnalysis::AdjustByPeriod(S, 0.5 * (uf + ul), 2 * M_PI);
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_SurfaceType::GeomAbs_Torus: {
           gp_Torus Torus = SurfAdapt.Torus();
           ElSLib::Parameters(Torus, P3D, S, T);
           S += ShapeAnalysis::AdjustByPeriod(S, 0.5 * (uf + ul), 2 * M_PI);
           T += ShapeAnalysis::AdjustByPeriod(T, 0.5 * (vf + vl), 2 * M_PI);
           break;
         }
-        case GeomAbs_BezierSurface:
-        case GeomAbs_BSplineSurface:
-        case GeomAbs_SurfaceOfExtrusion:
-        case GeomAbs_SurfaceOfRevolution:
-        case GeomAbs_OffsetSurface: //: d0 abv 3 Mar 98: UKI60107-1 #350
+        case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
+        case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
+        case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
+        case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+        case GeomAbs_SurfaceType::GeomAbs_OffsetSurface: //: d0 abv 3 Mar 98: UKI60107-1 #350
         {
           S = (uf + ul) / 2;
           T = (vf + vl) / 2; // yaura aumoins qqchose
                              // pdn to fix hangs PRO17015
-          if ((surftype == GeomAbs_SurfaceOfExtrusion) && Precision::IsInfinite(uf)
+          if ((surftype == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion) && Precision::IsInfinite(uf)
               && Precision::IsInfinite(ul))
           {
             // conic case
@@ -1265,7 +1265,7 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
               dv = std::min(myVDelt, SurfAdapt.VResolution(preci));
             }
             constexpr double Tol = Precision::PConfusion();
-            myExtPS.SetFlag(Extrema_ExtFlag_MIN);
+            myExtPS.SetFlag(Extrema_ExtFlag::Extrema_ExtFlag_MIN);
             myExtPS.Initialize(SurfAdapt, uf - du, ul + du, vf - dv, vl + dv, Tol, Tol);
             myExtOK = true;
           }
@@ -1477,7 +1477,7 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
     {
 
       UV = (num < 3); // 0-1-2 : iso-U  3-4-5 : iso-V
-      if (!(Adaptor3d()->GetType() == GeomAbs_OffsetSurface))
+      if (!(Adaptor3d()->GetType() == GeomAbs_SurfaceType::GeomAbs_OffsetSurface))
       {
         const Bnd_Box* anIsoBox = nullptr;
         switch (num)
@@ -1558,7 +1558,7 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
             break;
           case 2:
             par = U;
-            anIsoCurve.Load(GeomAbs_IsoU, U);
+            anIsoCurve.Load(GeomAbs_IsoType::GeomAbs_IsoU, U);
             anAdaptor = &anIsoCurve;
             break;
           case 3:
@@ -1575,7 +1575,7 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
             break;
           case 5:
             par = V;
-            anIsoCurve.Load(GeomAbs_IsoV, V);
+            anIsoCurve.Load(GeomAbs_IsoType::GeomAbs_IsoV, V);
             anAdaptor = &anIsoCurve;
             break;
           default:
@@ -1596,7 +1596,7 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
     // added by rln on 04/12/97 iterational process
     double PrevU = U, PrevV = V;
     int    MaxIters = 5, Iters = 0;
-    if (!(Adaptor3d()->GetType() == GeomAbs_OffsetSurface))
+    if (!(Adaptor3d()->GetType() == GeomAbs_SurfaceType::GeomAbs_OffsetSurface))
     {
       while (((PrevU != UU) || (PrevV != VV)) && (Iters < MaxIters) && (theMin > preci))
       {
@@ -1667,12 +1667,12 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
         if (UV)
         {
           par = UU;
-          anIsoCurve.Load(GeomAbs_IsoU, UU);
+          anIsoCurve.Load(GeomAbs_IsoType::GeomAbs_IsoU, UU);
         }
         else
         {
           par = VV;
-          anIsoCurve.Load(GeomAbs_IsoV, VV);
+          anIsoCurve.Load(GeomAbs_IsoType::GeomAbs_IsoV, VV);
         }
         Cf = anIsoCurve.FirstParameter();
         Cl = anIsoCurve.LastParameter();
@@ -1690,12 +1690,12 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
         if (UV)
         {
           par = UU;
-          anIsoCurve.Load(GeomAbs_IsoU, UU);
+          anIsoCurve.Load(GeomAbs_IsoType::GeomAbs_IsoU, UU);
         }
         else
         {
           par = VV;
-          anIsoCurve.Load(GeomAbs_IsoV, VV);
+          anIsoCurve.Load(GeomAbs_IsoType::GeomAbs_IsoV, VV);
         }
         Cf = anIsoCurve.FirstParameter();
         Cl = anIsoCurve.LastParameter();

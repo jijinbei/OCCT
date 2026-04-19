@@ -113,7 +113,7 @@ int AdvApp2Var_Framework::FirstNode(const GeomAbs_IsoType Type,
                                     const int             IndexStrip) const
 {
   const int aNbIsoInV = myUConstraints.Length() + 1;
-  if (Type == GeomAbs_IsoU)
+  if (Type == GeomAbs_IsoType::GeomAbs_IsoU)
   {
     return aNbIsoInV * (IndexStrip - 1) + IndexIso;
   }
@@ -127,7 +127,7 @@ int AdvApp2Var_Framework::LastNode(const GeomAbs_IsoType Type,
                                    const int             IndexStrip) const
 {
   const int aNbIsoInV = myUConstraints.Length() + 1;
-  if (Type == GeomAbs_IsoU)
+  if (Type == GeomAbs_IsoType::GeomAbs_IsoU)
   {
     return aNbIsoInV * IndexStrip + IndexIso;
   }
@@ -141,7 +141,7 @@ void AdvApp2Var_Framework::ChangeIso(const int                          IndexIso
                                      const occ::handle<AdvApp2Var_Iso>& theIso)
 {
   NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>& aStrip =
-    theIso->Type() == GeomAbs_IsoV ? myUConstraints.ChangeValue(IndexStrip)
+    theIso->Type() == GeomAbs_IsoType::GeomAbs_IsoV ? myUConstraints.ChangeValue(IndexStrip)
                                    : myVConstraints.ChangeValue(IndexStrip);
   aStrip.SetValue(IndexIso, theIso);
 }

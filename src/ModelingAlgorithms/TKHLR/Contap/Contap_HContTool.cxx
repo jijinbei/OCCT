@@ -31,15 +31,15 @@ int Contap_HContTool::NbSamplesV(const occ::handle<Adaptor3d_Surface>& S,
   GeomAbs_SurfaceType typS = S->GetType();
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       nbs = 2;
     }
     break;
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       nbs = 3 + S->NbVPoles();
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       //-- occ::handle<Geom_BSplineSurface>& HBS=S->BSpline();
       nbs = S->NbVKnots();
       nbs *= S->VDegree();
@@ -47,12 +47,12 @@ int Contap_HContTool::NbSamplesV(const occ::handle<Adaptor3d_Surface>& S,
         nbs = 2;
     }
     break;
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
       nbs = 15;
     }
     break;
@@ -73,15 +73,15 @@ int Contap_HContTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S,
   GeomAbs_SurfaceType typS = S->GetType();
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       nbs = 2;
     }
     break;
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       nbs = 3 + S->NbUPoles();
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       //-- occ::handle<Geom_BSplineSurface>& HBS=S->BSpline();
       nbs = S->NbUKnots();
       nbs *= S->UDegree();
@@ -89,15 +89,15 @@ int Contap_HContTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S,
         nbs = 2;
     }
     break;
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       nbs = 20;
     }
     break;
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
       nbs = 10;
     }
     break;
@@ -156,7 +156,7 @@ int Contap_HContTool::NbSamplePoints(const occ::handle<Adaptor3d_Surface>& S)
   {
     vsup = vinf + 2.e5;
   }
-  if (S->GetType() == GeomAbs_BSplineSurface)
+  if (S->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     int m = (NbSamplesU(S, uinf, usup) / 3) * (NbSamplesV(S, vinf, vsup) / 3);
     if (m > 5)
@@ -173,7 +173,7 @@ void Contap_HContTool::SamplePoint(const occ::handle<Adaptor3d_Surface>& S,
                                    double&                               U,
                                    double&                               V)
 {
-  if (S->GetType() == GeomAbs_BSplineSurface)
+  if (S->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     int nbIntU = NbSamplesU(S, uinf, usup) / 3;
     int nbIntV = NbSamplesV(S, vinf, vsup) / 3;
@@ -225,19 +225,19 @@ int Contap_HContTool::NbSamplesOnArc(const occ::handle<Adaptor2d_Curve2d>& A)
   double nbsOnC = 5;
   switch (CurveType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       nbsOnC = 2;
       break;
-    case GeomAbs_Circle:
-    case GeomAbs_Ellipse:
-    case GeomAbs_Hyperbola:
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       nbsOnC = 10;
       break;
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       nbsOnC = A->NbPoles();
       break;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       //-- occ::handle<Geom2d_BSplineCurve>& BSC=A->BSpline();
       nbsOnC = 2 + A->NbKnots() * A->Degree();
       break;

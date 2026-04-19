@@ -52,7 +52,7 @@ public:
   Standard_EXPORT BRepOffset_Offset(const TopoDS_Face&     Face,
                                     const double           Offset,
                                     const bool             OffsetOutside = true,
-                                    const GeomAbs_JoinType JoinType      = GeomAbs_Arc);
+                                    const GeomAbs_JoinType JoinType      = GeomAbs_JoinType::GeomAbs_Arc);
 
   //! This method will be called when you want to share
   //! the edges soon generated from an other face.
@@ -71,7 +71,7 @@ public:
     const double                                                                    Offset,
     const NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& Created,
     const bool             OffsetOutside = true,
-    const GeomAbs_JoinType JoinType      = GeomAbs_Arc);
+    const GeomAbs_JoinType JoinType      = GeomAbs_JoinType::GeomAbs_Arc);
 
   Standard_EXPORT BRepOffset_Offset(const TopoDS_Edge&  Path,
                                     const TopoDS_Edge&  Edge1,
@@ -103,14 +103,14 @@ public:
   Standard_EXPORT void Init(const TopoDS_Face&     Face,
                             const double           Offset,
                             const bool             OffsetOutside = true,
-                            const GeomAbs_JoinType JoinType      = GeomAbs_Arc);
+                            const GeomAbs_JoinType JoinType      = GeomAbs_JoinType::GeomAbs_Arc);
 
   Standard_EXPORT void Init(
     const TopoDS_Face&                                                              Face,
     const double                                                                    Offset,
     const NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& Created,
     const bool             OffsetOutside = true,
-    const GeomAbs_JoinType JoinType      = GeomAbs_Arc);
+    const GeomAbs_JoinType JoinType      = GeomAbs_JoinType::GeomAbs_Arc);
 
   Standard_EXPORT void Init(const TopoDS_Edge&  Path,
                             const TopoDS_Edge&  Edge1,

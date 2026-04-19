@@ -27,7 +27,7 @@ GccInt_BParab::GccInt_BParab(const gp_Parab2d& Parab)
 
 GccInt_IType GccInt_BParab::ArcType() const
 {
-  return GccInt_Par;
+  return GccInt_IType::GccInt_Par;
 }
 
 gp_Parab2d GccInt_BParab::Parabola() const

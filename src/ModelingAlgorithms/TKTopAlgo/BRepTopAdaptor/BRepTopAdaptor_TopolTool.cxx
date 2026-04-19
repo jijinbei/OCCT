@@ -389,17 +389,17 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
   GeomAbs_SurfaceType typS = myS->GetType();
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       nbsv = 2;
       nbsu = 2;
     }
     break;
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       nbsv = 3 + myS->NbVPoles();
       nbsu = 3 + myS->NbUPoles();
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       nbsv = myS->NbVKnots();
       nbsv *= myS->VDegree();
       if (nbsv < 4)
@@ -410,10 +410,10 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
         nbsu = 4;
     }
     break;
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       //-- Set 15 for 2pi
       //-- Not enough ->25 for 2pi
       nbsu = (int)(8 * (usup - uinf));
@@ -429,8 +429,8 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
       //-- printf("\n nbsu=%d nbsv=%d\n",nbsu,nbsv);
     }
     break;
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
       nbsv = 15;
       nbsu = 25;
     }
@@ -457,7 +457,7 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
   //-- printf("\n BRepTopAdaptor_TopolTool NbSu=%d NbSv=%d ",nbsu,nbsv);
   if (nbsu > 10 || nbsv > 10)
   {
-    if (typS == GeomAbs_BSplineSurface)
+    if (typS == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
     {
       const occ::handle<Geom_BSplineSurface>& Bspl   = myS->BSpline();
       int                                     nbup   = Bspl->NbUPoles();
@@ -468,7 +468,7 @@ void BRepTopAdaptor_TopolTool::ComputeSamplePoints()
       nbsv = myNbSamplesV;
       //-- printf("\n Apres analyse BSPline  NbSu=%d NbSv=%d ",myNbSamplesU,myNbSamplesV);
     }
-    else if (typS == GeomAbs_BezierSurface)
+    else if (typS == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
     {
       const occ::handle<Geom_BezierSurface>& Bez    = myS->Bezier();
       int                                    nbup   = Bez->NbUPoles();

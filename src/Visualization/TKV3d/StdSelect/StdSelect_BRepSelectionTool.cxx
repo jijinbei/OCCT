@@ -90,7 +90,7 @@ static bool isCylinderOrCone(const TopoDS_Face& theFace)
       ++aNbSeams;
 
     BRepAdaptor_Curve anAdaptor(anEdge);
-    if (anAdaptor.GetType() == GeomAbs_Circle)
+    if (anAdaptor.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
       ++aNbCirles;
   }
   return aNbSeams == 2 && aNbCirles == 2;
@@ -552,13 +552,13 @@ void StdSelect_BRepSelectionTool::GetEdgeSensitive(
   double aParamLast  = cu3d.LastParameter();
   switch (cu3d.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       BRep_Tool::Range(anEdge, aParamFirst, aParamLast);
       theSensitive =
         new Select3D_SensitiveSegment(theOwner, cu3d.Value(aParamFirst), cu3d.Value(aParamLast));
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       const gp_Circ aCircle = cu3d.Circle();
       if (aCircle.Radius() <= Precision::Confusion())
       {
@@ -616,7 +616,7 @@ void StdSelect_BRepSelectionTool::GetEdgeSensitive(
 
       // simple subdivisions
       int nbintervals = 1;
-      if (cu3d.GetType() == GeomAbs_BSplineCurve)
+      if (cu3d.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
       {
         nbintervals = cu3d.NbKnots() - 1;
         nbintervals = std::max(1, nbintervals / 3);
@@ -757,7 +757,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
     {
       const TopoDS_Edge& anEdge = TopoDS::Edge(aSubfacesMap.FindKey(1));
       BRepAdaptor_Curve  anAdaptor(anEdge);
-      if (anAdaptor.GetType() == GeomAbs_Circle && BRep_Tool::IsClosed(anEdge))
+      if (anAdaptor.GetType() == GeomAbs_CurveType::GeomAbs_Circle && BRep_Tool::IsClosed(anEdge))
       {
         occ::handle<Select3D_SensitiveCircle> aSensSCyl =
           new Select3D_SensitiveCircle(theOwner, anAdaptor.Circle(), theInteriorFlag);
@@ -779,7 +779,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
   // for faces with triangulation bugs or without autotriangulation ....
   // very ugly and should not even exist ...
   BRepAdaptor_Surface BS(theFace);
-  if (BS.GetType() == GeomAbs_Plane)
+  if (BS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     const double aFirstU =
       BS.FirstUParameter() <= -Precision::Infinite() ? -theMaxParam : BS.FirstUParameter();
@@ -862,16 +862,16 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
 
     switch (cu3d.GetType())
     {
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Line: {
         aWirePoints.Append(cu3d.Value((aWireExplorer.Orientation() == TopAbs_FORWARD) ? wl : wf));
         break;
       }
-      case GeomAbs_Circle: {
+      case GeomAbs_CurveType::GeomAbs_Circle: {
         if (2.0 * M_PI - std::abs(wl - wf) <= Precision::Confusion())
         {
-          if (BS.GetType() == GeomAbs_Cylinder || BS.GetType() == GeomAbs_Torus
-              || BS.GetType() == GeomAbs_Cone
-              || BS.GetType() == GeomAbs_BSplineSurface) // beuurkk pour l'instant...
+          if (BS.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder || BS.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus
+              || BS.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
+              || BS.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface) // beuurkk pour l'instant...
           {
             double ff = wf, ll = wl;
             double dw = (std::max(wf, wl) - std::min(wf, wl))

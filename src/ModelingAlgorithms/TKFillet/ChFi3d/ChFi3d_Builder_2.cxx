@@ -144,7 +144,7 @@ static void ChFi3d_CoupeParPlan(const ChFiDS_CommonPoint&         compoint1,
                             AS.LastVParameter(),
                             1.e-3,
                             1.e-3,
-                            Extrema_ExtFlag_MIN);
+                            Extrema_ExtFlag::Extrema_ExtFlag_MIN);
       double                           u1, v1;
       anExtPS.Point(1).Parameter(u1, v1);
       Pdeb(1) = UV1.X();
@@ -1064,7 +1064,7 @@ void ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Stripe>&      Stripe,
         return;
     }
   }
-  Spine->SetErrorStatus(ChFiDS_StartsolFailure);
+  Spine->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_StartsolFailure);
   throw Standard_Failure("StartSol echec");
 }
 
@@ -1799,14 +1799,14 @@ static void ChFi3d_MakeExtremities(occ::handle<ChFiDS_Stripe>& Stripe,
 
   const ChFiDS_CommonPoint& cpdeb1  = SDdeb->VertexFirstOnS1();
   const ChFiDS_CommonPoint& cpdeb2  = SDdeb->VertexFirstOnS2();
-  bool                      freedeb = sp->FirstStatus() == ChFiDS_FreeBoundary;
+  bool                      freedeb = sp->FirstStatus() == ChFiDS_State::ChFiDS_FreeBoundary;
   if (!freedeb && cpdeb1.IsOnArc() && cpdeb2.IsOnArc())
   {
     freedeb = (IsFree(cpdeb1.Arc(), EFMap) && IsFree(cpdeb2.Arc(), EFMap));
   }
   if (freedeb)
   {
-    sp->SetFirstStatus(ChFiDS_FreeBoundary);
+    sp->SetFirstStatus(ChFiDS_State::ChFiDS_FreeBoundary);
     Bnd_Box b1, b2;
     if (!cpdeb1.Point().IsEqual(cpdeb2.Point(), 0))
     {
@@ -1884,14 +1884,14 @@ static void ChFi3d_MakeExtremities(occ::handle<ChFiDS_Stripe>& Stripe,
   const occ::handle<ChFiDS_SurfData>& SDfin   = Stripe->SetOfSurfData()->Sequence().Last();
   const ChFiDS_CommonPoint&           cpfin1  = SDfin->VertexLastOnS1();
   const ChFiDS_CommonPoint&           cpfin2  = SDfin->VertexLastOnS2();
-  bool                                freefin = sp->LastStatus() == ChFiDS_FreeBoundary;
+  bool                                freefin = sp->LastStatus() == ChFiDS_State::ChFiDS_FreeBoundary;
   if (!freefin && cpfin1.IsOnArc() && cpfin2.IsOnArc())
   {
     freefin = (IsFree(cpfin1.Arc(), EFMap) && IsFree(cpfin2.Arc(), EFMap));
   }
   if (freefin)
   {
-    sp->SetLastStatus(ChFiDS_FreeBoundary);
+    sp->SetLastStatus(ChFiDS_State::ChFiDS_FreeBoundary);
     Bnd_Box b1, b2;
     if (!cpfin1.Point().IsEqual(cpfin2.Point(), 0))
     {
@@ -2110,7 +2110,7 @@ void ChFi3d_Builder::PerformSetOfSurfOnElSpine(const occ::handle<ChFiDS_ElSpine>
 
   occ::handle<ChFiDS_ElSpine> OffsetHGuide;
   occ::handle<ChFiDS_Spine>&  Spine = Stripe->ChangeSpine();
-  if (Spine->Mode() == ChFiDS_ConstThroatWithPenetrationChamfer)
+  if (Spine->Mode() == ChFiDS_ChamfMode::ChFiDS_ConstThroatWithPenetrationChamfer)
   {
     NCollection_List<occ::handle<ChFiDS_ElSpine>>& ll        = Spine->ChangeElSpines();
     NCollection_List<occ::handle<ChFiDS_ElSpine>>& ll_offset = Spine->ChangeOffsetElSpines();
@@ -2309,7 +2309,7 @@ void ChFi3d_Builder::PerformSetOfSurfOnElSpine(const occ::handle<ChFiDS_ElSpine>
     {
       if (wf < tolesp && (complete == Inside))
       {
-        if (Spine->FirstStatus() == ChFiDS_OnSame)
+        if (Spine->FirstStatus() == ChFiDS_State::ChFiDS_OnSame)
           intf = 2;
         else
           intf = 1;
@@ -2323,7 +2323,7 @@ void ChFi3d_Builder::PerformSetOfSurfOnElSpine(const occ::handle<ChFiDS_ElSpine>
       }
       if (wl - lastedlastp > -tolesp)
       {
-        if (Spine->LastStatus() == ChFiDS_OnSame)
+        if (Spine->LastStatus() == ChFiDS_State::ChFiDS_OnSame)
           intl = 2;
         else
           intl = 1;
@@ -2709,7 +2709,7 @@ void ChFi3d_Builder::PerformSetOfSurfOnElSpine(const occ::handle<ChFiDS_ElSpine>
       }
       else
       { // Otherwise invalidation of the stripe.
-        Spine->SetErrorStatus(ChFiDS_WalkingFailure);
+        Spine->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_WalkingFailure);
         throw Standard_Failure("CallPerformSurf : Path failed!");
       }
     }
@@ -3078,7 +3078,7 @@ void ChFi3d_Builder::PerformSetOfKPart(occ::handle<ChFiDS_Stripe>& Stripe, const
   {
     ChFi3d_PerformElSpine(ILES.ChangeValue(), Spine, myConti, tolesp);
   }
-  if (Spine->Mode() == ChFiDS_ConstThroatWithPenetrationChamfer)
+  if (Spine->Mode() == ChFiDS_ChamfMode::ChFiDS_ConstThroatWithPenetrationChamfer)
   {
     NCollection_List<occ::handle<ChFiDS_ElSpine>>& offsetll = Spine->ChangeOffsetElSpines();
     for (ILES.Initialize(offsetll); ILES.More(); ILES.Next())
@@ -3174,7 +3174,7 @@ void ChFi3d_Builder::PerformSetOfKGen(occ::handle<ChFiDS_Stripe>& Stripe, const 
       bool                     possibleon2 = (don2 < 2 * (ddeb + dfin));
       if ((tw1 && !possibleon1) || (tw2 && !possibleon2))
       {
-        Spine->SetErrorStatus(ChFiDS_TwistedSurface);
+        Spine->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_TwistedSurface);
         throw Standard_Failure("adjustment by reprocessing the non-written points");
       }
 
@@ -3215,7 +3215,7 @@ void ChFi3d_Builder::PerformSetOfKGen(occ::handle<ChFiDS_Stripe>& Stripe, const 
       {
         if (!yaprevon1 || !yanexton1)
         {
-          Spine->SetErrorStatus(ChFiDS_TwistedSurface);
+          Spine->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_TwistedSurface);
           throw Standard_Failure("adjustment by reprocessing the non-written points: no neighbor");
         }
         ChFiDS_FaceInterference& previntf1 = prevsd->ChangeInterferenceOnS1();

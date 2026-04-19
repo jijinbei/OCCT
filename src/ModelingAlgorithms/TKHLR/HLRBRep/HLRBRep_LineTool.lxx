@@ -126,7 +126,7 @@ inline double HLRBRep_LineTool::Resolution(const gp_Lin&, const double R3D)
 
 inline GeomAbs_CurveType HLRBRep_LineTool::GetType(const gp_Lin&)
 {
-  return GeomAbs_Line;
+  return GeomAbs_CurveType::GeomAbs_Line;
 }
 
 inline gp_Lin HLRBRep_LineTool::Line(const gp_Lin& C)

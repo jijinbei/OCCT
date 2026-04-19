@@ -209,7 +209,7 @@ void BRepFeat_MakeRevol::Perform(const double Angle)
   mySUntil.Nullify();
   ShapeUntilValid();
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_NoSelection;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
   PerfSelectionValid();
   bool            RevolComp = (2 * M_PI - std::abs(Angle) <= Precision::Angular());
   LocOpe_Revol    theRevol;
@@ -248,7 +248,7 @@ void BRepFeat_MakeRevol::Perform(const double Angle)
   if (exp.More())
   {
     NotDone();
-    myStatusError = BRepFeat_InvFirstShape;
+    myStatusError = BRepFeat_StatusError::BRepFeat_InvFirstShape;
     return;
   }
 
@@ -354,7 +354,7 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& Until)
     TourComplet = true;
   }
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_SelectionU;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionU;
   PerfSelectionValid();
   mySFrom.Nullify();
   ShapeFromValid();
@@ -390,7 +390,7 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& Until)
     if (exp.More())
     {
       NotDone();
-      myStatusError = BRepFeat_InvFirstShape;
+      myStatusError = BRepFeat_StatusError::BRepFeat_InvFirstShape;
       return;
     }
     GluedFacesValid();
@@ -491,7 +491,7 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
   }
 
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_SelectionFU;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionFU;
   PerfSelectionValid();
 
   TopExp_Explorer exp(From, TopAbs_FACE);
@@ -515,7 +515,7 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
   if (Trfu != Trff)
   {
     NotDone();
-    myStatusError = BRepFeat_IncTypes;
+    myStatusError = BRepFeat_StatusError::BRepFeat_IncTypes;
     return;
   }
 
@@ -559,7 +559,7 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NoIntersectU;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NoIntersectU;
       return;
     }
     if (ASI2.IsDone() && ASI2.NbPoints(1) >= 1)
@@ -576,13 +576,13 @@ void BRepFeat_MakeRevol::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NoIntersectF;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NoIntersectF;
       return;
     }
     if (!(PrU > PrF))
     {
       NotDone();
-      myStatusError = BRepFeat_IncParameter;
+      myStatusError = BRepFeat_StatusError::BRepFeat_IncParameter;
       return;
     }
     TopoDS_Shape Comp;
@@ -675,7 +675,7 @@ void BRepFeat_MakeRevol::PerformUntilAngle(const TopoDS_Shape& Until, const doub
     return;
   }
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_NoSelection;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
   PerfSelectionValid();
   mySFrom.Nullify();
   ShapeFromValid();
@@ -703,7 +703,7 @@ void BRepFeat_MakeRevol::PerformUntilAngle(const TopoDS_Shape& Until, const doub
     if (exp.More())
     {
       NotDone();
-      myStatusError = BRepFeat_InvFirstShape;
+      myStatusError = BRepFeat_StatusError::BRepFeat_InvFirstShape;
       return;
     }
     GluedFacesValid();

@@ -125,11 +125,11 @@ GeomFill_CircularBlendFunc::GeomFill_CircularBlendFunc(const occ::handle<Adaptor
 
   // Type de convertion ?
   if (Polynomial)
-    myTConv = Convert_Polynomial;
+    myTConv = Convert_ParameterisationType::Convert_Polynomial;
   else if (maxang > 0.65 * M_PI)
-    myTConv = Convert_QuasiAngular; // car c'est Continue
+    myTConv = Convert_ParameterisationType::Convert_QuasiAngular; // car c'est Continue
   else
-    myTConv = Convert_TgtThetaOver2;
+    myTConv = Convert_ParameterisationType::Convert_TgtThetaOver2;
   // car c'est le plus performant
 
   // On en deduit la structure
@@ -535,7 +535,7 @@ void GeomFill_CircularBlendFunc::Mults(NCollection_Array1<int>& TMults) const
 
 bool GeomFill_CircularBlendFunc::IsRational() const
 {
-  return (myTConv != Convert_Polynomial);
+  return (myTConv != Convert_ParameterisationType::Convert_Polynomial);
 }
 
 int GeomFill_CircularBlendFunc::NbIntervals(const GeomAbs_Shape S) const

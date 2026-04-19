@@ -17,7 +17,7 @@
 #ifndef _LocalAnalysis_StatusErrorType_HeaderFile
 #define _LocalAnalysis_StatusErrorType_HeaderFile
 
-enum LocalAnalysis_StatusErrorType
+enum class LocalAnalysis_StatusErrorType
 {
   LocalAnalysis_NullFirstDerivative,
   LocalAnalysis_NullSecondDerivative,

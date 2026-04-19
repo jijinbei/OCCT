@@ -17,7 +17,7 @@
 #ifndef _Geom2dGcc_Type1_HeaderFile
 #define _Geom2dGcc_Type1_HeaderFile
 
-enum Geom2dGcc_Type1
+enum class Geom2dGcc_Type1
 {
   Geom2dGcc_CuCuCu,
   Geom2dGcc_CiCuCu,

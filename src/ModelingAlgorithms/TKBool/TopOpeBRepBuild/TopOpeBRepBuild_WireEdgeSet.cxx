@@ -90,7 +90,7 @@ void TopOpeBRepBuild_WireEdgeSet::AddStartElement(const TopoDS_Shape& S)
   {
     BRepAdaptor_Curve cac(TopoDS::Edge(S));
     GeomAbs_CurveType t = cac.GetType();
-    bool              b = (t == GeomAbs_BSplineCurve || t == GeomAbs_BezierCurve);
+    bool              b = (t == GeomAbs_CurveType::GeomAbs_BSplineCurve || t == GeomAbs_CurveType::GeomAbs_BezierCurve);
     tocheck             = !b;
   }
   bool chk = true;

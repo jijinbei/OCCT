@@ -371,12 +371,12 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
 
   switch (Parameterisation)
   {
-    case Convert_TgtThetaOver2:
+    case Convert_ParameterisationType::Convert_TgtThetaOver2:
       num_spans = (int)std::trunc(1.2 * delta / M_PI) + 1;
 
       tgt_theta_flag = 1;
       break;
-    case Convert_TgtThetaOver2_1:
+    case Convert_ParameterisationType::Convert_TgtThetaOver2_1:
       num_spans = 1;
       if (delta > 0.9999 * M_PI)
       {
@@ -384,7 +384,7 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
       }
       tgt_theta_flag = 1;
       break;
-    case Convert_TgtThetaOver2_2:
+    case Convert_ParameterisationType::Convert_TgtThetaOver2_2:
       num_spans = 2;
       if (delta > 1.9999 * M_PI)
       {
@@ -393,29 +393,29 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
       tgt_theta_flag = 1;
       break;
 
-    case Convert_TgtThetaOver2_3:
+    case Convert_ParameterisationType::Convert_TgtThetaOver2_3:
       num_spans      = 3;
       tgt_theta_flag = 1;
       break;
-    case Convert_TgtThetaOver2_4:
+    case Convert_ParameterisationType::Convert_TgtThetaOver2_4:
       num_spans      = 4;
       tgt_theta_flag = 1;
       break;
-    case Convert_QuasiAngular:
+    case Convert_ParameterisationType::Convert_QuasiAngular:
       num_poles = 7;
       Degree    = 6;
       num_spans = 1;
       num_knots = 2;
       order     = Degree + 1;
       break;
-    case Convert_RationalC1:
+    case Convert_ParameterisationType::Convert_RationalC1:
       Degree    = 4;
       order     = Degree + 1;
       num_poles = 8;
       num_knots = 3;
       num_spans = 2;
       break;
-    case Convert_Polynomial:
+    case Convert_ParameterisationType::Convert_Polynomial:
       Degree    = 7;
       num_poles = 8;
       num_knots = 2;
@@ -461,7 +461,7 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
     }
     Mults(num_spans + 1) = Degree + 1;
   }
-  else if (Parameterisation != Convert_Polynomial)
+  else if (Parameterisation != Convert_ParameterisationType::Convert_Polynomial)
   {
     alpha = ULast - UFirst;
     alpha *= 0.5e0;
@@ -491,7 +491,7 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
 
     switch (Parameterisation)
     {
-      case Convert_QuasiAngular:
+      case Convert_ParameterisationType::Convert_QuasiAngular:
         //
         //    we code here in temp_poles(xx).Coord(1) the following function V(t)
         //   and in temp_poles(xx).Coord(2) the function U(t)
@@ -548,7 +548,7 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
         temp_poles(4).SetCoord(2, 0.0e0);
         EvaluatorPtr = &CosAndSinQuasiAngular;
         break;
-      case Convert_RationalC1:
+      case Convert_ParameterisationType::Convert_RationalC1:
         for (ii = order + 1; ii <= num_poles; ii++)
         {
           flat_knots(ii) = 0.0e0;
@@ -602,7 +602,7 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
     }
   }
   else
-  { // Convert_Polynomial
+  { // Convert_ParameterisationType::Convert_Polynomial
 
     Knots(1)         = 0.;
     Knots(num_knots) = 1.;
@@ -629,15 +629,15 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
   int ii, jj, index, num_poles, num_periodic_poles, temp_degree, pivot_index_problem,
     num_flat_knots, num_knots;
 
-  if (Parameterisation != Convert_TgtThetaOver2 && Parameterisation != Convert_RationalC1)
+  if (Parameterisation != Convert_ParameterisationType::Convert_TgtThetaOver2 && Parameterisation != Convert_ParameterisationType::Convert_RationalC1)
   {
     throw Standard_ConstructionError();
   }
   NCollection_Array1<double> temp_cos, temp_sin, temp_denominator, temp_knots;
   NCollection_Array1<int>    temp_mults;
-  if (Parameterisation == Convert_TgtThetaOver2)
+  if (Parameterisation == Convert_ParameterisationType::Convert_TgtThetaOver2)
   {
-    BuildCosAndSin(Convert_TgtThetaOver2_3,
+    BuildCosAndSin(Convert_ParameterisationType::Convert_TgtThetaOver2_3,
                    0.0e0,
                    2 * M_PI,
                    temp_cos,
@@ -660,11 +660,11 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
       Mults(ii) = Degree;
     }
   }
-  else if (Parameterisation == Convert_RationalC1)
+  else if (Parameterisation == Convert_ParameterisationType::Convert_RationalC1)
   {
     first_param = 0.0e0;
     last_param  = M_PI;
-    BuildCosAndSin(Convert_RationalC1,
+    BuildCosAndSin(Convert_ParameterisationType::Convert_RationalC1,
                    first_param,
                    last_param,
                    temp_cos,

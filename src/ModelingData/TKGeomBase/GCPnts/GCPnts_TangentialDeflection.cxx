@@ -414,15 +414,15 @@ void GCPnts_TangentialDeflection::initialize(const TheCurve& theC,
 
   switch (theC.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       PerformLinear(theC);
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       PerformCircular(theC);
       break;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) aBS = theC.BSpline();
       if (aBS->NbPoles() == 2)
         PerformLinear(theC);
@@ -430,7 +430,7 @@ void GCPnts_TangentialDeflection::initialize(const TheCurve& theC,
         PerformCurve(theC);
       break;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) aBZ = theC.Bezier();
       if (aBZ->NbPoles() == 2)
         PerformLinear(theC);
@@ -557,12 +557,12 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
       int  NbPoints = (myMinNbPnts > 3) ? myMinNbPnts : 3;
       switch (theC.GetType())
       {
-        case GeomAbs_BSplineCurve: {
+        case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
           Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) BS = theC.BSpline();
           NbPoints = std::max(BS->Degree() + 1, NbPoints);
           break;
         }
-        case GeomAbs_BezierCurve: {
+        case GeomAbs_CurveType::GeomAbs_BezierCurve: {
           Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) BZ = theC.Bezier();
           NbPoints = std::max(BZ->Degree() + 1, NbPoints);
           break;

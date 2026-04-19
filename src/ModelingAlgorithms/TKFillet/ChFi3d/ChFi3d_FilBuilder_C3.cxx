@@ -221,7 +221,7 @@ static bool ToricCorner(const TopoDS_Face& F, const double rd, const double rf, 
     return false;
   }
   BRepAdaptor_Surface bs(F);
-  if (bs.GetType() != GeomAbs_Plane)
+  if (bs.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     return false;
   }
@@ -553,7 +553,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     vv1,
     vv2);
   GeomAbs_SurfaceType styp = gasurf.GetType();
-  if (styp == GeomAbs_Cylinder)
+  if (styp == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     double h = vv2 - vv1;
     vv1 -= 0.5 * h;
@@ -564,7 +564,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
                 vv1,
                 vv2);
   }
-  else if (styp == GeomAbs_Torus)
+  else if (styp == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     double h = uu2 - uu1;
     uu1 -= 0.1 * h;
@@ -575,7 +575,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
                 vv1,
                 vv2);
   }
-  else if (styp == GeomAbs_BezierSurface || styp == GeomAbs_BSplineSurface)
+  else if (styp == GeomAbs_SurfaceType::GeomAbs_BezierSurface || styp == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     gasurf.Load((DStr.Surface(CD[pivot]->SetOfSurfData()->Value(i[pivot][deb])->Surf())).Surface());
   }

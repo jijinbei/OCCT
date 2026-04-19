@@ -76,34 +76,34 @@ void TopOpeBRepBuild_Builder::PrintSur(const TopoDS_Face& F)
   GeomAbs_SurfaceType t = STA_Surface.GetType();
   switch (t)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       std::cout << "PLANE";
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       std::cout << "CYLINDER";
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       std::cout << "CONE";
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       std::cout << "SPHERE";
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       std::cout << "TORUS";
       break;
-    case GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
       std::cout << "BEZIERSURFACE";
       break;
-    case GeomAbs_BSplineSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
       std::cout << "BSPLINESURFACE";
       break;
-    case GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
       std::cout << "SURFACEOFREVOLUTION";
       break;
-    case GeomAbs_SurfaceOfExtrusion:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
       std::cout << "SURFACEOFEXTRUSION";
       break;
-    case GeomAbs_OtherSurface:
+    case GeomAbs_SurfaceType::GeomAbs_OtherSurface:
     default:
       std::cout << "OTHERSURFACE";
       break;
@@ -129,31 +129,31 @@ void TopOpeBRepBuild_Builder::PrintCur(const TopoDS_Edge& E)
 
   switch (t)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       std::cout << "LINE";
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       std::cout << "CIRCLE";
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       std::cout << "ELLIPSE";
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       std::cout << "HYPERBOLA";
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       std::cout << "PARABOLA";
       break;
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       std::cout << "BEZIERCURVE";
       break;
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       std::cout << "BSPLINECURVE " << GC.BSpline()->Degree();
       break;
-    case GeomAbs_OffsetCurve:
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve:
       std::cout << "OFFSETCURVE";
       break;
-    case GeomAbs_OtherCurve:
+    case GeomAbs_CurveType::GeomAbs_OtherCurve:
       std::cout << "OTHERCURVE";
       break;
   }

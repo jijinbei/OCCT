@@ -308,16 +308,16 @@ bool ChFi2d_FilletAlgo::Perform(const double theRadius)
   Geom2dAdaptor_Curve aGAC(myCurve1);
   switch (aGAC.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       aNBSteps = 2;
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       aNBSteps = 4;
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       aNBSteps = 5;
       break;
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       aNBSteps = 2 + aGAC.Degree() * aGAC.NbPoles();
       break;
     default: // unknown: maximum

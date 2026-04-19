@@ -194,12 +194,12 @@ private:
   //! activated. A document is activated when it is created or
   //! retrieved.
   //! aTypeOfActivation will be:
-  //! - CDF_TOA_New if the document is a new one
+  //! - CDF_TypeOfActivation::CDF_TOA_New if the document is a new one
   //! (even empty or retrieved from the database for
   //! the first time).
-  //! - CDF_TOA_Unchanged if the document was already
+  //! - CDF_TypeOfActivation::CDF_TOA_Unchanged if the document was already
   //! retrieved but had no changes since the previous retrieval.
-  //! - CDF_TOA_Modified if the document was already
+  //! - CDF_TypeOfActivation::CDF_TOA_Modified if the document was already
   //! retrieved and modified since the previous retrieval.
   //! You do not need to call <Activate>, but you should redefine
   //! this method to implement application specific behavior.

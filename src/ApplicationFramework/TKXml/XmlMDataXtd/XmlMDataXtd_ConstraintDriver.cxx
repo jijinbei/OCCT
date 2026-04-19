@@ -281,61 +281,61 @@ void XmlMDataXtd_ConstraintDriver::Paste(const occ::handle<TDF_Attribute>& theSo
 
 static TDataXtd_ConstraintEnum ConstraintTypeEnum(const XmlObjMgt_DOMString& theString)
 {
-  TDataXtd_ConstraintEnum aResult = TDataXtd_RADIUS;
+  TDataXtd_ConstraintEnum aResult = TDataXtd_ConstraintEnum::TDataXtd_RADIUS;
   // planar constraints
   if (!theString.equals(::ConRadiusString()))
   {
     if (theString.equals(::ConDiameterString()))
-      aResult = TDataXtd_DIAMETER;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_DIAMETER;
     else if (theString.equals(::ConMinRadiusString()))
-      aResult = TDataXtd_MINOR_RADIUS;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_MINOR_RADIUS;
     else if (theString.equals(::ConMajRadiusString()))
-      aResult = TDataXtd_MAJOR_RADIUS;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_MAJOR_RADIUS;
     else if (theString.equals(::ConTangentString()))
-      aResult = TDataXtd_TANGENT;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_TANGENT;
     else if (theString.equals(::ConParallelString()))
-      aResult = TDataXtd_PARALLEL;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_PARALLEL;
     else if (theString.equals(::ConPerpendicularString()))
-      aResult = TDataXtd_PERPENDICULAR;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_PERPENDICULAR;
     else if (theString.equals(::ConConcentricString()))
-      aResult = TDataXtd_CONCENTRIC;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_CONCENTRIC;
     else if (theString.equals(::ConCoincidentString()))
-      aResult = TDataXtd_COINCIDENT;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_COINCIDENT;
     else if (theString.equals(::ConDistanceString()))
-      aResult = TDataXtd_DISTANCE;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_DISTANCE;
     else if (theString.equals(::ConAngleString()))
-      aResult = TDataXtd_ANGLE;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_ANGLE;
     else if (theString.equals(::ConEqualRadiusString()))
-      aResult = TDataXtd_EQUAL_RADIUS;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_EQUAL_RADIUS;
     else if (theString.equals(::ConSymmetryString()))
-      aResult = TDataXtd_SYMMETRY;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_SYMMETRY;
     else if (theString.equals(::ConMidPointString()))
-      aResult = TDataXtd_MIDPOINT;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_MIDPOINT;
     else if (theString.equals(::ConEqualDistanceString()))
-      aResult = TDataXtd_EQUAL_DISTANCE;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_EQUAL_DISTANCE;
     else if (theString.equals(::ConFixString()))
-      aResult = TDataXtd_FIX;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_FIX;
     else if (theString.equals(::ConRigidString()))
-      aResult = TDataXtd_RIGID;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_RIGID;
     // placement constraints
     else if (theString.equals(::ConFromString()))
-      aResult = TDataXtd_FROM;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_FROM;
     else if (theString.equals(::ConAxisString()))
-      aResult = TDataXtd_AXIS;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_AXIS;
     else if (theString.equals(::ConMateString()))
-      aResult = TDataXtd_MATE;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_MATE;
     else if (theString.equals(::ConAlignFacesString()))
-      aResult = TDataXtd_ALIGN_FACES;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_ALIGN_FACES;
     else if (theString.equals(::ConAlignAxesString()))
-      aResult = TDataXtd_ALIGN_AXES;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_ALIGN_AXES;
     else if (theString.equals(::ConAxesAngleString()))
-      aResult = TDataXtd_AXES_ANGLE;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_AXES_ANGLE;
     else if (theString.equals(::ConFacesAngleString()))
-      aResult = TDataXtd_FACES_ANGLE;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_FACES_ANGLE;
     else if (theString.equals(::ConRoundString()))
-      aResult = TDataXtd_ROUND;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_ROUND;
     else if (theString.equals(::ConOffsetString()))
-      aResult = TDataXtd_OFFSET;
+      aResult = TDataXtd_ConstraintEnum::TDataXtd_OFFSET;
     else
       throw Standard_DomainError(
         "TDataXtd_ConstraintEnum; string value without enum term equivalence");
@@ -350,58 +350,58 @@ static const XmlObjMgt_DOMString& ConstraintTypeString(const TDataXtd_Constraint
   switch (theE)
   {
       // planar constraints
-    case TDataXtd_RADIUS:
+    case TDataXtd_ConstraintEnum::TDataXtd_RADIUS:
       return ::ConRadiusString();
-    case TDataXtd_DIAMETER:
+    case TDataXtd_ConstraintEnum::TDataXtd_DIAMETER:
       return ::ConDiameterString();
-    case TDataXtd_MINOR_RADIUS:
+    case TDataXtd_ConstraintEnum::TDataXtd_MINOR_RADIUS:
       return ::ConMinRadiusString();
-    case TDataXtd_MAJOR_RADIUS:
+    case TDataXtd_ConstraintEnum::TDataXtd_MAJOR_RADIUS:
       return ::ConMajRadiusString();
-    case TDataXtd_TANGENT:
+    case TDataXtd_ConstraintEnum::TDataXtd_TANGENT:
       return ::ConTangentString();
-    case TDataXtd_PARALLEL:
+    case TDataXtd_ConstraintEnum::TDataXtd_PARALLEL:
       return ::ConParallelString();
-    case TDataXtd_PERPENDICULAR:
+    case TDataXtd_ConstraintEnum::TDataXtd_PERPENDICULAR:
       return ::ConPerpendicularString();
-    case TDataXtd_CONCENTRIC:
+    case TDataXtd_ConstraintEnum::TDataXtd_CONCENTRIC:
       return ::ConConcentricString();
-    case TDataXtd_COINCIDENT:
+    case TDataXtd_ConstraintEnum::TDataXtd_COINCIDENT:
       return ::ConCoincidentString();
-    case TDataXtd_DISTANCE:
+    case TDataXtd_ConstraintEnum::TDataXtd_DISTANCE:
       return ::ConDistanceString();
-    case TDataXtd_ANGLE:
+    case TDataXtd_ConstraintEnum::TDataXtd_ANGLE:
       return ::ConAngleString();
-    case TDataXtd_EQUAL_RADIUS:
+    case TDataXtd_ConstraintEnum::TDataXtd_EQUAL_RADIUS:
       return ::ConEqualRadiusString();
-    case TDataXtd_SYMMETRY:
+    case TDataXtd_ConstraintEnum::TDataXtd_SYMMETRY:
       return ::ConSymmetryString();
-    case TDataXtd_MIDPOINT:
+    case TDataXtd_ConstraintEnum::TDataXtd_MIDPOINT:
       return ::ConMidPointString();
-    case TDataXtd_EQUAL_DISTANCE:
+    case TDataXtd_ConstraintEnum::TDataXtd_EQUAL_DISTANCE:
       return ::ConEqualDistanceString();
-    case TDataXtd_FIX:
+    case TDataXtd_ConstraintEnum::TDataXtd_FIX:
       return ::ConFixString();
-    case TDataXtd_RIGID:
+    case TDataXtd_ConstraintEnum::TDataXtd_RIGID:
       return ::ConRigidString();
       // placement constraints
-    case TDataXtd_FROM:
+    case TDataXtd_ConstraintEnum::TDataXtd_FROM:
       return ::ConFromString();
-    case TDataXtd_AXIS:
+    case TDataXtd_ConstraintEnum::TDataXtd_AXIS:
       return ::ConAxisString();
-    case TDataXtd_MATE:
+    case TDataXtd_ConstraintEnum::TDataXtd_MATE:
       return ::ConMateString();
-    case TDataXtd_ALIGN_FACES:
+    case TDataXtd_ConstraintEnum::TDataXtd_ALIGN_FACES:
       return ::ConAlignFacesString();
-    case TDataXtd_ALIGN_AXES:
+    case TDataXtd_ConstraintEnum::TDataXtd_ALIGN_AXES:
       return ::ConAlignAxesString();
-    case TDataXtd_AXES_ANGLE:
+    case TDataXtd_ConstraintEnum::TDataXtd_AXES_ANGLE:
       return ::ConAxesAngleString();
-    case TDataXtd_FACES_ANGLE:
+    case TDataXtd_ConstraintEnum::TDataXtd_FACES_ANGLE:
       return ::ConFacesAngleString();
-    case TDataXtd_ROUND:
+    case TDataXtd_ConstraintEnum::TDataXtd_ROUND:
       return ::ConRoundString();
-    case TDataXtd_OFFSET:
+    case TDataXtd_ConstraintEnum::TDataXtd_OFFSET:
       return ::ConOffsetString();
 
     default:

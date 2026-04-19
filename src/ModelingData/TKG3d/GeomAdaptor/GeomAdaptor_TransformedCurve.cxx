@@ -189,7 +189,7 @@ occ::handle<Geom_BSplineCurve> GeomAdaptor_TransformedCurve::BSpline() const
 
 occ::handle<Geom_OffsetCurve> GeomAdaptor_TransformedCurve::OffsetCurve() const
 {
-  if (!Is3DCurve() || myCurve.GetType() != GeomAbs_OffsetCurve)
+  if (!Is3DCurve() || myCurve.GetType() != GeomAbs_CurveType::GeomAbs_OffsetCurve)
     throw Standard_NoSuchObject("GeomAdaptor_TransformedCurve::OffsetCurve");
 
   occ::handle<Geom_OffsetCurve> anOffC = myCurve.OffsetCurve();

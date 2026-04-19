@@ -17,7 +17,7 @@
 #ifndef _TopOpeBRepBuild_LoopEnum_HeaderFile
 #define _TopOpeBRepBuild_LoopEnum_HeaderFile
 
-enum TopOpeBRepBuild_LoopEnum
+enum class TopOpeBRepBuild_LoopEnum
 {
   TopOpeBRepBuild_ANYLOOP,
   TopOpeBRepBuild_BOUNDARY,

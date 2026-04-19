@@ -57,7 +57,7 @@ bool BRepLib_MakeShape::HasDescendants(const TopoDS_Face&) const
 
 BRepLib_ShapeModification BRepLib_MakeShape::FaceStatus(const TopoDS_Face&) const
 {
-  BRepLib_ShapeModification myStatus = BRepLib_Trimmed;
+  BRepLib_ShapeModification myStatus = BRepLib_ShapeModification::BRepLib_Trimmed;
   return myStatus;
 }
 

@@ -429,7 +429,7 @@ int MakeShell(Draw_Interpretor& theDI, int, const char** a)
 
   BRepOffset_MakeOffset Offset;
 
-  Offset.Initialize(aShape, Off, 1.0e-3, BRepOffset_Skin, true, false, GeomAbs_Arc);
+  Offset.Initialize(aShape, Off, 1.0e-3, BRepOffset_Mode::BRepOffset_Skin, true, false, GeomAbs_JoinType::GeomAbs_Arc);
   Offset.AddFace(F);
   Offset.MakeThickSolid(aProgress->Start());
 

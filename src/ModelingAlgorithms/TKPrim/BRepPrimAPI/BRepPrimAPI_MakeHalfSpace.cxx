@@ -138,7 +138,7 @@ static bool FindExtrema(const gp_Pnt&       thePnt,
   // try to find a projection on face
   for (int iext = 1; iext <= nbext; iext++)
   {
-    if (ext.SupportTypeShape2(iext) == BRepExtrema_IsInFace)
+    if (ext.SupportTypeShape2(iext) == BRepExtrema_SupportType::BRepExtrema_IsInFace)
     {
       TopoDS_Face aF = TopoDS::Face(ext.SupportOnShape2(iext));
       theMinPnt      = ext.PointOnShape2(iext);
@@ -152,7 +152,7 @@ static bool FindExtrema(const gp_Pnt&       thePnt,
   // if not found then take any edge or vertex solution
   for (int iext = 1; iext <= nbext; iext++)
   {
-    if (ext.SupportTypeShape2(iext) == BRepExtrema_IsOnEdge)
+    if (ext.SupportTypeShape2(iext) == BRepExtrema_SupportType::BRepExtrema_IsOnEdge)
     {
       theMinPnt = ext.PointOnShape2(iext);
       double aPar;
@@ -161,7 +161,7 @@ static bool FindExtrema(const gp_Pnt&       thePnt,
       if (getNormalFromEdge(theShape, aE, aPar, theNormal))
         return true;
     }
-    else if (ext.SupportTypeShape2(iext) == BRepExtrema_IsVertex)
+    else if (ext.SupportTypeShape2(iext) == BRepExtrema_SupportType::BRepExtrema_IsVertex)
     {
       theMinPnt        = ext.PointOnShape2(iext);
       TopoDS_Vertex aV = TopoDS::Vertex(ext.SupportOnShape2(iext));

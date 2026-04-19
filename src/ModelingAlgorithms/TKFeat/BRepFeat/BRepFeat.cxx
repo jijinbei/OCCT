@@ -696,88 +696,88 @@ Standard_OStream& BRepFeat::Print(const BRepFeat_StatusError se, Standard_OStrea
 {
   switch (se)
   {
-    case BRepFeat_OK:
+    case BRepFeat_StatusError::BRepFeat_OK:
       s << "No error";
       break;
-    case BRepFeat_BadDirect:
+    case BRepFeat_StatusError::BRepFeat_BadDirect:
       s << "Directions must be opposite";
       break;
-    case BRepFeat_BadIntersect:
+    case BRepFeat_StatusError::BRepFeat_BadIntersect:
       s << "Intersection failure";
       break;
-    case BRepFeat_EmptyBaryCurve:
+    case BRepFeat_StatusError::BRepFeat_EmptyBaryCurve:
       s << "Empty BaryCurve";
       break;
-    case BRepFeat_EmptyCutResult:
+    case BRepFeat_StatusError::BRepFeat_EmptyCutResult:
       s << "Failure in Cut : Empty resulting shape";
       break;
-    case BRepFeat_FalseSide:
+    case BRepFeat_StatusError::BRepFeat_FalseSide:
       s << "Verify plane and wire orientation";
       break;
-    case BRepFeat_IncDirection:
+    case BRepFeat_StatusError::BRepFeat_IncDirection:
       s << "Incoherent Direction for shapes From and Until";
       break;
-    case BRepFeat_IncSlidFace:
+    case BRepFeat_StatusError::BRepFeat_IncSlidFace:
       s << "Sliding face not in Base shape";
       break;
-    case BRepFeat_IncParameter:
+    case BRepFeat_StatusError::BRepFeat_IncParameter:
       s << "Incoherent Parameter : shape Until before shape From";
       break;
-    case BRepFeat_IncTypes:
+    case BRepFeat_StatusError::BRepFeat_IncTypes:
       s << "Invalid option for faces From and Until : 1 Support and 1 not";
       break;
-    case BRepFeat_IntervalOverlap:
+    case BRepFeat_StatusError::BRepFeat_IntervalOverlap:
       s << "Shapes From and Until overlap";
       break;
-    case BRepFeat_InvFirstShape:
+    case BRepFeat_StatusError::BRepFeat_InvFirstShape:
       s << "Invalid First shape : more than 1 face";
       break;
-    case BRepFeat_InvOption:
+    case BRepFeat_StatusError::BRepFeat_InvOption:
       s << "Invalid option";
       break;
-    case BRepFeat_InvShape:
+    case BRepFeat_StatusError::BRepFeat_InvShape:
       s << "Invalid shape";
       break;
-    case BRepFeat_LocOpeNotDone:
+    case BRepFeat_StatusError::BRepFeat_LocOpeNotDone:
       s << "Local Operation not done";
       break;
-    case BRepFeat_LocOpeInvNotDone:
+    case BRepFeat_StatusError::BRepFeat_LocOpeInvNotDone:
       s << "Local Operation : intersection line conflict";
       break;
-    case BRepFeat_NoExtFace:
+    case BRepFeat_StatusError::BRepFeat_NoExtFace:
       s << "No Extreme faces";
       break;
-    case BRepFeat_NoFaceProf:
+    case BRepFeat_StatusError::BRepFeat_NoFaceProf:
       s << "No Face Profile";
       break;
-    case BRepFeat_NoGluer:
+    case BRepFeat_StatusError::BRepFeat_NoGluer:
       s << "Gluer Failure";
       break;
-    case BRepFeat_NoIntersectF:
+    case BRepFeat_StatusError::BRepFeat_NoIntersectF:
       s << "No intersection between Feature and shape From";
       break;
-    case BRepFeat_NoIntersectU:
+    case BRepFeat_StatusError::BRepFeat_NoIntersectU:
       s << "No intersection between Feature and shape Until";
       break;
-    case BRepFeat_NoParts:
+    case BRepFeat_StatusError::BRepFeat_NoParts:
       s << "No parts of tool kept";
       break;
-    case BRepFeat_NoProjPt:
+    case BRepFeat_StatusError::BRepFeat_NoProjPt:
       s << "No projection points";
       break;
-    case BRepFeat_NotInitialized:
+    case BRepFeat_StatusError::BRepFeat_NotInitialized:
       s << "Fields not initialized";
       break;
-    case BRepFeat_NotYetImplemented:
+    case BRepFeat_StatusError::BRepFeat_NotYetImplemented:
       s << "Not yet implemented";
       break;
-    case BRepFeat_NullRealTool:
+    case BRepFeat_StatusError::BRepFeat_NullRealTool:
       s << "Real Tool : Null DPrism";
       break;
-    case BRepFeat_NullToolF:
+    case BRepFeat_StatusError::BRepFeat_NullToolF:
       s << "Null Tool : Invalid type for shape Form";
       break;
-    case BRepFeat_NullToolU:
+    case BRepFeat_StatusError::BRepFeat_NullToolU:
       s << "Null Tool : Invalid type for shape Until";
       break;
   }

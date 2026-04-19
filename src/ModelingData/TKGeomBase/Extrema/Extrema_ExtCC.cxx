@@ -224,8 +224,8 @@ void Extrema_ExtCC::Perform()
   //- _ExtElC, when one of the curves is a line and the other is elementary,
   //    or there are two circles;
   //- _GenExtCC, in all other cases
-  if ((type1 == GeomAbs_Line && type2 <= GeomAbs_Parabola)
-      || (type2 == GeomAbs_Line && type1 <= GeomAbs_Parabola))
+  if ((type1 == GeomAbs_CurveType::GeomAbs_Line && type2 <= GeomAbs_CurveType::GeomAbs_Parabola)
+      || (type2 == GeomAbs_CurveType::GeomAbs_Line && type1 <= GeomAbs_CurveType::GeomAbs_Parabola))
   {
     // analytical case - one curve is always a line
     int               anInd1 = 0, anInd2 = 1;
@@ -240,27 +240,27 @@ void Extrema_ExtCC::Perform()
     }
     switch (aType2)
     {
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Line: {
         Extrema_ExtElC Xtrem(myC[anInd1]->Line(), myC[anInd2]->Line(), Tol);
         PrepareResults(Xtrem, isInverse, U11, U12, U21, U22);
         break;
       }
-      case GeomAbs_Circle: {
+      case GeomAbs_CurveType::GeomAbs_Circle: {
         Extrema_ExtElC Xtrem(myC[anInd1]->Line(), myC[anInd2]->Circle(), Tol);
         PrepareResults(Xtrem, isInverse, U11, U12, U21, U22);
         break;
       }
-      case GeomAbs_Ellipse: {
+      case GeomAbs_CurveType::GeomAbs_Ellipse: {
         Extrema_ExtElC Xtrem(myC[anInd1]->Line(), myC[anInd2]->Ellipse());
         PrepareResults(Xtrem, isInverse, U11, U12, U21, U22);
         break;
       }
-      case GeomAbs_Hyperbola: {
+      case GeomAbs_CurveType::GeomAbs_Hyperbola: {
         Extrema_ExtElC Xtrem(myC[anInd1]->Line(), myC[anInd2]->Hyperbola());
         PrepareResults(Xtrem, isInverse, U11, U12, U21, U22);
         break;
       }
-      case GeomAbs_Parabola: {
+      case GeomAbs_CurveType::GeomAbs_Parabola: {
         Extrema_ExtElC Xtrem(myC[anInd1]->Line(), myC[anInd2]->Parabola());
         PrepareResults(Xtrem, isInverse, U11, U12, U21, U22);
         break;
@@ -269,7 +269,7 @@ void Extrema_ExtCC::Perform()
         break;
     }
   }
-  else if (type1 == GeomAbs_Circle && type2 == GeomAbs_Circle)
+  else if (type1 == GeomAbs_CurveType::GeomAbs_Circle && type2 == GeomAbs_CurveType::GeomAbs_Circle)
   {
     // analytical case - two circles
     bool           bIsDone;
@@ -377,8 +377,8 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
 
   const GeomAbs_CurveType aType1 = Extrema_CurveTool::GetType(*myC[0]);
   const GeomAbs_CurveType aType2 = Extrema_CurveTool::GetType(*myC[1]);
-  if (((aType1 != GeomAbs_Line) && (aType1 != GeomAbs_Circle))
-      || ((aType2 != GeomAbs_Line) && (aType2 != GeomAbs_Circle)))
+  if (((aType1 != GeomAbs_CurveType::GeomAbs_Line) && (aType1 != GeomAbs_CurveType::GeomAbs_Circle))
+      || ((aType2 != GeomAbs_CurveType::GeomAbs_Line) && (aType2 != GeomAbs_CurveType::GeomAbs_Circle)))
   {
     mySqDist.Append(theSqDist);
     myDone       = true;
@@ -391,7 +391,7 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
   if (aType1 != aType2)
   {
     // The projection of the circle's location to the trimmed line must exist.
-    const bool   isReversed = (aType1 != GeomAbs_Circle);
+    const bool   isReversed = (aType1 != GeomAbs_CurveType::GeomAbs_Circle);
     const gp_Pnt aPonC      = !isReversed ? Extrema_CurveTool::Value(*myC[0], theUt11)
                                           : Extrema_CurveTool::Value(*myC[1], theUt21);
 
@@ -414,7 +414,7 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
     return;
   }
 
-  if (aType1 == GeomAbs_Line)
+  if (aType1 == GeomAbs_CurveType::GeomAbs_Line)
   {
     // Line - Line
 

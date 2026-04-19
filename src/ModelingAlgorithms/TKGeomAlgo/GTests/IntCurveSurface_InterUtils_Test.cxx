@@ -77,7 +77,7 @@ TEST(IntCurveSurface_InterUtils, SectionPointToParameters_DegenerateFaceFallsBac
   const TestPolygon    aPolygon;
 
   const Intf_SectionPoint
-    aSectionPoint(gp_Pnt(0.5, 0.0, 0.0), Intf_EDGE, 0, 2, 0.4, Intf_FACE, 1, 0, 0.0, 0.0);
+    aSectionPoint(gp_Pnt(0.5, 0.0, 0.0), Intf_PIType::Intf_EDGE, 0, 2, 0.4, Intf_PIType::Intf_FACE, 1, 0, 0.0, 0.0);
 
   double aU = 0.0;
   double aV = 0.0;

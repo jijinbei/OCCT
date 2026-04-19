@@ -85,37 +85,37 @@ Intrv_Position Intrv_Interval::Position(const Intrv_Interval& Other) const
   if (mySMax < otSMin)
   {
     if (myEMax < otSMin)
-      P = Intrv_Before;
+      P = Intrv_Position::Intrv_Before;
     else if (otSMax >= myEMin)
-      P = Intrv_JustBefore;
+      P = Intrv_Position::Intrv_JustBefore;
     else if (myEMax < otEMin)
-      P = Intrv_OverlappingAtStart;
+      P = Intrv_Position::Intrv_OverlappingAtStart;
     else if (otEMax >= myEMin)
-      P = Intrv_JustEnclosingAtEnd;
+      P = Intrv_Position::Intrv_JustEnclosingAtEnd;
     else
-      P = Intrv_Enclosing;
+      P = Intrv_Position::Intrv_Enclosing;
   }
   else if (otSMax >= mySMin)
   {
     if (myEMax < otEMin)
-      P = Intrv_JustOverlappingAtStart;
+      P = Intrv_Position::Intrv_JustOverlappingAtStart;
     else if (otEMax >= myEMin)
-      P = Intrv_Similar;
+      P = Intrv_Position::Intrv_Similar;
     else
-      P = Intrv_JustEnclosingAtStart;
+      P = Intrv_Position::Intrv_JustEnclosingAtStart;
   }
   else if (mySMax < otEMin)
   {
     if (myEMax < otEMin)
-      P = Intrv_Inside;
+      P = Intrv_Position::Intrv_Inside;
     else if (otEMax >= myEMin)
-      P = Intrv_JustOverlappingAtEnd;
+      P = Intrv_Position::Intrv_JustOverlappingAtEnd;
     else
-      P = Intrv_OverlappingAtEnd;
+      P = Intrv_Position::Intrv_OverlappingAtEnd;
   }
   else if (otEMax >= mySMin)
-    P = Intrv_JustAfter;
+    P = Intrv_Position::Intrv_JustAfter;
   else
-    P = Intrv_After;
+    P = Intrv_Position::Intrv_After;
   return P;
 }

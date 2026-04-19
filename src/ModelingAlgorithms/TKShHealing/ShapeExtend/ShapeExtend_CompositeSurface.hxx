@@ -74,7 +74,7 @@ public:
   //! Initializes by a grid of surfaces (calls Init()).
   Standard_EXPORT ShapeExtend_CompositeSurface(
     const occ::handle<NCollection_HArray2<occ::handle<Geom_Surface>>>& GridSurf,
-    const ShapeExtend_Parametrisation                                  param = ShapeExtend_Natural);
+    const ShapeExtend_Parametrisation                                  param = ShapeExtend_Parametrisation::ShapeExtend_Natural);
 
   //! Initializes by a grid of surfaces (calls Init()).
   Standard_EXPORT ShapeExtend_CompositeSurface(
@@ -91,12 +91,12 @@ public:
   //!
   //! Last parameter defines how global parametrisation
   //! (joint values) will be computed:
-  //! ShapeExtend_Natural: U1 = u11min, Ui+1 = Ui + (ui1max-ui1min), etc.
-  //! ShapeExtend_Uniform: Ui = i-1, Vj = j-1
-  //! ShapeExtend_Unitary: Ui = (i-1)/Nu, Vi = (j-1)/Nv
+  //! ShapeExtend_Parametrisation::ShapeExtend_Natural: U1 = u11min, Ui+1 = Ui + (ui1max-ui1min), etc.
+  //! ShapeExtend_Parametrisation::ShapeExtend_Uniform: Ui = i-1, Vj = j-1
+  //! ShapeExtend_Parametrisation::ShapeExtend_Unitary: Ui = (i-1)/Nu, Vi = (j-1)/Nv
   Standard_EXPORT bool Init(
     const occ::handle<NCollection_HArray2<occ::handle<Geom_Surface>>>& GridSurf,
-    const ShapeExtend_Parametrisation                                  param = ShapeExtend_Natural);
+    const ShapeExtend_Parametrisation                                  param = ShapeExtend_Parametrisation::ShapeExtend_Natural);
 
   //! Initializes by a grid of surfaces with given global
   //! parametrisation defined by UJoints and VJoints arrays,
@@ -290,7 +290,7 @@ public:
 
   //! Computes Joint values according to parameter
   Standard_EXPORT void ComputeJointValues(
-    const ShapeExtend_Parametrisation param = ShapeExtend_Natural);
+    const ShapeExtend_Parametrisation param = ShapeExtend_Parametrisation::ShapeExtend_Natural);
 
   //! Checks geometrical connectivity of the patches, including
   //! closedness (sets fields muUClosed and myVClosed)

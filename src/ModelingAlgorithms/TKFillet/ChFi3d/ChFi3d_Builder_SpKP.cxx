@@ -183,9 +183,9 @@ static double ComputeAbscissa(const BRepAdaptor_Curve& C, const double U)
 {
   switch (C.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       return U;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       return C.Circle().Radius() * U;
     default:
       return 0;
@@ -837,7 +837,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
     {
       occ::handle<ChFiDS_SurfData>& sd  = SetData.ChangeValue(1);
       ChFiDS_CommonPoint&           CP2 = sd->ChangeVertexFirstOnS2();
-      if (CP2.IsOnArc() && Spine->FirstStatus() == ChFiDS_OnSame)
+      if (CP2.IsOnArc() && Spine->FirstStatus() == ChFiDS_State::ChFiDS_OnSame)
       {
         intf = !SearchFace(Spine, CP2, F2, FBID);
       }
@@ -848,7 +848,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
     {
       occ::handle<ChFiDS_SurfData>& sd  = SetData.ChangeValue(SetData.Length());
       ChFiDS_CommonPoint&           CP2 = sd->ChangeVertexLastOnS2();
-      if (CP2.IsOnArc() && Spine->LastStatus() == ChFiDS_OnSame)
+      if (CP2.IsOnArc() && Spine->LastStatus() == ChFiDS_State::ChFiDS_OnSame)
       {
         intl = !SearchFace(Spine, CP2, F2, FBID);
       }
@@ -883,7 +883,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
     {
       occ::handle<ChFiDS_SurfData>& sd  = SetData.ChangeValue(1);
       ChFiDS_CommonPoint&           CP1 = sd->ChangeVertexFirstOnS1();
-      if (CP1.IsOnArc() && Spine->FirstStatus() == ChFiDS_OnSame)
+      if (CP1.IsOnArc() && Spine->FirstStatus() == ChFiDS_State::ChFiDS_OnSame)
       {
         intf = !SearchFace(Spine, CP1, F1, FBID);
       }
@@ -894,7 +894,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
     {
       occ::handle<ChFiDS_SurfData>& sd  = SetData.ChangeValue(SetData.Length());
       ChFiDS_CommonPoint&           CP1 = sd->ChangeVertexLastOnS1();
-      if (CP1.IsOnArc() && Spine->LastStatus() == ChFiDS_OnSame)
+      if (CP1.IsOnArc() && Spine->LastStatus() == ChFiDS_State::ChFiDS_OnSame)
       {
         intl = !SearchFace(Spine, CP1, F1, FBID);
       }
@@ -1046,7 +1046,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
           if (!CP2.IsOnArc() || (CP2.IsOnArc() && SearchFace(Spine, CP2, F2, FBID)))
           {
             CP2 = sov;
-            if (Spine->FirstStatus() != ChFiDS_OnSame)
+            if (Spine->FirstStatus() != ChFiDS_State::ChFiDS_OnSame)
             {
               CD2->ChangeInterference(2).SetParameter(CD2->Interference(1).Parameter(true), true);
               intf = false;
@@ -1073,7 +1073,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
           if (!CP1.IsOnArc() || (CP1.IsOnArc() && SearchFace(Spine, CP1, F1, FBID)))
           {
             CP1 = sov;
-            if (Spine->FirstStatus() != ChFiDS_OnSame)
+            if (Spine->FirstStatus() != ChFiDS_State::ChFiDS_OnSame)
             {
               CD2->ChangeInterference(1).SetParameter(CD2->Interference(2).Parameter(true), true);
               intf = false;
@@ -1086,13 +1086,13 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
       // select <onS> switcher so that to get on spine params from
       // Interference with a face where both edges at corner are OnSame
       // eap occ293
-      if (intf && Spine->FirstStatus() == ChFiDS_OnSame)
+      if (intf && Spine->FirstStatus() == ChFiDS_State::ChFiDS_OnSame)
       {
         TopoDS_Edge threeE[3];
         ChFi3d_cherche_element(bout1, support, F1, threeE[0], boutemp);
         ChFi3d_cherche_element(bout1, support, F2, threeE[1], boutemp);
         threeE[2] = support;
-        if (ChFi3d_EdgeState(threeE, myEFMap) == ChFiDS_OnSame)
+        if (ChFi3d_EdgeState(threeE, myEFMap) == ChFiDS_State::ChFiDS_OnSame)
           onS = 1;
         else
           onS = 2;
@@ -1172,7 +1172,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
           if (!CP2.IsOnArc() || (CP2.IsOnArc() && SearchFace(Spine, CP2, F2, FBID)))
           {
             CP2 = sov;
-            if (Spine->LastStatus() != ChFiDS_OnSame)
+            if (Spine->LastStatus() != ChFiDS_State::ChFiDS_OnSame)
             {
               CD4->ChangeInterference(2).SetParameter(CD4->Interference(1).Parameter(false), false);
               intl = false;
@@ -1199,7 +1199,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
           if (!CP1.IsOnArc() || (CP1.IsOnArc() && SearchFace(Spine, CP1, F1, FBID)))
           {
             CP1 = sov;
-            if (Spine->LastStatus() != ChFiDS_OnSame)
+            if (Spine->LastStatus() != ChFiDS_State::ChFiDS_OnSame)
             {
               CD4->ChangeInterference(1).SetParameter(CD4->Interference(2).Parameter(false), false);
               intl = false;
@@ -1213,13 +1213,13 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
       // select <onS> switcher so that to get on spine params from
       // Interference with a face where both edges at corner are OnSame
       // eap occ293
-      if (intl && Spine->LastStatus() == ChFiDS_OnSame)
+      if (intl && Spine->LastStatus() == ChFiDS_State::ChFiDS_OnSame)
       {
         TopoDS_Edge threeE[3];
         ChFi3d_cherche_element(bout2, support, F1, threeE[0], boutemp);
         ChFi3d_cherche_element(bout2, support, F2, threeE[1], boutemp);
         threeE[2] = support;
-        if (ChFi3d_EdgeState(threeE, myEFMap) == ChFiDS_OnSame)
+        if (ChFi3d_EdgeState(threeE, myEFMap) == ChFiDS_State::ChFiDS_OnSame)
           onS = 1;
         else
           onS = 2;

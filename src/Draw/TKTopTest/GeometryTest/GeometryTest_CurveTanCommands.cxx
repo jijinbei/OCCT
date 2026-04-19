@@ -206,13 +206,13 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
       return 1;
     }
     Geom2dAdaptor_Curve anAdaptorCurve1(aQCurve1->GetCurve());
-    if (anAdaptorCurve1.GetType() == GeomAbs_Circle)
+    if (anAdaptorCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       GccEnt_QualifiedCirc aQualifiedCircle1(anAdaptorCurve1.Circle(), aQCurve1->GetPosition());
       GccAna_Circ2d3Tan    aCircBuilder(aQualifiedCircle1, aPoint2, aPoint3, aTolerance);
       return solutions(theDI, aCircBuilder, theArgVec[1]);
     }
-    else if (anAdaptorCurve1.GetType() == GeomAbs_Line)
+    else if (anAdaptorCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       GccEnt_QualifiedLin aQualifiedLin1(anAdaptorCurve1.Line(), aQCurve1->GetPosition());
       GccAna_Circ2d3Tan   aCircBuilder(aQualifiedLin1, aPoint2, aPoint3, aTolerance);
@@ -233,22 +233,22 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
     }
     Geom2dAdaptor_Curve anAdaptorCurve1(aQCurve1->GetCurve());
     Geom2dAdaptor_Curve anAdaptorCurve2(aQCurve2->GetCurve());
-    if (anAdaptorCurve1.GetType() == GeomAbs_Circle && anAdaptorCurve2.GetType() == GeomAbs_Circle)
+    if (anAdaptorCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Circle && anAdaptorCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       GccEnt_QualifiedCirc aQualifiedCircle1(anAdaptorCurve1.Circle(), aQCurve1->GetPosition());
       GccEnt_QualifiedCirc aQualifiedCircle2(anAdaptorCurve2.Circle(), aQCurve2->GetPosition());
       GccAna_Circ2d3Tan    aCircBuilder(aQualifiedCircle1, aQualifiedCircle2, aPoint3, aTolerance);
       return solutions(theDI, aCircBuilder, theArgVec[1]);
     }
-    else if (anAdaptorCurve1.GetType() == GeomAbs_Circle
-             && anAdaptorCurve2.GetType() == GeomAbs_Line)
+    else if (anAdaptorCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Circle
+             && anAdaptorCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       GccEnt_QualifiedCirc aQualifiedCircle1(anAdaptorCurve1.Circle(), aQCurve1->GetPosition());
       GccEnt_QualifiedLin  aQualifiedLin2(anAdaptorCurve2.Line(), aQCurve2->GetPosition());
       GccAna_Circ2d3Tan    aCircBuilder(aQualifiedCircle1, aQualifiedLin2, aPoint3, aTolerance);
       return solutions(theDI, aCircBuilder, theArgVec[1]);
     }
-    else if (anAdaptorCurve1.GetType() == GeomAbs_Line && anAdaptorCurve2.GetType() == GeomAbs_Line)
+    else if (anAdaptorCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Line && anAdaptorCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       GccEnt_QualifiedLin aQualifiedLin1(anAdaptorCurve1.Line(), aQCurve1->GetPosition());
       GccEnt_QualifiedLin aQualifiedLin2(anAdaptorCurve2.Line(), aQCurve2->GetPosition());
@@ -265,8 +265,8 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
   Geom2dAdaptor_Curve anAdaptorCurve1(aQCurve1->GetCurve());
   Geom2dAdaptor_Curve anAdaptorCurve2(aQCurve2->GetCurve());
   Geom2dAdaptor_Curve anAdaptorCurve3(aQCurve3->GetCurve());
-  if (anAdaptorCurve1.GetType() == GeomAbs_Circle && anAdaptorCurve2.GetType() == GeomAbs_Circle
-      && anAdaptorCurve3.GetType() == GeomAbs_Circle)
+  if (anAdaptorCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Circle && anAdaptorCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Circle
+      && anAdaptorCurve3.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     GccEnt_QualifiedCirc aQualifiedCircle1(anAdaptorCurve1.Circle(), aQCurve1->GetPosition());
     GccEnt_QualifiedCirc aQualifiedCircle2(anAdaptorCurve2.Circle(), aQCurve2->GetPosition());
@@ -277,8 +277,8 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
                                    aTolerance);
     return solutions(theDI, aCircBuilder, theArgVec[1]);
   }
-  if (anAdaptorCurve1.GetType() == GeomAbs_Circle && anAdaptorCurve2.GetType() == GeomAbs_Circle
-      && anAdaptorCurve3.GetType() == GeomAbs_Line)
+  if (anAdaptorCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Circle && anAdaptorCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Circle
+      && anAdaptorCurve3.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     GccEnt_QualifiedCirc aQualifiedCircle1(anAdaptorCurve1.Circle(), aQCurve1->GetPosition());
     GccEnt_QualifiedCirc aQualifiedCircle2(anAdaptorCurve2.Circle(), aQCurve2->GetPosition());
@@ -289,8 +289,8 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
                                    aTolerance);
     return solutions(theDI, aCircBuilder, theArgVec[1]);
   }
-  if (anAdaptorCurve1.GetType() == GeomAbs_Circle && anAdaptorCurve2.GetType() == GeomAbs_Line
-      && anAdaptorCurve3.GetType() == GeomAbs_Line)
+  if (anAdaptorCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Circle && anAdaptorCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line
+      && anAdaptorCurve3.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     GccEnt_QualifiedCirc aQualifiedCircle1(anAdaptorCurve1.Circle(), aQCurve1->GetPosition());
     GccEnt_QualifiedLin  aQualifiedLin2(anAdaptorCurve2.Line(), aQCurve2->GetPosition());
@@ -298,8 +298,8 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
     GccAna_Circ2d3Tan aCircBuilder(aQualifiedCircle1, aQualifiedLin2, aQualifiedLin3, aTolerance);
     return solutions(theDI, aCircBuilder, theArgVec[1]);
   }
-  if (anAdaptorCurve1.GetType() == GeomAbs_Line && anAdaptorCurve2.GetType() == GeomAbs_Line
-      && anAdaptorCurve3.GetType() == GeomAbs_Line)
+  if (anAdaptorCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Line && anAdaptorCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line
+      && anAdaptorCurve3.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     GccEnt_QualifiedLin aQualifiedLin1(anAdaptorCurve1.Line(), aQCurve1->GetPosition());
     GccEnt_QualifiedLin aQualifiedLin2(anAdaptorCurve2.Line(), aQCurve2->GetPosition());

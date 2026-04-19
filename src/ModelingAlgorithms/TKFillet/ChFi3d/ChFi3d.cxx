@@ -54,7 +54,7 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
     EE.Reverse();
   occ::handle<Geom2d_Curve> C2 = BRep_Tool::CurveOnSurface(EE, F2, f, l);
   if (C1.IsNull() || C2.IsNull())
-    return ChFiDS_Other;
+    return ChFiDS_TypeOfConcavity::ChFiDS_Other;
 
   BRepAdaptor_Curve C(E);
   f = C.FirstParameter();
@@ -110,7 +110,7 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
     if (DN1.Dot(DN2) > 0)
     {
       // Tangent
-      return ChFiDS_Tangential;
+      return ChFiDS_TypeOfConcavity::ChFiDS_Tangential;
     }
     else
     {
@@ -118,7 +118,7 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
 #ifdef OCCT_DEBUG
       std::cout << " faces locally mixed" << std::endl;
 #endif
-      return ChFiDS_Convex;
+      return ChFiDS_TypeOfConcavity::ChFiDS_Convex;
     }
   }
   else
@@ -129,12 +129,12 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
     if (Prod > 0.)
     {
       //
-      return ChFiDS_Convex;
+      return ChFiDS_TypeOfConcavity::ChFiDS_Convex;
     }
     else
     {
       // reenters
-      return ChFiDS_Concave;
+      return ChFiDS_TypeOfConcavity::ChFiDS_Concave;
     }
   }
 }
@@ -228,7 +228,7 @@ bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
       aCont(aC2d1, aC2d2, aPar, aSurf1, aSurf2, theOrder, 0.001, TolC0, 0.1, 0.1, 0.1);
     if (!aCont.IsDone())
     {
-      if (theOrder == GeomAbs_C2 && aCont.StatusError() == LocalAnalysis_NullSecondDerivative)
+      if (theOrder == GeomAbs_C2 && aCont.StatusError() == LocalAnalysis_StatusErrorType::LocalAnalysis_NullSecondDerivative)
         continue;
 
       nbNotDone++;
@@ -572,7 +572,7 @@ bool ChFi3d::SameSide(const TopAbs_Orientation Or,
 void Correct2dPoint(const TopoDS_Face& theF, gp_Pnt2d& theP2d)
 {
   BRepAdaptor_Surface aBAS(theF, false);
-  if (aBAS.GetType() < GeomAbs_BezierSurface)
+  if (aBAS.GetType() < GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     return;
   }

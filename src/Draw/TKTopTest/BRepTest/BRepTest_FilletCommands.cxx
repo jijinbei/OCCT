@@ -155,16 +155,16 @@ static int BLEND(Draw_Interpretor& di, int narg, const char** a)
   TopoDS_Shape V = DBRep::Get(a[2]);
   if (V.IsNull())
     return 1;
-  ChFi3d_FilletShape FSh = ChFi3d_Rational;
+  ChFi3d_FilletShape FSh = ChFi3d_FilletShape::ChFi3d_Rational;
   if (narg % 2 == 0)
   {
     if (!strcasecmp(a[narg - 1], "Q"))
     {
-      FSh = ChFi3d_QuasiAngular;
+      FSh = ChFi3d_FilletShape::ChFi3d_QuasiAngular;
     }
     else if (!strcasecmp(a[narg - 1], "P"))
     {
-      FSh = ChFi3d_Polynomial;
+      FSh = ChFi3d_FilletShape::ChFi3d_Polynomial;
     }
   }
   Rakk = new BRepFilletAPI_MakeFillet(V, FSh);
@@ -284,14 +284,14 @@ static int MKEVOL(Draw_Interpretor& di, int narg, const char** a)
   Rake->SetContinuity(blend_cont, tapp_angle);
   if (narg == 4)
   {
-    ChFi3d_FilletShape FSh = ChFi3d_Rational;
+    ChFi3d_FilletShape FSh = ChFi3d_FilletShape::ChFi3d_Rational;
     if (!strcasecmp(a[3], "Q"))
     {
-      FSh = ChFi3d_QuasiAngular;
+      FSh = ChFi3d_FilletShape::ChFi3d_QuasiAngular;
     }
     else if (!strcasecmp(a[3], "P"))
     {
-      FSh = ChFi3d_Polynomial;
+      FSh = ChFi3d_FilletShape::ChFi3d_Polynomial;
     }
     Rake->SetFilletShape(FSh);
   }
@@ -495,37 +495,37 @@ static int blend1(Draw_Interpretor& di, int narg, const char** a)
   else
     aRakk.Perform();
 
-  // if (Rakk.IsDone()==FilletSurf_IsNotOk)
+  // if (Rakk.IsDone()==FilletSurf_StatusDone::FilletSurf_IsNotOk)
   //  { FilletSurf_ErrorTypeStatus err=Rakk.StatusError();
-  //    if (err==FilletSurf_EmptyList) std::cout<< "StatusError=EmptyList"<<std::endl;
-  //    else if (err==FilletSurf_EdgeNotG1) std::cout<< "StatusError=NotG1"<<std::endl;
-  //    else if (err==FilletSurf_FacesNotG1) std::cout<< "StatusError=facesNotG1"<<std::endl;
-  //    else if (err==FilletSurf_EdgeNotOnShape)
+  //    if (err==FilletSurf_ErrorTypeStatus::FilletSurf_EmptyList) std::cout<< "StatusError=EmptyList"<<std::endl;
+  //    else if (err==FilletSurf_ErrorTypeStatus::FilletSurf_EdgeNotG1) std::cout<< "StatusError=NotG1"<<std::endl;
+  //    else if (err==FilletSurf_ErrorTypeStatus::FilletSurf_FacesNotG1) std::cout<< "StatusError=facesNotG1"<<std::endl;
+  //    else if (err==FilletSurf_ErrorTypeStatus::FilletSurf_EdgeNotOnShape)
   //    std::cout<< "StatusError=edgenotonshape"<<std::endl;
-  //    else if (err==FilletSurf_NotSharpEdge ) std::cout<< "StatusError=notsharpedge"<<std::endl;
-  //    else if (err==FilletSurf_PbFilletCompute) std::cout <<"StatusError=PBFillet"<<std::endl;
+  //    else if (err==FilletSurf_ErrorTypeStatus::FilletSurf_NotSharpEdge ) std::cout<< "StatusError=notsharpedge"<<std::endl;
+  //    else if (err==FilletSurf_ErrorTypeStatus::FilletSurf_PbFilletCompute) std::cout <<"StatusError=PBFillet"<<std::endl;
   //  }
   //  else {
-  //   if (Rakk.IsDone()==FilletSurf_IsPartial) std::cout <<"resultat partiel"<<std::endl;
-  if (aRakk.IsDone() == FilletSurf_IsNotOk)
+  //   if (Rakk.IsDone()==FilletSurf_StatusDone::FilletSurf_IsPartial) std::cout <<"resultat partiel"<<std::endl;
+  if (aRakk.IsDone() == FilletSurf_StatusDone::FilletSurf_IsNotOk)
   {
     FilletSurf_ErrorTypeStatus err = aRakk.StatusError();
-    if (err == FilletSurf_EmptyList)
+    if (err == FilletSurf_ErrorTypeStatus::FilletSurf_EmptyList)
       di << "StatusError=EmptyList\n";
-    else if (err == FilletSurf_EdgeNotG1)
+    else if (err == FilletSurf_ErrorTypeStatus::FilletSurf_EdgeNotG1)
       di << "StatusError=NotG1\n";
-    else if (err == FilletSurf_FacesNotG1)
+    else if (err == FilletSurf_ErrorTypeStatus::FilletSurf_FacesNotG1)
       di << "StatusError=facesNotG1\n";
-    else if (err == FilletSurf_EdgeNotOnShape)
+    else if (err == FilletSurf_ErrorTypeStatus::FilletSurf_EdgeNotOnShape)
       di << "StatusError=edgenotonshape\n";
-    else if (err == FilletSurf_NotSharpEdge)
+    else if (err == FilletSurf_ErrorTypeStatus::FilletSurf_NotSharpEdge)
       di << "StatusError=notsharpedge\n";
-    else if (err == FilletSurf_PbFilletCompute)
+    else if (err == FilletSurf_ErrorTypeStatus::FilletSurf_PbFilletCompute)
       di << "StatusError=PBFillet\n";
   }
   else
   {
-    if (aRakk.IsDone() == FilletSurf_IsPartial)
+    if (aRakk.IsDone() == FilletSurf_StatusDone::FilletSurf_IsPartial)
       di << "partial result\n";
 
     nb = aRakk.NbSurface();
@@ -536,40 +536,40 @@ static int blend1(Draw_Interpretor& di, int narg, const char** a)
 
     if (!simul)
     {
-      // if (Rakk.StartSectionStatus()==FilletSurf_NoExtremityOnEdge)
+      // if (Rakk.StartSectionStatus()==FilletSurf_StatusType::FilletSurf_NoExtremityOnEdge)
       //   {std::cout<<" type deb conges = WLBLOUT"<<std::endl;}
-      // else if (Rakk.StartSectionStatus()==FilletSurf_OneExtremityOnEdge )
+      // else if (Rakk.StartSectionStatus()==FilletSurf_StatusType::FilletSurf_OneExtremityOnEdge )
       //   { std::cout<<" type deb conges = WLBLSTOP"<<std::endl;}
-      // else if (Rakk.StartSectionStatus()==FilletSurf_TwoExtremityOnEdge)
+      // else if (Rakk.StartSectionStatus()==FilletSurf_StatusType::FilletSurf_TwoExtremityOnEdge)
       //   {std::cout<<" type deb conges = WLBLEND"<<std::endl;}
-      if (aRakk.StartSectionStatus() == FilletSurf_NoExtremityOnEdge)
+      if (aRakk.StartSectionStatus() == FilletSurf_StatusType::FilletSurf_NoExtremityOnEdge)
       {
         di << " type start fillets = WLBLOUT\n";
       }
-      else if (aRakk.StartSectionStatus() == FilletSurf_OneExtremityOnEdge)
+      else if (aRakk.StartSectionStatus() == FilletSurf_StatusType::FilletSurf_OneExtremityOnEdge)
       {
         di << " type start fillets = WLBLSTOP\n";
       }
-      else if (aRakk.StartSectionStatus() == FilletSurf_TwoExtremityOnEdge)
+      else if (aRakk.StartSectionStatus() == FilletSurf_StatusType::FilletSurf_TwoExtremityOnEdge)
       {
         di << " type start fillets = WLBLEND\n";
       }
 
-      // if (Rakk.EndSectionStatus()==FilletSurf_NoExtremityOnEdge)
+      // if (Rakk.EndSectionStatus()==FilletSurf_StatusType::FilletSurf_NoExtremityOnEdge)
       //   {std::cout<<" type fin  conges = WLBLOUT"<<std::endl;}
-      // else if (Rakk.EndSectionStatus()==FilletSurf_OneExtremityOnEdge)
+      // else if (Rakk.EndSectionStatus()==FilletSurf_StatusType::FilletSurf_OneExtremityOnEdge)
       //   {std::cout<<" type fin  conges = WLBLSTOP"<<std::endl;}
-      // else if (Rakk.EndSectionStatus()==FilletSurf_TwoExtremityOnEdge)
+      // else if (Rakk.EndSectionStatus()==FilletSurf_StatusType::FilletSurf_TwoExtremityOnEdge)
       //   { std::cout<<" type fin  conges = WLBLEND"<<std::endl;}
-      if (aRakk.EndSectionStatus() == FilletSurf_NoExtremityOnEdge)
+      if (aRakk.EndSectionStatus() == FilletSurf_StatusType::FilletSurf_NoExtremityOnEdge)
       {
         di << " type end fillets = WLBLOUT\n";
       }
-      else if (aRakk.EndSectionStatus() == FilletSurf_OneExtremityOnEdge)
+      else if (aRakk.EndSectionStatus() == FilletSurf_StatusType::FilletSurf_OneExtremityOnEdge)
       {
         di << " type end fillets = WLBLSTOP\n";
       }
-      else if (aRakk.EndSectionStatus() == FilletSurf_TwoExtremityOnEdge)
+      else if (aRakk.EndSectionStatus() == FilletSurf_StatusType::FilletSurf_TwoExtremityOnEdge)
       {
         di << " type end fillets = WLBLEND\n";
       }

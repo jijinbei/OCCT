@@ -45,7 +45,7 @@ Standard_EXPORT const char* MeshTest_DrawLinks(const char* theNameStr, void* the
     for (int i = 1; i <= nbLinks; i++)
     {
       const BRepMesh_Edge& aLink = aMeshData->GetLink(i);
-      if (aLink.Movability() == BRepMesh_Deleted)
+      if (aLink.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
         continue;
       int                         n1  = aLink.FirstNode();
       int                         n2  = aLink.LastNode();
@@ -88,7 +88,7 @@ Standard_EXPORT const char* MeshTest_DrawTriangles(const char* theNameStr, void*
     for (int i = 1; i <= nbElem; i++)
     {
       const BRepMesh_Triangle& aTri = aMeshData->GetElement(i);
-      if (aTri.Movability() == BRepMesh_Deleted)
+      if (aTri.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
         continue;
       int n[3];
       aMeshData->ElementNodes(aTri, n);

@@ -588,7 +588,7 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Sphere& S)
     // not done
     return;
 
-  if (anInter.TypeInter() != IntAna_Circle)
+  if (anInter.TypeInter() != IntAna_ResultType::IntAna_Circle)
   {
     // Intersection is empty or just a point.
     // The parallel case has already been considered,

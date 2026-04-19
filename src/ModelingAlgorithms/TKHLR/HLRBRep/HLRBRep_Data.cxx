@@ -447,11 +447,11 @@ public:
   {
     const IntRes2d_Transition& T1 = IP.TransitionOfFirst();
     const IntRes2d_Transition& T2 = IP.TransitionOfSecond();
-    if (T1.PositionOnCurve() == IntRes2d_Middle)
+    if (T1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
     {
-      if (T2.PositionOnCurve() == IntRes2d_Middle)
+      if (T2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
       {
-        if (T1.TransitionType() == IntRes2d_In || T1.TransitionType() == IntRes2d_Out)
+        if (T1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_In || T1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Out)
         {
           Set(i0, i1, IP.ParamOnFirst());
           Set(i1, i0, IP.ParamOnSecond());
@@ -784,17 +784,17 @@ void HLRBRep_Data::Update(const HLRAlgo_Projector& P)
     // not cut and simple surface
 
     if (!withOutL
-        && (iFaceType == GeomAbs_Plane || iFaceType == GeomAbs_Cylinder || iFaceType == GeomAbs_Cone
-            || iFaceType == GeomAbs_Sphere || iFaceType == GeomAbs_Torus))
+        && (iFaceType == GeomAbs_SurfaceType::GeomAbs_Plane || iFaceType == GeomAbs_SurfaceType::GeomAbs_Cylinder || iFaceType == GeomAbs_SurfaceType::GeomAbs_Cone
+            || iFaceType == GeomAbs_SurfaceType::GeomAbs_Sphere || iFaceType == GeomAbs_SurfaceType::GeomAbs_Torus))
       fd.Simple(true);
     else
       fd.Simple(false);
 
-    fd.Plane(iFaceType == GeomAbs_Plane);
-    fd.Cylinder(iFaceType == GeomAbs_Cylinder);
-    fd.Cone(iFaceType == GeomAbs_Cone);
-    fd.Sphere(iFaceType == GeomAbs_Sphere);
-    fd.Torus(iFaceType == GeomAbs_Torus);
+    fd.Plane(iFaceType == GeomAbs_SurfaceType::GeomAbs_Plane);
+    fd.Cylinder(iFaceType == GeomAbs_SurfaceType::GeomAbs_Cylinder);
+    fd.Cone(iFaceType == GeomAbs_SurfaceType::GeomAbs_Cone);
+    fd.Sphere(iFaceType == GeomAbs_SurfaceType::GeomAbs_Sphere);
+    fd.Torus(iFaceType == GeomAbs_SurfaceType::GeomAbs_Torus);
     tol = (double)(fd.Tolerance());
     fd.Side(FS.IsSide(tol, myToler * 10));
     bool inverted = false;
@@ -2259,8 +2259,8 @@ bool HLRBRep_Data::RejectedPoint(const IntRes2d_IntersectionPoint& PInter,
     {
       if (mySameVertex)
       {
-        if ((st == TopAbs_ON) || (Tr1->PositionOnCurve() != IntRes2d_Middle)
-            || (Tr2->PositionOnCurve() != IntRes2d_Middle))
+        if ((st == TopAbs_ON) || (Tr1->PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
+            || (Tr2->PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle))
           return true;
       }
     }
@@ -2270,26 +2270,26 @@ bool HLRBRep_Data::RejectedPoint(const IntRes2d_IntersectionPoint& PInter,
 
   switch (Tr1->TransitionType())
   { // compute the transition
-    case IntRes2d_In:
+    case IntRes2d_TypeTrans::IntRes2d_In:
       Orie = (myFEOri == TopAbs_REVERSED ? TopAbs_REVERSED : TopAbs_FORWARD);
       break;
-    case IntRes2d_Out:
+    case IntRes2d_TypeTrans::IntRes2d_Out:
       Orie = (myFEOri == TopAbs_REVERSED ? TopAbs_FORWARD : TopAbs_REVERSED);
       break;
-    case IntRes2d_Touch:
+    case IntRes2d_TypeTrans::IntRes2d_Touch:
       switch (Tr1->Situation())
       {
-        case IntRes2d_Inside:
+        case IntRes2d_Situation::IntRes2d_Inside:
           Orie = (myFEOri == TopAbs_REVERSED ? TopAbs_EXTERNAL : TopAbs_INTERNAL);
           break;
-        case IntRes2d_Outside:
+        case IntRes2d_Situation::IntRes2d_Outside:
           Orie = (myFEOri == TopAbs_REVERSED ? TopAbs_INTERNAL : TopAbs_EXTERNAL);
           break;
-        case IntRes2d_Unknown:
+        case IntRes2d_Situation::IntRes2d_Unknown:
           return true;
       }
       break;
-    case IntRes2d_Undecided:
+    case IntRes2d_TypeTrans::IntRes2d_Undecided:
       return true;
   }
 
@@ -2298,20 +2298,20 @@ bool HLRBRep_Data::RejectedPoint(const IntRes2d_IntersectionPoint& PInter,
   TopAbs_Orientation Ori = TopAbs_FORWARD;
   switch (Tr1->PositionOnCurve())
   {
-    case IntRes2d_Head:
+    case IntRes2d_Position::IntRes2d_Head:
       Ori = TopAbs_FORWARD;
       break;
-    case IntRes2d_Middle:
+    case IntRes2d_Position::IntRes2d_Middle:
       Ori = TopAbs_INTERNAL;
       break;
-    case IntRes2d_End:
+    case IntRes2d_Position::IntRes2d_End:
       Ori = TopAbs_REVERSED;
       break;
   }
 
   if (st != TopAbs_OUT)
   {
-    if (Tr2->PositionOnCurve() != IntRes2d_Middle)
+    if (Tr2->PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
     { // correction de la transition  sur myFE
       // clang-format off
       if (mySameVertex) return true;        // si intersection a une extremite verticale !
@@ -2321,7 +2321,7 @@ bool HLRBRep_Data::RejectedPoint(const IntRes2d_IntersectionPoint& PInter,
       double   psav    = p2;
       gp_Pnt2d Ptsav;
       gp_Vec2d Tgsav, Nmsav;
-      if (Tr2->PositionOnCurve() == IntRes2d_Head)
+      if (Tr2->PositionOnCurve() == IntRes2d_Position::IntRes2d_Head)
       {
         Ind = ((HLRBRep_EdgeData*)myFEData)->VSta();
         Or2 = TopAbs_FORWARD;
@@ -2452,8 +2452,8 @@ bool HLRBRep_Data::SameVertex(const bool h1, const bool h2)
   if (SameV)
   {
     myIntersected = true; // compute the intersections
-    if ((myLEType == GeomAbs_Line || myLEType == GeomAbs_Circle || myLEType == GeomAbs_Ellipse)
-        && (myFEType == GeomAbs_Line || myFEType == GeomAbs_Circle || myFEType == GeomAbs_Ellipse))
+    if ((myLEType == GeomAbs_CurveType::GeomAbs_Line || myLEType == GeomAbs_CurveType::GeomAbs_Circle || myLEType == GeomAbs_CurveType::GeomAbs_Ellipse)
+        && (myFEType == GeomAbs_CurveType::GeomAbs_Line || myFEType == GeomAbs_CurveType::GeomAbs_Circle || myFEType == GeomAbs_CurveType::GeomAbs_Ellipse))
       myIntersected = false; // no other intersection
 
     bool otherCase = true;

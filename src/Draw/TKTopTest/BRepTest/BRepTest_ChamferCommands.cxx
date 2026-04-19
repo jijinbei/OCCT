@@ -51,7 +51,7 @@ static int chamf_throat_with_penetration(Draw_Interpretor& di, int narg, const c
   int         NbArg = 4;
 
   BRepFilletAPI_MakeChamfer aMCh(S);
-  aMCh.SetMode(ChFiDS_ConstThroatWithPenetrationChamfer);
+  aMCh.SetMode(ChFiDS_ChamfMode::ChFiDS_ConstThroatWithPenetrationChamfer);
 
   while (i + NbArg <= narg)
   {
@@ -116,7 +116,7 @@ static int chamf_throat(Draw_Interpretor& di, int narg, const char** a)
   int         i = 3;
 
   BRepFilletAPI_MakeChamfer aMCh(S);
-  aMCh.SetMode(ChFiDS_ConstThroatChamfer);
+  aMCh.SetMode(ChFiDS_ChamfMode::ChFiDS_ConstThroatChamfer);
 
   while (i + 1 < narg)
   {

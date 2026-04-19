@@ -1568,7 +1568,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       {
         TopoDS_Face         aFace = TopoDS::Face(aShapeA);
         BRepAdaptor_Surface aSurface(aFace, false);
-        if (aSurface.GetType() == GeomAbs_Plane)
+        if (aSurface.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
         {
           gp_Pln                  aPlane     = aSurface.Plane();
           occ::handle<Geom_Plane> aGeomPlane = new Geom_Plane(aPlane);
@@ -1618,7 +1618,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
 
       TopoDS_Face         aFace = TopoDS::Face(*aShapeB);
       BRepAdaptor_Surface aSurface(aFace, false);
-      if (aSurface.GetType() == GeomAbs_Plane)
+      if (aSurface.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         gp_Pln aPlane = aSurface.Plane();
         // Construct a plane parallel to aGeomPlane through A
@@ -1686,7 +1686,7 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
       }
       // the edge is OK
       BRepAdaptor_Surface aSurface(aFace, false);
-      if (aSurface.GetType() == GeomAbs_Plane)
+      if (aSurface.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         gp_Pln aPlane = aSurface.Plane();
         // It rotates a half turn round the axis of rotation

@@ -161,7 +161,7 @@ static int DDocStd_fsdwrite(Draw_Interpretor& theDI, int theArgNb, const char** 
     const TopoDS_Shape& aShape = aShapes.Value(i);
 
     Handle(ShapePersistent_TopoDS::HShape) aPShape =
-      ShapePersistent_TopoDS::Translate(aShape, aMap, ShapePersistent_WithTriangle);
+      ShapePersistent_TopoDS::Translate(aShape, aMap, ShapePersistent_TriangleMode::ShapePersistent_WithTriangle);
     if (aPShape.IsNull())
     {
       theDI << "Error : couldn't translate shape " << theArgs[i] << "\n";

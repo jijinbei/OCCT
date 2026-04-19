@@ -152,14 +152,14 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToRectangleLoft)
                                    aFacesToRemove,
                                    anOffset,
                                    1.0e-3, // tolerance
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false, // intersection
                                    false, // selfInter
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // The operation should succeed - this is valid geometry
-  // Regression: commit 44be1230391 causes this to fail with BRepOffset_MixedConnectivity
+  // Regression: commit 44be1230391 causes this to fail with BRepOffset_Error::BRepOffset_MixedConnectivity
   EXPECT_TRUE(aThickMaker.IsDone())
     << "ThickSolid operation failed. This may be a regression from commit 44be1230391 "
     << "where CheckMixedContinuity incorrectly flags valid loft geometry as having "
@@ -221,10 +221,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToRectangleLoft_IntersectionMod
                                    aFacesToRemove,
                                    anOffset,
                                    1.0e-3, // tolerance
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    true,  // intersection mode
                                    false, // selfInter
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // The operation should succeed - this is valid geometry
@@ -280,10 +280,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_SimpleBox_Baseline)
                                    aFacesToRemove,
                                    anOffset,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   EXPECT_TRUE(aThickMaker.IsDone()) << "ThickSolid on simple ruled solid failed";
@@ -388,10 +388,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToEllipseLoft)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // Circle to ellipse is a smooth transition - should work
@@ -433,10 +433,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToHexagonLoft)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // Circle to hexagon creates transitional geometry
@@ -477,10 +477,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToSquareLoft)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // Circle to square is similar to circle to rectangle
@@ -521,10 +521,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_EllipseToRectangleLoft)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   EXPECT_TRUE(aThickMaker.IsDone()) << "ThickSolid on ellipse-to-rectangle loft failed. "
@@ -566,10 +566,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_ThreeSectionLoft)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   EXPECT_TRUE(aThickMaker.IsDone())
@@ -611,10 +611,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToRectangleLoft_Ruled)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // Ruled lofts produce different surface types and may behave differently
@@ -654,10 +654,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToRectangleLoft_SmallOffset)
                                    aFacesToRemove,
                                    0.5, // small offset
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   EXPECT_TRUE(aThickMaker.IsDone())
@@ -697,10 +697,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToRectangleLoft_LargeOffset)
                                    aFacesToRemove,
                                    10.0, // large offset
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   EXPECT_TRUE(aThickMaker.IsDone())
@@ -740,10 +740,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToRectangleLoft_NegativeOffset)
                                    aFacesToRemove,
                                    -2.0, // negative offset
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   EXPECT_TRUE(aThickMaker.IsDone())
@@ -767,10 +767,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_Cylinder_Baseline)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // Analytic surfaces should always work
@@ -800,10 +800,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_Sphere_Baseline)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   EXPECT_TRUE(aThickMaker.IsDone()) << "ThickSolid on sphere failed - this is unexpected.";
@@ -841,10 +841,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_FusedBoxCylinder)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // Fused analytic surfaces should work
@@ -888,10 +888,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToRectangle_ThinLoft)
                                    aFacesToRemove,
                                    1.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // We don't require IsDone() to be true for very thin lofts,
@@ -934,10 +934,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToRectangle_TallLoft)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   EXPECT_TRUE(aThickMaker.IsDone()) << "ThickSolid on tall circle-to-rectangle loft failed.";
@@ -975,10 +975,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToTriangleLoft)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // Triangle has sharp 60-degree corners
@@ -1018,10 +1018,10 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToOctagonLoft)
                                    aFacesToRemove,
                                    2.0,
                                    1.0e-3,
-                                   BRepOffset_Skin,
+                                   BRepOffset_Mode::BRepOffset_Skin,
                                    false,
                                    false,
-                                   GeomAbs_Intersection);
+                                   GeomAbs_JoinType::GeomAbs_Intersection);
   aThickMaker.Build();
 
   // Octagon is closer to a circle, corners are less sharp

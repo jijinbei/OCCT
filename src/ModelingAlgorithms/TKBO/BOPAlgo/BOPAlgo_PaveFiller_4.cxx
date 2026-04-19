@@ -144,7 +144,7 @@ void BOPAlgo_PaveFiller::PerformVF(const Message_ProgressRange& theRange)
   int nV, nF;
   //
   Message_ProgressScope aPSOuter(theRange, nullptr, 10);
-  if (myGlue == BOPAlgo_GlueFull)
+  if (myGlue == BOPAlgo_GlueEnum::BOPAlgo_GlueFull)
   {
     // there is no need to intersect vertices with faces in this mode
     // just initialize FaceInfo for all faces

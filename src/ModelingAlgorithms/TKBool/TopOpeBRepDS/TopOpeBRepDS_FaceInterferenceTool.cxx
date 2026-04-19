@@ -50,7 +50,7 @@ Standard_EXPORT bool FUN_Parameters(const gp_Pnt& Pnt, const TopoDS_Shape& F, do
   double        uvtol = Surf.Tolerance();
   double        fu = Surf.FirstUParameter(), lu = Surf.LastUParameter();
   double        fv = Surf.FirstVParameter(), lv = Surf.LastVParameter();
-  Extrema_ExtPS extps(Pnt, Surf, fu, lu, fv, lv, uvtol, uvtol, Extrema_ExtFlag_MIN);
+  Extrema_ExtPS extps(Pnt, Surf, fu, lu, fv, lv, uvtol, uvtol, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   if (!extps.IsDone())
   {
     return false;
@@ -80,7 +80,7 @@ static bool FUN_sphere(const TopoDS_Shape& F)
 {
   occ::handle<Geom_Surface> su = TopOpeBRepTool_ShapeTool::BASISSURFACE(TopoDS::Face(F));
   GeomAdaptor_Surface       GAS(su);
-  return (GAS.GetType() == GeomAbs_Sphere);
+  return (GAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere);
 }
 
 //------------------------------------------------------
@@ -185,7 +185,7 @@ void TopOpeBRepDS_FaceInterferenceTool::Init(const TopoDS_Shape&                
       FUN_RaiseError();
       return;
     }
-    if (cf == TopOpeBRepDS_DIFFORIENTED)
+    if (cf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED)
       STATIC_TOREVERSE = true;
   } // xpu150498
 

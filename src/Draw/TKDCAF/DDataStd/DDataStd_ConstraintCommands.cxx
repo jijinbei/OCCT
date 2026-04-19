@@ -97,58 +97,58 @@ static int DDataStd_SetConstraint(Draw_Interpretor& di, int nb, const char** arg
 
     // planar constraints
     if (strcmp(aT, "rad") == 0)
-      aCT = TDataXtd_RADIUS;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_RADIUS;
     else if (strcmp(aT, "dia") == 0)
-      aCT = TDataXtd_DIAMETER;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_DIAMETER;
     else if (strcmp(aT, "minr") == 0)
-      aCT = TDataXtd_MINOR_RADIUS;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_MINOR_RADIUS;
     else if (strcmp(aT, "majr") == 0)
-      aCT = TDataXtd_MAJOR_RADIUS;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_MAJOR_RADIUS;
     else if (strcmp(aT, "tan") == 0)
-      aCT = TDataXtd_TANGENT;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_TANGENT;
     else if (strcmp(aT, "par") == 0)
-      aCT = TDataXtd_PARALLEL;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_PARALLEL;
     else if (strcmp(aT, "perp") == 0)
-      aCT = TDataXtd_PERPENDICULAR;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_PERPENDICULAR;
     else if (strcmp(aT, "concentric") == 0)
-      aCT = TDataXtd_CONCENTRIC;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_CONCENTRIC;
     else if (strcmp(aT, "equal") == 0)
-      aCT = TDataXtd_COINCIDENT;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_COINCIDENT;
     else if (strcmp(aT, "dist") == 0)
-      aCT = TDataXtd_DISTANCE;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_DISTANCE;
     else if (strcmp(aT, "angle") == 0)
-      aCT = TDataXtd_ANGLE;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_ANGLE;
     else if (strcmp(aT, "eqrad") == 0)
-      aCT = TDataXtd_EQUAL_RADIUS;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_EQUAL_RADIUS;
     else if (strcmp(aT, "symm") == 0)
-      aCT = TDataXtd_SYMMETRY;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_SYMMETRY;
     else if (strcmp(aT, "midp") == 0)
-      aCT = TDataXtd_MIDPOINT;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_MIDPOINT;
     else if (strcmp(aT, "eqdist") == 0)
-      aCT = TDataXtd_EQUAL_DISTANCE;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_EQUAL_DISTANCE;
     else if (strcmp(aT, "fix") == 0)
-      aCT = TDataXtd_FIX;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_FIX;
     else if (strcmp(aT, "rigid") == 0)
-      aCT = TDataXtd_RIGID;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_RIGID;
     // placement constraints
     else if (strcmp(aT, "from") == 0)
-      aCT = TDataXtd_FROM;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_FROM;
     else if (strcmp(aT, "axis") == 0)
-      aCT = TDataXtd_AXIS;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_AXIS;
     else if (strcmp(aT, "mate") == 0)
-      aCT = TDataXtd_MATE;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_MATE;
     else if (strcmp(aT, "alignf") == 0)
-      aCT = TDataXtd_ALIGN_FACES;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_ALIGN_FACES;
     else if (strcmp(aT, "aligna") == 0)
-      aCT = TDataXtd_ALIGN_AXES;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_ALIGN_AXES;
     else if (strcmp(aT, "axesa") == 0)
-      aCT = TDataXtd_AXES_ANGLE;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_AXES_ANGLE;
     else if (strcmp(aT, "facesa") == 0)
-      aCT = TDataXtd_FACES_ANGLE;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_FACES_ANGLE;
     else if (strcmp(aT, "round") == 0)
-      aCT = TDataXtd_ROUND;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_ROUND;
     else if (strcmp(aT, "offset") == 0)
-      aCT = TDataXtd_OFFSET;
+      aCT = TDataXtd_ConstraintEnum::TDataXtd_OFFSET;
     else
     {
       di << "DDataStd_SetConstraint : unknown type, must be one of:\n";

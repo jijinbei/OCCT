@@ -176,15 +176,15 @@ bool CheckOn(IntRes2d_IntersectionPoint& thePntInter,
     //
     if (aMinDist <= theTolZ)
     {
-      IntRes2d_Transition aTrOnLin(IntRes2d_Head);
-      IntRes2d_Position   aPosOnCurve = IntRes2d_Middle;
+      IntRes2d_Transition aTrOnLin(IntRes2d_Position::IntRes2d_Head);
+      IntRes2d_Position   aPosOnCurve = IntRes2d_Position::IntRes2d_Middle;
       if ((std::abs(aPar - theDeb) <= Precision::Confusion()) || (aPar < theDeb))
       {
-        aPosOnCurve = IntRes2d_Head;
+        aPosOnCurve = IntRes2d_Position::IntRes2d_Head;
       }
       else if ((std::abs(aPar - theFin) <= Precision::Confusion()) || (aPar > theFin))
       {
-        aPosOnCurve = IntRes2d_End;
+        aPosOnCurve = IntRes2d_Position::IntRes2d_End;
       }
       //
       IntRes2d_Transition aTrOnCurve(aPosOnCurve);
@@ -479,7 +479,7 @@ void RefineTolerance(const TopoDS_Face&         aF,
   BRepAdaptor_Surface aBAS(aF, false);
   //
   aTypeS = aBAS.GetType();
-  if (aTypeS == GeomAbs_Cylinder)
+  if (aTypeS == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     double   aURes, aVRes, aTolX;
     gp_Pnt2d aP2D;

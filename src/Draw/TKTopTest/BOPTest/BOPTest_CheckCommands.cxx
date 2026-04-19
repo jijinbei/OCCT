@@ -493,27 +493,27 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
     {
       if (a[indxBO][1] == 'F' || a[indxBO][1] == 'f')
       {
-        aChecker.OperationType() = BOPAlgo_FUSE;
+        aChecker.OperationType() = BOPAlgo_Operation::BOPAlgo_FUSE;
       }
       else if (a[indxBO][1] == 'O' || a[indxBO][1] == 'o')
       {
-        aChecker.OperationType() = BOPAlgo_COMMON;
+        aChecker.OperationType() = BOPAlgo_Operation::BOPAlgo_COMMON;
       }
       else if (a[indxBO][1] == 'C' || a[indxBO][1] == 'c')
       {
-        aChecker.OperationType() = BOPAlgo_CUT;
+        aChecker.OperationType() = BOPAlgo_Operation::BOPAlgo_CUT;
       }
       else if (a[indxBO][1] == 'T' || a[indxBO][1] == 't')
       {
-        aChecker.OperationType() = BOPAlgo_CUT21;
+        aChecker.OperationType() = BOPAlgo_Operation::BOPAlgo_CUT21;
       }
       else if (a[indxBO][1] == 'S' || a[indxBO][1] == 's')
       {
-        aChecker.OperationType() = BOPAlgo_SECTION;
+        aChecker.OperationType() = BOPAlgo_Operation::BOPAlgo_SECTION;
       }
       else if (a[indxBO][1] == 'U' || a[indxBO][1] == 'u')
       {
-        aChecker.OperationType() = BOPAlgo_UNKNOWN;
+        aChecker.OperationType() = BOPAlgo_Operation::BOPAlgo_UNKNOWN;
       }
       else
       {
@@ -523,7 +523,7 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
       }
     }
     else
-      aChecker.OperationType() = BOPAlgo_SECTION;
+      aChecker.OperationType() = BOPAlgo_Operation::BOPAlgo_SECTION;
 
     aChecker.TangentMode()     = true;
     aChecker.MergeVertexMode() = true;
@@ -662,14 +662,14 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
 
         switch (aResult.GetCheckStatus())
         {
-          case BOPAlgo_BadType: {
+          case BOPAlgo_CheckStatus::BOPAlgo_BadType: {
             if (!aSS1.IsNull())
               S1_BadType++;
             if (!aSS2.IsNull())
               S2_BadType++;
           }
           break;
-          case BOPAlgo_SelfIntersect: {
+          case BOPAlgo_CheckStatus::BOPAlgo_SelfIntersect: {
             if (!aSS1.IsNull())
             {
               S1_SelfInt++;
@@ -684,7 +684,7 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_TooSmallEdge: {
+          case BOPAlgo_CheckStatus::BOPAlgo_TooSmallEdge: {
             if (!aSS1.IsNull())
             {
               S1_SmalE++;
@@ -699,7 +699,7 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_NonRecoverableFace: {
+          case BOPAlgo_CheckStatus::BOPAlgo_NonRecoverableFace: {
             if (!aSS1.IsNull())
             {
               S1_BadF++;
@@ -714,7 +714,7 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_IncompatibilityOfVertex: {
+          case BOPAlgo_CheckStatus::BOPAlgo_IncompatibilityOfVertex: {
             if (!aSS1.IsNull())
             {
               S1_BadV++;
@@ -733,7 +733,7 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_IncompatibilityOfEdge: {
+          case BOPAlgo_CheckStatus::BOPAlgo_IncompatibilityOfEdge: {
             if (!aSS1.IsNull())
             {
               S1_BadE++;
@@ -752,11 +752,11 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_IncompatibilityOfFace: {
+          case BOPAlgo_CheckStatus::BOPAlgo_IncompatibilityOfFace: {
             // not yet implemented
           }
           break;
-          case BOPAlgo_GeomAbs_C0: {
+          case BOPAlgo_CheckStatus::BOPAlgo_GeomAbs_C0: {
             if (!aSS1.IsNull())
             {
               S1_C0++;
@@ -775,7 +775,7 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_InvalidCurveOnSurface: {
+          case BOPAlgo_CheckStatus::BOPAlgo_InvalidCurveOnSurface: {
             if (!aSS1.IsNull())
             {
               S1_COnS++;
@@ -812,14 +812,14 @@ int bopargcheck(Draw_Interpretor& di, int n, const char** a)
             }
           }
           break;
-          case BOPAlgo_OperationAborted: {
+          case BOPAlgo_CheckStatus::BOPAlgo_OperationAborted: {
             if (!aSS1.IsNull())
               S1_OpAb++;
             if (!aSS2.IsNull())
               S2_OpAb++;
           }
           break;
-          case BOPAlgo_CheckUnknown:
+          case BOPAlgo_CheckStatus::BOPAlgo_CheckUnknown:
           default: {
             hasUnknown = true;
           }
@@ -1043,7 +1043,7 @@ int bopapicheck(Draw_Interpretor& di, int n, const char** a)
     aS2 = DBRep::Get(a[2]);
   }
 
-  BOPAlgo_Operation anOp    = BOPAlgo_UNKNOWN;
+  BOPAlgo_Operation anOp    = BOPAlgo_Operation::BOPAlgo_UNKNOWN;
   bool              bTestSE = true;
   bool              bTestSI = true;
 
@@ -1054,15 +1054,15 @@ int bopapicheck(Draw_Interpretor& di, int n, const char** a)
       // Get the operation type
       ++i;
       if (!strcmp(a[i], "common"))
-        anOp = BOPAlgo_COMMON;
+        anOp = BOPAlgo_Operation::BOPAlgo_COMMON;
       else if (!strcmp(a[i], "fuse"))
-        anOp = BOPAlgo_FUSE;
+        anOp = BOPAlgo_Operation::BOPAlgo_FUSE;
       else if (!strcmp(a[i], "cut"))
-        anOp = BOPAlgo_CUT;
+        anOp = BOPAlgo_Operation::BOPAlgo_CUT;
       else if (!strcmp(a[i], "tuc"))
-        anOp = BOPAlgo_CUT21;
+        anOp = BOPAlgo_Operation::BOPAlgo_CUT21;
       else if (!strcmp(a[i], "section"))
-        anOp = BOPAlgo_SECTION;
+        anOp = BOPAlgo_Operation::BOPAlgo_SECTION;
     }
     else if (!strcmp(a[i], "-se"))
     {
@@ -1097,7 +1097,7 @@ int bopapicheck(Draw_Interpretor& di, int n, const char** a)
   for (; itF.More(); itF.Next())
   {
     const BOPAlgo_CheckResult& aFaulty = itF.Value();
-    if (aFaulty.GetCheckStatus() == BOPAlgo_BadType)
+    if (aFaulty.GetCheckStatus() == BOPAlgo_CheckStatus::BOPAlgo_BadType)
     {
       isBadOp = true;
     }

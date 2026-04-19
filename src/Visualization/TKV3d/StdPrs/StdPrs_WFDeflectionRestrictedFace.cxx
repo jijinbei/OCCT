@@ -134,7 +134,7 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
   {
     const TopAbs_Orientation anOrient  = ToolRst.Orientation();
     const Adaptor2d_Curve2d* TheRCurve = &ToolRst.Value();
-    if (TheRCurve->GetType() != GeomAbs_Line)
+    if (TheRCurve->GetType() != GeomAbs_CurveType::GeomAbs_Line)
     {
       GCPnts_QuasiUniformDeflection UDP(*TheRCurve, ddefle);
       if (UDP.IsDone())
@@ -308,11 +308,11 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
   GeomAbs_SurfaceType        thetype = aFace->GetType();
 
   occ::handle<Geom_Surface> GB;
-  if (thetype == GeomAbs_BezierSurface)
+  if (thetype == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     GB = BS.Bezier();
   }
-  else if (thetype == GeomAbs_BSplineSurface)
+  else if (thetype == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     GB = BS.BSpline();
   }
@@ -357,11 +357,11 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
       {
         if (isobuild.IsXLine(i))
         {
-          anIso.Load(GeomAbs_IsoU, Coord, b1, b2);
+          anIso.Load(GeomAbs_IsoType::GeomAbs_IsoU, Coord, b1, b2);
         }
         else
         {
-          anIso.Load(GeomAbs_IsoV, Coord, b1, b2);
+          anIso.Load(GeomAbs_IsoType::GeomAbs_IsoV, Coord, b1, b2);
         }
 
         FindLimits(anIso, aLimit, b1, b2);
@@ -528,9 +528,9 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
       b2 = b2 == RealLast() ? aLimit : b2;
 
       if (isobuild.IsXLine(i))
-        anIso.Load(GeomAbs_IsoU, Coord, b1, b2);
+        anIso.Load(GeomAbs_IsoType::GeomAbs_IsoU, Coord, b1, b2);
       else
-        anIso.Load(GeomAbs_IsoV, Coord, b1, b2);
+        anIso.Load(GeomAbs_IsoType::GeomAbs_IsoV, Coord, b1, b2);
 
       if (StdPrs_DeflectionCurve::Match(X, Y, Z, aDistance, anIso, b1, b2, Deflection, anAngle))
         return true;

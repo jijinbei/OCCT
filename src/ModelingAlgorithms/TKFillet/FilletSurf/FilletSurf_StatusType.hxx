@@ -17,7 +17,7 @@
 #ifndef _FilletSurf_StatusType_HeaderFile
 #define _FilletSurf_StatusType_HeaderFile
 
-enum FilletSurf_StatusType
+enum class FilletSurf_StatusType
 {
   FilletSurf_TwoExtremityOnEdge,
   FilletSurf_OneExtremityOnEdge,

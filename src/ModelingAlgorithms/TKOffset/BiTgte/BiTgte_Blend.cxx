@@ -222,14 +222,14 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
   GeomAbs_SurfaceType STy = S.GetType();
   BRep_Builder        TheBuilder;
 
-  if (STy != GeomAbs_Plane)
+  if (STy != GeomAbs_SurfaceType::GeomAbs_Plane)
   { // if plane buildcurve3d manage KPart
-    if (CTy == GeomAbs_Line)
+    if (CTy == GeomAbs_CurveType::GeomAbs_Line)
     {
       gp_Dir2d D = C.Line().Direction();
       if (D.IsParallel(gp::DX2d(), Precision::Angular()))
       { // Iso V.
-        if (STy == GeomAbs_Sphere)
+        if (STy == GeomAbs_SurfaceType::GeomAbs_Sphere)
         {
           gp_Pnt2d P = C.Line().Location();
           if (std::abs(std::abs(P.Y()) - M_PI / 2.) < Precision::PConfusion())
@@ -250,7 +250,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
             TheBuilder.UpdateEdge(Edge, Circle, Loc, Tol);
           }
         }
-        else if (STy == GeomAbs_Cylinder)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cylinder)
         {
           gp_Cylinder Cyl  = S.Cylinder();
           gp_Pnt2d    P    = C.Line().Location();
@@ -264,7 +264,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
             Circle->Reverse();
           TheBuilder.UpdateEdge(Edge, Circle, Loc, Tol);
         }
-        else if (STy == GeomAbs_Cone)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cone)
         {
           gp_Cone  Cone = S.Cone();
           gp_Pnt2d P    = C.Line().Location();
@@ -278,7 +278,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
             Circle->Reverse();
           TheBuilder.UpdateEdge(Edge, Circle, Loc, Tol);
         }
-        else if (STy == GeomAbs_Torus)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Torus)
         {
           gp_Torus Tore = S.Torus();
           gp_Pnt2d P    = C.Line().Location();
@@ -295,7 +295,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
       }
       else if (D.IsParallel(gp::DY2d(), Precision::Angular()))
       { // Iso U.
-        if (STy == GeomAbs_Sphere)
+        if (STy == GeomAbs_SurfaceType::GeomAbs_Sphere)
         {
           gp_Sphere Sph  = S.Sphere();
           gp_Pnt2d  P    = C.Line().Location();
@@ -318,7 +318,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
             Circle->Reverse();
           TheBuilder.UpdateEdge(Edge, Circle, Loc, Tol);
         }
-        else if (STy == GeomAbs_Cylinder)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cylinder)
         {
           gp_Cylinder Cyl = S.Cylinder();
           gp_Pnt2d    P   = C.Line().Location();
@@ -331,7 +331,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
             Line->Reverse();
           TheBuilder.UpdateEdge(Edge, Line, Loc, Tol);
         }
-        else if (STy == GeomAbs_Cone)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cone)
         {
           gp_Cone  Cone = S.Cone();
           gp_Pnt2d P    = C.Line().Location();
@@ -344,7 +344,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
             Line->Reverse();
           TheBuilder.UpdateEdge(Edge, Line, Loc, Tol);
         }
-        else if (STy == GeomAbs_Torus)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Torus)
         {
         }
       }
@@ -400,7 +400,7 @@ occ::handle<Geom_Curve> MakeCurve(const BiTgte_CurveOnEdge& HC)
   ChFi3d_InitChron(ch);
 #endif
 
-  if (HC.GetType() == GeomAbs_Circle)
+  if (HC.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     C = new Geom_Circle(HC.Circle());
     C = new Geom_TrimmedCurve(C, HC.FirstParameter(), HC.LastParameter());
@@ -987,7 +987,7 @@ BiTgte_ContactType BiTgte_Blend::ContactType(const int Index) const
     Type1                  = Type2;
     Type2                  = Dummy;
   }
-  BiTgte_ContactType Type = BiTgte_VertexVertex;
+  BiTgte_ContactType Type = BiTgte_ContactType::BiTgte_VertexVertex;
 
   switch (Type1)
   {
@@ -995,13 +995,13 @@ BiTgte_ContactType BiTgte_Blend::ContactType(const int Index) const
       switch (Type2)
       {
         case TopAbs_VERTEX:
-          Type = BiTgte_VertexVertex;
+          Type = BiTgte_ContactType::BiTgte_VertexVertex;
           break;
         case TopAbs_EDGE:
-          Type = BiTgte_EdgeVertex;
+          Type = BiTgte_ContactType::BiTgte_EdgeVertex;
           break;
         case TopAbs_FACE:
-          Type = BiTgte_FaceVertex;
+          Type = BiTgte_ContactType::BiTgte_FaceVertex;
           break;
         default:
           break;
@@ -1012,10 +1012,10 @@ BiTgte_ContactType BiTgte_Blend::ContactType(const int Index) const
       switch (Type2)
       {
         case TopAbs_EDGE:
-          Type = BiTgte_EdgeEdge;
+          Type = BiTgte_ContactType::BiTgte_EdgeEdge;
           break;
         case TopAbs_FACE:
-          Type = BiTgte_FaceEdge;
+          Type = BiTgte_ContactType::BiTgte_FaceEdge;
           break;
         default:
           break;
@@ -1026,7 +1026,7 @@ BiTgte_ContactType BiTgte_Blend::ContactType(const int Index) const
       switch (Type2)
       {
         case TopAbs_FACE:
-          Type = BiTgte_FaceEdge;
+          Type = BiTgte_ContactType::BiTgte_FaceEdge;
           break;
         default:
           break;
@@ -1354,7 +1354,7 @@ void BiTgte_Blend::ComputeCenters()
         NCollection_List<TopoDS_Shape> Let;
         if (AS.ShapeType() == TopAbs_FACE)
         {
-          myAnalyse.Edges(TopoDS::Face(AS), ChFiDS_Tangential, Let);
+          myAnalyse.Edges(TopoDS::Face(AS), ChFiDS_TypeOfConcavity::ChFiDS_Tangential, Let);
         }
         NCollection_List<TopoDS_Shape>::Iterator itlet(Let);
 
@@ -1373,7 +1373,7 @@ void BiTgte_Blend::ComputeCenters()
             NCollection_List<TopoDS_Shape> LE;
             if (!EdgeTgt.IsBound(V1))
             {
-              myAnalyse.Edges(V1, ChFiDS_Tangential, LE);
+              myAnalyse.Edges(V1, ChFiDS_TypeOfConcavity::ChFiDS_Tangential, LE);
               const NCollection_List<TopoDS_Shape>& LA = myAnalyse.Ancestors(V1);
               if (LE.Extent() == LA.Extent())
                 EdgeTgt.Bind(V1, OV1);
@@ -1381,7 +1381,7 @@ void BiTgte_Blend::ComputeCenters()
             if (!EdgeTgt.IsBound(V2))
             {
               LE.Clear();
-              myAnalyse.Edges(V2, ChFiDS_Tangential, LE);
+              myAnalyse.Edges(V2, ChFiDS_TypeOfConcavity::ChFiDS_Tangential, LE);
               const NCollection_List<TopoDS_Shape>& LA = myAnalyse.Ancestors(V2);
               if (LE.Extent() == LA.Extent())
                 EdgeTgt.Bind(V2, OV2);
@@ -1390,7 +1390,7 @@ void BiTgte_Blend::ComputeCenters()
         }
         // end of map created tangent
 
-        if (OF1.Status() == BRepOffset_Reversed || OF1.Status() == BRepOffset_Degenerated)
+        if (OF1.Status() == BRepOffset_Status::BRepOffset_Reversed || OF1.Status() == BRepOffset_Status::BRepOffset_Degenerated)
           continue;
 
         const TopoDS_Face& F1 = OF1.Face();
@@ -1421,9 +1421,9 @@ void BiTgte_Blend::ComputeCenters()
     //--------------------------------------------------------
     // Construction of tubes on edge.
     //--------------------------------------------------------
-    ChFiDS_TypeOfConcavity OT = ChFiDS_Convex;
+    ChFiDS_TypeOfConcavity OT = ChFiDS_TypeOfConcavity::ChFiDS_Convex;
     if (myRadius < 0.)
-      OT = ChFiDS_Concave;
+      OT = ChFiDS_TypeOfConcavity::ChFiDS_Concave;
 
     NCollection_IndexedDataMap<TopoDS_Shape,
                                NCollection_List<TopoDS_Shape>,
@@ -1520,9 +1520,9 @@ void BiTgte_Blend::ComputeCenters()
   // Proceed with MakeLoops
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
                          aDMVV;
-  ChFiDS_TypeOfConcavity OT = ChFiDS_Concave;
+  ChFiDS_TypeOfConcavity OT = ChFiDS_TypeOfConcavity::ChFiDS_Concave;
   if (myRadius < 0.)
-    OT = ChFiDS_Convex;
+    OT = ChFiDS_TypeOfConcavity::ChFiDS_Convex;
 
   NCollection_List<TopoDS_Shape> LOF;
   // it.Initialize(myFaces);

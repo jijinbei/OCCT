@@ -178,19 +178,19 @@ BRepBuilderAPI_WireError BRepBuilderAPI_MakeWire::Error() const
   switch (myMakeWire.Error())
   {
 
-    case BRepLib_WireDone:
-      return BRepBuilderAPI_WireDone;
+    case BRepLib_WireError::BRepLib_WireDone:
+      return BRepBuilderAPI_WireError::BRepBuilderAPI_WireDone;
 
-    case BRepLib_EmptyWire:
-      return BRepBuilderAPI_EmptyWire;
+    case BRepLib_WireError::BRepLib_EmptyWire:
+      return BRepBuilderAPI_WireError::BRepBuilderAPI_EmptyWire;
 
-    case BRepLib_DisconnectedWire:
-      return BRepBuilderAPI_DisconnectedWire;
+    case BRepLib_WireError::BRepLib_DisconnectedWire:
+      return BRepBuilderAPI_WireError::BRepBuilderAPI_DisconnectedWire;
 
-    case BRepLib_NonManifoldWire:
-      return BRepBuilderAPI_NonManifoldWire;
+    case BRepLib_WireError::BRepLib_NonManifoldWire:
+      return BRepBuilderAPI_WireError::BRepBuilderAPI_NonManifoldWire;
   }
 
   // portage WNT
-  return BRepBuilderAPI_WireDone;
+  return BRepBuilderAPI_WireError::BRepBuilderAPI_WireDone;
 }

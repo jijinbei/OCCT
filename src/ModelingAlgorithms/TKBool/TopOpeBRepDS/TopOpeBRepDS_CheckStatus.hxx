@@ -17,7 +17,7 @@
 #ifndef _TopOpeBRepDS_CheckStatus_HeaderFile
 #define _TopOpeBRepDS_CheckStatus_HeaderFile
 
-enum TopOpeBRepDS_CheckStatus
+enum class TopOpeBRepDS_CheckStatus
 {
   TopOpeBRepDS_OK,
   TopOpeBRepDS_NOK

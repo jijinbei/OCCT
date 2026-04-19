@@ -53,8 +53,8 @@ public: //! @name Constructor from two shapes
                          const Bnd_Box&        theBox2,
                          const double          theDstRef,
                          const double          theDeflection = Precision::Confusion(),
-                         const Extrema_ExtFlag theExtFlag    = Extrema_ExtFlag_MINMAX,
-                         const Extrema_ExtAlgo theExtAlgo    = Extrema_ExtAlgo_Grad)
+                         const Extrema_ExtFlag theExtFlag    = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+                         const Extrema_ExtAlgo theExtAlgo    = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad)
       : myDstRef(theDstRef),
         myModif(false),
         myEps(theDeflection),

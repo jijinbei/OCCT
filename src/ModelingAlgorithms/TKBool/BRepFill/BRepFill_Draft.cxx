@@ -234,7 +234,7 @@ BRepFill_Draft::BRepFill_Draft(const TopoDS_Shape& S, const gp_Dir& Dir, const d
         BRepLib_MakeWire MW;
         MW.Add(List);
         BRepLib_WireError Err = MW.Error();
-        if (Err == BRepLib_WireDone)
+        if (Err == BRepLib_WireError::BRepLib_WireDone)
         {
           myWire = MW.Wire();
         }
@@ -683,7 +683,7 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
     NCollection_List<TopoDS_Shape> aLO, aLT;
     aLO.Append(Sol1);
     aLT.Append(Sol2);
-    aBuilder.BuildBOP(aLO, aLT, BOPAlgo_CUT, Message_ProgressRange());
+    aBuilder.BuildBOP(aLO, aLT, BOPAlgo_Operation::BOPAlgo_CUT, Message_ProgressRange());
     if (!aBuilder.HasErrors())
     {
       TopoDS_Solid    aCutMin;
@@ -725,7 +725,7 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
         BOPAlgo_Builder aGluer;
         aGluer.AddArgument(aCutMin);
         aGluer.AddArgument(Sol2);
-        aGluer.SetGlue(BOPAlgo_GlueShift);
+        aGluer.SetGlue(BOPAlgo_GlueEnum::BOPAlgo_GlueShift);
         aGluer.Perform();
 
         aLO.Clear();

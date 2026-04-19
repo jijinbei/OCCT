@@ -325,7 +325,7 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
   }
   //
   BOPAlgo_Operation anOp = BOPTest::GetOperationType(a[2]);
-  if (anOp == BOPAlgo_UNKNOWN)
+  if (anOp == BOPAlgo_Operation::BOPAlgo_UNKNOWN)
   {
     di << "Invalid operation type\n";
     return 0;
@@ -349,7 +349,7 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
   //
   BOPAlgo_Builder* pBuilder = nullptr;
 
-  if (anOp != BOPAlgo_SECTION)
+  if (anOp != BOPAlgo_Operation::BOPAlgo_SECTION)
   {
     pBuilder = &BOPTest_Objects::BOP();
   }
@@ -368,7 +368,7 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
     pBuilder->AddArgument(aS);
   }
   //
-  if (anOp != BOPAlgo_SECTION)
+  if (anOp != BOPAlgo_Operation::BOPAlgo_SECTION)
   {
     BOPAlgo_BOP* pBOP = (BOPAlgo_BOP*)pBuilder;
     //
@@ -554,7 +554,7 @@ int buildbop(Draw_Interpretor& di, int n, const char** a)
 
   // Get arguments and operation
   NCollection_List<TopoDS_Shape> aLObjects, aLTools;
-  BOPAlgo_Operation              anOp = BOPAlgo_UNKNOWN;
+  BOPAlgo_Operation              anOp = BOPAlgo_Operation::BOPAlgo_UNKNOWN;
 
   for (int i = 2; i < n; ++i)
   {
@@ -612,13 +612,13 @@ int buildbop(Draw_Interpretor& di, int n, const char** a)
 
       ++i;
       if (!strcasecmp(a[i], "common"))
-        anOp = BOPAlgo_COMMON;
+        anOp = BOPAlgo_Operation::BOPAlgo_COMMON;
       else if (!strcasecmp(a[i], "fuse"))
-        anOp = BOPAlgo_FUSE;
+        anOp = BOPAlgo_Operation::BOPAlgo_FUSE;
       else if (!strcasecmp(a[i], "cut"))
-        anOp = BOPAlgo_CUT;
+        anOp = BOPAlgo_Operation::BOPAlgo_CUT;
       else if (!strcasecmp(a[i], "tuc"))
-        anOp = BOPAlgo_CUT21;
+        anOp = BOPAlgo_Operation::BOPAlgo_CUT21;
       else
       {
         di << "Error: unknown operation type";
@@ -632,7 +632,7 @@ int buildbop(Draw_Interpretor& di, int n, const char** a)
     }
   }
 
-  if (anOp == BOPAlgo_UNKNOWN)
+  if (anOp == BOPAlgo_Operation::BOPAlgo_UNKNOWN)
   {
     di << "Error: operation has not been specified";
     return 1;

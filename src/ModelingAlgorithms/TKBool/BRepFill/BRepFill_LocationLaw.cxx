@@ -106,8 +106,8 @@ void BRepFill_LocationLaw::Init(const TopoDS_Wire& Path)
 GeomFill_PipeError BRepFill_LocationLaw::GetStatus() const
 {
   int                ii, N = myLaws->Length();
-  GeomFill_PipeError Status = GeomFill_PipeOk;
-  for (ii = 1; ii <= N && (Status == GeomFill_PipeOk); ii++)
+  GeomFill_PipeError Status = GeomFill_PipeError::GeomFill_PipeOk;
+  for (ii = 1; ii <= N && (Status == GeomFill_PipeError::GeomFill_PipeOk); ii++)
   {
     Status = myLaws->Value(ii)->ErrorStatus();
   }

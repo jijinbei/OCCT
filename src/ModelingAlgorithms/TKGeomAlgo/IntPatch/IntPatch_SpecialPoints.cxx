@@ -160,18 +160,18 @@ static bool IsPointOnSurface(const occ::handle<Adaptor3d_Surface>& theSurf,
 
   switch (theSurf->GetType())
   {
-    case GeomAbs_Plane:
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
-    case GeomAbs_SurfaceOfExtrusion:
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution: {
       Extrema_ExtPS anExtr(thePt,
                            *theSurf,
                            theSurf->UResolution(theTol),
                            theSurf->VResolution(theTol),
-                           Extrema_ExtFlag_MIN);
+                           Extrema_ExtFlag::Extrema_ExtFlag_MIN);
       if (!anExtr.IsDone() || (anExtr.NbExt() < 1))
       {
         aRetVal = false;
@@ -789,11 +789,11 @@ bool IntPatch_SpecialPoints::AddSingularPole(const occ::handle<Adaptor3d_Surface
 
   aUquad = 0.0;
 
-  if (theQSurf->GetType() == GeomAbs_Sphere)
+  if (theQSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     aVquad = std::copysign(M_PI_2, aVquad);
   }
-  else if (theQSurf->GetType() == GeomAbs_Cone)
+  else if (theQSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     const gp_Cone aCo        = theQSurf->Cone();
     const double  aRadius    = aCo.RefRadius();
@@ -849,7 +849,7 @@ bool IntPatch_SpecialPoints::AddSingularPole(const occ::handle<Adaptor3d_Surface
 
   // Transforms parametric surface in coordinate-system of the quadric
   gp_Trsf aTr;
-  aTr.SetTransformation((theQSurf->GetType() == GeomAbs_Sphere) ? theQSurf->Sphere().Position()
+  aTr.SetTransformation((theQSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere) ? theQSurf->Sphere().Position()
                                                                 : theQSurf->Cone().Position());
 
   // Derivatives of transformed thePSurf
@@ -858,14 +858,14 @@ bool IntPatch_SpecialPoints::AddSingularPole(const occ::handle<Adaptor3d_Surface
 
   bool isIsoChoosen = false;
 
-  if (theQSurf->GetType() == GeomAbs_Sphere)
+  if (theQSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     if (!ProcessSphere(thePtIso, aVecDu, aVecDv, theIsReversed, aVquad, aUquad, isIsoChoosen))
     {
       return false;
     }
   }
-  else // if(theQSurf->GetType() == GeomAbs_Cone)
+  else // if(theQSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     if (!ProcessCone(thePtIso,
                      aVecDu,
@@ -958,7 +958,7 @@ bool IntPatch_SpecialPoints::ContinueAfterSpecialPoint(
     return false;
   }
 
-  if ((theSPType == IntPatch_SPntPole) && (theQSurf->GetType() == GeomAbs_Cone))
+  if ((theSPType == IntPatch_SPntPole) && (theQSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cone))
   {
     // Check if the condition b) is satisfied.
     // Repeat the same steps as in

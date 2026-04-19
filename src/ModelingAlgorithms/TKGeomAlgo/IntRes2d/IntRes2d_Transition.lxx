@@ -26,7 +26,7 @@ inline IntRes2d_Transition::IntRes2d_Transition(const bool               Tangent
       tangent(Tangent),
       posit(Pos),
       typetra(Type),
-      situat(IntRes2d_Unknown),
+      situat(IntRes2d_Situation::IntRes2d_Unknown),
       oppos(false)
 
 {
@@ -38,7 +38,7 @@ inline IntRes2d_Transition::IntRes2d_Transition(const bool               Tangent
                                                 const bool               Oppos)
     : tangent(Tangent),
       posit(Pos),
-      typetra(IntRes2d_Touch),
+      typetra(IntRes2d_TypeTrans::IntRes2d_Touch),
       situat(Situ),
       oppos(Oppos)
 {
@@ -49,8 +49,8 @@ inline IntRes2d_Transition::IntRes2d_Transition(const IntRes2d_Position Pos)
 
       tangent(true),
       posit(Pos),
-      typetra(IntRes2d_Undecided),
-      situat(IntRes2d_Unknown),
+      typetra(IntRes2d_TypeTrans::IntRes2d_Undecided),
+      situat(IntRes2d_Situation::IntRes2d_Unknown),
       oppos(false)
 {
 }
@@ -73,7 +73,7 @@ inline void IntRes2d_Transition::SetValue(const bool               Tangent,
 
   tangent = Tangent;
   posit   = Pos;
-  typetra = IntRes2d_Touch;
+  typetra = IntRes2d_TypeTrans::IntRes2d_Touch;
   situat  = Situ;
   oppos   = Oppos;
 }
@@ -82,7 +82,7 @@ inline void IntRes2d_Transition::SetValue(const IntRes2d_Position Pos)
 {
 
   posit   = Pos;
-  typetra = IntRes2d_Undecided;
+  typetra = IntRes2d_TypeTrans::IntRes2d_Undecided;
 }
 
 inline void IntRes2d_Transition::SetPosition(const IntRes2d_Position Pos)
@@ -106,7 +106,7 @@ inline IntRes2d_TypeTrans IntRes2d_Transition::TransitionType() const
 inline bool IntRes2d_Transition::IsTangent() const
 {
 
-  if (typetra == IntRes2d_Undecided)
+  if (typetra == IntRes2d_TypeTrans::IntRes2d_Undecided)
   {
     throw Standard_DomainError();
   }
@@ -116,7 +116,7 @@ inline bool IntRes2d_Transition::IsTangent() const
 inline IntRes2d_Situation IntRes2d_Transition::Situation() const
 {
 
-  if (typetra != IntRes2d_Touch)
+  if (typetra != IntRes2d_TypeTrans::IntRes2d_Touch)
   {
     throw Standard_DomainError();
   }
@@ -126,7 +126,7 @@ inline IntRes2d_Situation IntRes2d_Transition::Situation() const
 inline bool IntRes2d_Transition::IsOpposite() const
 {
 
-  if (typetra != IntRes2d_Touch)
+  if (typetra != IntRes2d_TypeTrans::IntRes2d_Touch)
   {
     throw Standard_DomainError();
   }

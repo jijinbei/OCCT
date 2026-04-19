@@ -69,13 +69,13 @@ Standard_EXPORT bool FUN_HDS_FACESINTERFER(const TopoDS_Shape&                  
   for (; itL1.More(); itL1.Next())
   {
     const occ::handle<TopOpeBRepDS_Interference>& I = itL1.Value();
-    TopOpeBRepDS_Kind GT = TopOpeBRepDS_UNKNOWN, ST = TopOpeBRepDS_UNKNOWN;
+    TopOpeBRepDS_Kind GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
     int               G, S                          = 0;
     FUN_HDS_data(I, GT, G, ST, S);
     // interference face1/edge/face2
     bool fef = true;
-    fef      = fef && (GT == TopOpeBRepDS_EDGE);
-    fef      = fef && (ST == TopOpeBRepDS_FACE);
+    fef      = fef && (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE);
+    fef      = fef && (ST == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE);
     fef      = fef && (S == iF2);
     if (fef)
     {
@@ -254,7 +254,7 @@ NCollection_List<TopoDS_Shape>::Iterator TopOpeBRepDS_HDataStructure::SameDomain
 TopOpeBRepDS_Config TopOpeBRepDS_HDataStructure::SameDomainOrientation(const TopoDS_Shape& S) const
 {
   if (!HasShape(S))
-    return TopOpeBRepDS_UNSHGEOMETRY;
+    return TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY;
   return myDS.SameDomainOri(S);
 }
 
@@ -389,13 +389,13 @@ int TopOpeBRepDS_HDataStructure::NbGeometry(const TopOpeBRepDS_Kind K) const
   int n = 0;
   switch (K)
   {
-    case TopOpeBRepDS_POINT:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_POINT:
       n = NbPoints();
       break;
-    case TopOpeBRepDS_CURVE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE:
       n = NbCurves();
       break;
-    case TopOpeBRepDS_SURFACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE:
       n = NbSurfaces();
       break;
     default:
@@ -585,14 +585,14 @@ bool TopOpeBRepDS_HDataStructure::ScanInterfList(
   {
     TopOpeBRepDS_Kind GT = IT.Value()->GeometryType();
     int               G  = IT.Value()->Geometry();
-    if (GT == TopOpeBRepDS_POINT)
+    if (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
     {
       const TopOpeBRepDS_Point& OOPDS = myDS.Point(G);
       bool                      iseq  = PDS.IsEqual(OOPDS);
       if (iseq)
         return iseq;
     }
-    else if (GT == TopOpeBRepDS_VERTEX)
+    else if (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
     {
       TopOpeBRepDS_Point OOPDS(myDS.Shape(G));
       bool               iseq = PDS.IsEqual(OOPDS);
@@ -638,23 +638,23 @@ void TopOpeBRepDS_HDataStructure::StoreInterference(
   switch (I->GeometryType())
   {
 
-    case TopOpeBRepDS_SOLID:
-    case TopOpeBRepDS_FACE:
-    case TopOpeBRepDS_EDGE:
-    case TopOpeBRepDS_VERTEX:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_FACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX:
       //    appendtoG = true;
       //    myDS.ChangeShapeInterferences(G).Append(I);
       break;
 
-    case TopOpeBRepDS_SURFACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE:
       myDS.ChangeSurfaceInterferences(G).Append(I);
       break;
 
-    case TopOpeBRepDS_CURVE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE:
       myDS.ChangeCurveInterferences(G).Append(I);
       break;
 
-    case TopOpeBRepDS_POINT:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_POINT:
       //    appendtoG = true;
       //    myDS.ChangePointInterferences(G).Append(I);
       break;

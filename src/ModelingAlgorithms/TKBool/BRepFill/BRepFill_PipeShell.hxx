@@ -84,21 +84,21 @@ public:
   //! than P split <Spline>.
   //! Else the plan define by P and the tangent to the <Spine>
   //! intersect <AuxiliarySpine> in Q.
-  //! If <KeepContact> equals BRepFill_NoContact: The Normal is defined
+  //! If <KeepContact> equals BRepFill_TypeOfContact::BRepFill_NoContact: The Normal is defined
   //! by the vector PQ.
-  //! If <KeepContact> equals BRepFill_Contact: The Normal is defined to
+  //! If <KeepContact> equals BRepFill_TypeOfContact::BRepFill_Contact: The Normal is defined to
   //! achieve that the sweeped section is in contact to the
   //! auxiliarySpine. The width of section is constant all along the path.
   //! In other words, the auxiliary spine lies on the swept surface,
   //! but not necessarily is a boundary of this surface. However,
   //! the auxiliary spine has to be close enough to the main spine
   //! to provide intersection with any section all along the path.
-  //! If <KeepContact> equals BRepFill_ContactOnBorder: The auxiliary spine
+  //! If <KeepContact> equals BRepFill_TypeOfContact::BRepFill_ContactOnBorder: The auxiliary spine
   //! becomes a boundary of the swept surface and the width of section varies
   //! along the path.
   Standard_EXPORT void Set(const TopoDS_Wire&           AuxiliarySpine,
                            const bool                   CurvilinearEquivalence = true,
-                           const BRepFill_TypeOfContact KeepContact = BRepFill_NoContact);
+                           const BRepFill_TypeOfContact KeepContact = BRepFill_TypeOfContact::BRepFill_NoContact);
 
   //! Define the maximum V degree of resulting surface
   Standard_EXPORT void SetMaxDegree(const int NewMaxDegree);
@@ -173,7 +173,7 @@ public:
 
   //! Set the Transition Mode to manage discontinuities
   //! on the sweep.
-  Standard_EXPORT void SetTransition(const BRepFill_TransitionStyle Mode   = BRepFill_Modified,
+  Standard_EXPORT void SetTransition(const BRepFill_TransitionStyle Mode   = BRepFill_TransitionStyle::BRepFill_Modified,
                                      const double                   Angmin = 1.0e-2,
                                      const double                   Angmax = 6.0);
 

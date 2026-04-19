@@ -104,7 +104,7 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
     const Adaptor2d_Curve2d* TheRCurve = &ToolRst.Value();
     U1                                 = TheRCurve->FirstParameter();
     U2                                 = TheRCurve->LastParameter();
-    if (TheRCurve->GetType() != GeomAbs_Line)
+    if (TheRCurve->GetType() != GeomAbs_CurveType::GeomAbs_Line)
     {
       DU = (U2 - U1) / (nbPoints - 1);
       P2 = TheRCurve->Value(U1);
@@ -211,7 +211,7 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
             b1 = b1 == RealFirst() ? -aLimit : b1;
             b2 = b2 == RealLast() ? aLimit : b2;
 
-            anIso.Load(GeomAbs_IsoU, Coord, b1, b2);
+            anIso.Load(GeomAbs_IsoType::GeomAbs_IsoU, Coord, b1, b2);
 
             VrmlConverter_Curve::Add(anIso, aDrawer, anOStream);
           }
@@ -260,7 +260,7 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
             b1 = b1 == RealFirst() ? -aLimit : b1;
             b2 = b2 == RealLast() ? aLimit : b2;
 
-            anIso.Load(GeomAbs_IsoV, Coord, b1, b2);
+            anIso.Load(GeomAbs_IsoType::GeomAbs_IsoV, Coord, b1, b2);
 
             VrmlConverter_Curve::Add(anIso, aDrawer, anOStream);
           }

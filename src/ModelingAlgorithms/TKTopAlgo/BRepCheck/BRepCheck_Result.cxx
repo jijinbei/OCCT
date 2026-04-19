@@ -57,7 +57,7 @@ void BRepCheck_Result::SetFailStatus(const TopoDS_Shape& S)
     myMap.Bind(S, aList);
   }
 
-  BRepCheck::Add(*aList, BRepCheck_CheckFail);
+  BRepCheck::Add(*aList, BRepCheck_Status::BRepCheck_CheckFail);
 }
 
 //=================================================================================================

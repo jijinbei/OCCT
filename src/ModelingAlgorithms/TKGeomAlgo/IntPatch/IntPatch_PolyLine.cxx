@@ -44,7 +44,7 @@ IntPatch_PolyLine::IntPatch_PolyLine(const double InitDefle)
 
 void IntPatch_PolyLine::SetWLine(const bool OnFirst, const occ::handle<IntPatch_WLine>& Line)
 {
-  typ     = IntPatch_Walking;
+  typ     = IntPatch_IType::IntPatch_Walking;
   wpoly   = Line;
   onfirst = OnFirst;
   Prepare();
@@ -54,7 +54,7 @@ void IntPatch_PolyLine::SetWLine(const bool OnFirst, const occ::handle<IntPatch_
 
 void IntPatch_PolyLine::SetRLine(const bool OnFirst, const occ::handle<IntPatch_RLine>& Line)
 {
-  typ     = IntPatch_Restriction;
+  typ     = IntPatch_IType::IntPatch_Restriction;
   rpoly   = Line;
   onfirst = OnFirst;
   Prepare();
@@ -150,7 +150,7 @@ void IntPatch_PolyLine::ResetError()
 
 int IntPatch_PolyLine::NbPoints() const
 {
-  return (typ == IntPatch_Walking ? wpoly->NbPnts() : rpoly->NbPnts());
+  return (typ == IntPatch_IType::IntPatch_Walking ? wpoly->NbPnts() : rpoly->NbPnts());
 }
 
 //=================================================================================================
@@ -161,7 +161,7 @@ gp_Pnt2d IntPatch_PolyLine::Point(const int Index) const
   DX = DY = 0;
   if (onfirst)
   {
-    if (typ == IntPatch_Walking)
+    if (typ == IntPatch_IType::IntPatch_Walking)
     {
       wpoly->Point(Index).ParametersOnS1(X, Y);
       if (Index == 1)
@@ -184,7 +184,7 @@ gp_Pnt2d IntPatch_PolyLine::Point(const int Index) const
   }
   else
   {
-    if (typ == IntPatch_Walking)
+    if (typ == IntPatch_IType::IntPatch_Walking)
     {
       wpoly->Point(Index).ParametersOnS2(X, Y);
       if (Index == 1)

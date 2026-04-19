@@ -166,7 +166,7 @@ void FindVertex(const TheArc&                    A,
 
 bool IsDegenerated(const occ::handle<Adaptor3d_CurveOnSurface>& theCurve)
 {
-  if (theCurve->GetType() == GeomAbs_Circle)
+  if (theCurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     gp_Circ aCirc = theCurve->Circle();
     if (aCirc.Radius() <= Precision::Confusion())
@@ -178,7 +178,7 @@ bool IsDegenerated(const occ::handle<Adaptor3d_CurveOnSurface>& theCurve)
 bool IsDegenerated(const IntSurf_Quadric& theQuadric)
 {
   GeomAbs_SurfaceType TypeQuad = theQuadric.TypeQuadric();
-  if (TypeQuad == GeomAbs_Cone)
+  if (TypeQuad == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     gp_Cone aCone      = theQuadric.Cone();
     double  aSemiAngle = std::abs(aCone.SemiAngle());
@@ -338,7 +338,7 @@ static void BoundedArc(const TheArc&                    A,
   {
     const IntSurf_Quadric& aQuadric = Func.Quadric();
     GeomAbs_SurfaceType    TypeQuad = aQuadric.TypeQuadric();
-    GeomAbs_CurveType      TypeConS = GeomAbs_OtherCurve;
+    GeomAbs_CurveType      TypeConS = GeomAbs_CurveType::GeomAbs_OtherCurve;
 
     IntCurveSurface_HInter       IntCS;
     bool                         IsIntCSdone = false;
@@ -371,7 +371,7 @@ static void BoundedArc(const TheArc&                    A,
       maxdist = TolBoundary;
     }
 
-    if (TypeQuad != GeomAbs_OtherSurface) // intersection of boundary curve and quadric surface
+    if (TypeQuad != GeomAbs_SurfaceType::GeomAbs_OtherSurface) // intersection of boundary curve and quadric surface
     {
       // Exact solution
       occ::handle<Adaptor3d_Surface> aSurf = Func.Surface();
@@ -381,31 +381,31 @@ static void BoundedArc(const TheArc&                    A,
       occ::handle<Geom_Curve> CurveConS;
       switch (TypeConS)
       {
-        case GeomAbs_Line: {
+        case GeomAbs_CurveType::GeomAbs_Line: {
           CurveConS = new Geom_Line(ConS.Line());
           break;
         }
-        case GeomAbs_Circle: {
+        case GeomAbs_CurveType::GeomAbs_Circle: {
           CurveConS = new Geom_Circle(ConS.Circle());
           break;
         }
-        case GeomAbs_Ellipse: {
+        case GeomAbs_CurveType::GeomAbs_Ellipse: {
           CurveConS = new Geom_Ellipse(ConS.Ellipse());
           break;
         }
-        case GeomAbs_Hyperbola: {
+        case GeomAbs_CurveType::GeomAbs_Hyperbola: {
           CurveConS = new Geom_Hyperbola(ConS.Hyperbola());
           break;
         }
-        case GeomAbs_Parabola: {
+        case GeomAbs_CurveType::GeomAbs_Parabola: {
           CurveConS = new Geom_Parabola(ConS.Parabola());
           break;
         }
-        case GeomAbs_BezierCurve: {
+        case GeomAbs_CurveType::GeomAbs_BezierCurve: {
           CurveConS = ConS.Bezier();
           break;
         }
-        case GeomAbs_BSplineCurve: {
+        case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
           CurveConS = ConS.BSpline();
           break;
         }
@@ -426,23 +426,23 @@ static void BoundedArc(const TheArc&                    A,
       occ::handle<Geom_Surface>             QuadSurf;
       switch (TypeQuad)
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_SurfaceType::GeomAbs_Plane: {
           QuadSurf = new Geom_Plane(aQuadric.Plane());
           break;
         }
-        case GeomAbs_Cylinder: {
+        case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
           QuadSurf = new Geom_CylindricalSurface(aQuadric.Cylinder());
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_SurfaceType::GeomAbs_Cone: {
           QuadSurf = new Geom_ConicalSurface(aQuadric.Cone());
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_SurfaceType::GeomAbs_Sphere: {
           QuadSurf = new Geom_SphericalSurface(aQuadric.Sphere());
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_SurfaceType::GeomAbs_Torus: {
           QuadSurf = new Geom_ToroidalSurface(aQuadric.Torus());
           break;
         }
@@ -451,9 +451,9 @@ static void BoundedArc(const TheArc&                    A,
       }
       occ::handle<GeomAdaptor_Surface> GAHsurf = new GeomAdaptor_Surface(QuadSurf);
 
-      if ((TypeConS == GeomAbs_Line || TypeConS == GeomAbs_Circle || TypeConS == GeomAbs_Ellipse
-           || TypeConS == GeomAbs_Parabola || TypeConS == GeomAbs_Hyperbola)
-          && TypeQuad != GeomAbs_Torus && !IsDegenerated(HConS) && !IsDegenerated(aQuadric))
+      if ((TypeConS == GeomAbs_CurveType::GeomAbs_Line || TypeConS == GeomAbs_CurveType::GeomAbs_Circle || TypeConS == GeomAbs_CurveType::GeomAbs_Ellipse
+           || TypeConS == GeomAbs_CurveType::GeomAbs_Parabola || TypeConS == GeomAbs_CurveType::GeomAbs_Hyperbola)
+          && TypeQuad != GeomAbs_SurfaceType::GeomAbs_Torus && !IsDegenerated(HConS) && !IsDegenerated(aQuadric))
       {
         // exact intersection for only canonic curves and real quadric surfaces
         IntCS.Perform(HConS, GAHsurf);
@@ -470,7 +470,7 @@ static void BoundedArc(const TheArc&                    A,
       if (Nbp == 0 && Nbi == 0)
         IsIntCSdone = false;
 
-    } // if (TypeQuad != GeomAbs_OtherSurface) - intersection of boundary curve and quadric surface
+    } // if (TypeQuad != GeomAbs_SurfaceType::GeomAbs_OtherSurface) - intersection of boundary curve and quadric surface
 
     if (!IsIntCSdone)
     {
@@ -614,7 +614,7 @@ static void BoundedArc(const TheArc&                    A,
               // Line can be tangent surface if all distances less then maxdist
               aTang = aTang && std::abs(yf) < maxdist && std::abs(yl) < maxdist;
             }
-            if (aTang && IsIntCSdone && TypeConS == GeomAbs_Line)
+            if (aTang && IsIntCSdone && TypeConS == GeomAbs_CurveType::GeomAbs_Line)
             {
               // Interval is got by exact intersection
               // Line can be tangent if all points are on the same side of surface
@@ -1042,7 +1042,7 @@ int TreatLC(const TheArc&                    A,
   BRepAdaptor_Curve aBAC(*anE);
   aTypeE = aBAC.GetType();
 
-  if (aTypeE != GeomAbs_Line)
+  if (aTypeE != GeomAbs_CurveType::GeomAbs_Line)
   {
     return anExitCode;
   }
@@ -1050,7 +1050,7 @@ int TreatLC(const TheArc&                    A,
   GeomAbs_SurfaceType aTypeS;
   aTypeS = aQuadric.TypeQuadric();
 
-  if (aTypeS != GeomAbs_Cylinder)
+  if (aTypeS != GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     return anExitCode;
   }

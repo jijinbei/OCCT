@@ -147,19 +147,19 @@ public:
   gp_Lin Line() const;
 
   //! Returns the Circ from gp corresponding to the intersection
-  //! when ArcType returns IntPatch_Circle.
+  //! when ArcType returns IntPatch_IType::IntPatch_Circle.
   gp_Circ Circle() const;
 
   //! Returns the Elips from gp corresponding to the intersection
-  //! when ArcType returns IntPatch_Ellipse.
+  //! when ArcType returns IntPatch_IType::IntPatch_Ellipse.
   gp_Elips Ellipse() const;
 
   //! Returns the Parab from gp corresponding to the intersection
-  //! when ArcType returns IntPatch_Parabola.
+  //! when ArcType returns IntPatch_IType::IntPatch_Parabola.
   gp_Parab Parabola() const;
 
   //! Returns the Hypr from gp corresponding to the intersection
-  //! when ArcType returns IntPatch_Hyperbola.
+  //! when ArcType returns IntPatch_IType::IntPatch_Hyperbola.
   gp_Hypr Hyperbola() const;
 
   //! Returns True if the line has a known First point.

@@ -372,7 +372,7 @@ void BOPAlgo_MakePeriodic::SplitShape(const NCollection_List<TopoDS_Shape>& theT
   // Add the shape
   anIntersector.AddArgument(myShape);
   // Use gluing to speed-up intersections
-  anIntersector.SetGlue(BOPAlgo_GlueShift);
+  anIntersector.SetGlue(BOPAlgo_GlueEnum::BOPAlgo_GlueShift);
   // Use safe input mode, to avoid reusing geometry of the shape
   anIntersector.SetNonDestructive(true);
   // Set parallel processing mode
@@ -402,7 +402,7 @@ void BOPAlgo_MakePeriodic::SplitShape(const NCollection_List<TopoDS_Shape>& theT
   // Set Tools
   aSplitter.SetTools(theTools);
   // Use Gluing
-  aSplitter.SetGlue(BOPAlgo_GlueShift);
+  aSplitter.SetGlue(BOPAlgo_GlueEnum::BOPAlgo_GlueShift);
   // Set parallel processing mode
   aSplitter.SetRunParallel(myRunParallel);
   // Perform splitting
@@ -500,7 +500,7 @@ const TopoDS_Shape& BOPAlgo_MakePeriodic::RepeatShape(const int theDir, const in
   BOPAlgo_Builder aGluer;
   aGluer.SetArguments(aShapes);
   // Avoid intersections of the sub-shapes
-  aGluer.SetGlue(BOPAlgo_GlueFull);
+  aGluer.SetGlue(BOPAlgo_GlueEnum::BOPAlgo_GlueFull);
   // Set parallel processing mode
   aGluer.SetRunParallel(myRunParallel);
   // Perform gluing

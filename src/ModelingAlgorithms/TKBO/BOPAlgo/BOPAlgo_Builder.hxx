@@ -220,22 +220,22 @@ public: //! @name BOPs on open solids
     TopAbs_State anObjState, aToolsState;
     switch (theOperation)
     {
-      case BOPAlgo_COMMON: {
+      case BOPAlgo_Operation::BOPAlgo_COMMON: {
         anObjState  = TopAbs_IN;
         aToolsState = TopAbs_IN;
         break;
       }
-      case BOPAlgo_FUSE: {
+      case BOPAlgo_Operation::BOPAlgo_FUSE: {
         anObjState  = TopAbs_OUT;
         aToolsState = TopAbs_OUT;
         break;
       }
-      case BOPAlgo_CUT: {
+      case BOPAlgo_Operation::BOPAlgo_CUT: {
         anObjState  = TopAbs_OUT;
         aToolsState = TopAbs_IN;
         break;
       }
-      case BOPAlgo_CUT21: {
+      case BOPAlgo_Operation::BOPAlgo_CUT21: {
         anObjState  = TopAbs_IN;
         aToolsState = TopAbs_OUT;
         break;

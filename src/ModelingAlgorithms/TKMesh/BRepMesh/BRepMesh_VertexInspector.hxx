@@ -94,7 +94,7 @@ public:
   //! @param theIndex index of vertex to be removed.
   void Delete(const int theIndex)
   {
-    myVertices->ChangeValue(theIndex - 1).SetMovability(BRepMesh_Deleted);
+    myVertices->ChangeValue(theIndex - 1).SetMovability(BRepMesh_DegreeOfFreedom::BRepMesh_Deleted);
     myDelNodes.Append(theIndex);
   }
 
@@ -116,7 +116,7 @@ public:
   int GetCoincidentPoint() const { return myIndex; }
 
   //! Returns list with indexes of vertices that have movability attribute
-  //! equal to BRepMesh_Deleted and can be replaced with another node.
+  //! equal to BRepMesh_DegreeOfFreedom::BRepMesh_Deleted and can be replaced with another node.
   const IMeshData::ListOfInteger& GetListOfDelPoints() const { return myDelNodes; }
 
   //! Returns set of mesh vertices.

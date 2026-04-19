@@ -319,7 +319,7 @@ void GeomFill_DraftTrihedron::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, g
 
 bool GeomFill_DraftTrihedron::IsConstant() const
 {
-  return (myCurve->GetType() == GeomAbs_Line);
+  return (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line);
 }
 
 //=================================================================================================
@@ -331,23 +331,23 @@ bool GeomFill_DraftTrihedron::IsOnlyBy3dCurve() const
 
   switch (TheType)
   {
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       TheAxe = myCurve->Circle().Axis();
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       TheAxe = myCurve->Ellipse().Axis();
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       TheAxe = myCurve->Hyperbola().Axis();
       break;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       TheAxe = myCurve->Parabola().Axis();
       break;
     }
-    case GeomAbs_Line: { // La normale du plan de la courbe est il perpendiculaire a la BiNormale ?
+    case GeomAbs_CurveType::GeomAbs_Line: { // La normale du plan de la courbe est il perpendiculaire a la BiNormale ?
       gp_Vec V;
       V.SetXYZ(myCurve->Line().Direction().XYZ());
       return V.IsParallel(B, Precision::Angular());

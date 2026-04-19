@@ -20,28 +20,28 @@
 //! Indicates the outcome of the
 //! construction of an edge, i.e. whether it has been successful or
 //! not, as explained below:
-//! -      BRepBuilderAPI_EdgeDone No error occurred; The edge is
+//! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_EdgeDone No error occurred; The edge is
 //! correctly built.
-//! -      BRepBuilderAPI_PointProjectionFailed No parameters were given but
+//! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_PointProjectionFailed No parameters were given but
 //! the projection of the 3D points on the curve failed. This
 //! happens when the point distance to the curve is greater than
 //! the precision value.
-//! -      BRepBuilderAPI_ParameterOutOfRange
+//! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_ParameterOutOfRange
 //! The given parameters are not in the parametric range
 //! C->FirstParameter(), C->LastParameter()
-//! -      BRepBuilderAPI_DifferentPointsOnClosedCurve
+//! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_DifferentPointsOnClosedCurve
 //! The two vertices or points are the extremities of a closed
 //! curve but have different locations.
-//! -      BRepBuilderAPI_PointWithInfiniteParameter
+//! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_PointWithInfiniteParameter
 //! A finite coordinate point was associated with an infinite
 //! parameter (see the Precision package for a definition of infinite values).
-//! -      BRepBuilderAPI_DifferentsPointAndParameter
+//! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_DifferentsPointAndParameter
 //! The distance between the 3D point and the point evaluated
 //! on the curve with the parameter is greater than the precision.
-//! -      BRepBuilderAPI_LineThroughIdenticPoints
+//! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_LineThroughIdenticPoints
 //! Two identical points were given to define a line (construction
 //! of an edge without curve); gp::Resolution is used for the confusion test.
-enum BRepBuilderAPI_EdgeError
+enum class BRepBuilderAPI_EdgeError
 {
   BRepBuilderAPI_EdgeDone,
   BRepBuilderAPI_PointProjectionFailed,

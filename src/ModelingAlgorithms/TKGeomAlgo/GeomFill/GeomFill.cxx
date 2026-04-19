@@ -191,13 +191,13 @@ void GeomFill::GetShape(const double                  MaxAng,
 {
   switch (TConv)
   {
-    case Convert_QuasiAngular: {
+    case Convert_ParameterisationType::Convert_QuasiAngular: {
       NbPoles = 7;
       NbKnots = 2;
       Degree  = 6;
     }
     break;
-    case Convert_Polynomial: {
+    case Convert_ParameterisationType::Convert_Polynomial: {
       NbPoles = 8;
       NbKnots = 2;
       Degree  = 7;
@@ -210,15 +210,15 @@ void GeomFill::GetShape(const double                  MaxAng,
       Degree     = 2;
       if (NbSpan == 1)
       {
-        TConv = Convert_TgtThetaOver2_1;
+        TConv = Convert_ParameterisationType::Convert_TgtThetaOver2_1;
       }
       else if (NbSpan == 2)
       {
-        TConv = Convert_TgtThetaOver2_2;
+        TConv = Convert_ParameterisationType::Convert_TgtThetaOver2_2;
       }
       else if (NbSpan == 3)
       {
-        TConv = Convert_TgtThetaOver2_3;
+        TConv = Convert_ParameterisationType::Convert_TgtThetaOver2_3;
       }
     }
   }
@@ -236,7 +236,7 @@ void GeomFill::GetMinimalWeights(const Convert_ParameterisationType TConv,
                                  NCollection_Array1<double>&        Weights)
 
 {
-  if (TConv == Convert_Polynomial)
+  if (TConv == Convert_ParameterisationType::Convert_Polynomial)
     Weights.Init(1);
   else
   {
@@ -265,7 +265,7 @@ void GeomFill::GetMinimalWeights(const Convert_ParameterisationType TConv,
 
 void GeomFill::Knots(const Convert_ParameterisationType TConv, NCollection_Array1<double>& TKnots)
 {
-  if ((TConv != Convert_QuasiAngular) && (TConv != Convert_Polynomial))
+  if ((TConv != Convert_ParameterisationType::Convert_QuasiAngular) && (TConv != Convert_ParameterisationType::Convert_Polynomial))
   {
     int    i;
     double val = 0.;
@@ -288,12 +288,12 @@ void GeomFill::Mults(const Convert_ParameterisationType TConv, NCollection_Array
 {
   switch (TConv)
   {
-    case Convert_QuasiAngular: {
+    case Convert_ParameterisationType::Convert_QuasiAngular: {
       TMults(1) = 7;
       TMults(2) = 7;
     }
     break;
-    case Convert_Polynomial: {
+    case Convert_ParameterisationType::Convert_Polynomial: {
       TMults(1) = 8;
       TMults(2) = 8;
     }
@@ -389,13 +389,13 @@ void GeomFill::GetCircle(const Convert_ParameterisationType TConv,
 
   switch (TConv)
   {
-    case Convert_QuasiAngular: {
+    case Convert_ParameterisationType::Convert_QuasiAngular: {
       GeomFill_QuasiAngularConvertor QConvertor;
       QConvertor.Init();
       QConvertor.Section(pts1, Center, nplan, Angle, Poles, Weights);
       break;
     }
-    case Convert_Polynomial: {
+    case Convert_ParameterisationType::Convert_Polynomial: {
       GeomFill_PolynomialConvertor PConvertor;
       PConvertor.Init();
       PConvertor.Section(pts1, Center, nplan, Angle, Poles);
@@ -511,7 +511,7 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
 
   switch (TConv)
   {
-    case Convert_QuasiAngular: {
+    case Convert_ParameterisationType::Convert_QuasiAngular: {
       GeomFill_QuasiAngularConvertor QConvertor;
       QConvertor.Init();
       QConvertor.Section(pts1,
@@ -528,7 +528,7 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
                          DWeights);
       return true;
     }
-    case Convert_Polynomial: {
+    case Convert_ParameterisationType::Convert_Polynomial: {
       GeomFill_PolynomialConvertor PConvertor;
       PConvertor.Init();
       PConvertor.Section(pts1, tang1, Center, DCenter, nplan, dnplan, Angle, DAngle, Poles, DPoles);
@@ -691,7 +691,7 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
 
   switch (TConv)
   {
-    case Convert_QuasiAngular: {
+    case Convert_ParameterisationType::Convert_QuasiAngular: {
       GeomFill_QuasiAngularConvertor QConvertor;
       QConvertor.Init();
       QConvertor.Section(pts1,
@@ -714,7 +714,7 @@ bool GeomFill::GetCircle(const Convert_ParameterisationType TConv,
                          D2Weights);
       return true;
     }
-    case Convert_Polynomial: {
+    case Convert_ParameterisationType::Convert_Polynomial: {
       GeomFill_PolynomialConvertor PConvertor;
       PConvertor.Init();
       PConvertor.Section(pts1,

@@ -32,7 +32,7 @@ public:
 
   //! Default constructor.
   BRepMesh_Triangle()
-      : myMovability(BRepMesh_Free)
+      : myMovability(BRepMesh_DegreeOfFreedom::BRepMesh_Free)
   {
     myEdges[0]        = 0;
     myEdges[1]        = 0;
@@ -86,7 +86,7 @@ public:
   //! @return TRUE if equal, FALSE if not.
   bool IsEqual(const BRepMesh_Triangle& theOther) const
   {
-    if (myMovability == BRepMesh_Deleted || theOther.myMovability == BRepMesh_Deleted)
+    if (myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted || theOther.myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
       return false;
 
     if (myEdges[0] == theOther.myEdges[0] && myEdges[1] == theOther.myEdges[1]

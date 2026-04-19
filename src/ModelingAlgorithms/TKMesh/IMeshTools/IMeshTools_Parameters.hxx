@@ -25,7 +25,7 @@ struct IMeshTools_Parameters
 
   //! Default constructor
   IMeshTools_Parameters()
-      : MeshAlgo(IMeshTools_MeshAlgoType_DEFAULT),
+      : MeshAlgo(IMeshTools_MeshAlgoType::IMeshTools_MeshAlgoType_DEFAULT),
         Angle(0.5),
         Deflection(0.001),
         AngleInterior(-1.0),

@@ -38,7 +38,7 @@ IMPLEMENT_STANDARD_RTTIEXT(CDF_Application, CDM_Application)
 //=================================================================================================
 
 CDF_Application::CDF_Application()
-    : myRetrievableStatus(PCDM_RS_OK)
+    : myRetrievableStatus(PCDM_ReaderStatus::PCDM_RS_OK)
 {
   myDirectory      = new CDF_Directory();
   myMetaDataDriver = new CDF_FWOSDriver(MetaDataLookUpTable());
@@ -68,7 +68,7 @@ void CDF_Application::Open(const occ::handle<CDM_Document>& aDocument)
 {
   myDirectory->Add(aDocument);
   aDocument->Open(this);
-  Activate(aDocument, CDF_TOA_New);
+  Activate(aDocument, CDF_TypeOfActivation::CDF_TOA_New);
 }
 
 //=================================================================================================
@@ -144,9 +144,9 @@ PCDM_ReaderStatus CDF_Application::CanRetrieve(const TCollection_ExtendedString&
 {
 
   if (!myMetaDataDriver->Find(theFolder, theName, theVersion))
-    return PCDM_RS_UnknownDocument;
+    return PCDM_ReaderStatus::PCDM_RS_UnknownDocument;
   else if (!myMetaDataDriver->HasReadPermission(theFolder, theName, theVersion))
-    return PCDM_RS_PermissionDenied;
+    return PCDM_ReaderStatus::PCDM_RS_PermissionDenied;
   else
   {
     occ::handle<CDM_MetaData> theMetaData =
@@ -154,12 +154,12 @@ PCDM_ReaderStatus CDF_Application::CanRetrieve(const TCollection_ExtendedString&
 
     if (!theAppendMode && theMetaData->IsRetrieved())
     {
-      return theMetaData->Document()->IsModified() ? PCDM_RS_AlreadyRetrievedAndModified
-                                                   : PCDM_RS_AlreadyRetrieved;
+      return theMetaData->Document()->IsModified() ? PCDM_ReaderStatus::PCDM_RS_AlreadyRetrievedAndModified
+                                                   : PCDM_ReaderStatus::PCDM_RS_AlreadyRetrieved;
     }
     else if (theAppendMode && !theMetaData->IsRetrieved())
     {
-      return PCDM_RS_NoDocument;
+      return PCDM_ReaderStatus::PCDM_RS_NoDocument;
     }
     else
     {
@@ -174,7 +174,7 @@ PCDM_ReaderStatus CDF_Application::CanRetrieve(const TCollection_ExtendedString&
           theFormat = UTL::Value(Resources(), ResourceName);
         }
         else
-          return PCDM_RS_UnrecognizedFileFormat;
+          return PCDM_ReaderStatus::PCDM_RS_UnrecognizedFileFormat;
       }
 
       // check actual availability of the driver
@@ -182,7 +182,7 @@ PCDM_ReaderStatus CDF_Application::CanRetrieve(const TCollection_ExtendedString&
       {
         occ::handle<PCDM_Reader> aReader = ReaderFromFormat(theFormat);
         if (aReader.IsNull())
-          return PCDM_RS_NoDriver;
+          return PCDM_ReaderStatus::PCDM_RS_NoDriver;
       }
       catch (Standard_Failure const&)
       {
@@ -190,7 +190,7 @@ PCDM_ReaderStatus CDF_Application::CanRetrieve(const TCollection_ExtendedString&
       }
     }
   }
-  return PCDM_RS_OK;
+  return PCDM_ReaderStatus::PCDM_RS_OK;
 }
 
 //=================================================================================================
@@ -240,7 +240,7 @@ occ::handle<CDM_Document> CDF_Application::Retrieve(const occ::handle<CDM_MetaDa
 {
 
   occ::handle<CDM_Document> theDocumentToReturn;
-  myRetrievableStatus = PCDM_RS_DriverFailure;
+  myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_DriverFailure;
   bool isAppendMode   = !theFilter.IsNull() && theFilter->IsAppendMode();
   if (IsComponent)
   {
@@ -248,30 +248,30 @@ occ::handle<CDM_Document> CDF_Application::Retrieve(const occ::handle<CDM_MetaDa
     myRetrievableStatus = CanRetrieve(aMetaData, isAppendMode);
     switch (myRetrievableStatus)
     {
-      case PCDM_RS_UnknownDocument:
+      case PCDM_ReaderStatus::PCDM_RS_UnknownDocument:
         aMsg << "could not find the referenced document: " << aMetaData->Path() << "; not found."
              << (char)0 << std::endl;
         break;
-      case PCDM_RS_PermissionDenied:
+      case PCDM_ReaderStatus::PCDM_RS_PermissionDenied:
         aMsg << "Could not find the referenced document: " << aMetaData->Path()
              << "; permission denied. " << (char)0 << std::endl;
         break;
-      case PCDM_RS_NoDocument:
+      case PCDM_ReaderStatus::PCDM_RS_NoDocument:
         aMsg << "Document for appending is not defined." << (char)0 << std::endl;
         break;
       default:
-        myRetrievableStatus = PCDM_RS_OK;
+        myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_OK;
     }
-    if (myRetrievableStatus != PCDM_RS_OK)
+    if (myRetrievableStatus != PCDM_ReaderStatus::PCDM_RS_OK)
       throw Standard_Failure(aMsg.str().c_str());
-    myRetrievableStatus = PCDM_RS_DriverFailure;
+    myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_DriverFailure;
   }
   bool AlreadyRetrieved = aMetaData->IsRetrieved();
   if (AlreadyRetrieved)
-    myRetrievableStatus = PCDM_RS_AlreadyRetrieved;
+    myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_AlreadyRetrieved;
   bool Modified = AlreadyRetrieved && aMetaData->Document()->IsModified();
   if (Modified)
-    myRetrievableStatus = PCDM_RS_AlreadyRetrievedAndModified;
+    myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_AlreadyRetrievedAndModified;
   if (!AlreadyRetrieved || Modified || isAppendMode)
   {
     TCollection_ExtendedString aFormat;
@@ -310,7 +310,7 @@ occ::handle<CDM_Document> CDF_Application::Retrieve(const occ::handle<CDM_MetaDa
     catch (Standard_Failure const& anException)
     {
       myRetrievableStatus = theReader->GetStatus();
-      if (myRetrievableStatus > PCDM_RS_AlreadyRetrieved)
+      if (myRetrievableStatus > PCDM_ReaderStatus::PCDM_RS_AlreadyRetrieved)
       {
         Standard_SStream aMsg;
         aMsg << anException << std::endl;
@@ -351,15 +351,15 @@ CDF_TypeOfActivation CDF_Application::TypeOfActivation(const occ::handle<CDM_Met
     if (theDocument->IsOpened())
     {
       if (theDocument->IsModified())
-        return CDF_TOA_Modified;
+        return CDF_TypeOfActivation::CDF_TOA_Modified;
       else
-        return CDF_TOA_Unchanged;
+        return CDF_TypeOfActivation::CDF_TOA_Unchanged;
     }
 
     else
-      return CDF_TOA_New;
+      return CDF_TypeOfActivation::CDF_TOA_New;
   }
-  return CDF_TOA_New;
+  return CDF_TypeOfActivation::CDF_TOA_New;
 }
 
 //=================================================================================================
@@ -381,7 +381,7 @@ void CDF_Application::Read(Standard_IStream&                     theIStream,
   }
   catch (Standard_Failure const& anException)
   {
-    myRetrievableStatus = PCDM_RS_FormatFailure;
+    myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_FormatFailure;
 
     Standard_SStream aMsg;
     aMsg << anException << std::endl;
@@ -390,7 +390,7 @@ void CDF_Application::Read(Standard_IStream&                     theIStream,
 
   if (aFormat.IsEmpty())
   {
-    myRetrievableStatus = PCDM_RS_FormatFailure;
+    myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_FormatFailure;
     return;
   }
 
@@ -406,13 +406,13 @@ void CDF_Application::Read(Standard_IStream&                     theIStream,
     // check the document is ready to append
     if (theDocument.IsNull())
     {
-      myRetrievableStatus = PCDM_RS_NoDocument;
+      myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_NoDocument;
       return;
     }
     // check document format equals to the format of the stream
     if (theDocument->StorageFormat() != aFormat)
     {
-      myRetrievableStatus = PCDM_RS_FormatFailure;
+      myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_FormatFailure;
       return;
     }
   }
@@ -426,7 +426,7 @@ void CDF_Application::Read(Standard_IStream&                     theIStream,
   catch (Standard_Failure const& anException)
   {
     myRetrievableStatus = aReader->GetStatus();
-    if (myRetrievableStatus > PCDM_RS_AlreadyRetrieved)
+    if (myRetrievableStatus > PCDM_ReaderStatus::PCDM_RS_AlreadyRetrieved)
     {
       Standard_SStream aMsg;
       aMsg << anException << std::endl;
@@ -454,7 +454,7 @@ occ::handle<PCDM_Reader> CDF_Application::ReaderFromFormat(
   {
     Standard_SStream aMsg;
     aMsg << "Could not found the item:" << aResourceName << (char)0;
-    myRetrievableStatus = PCDM_RS_WrongResource;
+    myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_WrongResource;
     throw Standard_NoSuchObject(aMsg.str().c_str());
   }
 
@@ -475,7 +475,7 @@ occ::handle<PCDM_Reader> CDF_Application::ReaderFromFormat(
   }
   catch (Standard_Failure const& anException)
   {
-    myRetrievableStatus = PCDM_RS_WrongResource;
+    myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_WrongResource;
     throw anException;
   }
   if (!aReader.IsNull())
@@ -484,7 +484,7 @@ occ::handle<PCDM_Reader> CDF_Application::ReaderFromFormat(
   }
   else
   {
-    myRetrievableStatus = PCDM_RS_WrongResource;
+    myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_WrongResource;
   }
 
   // record in map
@@ -531,12 +531,12 @@ occ::handle<PCDM_StorageDriver> CDF_Application::WriterFromFormat(
   catch (Standard_Failure const& anException)
   {
     myWriters.Add(theFormat, aDriver);
-    myRetrievableStatus = PCDM_RS_WrongResource;
+    myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_WrongResource;
     throw anException;
   }
   if (aDriver.IsNull())
   {
-    myRetrievableStatus = PCDM_RS_WrongResource;
+    myRetrievableStatus = PCDM_ReaderStatus::PCDM_RS_WrongResource;
   }
   else
   {

@@ -84,16 +84,16 @@ static int VBLEND(Draw_Interpretor& di, int narg, const char** a)
   TopoDS_Shape V = DBRep::Get(a[2]);
   if (V.IsNull())
     return 1;
-  ChFi3d_FilletShape FSh = ChFi3d_Rational;
+  ChFi3d_FilletShape FSh = ChFi3d_FilletShape::ChFi3d_Rational;
   if (narg % 2 == 0)
   {
     if (!strcasecmp(a[narg - 1], "Q"))
     {
-      FSh = ChFi3d_QuasiAngular;
+      FSh = ChFi3d_FilletShape::ChFi3d_QuasiAngular;
     }
     else if (!strcasecmp(a[narg - 1], "P"))
     {
-      FSh = ChFi3d_Polynomial;
+      FSh = ChFi3d_FilletShape::ChFi3d_Polynomial;
     }
   }
   Rakk = new BRepFilletAPI_MakeFillet(V, FSh);

@@ -78,18 +78,18 @@ void ChFiKPart_ProjPC(const GeomAdaptor_Curve&   Cg,
                       const GeomAdaptor_Surface& Sg,
                       occ::handle<Geom2d_Curve>& Pcurv)
 {
-  if (Sg.GetType() < GeomAbs_BezierSurface)
+  if (Sg.GetType() < GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     occ::handle<GeomAdaptor_Curve>   HCg = new GeomAdaptor_Curve(Cg);
     occ::handle<GeomAdaptor_Surface> HSg = new GeomAdaptor_Surface(Sg);
     ProjLib_ProjectedCurve           Projc(HSg, HCg);
     switch (Projc.GetType())
     {
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Line: {
         Pcurv = new Geom2d_Line(Projc.Line());
       }
       break;
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_CurveType::GeomAbs_BezierCurve: {
         occ::handle<Geom2d_BezierCurve>     BezProjc = Projc.Bezier();
         const NCollection_Array1<gp_Pnt2d>& TP       = BezProjc->Poles();
         if (BezProjc->IsRational())
@@ -102,7 +102,7 @@ void ChFiKPart_ProjPC(const GeomAdaptor_Curve&   Cg,
         }
       }
       break;
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
         occ::handle<Geom2d_BSplineCurve>    BspProjc = Projc.BSpline();
         const NCollection_Array1<gp_Pnt2d>& TP       = BspProjc->Poles();
         const NCollection_Array1<double>&   TK       = BspProjc->Knots();

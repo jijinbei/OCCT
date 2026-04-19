@@ -34,7 +34,7 @@ IntPatch_RLine::IntPatch_RLine(const bool              Tang,
       indf(0),
       indl(0)
 {
-  typ  = IntPatch_Restriction;
+  typ  = IntPatch_IType::IntPatch_Restriction;
   onS2 = false;
   onS1 = false;
 }
@@ -52,7 +52,7 @@ IntPatch_RLine::IntPatch_RLine(const bool              Tang,
       indf(0),
       indl(0)
 {
-  typ  = IntPatch_Restriction;
+  typ  = IntPatch_IType::IntPatch_Restriction;
   onS2 = false;
   onS1 = false;
 }
@@ -68,7 +68,7 @@ IntPatch_RLine::IntPatch_RLine(const bool Tang)
       indf(0),
       indl(0)
 {
-  typ  = IntPatch_Restriction;
+  typ  = IntPatch_IType::IntPatch_Restriction;
   onS2 = false;
   onS1 = false;
 }

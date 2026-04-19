@@ -532,7 +532,7 @@ static void AddPoints(IntCurvesFace_Intersector&            theInt,
 
     switch (theInt.Transition(j))
     {
-      case IntCurveSurface_In:
+      case IntCurveSurface_TransitionOnCurve::IntCurveSurface_In:
         /* JAG 13.09.96
               if ( orface == TopAbs_FORWARD) {
             theor = TopAbs_FORWARD;
@@ -547,7 +547,7 @@ static void AddPoints(IntCurvesFace_Intersector&            theInt,
         theor = TopAbs_FORWARD;
 
         break;
-      case IntCurveSurface_Out:
+      case IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out:
         /* JAG 13.09.96
               if ( orface == TopAbs_FORWARD) {
             theor = TopAbs_REVERSED;
@@ -561,7 +561,7 @@ static void AddPoints(IntCurvesFace_Intersector&            theInt,
         */
         theor = TopAbs_REVERSED;
         break;
-      case IntCurveSurface_Tangent:
+      case IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent:
         theor = TopAbs_EXTERNAL;
         break;
     }

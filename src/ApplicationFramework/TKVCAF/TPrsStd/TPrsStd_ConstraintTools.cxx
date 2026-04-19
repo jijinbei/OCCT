@@ -221,7 +221,7 @@ void TPrsStd_ConstraintTools::UpdateOnlyValue(const occ::handle<TDataXtd_Constra
   TPrsStd_ConstraintTools::ComputeTextAndValue(aConst,
                                                val,
                                                txt,
-                                               aConst->GetType() == TDataXtd_ANGLE);
+                                               aConst->GetType() == TDataXtd_ConstraintEnum::TDataXtd_ANGLE);
   occ::handle<PrsDim_Relation> rel = occ::down_cast<PrsDim_Relation>(anAIS);
   if (!rel.IsNull())
     rel->SetText(txt);
@@ -1099,22 +1099,22 @@ void TPrsStd_ConstraintTools::computeAngleImpl(const occ::handle<TDataXtd_Constr
 
     BRepAdaptor_Surface aSurfaFace(aFace);
     GeomAbs_SurfaceType aTypeaFace = aSurfaFace.GetType();
-    if (aTypeaFace == GeomAbs_Plane)
+    if (aTypeaFace == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       aPlnaFace1  = aSurfaFace.Plane();
       anax1aFace1 = aPlnaFace1.Axis(); // Normale au plan
     }
-    else if (aTypeaFace == GeomAbs_Cylinder)
+    else if (aTypeaFace == GeomAbs_SurfaceType::GeomAbs_Cylinder)
     {
       gp_Cylinder aCylaFace = aSurfaFace.Cylinder();
       anax1aFace1           = aCylaFace.Axis();
     }
-    else if (aTypeaFace == GeomAbs_Cone)
+    else if (aTypeaFace == GeomAbs_SurfaceType::GeomAbs_Cone)
     {
       gp_Cone aCone = aSurfaFace.Cone();
       anax1aFace1   = aCone.Axis();
     }
-    else if (aTypeaFace == GeomAbs_Torus)
+    else if (aTypeaFace == GeomAbs_SurfaceType::GeomAbs_Torus)
     {
       gp_Torus aTore = aSurfaFace.Torus();
       anax1aFace1    = aTore.Axis();
@@ -1153,22 +1153,22 @@ void TPrsStd_ConstraintTools::computeAngleImpl(const occ::handle<TDataXtd_Constr
 
     aSurfaFace.Initialize(aFace);
     aTypeaFace = aSurfaFace.GetType();
-    if (aTypeaFace == GeomAbs_Plane)
+    if (aTypeaFace == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       aPlnaFace2  = aSurfaFace.Plane();
       anax1aFace2 = aPlnaFace2.Axis(); // Normale au plan
     }
-    else if (aTypeaFace == GeomAbs_Cylinder)
+    else if (aTypeaFace == GeomAbs_SurfaceType::GeomAbs_Cylinder)
     {
       gp_Cylinder aCylaFace = aSurfaFace.Cylinder();
       anax1aFace2           = aCylaFace.Axis();
     }
-    else if (aTypeaFace == GeomAbs_Cone)
+    else if (aTypeaFace == GeomAbs_SurfaceType::GeomAbs_Cone)
     {
       gp_Cone aCone = aSurfaFace.Cone();
       anax1aFace2   = aCone.Axis();
     }
-    else if (aTypeaFace == GeomAbs_Torus)
+    else if (aTypeaFace == GeomAbs_SurfaceType::GeomAbs_Torus)
     {
       gp_Torus aTore = aSurfaFace.Torus();
       anax1aFace2    = aTore.Axis();
@@ -1182,7 +1182,7 @@ void TPrsStd_ConstraintTools::computeAngleImpl(const occ::handle<TDataXtd_Constr
       return;
     }
 
-    if (aTypeaFace == GeomAbs_Plane)
+    if (aTypeaFace == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       if (!anax1aFace1.IsParallel(anax1aFace2, Precision::Angular()))
       {
@@ -1191,7 +1191,7 @@ void TPrsStd_ConstraintTools::computeAngleImpl(const occ::handle<TDataXtd_Constr
                                           aPlnaFace2,
                                           Precision::Angular(),
                                           Precision::Angular());
-        if (IntersectPlane.IsDone() && (IntersectPlane.TypeInter() != IntAna_Empty))
+        if (IntersectPlane.IsDone() && (IntersectPlane.TypeInter() != IntAna_ResultType::IntAna_Empty))
         {
           gp_Lin                 aLine         = IntersectPlane.Line(1);
           occ::handle<Geom_Line> computedgeom3 = new Geom_Line(aLine);
@@ -1826,7 +1826,7 @@ static bool CheckShapesPair(const TopoDS_Shape& aShape1, const TopoDS_Shape& aSh
   {
     BRepAdaptor_Curve aCurve1(TopoDS::Edge(aShape1));
     BRepAdaptor_Curve aCurve2(TopoDS::Edge(aShape2));
-    if (aCurve1.GetType() == GeomAbs_Line && aCurve2.GetType() == GeomAbs_Line)
+    if (aCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Line && aCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     { // Are lines parallel ?
       gp_Dir aDir1 = aCurve1.Line().Direction();
       gp_Dir aDir2 = aCurve2.Line().Direction();
@@ -1838,7 +1838,7 @@ static bool CheckShapesPair(const TopoDS_Shape& aShape1, const TopoDS_Shape& aSh
         return false;
       }
     }
-    else if (aCurve1.GetType() == GeomAbs_Circle && aCurve2.GetType() == GeomAbs_Circle)
+    else if (aCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Circle && aCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       gp_Pnt aCntr1 = aCurve1.Circle().Location(); // get the circle center
       gp_Pnt aCntr2 = aCurve2.Circle().Location(); // get the circle center
@@ -1872,7 +1872,7 @@ static bool CheckShapesPair(const TopoDS_Shape& aShape1, const TopoDS_Shape& aSh
       aPnt = BRep_Tool::Pnt(TopoDS::Vertex(aShape2));
       aCurve.Initialize(TopoDS::Edge(aShape1));
     }
-    if (aCurve.GetType() == GeomAbs_Circle)
+    if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       gp_Pnt aCntr = aCurve.Circle().Location();
       if (!aCntr.IsEqual(aPnt, Precision::Confusion()))
@@ -2286,7 +2286,7 @@ void TPrsStd_ConstraintTools::computeOffsetImpl(const occ::handle<TDataXtd_Const
       // Find a plane for the dimension
       TopoDS_Edge       OE = TopoDS::Edge(S1);
       BRepAdaptor_Curve CURVE(OE);
-      if (CURVE.GetType() == GeomAbs_Line)
+      if (CURVE.GetType() == GeomAbs_CurveType::GeomAbs_Line)
       {
         // Works only with line !!
         occ::handle<Geom_Geometry> aGeomGeometry = CURVE.Curve().Curve()->Transformed(CURVE.Trsf());
@@ -2312,7 +2312,7 @@ void TPrsStd_ConstraintTools::computeOffsetImpl(const occ::handle<TDataXtd_Const
         anAIS = ais;
         return;
       }
-      else if (CURVE.GetType() == GeomAbs_Circle)
+      else if (CURVE.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
       {
         occ::handle<Geom_Geometry> aGeomGeometry = CURVE.Curve().Curve()->Transformed(CURVE.Trsf());
         gp_Ax1                     ax = occ::down_cast<Geom_Circle>(aGeomGeometry)->Circ().Axis();

@@ -199,7 +199,7 @@ bool TopOpeBRepBuild_BuilderON::GFillONCheckI(const occ::handle<TopOpeBRepDS_Int
   TopOpeBRepDS_Kind GT, ST;
   int               GI, SI;
   FDS_data(SSI, GT, GI, ST, SI);
-  if (GT != TopOpeBRepDS_EDGE || ST != TopOpeBRepDS_FACE)
+  if (GT != TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE || ST != TopOpeBRepDS_Kind::TopOpeBRepDS_FACE)
     return false;
 #ifdef OCCT_DEBUG
 //  int iFOR=BDS.Shape(myFace);
@@ -409,14 +409,14 @@ Standard_EXPORT TopAbs_State FUN_build_TB(const TopOpeBRepBuild_PBuilder& PB, co
 
 static bool FUN_Kpart0(const GeomAbs_SurfaceType& ST1, const GeomAbs_SurfaceType& ST2)
 {
-  bool plane1 = (ST1 == GeomAbs_Plane);
-  bool cyli1  = (ST1 == GeomAbs_Cylinder);
-  bool cone1  = (ST1 == GeomAbs_Cone);
+  bool plane1 = (ST1 == GeomAbs_SurfaceType::GeomAbs_Plane);
+  bool cyli1  = (ST1 == GeomAbs_SurfaceType::GeomAbs_Cylinder);
+  bool cone1  = (ST1 == GeomAbs_SurfaceType::GeomAbs_Cone);
 
-  bool cyli2 = (ST2 == GeomAbs_Cylinder);
-  bool cone2 = (ST2 == GeomAbs_Cone);
-  bool sphe2 = (ST2 == GeomAbs_Sphere);
-  bool quad2 = cyli2 || cone2 || sphe2 || (ST2 == GeomAbs_Torus);
+  bool cyli2 = (ST2 == GeomAbs_SurfaceType::GeomAbs_Cylinder);
+  bool cone2 = (ST2 == GeomAbs_SurfaceType::GeomAbs_Cone);
+  bool sphe2 = (ST2 == GeomAbs_SurfaceType::GeomAbs_Sphere);
+  bool quad2 = cyli2 || cone2 || sphe2 || (ST2 == GeomAbs_SurfaceType::GeomAbs_Torus);
 
   if (plane1 && quad2)
     return true;
@@ -565,7 +565,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
   int nlfcx = lfcx.Extent();
 
   bool                hsdFOR   = HDS->HasSameDomain(FOR);
-  TopOpeBRepDS_Config cFOR     = TopOpeBRepDS_UNSHGEOMETRY;
+  TopOpeBRepDS_Config cFOR     = TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY;
   int                 irefFOR  = 0;
   TopAbs_Orientation  orefFOR  = TopAbs_EXTERNAL;
   bool                FORisref = false;
@@ -1001,7 +1001,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
       if (!FORisref)
       {
         // xpu170698 : PRO13555 (FOR=f19,GI=e10,FS=f15)
-        bool FORDO = (cFOR == TopOpeBRepDS_DIFFORIENTED);
+        bool FORDO = (cFOR == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
         if (FORDO)
           reverse = !reverse;
         if (oFOR != orefFOR)
@@ -1104,7 +1104,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
     if (keep3d)
     {
       TopAbs_Orientation neworiE = oe3d;
-      if (cf == TopOpeBRepDS_DIFFORIENTED)
+      if (cf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED)
         neworiE = TopAbs::Complement(neworiE);
       TopoDS_Shape newE = EspON;
       newE.Orientation(neworiE);
@@ -1607,7 +1607,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
       TopOpeBRepDS_Kind GT1, ST1;
       int               G1, S1;
       FDS_data(ssi, GT1, G1, ST1, S1);
-      bool cond = (GT1 == TopOpeBRepDS_EDGE && ST1 == TopOpeBRepDS_FACE);
+      bool cond = (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE && ST1 == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE);
       cond      = cond && (G1 == ie3);
       // NYI cond = cond && e(S1 est une face connexe a iFOR par ie3)
       if (cond)
@@ -2056,7 +2056,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
     bool reverse = false; // xpu270598 : reverse=false=>FCX has same geom ori
     if (!FCXisref)
     { // xpu270598
-      if (cFCX == TopOpeBRepDS_DIFFORIENTED)
+      if (cFCX == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED)
         reverse = true;
       if (oFCX != orefFCX)
         reverse = !reverse;
@@ -2444,7 +2444,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
     if (keep3d)
     {
       TopAbs_Orientation neworiE = oe3d;
-      if (cf == TopOpeBRepDS_DIFFORIENTED)
+      if (cf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED)
         neworiE = TopAbs::Complement(neworiE);
       TopoDS_Shape newE = EspON;
       newE.Orientation(neworiE);
@@ -2520,7 +2520,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
     if (keep2d)
     {
       TopAbs_Orientation neworiE = oe2d;
-      if (cf == TopOpeBRepDS_DIFFORIENTED)
+      if (cf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED)
         neworiE = TopAbs::Complement(neworiE);
       TopoDS_Shape newE = EspON;
       newE.Orientation(neworiE);
@@ -2622,7 +2622,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
     }
     else
     {
-      samegeomref = (cFOR == TopOpeBRepDS_SAMEORIENTED);
+      samegeomref = (cFOR == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
       if (oFOR != orefFOR)
         samegeomref = !samegeomref;
     }

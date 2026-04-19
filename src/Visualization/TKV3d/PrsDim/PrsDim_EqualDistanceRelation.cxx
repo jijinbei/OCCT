@@ -235,13 +235,13 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
   if (myFShape.ShapeType() == TopAbs_EDGE)
   {
     BRepAdaptor_Curve aCurve(TopoDS::Edge(myFShape));
-    if (aCurve.GetType() == GeomAbs_Line)
+    if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       // add sensitive element - line
       seg = new Select3D_SensitiveSegment(own, myAttachPoint1, myPoint1);
       aSelection->Add(seg);
     }
-    else if (aCurve.GetType() == GeomAbs_Circle)
+    else if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       occ::handle<Geom_Circle> aCircle  = occ::down_cast<Geom_Circle>(aCurve.Curve().Curve());
       double                   FirstPar = ElCLib::Parameter(aCircle->Circ(), myAttachPoint1),
@@ -262,13 +262,13 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
   if (mySShape.ShapeType() == TopAbs_EDGE)
   {
     BRepAdaptor_Curve aCurve(TopoDS::Edge(mySShape));
-    if (aCurve.GetType() == GeomAbs_Line)
+    if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       // add sensitive element - line
       seg = new Select3D_SensitiveSegment(own, myAttachPoint2, myPoint2);
       aSelection->Add(seg);
     }
-    else if (aCurve.GetType() == GeomAbs_Circle)
+    else if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       occ::handle<Geom_Circle> aCircle  = occ::down_cast<Geom_Circle>(aCurve.Curve().Curve());
       double                   FirstPar = ElCLib::Parameter(aCircle->Circ(), myAttachPoint2),
@@ -289,13 +289,13 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
   if (myShape3.ShapeType() == TopAbs_EDGE)
   {
     BRepAdaptor_Curve aCurve(TopoDS::Edge(myShape3));
-    if (aCurve.GetType() == GeomAbs_Line)
+    if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       // add sensitive element - line
       seg = new Select3D_SensitiveSegment(own, myAttachPoint3, myPoint3);
       aSelection->Add(seg);
     }
-    else if (aCurve.GetType() == GeomAbs_Circle)
+    else if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       occ::handle<Geom_Circle> aCircle  = occ::down_cast<Geom_Circle>(aCurve.Curve().Curve());
       double                   FirstPar = ElCLib::Parameter(aCircle->Circ(), myAttachPoint3),
@@ -321,13 +321,13 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
   if (myShape4.ShapeType() == TopAbs_EDGE)
   {
     BRepAdaptor_Curve aCurve(TopoDS::Edge(myShape4));
-    if (aCurve.GetType() == GeomAbs_Line)
+    if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       // add sensitive element - line
       seg = new Select3D_SensitiveSegment(own, myAttachPoint4, myPoint4);
       aSelection->Add(seg);
     }
-    else if (aCurve.GetType() == GeomAbs_Circle)
+    else if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       occ::handle<Geom_Circle> aCircle  = occ::down_cast<Geom_Circle>(aCurve.Curve().Curve());
       double                   FirstPar = ElCLib::Parameter(aCircle->Circ(), myAttachPoint4),
@@ -400,7 +400,7 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
 
   aPresentation->SetInfiniteState(isInfinite1 || isInfinite2);
 
-  if (cu1.GetType() == GeomAbs_Line && cu2.GetType() == GeomAbs_Line)
+  if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Line && cu2.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     occ::handle<Geom_Line> geom_lin1(occ::down_cast<Geom_Line>(geom1));
     occ::handle<Geom_Line> geom_lin2(occ::down_cast<Geom_Line>(geom2));
@@ -509,7 +509,7 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
                                                   FirstExtreme,
                                                   SecondExtreme);
   }
-  if (cu1.GetType() == GeomAbs_Circle && cu2.GetType() == GeomAbs_Circle)
+  if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Circle && cu2.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     // Get first and last points of circles
     occ::handle<Geom_Circle> aCir1(occ::down_cast<Geom_Circle>(geom1));

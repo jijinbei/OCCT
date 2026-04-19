@@ -66,11 +66,11 @@ Standard_EXPORT bool FUN_tool_direct(const TopoDS_Face& F, bool& direct)
 {
   BRepAdaptor_Surface BS(TopoDS::Face(F));
   GeomAbs_SurfaceType ST    = BS.GetType();
-  bool                plane = (ST == GeomAbs_Plane);
-  bool                cyl   = (ST == GeomAbs_Cylinder);
-  bool                cone  = (ST == GeomAbs_Cone);
-  bool                sphe  = (ST == GeomAbs_Sphere);
-  bool                torus = (ST == GeomAbs_Torus);
+  bool                plane = (ST == GeomAbs_SurfaceType::GeomAbs_Plane);
+  bool                cyl   = (ST == GeomAbs_SurfaceType::GeomAbs_Cylinder);
+  bool                cone  = (ST == GeomAbs_SurfaceType::GeomAbs_Cone);
+  bool                sphe  = (ST == GeomAbs_SurfaceType::GeomAbs_Sphere);
+  bool                torus = (ST == GeomAbs_SurfaceType::GeomAbs_Torus);
   if (plane)
   {
     const gp_Pln& plpl = BS.Plane();
@@ -617,7 +617,7 @@ Standard_EXPORT GeomAbs_CurveType FUN_tool_typ(const TopoDS_Edge& E)
 Standard_EXPORT bool FUN_tool_line(const TopoDS_Edge& E)
 {
   BRepAdaptor_Curve BC(E);
-  bool              line = (BC.GetType() == GeomAbs_Line);
+  bool              line = (BC.GetType() == GeomAbs_CurveType::GeomAbs_Line);
   return line;
 }
 
@@ -626,7 +626,7 @@ Standard_EXPORT bool FUN_tool_plane(const TopoDS_Shape& F)
 {
   occ::handle<Geom_Surface> S = TopOpeBRepTool_ShapeTool::BASISSURFACE(TopoDS::Face(F));
   GeomAdaptor_Surface       GS(S);
-  return (GS.GetType() == GeomAbs_Plane);
+  return (GS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane);
 }
 
 // ----------------------------------------------------------------------
@@ -634,7 +634,7 @@ Standard_EXPORT bool FUN_tool_cylinder(const TopoDS_Shape& F)
 {
   occ::handle<Geom_Surface> S = TopOpeBRepTool_ShapeTool::BASISSURFACE(TopoDS::Face(F));
   GeomAdaptor_Surface       GS(S);
-  return (GS.GetType() == GeomAbs_Cylinder);
+  return (GS.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder);
 }
 
 // ----------------------------------------------------------------------
@@ -972,7 +972,7 @@ Standard_EXPORT gp_Vec FUN_tool_tggeomE(const double paronE, const TopoDS_Edge& 
 // ----------------------------------------------------------------------
 Standard_EXPORT bool FUN_tool_line(const BRepAdaptor_Curve& BAC)
 {
-  bool line = (BAC.GetType() == GeomAbs_Line);
+  bool line = (BAC.GetType() == GeomAbs_CurveType::GeomAbs_Line);
   return line;
 }
 
@@ -990,15 +990,15 @@ Standard_EXPORT bool FUN_tool_quad(const BRepAdaptor_Curve& BAC)
 {
   GeomAbs_CurveType CT     = BAC.GetType();
   bool              isquad = false;
-  if (CT == GeomAbs_Line)
+  if (CT == GeomAbs_CurveType::GeomAbs_Line)
     isquad = true;
-  if (CT == GeomAbs_Circle)
+  if (CT == GeomAbs_CurveType::GeomAbs_Circle)
     isquad = true;
-  if (CT == GeomAbs_Ellipse)
+  if (CT == GeomAbs_CurveType::GeomAbs_Ellipse)
     isquad = true;
-  if (CT == GeomAbs_Hyperbola)
+  if (CT == GeomAbs_CurveType::GeomAbs_Hyperbola)
     isquad = true;
-  if (CT == GeomAbs_Parabola)
+  if (CT == GeomAbs_CurveType::GeomAbs_Parabola)
     isquad = true;
   return isquad;
 }

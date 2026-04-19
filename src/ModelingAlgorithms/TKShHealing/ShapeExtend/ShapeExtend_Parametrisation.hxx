@@ -21,7 +21,7 @@
 //! each patch of the 1st row and column adds its range, Ui+1 = Ui + URange(i,1), etc.
 //! each patch gives range 1.: Ui = i-1, Vj = j-1
 //! uniform parametrisation with global range [0,1]
-enum ShapeExtend_Parametrisation
+enum class ShapeExtend_Parametrisation
 {
   ShapeExtend_Natural,
   ShapeExtend_Uniform,

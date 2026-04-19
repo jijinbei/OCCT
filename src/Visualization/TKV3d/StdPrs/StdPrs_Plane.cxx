@@ -33,7 +33,7 @@ void StdPrs_Plane::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
 {
   //  aPresentation->NewGroup();
   occ::handle<Graphic3d_Group> TheGroup = aPresentation->CurrentGroup();
-  if (aPlane.GetType() != GeomAbs_Plane)
+  if (aPlane.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
     return;
   occ::handle<Geom_Plane> thegeom = new Geom_Plane(aPlane.Plane());
 
@@ -137,7 +137,7 @@ bool StdPrs_Plane::Match(const double             X,
                          const Adaptor3d_Surface& aPlane,
                          const occ::handle<Prs3d_Drawer>&)
 {
-  if (aPlane.GetType() == GeomAbs_Plane)
+  if (aPlane.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     gp_Pln theplane = aPlane.Plane();
     gp_Pnt thepoint(X, Y, Z);

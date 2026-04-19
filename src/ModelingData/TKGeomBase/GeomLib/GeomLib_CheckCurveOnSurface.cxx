@@ -442,11 +442,11 @@ int FillSubIntervals(const occ::handle<Adaptor3d_Curve>&   theCurve3d,
   bool                             isTrimmed3D = false, isTrimmed2D = false;
 
   //
-  if (theCurve3d->GetType() == GeomAbs_BSplineCurve)
+  if (theCurve3d->GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     aBS3DCurv = theCurve3d->BSpline();
   }
-  if (theCurve2d->GetType() == GeomAbs_BSplineCurve)
+  if (theCurve2d->GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     aBS2DCurv = theCurve2d->BSpline();
   }

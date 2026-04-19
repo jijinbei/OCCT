@@ -81,7 +81,7 @@ static void NormalD0(const double                          U,
   CSLib_NormalStatus NStatus;
   CSLib::Normal(D1U, D1V, MagTol, NStatus, Normal);
 
-  if (NStatus != CSLib_Defined)
+  if (NStatus != CSLib_NormalStatus::CSLib_Defined)
   {
     if (Cont == GeomAbs_C0 || Cont == GeomAbs_C1)
     {
@@ -127,7 +127,7 @@ static void NormalD0(const double                          U,
                   OrderU,
                   OrderV);
 
-    if (NStatus != CSLib_Defined)
+    if (NStatus != CSLib_NormalStatus::CSLib_Defined)
     {
 #ifdef OCCT_DEBUG
       std::cout << U << ", " << V << std::endl;
@@ -170,7 +170,7 @@ static void NormalD1(const double                          U,
   CSLib_NormalStatus NStatus;
   CSLib::Normal(D1UNormal, D1VNormal, MagTol, NStatus, Normal);
   int MaxOrder;
-  if (NStatus == CSLib_Defined)
+  if (NStatus == CSLib_NormalStatus::CSLib_Defined)
     MaxOrder = 0;
   else
     MaxOrder = 3;
@@ -217,7 +217,7 @@ static void NormalD1(const double                          U,
                 Normal,
                 OrderU,
                 OrderV);
-  if (NStatus != CSLib_Defined)
+  if (NStatus != CSLib_NormalStatus::CSLib_Defined)
     throw Geom_UndefinedValue();
 
   D1UNormal = CSLib::DNNormal(1, 0, DerNUV, OrderU, OrderV);
@@ -254,7 +254,7 @@ static void NormalD2(const double                          U,
   CSLib_NormalStatus NStatus;
   CSLib::Normal(D1UNormal, D1VNormal, MagTol, NStatus, Normal);
   int MaxOrder;
-  if (NStatus == CSLib_Defined)
+  if (NStatus == CSLib_NormalStatus::CSLib_Defined)
     MaxOrder = 0;
   else
     MaxOrder = 3;
@@ -306,7 +306,7 @@ static void NormalD2(const double                          U,
                 Normal,
                 OrderU,
                 OrderV);
-  if (NStatus != CSLib_Defined)
+  if (NStatus != CSLib_NormalStatus::CSLib_Defined)
     throw Geom_UndefinedValue();
 
   D1UNormal  = CSLib::DNNormal(1, 0, DerNUV, OrderU, OrderV);
@@ -516,7 +516,7 @@ void GeomFill_Darboux::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, gp_Vec& 
 
 bool GeomFill_Darboux::IsConstant() const
 {
-  return (myCurve->GetType() == GeomAbs_Line);
+  return (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line);
 }
 
 bool GeomFill_Darboux::IsOnlyBy3dCurve() const

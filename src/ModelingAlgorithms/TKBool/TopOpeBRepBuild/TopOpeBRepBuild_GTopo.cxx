@@ -57,7 +57,7 @@ void TopOpeBRepBuild_GTopo::Reset()
   myt1 = myt2   = TopAbs_SHAPE;
   mycases[0][0] = mycases[0][1] = mycases[0][2] = mycases[1][0] = mycases[1][1] = mycases[1][2] =
     mycases[2][0] = mycases[2][1] = mycases[2][2] = false;
-  myConfig1 = myConfig2 = TopOpeBRepDS_UNSHGEOMETRY;
+  myConfig1 = myConfig2 = TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY;
   myReverseForce = myReverseValue = false;
 }
 

@@ -29,9 +29,9 @@ TopOpeBRepDS_FaceEdgeInterference::TopOpeBRepDS_FaceEdgeInterference(
   const bool                     GIsBound,
   const TopOpeBRepDS_Config      C)
     : TopOpeBRepDS_ShapeShapeInterference(T,
-                                          TopOpeBRepDS_FACE,
+                                          TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
                                           S,
-                                          TopOpeBRepDS_EDGE,
+                                          TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE,
                                           G,
                                           GIsBound,
                                           C)

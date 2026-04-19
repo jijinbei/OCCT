@@ -38,7 +38,7 @@ inline void IntPatch_GLine::SetLastPoint(const int IndLast)
 
 inline gp_Lin IntPatch_GLine::Line() const
 {
-  if (typ != IntPatch_Lin)
+  if (typ != IntPatch_IType::IntPatch_Lin)
   {
     throw Standard_DomainError();
   }
@@ -47,7 +47,7 @@ inline gp_Lin IntPatch_GLine::Line() const
 
 inline gp_Circ IntPatch_GLine::Circle() const
 {
-  if (typ != IntPatch_Circle)
+  if (typ != IntPatch_IType::IntPatch_Circle)
   {
     throw Standard_DomainError();
   }
@@ -56,7 +56,7 @@ inline gp_Circ IntPatch_GLine::Circle() const
 
 inline gp_Elips IntPatch_GLine::Ellipse() const
 {
-  if (typ != IntPatch_Ellipse)
+  if (typ != IntPatch_IType::IntPatch_Ellipse)
   {
     throw Standard_DomainError();
   }
@@ -65,7 +65,7 @@ inline gp_Elips IntPatch_GLine::Ellipse() const
 
 inline gp_Parab IntPatch_GLine::Parabola() const
 {
-  if (typ != IntPatch_Parabola)
+  if (typ != IntPatch_IType::IntPatch_Parabola)
   {
     throw Standard_DomainError();
   }
@@ -74,7 +74,7 @@ inline gp_Parab IntPatch_GLine::Parabola() const
 
 inline gp_Hypr IntPatch_GLine::Hyperbola() const
 {
-  if (typ != IntPatch_Hyperbola)
+  if (typ != IntPatch_IType::IntPatch_Hyperbola)
   {
     throw Standard_DomainError();
   }

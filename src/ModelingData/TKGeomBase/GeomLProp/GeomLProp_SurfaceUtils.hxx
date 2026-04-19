@@ -235,18 +235,18 @@ inline bool FindSurfTangentOrder(const gp_Vec& theD1,
     {
       if (theOrder <= 2 && aDerivs[theOrder - 1]->SquareMagnitude() > theTolSq)
       {
-        theStatus = LProp_Defined;
+        theStatus = LProp_Status::LProp_Defined;
         return true;
       }
     }
     else
     {
-      theStatus = LProp_Undefined;
+      theStatus = LProp_Status::LProp_Undefined;
       return false;
     }
   }
 
-  theStatus = LProp_Undefined;
+  theStatus = LProp_Status::LProp_Undefined;
   return false;
 }
 
@@ -352,9 +352,9 @@ inline bool ComputeSurfNormal(const gp_Vec& theD1u,
                               double        theLinTol,
                               gp_Dir&       theNormal)
 {
-  CSLib_DerivativeStatus aStatus = CSLib_Done;
+  CSLib_DerivativeStatus aStatus = CSLib_DerivativeStatus::CSLib_Done;
   CSLib::Normal(theD1u, theD1v, theLinTol, aStatus, theNormal);
-  return aStatus == CSLib_Done;
+  return aStatus == CSLib_DerivativeStatus::CSLib_Done;
 }
 
 //! Compute principal curvatures and directions via fundamental forms.
@@ -504,10 +504,10 @@ void SetParameters(Surface&      theSurf,
   theStoredV = theV;
   EvalSurfDerivatives<
     Access>(theSurf, theU, theV, theDerOrder, thePnt, theD1u, theD1v, theD2u, theD2v, theDuv);
-  theUTanSt = LProp_Undecided;
-  theVTanSt = LProp_Undecided;
-  theNormSt = LProp_Undecided;
-  theCurvSt = LProp_Undecided;
+  theUTanSt = LProp_Status::LProp_Undecided;
+  theVTanSt = LProp_Status::LProp_Undecided;
+  theNormSt = LProp_Status::LProp_Undecided;
+  theCurvSt = LProp_Status::LProp_Undecided;
 }
 
 //! Ensure surface derivatives up to the required order. Returns the specified result field.
@@ -542,9 +542,9 @@ bool IsTangentUDefined(Props&        theProps,
                        int&          theSigOrder,
                        LProp_Status& theTanStatus)
 {
-  if (theTanStatus == LProp_Undefined)
+  if (theTanStatus == LProp_Status::LProp_Undefined)
     return false;
-  if (theTanStatus >= LProp_Defined)
+  if (theTanStatus >= LProp_Status::LProp_Defined)
     return true;
   return FindSurfTangentOrder(theProps.D1U(),
                               theProps.D2U(),
@@ -562,9 +562,9 @@ bool IsTangentVDefined(Props&        theProps,
                        int&          theSigOrder,
                        LProp_Status& theTanStatus)
 {
-  if (theTanStatus == LProp_Undefined)
+  if (theTanStatus == LProp_Status::LProp_Undefined)
     return false;
-  if (theTanStatus >= LProp_Defined)
+  if (theTanStatus >= LProp_Status::LProp_Defined)
     return true;
   return FindSurfTangentOrder(theProps.D1V(),
                               theProps.D2V(),
@@ -613,16 +613,16 @@ inline bool IsNormalDefined(const gp_Vec& theD1u,
                             gp_Dir&       theNormal,
                             LProp_Status& theNormStatus)
 {
-  if (theNormStatus == LProp_Undefined)
+  if (theNormStatus == LProp_Status::LProp_Undefined)
     return false;
-  if (theNormStatus >= LProp_Defined)
+  if (theNormStatus >= LProp_Status::LProp_Defined)
     return true;
   if (ComputeSurfNormal(theD1u, theD1v, theLinTol, theNormal))
   {
-    theNormStatus = LProp_Computed;
+    theNormStatus = LProp_Status::LProp_Computed;
     return true;
   }
-  theNormStatus = LProp_Undefined;
+  theNormStatus = LProp_Status::LProp_Undefined;
   return false;
 }
 
@@ -655,23 +655,23 @@ bool IsCurvatureDefined(Props&        theProps,
                         double&       theGausCurv,
                         LProp_Status& theCurvStatus)
 {
-  if (theCurvStatus == LProp_Undefined)
+  if (theCurvStatus == LProp_Status::LProp_Undefined)
     return false;
-  if (theCurvStatus >= LProp_Defined)
+  if (theCurvStatus >= LProp_Status::LProp_Defined)
     return true;
   if (theCN < 2)
   {
-    theCurvStatus = LProp_Undefined;
+    theCurvStatus = LProp_Status::LProp_Undefined;
     return false;
   }
   if (!theProps.IsNormalDefined())
   {
-    theCurvStatus = LProp_Undefined;
+    theCurvStatus = LProp_Status::LProp_Undefined;
     return false;
   }
   if (!theProps.IsTangentUDefined() || !theProps.IsTangentVDefined())
   {
-    theCurvStatus = LProp_Undefined;
+    theCurvStatus = LProp_Status::LProp_Undefined;
     return false;
   }
   if (theDerOrder < 2)
@@ -689,10 +689,10 @@ bool IsCurvatureDefined(Props&        theProps,
                             theMeanCurv,
                             theGausCurv))
   {
-    theCurvStatus = LProp_Computed;
+    theCurvStatus = LProp_Status::LProp_Computed;
     return true;
   }
-  theCurvStatus = LProp_Undefined;
+  theCurvStatus = LProp_Status::LProp_Undefined;
   return false;
 }
 

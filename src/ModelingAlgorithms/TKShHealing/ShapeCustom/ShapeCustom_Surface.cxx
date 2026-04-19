@@ -382,22 +382,22 @@ occ::handle<Geom_Surface> ShapeCustom_Surface::ConvertToAnalytical(const double 
       switch (SurfAdapt.GetType())
       {
 
-        case GeomAbs_Cylinder: {
+        case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
           gp_Cylinder Cylinder = SurfAdapt.Cylinder();
           ElSLib::Parameters(Cylinder, P3d, S, T);
           break;
         }
-        case GeomAbs_Cone: {
+        case GeomAbs_SurfaceType::GeomAbs_Cone: {
           gp_Cone Cone = SurfAdapt.Cone();
           ElSLib::Parameters(Cone, P3d, S, T);
           break;
         }
-        case GeomAbs_Sphere: {
+        case GeomAbs_SurfaceType::GeomAbs_Sphere: {
           gp_Sphere Sphere = SurfAdapt.Sphere();
           ElSLib::Parameters(Sphere, P3d, S, T);
           break;
         }
-        case GeomAbs_Torus: {
+        case GeomAbs_SurfaceType::GeomAbs_Torus: {
           gp_Torus Torus = SurfAdapt.Torus();
           ElSLib::Parameters(Torus, P3d, S, T);
           break;

@@ -86,28 +86,28 @@ static void DecodeMakeEdgeError(
 #endif
   switch (ME.Error())
   {
-    case (BRepLib_EdgeDone):
+    case (BRepLib_EdgeError::BRepLib_EdgeDone):
       return;
-    case (BRepLib_PointProjectionFailed):
+    case (BRepLib_EdgeError::BRepLib_PointProjectionFailed):
       TP->AddFail(orig, " Point Projection failed");
       break;
-    case (BRepLib_ParameterOutOfRange):
+    case (BRepLib_EdgeError::BRepLib_ParameterOutOfRange):
       TP->AddFail(orig, " Parameter Out Of Range");
       break;
-    case (BRepLib_DifferentPointsOnClosedCurve):
+    case (BRepLib_EdgeError::BRepLib_DifferentPointsOnClosedCurve):
       TP->AddFail(orig, " Different Points on Closed Curve");
       break;
-    case (BRepLib_PointWithInfiniteParameter):
+    case (BRepLib_EdgeError::BRepLib_PointWithInfiniteParameter):
       TP->AddFail(orig, " Point with infinite Parameter");
       break;
-    case (BRepLib_DifferentsPointAndParameter):
+    case (BRepLib_EdgeError::BRepLib_DifferentsPointAndParameter):
       if (!ShapeConstruct_Curve()
              .AdjustCurve(myCurve, BRep_Tool::Pnt(V1), BRep_Tool::Pnt(V2), true, true))
         TP->AddFail(orig, " Different Points and Parameters");
       else
         TP->AddWarning(orig, "Different Points and Parameters, adjusted");
       break;
-    case (BRepLib_LineThroughIdenticPoints):
+    case (BRepLib_EdgeError::BRepLib_LineThroughIdenticPoints):
       TP->AddFail(orig, " Line through identic Points");
       break;
   }
@@ -464,7 +464,7 @@ void StepToTopoDS_TranslateEdge::MakeFromCurve3D(const occ::handle<StepGeom_Curv
   }
   else
   {
-    if (ME.Error() == BRepLib_DifferentPointsOnClosedCurve)
+    if (ME.Error() == BRepLib_EdgeError::BRepLib_DifferentPointsOnClosedCurve)
     {
       // The Edge could be closed and trimmed by 2 Different vertices
       if (C1->IsClosed())

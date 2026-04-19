@@ -202,7 +202,7 @@ static bool CheckSense(const NCollection_Sequence<occ::handle<Geom_Curve>>& Seq1
 //=======================================================================
 
 GeomFill_Pipe::GeomFill_Pipe()
-    : myStatus(GeomFill_PipeNotOk),
+    : myStatus(GeomFill_PipeError::GeomFill_PipeNotOk),
       myExchUV(false),
       myKPart(false)
 {
@@ -212,7 +212,7 @@ GeomFill_Pipe::GeomFill_Pipe()
 //=================================================================================================
 
 GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>& Path, const double Radius)
-    : myStatus(GeomFill_PipeNotOk),
+    : myStatus(GeomFill_PipeError::GeomFill_PipeNotOk),
       myExchUV(false),
       myKPart(false)
 {
@@ -225,7 +225,7 @@ GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>& Path, const double R
 GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>& Path,
                              const occ::handle<Geom_Curve>& FirstSect,
                              const GeomFill_Trihedron       Option)
-    : myStatus(GeomFill_PipeNotOk),
+    : myStatus(GeomFill_PipeError::GeomFill_PipeNotOk),
       myExchUV(false),
       myKPart(false)
 {
@@ -238,7 +238,7 @@ GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>& Path,
 GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom2d_Curve>& Path,
                              const occ::handle<Geom_Surface>& Support,
                              const occ::handle<Geom_Curve>&   FirstSect)
-    : myStatus(GeomFill_PipeNotOk),
+    : myStatus(GeomFill_PipeError::GeomFill_PipeNotOk),
       myExchUV(false),
       myKPart(false)
 {
@@ -251,7 +251,7 @@ GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom2d_Curve>& Path,
 GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>& Path,
                              const occ::handle<Geom_Curve>& FirstSect,
                              const occ::handle<Geom_Curve>& LastSect)
-    : myStatus(GeomFill_PipeNotOk),
+    : myStatus(GeomFill_PipeError::GeomFill_PipeNotOk),
       myExchUV(false),
       myKPart(false)
 {
@@ -263,7 +263,7 @@ GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>& Path,
 
 GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>&                       Path,
                              const NCollection_Sequence<occ::handle<Geom_Curve>>& NSections)
-    : myStatus(GeomFill_PipeNotOk),
+    : myStatus(GeomFill_PipeError::GeomFill_PipeNotOk),
       myExchUV(false),
       myKPart(false)
 {
@@ -276,7 +276,7 @@ GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>&                     
 GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>& Path,
                              const occ::handle<Geom_Curve>& Curve1,
                              const gp_Dir&                  Direction)
-    : myStatus(GeomFill_PipeNotOk),
+    : myStatus(GeomFill_PipeError::GeomFill_PipeNotOk),
       myExchUV(false),
       myKPart(false)
 {
@@ -289,7 +289,7 @@ GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>& Path,
                              const occ::handle<Geom_Curve>& Curve1,
                              const occ::handle<Geom_Curve>& Curve2,
                              const double                   Radius)
-    : myStatus(GeomFill_PipeNotOk),
+    : myStatus(GeomFill_PipeError::GeomFill_PipeNotOk),
       myExchUV(false),
       myKPart(false)
 {
@@ -307,7 +307,7 @@ GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Adaptor3d_Curve>& Path,
                              const occ::handle<Adaptor3d_Curve>& Curve1,
                              const occ::handle<Adaptor3d_Curve>& Curve2,
                              const double                        Radius)
-    : myStatus(GeomFill_PipeNotOk),
+    : myStatus(GeomFill_PipeError::GeomFill_PipeNotOk),
       myExchUV(false),
       myKPart(false)
 {
@@ -324,7 +324,7 @@ GeomFill_Pipe::GeomFill_Pipe(const occ::handle<Geom_Curve>&      Path,
                              const occ::handle<Geom_Curve>&      FirstSect,
                              const bool                          byACR,
                              const bool                          rotat)
-    : myStatus(GeomFill_PipeNotOk),
+    : myStatus(GeomFill_PipeError::GeomFill_PipeNotOk),
       myExchUV(false),
       myKPart(false)
 // Path : trajectoire
@@ -433,23 +433,23 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
   // Construction de la loi de triedre
   switch (Option)
   {
-    case GeomFill_IsCorrectedFrenet: {
+    case GeomFill_Trihedron::GeomFill_IsCorrectedFrenet: {
       TLaw = new (GeomFill_CorrectedFrenet)();
       break;
     }
 
-    case GeomFill_IsDarboux:
+    case GeomFill_Trihedron::GeomFill_IsDarboux:
 #ifdef OCCT_DEBUG
     {
       std::cout << "Option Darboux: non realisable" << std::endl;
     }
 #endif
-    case GeomFill_IsFrenet: {
+    case GeomFill_Trihedron::GeomFill_IsFrenet: {
       TLaw = new (GeomFill_Frenet)();
       break;
     }
 
-    case GeomFill_IsFixed: {
+    case GeomFill_Trihedron::GeomFill_IsFixed: {
       double            Eps = 1.e-9;
       gp_Vec            V1(0, 0, 1), V2(0, 1, 0);
       gp_Dir            D;
@@ -478,7 +478,7 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
       break;
     }
 
-    case GeomFill_IsConstantNormal: {
+    case GeomFill_Trihedron::GeomFill_IsConstantNormal: {
       TLaw  = new (GeomFill_Frenet)();
       myLoc = new (GeomFill_CurveAndTrihedron)(TLaw);
       myLoc->SetCurve(myAdpPath);
@@ -666,7 +666,7 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
 
     if (!(myLoc->SetCurve(myAdpPath)))
     {
-      myStatus = GeomFill_ImpossibleContact;
+      myStatus = GeomFill_PipeError::GeomFill_ImpossibleContact;
       return;
     }
 
@@ -743,7 +743,7 @@ void GeomFill_Pipe::Perform(const double        Tol,
                             const int           DegMax,
                             const int           NbMaxSegment)
 {
-  if (myStatus == GeomFill_ImpossibleContact)
+  if (myStatus == GeomFill_PipeError::GeomFill_ImpossibleContact)
   {
     return;
   }
@@ -804,7 +804,7 @@ void GeomFill_Pipe::Perform(const double        Tol,
                                             App.UDegree(),
                                             App.VDegree());
         myError   = App.MaxErrorOnSurf();
-        myStatus  = GeomFill_PipeOk;
+        myStatus  = GeomFill_PipeError::GeomFill_PipeOk;
       }
       // else {
       //   throw Standard_ConstructionError("GeomFill_Pipe::Perform : Cannot make a surface");
@@ -815,12 +815,12 @@ void GeomFill_Pipe::Perform(const double        Tol,
   {
     GeomFill_Sweep Sweep(myLoc, myKPart);
     Sweep.SetTolerance(Tol);
-    Sweep.Build(mySec, GeomFill_Location, TheConti, DegMax, NbMaxSegment);
+    Sweep.Build(mySec, GeomFill_ApproxStyle::GeomFill_Location, TheConti, DegMax, NbMaxSegment);
     if (Sweep.IsDone())
     {
       mySurface = Sweep.Surface();
       myError   = Sweep.ErrorOnSurface();
-      myStatus  = GeomFill_PipeOk;
+      myStatus  = GeomFill_PipeError::GeomFill_PipeOk;
     }
     // else {
     //   throw Standard_ConstructionError("GeomFill_Pipe::Perform : Cannot make a surface");
@@ -840,8 +840,8 @@ bool GeomFill_Pipe::KPartT4()
 {
   bool Ok = false;
   // -------    Cas du Cylindre  --------------------------
-  if (myAdpPath->GetType() == GeomAbs_Line && myAdpFirstSect->GetType() == GeomAbs_Line
-      && myAdpLastSect->GetType() == GeomAbs_Line)
+  if (myAdpPath->GetType() == GeomAbs_CurveType::GeomAbs_Line && myAdpFirstSect->GetType() == GeomAbs_CurveType::GeomAbs_Line
+      && myAdpLastSect->GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     // try to generate a cylinder.
     gp_Ax1 A0 = myAdpPath->Line().Position();
@@ -894,11 +894,11 @@ bool GeomFill_Pipe::KPartT4()
                                                    myAdpPath->FirstParameter(),
                                                    myAdpPath->LastParameter());
     Ok           = true; // C'est bien un cylindre
-    myStatus     = GeomFill_PipeOk;
+    myStatus     = GeomFill_PipeError::GeomFill_PipeOk;
   }
   // -----------    Cas du tore  ----------------------------------
-  else if (myAdpPath->GetType() == GeomAbs_Circle && myAdpFirstSect->GetType() == GeomAbs_Circle
-           && myAdpLastSect->GetType() == GeomAbs_Circle)
+  else if (myAdpPath->GetType() == GeomAbs_CurveType::GeomAbs_Circle && myAdpFirstSect->GetType() == GeomAbs_CurveType::GeomAbs_Circle
+           && myAdpLastSect->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     // try to generate a toroidal surface.
     // les 3 cercles doivent avoir meme angle d'ouverture
@@ -959,7 +959,7 @@ bool GeomFill_Pipe::KPartT4()
                                                    VV2);
     myExchUV  = true;
     Ok        = true;
-    myStatus  = GeomFill_PipeOk;
+    myStatus  = GeomFill_PipeError::GeomFill_PipeOk;
   }
 
   return Ok;
@@ -1051,6 +1051,6 @@ void GeomFill_Pipe::ApproxSurf(const bool WithParameters)
                                         App.VDegree());
     double t2d;
     App.TolReached(myError, t2d);
-    myStatus = GeomFill_PipeOk;
+    myStatus = GeomFill_PipeError::GeomFill_PipeOk;
   }
 }

@@ -56,14 +56,14 @@ public:
 
   //! Initializes the computation of the fillets.
   //! <FShape> sets the type of fillet surface. The
-  //! default value is ChFi3d_Rational (classical nurbs
-  //! representation of circles). ChFi3d_QuasiAngular
+  //! default value is ChFi3d_FilletShape::ChFi3d_Rational (classical nurbs
+  //! representation of circles). ChFi3d_FilletShape::ChFi3d_QuasiAngular
   //! corresponds to a nurbs representation of circles
   //! which parameterisation matches the circle one.
-  //! ChFi3d_Polynomial corresponds to a polynomial
+  //! ChFi3d_FilletShape::ChFi3d_Polynomial corresponds to a polynomial
   //! representation of circles.
   Standard_EXPORT BRepFilletAPI_MakeFillet(const TopoDS_Shape&      S,
-                                           const ChFi3d_FilletShape FShape = ChFi3d_Rational);
+                                           const ChFi3d_FilletShape FShape = ChFi3d_FilletShape::ChFi3d_Rational);
 
   Standard_EXPORT void SetParams(const double Tang,
                                  const double Tesp,
@@ -370,13 +370,13 @@ public:
   Standard_EXPORT TopoDS_Shape BadShape() const;
 
   //! returns the status concerning the contour IC in case of error
-  //! ChFiDS_Ok : the computation is Ok
-  //! ChFiDS_StartsolFailure : the computation can't start, perhaps the
+  //! ChFiDS_ErrorStatus::ChFiDS_Ok : the computation is Ok
+  //! ChFiDS_ErrorStatus::ChFiDS_StartsolFailure : the computation can't start, perhaps the
   //! the radius is too big
-  //! ChFiDS_TwistedSurface : the computation failed because of a twisted
+  //! ChFiDS_ErrorStatus::ChFiDS_TwistedSurface : the computation failed because of a twisted
   //! surface
-  //! ChFiDS_WalkingFailure : there is a problem in the walking
-  //! ChFiDS_Error: other error different from above
+  //! ChFiDS_ErrorStatus::ChFiDS_WalkingFailure : there is a problem in the walking
+  //! ChFiDS_ErrorStatus::ChFiDS_Error: other error different from above
   Standard_EXPORT ChFiDS_ErrorStatus StripeStatus(const int IC) const;
 
 private:

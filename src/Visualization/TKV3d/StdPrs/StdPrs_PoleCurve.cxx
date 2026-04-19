@@ -38,10 +38,10 @@ void StdPrs_PoleCurve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
   aPresentation->CurrentGroup()->SetPrimitivesAspect(aDrawer->LineAspect()->Aspect());
 
   GeomAbs_CurveType CType = aCurve.GetType();
-  if (CType == GeomAbs_BezierCurve || CType == GeomAbs_BSplineCurve)
+  if (CType == GeomAbs_CurveType::GeomAbs_BezierCurve || CType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     int i, Nb;
-    if (CType == GeomAbs_BezierCurve)
+    if (CType == GeomAbs_CurveType::GeomAbs_BezierCurve)
     {
       occ::handle<Geom_BezierCurve> Bz               = aCurve.Bezier();
       Nb                                             = Bz->NbPoles();
@@ -50,7 +50,7 @@ void StdPrs_PoleCurve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
         aPrims->AddVertex(Bz->Pole(i));
       aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
     }
-    else if (CType == GeomAbs_BSplineCurve)
+    else if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
     {
       occ::handle<Geom_BSplineCurve> Bs              = aCurve.BSpline();
       Nb                                             = Bs->NbPoles();
@@ -86,7 +86,7 @@ bool StdPrs_PoleCurve::Match(const double           X,
   GeomAbs_CurveType CType = aCurve.GetType();
   int               i, Nb = 0;
   double            x, y, z;
-  if (CType == GeomAbs_BezierCurve)
+  if (CType == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     occ::handle<Geom_BezierCurve> Bz = aCurve.Bezier();
     Nb                               = Bz->NbPoles();
@@ -98,7 +98,7 @@ bool StdPrs_PoleCurve::Match(const double           X,
     }
     return false;
   }
-  else if (CType == GeomAbs_BSplineCurve)
+  else if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom_BSplineCurve> Bs = aCurve.BSpline();
     Nb                                = Bs->NbPoles();
@@ -127,7 +127,7 @@ int StdPrs_PoleCurve::Pick(const double           X,
   double            dist;
   GeomAbs_CurveType CType = aCurve.GetType();
 
-  if (CType == GeomAbs_BezierCurve)
+  if (CType == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     occ::handle<Geom_BezierCurve> Bz = aCurve.Bezier();
     Nb                               = Bz->NbPoles();
@@ -145,7 +145,7 @@ int StdPrs_PoleCurve::Pick(const double           X,
       }
     }
   }
-  else if (CType == GeomAbs_BSplineCurve)
+  else if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom_BSplineCurve> Bs = aCurve.BSpline();
     Nb                                = Bs->NbPoles();

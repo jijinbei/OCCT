@@ -17,7 +17,7 @@
 #ifndef _IntRes2d_Situation_HeaderFile
 #define _IntRes2d_Situation_HeaderFile
 
-enum IntRes2d_Situation
+enum class IntRes2d_Situation
 {
   IntRes2d_Inside,
   IntRes2d_Outside,

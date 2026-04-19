@@ -100,10 +100,10 @@ void BRepMesh_CurveTessellator::init()
   int aMinPntThreshold = 2;
   switch (myCurve.GetType())
   {
-    case GeomAbs_Circle:
-    case GeomAbs_Ellipse:
-    case GeomAbs_Parabola:
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       aMinPntThreshold = 4;
       break;
 
@@ -235,8 +235,8 @@ bool BRepMesh_CurveTessellator::Value(const int theIndex,
   // it is necessary to re-project point.
   const Adaptor3d_CurveOnSurface&       aCurve   = myCurve.CurveOnSurface();
   const occ::handle<Adaptor3d_Surface>& aSurface = aCurve.GetSurface();
-  if (aSurface->GetType() != GeomAbs_BSplineSurface && aSurface->GetType() != GeomAbs_BezierSurface
-      && aSurface->GetType() != GeomAbs_OtherSurface)
+  if (aSurface->GetType() != GeomAbs_SurfaceType::GeomAbs_BSplineSurface && aSurface->GetType() != GeomAbs_SurfaceType::GeomAbs_BezierSurface
+      && aSurface->GetType() != GeomAbs_SurfaceType::GeomAbs_OtherSurface)
   {
     return true;
   }

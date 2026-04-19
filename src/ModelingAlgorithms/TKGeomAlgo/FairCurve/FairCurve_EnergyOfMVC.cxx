@@ -55,7 +55,7 @@ FairCurve_EnergyOfMVC::FairCurve_EnergyOfMVC(
       MyTension(BSplOrder, FlatKnots, Poles, 1, LengthSliding, Law, FreeSliding, true),
       MySagging(BSplOrder, FlatKnots, Poles, 1, Law, FreeSliding),
       MyJerk(BSplOrder, FlatKnots, Poles, 1, Law, FreeSliding),
-      MyStatus(FairCurve_OK)
+      MyStatus(FairCurve_AnalysisCode::FairCurve_OK)
 {
   Standard_DomainError_Raise_if(PhysicalRatio < 0 || PhysicalRatio > 1,
                                 "FairCurve_EnergyOfMVC: PhysicalRatio error");
@@ -94,10 +94,10 @@ bool FairCurve_EnergyOfMVC::Compute(const int DerivativeOrder, math_Vector& Resu
   bool               Ok = false;
 
   // Blindage contre les longueur de glissement trop exotique
-  MyStatus = FairCurve_OK;
+  MyStatus = FairCurve_AnalysisCode::FairCurve_OK;
   if (MyLengthSliding > 10 * OriginalSliding)
   {
-    MyStatus = FairCurve_InfiniteSliding;
+    MyStatus = FairCurve_AnalysisCode::FairCurve_InfiniteSliding;
     return false;
   }
   if (MyLengthSliding < OriginalSliding / 100)

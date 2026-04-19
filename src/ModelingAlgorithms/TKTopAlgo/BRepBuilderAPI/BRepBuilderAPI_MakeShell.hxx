@@ -60,7 +60,7 @@ public:
   //! function is used to define the construction arguments.
   //! Warning
   //! The function Error will return
-  //! BRepBuilderAPI_EmptyShell if it is called before the function Init.
+  //! BRepBuilderAPI_ShellError::BRepBuilderAPI_EmptyShell if it is called before the function Init.
   Standard_EXPORT BRepBuilderAPI_MakeShell();
 
   //! Constructs a shell from the surface S.
@@ -85,7 +85,7 @@ public:
   //! direction by the two parameter values VMin and VMax.
   //! Warning
   //! The function Error returns:
-  //! -      BRepBuilderAPI_ShellParametersOutOfRange
+  //! -      BRepBuilderAPI_ShellError::BRepBuilderAPI_ShellParametersOutOfRange
   //! when the given parameters are outside the bounds of the
   //! surface or the basis surface if S is trimmed
   Standard_EXPORT void Init(const occ::handle<Geom_Surface>& S,
@@ -99,10 +99,10 @@ public:
   Standard_EXPORT bool IsDone() const override;
 
   //! Returns the construction status:
-  //! -   BRepBuilderAPI_ShellDone if the shell is built, or
+  //! -   BRepBuilderAPI_ShellError::BRepBuilderAPI_ShellDone if the shell is built, or
   //! -   another value of the BRepBuilderAPI_ShellError
   //! enumeration indicating why the construction failed.
-  //! This is frequently BRepBuilderAPI_ShellParametersOutOfRange
+  //! This is frequently BRepBuilderAPI_ShellError::BRepBuilderAPI_ShellParametersOutOfRange
   //! indicating that the given parameters are outside the bounds of the surface.
   Standard_EXPORT BRepBuilderAPI_ShellError Error() const;
 

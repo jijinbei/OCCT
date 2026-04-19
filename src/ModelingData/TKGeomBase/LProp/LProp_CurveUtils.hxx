@@ -294,7 +294,7 @@ void SetParameter(Curve&        theCurve,
 {
   theStoredU = theU;
   EvalDerivatives<Access>(theCurve, theU, theDerOrder, thePnt, theDerivArr);
-  theTanStatus = LProp_Undecided;
+  theTanStatus = LProp_Status::LProp_Undecided;
 }
 
 //! Ensure derivatives up to the required order are computed.
@@ -336,9 +336,9 @@ bool IsTangentDefined(Props&        theProps,
                       int&          theSigOrder,
                       LProp_Status& theTanStatus)
 {
-  if (theTanStatus == LProp_Undefined)
+  if (theTanStatus == LProp_Status::LProp_Undefined)
     return false;
-  if (theTanStatus >= LProp_Defined)
+  if (theTanStatus >= LProp_Status::LProp_Defined)
     return true;
 
   const double aTolSq  = theLinTol * theLinTol;
@@ -360,19 +360,19 @@ bool IsTangentDefined(Props&        theProps,
           aV = theProps.D3();
           break;
         default:
-          theTanStatus = LProp_Undefined;
+          theTanStatus = LProp_Status::LProp_Undefined;
           return false;
       }
       if (aV.SquareMagnitude() > aTolSq)
       {
         theSigOrder  = anOrder;
-        theTanStatus = LProp_Defined;
+        theTanStatus = LProp_Status::LProp_Defined;
         return true;
       }
     }
     else
     {
-      theTanStatus = LProp_Undefined;
+      theTanStatus = LProp_Status::LProp_Undefined;
       return false;
     }
   }

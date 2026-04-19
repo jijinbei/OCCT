@@ -40,7 +40,7 @@ IMPLEMENT_STANDARD_RTTIEXT(BiTgte_CurveOnEdge, Adaptor3d_Curve)
 //=================================================================================================
 
 BiTgte_CurveOnEdge::BiTgte_CurveOnEdge()
-    : myType(GeomAbs_OtherCurve)
+    : myType(GeomAbs_CurveType::GeomAbs_OtherCurve)
 {
 }
 
@@ -49,7 +49,7 @@ BiTgte_CurveOnEdge::BiTgte_CurveOnEdge()
 BiTgte_CurveOnEdge::BiTgte_CurveOnEdge(const TopoDS_Edge& theEonF, const TopoDS_Edge& theEdge)
     : myEdge(theEdge),
       myEonF(theEonF),
-      myType(GeomAbs_OtherCurve)
+      myType(GeomAbs_CurveType::GeomAbs_OtherCurve)
 {
   Init(theEonF, theEdge);
 }
@@ -88,14 +88,14 @@ void BiTgte_CurveOnEdge::Init(const TopoDS_Edge& EonF, const TopoDS_Edge& Edge)
   GeomAdaptor_Curve Curv(myCurv);
   GeomAdaptor_Curve ConF(myConF);
 
-  myType = GeomAbs_OtherCurve;
-  if (Curv.GetType() == GeomAbs_Line && ConF.GetType() == GeomAbs_Circle)
+  myType = GeomAbs_CurveType::GeomAbs_OtherCurve;
+  if (Curv.GetType() == GeomAbs_CurveType::GeomAbs_Line && ConF.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     gp_Ax1 a1 = Curv.Line().Position();
     gp_Ax1 a2 = ConF.Circle().Axis();
     if (a1.IsCoaxial(a2, Precision::Angular(), Precision::Confusion()))
     {
-      myType = GeomAbs_Circle;
+      myType = GeomAbs_CurveType::GeomAbs_Circle;
       myCirc = gp_Circ(ConF.Circle().Position(), 0.);
     }
   }
@@ -229,7 +229,7 @@ gp_Lin BiTgte_CurveOnEdge::Line() const
 
 gp_Circ BiTgte_CurveOnEdge::Circle() const
 {
-  if (myType != GeomAbs_Circle)
+  if (myType != GeomAbs_CurveType::GeomAbs_Circle)
   {
     throw Standard_NoSuchObject("BiTgte_CurveOnEdge::Circle");
   }

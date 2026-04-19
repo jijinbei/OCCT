@@ -17,7 +17,7 @@
 #ifndef _PCDM_TypeOfFileDriver_HeaderFile
 #define _PCDM_TypeOfFileDriver_HeaderFile
 
-enum PCDM_TypeOfFileDriver
+enum class PCDM_TypeOfFileDriver
 {
   PCDM_TOFD_File,
   PCDM_TOFD_CmpFile,

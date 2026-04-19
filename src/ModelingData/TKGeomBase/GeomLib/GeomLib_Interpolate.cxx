@@ -36,11 +36,11 @@ GeomLib_Interpolate::GeomLib_Interpolate(const int                         Degre
   if (NumPoints < Degree || PointsArray.Lower() != 1 || PointsArray.Upper() < NumPoints
       || ParametersArray.Lower() != 1 || ParametersArray.Upper() < NumPoints)
   {
-    myError = GeomLib_NotEnoughtPoints;
+    myError = GeomLib_InterpolationErrors::GeomLib_NotEnoughtPoints;
   }
   else if (Degree < 3)
   {
-    myError = GeomLib_DegreeSmallerThan3;
+    myError = GeomLib_InterpolationErrors::GeomLib_DegreeSmallerThan3;
   }
   else
   {
@@ -112,7 +112,7 @@ GeomLib_Interpolate::GeomLib_Interpolate(const int                         Degre
     }
     else
     {
-      myError = GeomLib_InversionProblem;
+      myError = GeomLib_InterpolationErrors::GeomLib_InversionProblem;
     }
   }
 }

@@ -21,7 +21,7 @@
 inline LocOpe_Gluer::LocOpe_Gluer()
     : myDone(false),
       myOri(TopAbs_INTERNAL),
-      myOpe(LocOpe_INVALID)
+      myOpe(LocOpe_Operation::LocOpe_INVALID)
 {
 }
 
@@ -32,7 +32,7 @@ inline LocOpe_Gluer::LocOpe_Gluer(const TopoDS_Shape& Sbase, const TopoDS_Shape&
       mySb(Sbase),
       mySn(Snew),
       myOri(TopAbs_INTERNAL),
-      myOpe(LocOpe_INVALID)
+      myOpe(LocOpe_Operation::LocOpe_INVALID)
 {
 }
 

@@ -310,7 +310,7 @@ public:
   Standard_EXPORT bool IsDone() const override;
 
   //! Returns the construction status
-  //! -   BRepBuilderAPI_EdgeDone if the edge is built, or
+  //! -   BRepBuilderAPI_EdgeError::BRepBuilderAPI_EdgeDone if the edge is built, or
   //! -   another value of the BRepBuilderAPI_EdgeError
   //! enumeration indicating the reason of construction failure.
   Standard_EXPORT BRepBuilderAPI_EdgeError Error() const;

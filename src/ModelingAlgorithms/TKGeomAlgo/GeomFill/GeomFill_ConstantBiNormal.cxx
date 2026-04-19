@@ -261,23 +261,23 @@ bool GeomFill_ConstantBiNormal::IsOnlyBy3dCurve() const
 
   switch (TheType)
   {
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       TheAxe = myCurve->Circle().Axis();
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       TheAxe = myCurve->Ellipse().Axis();
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       TheAxe = myCurve->Hyperbola().Axis();
       break;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       TheAxe = myCurve->Parabola().Axis();
       break;
     }
-    case GeomAbs_Line: { // La normale du plan de la courbe est il perpendiculaire a la BiNormale ?
+    case GeomAbs_CurveType::GeomAbs_Line: { // La normale du plan de la courbe est il perpendiculaire a la BiNormale ?
       gp_Vec V;
       V.SetXYZ(myCurve->Line().Direction().XYZ());
       return V.IsNormal(BN, Precision::Angular());

@@ -48,8 +48,8 @@ public:
   Standard_EXPORT BRepExtrema_DistShapeShape(
     const TopoDS_Shape&          Shape1,
     const TopoDS_Shape&          Shape2,
-    const Extrema_ExtFlag        F        = Extrema_ExtFlag_MINMAX,
-    const Extrema_ExtAlgo        A        = Extrema_ExtAlgo_Grad,
+    const Extrema_ExtFlag        F        = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+    const Extrema_ExtAlgo        A        = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad,
     const Message_ProgressRange& theRange = Message_ProgressRange());
   //! create tool and computation of the minimum distance
   //! (value and pair of points) in single thread mode.
@@ -63,8 +63,8 @@ public:
     const TopoDS_Shape&          Shape1,
     const TopoDS_Shape&          Shape2,
     const double                 theDeflection,
-    const Extrema_ExtFlag        F        = Extrema_ExtFlag_MINMAX,
-    const Extrema_ExtAlgo        A        = Extrema_ExtAlgo_Grad,
+    const Extrema_ExtFlag        F        = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+    const Extrema_ExtAlgo        A        = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad,
     const Message_ProgressRange& theRange = Message_ProgressRange());
 
   //! Sets deflection to computation of the minimum distance

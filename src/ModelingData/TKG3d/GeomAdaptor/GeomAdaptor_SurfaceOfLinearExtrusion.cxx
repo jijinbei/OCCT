@@ -101,7 +101,7 @@ void GeomAdaptor_SurfaceOfLinearExtrusion::Load(const gp_Dir& V)
   myHaveDir   = true;
   myDirection = V;
 
-  mySurfaceType = GeomAbs_SurfaceOfExtrusion;
+  mySurfaceType = GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion;
 
   // Populate extrusion surface data for fast evaluation
   GeomAdaptor_Surface::ExtrusionData anExtData;
@@ -269,40 +269,40 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfLinearExtrusion::GetType() const
   switch (myBasisCurve->GetType())
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       gp_Dir D = myBasisCurve->Line().Direction();
       if (!myDirection.IsParallel(D, Precision::Angular()))
-        return GeomAbs_Plane;
+        return GeomAbs_SurfaceType::GeomAbs_Plane;
       break;
     }
 
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       gp_Dir D = (myBasisCurve->Circle()).Axis().Direction();
       if (myDirection.IsParallel(D, Precision::Angular()))
-        return GeomAbs_Cylinder;
+        return GeomAbs_SurfaceType::GeomAbs_Cylinder;
       else if (myDirection.IsNormal(D, Precision::Angular()))
-        return GeomAbs_Plane;
+        return GeomAbs_SurfaceType::GeomAbs_Plane;
       break;
     }
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       gp_Dir D = (myBasisCurve->Ellipse()).Axis().Direction();
       if (myDirection.IsNormal(D, Precision::Angular()))
-        return GeomAbs_Plane;
+        return GeomAbs_SurfaceType::GeomAbs_Plane;
       break;
     }
 
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       gp_Dir D = (myBasisCurve->Parabola()).Axis().Direction();
       if (myDirection.IsNormal(D, Precision::Angular()))
-        return GeomAbs_Plane;
+        return GeomAbs_SurfaceType::GeomAbs_Plane;
       break;
     }
 
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       gp_Dir D = (myBasisCurve->Hyperbola()).Axis().Direction();
       if (myDirection.IsNormal(D, Precision::Angular()))
-        return GeomAbs_Plane;
+        return GeomAbs_SurfaceType::GeomAbs_Plane;
       break;
     }
 
@@ -310,14 +310,14 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfLinearExtrusion::GetType() const
       break;
   }
 
-  return GeomAbs_SurfaceOfExtrusion;
+  return GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion;
 }
 
 //=================================================================================================
 
 gp_Pln GeomAdaptor_SurfaceOfLinearExtrusion::Plane() const
 {
-  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_Plane,
+  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_SurfaceType::GeomAbs_Plane,
                                  "GeomAdaptor_SurfaceOfLinearExtrusion::Plane");
 
   gp_Pnt P;
@@ -358,7 +358,7 @@ gp_Pln GeomAdaptor_SurfaceOfLinearExtrusion::Plane() const
 
 gp_Cylinder GeomAdaptor_SurfaceOfLinearExtrusion::Cylinder() const
 {
-  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_Cylinder,
+  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_SurfaceType::GeomAbs_Cylinder,
                                  "GeomAdaptor_SurfaceOfLinearExtrusion::Cylinder");
 
   gp_Circ C = myBasisCurve->Circle();

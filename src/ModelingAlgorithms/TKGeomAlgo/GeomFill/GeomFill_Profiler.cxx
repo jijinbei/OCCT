@@ -142,7 +142,7 @@ void GeomFill_Profiler::AddCurve(const occ::handle<Geom_Curve>& Curve)
     C = occ::down_cast<Geom_Curve>(Curve->Copy());
   }
   else {
-    C = GeomConvert::CurveToBSplineCurve(Curve,Convert_QuasiAngular);
+    C = GeomConvert::CurveToBSplineCurve(Curve,Convert_ParameterisationType::Convert_QuasiAngular);
   }
   */
   ///////////////////////////////////////////////

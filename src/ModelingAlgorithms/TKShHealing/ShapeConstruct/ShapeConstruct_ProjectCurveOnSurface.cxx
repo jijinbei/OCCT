@@ -765,22 +765,22 @@ bool ShapeConstruct_ProjectCurveOnSurface::PerformByProjLib(const occ::handle<Ge
 
     switch (aProjector.GetType())
     {
-      case GeomAbs_Line:
+      case GeomAbs_CurveType::GeomAbs_Line:
         theC2D = new Geom2d_Line(aProjector.Line());
         break;
-      case GeomAbs_Circle:
+      case GeomAbs_CurveType::GeomAbs_Circle:
         theC2D = new Geom2d_Circle(aProjector.Circle());
         break;
-      case GeomAbs_Ellipse:
+      case GeomAbs_CurveType::GeomAbs_Ellipse:
         theC2D = new Geom2d_Ellipse(aProjector.Ellipse());
         break;
-      case GeomAbs_Parabola:
+      case GeomAbs_CurveType::GeomAbs_Parabola:
         theC2D = new Geom2d_Parabola(aProjector.Parabola());
         break;
-      case GeomAbs_Hyperbola:
+      case GeomAbs_CurveType::GeomAbs_Hyperbola:
         theC2D = new Geom2d_Hyperbola(aProjector.Hyperbola());
         break;
-      case GeomAbs_BSplineCurve:
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve:
         theC2D = aProjector.BSpline();
         break;
       default:

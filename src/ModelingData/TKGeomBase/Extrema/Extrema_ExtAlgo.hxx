@@ -17,7 +17,7 @@
 #ifndef _Extrema_ExtAlgo_HeaderFile
 #define _Extrema_ExtAlgo_HeaderFile
 
-enum Extrema_ExtAlgo
+enum class Extrema_ExtAlgo
 {
   Extrema_ExtAlgo_Grad,
   Extrema_ExtAlgo_Tree

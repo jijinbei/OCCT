@@ -17,7 +17,7 @@
 #ifndef _IntWalk_StatusDeflection_HeaderFile
 #define _IntWalk_StatusDeflection_HeaderFile
 
-enum IntWalk_StatusDeflection
+enum class IntWalk_StatusDeflection
 {
   IntWalk_PasTropGrand,
   IntWalk_StepTooSmall,

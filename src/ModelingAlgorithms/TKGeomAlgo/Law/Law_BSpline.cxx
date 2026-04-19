@@ -114,36 +114,36 @@ static void KnotAnalysis(const int                         Degree,
                          GeomAbs_BSplKnotDistribution&     KnotForm,
                          int&                              MaxKnotMult)
 {
-  KnotForm = GeomAbs_NonUniform;
+  KnotForm = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
 
   BSplCLib_KnotDistribution KSet = BSplCLib::KnotForm(CKnots, 1, CKnots.Length());
 
-  if (KSet == BSplCLib_Uniform)
+  if (KSet == BSplCLib_KnotDistribution::BSplCLib_Uniform)
   {
     BSplCLib_MultDistribution MSet = BSplCLib::MultForm(CMults, 1, CMults.Length());
     switch (MSet)
     {
-      case BSplCLib_NonConstant:
+      case BSplCLib_MultDistribution::BSplCLib_NonConstant:
         break;
-      case BSplCLib_Constant:
+      case BSplCLib_MultDistribution::BSplCLib_Constant:
         if (CKnots.Length() == 2)
         {
-          KnotForm = GeomAbs_PiecewiseBezier;
+          KnotForm = GeomAbs_BSplKnotDistribution::GeomAbs_PiecewiseBezier;
         }
         else
         {
           if (CMults(1) == 1)
-            KnotForm = GeomAbs_Uniform;
+            KnotForm = GeomAbs_BSplKnotDistribution::GeomAbs_Uniform;
         }
         break;
-      case BSplCLib_QuasiConstant:
+      case BSplCLib_MultDistribution::BSplCLib_QuasiConstant:
         if (CMults(1) == Degree + 1)
         {
           double M = CMults(2);
           if (M == Degree)
-            KnotForm = GeomAbs_PiecewiseBezier;
+            KnotForm = GeomAbs_BSplKnotDistribution::GeomAbs_PiecewiseBezier;
           else if (M == 1)
-            KnotForm = GeomAbs_QuasiUniform;
+            KnotForm = GeomAbs_BSplKnotDistribution::GeomAbs_QuasiUniform;
         }
         break;
     }
@@ -1020,7 +1020,7 @@ void Law_BSpline::UpdateKnots()
   int MaxKnotMult = 0;
   KnotAnalysis(deg, periodic, knots->Array1(), mults->Array1(), knotSet, MaxKnotMult);
 
-  if (knotSet == GeomAbs_Uniform && !periodic)
+  if (knotSet == GeomAbs_BSplKnotDistribution::GeomAbs_Uniform && !periodic)
   {
     flatknots = knots;
   }

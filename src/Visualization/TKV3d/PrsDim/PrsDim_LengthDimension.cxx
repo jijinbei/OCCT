@@ -482,7 +482,7 @@ bool PrsDim_LengthDimension::InitEdgeFaceLength(const TopoDS_Edge& theEdge,
   theEdgeDir = gp::DX();
 
   // Find attachment points (closest distance between the edge and the face)
-  BRepExtrema_DistShapeShape aDistAdaptor(theEdge, theFace, Extrema_ExtFlag_MIN);
+  BRepExtrema_DistShapeShape aDistAdaptor(theEdge, theFace, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   if (!aDistAdaptor.IsDone() || aDistAdaptor.NbSolution() < 1)
   {
     return false;
@@ -772,7 +772,7 @@ bool PrsDim_LengthDimension::InitOneShapePoints(const TopoDS_Shape& theShape)
   double            aFirst = aBrepCurve.FirstParameter();
   double            aLast  = aBrepCurve.LastParameter();
 
-  if (aBrepCurve.GetType() != GeomAbs_Line)
+  if (aBrepCurve.GetType() != GeomAbs_CurveType::GeomAbs_Line)
   {
     return false;
   }

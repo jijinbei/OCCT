@@ -166,7 +166,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
       if (trc)
         std::cout << " Directions must be opposite" << std::endl;
 #endif
-      myStatusError = BRepFeat_BadDirect;
+      myStatusError = BRepFeat_StatusError::BRepFeat_BadDirect;
       NotDone();
       return;
     }
@@ -251,7 +251,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
     if (trc)
       std::cout << " No Extreme faces" << std::endl;
 #endif
-    myStatusError = BRepFeat_NoExtFace;
+    myStatusError = BRepFeat_StatusError::BRepFeat_NoExtFace;
     NotDone();
     return;
   }
@@ -384,7 +384,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
         std::cout << "Face profile not computable" << std::endl;
       }
 #endif
-      myStatusError = BRepFeat_NoFaceProf;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NoFaceProf;
       NotDone();
       return;
     }
@@ -399,7 +399,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
 #ifdef OCCT_DEBUG
       std::cout << "Verify plane and wire orientation" << std::endl;
 #endif
-      myStatusError = BRepFeat_FalseSide;
+      myStatusError = BRepFeat_StatusError::BRepFeat_FalseSide;
       NotDone();
       return;
     }
@@ -783,7 +783,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
         std::cout << " Face profile not computable" << std::endl;
       }
 #endif
-      myStatusError = BRepFeat_NoFaceProf;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NoFaceProf;
       NotDone();
       return;
     }
@@ -798,7 +798,7 @@ void BRepFeat_MakeLinearForm::Init(const TopoDS_Shape&            Sbase,
 #ifdef OCCT_DEBUG
       std::cout << "Verify plane and wire orientation" << std::endl;
 #endif
-      myStatusError = BRepFeat_FalseSide;
+      myStatusError = BRepFeat_StatusError::BRepFeat_FalseSide;
       NotDone();
       return;
     }
@@ -897,7 +897,7 @@ void BRepFeat_MakeLinearForm::Perform()
     if (trc)
       std::cout << " Fields not initialized" << std::endl;
 #endif
-    myStatusError = BRepFeat_NotInitialized;
+    myStatusError = BRepFeat_StatusError::BRepFeat_NotInitialized;
     NotDone();
     return;
   }
@@ -909,9 +909,9 @@ void BRepFeat_MakeLinearForm::Perform()
   myGluedF.Clear();
 
   if (!mySUntil.IsNull())
-    myPerfSelection = BRepFeat_SelectionU;
+    myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionU;
   else
-    myPerfSelection = BRepFeat_NoSelection;
+    myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
 
   gp_Dir dir(myDir);
   gp_Vec V = Length * dir;
@@ -939,7 +939,7 @@ void BRepFeat_MakeLinearForm::Perform()
       if (trc)
         std::cout << " Sliding face not in Base shape" << std::endl;
 #endif
-      myStatusError = BRepFeat_IncSlidFace;
+      myStatusError = BRepFeat_StatusError::BRepFeat_IncSlidFace;
       NotDone();
       return;
     }
@@ -957,7 +957,7 @@ void BRepFeat_MakeLinearForm::Perform()
       std::cout << " Glued faces not empty and Until shape not null" << std::endl;
     }
 #endif
-    myStatusError = BRepFeat_InvShape;
+    myStatusError = BRepFeat_StatusError::BRepFeat_InvShape;
     NotDone();
     return;
   }

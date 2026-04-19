@@ -20,7 +20,7 @@
 TEST(UnitsAPI_Test, BUC60727_AnyToLS_Conversion)
 {
   // Set local system to MDTV (Millimeter, Degree, Ton, Velocity)
-  UnitsAPI::SetLocalSystem(UnitsAPI_MDTV);
+  UnitsAPI::SetLocalSystem(UnitsAPI_SystemUnits::UnitsAPI_MDTV);
 
   // Test conversion: 3 mm in the MDTV system should remain 3
   // (since the base unit for length in MDTV is millimeter)

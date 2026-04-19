@@ -39,7 +39,7 @@ BRepExtrema_ExtFF::BRepExtrema_ExtFF(const TopoDS_Face& F1, const TopoDS_Face& F
 void BRepExtrema_ExtFF::Initialize(const TopoDS_Face& F2)
 {
   BRepAdaptor_Surface Surf(F2);
-  if (Surf.GetType() == GeomAbs_OtherSurface)
+  if (Surf.GetType() == GeomAbs_SurfaceType::GeomAbs_OtherSurface)
     return; // protect against non-geometric type (e.g. triangulation)
 
   myHS       = new BRepAdaptor_Surface(Surf);
@@ -60,7 +60,7 @@ void BRepExtrema_ExtFF::Perform(const TopoDS_Face& F1, const TopoDS_Face& F2)
   myPointsOnS2.Clear();
 
   BRepAdaptor_Surface Surf1(F1);
-  if (myHS.IsNull() || Surf1.GetType() == GeomAbs_OtherSurface)
+  if (myHS.IsNull() || Surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_OtherSurface)
     return; // protect against non-geometric type (e.g. triangulation)
 
   occ::handle<BRepAdaptor_Surface> HS1 = new BRepAdaptor_Surface(Surf1);

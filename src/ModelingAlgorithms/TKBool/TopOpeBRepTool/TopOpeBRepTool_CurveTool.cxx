@@ -113,22 +113,22 @@ Standard_EXPORT occ::handle<Geom2d_Curve> MakePCurve(const ProjLib_ProjectedCurv
   occ::handle<Geom2d_Curve> C2D;
   switch (PC.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       C2D = new Geom2d_Line(PC.Line());
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       C2D = new Geom2d_Circle(PC.Circle());
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       C2D = new Geom2d_Ellipse(PC.Ellipse());
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       C2D = new Geom2d_Parabola(PC.Parabola());
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       C2D = new Geom2d_Hyperbola(PC.Hyperbola());
       break;
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       C2D = PC.BSpline();
       break;
     default:
@@ -660,13 +660,13 @@ bool TopOpeBRepTool_CurveTool::MakeCurves(const double                     parmi
   Approx
     .SetParameters(tol3d, tol2d, degmin, degmax, nitmax, NbPntMax, withtangency, parametrization);
 
-  if (CompC3D && CompPC1 && BAS1.GetType() == GeomAbs_Plane)
+  if (CompC3D && CompPC1 && BAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     //-- The curve X,Y,Z and U2,V2 is approximated
     Approx.Perform(BAS1, BAS2, AL, CompC3D, false, CompPC2, iparmin, iparmax);
   }
 
-  else if (CompC3D && CompPC2 && BAS2.GetType() == GeomAbs_Plane)
+  else if (CompC3D && CompPC2 && BAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     //-- The curve X,Y,Z and U1,V1 is approximated
     Approx.Perform(BAS1, BAS2, AL, CompC3D, CompPC1, false, iparmin, iparmax);
@@ -685,14 +685,14 @@ bool TopOpeBRepTool_CurveTool::MakeCurves(const double                     parmi
 
   if (done)
   {
-    if (CompC3D && CompPC1 && BAS1.GetType() == GeomAbs_Plane)
+    if (CompC3D && CompPC1 && BAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       C3Dnew = ::MakeCurve3DfromWLineApprox(Approx, 1);
       PC1new = ::MakeCurve2DfromWLineApproxAndPlane(Approx, BAS1.Plane());
       if (CompPC2)
         PC2new = ::MakeCurve2DfromWLineApprox(Approx, 2);
     }
-    else if (CompC3D && CompPC2 && BAS2.GetType() == GeomAbs_Plane)
+    else if (CompC3D && CompPC2 && BAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       C3Dnew = ::MakeCurve3DfromWLineApprox(Approx, 1);
       if (CompPC1)
@@ -916,30 +916,30 @@ bool TopOpeBRepTool_CurveTool::IsProjectable(const TopoDS_Shape&            S,
   // --------
 
   bool projectable = true;
-  if (suty == GeomAbs_Cone)
+  if (suty == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
-    if ((cuty == GeomAbs_Ellipse) || (cuty == GeomAbs_Hyperbola) || (cuty == GeomAbs_Parabola))
+    if ((cuty == GeomAbs_CurveType::GeomAbs_Ellipse) || (cuty == GeomAbs_CurveType::GeomAbs_Hyperbola) || (cuty == GeomAbs_CurveType::GeomAbs_Parabola))
     {
       projectable = false;
     }
   }
-  else if (suty == GeomAbs_Cylinder)
+  else if (suty == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
-    if (cuty == GeomAbs_Ellipse)
+    if (cuty == GeomAbs_CurveType::GeomAbs_Ellipse)
     {
       projectable = false;
     }
   }
-  else if (suty == GeomAbs_Sphere)
+  else if (suty == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
-    if (cuty == GeomAbs_Circle)
+    if (cuty == GeomAbs_CurveType::GeomAbs_Circle)
     {
       projectable = false;
     }
   }
-  else if (suty == GeomAbs_Torus)
+  else if (suty == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
-    if (cuty == GeomAbs_Circle)
+    if (cuty == GeomAbs_CurveType::GeomAbs_Circle)
     {
       projectable = false;
     }
@@ -998,7 +998,7 @@ occ::handle<Geom2d_Curve> TopOpeBRepTool_CurveTool::MakePCurveOnFace(
   double u2 = pC2D.X();
   double v2 = pC2D.Y();
 
-  if (BAS.GetType() == GeomAbs_Sphere)
+  if (BAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     // MSV: consider quasiperiodic shift of pcurve
     double VFirst  = BAS.FirstVParameter();

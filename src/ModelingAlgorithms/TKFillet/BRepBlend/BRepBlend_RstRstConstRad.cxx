@@ -74,7 +74,7 @@ BRepBlend_RstRstConstRad::BRepBlend_RstRstConstRad(const occ::handle<Adaptor3d_S
       maxang(RealFirst()),
       minang(RealLast()),
       distmin(RealLast()),
-      mySShape(BlendFunc_Rational)
+      mySShape(BlendFunc_SectionShape::BlendFunc_Rational)
 {
 }
 
@@ -453,22 +453,22 @@ Blend_DecrochStatus BRepBlend_RstRstConstRad::Decroch(const math_Vector& Sol,
   {
     if (NRst2InPlane.Dot(TgRst2) < 1.e-10)
     {
-      return Blend_DecrochBoth;
+      return Blend_DecrochStatus::Blend_DecrochBoth;
     }
     else
     {
-      return Blend_DecrochRst1;
+      return Blend_DecrochStatus::Blend_DecrochRst1;
     }
   }
   else
   {
     if (NRst2InPlane.Dot(TgRst2) < 1.e-10)
     {
-      return Blend_DecrochRst2;
+      return Blend_DecrochStatus::Blend_DecrochRst2;
     }
     else
     {
-      return Blend_NoDecroch;
+      return Blend_DecrochStatus::Blend_NoDecroch;
     }
   }
 }
@@ -577,7 +577,7 @@ void BRepBlend_RstRstConstRad::Section(const double Param,
 
 bool BRepBlend_RstRstConstRad::IsRational() const
 {
-  return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================
@@ -683,7 +683,7 @@ void BRepBlend_RstRstConstRad::Section(const Blend_Point&            P,
   Poles2d(Poles2d.Upper()).SetCoord(pt2d2.X(), pt2d2.Y());
 
   // Linear case
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = ptrst1;
     Poles(upp)   = ptrst2;
@@ -864,7 +864,7 @@ bool BRepBlend_RstRstConstRad::Section(const Blend_Point&            P,
   }
 
   // Linear case
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = ptrst1;
     Poles(upp)   = ptrst2;

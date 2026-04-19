@@ -263,21 +263,21 @@ static int DDataStd_SetGeometry(Draw_Interpretor& di, int nb, const char** arg)
   {
     const char* aT = arg[3];
     if (strcmp(aT, "any") == 0)
-      aType = TDataXtd_ANY_GEOM;
+      aType = TDataXtd_GeometryEnum::TDataXtd_ANY_GEOM;
     else if (strcmp(aT, "pnt") == 0)
-      aType = TDataXtd_POINT;
+      aType = TDataXtd_GeometryEnum::TDataXtd_POINT;
     else if (strcmp(aT, "lin") == 0)
-      aType = TDataXtd_LINE;
+      aType = TDataXtd_GeometryEnum::TDataXtd_LINE;
     else if (strcmp(aT, "cir") == 0)
-      aType = TDataXtd_CIRCLE;
+      aType = TDataXtd_GeometryEnum::TDataXtd_CIRCLE;
     else if (strcmp(aT, "ell") == 0)
-      aType = TDataXtd_ELLIPSE;
+      aType = TDataXtd_GeometryEnum::TDataXtd_ELLIPSE;
     else if (strcmp(aT, "spl") == 0)
-      aType = TDataXtd_SPLINE;
+      aType = TDataXtd_GeometryEnum::TDataXtd_SPLINE;
     else if (strcmp(aT, "pln") == 0)
-      aType = TDataXtd_PLANE;
+      aType = TDataXtd_GeometryEnum::TDataXtd_PLANE;
     else if (strcmp(aT, "cyl") == 0)
-      aType = TDataXtd_CYLINDER;
+      aType = TDataXtd_GeometryEnum::TDataXtd_CYLINDER;
     else
     {
       di << "DDataStd_SetGeometry : unknown type, must be one of:\n";
@@ -324,28 +324,28 @@ static int DDataStd_GetGeometryType(Draw_Interpretor& di, int nb, const char** a
   TDataXtd_GeometryEnum aType = aGA->GetType();
   switch (aType)
   {
-    case TDataXtd_ANY_GEOM:
+    case TDataXtd_GeometryEnum::TDataXtd_ANY_GEOM:
       di << "any";
       break;
-    case TDataXtd_POINT:
+    case TDataXtd_GeometryEnum::TDataXtd_POINT:
       di << "pnt";
       break;
-    case TDataXtd_LINE:
+    case TDataXtd_GeometryEnum::TDataXtd_LINE:
       di << "lin";
       break;
-    case TDataXtd_CIRCLE:
+    case TDataXtd_GeometryEnum::TDataXtd_CIRCLE:
       di << "cir";
       break;
-    case TDataXtd_ELLIPSE:
+    case TDataXtd_GeometryEnum::TDataXtd_ELLIPSE:
       di << "ell";
       break;
-    case TDataXtd_SPLINE:
+    case TDataXtd_GeometryEnum::TDataXtd_SPLINE:
       di << "spl";
       break;
-    case TDataXtd_PLANE:
+    case TDataXtd_GeometryEnum::TDataXtd_PLANE:
       di << "pln";
       break;
-    case TDataXtd_CYLINDER:
+    case TDataXtd_GeometryEnum::TDataXtd_CYLINDER:
       di << "cyl";
       break;
     default: {

@@ -174,7 +174,7 @@ void Extrema_GenLocateExtPS::Perform(const gp_Pnt& theP,
     // Normal projection criteria.
     Extrema_FuncPSNorm F(theP, mySurf);
 
-    if (mySurf.GetType() == GeomAbs_BSplineSurface)
+    if (mySurf.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
     {
       aTol(1) = myTolU;
       aTol(2) = myTolV;

@@ -103,7 +103,7 @@ void BRepBndLib::Add(const TopoDS_Shape& S, Bnd_Box& B, bool useTriangulation)
       if (!GS.IsNull())
       {
         BS.Initialize(F, false);
-        if (BS.GetType() != GeomAbs_Plane)
+        if (BS.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
         {
           BS.Initialize(F);
           BndLib_AddSurface::Add(BS, BRep_Tool::Tolerance(F), B);
@@ -429,28 +429,28 @@ void BRepBndLib::AddOptimal(const TopoDS_Shape& S,
 bool CanUseEdges(const Adaptor3d_Surface& BS)
 {
   GeomAbs_SurfaceType aST = BS.GetType();
-  if (aST == GeomAbs_Plane || aST == GeomAbs_Cylinder || aST == GeomAbs_Cone
-      || aST == GeomAbs_SurfaceOfExtrusion)
+  if (aST == GeomAbs_SurfaceType::GeomAbs_Plane || aST == GeomAbs_SurfaceType::GeomAbs_Cylinder || aST == GeomAbs_SurfaceType::GeomAbs_Cone
+      || aST == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
   {
     return true;
   }
-  else if (aST == GeomAbs_SurfaceOfRevolution)
+  else if (aST == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
   {
     const occ::handle<Adaptor3d_Curve>& aBC = BS.BasisCurve();
-    return aBC->GetType() == GeomAbs_Line;
+    return aBC->GetType() == GeomAbs_CurveType::GeomAbs_Line;
   }
-  else if (aST == GeomAbs_OffsetSurface)
+  else if (aST == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
   {
     const occ::handle<Adaptor3d_Surface>& aS = BS.BasisSurface();
     return CanUseEdges(*aS);
   }
-  else if (aST == GeomAbs_BSplineSurface)
+  else if (aST == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     occ::handle<Geom_BSplineSurface> aBSpl = BS.BSpline();
     return (aBSpl->UDegree() == 1 && aBSpl->NbUKnots() == 2)
            || (aBSpl->VDegree() == 1 && aBSpl->NbVKnots() == 2);
   }
-  else if (aST == GeomAbs_BezierSurface)
+  else if (aST == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     occ::handle<Geom_BezierSurface> aBz = BS.Bezier();
     return (aBz->UDegree() == 1) || (aBz->VDegree() == 1);

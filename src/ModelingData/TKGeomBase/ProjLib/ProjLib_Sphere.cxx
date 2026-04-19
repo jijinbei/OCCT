@@ -54,7 +54,7 @@ ProjLib_Sphere::ProjLib_Sphere(const gp_Sphere& Sp, const gp_Circ& C)
 
 void ProjLib_Sphere::Init(const gp_Sphere& Sp)
 {
-  myType       = GeomAbs_OtherCurve;
+  myType       = GeomAbs_CurveType::GeomAbs_OtherCurve;
   mySphere     = Sp;
   myIsPeriodic = false;
   isDone       = false;
@@ -119,7 +119,7 @@ void ProjLib_Sphere::Project(const gp_Circ& C)
 
   if (isIsoU)
   {
-    myType = GeomAbs_Line;
+    myType = GeomAbs_CurveType::GeomAbs_Line;
 
     P2d1 = EvalPnt2d(gp_Vec(Xc), mySphere);
     P2d2 = EvalPnt2d(gp_Vec(Yc), mySphere);
@@ -153,7 +153,7 @@ void ProjLib_Sphere::Project(const gp_Circ& C)
   }
   else if (isIsoV)
   {
-    myType = GeomAbs_Line;
+    myType = GeomAbs_CurveType::GeomAbs_Line;
 
     // P2d(U,V) :first point of the PCurve.
     double U = Xs.AngleWithRef(Xc, Xs ^ Ys);

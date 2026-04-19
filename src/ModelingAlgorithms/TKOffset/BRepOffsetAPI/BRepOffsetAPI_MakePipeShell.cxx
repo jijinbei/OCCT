@@ -141,17 +141,17 @@ BRepBuilderAPI_PipeError BRepOffsetAPI_MakePipeShell::GetStatus() const
   stat = myPipe->GetStatus();
   switch (stat)
   {
-    case GeomFill_PipeOk: {
-      return BRepBuilderAPI_PipeDone;
+    case GeomFill_PipeError::GeomFill_PipeOk: {
+      return BRepBuilderAPI_PipeError::BRepBuilderAPI_PipeDone;
     }
-    case GeomFill_PlaneNotIntersectGuide: {
-      return BRepBuilderAPI_PlaneNotIntersectGuide;
+    case GeomFill_PipeError::GeomFill_PlaneNotIntersectGuide: {
+      return BRepBuilderAPI_PipeError::BRepBuilderAPI_PlaneNotIntersectGuide;
     }
-    case GeomFill_ImpossibleContact: {
-      return BRepBuilderAPI_ImpossibleContact;
+    case GeomFill_PipeError::GeomFill_ImpossibleContact: {
+      return BRepBuilderAPI_PipeError::BRepBuilderAPI_ImpossibleContact;
     }
     default:
-      return BRepBuilderAPI_PipeNotDone;
+      return BRepBuilderAPI_PipeError::BRepBuilderAPI_PipeNotDone;
   }
 }
 

@@ -17,7 +17,7 @@
 #ifndef _TopOpeBRep_P2Dstatus_HeaderFile
 #define _TopOpeBRep_P2Dstatus_HeaderFile
 
-enum TopOpeBRep_P2Dstatus
+enum class TopOpeBRep_P2Dstatus
 {
   TopOpeBRep_P2DUNK,
   TopOpeBRep_P2DINT,

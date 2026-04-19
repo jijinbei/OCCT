@@ -475,7 +475,7 @@ void TopOpeBRepBuild_Builder::MakeFaces(const TopoDS_Shape&             aFace,
           NCollection_List<BRepCheck_Status>::Iterator itl(bcr->Status());
           for (; itl.More(); itl.Next())
           {
-            if (itl.Value() == BRepCheck_BadOrientationOfSubshape)
+            if (itl.Value() == BRepCheck_Status::BRepCheck_BadOrientationOfSubshape)
             {
               CorrectEdgeOrientation(newWire);
               break;

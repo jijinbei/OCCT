@@ -25,30 +25,30 @@ int HLRBRep_SurfaceTool::NbSamplesU(const HLRBRep_Surface* theSurf)
   const GeomAbs_SurfaceType typS = theSurf->GetType();
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       nbs = 2;
     }
     break;
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       nbs = 3 + theSurf->NbUPoles();
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       nbs = theSurf->NbUKnots();
       nbs *= theSurf->UDegree();
       if (nbs < 2)
         nbs = 2;
     }
     break;
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       nbs = 20;
     }
     break;
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
       nbs = 10;
     }
     break;
@@ -69,27 +69,27 @@ int HLRBRep_SurfaceTool::NbSamplesV(const HLRBRep_Surface* theSurf)
   const GeomAbs_SurfaceType typS = theSurf->GetType();
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       nbs = 2;
     }
     break;
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       nbs = 3 + theSurf->NbVPoles();
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       nbs = theSurf->NbVKnots();
       nbs *= theSurf->VDegree();
       if (nbs < 2)
         nbs = 2;
     }
     break;
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
       nbs = 15;
     }
     break;

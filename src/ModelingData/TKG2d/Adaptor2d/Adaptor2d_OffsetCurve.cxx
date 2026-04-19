@@ -373,14 +373,14 @@ GeomAbs_CurveType Adaptor2d_OffsetCurve::GetType() const
     switch (myCurve->GetType())
     {
 
-      case GeomAbs_Line:
-        return GeomAbs_Line;
+      case GeomAbs_CurveType::GeomAbs_Line:
+        return GeomAbs_CurveType::GeomAbs_Line;
 
-      case GeomAbs_Circle:
-        return GeomAbs_Circle;
+      case GeomAbs_CurveType::GeomAbs_Circle:
+        return GeomAbs_CurveType::GeomAbs_Circle;
 
       default:
-        return GeomAbs_OffsetCurve;
+        return GeomAbs_CurveType::GeomAbs_OffsetCurve;
     }
   }
 }
@@ -389,7 +389,7 @@ GeomAbs_CurveType Adaptor2d_OffsetCurve::GetType() const
 
 gp_Lin2d Adaptor2d_OffsetCurve::Line() const
 {
-  if (GetType() == GeomAbs_Line)
+  if (GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     gp_Pnt2d P;
     gp_Vec2d V;
@@ -406,7 +406,7 @@ gp_Lin2d Adaptor2d_OffsetCurve::Line() const
 
 gp_Circ2d Adaptor2d_OffsetCurve::Circle() const
 {
-  if (GetType() == GeomAbs_Circle)
+  if (GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     if (myOffset == 0.)
     {
@@ -449,7 +449,7 @@ gp_Circ2d Adaptor2d_OffsetCurve::Circle() const
 
 gp_Elips2d Adaptor2d_OffsetCurve::Ellipse() const
 {
-  if (myCurve->GetType() == GeomAbs_Ellipse && myOffset == 0.)
+  if (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse && myOffset == 0.)
   {
     return myCurve->Ellipse();
   }
@@ -463,7 +463,7 @@ gp_Elips2d Adaptor2d_OffsetCurve::Ellipse() const
 
 gp_Hypr2d Adaptor2d_OffsetCurve::Hyperbola() const
 {
-  if (myCurve->GetType() == GeomAbs_Hyperbola && myOffset == 0.)
+  if (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Hyperbola && myOffset == 0.)
   {
     return myCurve->Hyperbola();
   }
@@ -477,7 +477,7 @@ gp_Hypr2d Adaptor2d_OffsetCurve::Hyperbola() const
 
 gp_Parab2d Adaptor2d_OffsetCurve::Parabola() const
 {
-  if (myCurve->GetType() == GeomAbs_Parabola && myOffset == 0.)
+  if (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Parabola && myOffset == 0.)
   {
     return myCurve->Parabola();
   }
@@ -492,7 +492,7 @@ gp_Parab2d Adaptor2d_OffsetCurve::Parabola() const
 int Adaptor2d_OffsetCurve::Degree() const
 {
   GeomAbs_CurveType type = myCurve->GetType();
-  if ((type == GeomAbs_BezierCurve || type == GeomAbs_BSplineCurve) && myOffset == 0.)
+  if ((type == GeomAbs_CurveType::GeomAbs_BezierCurve || type == GeomAbs_CurveType::GeomAbs_BSplineCurve) && myOffset == 0.)
   {
     return myCurve->Degree();
   }
@@ -518,7 +518,7 @@ bool Adaptor2d_OffsetCurve::IsRational() const
 int Adaptor2d_OffsetCurve::NbPoles() const
 {
   GeomAbs_CurveType type = myCurve->GetType();
-  if ((type == GeomAbs_BezierCurve || type == GeomAbs_BSplineCurve) && myOffset == 0.)
+  if ((type == GeomAbs_CurveType::GeomAbs_BezierCurve || type == GeomAbs_CurveType::GeomAbs_BSplineCurve) && myOffset == 0.)
   {
     return myCurve->NbPoles();
   }
@@ -546,7 +546,7 @@ int Adaptor2d_OffsetCurve::NbKnots() const
 
 occ::handle<Geom2d_BezierCurve> Adaptor2d_OffsetCurve::Bezier() const
 {
-  Standard_NoSuchObject_Raise_if(myOffset != 0.0e0 || GetType() != GeomAbs_BezierCurve,
+  Standard_NoSuchObject_Raise_if(myOffset != 0.0e0 || GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve,
                                  "Adaptor2d_OffsetCurve::Bezier() - wrong curve type");
   return myCurve->Bezier();
 }
@@ -555,7 +555,7 @@ occ::handle<Geom2d_BezierCurve> Adaptor2d_OffsetCurve::Bezier() const
 
 occ::handle<Geom2d_BSplineCurve> Adaptor2d_OffsetCurve::BSpline() const
 {
-  Standard_NoSuchObject_Raise_if(myOffset != 0.0e0 || GetType() != GeomAbs_BSplineCurve,
+  Standard_NoSuchObject_Raise_if(myOffset != 0.0e0 || GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve,
                                  "Adaptor2d_OffsetCurve::BSpline() - wrong curve type");
   return myCurve->BSpline();
 }
@@ -565,11 +565,11 @@ static int nbPoints(const occ::handle<Adaptor2d_Curve2d>& theCurve)
 
   int nbs = 20;
 
-  if (theCurve->GetType() == GeomAbs_BezierCurve)
+  if (theCurve->GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     nbs = std::max(nbs, 3 + theCurve->NbPoles());
   }
-  else if (theCurve->GetType() == GeomAbs_BSplineCurve)
+  else if (theCurve->GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     nbs = std::max(nbs, theCurve->NbKnots() * theCurve->Degree());
   }

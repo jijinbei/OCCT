@@ -64,14 +64,14 @@ BlendFunc_ConstRad::BlendFunc_ConstRad(const occ::handle<Adaptor3d_Surface>& S1,
       maxang(RealFirst()),
       minang(RealLast()),
       distmin(RealLast()),
-      mySShape(BlendFunc_Rational)
+      mySShape(BlendFunc_SectionShape::BlendFunc_Rational)
 {
   // Initialisation of cash control variables.
   tval = -9.876e100;
   xval.Init(-9.876e100);
   myXOrder = -1;
   myTOrder = -1;
-  myTConv  = Convert_TgtThetaOver2;
+  myTConv  = Convert_ParameterisationType::Convert_TgtThetaOver2;
 }
 
 //=================================================================================================
@@ -1168,7 +1168,7 @@ void BlendFunc_ConstRad::Section(const double Param,
 
 bool BlendFunc_ConstRad::IsRational() const
 {
-  return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================
@@ -1271,7 +1271,7 @@ void BlendFunc_ConstRad::Section(const Blend_Point&            P,
   Poles2d(Poles2d.Lower()).SetCoord(X(1), X(2));
   Poles2d(Poles2d.Upper()).SetCoord(X(3), X(4));
 
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts1;
     Poles(upp)   = pts2;
@@ -1392,7 +1392,7 @@ bool BlendFunc_ConstRad::Section(const Blend_Point&            P,
   }
 
   // the linear case is processed...
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts1;
     Poles(upp)   = pts2;
@@ -1745,7 +1745,7 @@ bool BlendFunc_ConstRad::Section(const Blend_Point&            P,
   }
 
   // linear case is processed...
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts1;
     Poles(upp)   = pts2;

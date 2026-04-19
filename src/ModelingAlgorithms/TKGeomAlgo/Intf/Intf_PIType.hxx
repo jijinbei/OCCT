@@ -19,7 +19,7 @@
 
 //! Describes the different intersection point types for this
 //! application.
-enum Intf_PIType
+enum class Intf_PIType
 {
   Intf_EXTERNAL,
   Intf_FACE,

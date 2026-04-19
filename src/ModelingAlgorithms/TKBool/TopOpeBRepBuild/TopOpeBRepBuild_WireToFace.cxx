@@ -52,7 +52,7 @@ void TopOpeBRepBuild_WireToFace::MakeFaces(const TopoDS_Face& F, NCollection_Lis
   TopOpeBRepBuild_FaceBuilder FB;
   FB.InitFaceBuilder(wes, F, ForceClass);
 
-  TopOpeBRepDS_BuildTool  BT(TopOpeBRepTool_APPROX);
+  TopOpeBRepDS_BuildTool  BT(TopOpeBRepTool_OutCurveType::TopOpeBRepTool_APPROX);
   TopOpeBRepBuild_Builder B(BT);
   B.MakeFaces(F, FB, LF);
 }

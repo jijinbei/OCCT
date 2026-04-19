@@ -1311,8 +1311,8 @@ private:
   bool                                       myVPeriodic     = false;
   bool                                       myURational     = false;
   bool                                       myVRational     = false;
-  GeomAbs_BSplKnotDistribution               myUKnotSet      = GeomAbs_NonUniform;
-  GeomAbs_BSplKnotDistribution               myVKnotSet      = GeomAbs_NonUniform;
+  GeomAbs_BSplKnotDistribution               myUKnotSet      = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
+  GeomAbs_BSplKnotDistribution               myVKnotSet      = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
   GeomAbs_Shape                              myUSmooth       = GeomAbs_C0;
   GeomAbs_Shape                              myVSmooth       = GeomAbs_C0;
   double                                     myUMaxDerivInv  = 0.0;

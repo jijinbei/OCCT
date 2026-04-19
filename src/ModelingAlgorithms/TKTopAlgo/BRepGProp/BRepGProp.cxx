@@ -735,7 +735,7 @@ double BRepGProp::VolumePropertiesGK(const TopoDS_Shape& S,
       BRepCheck_Shell  aChecker(TopoDS::Shell(aShell));
       BRepCheck_Status aStatus = aChecker.Closed(false);
 
-      if (aStatus == BRepCheck_NoError)
+      if (aStatus == BRepCheck_Status::BRepCheck_NoError)
         aClosedShells.Append(aShell);
     }
 
@@ -885,7 +885,7 @@ double BRepGProp::VolumePropertiesGK(const TopoDS_Shape& S,
       BRepCheck_Shell  aChecker(TopoDS::Shell(aShell));
       BRepCheck_Status aStatus = aChecker.Closed(false);
 
-      if (aStatus == BRepCheck_NoError)
+      if (aStatus == BRepCheck_Status::BRepCheck_NoError)
         aClosedShells.Append(aShell);
     }
 

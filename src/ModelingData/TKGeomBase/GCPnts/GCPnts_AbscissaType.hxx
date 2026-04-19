@@ -17,7 +17,7 @@
 #ifndef _GCPnts_AbscissaType_HeaderFile
 #define _GCPnts_AbscissaType_HeaderFile
 
-enum GCPnts_AbscissaType
+enum class GCPnts_AbscissaType
 {
   GCPnts_LengthParametrized,
   GCPnts_Parametrized,

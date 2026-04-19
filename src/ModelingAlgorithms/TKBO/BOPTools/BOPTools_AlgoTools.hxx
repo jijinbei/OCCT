@@ -449,7 +449,7 @@ public: //! @name Methods for shape validation (correction)
     const bool                                                           theRunParallel = false);
 
   //! Provides valid values of tolerances for the shape <theS>
-  //! in terms of BRepCheck_InvalidCurveOnSurface.
+  //! in terms of BRepCheck_Status::BRepCheck_InvalidCurveOnSurface.
   Standard_EXPORT static void CorrectCurveOnSurface(
     const TopoDS_Shape&                                                  theS,
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMapToAvoid,
@@ -457,7 +457,7 @@ public: //! @name Methods for shape validation (correction)
     const bool                                                           theRunParallel = false);
 
   //! Provides valid values of tolerances for the shape <theS>
-  //! in terms of BRepCheck_InvalidPointOnCurve.
+  //! in terms of BRepCheck_Status::BRepCheck_InvalidPointOnCurve.
   Standard_EXPORT static void CorrectPointOnCurve(
     const TopoDS_Shape&                                                  theS,
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMapToAvoid,

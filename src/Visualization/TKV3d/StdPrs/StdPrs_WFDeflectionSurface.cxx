@@ -175,16 +175,16 @@ void StdPrs_WFDeflectionSurface::Add(const occ::handle<Prs3d_Presentation>& aPre
     aPresentation->CurrentGroup()->SetPrimitivesAspect(aDrawer->FreeBoundaryAspect()->Aspect());
     if (!UClosed)
     {
-      anIso.Load(GeomAbs_IsoU, U1, V1, V2);
+      anIso.Load(GeomAbs_IsoType::GeomAbs_IsoU, U1, V1, V2);
       StdPrs_DeflectionCurve::Add(aPresentation, anIso, TheDeflection, MaxP);
-      anIso.Load(GeomAbs_IsoU, U2, V1, V2);
+      anIso.Load(GeomAbs_IsoType::GeomAbs_IsoU, U2, V1, V2);
       StdPrs_DeflectionCurve::Add(aPresentation, anIso, TheDeflection, MaxP);
     }
     if (!VClosed)
     {
-      anIso.Load(GeomAbs_IsoV, V1, U1, U2);
+      anIso.Load(GeomAbs_IsoType::GeomAbs_IsoV, V1, U1, U2);
       StdPrs_DeflectionCurve::Add(aPresentation, anIso, TheDeflection, MaxP);
-      anIso.Load(GeomAbs_IsoV, V2, U1, U2);
+      anIso.Load(GeomAbs_IsoType::GeomAbs_IsoV, V2, U1, U2);
       StdPrs_DeflectionCurve::Add(aPresentation, anIso, TheDeflection, MaxP);
     }
   }
@@ -200,7 +200,7 @@ void StdPrs_WFDeflectionSurface::Add(const occ::handle<Prs3d_Presentation>& aPre
     double du = UClosed ? (U2 - U1) / fin : (U2 - U1) / (1 + fin);
     for (int i = 1; i <= fin; i++)
     {
-      anIso.Load(GeomAbs_IsoU, U1 + du * i, V1, V2);
+      anIso.Load(GeomAbs_IsoType::GeomAbs_IsoU, U1 + du * i, V1, V2);
       StdPrs_DeflectionCurve::Add(aPresentation, anIso, TheDeflection, MaxP);
     }
   }
@@ -212,7 +212,7 @@ void StdPrs_WFDeflectionSurface::Add(const occ::handle<Prs3d_Presentation>& aPre
     double dv = VClosed ? (V2 - V1) / fin : (V2 - V1) / (1 + fin);
     for (int i = 1; i <= fin; i++)
     {
-      anIso.Load(GeomAbs_IsoV, V1 + dv * i, U1, U2);
+      anIso.Load(GeomAbs_IsoType::GeomAbs_IsoV, V1 + dv * i, U1, U2);
       StdPrs_DeflectionCurve::Add(aPresentation, anIso, TheDeflection, MaxP);
     }
   }

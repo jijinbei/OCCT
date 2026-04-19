@@ -94,7 +94,7 @@ void BRepFeat_RibSlot::LFPerform()
     if (trc)
       std::cout << " Fields not initialized" << std::endl;
 #endif
-    myStatusError = BRepFeat_NotInitialized;
+    myStatusError = BRepFeat_StatusError::BRepFeat_NotInitialized;
     NotDone();
     return;
   }
@@ -175,7 +175,7 @@ void BRepFeat_RibSlot::LFPerform()
     }
 
     LocOpe_Operation ope = theGlue.OpeType();
-    if (ope == LocOpe_INVALID || (myFuse && ope != LocOpe_FUSE) || (!myFuse && ope != LocOpe_CUT)
+    if (ope == LocOpe_Operation::LocOpe_INVALID || (myFuse && ope != LocOpe_Operation::LocOpe_FUSE) || (!myFuse && ope != LocOpe_Operation::LocOpe_CUT)
         || (!Collage))
     {
       theOpe = 2;
@@ -218,7 +218,7 @@ void BRepFeat_RibSlot::LFPerform()
     bool                                     bFlag;
     NCollection_List<TopoDS_Shape>::Iterator aIt;
 
-    bFlag = myPerfSelection != BRepFeat_NoSelection;
+    bFlag = myPerfSelection != BRepFeat_PerfSelection::BRepFeat_NoSelection;
     //
     theBuilder.Init(mySbase, myGShape);
     theBuilder.SetOperation(myFuse, bFlag);
@@ -228,7 +228,7 @@ void BRepFeat_RibSlot::LFPerform()
     {
       theBuilder.PartsOfTool(partsoftool);
       aIt.Initialize(partsoftool);
-      if (aIt.More() && myPerfSelection != BRepFeat_NoSelection)
+      if (aIt.More() && myPerfSelection != BRepFeat_PerfSelection::BRepFeat_NoSelection)
       {
         double toler = (BRep_Tool::Tolerance(myPbase)) * 2;
         //
@@ -482,19 +482,19 @@ gp_Dir BRepFeat_RibSlot::Normal(const TopoDS_Face& F, const gp_Pnt& P)
   switch (AS.GetType())
   {
 
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       ElSLib::Parameters(AS.Plane(), P, U, V);
       break;
 
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       ElSLib::Parameters(AS.Cylinder(), P, U, V);
       break;
 
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       ElSLib::Parameters(AS.Cone(), P, U, V);
       break;
 
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       ElSLib::Parameters(AS.Torus(), P, U, V);
       break;
 
@@ -531,23 +531,23 @@ double BRepFeat_RibSlot::IntPar(const occ::handle<Geom_Curve>& C, const gp_Pnt& 
   switch (AC.GetType())
   {
 
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       U = ElCLib::Parameter(AC.Line(), P);
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       U = ElCLib::Parameter(AC.Circle(), P);
       break;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       U = ElCLib::Parameter(AC.Ellipse(), P);
       break;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       U = ElCLib::Parameter(AC.Hyperbola(), P);
       break;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       U = ElCLib::Parameter(AC.Parabola(), P);
       break;
 

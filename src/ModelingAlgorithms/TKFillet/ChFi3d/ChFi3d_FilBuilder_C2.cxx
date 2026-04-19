@@ -99,8 +99,8 @@ static bool ToricRotule(const BRepAdaptor_Surface&        fac,
     return false;
   if (!sp1->IsConstant() || !sp2->IsConstant())
     return false;
-  if ((fac.GetType() != GeomAbs_Plane) || (s1.GetType() != GeomAbs_Plane)
-      || (s2.GetType() != GeomAbs_Plane))
+  if ((fac.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane) || (s1.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
+      || (s2.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane))
     return false;
   gp_Dir df  = fac.Plane().Position().Direction();
   gp_Dir ds1 = s1.Plane().Position().Direction();
@@ -329,8 +329,8 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
   bool         isfirst2 = (Sens2 == 1);
   Stat1                 = st1->Spine()->Status(isfirst1);
   Stat2                 = st2->Spine()->Status(isfirst2);
-  bool c1biseau         = (Stat1 == ChFiDS_AllSame);
-  bool c1rotule         = (Stat1 == ChFiDS_OnSame && Stat2 == ChFiDS_OnSame);
+  bool c1biseau         = (Stat1 == ChFiDS_State::ChFiDS_AllSame);
+  bool c1rotule         = (Stat1 == ChFiDS_State::ChFiDS_OnSame && Stat2 == ChFiDS_State::ChFiDS_OnSame);
 
   // It is checked if the fillets have a commonpoint on a common arc.
   // This edge is the pivot of the bevel or the knee.
@@ -600,7 +600,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
               break;
             }
           }
-          if (pcpivot.GetType() != GeomAbs_BSplineCurve)
+          if (pcpivot.GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve)
           {
             occ::handle<Geom2d_TrimmedCurve> trc =
               new Geom2d_TrimmedCurve(pcpivot.Curve(),
@@ -822,7 +822,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
       double                       uintpcsam = 0., uintpcdif = 0.;
       int                          ifacosam = 0, ifacodif = 0, ifaopsam = 0, ifaopdif = 0;
       bool                         isfirstsam = false, isfirstdif = false;
-      if (Stat1 == ChFiDS_OnSame && Stat2 == ChFiDS_OnDiff)
+      if (Stat1 == ChFiDS_State::ChFiDS_OnSame && Stat2 == ChFiDS_State::ChFiDS_OnDiff)
       {
         stsam      = st1;
         sdsam      = sd1;
@@ -837,7 +837,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
         ifaopdif   = IFaArc2;
         isfirstdif = isfirst2;
       }
-      else if (Stat1 == ChFiDS_OnDiff && Stat2 == ChFiDS_OnSame)
+      else if (Stat1 == ChFiDS_State::ChFiDS_OnDiff && Stat2 == ChFiDS_State::ChFiDS_OnSame)
       {
         stsam      = st2;
         sdsam      = sd2;

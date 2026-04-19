@@ -65,7 +65,7 @@ occ::handle<TDataXtd_Axis> TDataXtd_Axis::Set(const TDF_Label& L, const gp_Lin& 
       {
         TopoDS_Edge       anEdge = TopoDS::Edge(aNS->Get());
         BRepAdaptor_Curve anAdaptor(anEdge);
-        if (anAdaptor.GetType() == GeomAbs_Line)
+        if (anAdaptor.GetType() == GeomAbs_CurveType::GeomAbs_Line)
         {
           gp_Lin anOldLine = anAdaptor.Line();
           if (anOldLine.Direction().X() == line.Direction().X()

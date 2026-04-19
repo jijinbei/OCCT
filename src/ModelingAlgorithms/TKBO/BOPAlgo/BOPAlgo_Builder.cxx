@@ -50,7 +50,7 @@ BOPAlgo_Builder::BOPAlgo_Builder()
       myOrigins(100, myAllocator),
       myInParts(100, myAllocator),
       myNonDestructive(false),
-      myGlue(BOPAlgo_GlueOff),
+      myGlue(BOPAlgo_GlueEnum::BOPAlgo_GlueOff),
       myCheckInverted(true)
 {
 }
@@ -69,7 +69,7 @@ BOPAlgo_Builder::BOPAlgo_Builder(const occ::handle<NCollection_BaseAllocator>& t
       myOrigins(100, myAllocator),
       myInParts(100, myAllocator),
       myNonDestructive(false),
-      myGlue(BOPAlgo_GlueOff),
+      myGlue(BOPAlgo_GlueEnum::BOPAlgo_GlueOff),
       myCheckInverted(true)
 {
 }

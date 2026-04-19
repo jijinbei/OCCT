@@ -91,7 +91,7 @@ static void Drawsect(const occ::handle<Adaptor3d_Surface>& surf1,
   // POP pour NT
   // char name[100];
   char* name = new char[100];
-  if ((State == Blend_StepTooLarge) || (State == Blend_SamePoints))
+  if ((State == Blend_Status::Blend_StepTooLarge) || (State == Blend_Status::Blend_SamePoints))
   {
     IndexOfRejection++;
     Sprintf(name, "%s_%d", "Rejection", IndexOfRejection);
@@ -109,7 +109,7 @@ static void Drawsect(const occ::handle<Adaptor3d_Surface>& surf1,
                      const double                          param,
                      Blend_Function&                       Func)
 {
-  Drawsect(surf1, surf2, sol, param, Func, Blend_OK);
+  Drawsect(surf1, surf2, sol, param, Func, Blend_Status::Blend_OK);
 }
 #endif
 
@@ -249,8 +249,8 @@ void BRepBlend_Walking::Perform(Blend_Function&    Func,
 #ifdef OCCT_DEBUG
   sectioncalculee = 0;
 #endif
-  State = TestArret(Func, Blend_OK, false);
-  if (State != Blend_OK)
+  State = TestArret(Func, Blend_Status::Blend_OK, false);
+  if (State != Blend_Status::Blend_OK)
   {
     return;
   }
@@ -331,7 +331,7 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function& Func,
     return false;
   }
 
-  TestArret(Func, Blend_OK, false);
+  TestArret(Func, Blend_Status::Blend_OK, false);
 #ifdef OCCT_DEBUG
   if (Blend_GettraceDRAWSECT())
   {
@@ -424,7 +424,7 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
     if (std::abs(w1 - w2) <= tolgui)
     {
       // sol sur 1 et 2 a la fois
-      State     = Blend_OnRst12;
+      State     = Blend_Status::Blend_OnRst12;
       param     = w1;
       ParSol(1) = solrst2(3);
       ParSol(2) = solrst2(4);
@@ -434,7 +434,7 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
     else if (sens * (w2 - w1) < 0.0)
     { // on garde le plus grand
       // sol sur 1
-      State = Blend_OnRst1;
+      State = Blend_Status::Blend_OnRst1;
       param = w1;
 
       recdomain1->Init();
@@ -453,7 +453,7 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
     else
     {
       // sol sur 2
-      State = Blend_OnRst2;
+      State = Blend_Status::Blend_OnRst2;
       param = w2;
 
       recdomain2->Init();
@@ -473,7 +473,7 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
   else if (recad1)
   {
     // sol sur 1
-    State = Blend_OnRst1;
+    State = Blend_Status::Blend_OnRst1;
     param = w1;
     recdomain1->Init();
     nbarc = 1;
@@ -502,7 +502,7 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
   else
   { // if (recad2) {
     // sol sur 2
-    State = Blend_OnRst2;
+    State = Blend_Status::Blend_OnRst2;
     param = w2;
 
     recdomain2->Init();
@@ -536,7 +536,7 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
   State = TestArret(Func, State, false);
   switch (State)
   {
-    case Blend_OnRst1: {
+    case Blend_Status::Blend_OnRst1: {
 #ifdef OCCT_DEBUG
       if (Blend_GettraceDRAWSECT())
       {
@@ -551,7 +551,7 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
     }
     break;
 
-    case Blend_OnRst2: {
+    case Blend_Status::Blend_OnRst2: {
 #ifdef OCCT_DEBUG
       if (Blend_GettraceDRAWSECT())
       {
@@ -566,7 +566,7 @@ bool BRepBlend_Walking::PerformFirstSection(Blend_Function&    Func,
     }
     break;
 
-    case Blend_OnRst12: {
+    case Blend_Status::Blend_OnRst12: {
 #ifdef OCCT_DEBUG
       if (Blend_GettraceDRAWSECT())
       {
@@ -752,14 +752,14 @@ Blend_Status BRepBlend_Walking::TestArret(Blend_Function&    Function,
 // Si c est le cas,
 //  On verifie le critere de fleche sur surf1 et surf2
 //   Si OK, on classifie les points sur surf1 et sur surf2.
-//    Si les deux sont dedans : on retourne Blend_OK
+//    Si les deux sont dedans : on retourne Blend_Status::Blend_OK
 //    sinon si un seul est dedans
 //     on resout le pb inverse sur la restriction concernee
 //    sinon on resout le pb inverse sur la surface pour laquelle
 //     le point est le plus loin.
 //   sinon (fleche non OK)
-//    on renvoie Blend_StepTooLarge.
-// sinon on renvoie Blend_StepTooLarge.
+//    on renvoie Blend_Status::Blend_StepTooLarge.
+// sinon on renvoie Blend_Status::Blend_StepTooLarge.
 //
 
 {
@@ -810,8 +810,8 @@ Blend_Status BRepBlend_Walking::TestArret(Blend_Function&    Function,
     }
     else
     {
-      State1 = Blend_OK;
-      State2 = Blend_OK;
+      State1 = Blend_Status::Blend_OK;
+      State2 = Blend_Status::Blend_OK;
       if (TestLengthStep)
       {
         // On verifie juste que le pas n'est pas trop grand
@@ -825,33 +825,33 @@ Blend_Status BRepBlend_Walking::TestArret(Blend_Function&    Function,
         curpoint.ParametersOnS1(curparamu, curparamv);
         previousP.ParametersOnS1(prevparamu, prevparamv);
         if (std::abs(curparamu - prevparamu) > sup(1))
-          State1 = Blend_StepTooLarge;
+          State1 = Blend_Status::Blend_StepTooLarge;
         if (std::abs(curparamv - prevparamv) > sup(2))
-          State1 = Blend_StepTooLarge;
+          State1 = Blend_Status::Blend_StepTooLarge;
         curpoint.ParametersOnS2(curparamu, curparamv);
         previousP.ParametersOnS2(prevparamu, prevparamv);
         if (std::abs(curparamu - prevparamu) > sup(3))
-          State2 = Blend_StepTooLarge;
+          State2 = Blend_Status::Blend_StepTooLarge;
         if (std::abs(curparamv - prevparamv) > sup(4))
-          State2 = Blend_StepTooLarge;
+          State2 = Blend_Status::Blend_StepTooLarge;
       }
     }
 
-    if (State1 == Blend_Backward)
+    if (State1 == Blend_Status::Blend_Backward)
     {
-      State1 = Blend_StepTooLarge;
+      State1 = Blend_Status::Blend_StepTooLarge;
       rebrou = true;
     }
 
-    if (State2 == Blend_Backward)
+    if (State2 == Blend_Status::Blend_Backward)
     {
-      State2 = Blend_StepTooLarge;
+      State2 = Blend_Status::Blend_StepTooLarge;
       rebrou = true;
     }
 
-    if (State1 == Blend_StepTooLarge || State2 == Blend_StepTooLarge)
+    if (State1 == Blend_Status::Blend_StepTooLarge || State2 == Blend_Status::Blend_StepTooLarge)
     {
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
 
     // Ici seulement on peut statuer sur le twist
@@ -869,19 +869,19 @@ Blend_Status BRepBlend_Walking::TestArret(Blend_Function&    Function,
       double testra = Tgp1.Dot(Nor1.Crossed(V1));
       if (std::abs(testra) > Precision::Confusion())
       {
-        tras1 = IntSurf_In;
+        tras1 = IntSurf_TypeTrans::IntSurf_In;
         if ((testra > 0. && !loctwist1) || (testra < 0. && loctwist1))
         {
-          tras1 = IntSurf_Out;
+          tras1 = IntSurf_TypeTrans::IntSurf_Out;
         }
 
         testra = Tgp2.Dot(Nor2.Crossed(V2));
         if (std::abs(testra) > Precision::Confusion())
         {
-          tras2 = IntSurf_Out;
+          tras2 = IntSurf_TypeTrans::IntSurf_Out;
           if ((testra > 0. && !loctwist2) || (testra < 0. && loctwist2))
           {
-            tras2 = IntSurf_In;
+            tras2 = IntSurf_TypeTrans::IntSurf_In;
           }
           comptra = true;
           line->Set(tras1, tras2);
@@ -889,18 +889,18 @@ Blend_Status BRepBlend_Walking::TestArret(Blend_Function&    Function,
       }
     }
 
-    if (State1 == Blend_OK || State2 == Blend_OK)
+    if (State1 == Blend_Status::Blend_OK || State2 == Blend_Status::Blend_OK)
     {
       previousP = curpoint;
       return State;
     }
 
-    if (State1 == Blend_StepTooSmall && State2 == Blend_StepTooSmall)
+    if (State1 == Blend_Status::Blend_StepTooSmall && State2 == Blend_Status::Blend_StepTooSmall)
     {
       previousP = curpoint;
-      if (State == Blend_OK)
+      if (State == Blend_Status::Blend_OK)
       {
-        return Blend_StepTooSmall;
+        return Blend_Status::Blend_StepTooSmall;
       }
       else
       {
@@ -908,9 +908,9 @@ Blend_Status BRepBlend_Walking::TestArret(Blend_Function&    Function,
       }
     }
 
-    if (State == Blend_OK)
+    if (State == Blend_Status::Blend_OK)
     {
-      return Blend_SamePoints;
+      return Blend_Status::Blend_SamePoints;
     }
     else
     {
@@ -919,7 +919,7 @@ Blend_Status BRepBlend_Walking::TestArret(Blend_Function&    Function,
   }
   else
   {
-    return Blend_StepTooLarge;
+    return Blend_Status::Blend_StepTooLarge;
   }
 }
 
@@ -989,24 +989,24 @@ Blend_Status BRepBlend_Walking::CheckDeflection(const bool OnFirst, const Blend_
   if (Norme <= toler3d * toler3d)
   {
     // il faudra peut etre  forcer meme point
-    return Blend_SamePoints;
+    return Blend_Status::Blend_SamePoints;
   }
   if (!prevpointistangent)
   {
     if (prevNorme <= toler3d * toler3d)
     {
-      return Blend_SamePoints;
+      return Blend_Status::Blend_SamePoints;
     }
     Cosi = sens * Corde * prevTg;
     if (Cosi < 0.)
     { // angle 3d>pi/2. --> retour arriere
-      return Blend_Backward;
+      return Blend_Status::Blend_Backward;
     }
 
     Cosi2 = Cosi * Cosi / prevNorme / Norme;
     if (Cosi2 < CosRef3D)
     {
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
 
@@ -1017,7 +1017,7 @@ Blend_Status BRepBlend_Walking::CheckDeflection(const bool OnFirst, const Blend_
     Cosi2 = Cosi * Cosi / Tgsurf.SquareMagnitude() / Norme;
     if (Cosi2 < CosRef3D || Cosi < 0.)
     {
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
 
@@ -1048,19 +1048,19 @@ Blend_Status BRepBlend_Walking::CheckDeflection(const bool OnFirst, const Blend_
     if (std::abs(Du) < tolu && std::abs(Dv) < tolv)
     {
       // il faudra peut etre  forcer meme point
-      return Blend_SamePoints; // point confondu 2d
+      return Blend_Status::Blend_SamePoints; // point confondu 2d
     }
     if (!prevpointistangent)
     {
       if (std::abs(previousd2d.X()) < tolu && std::abs(previousd2d.Y()) < tolv)
       {
         // il faudra peut etre  forcer meme point
-        return Blend_SamePoints; // point confondu 2d
+        return Blend_Status::Blend_SamePoints; // point confondu 2d
       }
       Cosi = sens * (Du * previousd2d.X() + Dv * previousd2d.Y());
       if (Cosi < 0)
       {
-        return Blend_Backward;
+        return Blend_Status::Blend_Backward;
       }
     }
     if (!curpointistangent)
@@ -1070,7 +1070,7 @@ Blend_Status BRepBlend_Walking::CheckDeflection(const bool OnFirst, const Blend_
       Cosi2 = Cosi * Cosi / Duv;
       if (Cosi2 < CosRef2D || Cosi < 0.)
       {
-        return Blend_StepTooLarge;
+        return Blend_Status::Blend_StepTooLarge;
       }
     }
   }
@@ -1082,15 +1082,15 @@ Blend_Status BRepBlend_Walking::CheckDeflection(const bool OnFirst, const Blend_
 
     if (FlecheCourante <= 0.25 * fleche * fleche)
     {
-      return Blend_StepTooSmall;
+      return Blend_Status::Blend_StepTooSmall;
     }
     if (FlecheCourante > fleche * fleche)
     {
       // pas trop grand : commentaire interessant
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
-  return Blend_OK;
+  return Blend_Status::Blend_OK;
 }
 
 int BRepBlend_Walking::ArcToRecadre(const bool         OnFirst,
@@ -1564,7 +1564,7 @@ void BRepBlend_Walking::Transition(const bool                            OnFirst
   tgrst.SetLinearForm(dp2d.X(), d1u, dp2d.Y(), d1v);
 
   CSLib::Normal(d1u, d1v, 1.e-9, stat, thenormal);
-  if (stat == CSLib_Defined)
+  if (stat == CSLib_NormalStatus::CSLib_Defined)
     normale.SetXYZ(thenormal.XYZ());
   else
   {
@@ -1602,7 +1602,7 @@ void BRepBlend_Walking::Transition(const bool                            OnFirst
                   iv);
     normale.SetXYZ(thenormal.XYZ());
 #ifdef OCCT_DEBUG
-    if (stat == CSLib_InfinityOfSolutions)
+    if (stat == CSLib_NormalStatus::CSLib_InfinityOfSolutions)
       std::cout << "BRepBlend_Walking::Transition : Infinite de Normal" << std::endl;
 #endif
   }
@@ -1804,7 +1804,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
   {
     return;
   }
-  Blend_Status                   State = Blend_OnRst12;
+  Blend_Status                   State = Blend_Status::Blend_OnRst12;
   TopAbs_State                   situ1 = TopAbs_IN, situ2 = TopAbs_IN;
   double                         w1, w2;
   int                            Index1 = 0, Index2 = 0, nbarc;
@@ -1850,7 +1850,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       Cosi2 = Cosi * Cosi / PrevTgOnGuide.SquareMagnitude() / TgOnGuide.SquareMagnitude();
     if (Cosi2 < CosRef3D) // angle 3d too great
     {
-      State = Blend_StepTooLarge;
+      State = Blend_Status::Blend_StepTooLarge;
       stepw = stepw / 2.;
       param = parprec + sens * stepw; // on ne risque pas de depasser Bound.
       if (std::abs(stepw) < tolgui)
@@ -1875,7 +1875,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
 
     if (!rsnld.IsDone())
     {
-      State    = Blend_StepTooLarge;
+      State    = Blend_Status::Blend_StepTooLarge;
       bonpoint = false;
     }
     else
@@ -1895,7 +1895,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
     }
     if (bonpoint && line->NbPoints() == 1 && (situ1 != TopAbs_IN || situ2 != TopAbs_IN))
     {
-      State    = Blend_StepTooLarge;
+      State    = Blend_Status::Blend_StepTooLarge;
       bonpoint = false;
     }
     if (bonpoint)
@@ -1926,7 +1926,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
           {
             echecrecad = true;
             recad1     = false;
-            State      = Blend_StepTooLarge;
+            State      = Blend_Status::Blend_StepTooLarge;
             bonpoint   = false;
             stepw      = stepw / 2.;
           }
@@ -1956,7 +1956,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
           {
             echecrecad = true;
             recad2     = false;
-            State      = Blend_StepTooLarge;
+            State      = Blend_Status::Blend_StepTooLarge;
             bonpoint   = false;
             stepw      = stepw / 2.;
           }
@@ -2026,7 +2026,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
           // sol sur 1 et 2 a la fois
           //  On passe par les arcs , pour ne pas avoir de probleme
           //  avec les surfaces periodiques.
-          State = Blend_OnRst12;
+          State = Blend_Status::Blend_OnRst12;
           param = (w1 + w2) / 2;
           gp_Pnt Pnt1, Pnt2;
           p2d                     = BRepBlend_HCurve2dTool::Value(recdomain1->Value(), solrst1(1));
@@ -2098,7 +2098,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
         else if (recad1)
         {
           // sol sur 1
-          State = Blend_OnRst1;
+          State = Blend_Status::Blend_OnRst1;
           param = w1;
           recdomain1->Init();
           nbarc = 1;
@@ -2134,7 +2134,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
         else if (recad2)
         {
           // sol sur 2
-          State = Blend_OnRst2;
+          State = Blend_Status::Blend_OnRst2;
           param = w2;
 
           recdomain2->Init();
@@ -2170,7 +2170,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
         }
         else
         {
-          State = Blend_OK;
+          State = Blend_Status::Blend_OK;
         }
 
         bool testdefl = true;
@@ -2191,16 +2191,16 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       else
       {
         // Ou bien le pas max est mal regle. On divise.
-        //	if(line->NbPoints() == 1) State = Blend_StepTooLarge;
+        //	if(line->NbPoints() == 1) State = Blend_Status::Blend_StepTooLarge;
         if (stepw > 2 * tolgui)
-          State = Blend_StepTooLarge;
+          State = Blend_Status::Blend_StepTooLarge;
         // Sinon echec recadrage. On sort avec PointsConfondus
         else
         {
 #ifdef OCCT_DEBUG
           std::cout << "Echec recadrage" << std::endl;
 #endif
-          State = Blend_SamePoints;
+          State = Blend_Status::Blend_SamePoints;
         }
       }
     }
@@ -2213,7 +2213,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
 #endif
     switch (State)
     {
-      case Blend_OK: {
+      case Blend_Status::Blend_OK: {
         // Mettre a jour la ligne.
         if (sens > 0.)
         {
@@ -2251,7 +2251,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_StepTooLarge: {
+      case Blend_Status::Blend_StepTooLarge: {
         stepw = stepw / 2.;
         if (std::abs(stepw) < tolgui)
         {
@@ -2279,7 +2279,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_StepTooSmall: {
+      case Blend_Status::Blend_StepTooSmall: {
         // Mettre a jour la ligne.
         if (sens > 0.)
         {
@@ -2317,7 +2317,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_OnRst1: {
+      case Blend_Status::Blend_OnRst1: {
         if (sens > 0.)
         {
           line->Append(previousP);
@@ -2343,7 +2343,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_OnRst2: {
+      case Blend_Status::Blend_OnRst2: {
         if (sens > 0.)
         {
           line->Append(previousP);
@@ -2369,7 +2369,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_OnRst12: {
+      case Blend_Status::Blend_OnRst12: {
         if (sens > 0.)
         {
           line->Append(previousP);
@@ -2402,7 +2402,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
       }
       break;
 
-      case Blend_SamePoints: {
+      case Blend_Status::Blend_SamePoints: {
         // On arrete
 #ifdef OCCT_DEBUG
         std::cout << " Points confondus dans le cheminement" << std::endl;
@@ -2549,7 +2549,7 @@ bool BRepBlend_Walking::CorrectExtremityOnOneRst(const int     IndexOfRst,
                            *AnotherSurf,
                            Precision::PConfusion(),
                            Precision::PConfusion(),
-                           Extrema_ExtFlag_MIN);
+                           Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   if (projonsurf.IsDone())
   {
     double MinSqDist = Precision::Infinite();

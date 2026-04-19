@@ -44,18 +44,18 @@ public:
   //! False only topological informaions are checked.
   //! The geometricals controls are
   //! For a Vertex:
-  //! BRepCheck_InvalidToleranceValue NYI
+  //! BRepCheck_Status::BRepCheck_InvalidToleranceValue NYI
   //! For an Edge:
-  //! BRepCheck_InvalidCurveOnClosedSurface,
-  //! BRepCheck_InvalidCurveOnSurface,
-  //! BRepCheck_InvalidSameParameterFlag,
-  //! BRepCheck_InvalidToleranceValue NYI
+  //! BRepCheck_Status::BRepCheck_InvalidCurveOnClosedSurface,
+  //! BRepCheck_Status::BRepCheck_InvalidCurveOnSurface,
+  //! BRepCheck_Status::BRepCheck_InvalidSameParameterFlag,
+  //! BRepCheck_Status::BRepCheck_InvalidToleranceValue NYI
   //! For a face:
-  //! BRepCheck_UnorientableShape,
-  //! BRepCheck_IntersectingWires,
-  //! BRepCheck_InvalidToleranceValue NYI
+  //! BRepCheck_Status::BRepCheck_UnorientableShape,
+  //! BRepCheck_Status::BRepCheck_IntersectingWires,
+  //! BRepCheck_Status::BRepCheck_InvalidToleranceValue NYI
   //! For a wire:
-  //! BRepCheck_SelfIntersectingWire
+  //! BRepCheck_Status::BRepCheck_SelfIntersectingWire
   BRepCheck_Analyzer(const TopoDS_Shape& S,
                      const bool          GeomControls  = true,
                      const bool          theIsParallel = false,
@@ -72,16 +72,16 @@ public:
   //! For a Vertex:
   //! BRepCheck_InvalidTolerance NYI
   //! For an Edge:
-  //! BRepCheck_InvalidCurveOnClosedSurface,
-  //! BRepCheck_InvalidCurveOnSurface,
-  //! BRepCheck_InvalidSameParameterFlag,
+  //! BRepCheck_Status::BRepCheck_InvalidCurveOnClosedSurface,
+  //! BRepCheck_Status::BRepCheck_InvalidCurveOnSurface,
+  //! BRepCheck_Status::BRepCheck_InvalidSameParameterFlag,
   //! BRepCheck_InvalidTolerance NYI
   //! For a face:
-  //! BRepCheck_UnorientableShape,
-  //! BRepCheck_IntersectingWires,
+  //! BRepCheck_Status::BRepCheck_UnorientableShape,
+  //! BRepCheck_Status::BRepCheck_IntersectingWires,
   //! BRepCheck_InvalidTolerance NYI
   //! For a wire:
-  //! BRepCheck_SelfIntersectingWire
+  //! BRepCheck_Status::BRepCheck_SelfIntersectingWire
   Standard_EXPORT void Init(const TopoDS_Shape& S, const bool GeomControls = true);
 
   //! Sets method to calculate distance: Calculating in finite number of points (if theIsExact

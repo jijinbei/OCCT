@@ -179,14 +179,14 @@ static int pipe(Draw_Interpretor& di, int n, const char** a)
   if (Profile.IsNull())
     return 1;
 
-  GeomFill_Trihedron Mode = GeomFill_IsCorrectedFrenet;
+  GeomFill_Trihedron Mode = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet;
   if (n >= 5)
   {
     int iMode = atoi(a[4]);
     if (iMode == 1)
-      Mode = GeomFill_IsFrenet;
+      Mode = GeomFill_Trihedron::GeomFill_IsFrenet;
     else if (iMode == 2)
-      Mode = GeomFill_IsDiscreteTrihedron;
+      Mode = GeomFill_Trihedron::GeomFill_IsDiscreteTrihedron;
   }
 
   bool ForceApproxC1 = false;
@@ -350,7 +350,7 @@ int evolved(Draw_Interpretor& di, int n, const char** a)
 
   TopoDS_Shape Volevo = BRepOffsetAPI_MakeEvolved(Base,
                                                   Prof,
-                                                  GeomAbs_Arc,
+                                                  GeomAbs_JoinType::GeomAbs_Arc,
                                                   !hasToComputeAxes,
                                                   Solid,
                                                   false,
@@ -528,22 +528,22 @@ int thrusections(Draw_Interpretor& di, int n, const char** a)
     BRepFill_ThruSectionErrorStatus aStatus = Generator->GetStatus();
     switch (aStatus)
     {
-      case BRepFill_ThruSectionErrorStatus_NotDone:
+      case BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotDone:
         di << "Algorithm is not done\n";
         break;
-      case BRepFill_ThruSectionErrorStatus_NotSameTopology:
+      case BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotSameTopology:
         di << "The input profiles should be all closed or all opened\n";
         break;
-      case BRepFill_ThruSectionErrorStatus_ProfilesInconsistent:
+      case BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_ProfilesInconsistent:
         di << "Profiles inconsistent\n";
         break;
-      case BRepFill_ThruSectionErrorStatus_WrongUsage:
+      case BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_WrongUsage:
         di << "Wrong usage of punctual sections\n";
         break;
-      case BRepFill_ThruSectionErrorStatus_Null3DCurve:
+      case BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Null3DCurve:
         di << "Some edges have null 3d curve";
         break;
-      case BRepFill_ThruSectionErrorStatus_Failed:
+      case BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Failed:
         di << "Algorithm has failed\n";
         break;
       default:
@@ -913,17 +913,17 @@ static int buildsweep(Draw_Interpretor& di, int n, const char** a)
   int          cur = 2;
   if (n > cur)
   {
-    BRepBuilderAPI_TransitionMode Transition = BRepBuilderAPI_Transformed;
+    BRepBuilderAPI_TransitionMode Transition = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed;
 
     // Reading Transition
     if (!strcmp(a[cur], "-C"))
     {
-      Transition = BRepBuilderAPI_RightCorner;
+      Transition = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RightCorner;
       cur++;
     }
     else if (!strcmp(a[cur], "-R"))
     {
-      Transition = BRepBuilderAPI_RoundCorner;
+      Transition = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RoundCorner;
       cur++;
     }
     Sweep->SetTransitionMode(Transition);
@@ -938,11 +938,11 @@ static int buildsweep(Draw_Interpretor& di, int n, const char** a)
   {
     di << "Buildsweep : Not Done\n";
     BRepBuilderAPI_PipeError Stat = Sweep->GetStatus();
-    if (Stat == BRepBuilderAPI_PlaneNotIntersectGuide)
+    if (Stat == BRepBuilderAPI_PipeError::BRepBuilderAPI_PlaneNotIntersectGuide)
     {
       di << "Buildsweep : One Plane not intersect the guide\n";
     }
-    if (Stat == BRepBuilderAPI_ImpossibleContact)
+    if (Stat == BRepBuilderAPI_PipeError::BRepBuilderAPI_ImpossibleContact)
     {
       di << "BuildSweep : One section can not be in contact with the guide\n";
     }
@@ -1017,15 +1017,15 @@ static int simulsweep(Draw_Interpretor& di, int n, const char** a)
 
   if (n > 3)
   {
-    BRepBuilderAPI_TransitionMode Transition = BRepBuilderAPI_Transformed;
+    BRepBuilderAPI_TransitionMode Transition = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed;
     // Lecture Transition
     if (!strcmp(a[3], "-C"))
     {
-      Transition = BRepBuilderAPI_RightCorner;
+      Transition = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RightCorner;
     }
     else if (!strcmp(a[3], "-R"))
     {
-      Transition = BRepBuilderAPI_RoundCorner;
+      Transition = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RoundCorner;
     }
     Sweep->SetTransitionMode(Transition);
   }

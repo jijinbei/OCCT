@@ -111,12 +111,12 @@ static IntPatch_SpecPntType IsSeamOrPole(const occ::handle<Adaptor3d_Surface>& t
 
   const GeomAbs_SurfaceType aType = theQSurf->GetType();
 
-  if ((aType == GeomAbs_Cone)
+  if ((aType == GeomAbs_SurfaceType::GeomAbs_Cone)
       && (theQSurf->Cone().Apex().SquareDistance(aP3d) < theTol3D * theTol3D))
   {
     return IntPatch_SPntPoleSeamU;
   }
-  else if (aType == GeomAbs_Sphere)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     const double aSqTol = theTol3D * theTol3D;
     gp_Pnt       aP(ElSLib::Value(0.0, M_PI_2, theQSurf->Sphere()));
@@ -134,15 +134,15 @@ static IntPatch_SpecPntType IsSeamOrPole(const occ::handle<Adaptor3d_Surface>& t
 
   const double aDeltaU = std::abs(aUQRef - aUQNext);
 
-  if ((aType != GeomAbs_Torus) && (aDeltaU < theDeltaMax))
+  if ((aType != GeomAbs_SurfaceType::GeomAbs_Torus) && (aDeltaU < theDeltaMax))
     return IntPatch_SPntNone;
 
   switch (aType)
   {
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       return IntPatch_SPntSeamU;
 
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       const double aDeltaV = std::abs(aVQRef - aVQNext);
 
       if ((aDeltaU >= theDeltaMax) && (aDeltaV >= theDeltaMax))
@@ -156,8 +156,8 @@ static IntPatch_SpecPntType IsSeamOrPole(const occ::handle<Adaptor3d_Surface>& t
     }
 
     break;
-    case GeomAbs_Sphere:
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       return IntPatch_SPntPoleSeamU;
     default:
       break;
@@ -475,15 +475,15 @@ void Recadre(const bool,
   iwline->Line()->Value(Param).Parameters(U1p, V1p, U2p, V2p);
   switch (typeS1)
   {
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       while (V1 < (V1p - 1.5 * M_PI))
         V1 += M_PI + M_PI;
       while (V1 > (V1p + 1.5 * M_PI))
         V1 -= M_PI + M_PI;
       [[fallthrough]];
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       while (U1 < (U1p - 1.5 * M_PI))
         U1 += M_PI + M_PI;
       while (U1 > (U1p + 1.5 * M_PI))
@@ -494,15 +494,15 @@ void Recadre(const bool,
   }
   switch (typeS2)
   {
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       while (V2 < (V2p - 1.5 * M_PI))
         V2 += M_PI + M_PI;
       while (V2 > (V2p + 1.5 * M_PI))
         V2 -= M_PI + M_PI;
       [[fallthrough]];
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       while (U2 < (U2p - 1.5 * M_PI))
         U2 += M_PI + M_PI;
       while (U2 > (U2p + 1.5 * M_PI))
@@ -523,7 +523,7 @@ double GetLocalStep(const occ::handle<Adaptor3d_Surface>& theSurf, const double 
   {
     GeomAbs_SurfaceType aSType = theSurf->GetType();
 
-    if (aSType == GeomAbs_BezierSurface || aSType == GeomAbs_BSplineSurface)
+    if (aSType == GeomAbs_SurfaceType::GeomAbs_BezierSurface || aSType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
     {
       double       aMinRes = Precision::Infinite();
       int          aMaxDeg = 0;
@@ -632,8 +632,8 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
 
   paramf = 0.;
   paraml = 0.;
-  trans1 = IntSurf_Undecided;
-  trans2 = IntSurf_Undecided;
+  trans1 = IntSurf_TypeTrans::IntSurf_Undecided;
+  trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
   //
   done = false;
   empt = true;
@@ -643,19 +643,19 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
   reversed = false;
   switch (typeS1)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       Quad.SetValue(Surf1->Plane());
       break;
 
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       Quad.SetValue(Surf1->Cylinder());
       break;
 
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       Quad.SetValue(Surf1->Sphere());
       break;
 
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       Quad.SetValue(Surf1->Cone());
       break;
 
@@ -663,19 +663,19 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       reversed = true;
       switch (typeS2)
       {
-        case GeomAbs_Plane:
+        case GeomAbs_SurfaceType::GeomAbs_Plane:
           Quad.SetValue(Surf2->Plane());
           break;
 
-        case GeomAbs_Cylinder:
+        case GeomAbs_SurfaceType::GeomAbs_Cylinder:
           Quad.SetValue(Surf2->Cylinder());
           break;
 
-        case GeomAbs_Sphere:
+        case GeomAbs_SurfaceType::GeomAbs_Sphere:
           Quad.SetValue(Surf2->Sphere());
           break;
 
-        case GeomAbs_Cone:
+        case GeomAbs_SurfaceType::GeomAbs_Cone:
           Quad.SetValue(Surf2->Cone());
           break;
         default: {
@@ -740,7 +740,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
   }
   //
   bool SearchIns = true;
-  if (Quad.TypeQuadric() == GeomAbs_Plane && solrst.NbSegments() > 0)
+  if (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Plane && solrst.NbSegments() > 0)
   {
     // For such kind of cases it is possible that whole surface is on one side of plane,
     // plane only touches surface and does not cross it,
@@ -864,13 +864,13 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
         }
         if (tgline.DotCross(norm2, norm1) > 0.)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
 
         //
@@ -897,7 +897,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
           thelin->Value(1).ParametersOnS2(AnU2, AnV2);
         }
 
-        if (typQuad == GeomAbs_Cylinder || typQuad == GeomAbs_Cone || typQuad == GeomAbs_Sphere)
+        if (typQuad == GeomAbs_SurfaceType::GeomAbs_Cylinder || typQuad == GeomAbs_SurfaceType::GeomAbs_Cone || typQuad == GeomAbs_SurfaceType::GeomAbs_Sphere)
         {
           arecadr = true;
         }
@@ -957,10 +957,10 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
             thelin->Value(k).ParametersOnS1(U2, V2);
             switch (typeS1)
             {
-              case GeomAbs_Cylinder:
-              case GeomAbs_Cone:
-              case GeomAbs_Sphere:
-              case GeomAbs_Torus:
+              case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+              case GeomAbs_SurfaceType::GeomAbs_Cone:
+              case GeomAbs_SurfaceType::GeomAbs_Sphere:
+              case GeomAbs_SurfaceType::GeomAbs_Torus:
                 while (U2 < (AnU2 - 1.5 * M_PI))
                   U2 += M_PI + M_PI;
                 while (U2 > (AnU2 + 1.5 * M_PI))
@@ -969,7 +969,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
               default:
                 break;
             }
-            if (typeS2 == GeomAbs_Torus)
+            if (typeS2 == GeomAbs_SurfaceType::GeomAbs_Torus)
             {
               while (V2 < (AnV2 - 1.5 * M_PI))
                 V2 += M_PI + M_PI;
@@ -985,10 +985,10 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
             thelin->Value(k).ParametersOnS2(U2, V2);
             switch (typeS2)
             {
-              case GeomAbs_Cylinder:
-              case GeomAbs_Cone:
-              case GeomAbs_Sphere:
-              case GeomAbs_Torus:
+              case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+              case GeomAbs_SurfaceType::GeomAbs_Cone:
+              case GeomAbs_SurfaceType::GeomAbs_Sphere:
+              case GeomAbs_SurfaceType::GeomAbs_Torus:
                 while (U2 < (AnU2 - 1.5 * M_PI))
                   U2 += M_PI + M_PI;
                 while (U2 > (AnU2 + 1.5 * M_PI))
@@ -997,7 +997,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
               default:
                 break;
             }
-            if (typeS2 == GeomAbs_Torus)
+            if (typeS2 == GeomAbs_SurfaceType::GeomAbs_Torus)
             {
               while (V2 < (AnV2 - 1.5 * M_PI))
                 V2 += M_PI + M_PI;
@@ -1075,8 +1075,8 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
               }
               else
               {
-                TLine.SetValue(true, IntSurf_Undecided);
-                TArc.SetValue(true, IntSurf_Undecided);
+                TLine.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                TArc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
               }
 
               ptdeb.SetArc(reversed, currentarc, currentparam, TLine, TArc);
@@ -1173,8 +1173,8 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
               }
               else
               {
-                TLine.SetValue(true, IntSurf_Undecided);
-                TArc.SetValue(true, IntSurf_Undecided);
+                TLine.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                TArc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
               }
 
               ptfin.SetArc(reversed, currentarc, currentparam, TLine, TArc);
@@ -1431,13 +1431,13 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
         TransitionOK = true;
         if (_u1 > 0.00000001)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (_u1 < -0.00000001)
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
@@ -1497,13 +1497,13 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
         TransitionOK = true;
         if (_u1 > 0.00000001)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (_u1 < -0.00000001)
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
@@ -1598,7 +1598,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
         {
           const occ::handle<IntPatch_Line>& slinj = slin(j);
           typ                                     = slinj->ArcType();
-          if (typ == IntPatch_Walking)
+          if (typ == IntPatch_IType::IntPatch_Walking)
           {
             Nbpts = occ::down_cast<IntPatch_WLine>(slinj)->NbVertex();
           }
@@ -1608,7 +1608,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
           }
           for (int k = 1; k <= Nbpts; k++)
           {
-            if (typ == IntPatch_Walking)
+            if (typ == IntPatch_IType::IntPatch_Walking)
             {
               ptdeb = occ::down_cast<IntPatch_WLine>(slinj)->Vertex(k);
             }
@@ -1622,7 +1622,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
               if (ptdeb.Value().Distance(PStartf.Value()) <= TolArc)
               {
                 ptdeb.SetMultiple(true);
-                if (typ == IntPatch_Walking)
+                if (typ == IntPatch_IType::IntPatch_Walking)
                 {
                   occ::down_cast<IntPatch_WLine>(slinj)->Replace(k, ptdeb);
                 }
@@ -1643,7 +1643,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
             {
               if (dofirst)
               { //-- on recharge le ptdeb
-                if (typ == IntPatch_Walking)
+                if (typ == IntPatch_IType::IntPatch_Walking)
                 {
                   ptdeb = occ::down_cast<IntPatch_WLine>(slinj)->Vertex(k);
                 }
@@ -1655,7 +1655,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
               if (ptdeb.Value().Distance(PStartl.Value()) <= TolArc)
               {
                 ptdeb.SetMultiple(true);
-                if (typ == IntPatch_Walking)
+                if (typ == IntPatch_IType::IntPatch_Walking)
                 {
                   occ::down_cast<IntPatch_WLine>(slinj)->Replace(k, ptdeb);
                 }
@@ -1705,7 +1705,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       }
     }
 
-    if (aL->ArcType() == IntPatch_Walking)
+    if (aL->ArcType() == IntPatch_IType::IntPatch_Walking)
     {
       const occ::handle<IntPatch_WLine> aWL = occ::down_cast<IntPatch_WLine>(aL);
       slin.Append(aWL);
@@ -1735,7 +1735,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
 
     const occ::handle<Adaptor2d_Curve2d>& anArc =
       aRL1->IsArcOnS1() ? aRL1->ArcOnS1() : aRL1->ArcOnS2();
-    if (anArc->GetType() != GeomAbs_Line)
+    if (anArc->GetType() != GeomAbs_CurveType::GeomAbs_Line)
     {
       // Restriction line must be isoline.
       // Other cases are not supported by
@@ -1758,7 +1758,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       {
         const occ::handle<Adaptor2d_Curve2d>& anArc2 =
           aRL2->IsArcOnS1() ? aRL2->ArcOnS1() : aRL2->ArcOnS2();
-        if (anArc2->GetType() != GeomAbs_Line)
+        if (anArc2->GetType() != GeomAbs_CurveType::GeomAbs_Line)
         {
           // Restriction line must be isoline.
           // Other cases are not supported by
@@ -1827,8 +1827,8 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     return;
 
   bool isDecomposeRequired =
-    (Quad.TypeQuadric() == GeomAbs_Cone) || (Quad.TypeQuadric() == GeomAbs_Sphere)
-    || (Quad.TypeQuadric() == GeomAbs_Cylinder) || (Quad.TypeQuadric() == GeomAbs_Torus);
+    (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Cone) || (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Sphere)
+    || (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Cylinder) || (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Torus);
 
   if (!isDecomposeRequired)
     return;
@@ -2293,7 +2293,7 @@ static void ToSmooth(const occ::handle<IntSurf_LineOn2S>& Line,
     Line->Value(Index3).ParametersOnS1(U3, V3);
   }
 
-  if (!doU && Quad.TypeQuadric() == GeomAbs_Sphere)
+  if (!doU && Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     if (fabs(fabs(U1) - fabs(U2)) > (M_PI / 16.))
       doU = true;
@@ -2310,7 +2310,7 @@ static void ToSmooth(const occ::handle<IntSurf_LineOn2S>& Line,
     }
   }
 
-  if (Quad.TypeQuadric() == GeomAbs_Cone)
+  if (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     double Uapx = 0., Vapx = 0.;
     Quad.Parameters(Quad.Cone().Apex(), Uapx, Vapx);
@@ -2921,14 +2921,14 @@ static bool DecomposeResult(const occ::handle<IntPatch_PointLine>&  theLine,
                             const double                            theTolTang,
                             NCollection_Sequence<occ::handle<IntPatch_Line>>& theLines)
 {
-  if (theLine->ArcType() == IntPatch_Restriction)
+  if (theLine->ArcType() == IntPatch_IType::IntPatch_Restriction)
   {
     const occ::handle<IntPatch_RLine>& aRL = occ::down_cast<IntPatch_RLine>(theLine);
     if (!aRL.IsNull())
     {
       const occ::handle<Adaptor2d_Curve2d>& anArc =
         aRL->IsArcOnS1() ? aRL->ArcOnS1() : aRL->ArcOnS2();
-      if (anArc->GetType() != GeomAbs_Line)
+      if (anArc->GetType() != GeomAbs_CurveType::GeomAbs_Line)
       {
         // Restriction line must be isoline.
         // Other cases are not supported by
@@ -2960,7 +2960,7 @@ static bool DecomposeResult(const occ::handle<IntPatch_PointLine>&  theLine,
 
   AdjustLine(aSSLine, IsReversed, theQSurf, aTOL2D);
 
-  if (theLine->ArcType() == IntPatch_Walking)
+  if (theLine->ArcType() == IntPatch_IType::IntPatch_Walking)
   {
     bool isInserted = true;
     while (isInserted)
@@ -3342,7 +3342,7 @@ static bool DecomposeResult(const occ::handle<IntPatch_PointLine>&  theLine,
       }
     }
 
-    if (theLine->ArcType() == IntPatch_Walking)
+    if (theLine->ArcType() == IntPatch_IType::IntPatch_Walking)
     {
       IntPatch_Point aTPntF, aTPntL;
 
@@ -3393,7 +3393,7 @@ static bool DecomposeResult(const occ::handle<IntPatch_PointLine>&  theLine,
       }
     }
     else
-    { // theLine->ArcType() == IntPatch_Restriction
+    { // theLine->ArcType() == IntPatch_IType::IntPatch_Restriction
       if (!isDecomposited && !hasBeenDecomposed)
       {
         // The line has not been changed
@@ -3536,13 +3536,13 @@ bool IsCoincide(IntPatch_TheSurfFunction&              theFunc,
                             0.5,
                             0.65450849719,
                             0.79389262615};
-  if (theLine->ArcType() == IntPatch_Restriction)
+  if (theLine->ArcType() == IntPatch_IType::IntPatch_Restriction)
   { // Restriction-restriction processing
     const occ::handle<IntPatch_RLine>&    aRL2 = occ::down_cast<IntPatch_RLine>(theLine);
     const occ::handle<Adaptor2d_Curve2d>& anArc =
       aRL2->IsArcOnS1() ? aRL2->ArcOnS1() : aRL2->ArcOnS2();
 
-    if (anArc->GetType() != GeomAbs_Line)
+    if (anArc->GetType() != GeomAbs_CurveType::GeomAbs_Line)
     {
       // Restriction line must be isoline.
       // Other cases are not supported by

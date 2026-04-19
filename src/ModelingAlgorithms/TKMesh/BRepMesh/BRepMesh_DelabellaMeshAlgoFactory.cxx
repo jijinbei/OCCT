@@ -77,13 +77,13 @@ occ::handle<IMeshTools_MeshAlgo> BRepMesh_DelabellaMeshAlgoFactory::GetAlgo(
 {
   switch (theSurfaceType)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       return theParameters.InternalVerticesMode
                ? new NodeInsertionMeshAlgo<BRepMesh_DefaultRangeSplitter>::Type
                : new BaseMeshAlgo::Type;
       break;
 
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       NodeInsertionMeshAlgo<BRepMesh_SphereRangeSplitter>::Type* aMeshAlgo =
         new NodeInsertionMeshAlgo<BRepMesh_SphereRangeSplitter>::Type;
       aMeshAlgo->SetPreProcessSurfaceNodes(true);
@@ -91,13 +91,13 @@ occ::handle<IMeshTools_MeshAlgo> BRepMesh_DelabellaMeshAlgoFactory::GetAlgo(
     }
     break;
 
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       return theParameters.InternalVerticesMode
                ? new DefaultNodeInsertionMeshAlgo<BRepMesh_CylinderRangeSplitter>::Type
                : new DefaultBaseMeshAlgo::Type;
       break;
 
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       NodeInsertionMeshAlgo<BRepMesh_ConeRangeSplitter>::Type* aMeshAlgo =
         new NodeInsertionMeshAlgo<BRepMesh_ConeRangeSplitter>::Type;
       aMeshAlgo->SetPreProcessSurfaceNodes(true);
@@ -105,7 +105,7 @@ occ::handle<IMeshTools_MeshAlgo> BRepMesh_DelabellaMeshAlgoFactory::GetAlgo(
     }
     break;
 
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       NodeInsertionMeshAlgo<BRepMesh_TorusRangeSplitter>::Type* aMeshAlgo =
         new NodeInsertionMeshAlgo<BRepMesh_TorusRangeSplitter>::Type;
       aMeshAlgo->SetPreProcessSurfaceNodes(true);
@@ -113,7 +113,7 @@ occ::handle<IMeshTools_MeshAlgo> BRepMesh_DelabellaMeshAlgoFactory::GetAlgo(
     }
     break;
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution: {
       DeflectionControlMeshAlgo<BRepMesh_BoundaryParamsRangeSplitter>::Type* aMeshAlgo =
         new DeflectionControlMeshAlgo<BRepMesh_BoundaryParamsRangeSplitter>::Type;
       aMeshAlgo->SetPreProcessSurfaceNodes(true);

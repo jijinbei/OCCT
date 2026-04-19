@@ -219,7 +219,7 @@ void BRepFeat_MakePrism::Perform(const double Length)
   mySUntil.Nullify();
   ShapeUntilValid();
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_NoSelection;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
   PerfSelectionValid();
   gp_Vec V(Length * myDir);
 
@@ -337,7 +337,7 @@ void BRepFeat_MakePrism::Perform(const TopoDS_Shape& Until)
     throw Standard_ConstructionError();
   }
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_SelectionU;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionU;
   PerfSelectionValid();
   mySFrom.Nullify();
   ShapeFromValid();
@@ -460,7 +460,7 @@ void BRepFeat_MakePrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
   }
 
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_SelectionFU;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionFU;
   PerfSelectionValid();
 
   TopExp_Explorer exp(From, TopAbs_FACE);
@@ -482,7 +482,7 @@ void BRepFeat_MakePrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
   if (Trfu != Trff)
   {
     NotDone();
-    myStatusError = BRepFeat_IncTypes;
+    myStatusError = BRepFeat_StatusError::BRepFeat_IncTypes;
     return;
   }
 
@@ -556,7 +556,7 @@ void BRepFeat_MakePrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NoIntersectU;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NoIntersectU;
       return;
     }
     if (ASI2.IsDone() && ASI2.NbPoints(1) >= 1)
@@ -570,7 +570,7 @@ void BRepFeat_MakePrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NoIntersectF;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NoIntersectF;
       return;
     }
     if (tran > 0 && (std::abs(ParU) < std::abs(ParF)))
@@ -590,7 +590,7 @@ void BRepFeat_MakePrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NullToolU;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NullToolU;
       return;
     }
     TopoDS_Solid SS = BRepFeat::Tool(mySFrom, FFrom, OrF);
@@ -601,7 +601,7 @@ void BRepFeat_MakePrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& U
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NullToolF;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NullToolF;
       return;
     }
     //
@@ -647,7 +647,7 @@ void BRepFeat_MakePrism::PerformUntilEnd()
   if (trc)
     std::cout << "BRepFeat_MakePrism::PerformUntilEnd()" << std::endl;
 #endif
-  myPerfSelection = BRepFeat_SelectionSh;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionSh;
   PerfSelectionValid();
   myGluedF.Clear();
   mySUntil.Nullify();
@@ -709,7 +709,7 @@ void BRepFeat_MakePrism::PerformFromEnd(const TopoDS_Shape& Until)
   {
     throw Standard_ConstructionError();
   }
-  myPerfSelection = BRepFeat_SelectionShU;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionShU;
   PerfSelectionValid();
   mySFrom.Nullify();
   ShapeFromValid();
@@ -781,7 +781,7 @@ void BRepFeat_MakePrism::PerformFromEnd(const TopoDS_Shape& Until)
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NullToolU;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NullToolU;
       return;
     }
 
@@ -793,7 +793,7 @@ void BRepFeat_MakePrism::PerformFromEnd(const TopoDS_Shape& Until)
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NullToolF;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NullToolF;
       return;
     }
     //
@@ -843,11 +843,11 @@ void BRepFeat_MakePrism::PerformThruAll()
   ShapeFromValid();
   if (myFuse == 0)
   {
-    myPerfSelection = BRepFeat_NoSelection;
+    myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
   }
   else
   {
-    myPerfSelection = BRepFeat_SelectionSh;
+    myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionSh;
   }
   PerfSelectionValid();
   myGluedF.Clear();
@@ -904,7 +904,7 @@ void BRepFeat_MakePrism::PerformUntilHeight(const TopoDS_Shape& Until, const dou
     throw Standard_ConstructionError();
   }
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_NoSelection;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
   PerfSelectionValid();
   mySFrom.Nullify();
   ShapeFromValid();

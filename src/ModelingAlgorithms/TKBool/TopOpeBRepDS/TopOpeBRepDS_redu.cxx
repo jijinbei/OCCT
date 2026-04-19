@@ -74,7 +74,7 @@ Standard_EXPORT bool FUN_ds_redu2d1d(
   TopAbs_Orientation            O2  = T2d.Orientation(TopAbs_IN);
   newT2d.Index(IB2);
   newT2d.Set(O2);
-  bool ok2 = (IB2 == IA2) && (SB2 == TopAbs_FACE) && (GT2 == TopOpeBRepDS_VERTEX);
+  bool ok2 = (IB2 == IA2) && (SB2 == TopAbs_FACE) && (GT2 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
   if (!ok2)
     return false;
 
@@ -176,7 +176,7 @@ Standard_EXPORT bool FUN_ds_GetTr(
   FDS_copy(LIG, LIGcopy);
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> l3d;
   FDS_assign(LIG, LIGcopy);
-  FUN_selectSKinterference(LIGcopy, TopOpeBRepDS_FACE, l3d);
+  FUN_selectSKinterference(LIGcopy, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, l3d);
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> l2d;
   FDS_assign(LIG, LIGcopy);
   FUN_ds_hasI2d(ISE, LIGcopy, l2d);

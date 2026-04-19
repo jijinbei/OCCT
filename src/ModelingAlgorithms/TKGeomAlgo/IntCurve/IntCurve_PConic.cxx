@@ -31,7 +31,7 @@ IntCurve_PConic::IntCurve_PConic(const gp_Elips2d& E)
       prm2(E.MinorRadius()),
       TheEpsX(0.00000001),
       TheAccuracy(20),
-      type(GeomAbs_Ellipse)
+      type(GeomAbs_CurveType::GeomAbs_Ellipse)
 {
 }
 
@@ -41,7 +41,7 @@ IntCurve_PConic::IntCurve_PConic(const gp_Hypr2d& H)
       prm2(H.MinorRadius()),
       TheEpsX(0.00000001),
       TheAccuracy(50),
-      type(GeomAbs_Hyperbola)
+      type(GeomAbs_CurveType::GeomAbs_Hyperbola)
 {
 }
 
@@ -51,7 +51,7 @@ IntCurve_PConic::IntCurve_PConic(const gp_Circ2d& C)
       prm2(0.0),
       TheEpsX(0.00000001),
       TheAccuracy(20),
-      type(GeomAbs_Circle)
+      type(GeomAbs_CurveType::GeomAbs_Circle)
 {
 }
 
@@ -61,7 +61,7 @@ IntCurve_PConic::IntCurve_PConic(const gp_Parab2d& P)
       prm2(0.0),
       TheEpsX(0.00000001),
       TheAccuracy(20),
-      type(GeomAbs_Parabola)
+      type(GeomAbs_CurveType::GeomAbs_Parabola)
 {
 }
 
@@ -71,7 +71,7 @@ IntCurve_PConic::IntCurve_PConic(const gp_Lin2d& L)
       prm2(0.0),
       TheEpsX(0.00000001),
       TheAccuracy(20),
-      type(GeomAbs_Line)
+      type(GeomAbs_CurveType::GeomAbs_Line)
 {
 }
 

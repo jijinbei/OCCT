@@ -76,7 +76,7 @@ ProjLib_Plane::ProjLib_Plane(const gp_Pln& Pl, const gp_Hypr& H)
 
 void ProjLib_Plane::Init(const gp_Pln& Pl)
 {
-  myType       = GeomAbs_OtherCurve;
+  myType       = GeomAbs_CurveType::GeomAbs_OtherCurve;
   isDone       = false;
   myIsPeriodic = false;
   myPlane      = Pl;
@@ -100,7 +100,7 @@ static gp_Dir2d EvalDir2d(const gp_Dir& D, const gp_Pln& Pl)
 
 void ProjLib_Plane::Project(const gp_Lin& L)
 {
-  myType = GeomAbs_Line;
+  myType = GeomAbs_CurveType::GeomAbs_Line;
   myLin  = gp_Lin2d(EvalPnt2d(L.Location(), myPlane), EvalDir2d(L.Direction(), myPlane));
   isDone = true;
 }
@@ -110,7 +110,7 @@ void ProjLib_Plane::Project(const gp_Lin& L)
 void ProjLib_Plane::Project(const gp_Circ& C)
 {
 
-  myType = GeomAbs_Circle;
+  myType = GeomAbs_CurveType::GeomAbs_Circle;
 
   gp_Pnt2d P2d = EvalPnt2d(C.Location(), myPlane);
   gp_Dir2d X2d = EvalDir2d(C.Position().XDirection(), myPlane);
@@ -126,7 +126,7 @@ void ProjLib_Plane::Project(const gp_Circ& C)
 
 void ProjLib_Plane::Project(const gp_Elips& E)
 {
-  myType = GeomAbs_Ellipse;
+  myType = GeomAbs_CurveType::GeomAbs_Ellipse;
 
   gp_Pnt2d P2d = EvalPnt2d(E.Location(), myPlane);
   gp_Dir2d X2d = EvalDir2d(E.Position().XDirection(), myPlane);
@@ -142,7 +142,7 @@ void ProjLib_Plane::Project(const gp_Elips& E)
 
 void ProjLib_Plane::Project(const gp_Parab& P)
 {
-  myType = GeomAbs_Parabola;
+  myType = GeomAbs_CurveType::GeomAbs_Parabola;
 
   gp_Pnt2d P2d = EvalPnt2d(P.Location(), myPlane);
   gp_Dir2d X2d = EvalDir2d(P.Position().XDirection(), myPlane);
@@ -157,7 +157,7 @@ void ProjLib_Plane::Project(const gp_Parab& P)
 
 void ProjLib_Plane::Project(const gp_Hypr& H)
 {
-  myType = GeomAbs_Hyperbola;
+  myType = GeomAbs_CurveType::GeomAbs_Hyperbola;
 
   gp_Pnt2d P2d = EvalPnt2d(H.Location(), myPlane);
   gp_Dir2d X2d = EvalDir2d(H.Position().XDirection(), myPlane);

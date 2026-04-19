@@ -36,7 +36,7 @@
 //! polynomial parameterization of the resulting BSpline curve. Several types of parametric
 //! transformations are available.
 //! TgtThetaOver2
-//! The most usual method is Convert_TgtThetaOver2 where the parameter t on the BSpline
+//! The most usual method is Convert_ParameterisationType::Convert_TgtThetaOver2 where the parameter t on the BSpline
 //! curve is obtained by means of transformation of the following type:
 //! t = tan ( Theta / 2 )
 //! The result of this definition is:
@@ -51,32 +51,32 @@
 //! circle (Delta is equal to 2.* Pi in the case of a complete circle). The resulting BSpline curve
 //! is "exact", i.e. computing any point of parameter t on the BSpline curve gives an exact point on
 //! the circle or the ellipse. TgtThetaOver2_N Where N is equal to 1, 2, 3 or 4, this ensures the
-//! same type of parameterization as Convert_TgtThetaOver2 but sets the number of spans in the
+//! same type of parameterization as Convert_ParameterisationType::Convert_TgtThetaOver2 but sets the number of spans in the
 //! resulting BSpline curve to N rather than allowing the algorithm to make this calculation.
 //! However, the opening angle Delta (parametric angle, given in radians) of the arc of the circle
 //! (or of the ellipse) must comply with the following:
-//! -   Delta <= 0.9999 * Pi for the Convert_TgtThetaOver2_1 method, or
-//! -   Delta <= 1.9999 * Pi for the Convert_TgtThetaOver2_2 method.
+//! -   Delta <= 0.9999 * Pi for the Convert_ParameterisationType::Convert_TgtThetaOver2_1 method, or
+//! -   Delta <= 1.9999 * Pi for the Convert_ParameterisationType::Convert_TgtThetaOver2_2 method.
 //! QuasiAngular
-//! The Convert_QuasiAngular method of parameterization uses a different type of rational
+//! The Convert_ParameterisationType::Convert_QuasiAngular method of parameterization uses a different type of rational
 //! parameterization. This method ensures that the parameter t along the resulting BSpline curve is
 //! very close to the natural parameterization angle Theta of the circle or ellipse (i.e. which uses
 //! the functions sin ( Theta ) and cos ( Theta ).
 //! The resulting BSpline curve is "exact", i.e. computing any point of parameter t on the BSpline
 //! curve gives an exact point on the circle or the ellipse.
 //! RationalC1
-//! The Convert_RationalC1 method of parameterization uses a further type of rational
+//! The Convert_ParameterisationType::Convert_RationalC1 method of parameterization uses a further type of rational
 //! parameterization. This method ensures that the equation relating to the resulting BSpline curve
 //! has a "C1" continuous denominator, which is not the case with the above methods. RationalC1
 //! enhances the degree of continuity at the junction point of the different spans of the curve.
 //! The resulting BSpline curve is "exact", i.e. computing any point of parameter t on the BSpline
 //! curve gives an exact point on the circle or the ellipse.
 //! Polynomial
-//! The Convert_Polynomial method is used to produce polynomial (i.e. non-rational)
+//! The Convert_ParameterisationType::Convert_Polynomial method is used to produce polynomial (i.e. non-rational)
 //! parameterization of the resulting BSpline curve with 8 poles (i.e. a polynomial degree equal to
 //! 7). However, the result is an approximation of the circle or ellipse (i.e. computing the point
 //! of parameter t on the BSpline curve does not give an exact point on the circle or the ellipse).
-enum Convert_ParameterisationType
+enum class Convert_ParameterisationType
 {
   Convert_TgtThetaOver2,
   Convert_TgtThetaOver2_1,

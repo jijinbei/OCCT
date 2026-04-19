@@ -960,7 +960,7 @@ static int BUC60867(Draw_Interpretor& di, int argc, const char** argv)
       return 0;
     }
     PCDM_ReaderStatus Result = A->Open(path, D);
-    if (Result == PCDM_RS_OK)
+    if (Result == PCDM_ReaderStatus::PCDM_RS_OK)
     {
       di << 0;
       return 0;

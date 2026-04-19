@@ -29,7 +29,7 @@ inline TopOpeBRep_LineInter::TopOpeBRep_LineInter()
       myVPF(0),
       myVPL(0),
       myVPN(0),
-      myTypeLineCurve(TopOpeBRep_OTHERTYPE),
+      myTypeLineCurve(TopOpeBRep_TypeLineCurve::TopOpeBRep_OTHERTYPE),
       myexF1(0),
       myexF2(0)
 // myLineTonF1, myLineTonF2

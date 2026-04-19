@@ -93,11 +93,11 @@ static bool FUN_periodicS(const TopoDS_Shape& F)
   GeomAdaptor_Surface       GAS(SSS);
   GeomAbs_SurfaceType       styp     = GAS.GetType();
   bool                      periodic = false;
-  if (styp == GeomAbs_Cylinder)
+  if (styp == GeomAbs_SurfaceType::GeomAbs_Cylinder)
     periodic = true;
-  if (styp == GeomAbs_Cone)
+  if (styp == GeomAbs_SurfaceType::GeomAbs_Cone)
     periodic = true;
-  if (styp == GeomAbs_Sphere)
+  if (styp == GeomAbs_SurfaceType::GeomAbs_Sphere)
     periodic = true;
   // NYI : for Torus,SurfaceOfRevolution..
   return periodic;
@@ -655,7 +655,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
       TopOpeBRepDS_Kind GT, ST;
       int               GI, SI;
       FDS_data(SSI, GT, GI, ST, SI);
-      if (ST != TopOpeBRepDS_FACE)
+      if (ST != TopOpeBRepDS_Kind::TopOpeBRepDS_FACE)
         continue;
       const TopOpeBRepDS_Transition& TFE  = SSI->Transition();
       TopAbs_ShapeEnum               shab = TFE.ShapeBefore(), shaa = TFE.ShapeAfter();
@@ -724,7 +724,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdges()
       TopOpeBRepDS_Kind GT, ST;
       int               GI, SI;
       FDS_data(SSI, GT, GI, ST, SI);
-      if (ST != TopOpeBRepDS_FACE)
+      if (ST != TopOpeBRepDS_Kind::TopOpeBRepDS_FACE)
         continue;
       bool GB = SSI->GBound();
       if (GB == 1)
@@ -891,7 +891,7 @@ void TopOpeBRepBuild_Builder::SplitSectionEdge(const TopoDS_Shape& EA)
     TopOpeBRepDS_Kind                             GT, ST;
     int                                           G, S;
     FDS_data(I, GT, G, ST, S);
-    if (GT == TopOpeBRepDS_POINT)
+    if (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
     {
       allGb1 = false;
       break;

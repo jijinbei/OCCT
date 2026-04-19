@@ -50,110 +50,110 @@ Standard_OStream& TDataXtd::Print(const TDataXtd_ConstraintEnum C, Standard_OStr
 
       // 2d planar constraints
 
-    case TDataXtd_RADIUS: {
+    case TDataXtd_ConstraintEnum::TDataXtd_RADIUS: {
       s << "RADIUS";
       break;
     }
-    case TDataXtd_DIAMETER: {
+    case TDataXtd_ConstraintEnum::TDataXtd_DIAMETER: {
       s << "DIAMETER";
       break;
     }
-    case TDataXtd_MINOR_RADIUS: {
+    case TDataXtd_ConstraintEnum::TDataXtd_MINOR_RADIUS: {
       s << "MINOR_RADIUS";
       break;
     }
-    case TDataXtd_MAJOR_RADIUS: {
+    case TDataXtd_ConstraintEnum::TDataXtd_MAJOR_RADIUS: {
       s << "MAJOR_RADIUS";
       break;
     }
-    case TDataXtd_TANGENT: {
+    case TDataXtd_ConstraintEnum::TDataXtd_TANGENT: {
       s << "TANGENT";
       break;
     }
-    case TDataXtd_PARALLEL: {
+    case TDataXtd_ConstraintEnum::TDataXtd_PARALLEL: {
       s << "PARALLEL";
       break;
     }
-    case TDataXtd_PERPENDICULAR: {
+    case TDataXtd_ConstraintEnum::TDataXtd_PERPENDICULAR: {
       s << "PERPENDICULAR";
       break;
     }
-    case TDataXtd_CONCENTRIC: {
+    case TDataXtd_ConstraintEnum::TDataXtd_CONCENTRIC: {
       s << "CONCENTRIC";
       break;
     }
-    case TDataXtd_COINCIDENT: {
+    case TDataXtd_ConstraintEnum::TDataXtd_COINCIDENT: {
       s << "COINCIDENT";
       break;
     }
-    case TDataXtd_DISTANCE: {
+    case TDataXtd_ConstraintEnum::TDataXtd_DISTANCE: {
       s << "DISTANCE";
       break;
     }
-    case TDataXtd_ANGLE: {
+    case TDataXtd_ConstraintEnum::TDataXtd_ANGLE: {
       s << "ANGLE";
       break;
     }
-    case TDataXtd_EQUAL_RADIUS: {
+    case TDataXtd_ConstraintEnum::TDataXtd_EQUAL_RADIUS: {
       s << "EQUAL_RADIUS";
       break;
     }
-    case TDataXtd_SYMMETRY: {
+    case TDataXtd_ConstraintEnum::TDataXtd_SYMMETRY: {
       s << "SYMMETRY";
       break;
     }
-    case TDataXtd_MIDPOINT: {
+    case TDataXtd_ConstraintEnum::TDataXtd_MIDPOINT: {
       s << "MIDPOINT";
       break;
     }
-    case TDataXtd_EQUAL_DISTANCE: {
+    case TDataXtd_ConstraintEnum::TDataXtd_EQUAL_DISTANCE: {
       s << "EQUAL_DISTANCE";
       break;
     }
-    case TDataXtd_FIX: {
+    case TDataXtd_ConstraintEnum::TDataXtd_FIX: {
       s << "FIX";
       break;
     }
-    case TDataXtd_RIGID: {
+    case TDataXtd_ConstraintEnum::TDataXtd_RIGID: {
       s << "RIGID";
       break;
     }
 
       // placement constraint
 
-    case TDataXtd_FROM: {
+    case TDataXtd_ConstraintEnum::TDataXtd_FROM: {
       s << "FROM";
       break;
     }
-    case TDataXtd_AXIS: {
+    case TDataXtd_ConstraintEnum::TDataXtd_AXIS: {
       s << "AXIS";
       break;
     }
-    case TDataXtd_MATE: {
+    case TDataXtd_ConstraintEnum::TDataXtd_MATE: {
       s << "MATE";
       break;
     }
-    case TDataXtd_ALIGN_FACES: {
+    case TDataXtd_ConstraintEnum::TDataXtd_ALIGN_FACES: {
       s << "ALIGN_FACES";
       break;
     }
-    case TDataXtd_ALIGN_AXES: {
+    case TDataXtd_ConstraintEnum::TDataXtd_ALIGN_AXES: {
       s << "ALIGN_AXES";
       break;
     }
-    case TDataXtd_AXES_ANGLE: {
+    case TDataXtd_ConstraintEnum::TDataXtd_AXES_ANGLE: {
       s << "AXES_ANGLE";
       break;
     }
-    case TDataXtd_FACES_ANGLE: {
+    case TDataXtd_ConstraintEnum::TDataXtd_FACES_ANGLE: {
       s << "FACES_ANGLE";
       break;
     }
-    case TDataXtd_ROUND: {
+    case TDataXtd_ConstraintEnum::TDataXtd_ROUND: {
       s << "ROUND";
       break;
     }
-    case TDataXtd_OFFSET: {
+    case TDataXtd_ConstraintEnum::TDataXtd_OFFSET: {
       s << "OFFSET";
       break;
     }
@@ -172,35 +172,35 @@ Standard_OStream& TDataXtd::Print(const TDataXtd_GeometryEnum G, Standard_OStrea
 {
   switch (G)
   {
-    case TDataXtd_ANY_GEOM: {
+    case TDataXtd_GeometryEnum::TDataXtd_ANY_GEOM: {
       s << "ANY_GEOM";
       break;
     }
-    case TDataXtd_POINT: {
+    case TDataXtd_GeometryEnum::TDataXtd_POINT: {
       s << "POINT";
       break;
     }
-    case TDataXtd_LINE: {
+    case TDataXtd_GeometryEnum::TDataXtd_LINE: {
       s << "LINE";
       break;
     }
-    case TDataXtd_CIRCLE: {
+    case TDataXtd_GeometryEnum::TDataXtd_CIRCLE: {
       s << "CIRCLE";
       break;
     }
-    case TDataXtd_ELLIPSE: {
+    case TDataXtd_GeometryEnum::TDataXtd_ELLIPSE: {
       s << "ELLIPSE";
       break;
     }
-    case TDataXtd_SPLINE: {
+    case TDataXtd_GeometryEnum::TDataXtd_SPLINE: {
       s << "SPLINE";
       break;
     }
-    case TDataXtd_PLANE: {
+    case TDataXtd_GeometryEnum::TDataXtd_PLANE: {
       s << "PLANE";
       break;
     }
-    case TDataXtd_CYLINDER: {
+    case TDataXtd_GeometryEnum::TDataXtd_CYLINDER: {
       s << "CYLINDER";
       break;
     }

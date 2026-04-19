@@ -18,7 +18,7 @@
 #define _ChFi2d_ConstructionError_HeaderFile
 
 //! Error that can occur during the fillet construction on planar wire.
-enum ChFi2d_ConstructionError
+enum class ChFi2d_ConstructionError
 {
   ChFi2d_NotPlanar,           //!< the face is not planar
   ChFi2d_NoFace,              //!< the face is null

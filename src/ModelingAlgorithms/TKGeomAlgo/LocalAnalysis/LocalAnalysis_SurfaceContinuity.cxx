@@ -74,7 +74,7 @@ void LocalAnalysis_SurfaceContinuity::SurfC1(GeomLProp_SLProps& Surf1, GeomLProp
   else
   {
     myIsDone      = false;
-    myErrorStatus = LocalAnalysis_NullFirstDerivative;
+    myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_NullFirstDerivative;
   }
 }
 
@@ -118,14 +118,14 @@ void LocalAnalysis_SurfaceContinuity::SurfC2(GeomLProp_SLProps& Surf1, GeomLProp
     else
     {
       myIsDone      = false;
-      myErrorStatus = LocalAnalysis_NullSecondDerivative;
+      myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_NullSecondDerivative;
     }
   }
 
   else
   {
     myIsDone      = false;
-    myErrorStatus = LocalAnalysis_NullFirstDerivative;
+    myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_NullFirstDerivative;
   }
 
   V11v    = Surf1.D1V();
@@ -160,13 +160,13 @@ void LocalAnalysis_SurfaceContinuity::SurfC2(GeomLProp_SLProps& Surf1, GeomLProp
     else
     {
       myIsDone      = false;
-      myErrorStatus = LocalAnalysis_NullSecondDerivative;
+      myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_NullSecondDerivative;
     }
   }
   else
   {
     myIsDone      = false;
-    myErrorStatus = LocalAnalysis_NullFirstDerivative;
+    myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_NullFirstDerivative;
   }
 }
 
@@ -186,7 +186,7 @@ void LocalAnalysis_SurfaceContinuity::SurfG1(GeomLProp_SLProps& Surf1, GeomLProp
   else
   {
     myIsDone      = false;
-    myErrorStatus = LocalAnalysis_NormalNotDefined;
+    myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_NormalNotDefined;
   }
 }
 
@@ -234,7 +234,7 @@ void LocalAnalysis_SurfaceContinuity::SurfG2(GeomLProp_SLProps& Surf1, GeomLProp
   else
   {
     myIsDone      = false;
-    myErrorStatus = LocalAnalysis_CurvatureNotDefined;
+    myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_CurvatureNotDefined;
   }
 }
 

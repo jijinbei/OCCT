@@ -181,7 +181,7 @@ void ExtentSpineOnCommonFace(occ::handle<ChFiDS_Spine>& Spine1,
 ChFi3d_ChBuilder::ChFi3d_ChBuilder(const TopoDS_Shape& S, const double Ta)
     : ChFi3d_Builder(S, Ta)
 {
-  myMode = ChFiDS_ClassicChamfer;
+  myMode = ChFiDS_ChamfMode::ChFiDS_ClassicChamfer;
 }
 
 //=======================================================================
@@ -331,7 +331,7 @@ void ChFi3d_ChBuilder::Add(const double       Dis1,
 
     Spine->SetMode(myMode);
     double Offset = -1;
-    if (myMode == ChFiDS_ConstThroatWithPenetrationChamfer)
+    if (myMode == ChFiDS_ChamfMode::ChFiDS_ConstThroatWithPenetrationChamfer)
     {
       Offset = std::min(Dis1, Dis2);
     }
@@ -652,7 +652,7 @@ void ChFi3d_ChBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
   GeomAbs_SurfaceType                                  typ = AS.GetType();
   switch (typ)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       v1                       = p1f.Y();
       v2                       = p2f.Y();
       u1                       = std::max(p1f.X(), p2f.X());
@@ -665,7 +665,7 @@ void ChFi3d_ChBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
       sec2.Set(ElSLib::PlaneUIso(Pl.Position(), u2), v1, v2);
     }
     break;
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       v1          = p1f.Y();
       v2          = p2f.Y();
       u1          = std::max(p1f.X(), p2f.X());
@@ -750,7 +750,7 @@ bool ChFi3d_ChBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
 
   occ::handle<ChFiDS_ElSpine> OffsetHGuide;
 
-  if (chsp->IsChamfer() == ChFiDS_Sym)
+  if (chsp->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_Sym)
   {
     double dis;
     chsp->GetDist(dis);
@@ -759,7 +759,7 @@ bool ChFi3d_ChBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
 
     std::unique_ptr<BlendFunc_GenChamfer>  pFunc;
     std::unique_ptr<BlendFunc_GenChamfInv> pFInv;
-    if (chsp->Mode() == ChFiDS_ClassicChamfer)
+    if (chsp->Mode() == ChFiDS_ChamfMode::ChFiDS_ClassicChamfer)
     {
       pFunc.reset(new BRepBlend_Chamfer(S1, S2, HGuide));
       pFInv.reset(new BRepBlend_ChamfInv(S1, S2, HGuide));
@@ -889,7 +889,7 @@ bool ChFi3d_ChBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
       }
     }
   }
-  else if (chsp->IsChamfer() == ChFiDS_TwoDist)
+  else if (chsp->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_TwoDist)
   {
     double dis1, dis2;
     chsp->Dists(dis1, dis2);
@@ -899,7 +899,7 @@ bool ChFi3d_ChBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
 
     std::unique_ptr<BlendFunc_GenChamfer>  pFunc;
     std::unique_ptr<BlendFunc_GenChamfInv> pFInv;
-    if (chsp->Mode() == ChFiDS_ClassicChamfer)
+    if (chsp->Mode() == ChFiDS_ChamfMode::ChFiDS_ClassicChamfer)
     {
       pFunc.reset(new BRepBlend_Chamfer(S1, S2, HGuide));
       pFInv.reset(new BRepBlend_ChamfInv(S1, S2, HGuide));
@@ -1299,13 +1299,13 @@ bool ChFi3d_ChBuilder::PerformFirstSection(const occ::handle<ChFiDS_Spine>&     
 
   double TolGuide = HGuide->Resolution(tolapp3d);
 
-  if (chsp->IsChamfer() == ChFiDS_Sym)
+  if (chsp->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_Sym)
   {
     double dis;
     chsp->GetDist(dis);
 
     std::unique_ptr<BlendFunc_GenChamfer> pFunc;
-    if (chsp->Mode() == ChFiDS_ClassicChamfer)
+    if (chsp->Mode() == ChFiDS_ChamfMode::ChFiDS_ClassicChamfer)
     {
       pFunc.reset(new BRepBlend_Chamfer(S1, S2, HGuide));
     }
@@ -1370,13 +1370,13 @@ bool ChFi3d_ChBuilder::PerformFirstSection(const occ::handle<ChFiDS_Spine>&     
 
     return TheWalk.PerformFirstSection(*pFunc, Par, SolDep, tolapp3d, TolGuide, Pos1, Pos2);
   }
-  else if (chsp->IsChamfer() == ChFiDS_TwoDist)
+  else if (chsp->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_TwoDist)
   {
     double dis1, dis2;
     chsp->Dists(dis1, dis2);
 
     std::unique_ptr<BlendFunc_GenChamfer> pFunc;
-    if (chsp->Mode() == ChFiDS_ClassicChamfer)
+    if (chsp->Mode() == ChFiDS_ChamfMode::ChFiDS_ClassicChamfer)
     {
       pFunc.reset(new BRepBlend_Chamfer(S1, S2, HGuide));
       pFunc->Set(dis1, dis2, Choix);
@@ -1437,7 +1437,7 @@ bool ChFi3d_ChBuilder::PerformFirstSection(const occ::handle<ChFiDS_Spine>&     
       TgL.Reverse();
 
     double aDist1 = dis1, aDist2 = dis2;
-    if (chsp->Mode() == ChFiDS_ConstThroatWithPenetrationChamfer)
+    if (chsp->Mode() == ChFiDS_ChamfMode::ChFiDS_ConstThroatWithPenetrationChamfer)
     {
       /*
       double Alpha = TgF.Angle(TgL);
@@ -1589,12 +1589,12 @@ bool ChFi3d_ChBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfD
   if (intl)
     Last = chsp->LastParameter(chsp->NbEdges());
 
-  if (chsp->IsChamfer() == ChFiDS_Sym)
+  if (chsp->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_Sym)
   {
 
     std::unique_ptr<BlendFunc_GenChamfer>  pFunc;
     std::unique_ptr<BlendFunc_GenChamfInv> pFInv;
-    if (chsp->Mode() == ChFiDS_ClassicChamfer)
+    if (chsp->Mode() == ChFiDS_ChamfMode::ChFiDS_ClassicChamfer)
     {
       pFunc.reset(new BRepBlend_Chamfer(S1, S2, HGuide));
       pFInv.reset(new BRepBlend_ChamfInv(S1, S2, HGuide));
@@ -1643,14 +1643,14 @@ bool ChFi3d_ChBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfD
     if (!done)
       throw Standard_Failure("PerformSurf : Fail of approximation!");
   }
-  else if (chsp->IsChamfer() == ChFiDS_TwoDist)
+  else if (chsp->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_TwoDist)
   {
     double d1, d2;
     chsp->Dists(d1, d2);
 
     std::unique_ptr<BlendFunc_GenChamfer>  pFunc;
     std::unique_ptr<BlendFunc_GenChamfInv> pFInv;
-    if (chsp->Mode() == ChFiDS_ClassicChamfer)
+    if (chsp->Mode() == ChFiDS_ChamfMode::ChFiDS_ClassicChamfer)
     {
       pFunc.reset(new BRepBlend_Chamfer(S1, S2, HGuide));
       pFInv.reset(new BRepBlend_ChamfInv(S1, S2, HGuide));
@@ -1933,12 +1933,12 @@ void ChFi3d_ChBuilder::ExtentTwoCorner(const TopoDS_Vertex&                     
     chsp[i] = occ::down_cast<ChFiDS_ChamfSpine>(Spine[i]);
     ConexFaces(Spine[i], Iedge[i], F[j], F[j + 1]);
 
-    if (chsp[i]->IsChamfer() == ChFiDS_Sym)
+    if (chsp[i]->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_Sym)
     {
       chsp[i]->GetDist(d[j]);
       d[j + 1] = d[j];
     }
-    else if (chsp[i]->IsChamfer() == ChFiDS_TwoDist)
+    else if (chsp[i]->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_TwoDist)
     {
       chsp[i]->Dists(d[j], d[j + 1]);
     }
@@ -1983,7 +1983,7 @@ void ChFi3d_ChBuilder::ExtentTwoCorner(const TopoDS_Vertex&                     
       State[i] = Spine[i]->LastStatus();
   }
 
-  if (State[0] == ChFiDS_AllSame)
+  if (State[0] == ChFiDS_State::ChFiDS_AllSame)
   {
     /*
        // The greatest intersection of the chamfer is found (on the incident edge)
@@ -2001,7 +2001,7 @@ void ChFi3d_ChBuilder::ExtentTwoCorner(const TopoDS_Vertex&                     
     for (j = 0; j < 2; j++)
       ExtentOneCorner(V, Stripe[j]);
   }
-  else if ((State[0] == ChFiDS_OnSame) && (State[1] == ChFiDS_OnSame))
+  else if ((State[0] == ChFiDS_State::ChFiDS_OnSame) && (State[1] == ChFiDS_State::ChFiDS_OnSame))
   {
 
     ExtentSpineOnCommonFace(Spine[0], Spine[1], V, dis[0], dis[1], isfirst[0], isfirst[1]);
@@ -2056,12 +2056,12 @@ void ChFi3d_ChBuilder::ExtentThreeCorner(const TopoDS_Vertex&                   
     chsp[i] = occ::down_cast<ChFiDS_ChamfSpine>(Spine[i]);
     ConexFaces(Spine[i], Iedge[i], F[i][0], F[i][1]);
 
-    if (chsp[i]->IsChamfer() == ChFiDS_Sym)
+    if (chsp[i]->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_Sym)
     {
       chsp[i]->GetDist(d[i][0]);
       d[i][1] = d[i][0];
     }
-    else if (chsp[i]->IsChamfer() == ChFiDS_TwoDist)
+    else if (chsp[i]->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_TwoDist)
     {
       chsp[i]->Dists(d[i][0], d[i][1]);
     }

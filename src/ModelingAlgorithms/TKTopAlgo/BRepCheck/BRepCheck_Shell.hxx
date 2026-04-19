@@ -42,7 +42,7 @@ public:
 
   //! Checks if the oriented faces of the shell give a
   //! closed shell. If the wire is closed, returns
-  //! BRepCheck_NoError. If <Update> is set to
+  //! BRepCheck_Status::BRepCheck_NoError. If <Update> is set to
   //! true, registers the status in the list.
   Standard_EXPORT BRepCheck_Status Closed(const bool Update = false);
 

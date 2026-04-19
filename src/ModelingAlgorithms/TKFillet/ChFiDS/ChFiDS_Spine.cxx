@@ -36,11 +36,11 @@ IMPLEMENT_STANDARD_RTTIEXT(ChFiDS_Spine, Standard_Transient)
 
 ChFiDS_Spine::ChFiDS_Spine()
     : splitdone(false),
-      myMode(ChFiDS_ClassicChamfer),
+      myMode(ChFiDS_ChamfMode::ChFiDS_ClassicChamfer),
       indexofcurve(0),
-      myTypeOfConcavity(ChFiDS_Other),
-      firstState(ChFiDS_OnSame),
-      lastState(ChFiDS_OnSame),
+      myTypeOfConcavity(ChFiDS_TypeOfConcavity::ChFiDS_Other),
+      firstState(ChFiDS_State::ChFiDS_OnSame),
+      lastState(ChFiDS_State::ChFiDS_OnSame),
       tolesp(Precision::Confusion()),
       firstparam(0.0),
       lastparam(0.0),
@@ -54,7 +54,7 @@ ChFiDS_Spine::ChFiDS_Spine()
       haslasttgt(false),
       valref(0.0),
       hasref(false),
-      errorstate(ChFiDS_Ok)
+      errorstate(ChFiDS_ErrorStatus::ChFiDS_Ok)
 {
 }
 
@@ -62,11 +62,11 @@ ChFiDS_Spine::ChFiDS_Spine()
 
 ChFiDS_Spine::ChFiDS_Spine(const double Tol)
     : splitdone(false),
-      myMode(ChFiDS_ClassicChamfer),
+      myMode(ChFiDS_ChamfMode::ChFiDS_ClassicChamfer),
       indexofcurve(0),
-      myTypeOfConcavity(ChFiDS_Other),
-      firstState(ChFiDS_OnSame),
-      lastState(ChFiDS_OnSame),
+      myTypeOfConcavity(ChFiDS_TypeOfConcavity::ChFiDS_Other),
+      firstState(ChFiDS_State::ChFiDS_OnSame),
+      lastState(ChFiDS_State::ChFiDS_OnSame),
       tolesp(Tol),
       firstparam(0.0),
       lastparam(0.0),
@@ -80,7 +80,7 @@ ChFiDS_Spine::ChFiDS_Spine(const double Tol)
       haslasttgt(false),
       valref(0.0),
       hasref(false),
-      errorstate(ChFiDS_Ok)
+      errorstate(ChFiDS_ErrorStatus::ChFiDS_Ok)
 {
 }
 
@@ -251,7 +251,7 @@ double ChFiDS_Spine::Length(const int IndexSpine) const
 
 bool ChFiDS_Spine::IsPeriodic() const
 {
-  return (firstState == ChFiDS_Closed);
+  return (firstState == ChFiDS_State::ChFiDS_Closed);
 }
 
 //=================================================================================================

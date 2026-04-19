@@ -83,21 +83,21 @@ BRepBuilderAPI_ShellError BRepBuilderAPI_MakeShell::Error() const
   switch (myMakeShell.Error())
   {
 
-    case BRepLib_ShellDone:
-      return BRepBuilderAPI_ShellDone;
+    case BRepLib_ShellError::BRepLib_ShellDone:
+      return BRepBuilderAPI_ShellError::BRepBuilderAPI_ShellDone;
 
-    case BRepLib_EmptyShell:
-      return BRepBuilderAPI_EmptyShell;
+    case BRepLib_ShellError::BRepLib_EmptyShell:
+      return BRepBuilderAPI_ShellError::BRepBuilderAPI_EmptyShell;
 
-    case BRepLib_DisconnectedShell:
-      return BRepBuilderAPI_DisconnectedShell;
+    case BRepLib_ShellError::BRepLib_DisconnectedShell:
+      return BRepBuilderAPI_ShellError::BRepBuilderAPI_DisconnectedShell;
 
-    case BRepLib_ShellParametersOutOfRange:
-      return BRepBuilderAPI_ShellParametersOutOfRange;
+    case BRepLib_ShellError::BRepLib_ShellParametersOutOfRange:
+      return BRepBuilderAPI_ShellError::BRepBuilderAPI_ShellParametersOutOfRange;
   }
 
   // portage WNT
-  return BRepBuilderAPI_ShellDone;
+  return BRepBuilderAPI_ShellError::BRepBuilderAPI_ShellDone;
 }
 
 //=======================================================================

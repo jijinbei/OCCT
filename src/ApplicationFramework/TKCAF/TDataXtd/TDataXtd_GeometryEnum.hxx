@@ -17,7 +17,7 @@
 #define _TDataXtd_GeometryEnum_HeaderFile
 
 //! The terms of this enumeration define the types of geometric shapes available.
-enum TDataXtd_GeometryEnum
+enum class TDataXtd_GeometryEnum
 {
   TDataXtd_ANY_GEOM,
   TDataXtd_POINT,

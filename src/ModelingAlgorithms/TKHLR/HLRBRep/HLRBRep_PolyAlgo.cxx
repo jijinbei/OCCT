@@ -457,7 +457,7 @@ void HLRBRep_PolyAlgo::StoreShell(
               aSurf = aRectTrimSurf->BasisSurface();
             }
             GeomAdaptor_Surface aSurfAdapt(aSurf);
-            aPid->Planar(aSurfAdapt.GetType() == GeomAbs_Plane);
+            aPid->Planar(aSurfAdapt.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane);
           }
           else
           {
@@ -635,11 +635,11 @@ bool HLRBRep_PolyAlgo::Normal(const int                                        t
   {
     gp_Vec                 aD1U, aD1V;
     gp_Pnt                 aPnt;
-    CSLib_DerivativeStatus aStatus = CSLib_D1IsNull;
+    CSLib_DerivativeStatus aStatus = CSLib_DerivativeStatus::CSLib_D1IsNull;
     myBSurf.D1(theNod1RValues.UV.X(), theNod1RValues.UV.Y(), aPnt, aD1U, aD1V);
     gp_Dir aNorm;
     CSLib::Normal(aD1U, aD1V, Precision::Angular(), aStatus, aNorm);
-    if (aStatus != CSLib_Done)
+    if (aStatus != CSLib_DerivativeStatus::CSLib_Done)
     {
       gp_Vec             aD2U, aD2V, aD2UV;
       bool               isOK = false;

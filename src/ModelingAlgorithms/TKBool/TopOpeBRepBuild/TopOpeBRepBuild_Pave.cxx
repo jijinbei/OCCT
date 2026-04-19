@@ -26,7 +26,7 @@ TopOpeBRepBuild_Pave::TopOpeBRepBuild_Pave(const TopoDS_Shape& V, const double P
       myParam(P),
       myIsShape(B),
       myHasSameDomain(false),
-      myIntType(TopOpeBRepDS_FACE)
+      myIntType(TopOpeBRepDS_Kind::TopOpeBRepDS_FACE)
 {
 }
 

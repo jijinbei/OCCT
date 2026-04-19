@@ -35,7 +35,7 @@ ProjLib_Projector::ProjLib_Projector()
     : myIsPeriodic(false)
 {
   isDone = false;
-  myType = GeomAbs_BSplineCurve;
+  myType = GeomAbs_CurveType::GeomAbs_BSplineCurve;
 }
 
 //=================================================================================================
@@ -88,7 +88,7 @@ void ProjLib_Projector::SetPeriodic()
 
 const gp_Lin2d& ProjLib_Projector::Line() const
 {
-  if (myType != GeomAbs_Line)
+  if (myType != GeomAbs_CurveType::GeomAbs_Line)
     throw Standard_NoSuchObject("ProjLib_Projector::Line");
   return myLin;
 }
@@ -97,7 +97,7 @@ const gp_Lin2d& ProjLib_Projector::Line() const
 
 const gp_Circ2d& ProjLib_Projector::Circle() const
 {
-  if (myType != GeomAbs_Circle)
+  if (myType != GeomAbs_CurveType::GeomAbs_Circle)
     throw Standard_NoSuchObject("ProjLib_Projector::Circle");
   return myCirc;
 }
@@ -106,7 +106,7 @@ const gp_Circ2d& ProjLib_Projector::Circle() const
 
 const gp_Elips2d& ProjLib_Projector::Ellipse() const
 {
-  if (myType != GeomAbs_Ellipse)
+  if (myType != GeomAbs_CurveType::GeomAbs_Ellipse)
     throw Standard_NoSuchObject("ProjLib_Projector::Ellipse");
   return myElips;
 }
@@ -115,7 +115,7 @@ const gp_Elips2d& ProjLib_Projector::Ellipse() const
 
 const gp_Hypr2d& ProjLib_Projector::Hyperbola() const
 {
-  if (myType != GeomAbs_Hyperbola)
+  if (myType != GeomAbs_CurveType::GeomAbs_Hyperbola)
     throw Standard_NoSuchObject("ProjLib_Projector::Hyperbola");
   return myHypr;
 }
@@ -124,7 +124,7 @@ const gp_Hypr2d& ProjLib_Projector::Hyperbola() const
 
 const gp_Parab2d& ProjLib_Projector::Parabola() const
 {
-  if (myType != GeomAbs_Parabola)
+  if (myType != GeomAbs_CurveType::GeomAbs_Parabola)
     throw Standard_NoSuchObject("ProjLib_Projector::Parabola");
   return myParab;
 }
@@ -133,35 +133,35 @@ const gp_Parab2d& ProjLib_Projector::Parabola() const
 
 void ProjLib_Projector::Project(const gp_Lin&)
 {
-  myType = GeomAbs_OtherCurve;
+  myType = GeomAbs_CurveType::GeomAbs_OtherCurve;
 }
 
 //=================================================================================================
 
 void ProjLib_Projector::Project(const gp_Circ&)
 {
-  myType = GeomAbs_OtherCurve;
+  myType = GeomAbs_CurveType::GeomAbs_OtherCurve;
 }
 
 //=================================================================================================
 
 void ProjLib_Projector::Project(const gp_Elips&)
 {
-  myType = GeomAbs_OtherCurve;
+  myType = GeomAbs_CurveType::GeomAbs_OtherCurve;
 }
 
 //=================================================================================================
 
 void ProjLib_Projector::Project(const gp_Parab&)
 {
-  myType = GeomAbs_OtherCurve;
+  myType = GeomAbs_CurveType::GeomAbs_OtherCurve;
 }
 
 //=================================================================================================
 
 void ProjLib_Projector::Project(const gp_Hypr&)
 {
-  myType = GeomAbs_OtherCurve;
+  myType = GeomAbs_CurveType::GeomAbs_OtherCurve;
 }
 
 //=================================================================================================
@@ -172,7 +172,7 @@ void ProjLib_Projector::UFrame(const double CFirst,
                                const double UFirst,
                                const double Period)
 {
-  if (myType == GeomAbs_Line)
+  if (myType == GeomAbs_CurveType::GeomAbs_Line)
   {
     //  Modified by skv - Wed Aug 11 15:45:58 2004 OCC6272 Begin
     //     if ( myLin.Direction().Y() == 0.) {
@@ -196,7 +196,7 @@ void ProjLib_Projector::VFrame(const double CFirst,
                                const double VFirst,
                                const double Period)
 {
-  if (myType == GeomAbs_Line)
+  if (myType == GeomAbs_CurveType::GeomAbs_Line)
   {
     //  Modified by skv - Wed Aug 11 15:45:58 2004 OCC6272 Begin
     //     if ( myLin.Direction().X() == 0.) {

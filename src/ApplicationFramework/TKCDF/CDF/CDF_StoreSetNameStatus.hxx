@@ -17,7 +17,7 @@
 #ifndef _CDF_StoreSetNameStatus_HeaderFile
 #define _CDF_StoreSetNameStatus_HeaderFile
 
-enum CDF_StoreSetNameStatus
+enum class CDF_StoreSetNameStatus
 {
   CDF_SSNS_OK,
   CDF_SSNS_ReplacingAnExistentDocument,

@@ -47,15 +47,15 @@ Standard_OStream& TDataStd::Print(const TDataStd_RealEnum C, Standard_OStream& s
 {
   switch (C)
   {
-    case TDataStd_SCALAR: {
+    case TDataStd_RealEnum::TDataStd_SCALAR: {
       s << "SCALAR";
       break;
     }
-    case TDataStd_LENGTH: {
+    case TDataStd_RealEnum::TDataStd_LENGTH: {
       s << "LENGTH";
       break;
     }
-    case TDataStd_ANGULAR: {
+    case TDataStd_RealEnum::TDataStd_ANGULAR: {
       s << "ANGULAR";
       break;
     }

@@ -1085,7 +1085,7 @@ static int OneShapeIsHalfSpace(const TopoDS_Shape& S1, const TopoDS_Shape& S2)
       BRepAdaptor_Surface FSurf(testFace);
       bool                SolidIsSphereOrTorus = false;
 
-      if (FSurf.GetType() == GeomAbs_Sphere || FSurf.GetType() == GeomAbs_Torus)
+      if (FSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere || FSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
       {
         double minU = FSurf.FirstUParameter();
         double maxU = FSurf.LastUParameter();
@@ -1093,13 +1093,13 @@ static int OneShapeIsHalfSpace(const TopoDS_Shape& S1, const TopoDS_Shape& S2)
         double maxV = FSurf.LastVParameter();
         bool   yesU = (std::abs(minU - 0.) < 1.e-9 && std::abs(maxU - 2 * M_PI) < 1.e-9);
         bool   yesV =
-          (FSurf.GetType() == GeomAbs_Sphere)
+          (FSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
               ? (std::abs(minV - (-M_PI / 2.)) < 1.e-9 && std::abs(maxV - M_PI / 2.) < 1.e-9)
               : (std::abs(minV - 0.) < 1.e-9 && std::abs(maxV - 2 * M_PI) < 1.e-9);
         SolidIsSphereOrTorus = (yesU && yesV);
       }
 
-      if (FSurf.GetType() == GeomAbs_SurfaceOfRevolution)
+      if (FSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
       {
         bool areBothPeriodic = (FSurf.IsUPeriodic() && FSurf.IsVPeriodic());
         if (areBothPeriodic)

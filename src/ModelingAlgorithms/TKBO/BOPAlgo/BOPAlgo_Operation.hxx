@@ -15,7 +15,7 @@
 #ifndef _BOPAlgo_Operation_HeaderFile
 #define _BOPAlgo_Operation_HeaderFile
 
-enum BOPAlgo_Operation
+enum class BOPAlgo_Operation
 {
   BOPAlgo_COMMON,
   BOPAlgo_FUSE,

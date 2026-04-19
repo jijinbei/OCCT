@@ -142,7 +142,7 @@ BRepFill_Pipe::BRepFill_Pipe()
   myDegmax        = 11;
   mySegmax        = 100;
   myContinuity    = GeomAbs_C2;
-  myMode          = GeomFill_IsCorrectedFrenet;
+  myMode          = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet;
   myForceApproxC1 = false;
 
   myCurIndexOfSectionEdge = 1;
@@ -160,13 +160,13 @@ BRepFill_Pipe::BRepFill_Pipe(const TopoDS_Wire&       Spine,
   myDegmax = 11;
   mySegmax = 100;
 
-  myMode = GeomFill_IsCorrectedFrenet;
-  if (aMode == GeomFill_IsFrenet || aMode == GeomFill_IsCorrectedFrenet
-      || aMode == GeomFill_IsDiscreteTrihedron)
+  myMode = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet;
+  if (aMode == GeomFill_Trihedron::GeomFill_IsFrenet || aMode == GeomFill_Trihedron::GeomFill_IsCorrectedFrenet
+      || aMode == GeomFill_Trihedron::GeomFill_IsDiscreteTrihedron)
     myMode = aMode;
 
   myContinuity = GeomAbs_C2;
-  if (myMode == GeomFill_IsDiscreteTrihedron)
+  if (myMode == GeomFill_Trihedron::GeomFill_IsDiscreteTrihedron)
     myContinuity = GeomAbs_C0;
 
   myForceApproxC1 = ForceApproxC1;
@@ -198,13 +198,13 @@ void BRepFill_Pipe::Perform(const TopoDS_Wire&  Spine,
   occ::handle<GeomFill_TrihedronLaw> TLaw;
   switch (myMode)
   {
-    case GeomFill_IsFrenet:
+    case GeomFill_Trihedron::GeomFill_IsFrenet:
       TLaw = new GeomFill_Frenet();
       break;
-    case GeomFill_IsCorrectedFrenet:
+    case GeomFill_Trihedron::GeomFill_IsCorrectedFrenet:
       TLaw = new GeomFill_CorrectedFrenet();
       break;
-    case GeomFill_IsDiscreteTrihedron:
+    case GeomFill_Trihedron::GeomFill_IsDiscreteTrihedron:
       TLaw = new GeomFill_DiscreteTrihedron();
       break;
     default:
@@ -475,9 +475,9 @@ TopoDS_Wire BRepFill_Pipe::PipeLine(const gp_Pnt& Point)
   MkSw.Build(myReversedEdges,
              myTapes,
              myRails,
-             BRepFill_Modified,
+             BRepFill_TransitionStyle::BRepFill_Modified,
              myContinuity,
-             GeomFill_Location,
+             GeomFill_ApproxStyle::GeomFill_Location,
              myDegmax,
              mySegmax);
   TopoDS_Shape aLocalShape = MkSw.Shape();
@@ -623,9 +623,9 @@ TopoDS_Shape BRepFill_Pipe::MakeShape(const TopoDS_Shape& S,
       MkSw.Build(myReversedEdges,
                  myTapes,
                  myRails,
-                 BRepFill_Modified,
+                 BRepFill_TransitionStyle::BRepFill_Modified,
                  myContinuity,
-                 GeomFill_Location,
+                 GeomFill_ApproxStyle::GeomFill_Location,
                  myDegmax,
                  mySegmax);
       result = MkSw.Shape();
@@ -654,9 +654,9 @@ TopoDS_Shape BRepFill_Pipe::MakeShape(const TopoDS_Shape& S,
       MkSw.Build(myReversedEdges,
                  myTapes,
                  myRails,
-                 BRepFill_Modified,
+                 BRepFill_TransitionStyle::BRepFill_Modified,
                  myContinuity,
-                 GeomFill_Location,
+                 GeomFill_ApproxStyle::GeomFill_Location,
                  myDegmax,
                  mySegmax);
       result        = MkSw.Shape();

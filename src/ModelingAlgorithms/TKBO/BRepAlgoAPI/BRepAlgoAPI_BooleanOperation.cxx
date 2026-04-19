@@ -81,7 +81,7 @@ protected:
 //=================================================================================================
 
 BRepAlgoAPI_BooleanOperation::BRepAlgoAPI_BooleanOperation()
-    : myOperation(BOPAlgo_UNKNOWN)
+    : myOperation(BOPAlgo_Operation::BOPAlgo_UNKNOWN)
 {
 }
 
@@ -89,7 +89,7 @@ BRepAlgoAPI_BooleanOperation::BRepAlgoAPI_BooleanOperation()
 
 BRepAlgoAPI_BooleanOperation::BRepAlgoAPI_BooleanOperation(const BOPAlgo_PaveFiller& thePF)
     : BRepAlgoAPI_BuilderAlgo(thePF),
-      myOperation(BOPAlgo_UNKNOWN)
+      myOperation(BOPAlgo_Operation::BOPAlgo_UNKNOWN)
 {
 }
 
@@ -133,7 +133,7 @@ void BRepAlgoAPI_BooleanOperation::Build(const Message_ProgressRange& theRange)
     return;
   }
   // Check if the operation is set
-  if (myOperation == BOPAlgo_UNKNOWN)
+  if (myOperation == BOPAlgo_Operation::BOPAlgo_UNKNOWN)
   {
     AddError(new BOPAlgo_AlertBOPNotSet);
     return;
@@ -152,17 +152,17 @@ void BRepAlgoAPI_BooleanOperation::Build(const Message_ProgressRange& theRange)
   TCollection_AsciiString aPSName;
   switch (myOperation)
   {
-    case BOPAlgo_COMMON:
+    case BOPAlgo_Operation::BOPAlgo_COMMON:
       aPSName = "Performing COMMON operation";
       break;
-    case BOPAlgo_FUSE:
+    case BOPAlgo_Operation::BOPAlgo_FUSE:
       aPSName = "Performing FUSE operation";
       break;
-    case BOPAlgo_CUT:
-    case BOPAlgo_CUT21:
+    case BOPAlgo_Operation::BOPAlgo_CUT:
+    case BOPAlgo_Operation::BOPAlgo_CUT21:
       aPSName = "Performing CUT operation";
       break;
-    case BOPAlgo_SECTION:
+    case BOPAlgo_Operation::BOPAlgo_SECTION:
       aPSName = "Performing SECTION operation";
       break;
     default:
@@ -192,7 +192,7 @@ void BRepAlgoAPI_BooleanOperation::Build(const Message_ProgressRange& theRange)
   }
 
   // Builder Initialization
-  if (myOperation == BOPAlgo_SECTION)
+  if (myOperation == BOPAlgo_Operation::BOPAlgo_SECTION)
   {
     myBuilder = new BOPAlgo_Section(myAllocator);
     myBuilder->SetArguments(myDSFiller->Arguments());
@@ -289,24 +289,24 @@ void BRepAlgoAPI_DumpOper::Dump(const TopoDS_Shape& theShape1,
   TCollection_AsciiString aBopString;
   switch (theOperation)
   {
-    case BOPAlgo_COMMON:
+    case BOPAlgo_Operation::BOPAlgo_COMMON:
       aBopString += "bcommon Res ";
       break;
-    case BOPAlgo_FUSE:
+    case BOPAlgo_Operation::BOPAlgo_FUSE:
       aBopString += "bfuse Res ";
       break;
-    case BOPAlgo_CUT:
-    case BOPAlgo_CUT21:
+    case BOPAlgo_Operation::BOPAlgo_CUT:
+    case BOPAlgo_Operation::BOPAlgo_CUT21:
       aBopString += "bcut Res ";
       break;
-    case BOPAlgo_SECTION:
+    case BOPAlgo_Operation::BOPAlgo_SECTION:
       aBopString += "bsection Res ";
       break;
     default:
       break;
   };
   aBopString += ("arg1 arg2");
-  if (theOperation == BOPAlgo_CUT21)
+  if (theOperation == BOPAlgo_Operation::BOPAlgo_CUT21)
     aBopString += " 1";
 
   fprintf(afile, "%s\n", aBopString.ToCString());

@@ -150,14 +150,14 @@ void ChFi3d_FilBuilder::SetFilletShape(const ChFi3d_FilletShape FShape)
 {
   switch (FShape)
   {
-    case ChFi3d_Rational:
-      myShape = BlendFunc_Rational;
+    case ChFi3d_FilletShape::ChFi3d_Rational:
+      myShape = BlendFunc_SectionShape::BlendFunc_Rational;
       break;
-    case ChFi3d_QuasiAngular:
-      myShape = BlendFunc_QuasiAngular;
+    case ChFi3d_FilletShape::ChFi3d_QuasiAngular:
+      myShape = BlendFunc_SectionShape::BlendFunc_QuasiAngular;
       break;
-    case ChFi3d_Polynomial:
-      myShape = BlendFunc_Polynomial;
+    case ChFi3d_FilletShape::ChFi3d_Polynomial:
+      myShape = BlendFunc_SectionShape::BlendFunc_Polynomial;
       break;
   }
 }
@@ -166,17 +166,17 @@ void ChFi3d_FilBuilder::SetFilletShape(const ChFi3d_FilletShape FShape)
 
 ChFi3d_FilletShape ChFi3d_FilBuilder::GetFilletShape() const
 {
-  ChFi3d_FilletShape filshape = ChFi3d_Rational; //  need to set default value
+  ChFi3d_FilletShape filshape = ChFi3d_FilletShape::ChFi3d_Rational; //  need to set default value
   switch (myShape)
   {
-    case BlendFunc_Rational:
-      filshape = ChFi3d_Rational;
+    case BlendFunc_SectionShape::BlendFunc_Rational:
+      filshape = ChFi3d_FilletShape::ChFi3d_Rational;
       break;
-    case BlendFunc_QuasiAngular:
-      filshape = ChFi3d_QuasiAngular;
+    case BlendFunc_SectionShape::BlendFunc_QuasiAngular:
+      filshape = ChFi3d_FilletShape::ChFi3d_QuasiAngular;
       break;
-    case BlendFunc_Polynomial:
-      filshape = ChFi3d_Polynomial;
+    case BlendFunc_SectionShape::BlendFunc_Polynomial:
+      filshape = ChFi3d_FilletShape::ChFi3d_Polynomial;
       break;
     default:
       break;
@@ -480,7 +480,7 @@ void ChFi3d_FilBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
   GeomAbs_SurfaceType                                  typ = AS.GetType();
   switch (typ)
   {
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       u1                       = p1f.X();
       u2                       = p2f.X();
       v1                       = std::max(p1f.Y(), p2f.Y());
@@ -493,7 +493,7 @@ void ChFi3d_FilBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
       sec2.Set(ElSLib::CylinderVIso(Cy.Position(), Cy.Radius(), v2), u1, u2);
     }
     break;
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       v1            = p1f.Y();
       v2            = p2f.Y();
       u1            = std::max(p1f.X(), p2f.X());
@@ -513,7 +513,7 @@ void ChFi3d_FilBuilder::SimulKPart(const occ::handle<ChFiDS_SurfData>& SD) const
       }
     }
     break;
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       v1            = p1f.Y();
       v2            = p2f.Y();
       u1            = std::max(p1f.X(), p2f.X());
@@ -1721,7 +1721,7 @@ void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
                        RecRst);
     if (!done)
     {
-      Spine->SetErrorStatus(ChFiDS_WalkingFailure);
+      Spine->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_WalkingFailure);
       throw Standard_Failure("PerformSurf : Failed processing!");
     }
     TopAbs_Orientation Or = HS2->Face().Orientation();
@@ -1778,7 +1778,7 @@ void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
                        RecRst);
     if (!done)
     {
-      Spine->SetErrorStatus(ChFiDS_WalkingFailure);
+      Spine->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_WalkingFailure);
       throw Standard_Failure("PerformSurf : Failed processing!");
     }
     TopAbs_Orientation Or = HS2->Face().Orientation();
@@ -1878,7 +1878,7 @@ void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
                        RecRst);
     if (!done)
     {
-      Spine->SetErrorStatus(ChFiDS_WalkingFailure);
+      Spine->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_WalkingFailure);
       throw Standard_Failure("PerformSurf : Failed processing!");
     }
     TopAbs_Orientation Or = HS1->Face().Orientation();
@@ -1936,7 +1936,7 @@ void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
                        RecRst);
     if (!done)
     {
-      Spine->SetErrorStatus(ChFiDS_WalkingFailure);
+      Spine->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_WalkingFailure);
       throw Standard_Failure("PerformSurf : Failed processing!");
     }
     TopAbs_Orientation Or = HS1->Face().Orientation();
@@ -2053,7 +2053,7 @@ void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
                        RecRst2);
     if (!done)
     {
-      Spine->SetErrorStatus(ChFiDS_WalkingFailure);
+      Spine->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_WalkingFailure);
       throw Standard_Failure("PerformSurf : Failed processing!");
     }
     TopAbs_Orientation Or = HS1->Face().Orientation();
@@ -2126,7 +2126,7 @@ void ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
 
     if (!done)
     {
-      Spine->SetErrorStatus(ChFiDS_WalkingFailure);
+      Spine->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_WalkingFailure);
       throw Standard_Failure("PerformSurf : Failed processing!");
     }
     TopAbs_Orientation Or = HS1->Face().Orientation();
@@ -2315,7 +2315,7 @@ void ChFi3d_FilBuilder::ExtentOneCorner(const TopoDS_Vertex& V, const occ::handl
   if (Spine->IsTangencyExtremity((Sens == 1)))
     return; // No extension in the queue
 
-  if (Spine->Status((Sens == 1)) == ChFiDS_FreeBoundary)
+  if (Spine->Status((Sens == 1)) == ChFiDS_State::ChFiDS_FreeBoundary)
   {
     Coeff *= 2; // It is necessary to go to the end and to evaluate the length
   }
@@ -2426,7 +2426,7 @@ void ChFi3d_FilBuilder::ExtentThreeCorner(const TopoDS_Vertex&                  
     double dU = Spine->LastParameter(Spine->NbEdges());
     if (Sens == 1)
     {
-      if (Spine->GetTypeOfConcavity() != ChFiDS_Convex || Spine->FirstStatus() != ChFiDS_OnSame)
+      if (Spine->GetTypeOfConcavity() != ChFiDS_TypeOfConcavity::ChFiDS_Convex || Spine->FirstStatus() != ChFiDS_State::ChFiDS_OnSame)
       {
         Spine->SetFirstParameter(-dU * Coeff);
         Spine->SetFirstTgt(0.);
@@ -2434,7 +2434,7 @@ void ChFi3d_FilBuilder::ExtentThreeCorner(const TopoDS_Vertex&                  
     }
     else
     {
-      if (Spine->GetTypeOfConcavity() != ChFiDS_Convex || Spine->LastStatus() != ChFiDS_OnSame)
+      if (Spine->GetTypeOfConcavity() != ChFiDS_TypeOfConcavity::ChFiDS_Convex || Spine->LastStatus() != ChFiDS_State::ChFiDS_OnSame)
       {
         Spine->SetLastParameter(dU * (1. + Coeff));
         Spine->SetLastTgt(dU);

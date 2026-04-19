@@ -16,7 +16,7 @@
 #define _ChFiDS_ChamfMode_HeaderFile
 
 //! this enumeration defines several modes of chamfer
-enum ChFiDS_ChamfMode
+enum class ChFiDS_ChamfMode
 {
   //! chamfer with constant distance from spine to one of the two surfaces
   ChFiDS_ClassicChamfer,

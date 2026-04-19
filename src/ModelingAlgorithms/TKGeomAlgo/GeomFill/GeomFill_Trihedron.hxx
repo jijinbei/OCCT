@@ -17,7 +17,7 @@
 #ifndef _GeomFill_Trihedron_HeaderFile
 #define _GeomFill_Trihedron_HeaderFile
 
-enum GeomFill_Trihedron
+enum class GeomFill_Trihedron
 {
   GeomFill_IsCorrectedFrenet,
   GeomFill_IsFixed,

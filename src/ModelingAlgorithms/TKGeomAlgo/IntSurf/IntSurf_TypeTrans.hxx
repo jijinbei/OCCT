@@ -17,7 +17,7 @@
 #ifndef _IntSurf_TypeTrans_HeaderFile
 #define _IntSurf_TypeTrans_HeaderFile
 
-enum IntSurf_TypeTrans
+enum class IntSurf_TypeTrans
 {
   IntSurf_In,
   IntSurf_Out,

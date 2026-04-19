@@ -81,11 +81,11 @@ void IntPatch_Point::ReverseTransition()
     IntSurf_Transition TLine;
     switch (traline1.TransitionType())
     {
-      case IntSurf_In:
-        TLine.SetValue(false, IntSurf_Out);
+      case IntSurf_TypeTrans::IntSurf_In:
+        TLine.SetValue(false, IntSurf_TypeTrans::IntSurf_Out);
         break;
-      case IntSurf_Out:
-        TLine.SetValue(false, IntSurf_In);
+      case IntSurf_TypeTrans::IntSurf_Out:
+        TLine.SetValue(false, IntSurf_TypeTrans::IntSurf_In);
         break;
       default:
         break;
@@ -94,11 +94,11 @@ void IntPatch_Point::ReverseTransition()
     IntSurf_Transition TArc;
     switch (tra1.TransitionType())
     {
-      case IntSurf_In:
-        TArc.SetValue(false, IntSurf_Out);
+      case IntSurf_TypeTrans::IntSurf_In:
+        TArc.SetValue(false, IntSurf_TypeTrans::IntSurf_Out);
         break;
-      case IntSurf_Out:
-        TArc.SetValue(false, IntSurf_In);
+      case IntSurf_TypeTrans::IntSurf_Out:
+        TArc.SetValue(false, IntSurf_TypeTrans::IntSurf_In);
         break;
       default:
         break;
@@ -110,11 +110,11 @@ void IntPatch_Point::ReverseTransition()
     IntSurf_Transition TLine;
     switch (traline2.TransitionType())
     {
-      case IntSurf_In:
-        TLine.SetValue(false, IntSurf_Out);
+      case IntSurf_TypeTrans::IntSurf_In:
+        TLine.SetValue(false, IntSurf_TypeTrans::IntSurf_Out);
         break;
-      case IntSurf_Out:
-        TLine.SetValue(false, IntSurf_In);
+      case IntSurf_TypeTrans::IntSurf_Out:
+        TLine.SetValue(false, IntSurf_TypeTrans::IntSurf_In);
         break;
       default:
         break;
@@ -123,11 +123,11 @@ void IntPatch_Point::ReverseTransition()
     IntSurf_Transition TArc;
     switch (tra2.TransitionType())
     {
-      case IntSurf_In:
-        TArc.SetValue(false, IntSurf_Out);
+      case IntSurf_TypeTrans::IntSurf_In:
+        TArc.SetValue(false, IntSurf_TypeTrans::IntSurf_Out);
         break;
-      case IntSurf_Out:
-        TArc.SetValue(false, IntSurf_In);
+      case IntSurf_TypeTrans::IntSurf_Out:
+        TArc.SetValue(false, IntSurf_TypeTrans::IntSurf_In);
         break;
       default:
         break;
@@ -142,18 +142,18 @@ void IntPatch_Point::ReverseTransition()
 static void DumpTransition(const IntSurf_Transition& T)
 {
   IntSurf_TypeTrans typetrans = T.TransitionType();
-  if (typetrans == IntSurf_In)
+  if (typetrans == IntSurf_TypeTrans::IntSurf_In)
     std::cout << " In  ";
-  else if (typetrans == IntSurf_Out)
+  else if (typetrans == IntSurf_TypeTrans::IntSurf_Out)
     std::cout << " Out ";
-  else if (typetrans == IntSurf_Undecided)
+  else if (typetrans == IntSurf_TypeTrans::IntSurf_Undecided)
     std::cout << " Und.";
-  else if (typetrans == IntSurf_Touch)
+  else if (typetrans == IntSurf_TypeTrans::IntSurf_Touch)
   {
     std::cout << " Touch ";
-    if (T.Situation() == IntSurf_Inside)
+    if (T.Situation() == IntSurf_Situation::IntSurf_Inside)
       std::cout << " Inside ";
-    else if (T.Situation() == IntSurf_Outside)
+    else if (T.Situation() == IntSurf_Situation::IntSurf_Outside)
       std::cout << " Outside";
     else
       std::cout << " Unknown";
@@ -163,7 +163,7 @@ static void DumpTransition(const IntSurf_Transition& T)
       std::cout << " Non_Opposite ";
   }
 
-  if (typetrans != IntSurf_Undecided)
+  if (typetrans != IntSurf_TypeTrans::IntSurf_Undecided)
   {
     if (T.IsTangent())
       std::cout << " Tangent    ";

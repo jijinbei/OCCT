@@ -68,7 +68,7 @@ GeomFill_GuideTrihedronPlan::GeomFill_GuideTrihedronPlan(
       XTol(1, 1),
       Inf(1, 1),
       Sup(1, 1),
-      myStatus(GeomFill_PipeOk)
+      myStatus(GeomFill_PipeError::GeomFill_PipeOk)
 {
   myCurve.Nullify();
   myGuide = theGuide; // guide
@@ -87,7 +87,7 @@ GeomFill_GuideTrihedronPlan::GeomFill_GuideTrihedronPlan(
 //=======================================================================
 void GeomFill_GuideTrihedronPlan::Init()
 {
-  myStatus = GeomFill_PipeOk;
+  myStatus = GeomFill_PipeError::GeomFill_PipeOk;
   gp_Pnt P;
   //  Bnd_Box2d Box;
   //  Box.Update(-0.1, -0.1, 0.1, 0.1); // Taille minimal
@@ -138,7 +138,7 @@ void GeomFill_GuideTrihedronPlan::Init()
              ? myGuide->FirstParameter()
              : myGuide->LastParameter());
 
-      myStatus = GeomFill_PlaneNotIntersectGuide;
+      myStatus = GeomFill_PipeError::GeomFill_PlaneNotIntersectGuide;
       // return;
     }
     else
@@ -248,7 +248,7 @@ bool GeomFill_GuideTrihedronPlan::D0(const double Param,
     occ::handle<Geom_Plane> Plan = new (Geom_Plane)(P, Tangent);
     TracePlan(Plan);
 #endif
-    myStatus = GeomFill_PlaneNotIntersectGuide;
+    myStatus = GeomFill_PipeError::GeomFill_PlaneNotIntersectGuide;
     return false;
   }
 
@@ -338,7 +338,7 @@ bool GeomFill_GuideTrihedronPlan::D1(const double Param,
     occ::handle<Geom_Plane> Plan = new (Geom_Plane)(P, Tangent);
     TracePlan(Plan);
 #endif
-    myStatus = GeomFill_PlaneNotIntersectGuide;
+    myStatus = GeomFill_PipeError::GeomFill_PlaneNotIntersectGuide;
     return false;
   }
 
@@ -486,7 +486,7 @@ void GeomFill_GuideTrihedronPlan::GetAverageLaw(gp_Vec& ATangent,
 
 bool GeomFill_GuideTrihedronPlan::IsConstant() const
 {
-  if ((myCurve->GetType() == GeomAbs_Line) && (myGuide->GetType() == GeomAbs_Line))
+  if ((myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line) && (myGuide->GetType() == GeomAbs_CurveType::GeomAbs_Line))
   {
     double Angle;
     Angle = myCurve->Line().Angle(myGuide->Line());

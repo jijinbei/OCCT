@@ -243,7 +243,7 @@ const MTClioloi& TopOpeBRepTool_BoxSort::Compare(const TopoDS_Shape& S)
       occ::handle<Geom_Surface> surf = BRep_Tool::Surface(F);
       GeomAdaptor_Surface       GAS(surf);
       GeomAbs_SurfaceType       suty = GAS.GetType();
-      isPlane                        = (suty == GeomAbs_Plane);
+      isPlane                        = (suty == GeomAbs_SurfaceType::GeomAbs_Plane);
       if (isPlane)
         P = GAS.Plane();
       else

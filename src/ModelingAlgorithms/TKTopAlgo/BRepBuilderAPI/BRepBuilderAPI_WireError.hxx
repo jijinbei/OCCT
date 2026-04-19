@@ -19,15 +19,15 @@
 
 //! Indicates the outcome of wire
 //! construction, i.e. whether it is successful or not, as explained below:
-//! -      BRepBuilderAPI_WireDone No
+//! -      BRepBuilderAPI_WireError::BRepBuilderAPI_WireDone No
 //! error occurred. The wire is correctly built.
-//! -      BRepBuilderAPI_EmptyWire No
+//! -      BRepBuilderAPI_WireError::BRepBuilderAPI_EmptyWire No
 //! initialization of the algorithm. Only an empty constructor was used.
-//! -      BRepBuilderAPI_DisconnectedWire
+//! -      BRepBuilderAPI_WireError::BRepBuilderAPI_DisconnectedWire
 //! The last edge which you attempted to add was not connected to the wire.
-//! -      BRepBuilderAPI_NonManifoldWire
+//! -      BRepBuilderAPI_WireError::BRepBuilderAPI_NonManifoldWire
 //! The wire with some singularity.
-enum BRepBuilderAPI_WireError
+enum class BRepBuilderAPI_WireError
 {
   BRepBuilderAPI_WireDone,
   BRepBuilderAPI_EmptyWire,

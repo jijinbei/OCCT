@@ -50,7 +50,7 @@ void TopOpeBRep_GeomTool::MakeCurves(const double                min,
   switch (typeline)
   {
 
-    case TopOpeBRep_WALKING: {
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING: {
       // make BSplines of degree 1
       C3D = MakeBSpline1fromWALKING3d(L);
       PC1 = MakeBSpline1fromWALKING2d(L, 1);
@@ -62,20 +62,20 @@ void TopOpeBRep_GeomTool::MakeCurves(const double                min,
       IsWalk = true;
       break;
     }
-    case TopOpeBRep_LINE:
-    case TopOpeBRep_CIRCLE:
-    case TopOpeBRep_ELLIPSE: {
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_LINE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_CIRCLE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_ELLIPSE: {
       C3D = L.Curve();
       break;
     }
-    case TopOpeBRep_PARABOLA:
-    case TopOpeBRep_HYPERBOLA: {
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_PARABOLA:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_HYPERBOLA: {
       C3D = L.Curve(min, max); // Trimmed
       break;
     }
-    case TopOpeBRep_ANALYTIC:
-    case TopOpeBRep_RESTRICTION:
-    case TopOpeBRep_OTHERTYPE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_ANALYTIC:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_OTHERTYPE:
     default:
       throw Standard_ProgramError("TopOpeBRep_GeomTool::MakePrivateCurves");
       break;
@@ -98,33 +98,33 @@ void TopOpeBRep_GeomTool::MakeCurve(const double                min,
   switch (typeline)
   {
 
-    case TopOpeBRep_WALKING:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING:
       C3D = MakeBSpline1fromWALKING3d(L);
       break;
 
-    case TopOpeBRep_LINE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_LINE:
       C3D = L.Curve();
       break;
 
-    case TopOpeBRep_CIRCLE:
-    case TopOpeBRep_ELLIPSE:
-    case TopOpeBRep_PARABOLA:
-    case TopOpeBRep_HYPERBOLA:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_CIRCLE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_ELLIPSE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_PARABOLA:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_HYPERBOLA:
 
-      if (typeline == TopOpeBRep_CIRCLE)
+      if (typeline == TopOpeBRep_TypeLineCurve::TopOpeBRep_CIRCLE)
         C3D = L.Curve();
-      else if (typeline == TopOpeBRep_ELLIPSE)
+      else if (typeline == TopOpeBRep_TypeLineCurve::TopOpeBRep_ELLIPSE)
         C3D = L.Curve();
-      else if (typeline == TopOpeBRep_PARABOLA)
+      else if (typeline == TopOpeBRep_TypeLineCurve::TopOpeBRep_PARABOLA)
         C3D = L.Curve(min, max); // Trimmed
-      else if (typeline == TopOpeBRep_HYPERBOLA)
+      else if (typeline == TopOpeBRep_TypeLineCurve::TopOpeBRep_HYPERBOLA)
         C3D = L.Curve(min, max); // Trimmed
 
       break;
 
-    case TopOpeBRep_ANALYTIC:
-    case TopOpeBRep_RESTRICTION:
-    case TopOpeBRep_OTHERTYPE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_ANALYTIC:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_OTHERTYPE:
     default:
       throw Standard_ProgramError("TopOpeBRep_GeomTool::MakePrivateCurves");
       break;

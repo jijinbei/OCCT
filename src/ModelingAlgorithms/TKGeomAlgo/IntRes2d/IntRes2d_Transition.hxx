@@ -72,8 +72,8 @@ public:
   void SetPosition(const IntRes2d_Position Pos);
 
   //! Indicates if the intersection is at the beginning
-  //! (IntRes2d_Head), at the end (IntRes2d_End), or in
-  //! the middle (IntRes2d_Middle) of the curve.
+  //! (IntRes2d_Position::IntRes2d_Head), at the end (IntRes2d_Position::IntRes2d_End), or in
+  //! the middle (IntRes2d_Position::IntRes2d_Middle) of the curve.
   IntRes2d_Position PositionOnCurve() const;
 
   //! Returns the type of transition at the intersection.

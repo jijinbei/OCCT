@@ -62,9 +62,9 @@ public:
   //! Warning
   //! The status of the initialization, as given by the Status
   //! function, can be one of the following:
-  //! -   ChFi2d_Ready if the initialization is correct,
-  //! -   ChFi2d_NotPlanar if F is not planar,
-  //! -   ChFi2d_NoFace if F is a null face.
+  //! -   ChFi2d_ConstructionError::ChFi2d_Ready if the initialization is correct,
+  //! -   ChFi2d_ConstructionError::ChFi2d_NotPlanar if F is not planar,
+  //! -   ChFi2d_ConstructionError::ChFi2d_NoFace if F is a null face.
   Standard_EXPORT BRepFilletAPI_MakeFillet2d();
 
   //! Initializes an algorithm for computing fillets and chamfers on the face F.
@@ -73,9 +73,9 @@ public:
   //! Warning
   //! The status of the initialization, as given by the Status
   //! function, can be one of the following:
-  //! -   ChFi2d_Ready if the initialization is correct,
-  //! -   ChFi2d_NotPlanar if F is not planar,
-  //! -   ChFi2d_NoFace if F is a null face.
+  //! -   ChFi2d_ConstructionError::ChFi2d_Ready if the initialization is correct,
+  //! -   ChFi2d_ConstructionError::ChFi2d_NotPlanar if F is not planar,
+  //! -   ChFi2d_ConstructionError::ChFi2d_NoFace if F is a null face.
   Standard_EXPORT BRepFilletAPI_MakeFillet2d(const TopoDS_Face& F);
 
   //! Initializes this algorithm for constructing fillets or
@@ -83,9 +83,9 @@ public:
   //! Warning
   //! The status of the initialization, as given by the Status
   //! function, can be one of the following:
-  //! -   ChFi2d_Ready if the initialization is correct,
-  //! -   ChFi2d_NotPlanar if F is not planar,
-  //! -   ChFi2d_NoFace if F is a null face.
+  //! -   ChFi2d_ConstructionError::ChFi2d_Ready if the initialization is correct,
+  //! -   ChFi2d_ConstructionError::ChFi2d_NotPlanar if F is not planar,
+  //! -   ChFi2d_ConstructionError::ChFi2d_NoFace if F is a null face.
   Standard_EXPORT void Init(const TopoDS_Face& F);
 
   //! This initialize method allow to init the builder
@@ -100,15 +100,15 @@ public:
   //! Warning
   //! The status of the construction, as given by the Status
   //! function, can be one of the following:
-  //! - ChFi2d_IsDone if the fillet is built,
-  //! - ChFi2d_ConnexionError if V does not belong to the initial face,
-  //! -   ChFi2d_ComputationError if Radius is too large
+  //! - ChFi2d_ConstructionError::ChFi2d_IsDone if the fillet is built,
+  //! - ChFi2d_ConstructionError::ChFi2d_ConnexionError if V does not belong to the initial face,
+  //! -   ChFi2d_ConstructionError::ChFi2d_ComputationError if Radius is too large
   //! to build a fillet between the two adjacent edges,
-  //! -   ChFi2d_NotAuthorized
+  //! -   ChFi2d_ConstructionError::ChFi2d_NotAuthorized
   //! -   if one of the two edges connected to V is a fillet or chamfer, or
   //! -   if a curve other than a straight line or an arc of a
   //! circle is used as E, E1 or E2.
-  //! Do not use the returned fillet if the status of the construction is not ChFi2d_IsDone.
+  //! Do not use the returned fillet if the status of the construction is not ChFi2d_ConstructionError::ChFi2d_IsDone.
   //! Exceptions
   //! Standard_NegativeValue if Radius is less than or equal to zero.
   Standard_EXPORT TopoDS_Edge AddFillet(const TopoDS_Vertex& V, const double Radius);
@@ -119,13 +119,13 @@ public:
   //! Warning
   //! The status of the construction, as given by the Status
   //! function, can be one of the following:
-  //! -   ChFi2d_IsDone if the new fillet is built,
-  //! -   ChFi2d_ConnexionError if Fillet does not
+  //! -   ChFi2d_ConstructionError::ChFi2d_IsDone if the new fillet is built,
+  //! -   ChFi2d_ConstructionError::ChFi2d_ConnexionError if Fillet does not
   //! belong to the existing face,
-  //! -   ChFi2d_ComputationError if Radius is too
+  //! -   ChFi2d_ConstructionError::ChFi2d_ComputationError if Radius is too
   //! large to build a fillet between the two adjacent edges.
   //! Do not use the returned fillet if the status of the
-  //! construction is not ChFi2d_IsDone.
+  //! construction is not ChFi2d_ConstructionError::ChFi2d_IsDone.
   //! Exceptions
   //! Standard_NegativeValue if Radius is less than or equal to zero.
   Standard_EXPORT TopoDS_Edge ModifyFillet(const TopoDS_Edge& Fillet, const double Radius);
@@ -136,7 +136,7 @@ public:
   //! adjacent edges of Fillet and modifies the existing face.
   //! Warning
   //! -   The returned vertex is only valid if the Status
-  //! function returns ChFi2d_IsDone.
+  //! function returns ChFi2d_ConstructionError::ChFi2d_IsDone.
   //! -   A null vertex is returned if the edge Fillet does not
   //! belong to the initial face.
   Standard_EXPORT TopoDS_Vertex RemoveFillet(const TopoDS_Edge& Fillet);
@@ -170,19 +170,19 @@ public:
   //! Warning
   //! The status of the construction, as given by the Status function, can
   //! be one of the following:
-  //! -          ChFi2d_IsDone if the chamfer is built,
-  //! -  ChFi2d_ParametersError if D1, D2, D or Ang is less than or equal to zero,
-  //! -          ChFi2d_ConnexionError if:
+  //! -          ChFi2d_ConstructionError::ChFi2d_IsDone if the chamfer is built,
+  //! -  ChFi2d_ConstructionError::ChFi2d_ParametersError if D1, D2, D or Ang is less than or equal to zero,
+  //! -          ChFi2d_ConstructionError::ChFi2d_ConnexionError if:
   //! - the edge E, E1 or E2 does not belong to the initial face, or
   //! -  the edges E1 and E2 are not adjacent, or
   //! -  the vertex V is not one of the limit points of the edge E,
-  //! -          ChFi2d_ComputationError if the parameters of the chamfer
+  //! -          ChFi2d_ConstructionError::ChFi2d_ComputationError if the parameters of the chamfer
   //! are too large to build a chamfer between the two adjacent edges,
-  //! -          ChFi2d_NotAuthorized if:
+  //! -          ChFi2d_ConstructionError::ChFi2d_NotAuthorized if:
   //! - the edge E1, E2 or one of the two edges connected to V is a fillet or chamfer, or
   //! - a curve other than a straight line or an arc of a circle is used as E, E1 or E2.
   //! Do not use the returned chamfer if
-  //! the status of the construction is not ChFi2d_IsDone.
+  //! the status of the construction is not ChFi2d_ConstructionError::ChFi2d_IsDone.
   Standard_EXPORT TopoDS_Edge AddChamfer(const TopoDS_Edge&   E,
                                          const TopoDS_Vertex& V,
                                          const double         D,
@@ -214,18 +214,18 @@ public:
   //! Warning
   //! The status of the construction, as given by the Status
   //! function, can be one of the following:
-  //! -   ChFi2d_IsDone if the chamfer is built,
-  //! -   ChFi2d_ParametersError if D1, D2, D or Ang is less than or equal to zero,
-  //! -   ChFi2d_ConnexionError if:
+  //! -   ChFi2d_ConstructionError::ChFi2d_IsDone if the chamfer is built,
+  //! -   ChFi2d_ConstructionError::ChFi2d_ParametersError if D1, D2, D or Ang is less than or equal to zero,
+  //! -   ChFi2d_ConstructionError::ChFi2d_ConnexionError if:
   //! -   the edge E, E1, E2 or Chamfer does not belong
   //! to the existing face, or
   //! -   the edges E1 and E2 are not adjacent,
-  //! -   ChFi2d_ComputationError if the parameters of
+  //! -   ChFi2d_ConstructionError::ChFi2d_ComputationError if the parameters of
   //! the chamfer are too large to build a chamfer
   //! between the two adjacent edges,
-  //! -   ChFi2d_NotAuthorized if E1 or E2 is a fillet or chamfer.
+  //! -   ChFi2d_ConstructionError::ChFi2d_NotAuthorized if E1 or E2 is a fillet or chamfer.
   //! Do not use the returned chamfer if the status of the
-  //! construction is not ChFi2d_IsDone.
+  //! construction is not ChFi2d_ConstructionError::ChFi2d_IsDone.
   Standard_EXPORT TopoDS_Edge ModifyChamfer(const TopoDS_Edge& Chamfer,
                                             const TopoDS_Edge& E,
                                             const double       D,
@@ -237,7 +237,7 @@ public:
   //! adjacent edges of Chamfer and modifies the existing face.
   //! Warning
   //! -   The returned vertex is only valid if the Status
-  //! function returns ChFi2d_IsDone.
+  //! function returns ChFi2d_ConstructionError::ChFi2d_IsDone.
   //! -   A null vertex is returned if the edge Chamfer does
   //! not belong to the initial face.
   Standard_EXPORT TopoDS_Vertex RemoveChamfer(const TopoDS_Edge& Chamfer);

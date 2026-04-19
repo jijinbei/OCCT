@@ -51,7 +51,7 @@ public:
     const int                   Index,
     const TopAbs_Orientation    FaceOrientation);
 
-  //! compute transition on "IntPatch_Restriction line" edge <R>
+  //! compute transition on "IntPatch_IType::IntPatch_Restriction line" edge <R>
   //! when crossing edge <E> of face <F> at point <VP>.
   //! VP is given on edge <E> of face <F> of index <Index> (1 or 2).
   //! <VP> has been classified by FacesFiller as TopAbs_ON an edge <R>

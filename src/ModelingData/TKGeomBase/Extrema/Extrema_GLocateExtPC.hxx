@@ -61,7 +61,7 @@ public:
         myumin(0.0),
         myusup(0.0),
         mytol(0.0),
-        type(GeomAbs_OtherCurve),
+        type(GeomAbs_CurveType::GeomAbs_OtherCurve),
         numberext(0)
   {
   }
@@ -110,8 +110,8 @@ public:
     myusup      = theUsup;
     type        = TheCurveTool::GetType(theC);
     double tolu = TheCurveTool::Resolution(theC, Precision::Confusion());
-    if ((type == GeomAbs_BSplineCurve) || (type == GeomAbs_BezierCurve)
-        || (type == GeomAbs_OffsetCurve) || (type == GeomAbs_OtherCurve))
+    if ((type == GeomAbs_CurveType::GeomAbs_BSplineCurve) || (type == GeomAbs_CurveType::GeomAbs_BezierCurve)
+        || (type == GeomAbs_CurveType::GeomAbs_OffsetCurve) || (type == GeomAbs_CurveType::GeomAbs_OtherCurve))
     {
       myLocExtPC.Initialize(theC, theUmin, theUsup, tolu);
     }
@@ -130,9 +130,9 @@ public:
     local_u0 = theU0;
     switch (type)
     {
-      case GeomAbs_OtherCurve:
-      case GeomAbs_OffsetCurve:
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_CurveType::GeomAbs_OtherCurve:
+      case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
         // Search for extremum is done interval by continuous C2 interval
         int                        n = TheCurveTool::NbIntervals(*myC, GeomAbs_C2);
         NCollection_Array1<double> theInter(1, n + 1);
@@ -273,7 +273,7 @@ public:
 
       break;
 
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_CurveType::GeomAbs_BezierCurve: {
         myLocExtPC.Perform(theP, theU0);
         myDone = myLocExtPC.IsDone();
       }
@@ -316,12 +316,12 @@ public:
       throw StdFail_NotDone();
     }
     double d = 0;
-    if ((type == GeomAbs_BezierCurve))
+    if ((type == GeomAbs_CurveType::GeomAbs_BezierCurve))
     {
       d = myLocExtPC.SquareDistance();
     }
-    else if (type == GeomAbs_BSplineCurve || type == GeomAbs_OffsetCurve
-             || type == GeomAbs_OtherCurve)
+    else if (type == GeomAbs_CurveType::GeomAbs_BSplineCurve || type == GeomAbs_CurveType::GeomAbs_OffsetCurve
+             || type == GeomAbs_CurveType::GeomAbs_OtherCurve)
     {
       d = mydist2;
     }
@@ -343,12 +343,12 @@ public:
       throw StdFail_NotDone();
     }
     bool b = false;
-    if ((type == GeomAbs_BezierCurve))
+    if ((type == GeomAbs_CurveType::GeomAbs_BezierCurve))
     {
       b = myLocExtPC.IsMin();
     }
-    else if (type == GeomAbs_BSplineCurve || type == GeomAbs_OffsetCurve
-             || type == GeomAbs_OtherCurve)
+    else if (type == GeomAbs_CurveType::GeomAbs_BSplineCurve || type == GeomAbs_CurveType::GeomAbs_OffsetCurve
+             || type == GeomAbs_CurveType::GeomAbs_OtherCurve)
     {
       b = myismin;
     }
@@ -369,12 +369,12 @@ public:
     {
       throw StdFail_NotDone();
     }
-    if (type == GeomAbs_BezierCurve)
+    if (type == GeomAbs_CurveType::GeomAbs_BezierCurve)
     {
       return myLocExtPC.Point();
     }
-    else if (type == GeomAbs_BSplineCurve || type == GeomAbs_OffsetCurve
-             || type == GeomAbs_OtherCurve)
+    else if (type == GeomAbs_CurveType::GeomAbs_BSplineCurve || type == GeomAbs_CurveType::GeomAbs_OffsetCurve
+             || type == GeomAbs_CurveType::GeomAbs_OtherCurve)
     {
       return mypp;
     }

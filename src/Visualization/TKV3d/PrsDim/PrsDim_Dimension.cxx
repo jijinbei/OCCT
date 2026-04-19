@@ -1067,11 +1067,11 @@ bool PrsDim_Dimension::CircleFromEdge(const TopoDS_Edge& theEdge,
   BRepAdaptor_Curve anAdaptedCurve(theEdge);
   switch (anAdaptedCurve.GetType())
   {
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       theCircle = anAdaptedCurve.Circle();
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       gp_Elips anEll = anAdaptedCurve.Ellipse();
       if ((anEll.MinorRadius() - anEll.MajorRadius()) >= Precision::Confusion())
       {
@@ -1080,12 +1080,12 @@ bool PrsDim_Dimension::CircleFromEdge(const TopoDS_Edge& theEdge,
       theCircle = gp_Circ(anEll.Position(), anEll.MinorRadius());
       break;
     }
-    case GeomAbs_Line:
-    case GeomAbs_Hyperbola:
-    case GeomAbs_Parabola:
-    case GeomAbs_BezierCurve:
-    case GeomAbs_BSplineCurve:
-    case GeomAbs_OtherCurve:
+    case GeomAbs_CurveType::GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_OtherCurve:
     default:
       return false;
   }
@@ -1148,7 +1148,7 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
           if (aSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Revolution)
           {
             aBasisCurve = aSurf1.BasisCurve();
-            if (aBasisCurve->GetType() == GeomAbs_Line)
+            if (aBasisCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line)
             {
               isExpectedType = true;
             }
@@ -1156,7 +1156,7 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
           else if (aSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Extrusion)
           {
             aBasisCurve = aSurf1.BasisCurve();
-            if (aBasisCurve->GetType() == GeomAbs_Circle)
+            if (aBasisCurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
             {
               isExpectedType = true;
             }

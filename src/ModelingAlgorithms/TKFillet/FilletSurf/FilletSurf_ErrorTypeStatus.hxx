@@ -17,7 +17,7 @@
 #ifndef _FilletSurf_ErrorTypeStatus_HeaderFile
 #define _FilletSurf_ErrorTypeStatus_HeaderFile
 
-enum FilletSurf_ErrorTypeStatus
+enum class FilletSurf_ErrorTypeStatus
 {
   FilletSurf_EmptyList,
   FilletSurf_EdgeNotG1,

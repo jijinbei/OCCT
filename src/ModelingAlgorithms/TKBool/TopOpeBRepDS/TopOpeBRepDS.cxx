@@ -57,37 +57,37 @@ TCollection_AsciiString TopOpeBRepDS::SPrint(const TopOpeBRepDS_Kind k)
   TCollection_AsciiString s;
   switch (k)
   {
-    case TopOpeBRepDS_POINT:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_POINT:
       s = s + "PO";
       break;
-    case TopOpeBRepDS_CURVE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE:
       s = s + "CU";
       break;
-    case TopOpeBRepDS_SURFACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE:
       s = s + "SU";
       break;
-    case TopOpeBRepDS_VERTEX:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX:
       s = s + "VE";
       break;
-    case TopOpeBRepDS_EDGE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE:
       s = s + "ED";
       break;
-    case TopOpeBRepDS_WIRE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_WIRE:
       s = s + "WI";
       break;
-    case TopOpeBRepDS_FACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_FACE:
       s = s + "FA";
       break;
-    case TopOpeBRepDS_SHELL:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SHELL:
       s = s + "SH";
       break;
-    case TopOpeBRepDS_SOLID:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID:
       s = s + "SO";
       break;
-    case TopOpeBRepDS_COMPSOLID:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_COMPSOLID:
       s = s + "CS";
       break;
-    case TopOpeBRepDS_COMPOUND:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_COMPOUND:
       s = s + "CO";
       break;
     default:
@@ -161,13 +161,13 @@ TCollection_AsciiString TopOpeBRepDS::SPrint(const TopOpeBRepDS_Config C)
   TCollection_AsciiString SS;
   switch (C)
   {
-    case TopOpeBRepDS_UNSHGEOMETRY:
+    case TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY:
       SS = "UNSH";
       break;
-    case TopOpeBRepDS_SAMEORIENTED:
+    case TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED:
       SS = "SAME";
       break;
-    case TopOpeBRepDS_DIFFORIENTED:
+    case TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED:
       SS = "DIFF";
       break;
   }
@@ -186,28 +186,28 @@ bool TopOpeBRepDS::IsTopology(const TopOpeBRepDS_Kind k)
 {
   switch (k)
   {
-    case TopOpeBRepDS_COMPOUND:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_COMPOUND:
       return true;
       break;
-    case TopOpeBRepDS_COMPSOLID:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_COMPSOLID:
       return true;
       break;
-    case TopOpeBRepDS_SOLID:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID:
       return true;
       break;
-    case TopOpeBRepDS_SHELL:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SHELL:
       return true;
       break;
-    case TopOpeBRepDS_FACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_FACE:
       return true;
       break;
-    case TopOpeBRepDS_WIRE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_WIRE:
       return true;
       break;
-    case TopOpeBRepDS_EDGE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE:
       return true;
       break;
-    case TopOpeBRepDS_VERTEX:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX:
       return true;
       break;
     default:
@@ -221,13 +221,13 @@ bool TopOpeBRepDS::IsGeometry(const TopOpeBRepDS_Kind k)
 {
   switch (k)
   {
-    case TopOpeBRepDS_SURFACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE:
       return true;
       break;
-    case TopOpeBRepDS_CURVE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE:
       return true;
       break;
-    case TopOpeBRepDS_POINT:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_POINT:
       return true;
       break;
     default:
@@ -240,32 +240,32 @@ bool TopOpeBRepDS::IsGeometry(const TopOpeBRepDS_Kind k)
 
 TopOpeBRepDS_Kind TopOpeBRepDS::ShapeToKind(const TopAbs_ShapeEnum S)
 {
-  TopOpeBRepDS_Kind res = TopOpeBRepDS_SOLID; // bidon
+  TopOpeBRepDS_Kind res = TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID; // bidon
   switch (S)
   {
     case TopAbs_VERTEX:
-      res = TopOpeBRepDS_VERTEX;
+      res = TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX;
       break;
     case TopAbs_EDGE:
-      res = TopOpeBRepDS_EDGE;
+      res = TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE;
       break;
     case TopAbs_WIRE:
-      res = TopOpeBRepDS_WIRE;
+      res = TopOpeBRepDS_Kind::TopOpeBRepDS_WIRE;
       break;
     case TopAbs_FACE:
-      res = TopOpeBRepDS_FACE;
+      res = TopOpeBRepDS_Kind::TopOpeBRepDS_FACE;
       break;
     case TopAbs_SHELL:
-      res = TopOpeBRepDS_SHELL;
+      res = TopOpeBRepDS_Kind::TopOpeBRepDS_SHELL;
       break;
     case TopAbs_SOLID:
-      res = TopOpeBRepDS_SOLID;
+      res = TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID;
       break;
     case TopAbs_COMPSOLID:
-      res = TopOpeBRepDS_COMPSOLID;
+      res = TopOpeBRepDS_Kind::TopOpeBRepDS_COMPSOLID;
       break;
     case TopAbs_COMPOUND:
-      res = TopOpeBRepDS_COMPOUND;
+      res = TopOpeBRepDS_Kind::TopOpeBRepDS_COMPOUND;
       break;
     default:
       throw Standard_ProgramError("TopOpeBRepDS::ShapeToKind");
@@ -283,28 +283,28 @@ TopAbs_ShapeEnum TopOpeBRepDS::KindToShape(const TopOpeBRepDS_Kind K)
 
   switch (K)
   {
-    case TopOpeBRepDS_VERTEX:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX:
       res = TopAbs_VERTEX;
       break;
-    case TopOpeBRepDS_EDGE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE:
       res = TopAbs_EDGE;
       break;
-    case TopOpeBRepDS_WIRE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_WIRE:
       res = TopAbs_WIRE;
       break;
-    case TopOpeBRepDS_FACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_FACE:
       res = TopAbs_FACE;
       break;
-    case TopOpeBRepDS_SHELL:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SHELL:
       res = TopAbs_SHELL;
       break;
-    case TopOpeBRepDS_SOLID:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID:
       res = TopAbs_SOLID;
       break;
-    case TopOpeBRepDS_COMPSOLID:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_COMPSOLID:
       res = TopAbs_COMPSOLID;
       break;
-    case TopOpeBRepDS_COMPOUND:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_COMPOUND:
       res = TopAbs_COMPOUND;
       break;
     default:

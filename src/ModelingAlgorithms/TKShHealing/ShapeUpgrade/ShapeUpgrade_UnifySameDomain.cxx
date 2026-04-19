@@ -120,13 +120,13 @@ static bool IsLinear(const BRepAdaptor_Curve& theBAcurve, gp_Dir& theDir)
 {
   GeomAbs_CurveType aType = theBAcurve.GetType();
 
-  if (aType == GeomAbs_Line)
+  if (aType == GeomAbs_CurveType::GeomAbs_Line)
   {
     theDir = theBAcurve.Line().Position().Direction();
     return true;
   }
 
-  if ((aType == GeomAbs_BezierCurve || aType == GeomAbs_BSplineCurve) && theBAcurve.NbPoles() == 2)
+  if ((aType == GeomAbs_CurveType::GeomAbs_BezierCurve || aType == GeomAbs_CurveType::GeomAbs_BSplineCurve) && theBAcurve.NbPoles() == 2)
   {
     gp_Pnt aFirstPnt = theBAcurve.Value(theBAcurve.FirstParameter());
     gp_Pnt aLastPnt  = theBAcurve.Value(theBAcurve.LastParameter());
@@ -1201,7 +1201,7 @@ static void AddPCurves(
   BRepAdaptor_Surface RefBAsurf(theRefFace, false);
 
   GeomAbs_SurfaceType aType = RefBAsurf.GetType();
-  if (aType == GeomAbs_Plane)
+  if (aType == GeomAbs_SurfaceType::GeomAbs_Plane)
     return;
 
   for (int i = 1; i <= theFaces.Length(); i++)
@@ -1678,7 +1678,7 @@ void ShapeUpgrade_UnifySameDomain::UnionPCurves(const NCollection_Sequence<TopoD
     aFace.Orientation(TopAbs_FORWARD); // to get proper pcurves of seam edges
 
     BRepAdaptor_Surface aBAsurf(aFace, false);
-    if (aBAsurf.GetType() == GeomAbs_Plane)
+    if (aBAsurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
       continue;
 
     TopLoc_Location           aLoc;
@@ -1714,7 +1714,7 @@ void ShapeUpgrade_UnifySameDomain::UnionPCurves(const NCollection_Sequence<TopoD
     NCollection_Sequence<double>                    aFirstsSeq;
     NCollection_Sequence<double>                    aLastsSeq;
     NCollection_Sequence<bool>                      aForwardsSeq;
-    GeomAbs_CurveType                               aCurrentType = GeomAbs_OtherCurve;
+    GeomAbs_CurveType                               aCurrentType = GeomAbs_CurveType::GeomAbs_OtherCurve;
 
     double aFirst, aLast;
     for (int i = 1; i <= theChain.Length(); i++)
@@ -1747,13 +1747,13 @@ void ShapeUpgrade_UnifySameDomain::UnionPCurves(const NCollection_Sequence<TopoD
       GeomAbs_CurveType   aType = anAdaptor.GetType();
 
       occ::handle<Geom2d_Line> aLine;
-      if (aType == GeomAbs_BSplineCurve || aType == GeomAbs_BezierCurve)
+      if (aType == GeomAbs_CurveType::GeomAbs_BSplineCurve || aType == GeomAbs_CurveType::GeomAbs_BezierCurve)
         TryMakeLine(aPCurve, aFirst, aLast, aLine);
       if (!aLine.IsNull())
       {
         aPCurve = aLine;
         anAdaptor.Load(aPCurve);
-        aType = GeomAbs_Line;
+        aType = GeomAbs_CurveType::GeomAbs_Line;
       }
 
       if (aPCurveSeq.IsEmpty())
@@ -1783,7 +1783,7 @@ void ShapeUpgrade_UnifySameDomain::UnionPCurves(const NCollection_Sequence<TopoD
         Geom2dAdaptor_Curve aPrevAdaptor(aPCurveSeq.Last());
         switch (aType)
         {
-          case GeomAbs_Line: {
+          case GeomAbs_CurveType::GeomAbs_Line: {
             gp_Lin2d aPrevLin  = aPrevAdaptor.Line();
             gp_Pnt2d aFirstP2d = aPCurve->Value(aFirst);
             gp_Pnt2d aLastP2d  = aPCurve->Value(aLast);
@@ -1804,7 +1804,7 @@ void ShapeUpgrade_UnifySameDomain::UnionPCurves(const NCollection_Sequence<TopoD
             }
             break;
           }
-          case GeomAbs_Circle: {
+          case GeomAbs_CurveType::GeomAbs_Circle: {
             gp_Circ2d aCirc     = anAdaptor.Circle();
             gp_Circ2d aPrevCirc = aPrevAdaptor.Circle();
             if (aCirc.Location().Distance(aPrevCirc.Location()) <= Precision::Confusion()
@@ -1976,7 +1976,7 @@ void ShapeUpgrade_UnifySameDomain::UnionPCurves(const NCollection_Sequence<TopoD
       {
         Geom2dAdaptor_Curve aGAcurve(ResPCurves(ii));
         GeomAbs_CurveType   aType = aGAcurve.GetType();
-        if (aType == GeomAbs_Line)
+        if (aType == GeomAbs_CurveType::GeomAbs_Line)
         {
           gp_Lin2d aLin2d   = aGAcurve.Line();
           gp_Dir2d aDir2d   = aLin2d.Direction();
@@ -1987,7 +1987,7 @@ void ShapeUpgrade_UnifySameDomain::UnionPCurves(const NCollection_Sequence<TopoD
           occ::handle<Geom2d_Line> aNewLine2d = new Geom2d_Line(aPnt2d, aDir2d);
           ResPCurves(ii)                      = aNewLine2d;
         }
-        else if (aType == GeomAbs_Circle)
+        else if (aType == GeomAbs_CurveType::GeomAbs_Circle)
         {
           gp_Circ2d aCirc2d   = aGAcurve.Circle();
           double    aRadius   = aCirc2d.Radius();
@@ -2400,7 +2400,7 @@ static bool IsMergingPossible(
   GeomAbs_CurveType t1 = ade1.GetType();
   GeomAbs_CurveType t2 = ade2.GetType();
 
-  if (t1 == GeomAbs_Circle && t2 == GeomAbs_Circle)
+  if (t1 == GeomAbs_CurveType::GeomAbs_Circle && t2 == GeomAbs_CurveType::GeomAbs_Circle)
   {
     if (ade1.Circle().Location().Distance(ade2.Circle().Location()) > Precision::Confusion())
       return false;
@@ -2408,8 +2408,8 @@ static bool IsMergingPossible(
 
   gp_Dir aDir1, aDir2;
   if (!(IsLinear(ade1, aDir1) && IsLinear(ade2, aDir2))
-      && ((t1 != GeomAbs_BezierCurve && t1 != GeomAbs_BSplineCurve)
-          || (t2 != GeomAbs_BezierCurve && t2 != GeomAbs_BSplineCurve))
+      && ((t1 != GeomAbs_CurveType::GeomAbs_BezierCurve && t1 != GeomAbs_CurveType::GeomAbs_BSplineCurve)
+          || (t2 != GeomAbs_CurveType::GeomAbs_BezierCurve && t2 != GeomAbs_CurveType::GeomAbs_BSplineCurve))
       && t1 != t2)
     return false;
 
@@ -2434,7 +2434,7 @@ static bool IsMergingPossible(
   if (Diff1.Angle(Diff2) > theAngTol)
     return false;
 
-  if (theLineDirectionOk && t2 == GeomAbs_Line)
+  if (theLineDirectionOk && t2 == GeomAbs_CurveType::GeomAbs_Line)
   {
     // Check that the accumulated deflection does not exceed the linear tolerance
     double aLast =

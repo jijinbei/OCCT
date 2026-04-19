@@ -355,14 +355,14 @@ bool FilletSurf_InternalBuilder::PerformSurf(
   FInv.Set(fsp->Radius(), Choix);
   switch (GetFilletShape())
   {
-    case ChFi3d_Rational:
-      Func.Set(BlendFunc_Rational);
+    case ChFi3d_FilletShape::ChFi3d_Rational:
+      Func.Set(BlendFunc_SectionShape::BlendFunc_Rational);
       break;
-    case ChFi3d_QuasiAngular:
-      Func.Set(BlendFunc_QuasiAngular);
+    case ChFi3d_FilletShape::ChFi3d_QuasiAngular:
+      Func.Set(BlendFunc_SectionShape::BlendFunc_QuasiAngular);
       break;
-    case ChFi3d_Polynomial:
-      Func.Set(BlendFunc_Polynomial);
+    case ChFi3d_FilletShape::ChFi3d_Polynomial:
+      Func.Set(BlendFunc_SectionShape::BlendFunc_Polynomial);
   }
   double PFirst = First;
   done          = SimulData(Data,
@@ -742,15 +742,15 @@ FilletSurf_StatusType FilletSurf_InternalBuilder::StartSectionStatus() const
 
   if (isonedge1 && isonedge2)
   {
-    return FilletSurf_TwoExtremityOnEdge;
+    return FilletSurf_StatusType::FilletSurf_TwoExtremityOnEdge;
   }
   else if ((!isonedge1) && (!isonedge2))
   {
-    return FilletSurf_NoExtremityOnEdge;
+    return FilletSurf_StatusType::FilletSurf_NoExtremityOnEdge;
   }
   else
   {
-    return FilletSurf_OneExtremityOnEdge;
+    return FilletSurf_StatusType::FilletSurf_OneExtremityOnEdge;
   }
 }
 
@@ -773,15 +773,15 @@ FilletSurf_StatusType FilletSurf_InternalBuilder::EndSectionStatus() const
 
   if (isonedge1 && isonedge2)
   {
-    return FilletSurf_TwoExtremityOnEdge;
+    return FilletSurf_StatusType::FilletSurf_TwoExtremityOnEdge;
   }
   else if ((!isonedge1) && (!isonedge2))
   {
-    return FilletSurf_NoExtremityOnEdge;
+    return FilletSurf_StatusType::FilletSurf_NoExtremityOnEdge;
   }
   else
   {
-    return FilletSurf_OneExtremityOnEdge;
+    return FilletSurf_StatusType::FilletSurf_OneExtremityOnEdge;
   }
 }
 

@@ -384,8 +384,8 @@ double BRepAdaptor_CompCurve::Resolution(const double R3d) const
 
 GeomAbs_CurveType BRepAdaptor_CompCurve::GetType() const
 {
-  return GeomAbs_OtherCurve; // temporary
-  //  if ( myCurves->Length() > 1) return GeomAbs_OtherCurve;
+  return GeomAbs_CurveType::GeomAbs_OtherCurve; // temporary
+  //  if ( myCurves->Length() > 1) return GeomAbs_CurveType::GeomAbs_OtherCurve;
   //  return myCurves->Value(1).GetType();
 }
 

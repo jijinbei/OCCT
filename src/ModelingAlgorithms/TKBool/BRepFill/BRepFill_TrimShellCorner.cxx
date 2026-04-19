@@ -975,7 +975,7 @@ bool BRepFill_TrimShellCorner::ChooseSection(const TopoDS_Shape&  Comp,
   int          ind, i, j;
   BRep_Builder BB;
 
-  if (myTransition == BRepFill_Right && !theFirstVertex.IsNull()
+  if (myTransition == BRepFill_TransitionStyle::BRepFill_Right && !theFirstVertex.IsNull()
       && !theLastVertex.IsNull()) // the case where section wire goes from
   // its known first vertex to its known last vertex
   {

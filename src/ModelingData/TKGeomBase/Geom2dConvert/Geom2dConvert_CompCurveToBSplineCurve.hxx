@@ -34,13 +34,13 @@ public:
   //! Initialize the algorithm
   //! - Parameterisation is used to convert
   Standard_EXPORT Geom2dConvert_CompCurveToBSplineCurve(
-    const Convert_ParameterisationType Parameterisation = Convert_TgtThetaOver2);
+    const Convert_ParameterisationType Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   //! Initialize the algorithm with one curve
   //! - Parameterisation is used to convert
   Standard_EXPORT Geom2dConvert_CompCurveToBSplineCurve(
     const occ::handle<Geom2d_BoundedCurve>& BasisCurve,
-    const Convert_ParameterisationType      Parameterisation = Convert_TgtThetaOver2);
+    const Convert_ParameterisationType      Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   //! Append a curve in the BSpline
   //! Return False if the curve is not G0 with the BSplineCurve.

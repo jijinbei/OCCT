@@ -35,7 +35,7 @@ BRepGProp_TFunction::BRepGProp_TFunction(const BRepGProp_Face& theSurface,
       myTolReached(0.),
       myErrReached(0.),
       myAbsError(0.),
-      myValueType(GProp_Unknown),
+      myValueType(GProp_ValueType::GProp_Unknown),
       myIsByPoint(IsByPoint),
       myNbPntOuter(3)
 {
@@ -81,20 +81,20 @@ bool BRepGProp_TFunction::Value(const double X, double& F)
 
   // aTol /= myNbPntOuter;
 
-  if (myValueType == GProp_Mass)
+  if (myValueType == GProp_ValueType::GProp_Mass)
   {
     if (myIsByPoint)
       aCoeff /= 3.;
   }
-  else if (myValueType == GProp_CenterMassX || myValueType == GProp_CenterMassY
-           || myValueType == GProp_CenterMassZ)
+  else if (myValueType == GProp_ValueType::GProp_CenterMassX || myValueType == GProp_ValueType::GProp_CenterMassY
+           || myValueType == GProp_ValueType::GProp_CenterMassZ)
   {
     if (myIsByPoint)
       aCoeff *= 0.25;
   }
-  else if (myValueType == GProp_InertiaXX || myValueType == GProp_InertiaYY
-           || myValueType == GProp_InertiaZZ || myValueType == GProp_InertiaXY
-           || myValueType == GProp_InertiaXZ || myValueType == GProp_InertiaYZ)
+  else if (myValueType == GProp_ValueType::GProp_InertiaXX || myValueType == GProp_ValueType::GProp_InertiaYY
+           || myValueType == GProp_ValueType::GProp_InertiaZZ || myValueType == GProp_ValueType::GProp_InertiaXY
+           || myValueType == GProp_ValueType::GProp_InertiaXZ || myValueType == GProp_ValueType::GProp_InertiaYZ)
   {
     if (myIsByPoint)
       aCoeff *= 0.2;

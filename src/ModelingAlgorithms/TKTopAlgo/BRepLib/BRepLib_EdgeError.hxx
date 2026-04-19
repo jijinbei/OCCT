@@ -19,7 +19,7 @@
 
 //! Errors that can occur at edge construction.
 //! no error
-enum BRepLib_EdgeError
+enum class BRepLib_EdgeError
 {
   BRepLib_EdgeDone,
   BRepLib_PointProjectionFailed,

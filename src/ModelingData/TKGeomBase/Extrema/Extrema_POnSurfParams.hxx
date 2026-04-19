@@ -34,7 +34,7 @@ public:
   //! empty constructor
   Extrema_POnSurfParams()
       : mySqrDistance(0.),
-        myElementType(Extrema_Node),
+        myElementType(Extrema_ElementType::Extrema_Node),
         myIndexU(0),
         myIndexV(0)
   {
@@ -45,7 +45,7 @@ public:
   Extrema_POnSurfParams(const double theU, const double theV, const gp_Pnt& thePnt)
       : Extrema_POnSurf(theU, theV, thePnt),
         mySqrDistance(0.),
-        myElementType(Extrema_Node),
+        myElementType(Extrema_ElementType::Extrema_Node),
         myIndexU(0),
         myIndexV(0)
   {

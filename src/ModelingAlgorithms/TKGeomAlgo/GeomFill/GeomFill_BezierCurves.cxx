@@ -210,7 +210,7 @@ void GeomFill_BezierCurves::Init(const occ::handle<Geom_BezierCurve>& C1,
   int DegU = std::max(CC1->Degree(), CC3->Degree());
   int DegV = std::max(CC2->Degree(), CC4->Degree());
 
-  if (Type == GeomFill_CoonsStyle)
+  if (Type == GeomFill_FillingStyle::GeomFill_CoonsStyle)
   {
     DegU = std::max(DegU, 3);
     DegV = std::max(DegV, 3);
@@ -244,13 +244,13 @@ void GeomFill_BezierCurves::Init(const occ::handle<Geom_BezierCurve>& C1,
     SetSameWeights(W1, W2, W3, W4);
     switch (Type)
     {
-      case GeomFill_StretchStyle:
+      case GeomFill_FillingStyle::GeomFill_StretchStyle:
         Caro = GeomFill_Stretch(P1, P2, P3, P4, W1, W2, W3, W4);
         break;
-      case GeomFill_CoonsStyle:
+      case GeomFill_FillingStyle::GeomFill_CoonsStyle:
         Caro = GeomFill_Coons(P1, P4, P3, P2, W1, W4, W3, W2);
         break;
-      case GeomFill_CurvedStyle:
+      case GeomFill_FillingStyle::GeomFill_CurvedStyle:
         Caro = GeomFill_Curved(P1, P2, P3, P4, W1, W2, W3, W4);
         break;
     }
@@ -259,13 +259,13 @@ void GeomFill_BezierCurves::Init(const occ::handle<Geom_BezierCurve>& C1,
   {
     switch (Type)
     {
-      case GeomFill_StretchStyle:
+      case GeomFill_FillingStyle::GeomFill_StretchStyle:
         Caro = GeomFill_Stretch(P1, P2, P3, P4);
         break;
-      case GeomFill_CoonsStyle:
+      case GeomFill_FillingStyle::GeomFill_CoonsStyle:
         Caro = GeomFill_Coons(P1, P4, P3, P2);
         break;
-      case GeomFill_CurvedStyle:
+      case GeomFill_FillingStyle::GeomFill_CurvedStyle:
         Caro = GeomFill_Curved(P1, P2, P3, P4);
         break;
     }
@@ -331,7 +331,7 @@ void GeomFill_BezierCurves::Init(const occ::handle<Geom_BezierCurve>& C1,
 
   bool isRat = (CC1->IsRational() || CC2->IsRational());
 
-  if (Type != GeomFill_CurvedStyle)
+  if (Type != GeomFill_FillingStyle::GeomFill_CurvedStyle)
   {
     int DegU = std::max(Deg1, Deg2);
 

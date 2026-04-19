@@ -351,13 +351,13 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
       IntImpParGen::DeterminePosition(Pos1, TheImpCurveDomain, pt1, param1);
       IntImpParGen::DeterminePosition(Pos2, TheParCurveDomain, pt2, param2);
 
-      if (Pos1 == IntRes2d_End)
+      if (Pos1 == IntRes2d_Position::IntRes2d_End)
         EndOnImp = true;
-      else if (Pos1 == IntRes2d_Head)
+      else if (Pos1 == IntRes2d_Position::IntRes2d_Head)
         HeadOnImp = true;
-      if (Pos2 == IntRes2d_End)
+      if (Pos2 == IntRes2d_Position::IntRes2d_End)
         EndOnPar = true;
-      else if (Pos2 == IntRes2d_Head)
+      else if (Pos2 == IntRes2d_Position::IntRes2d_Head)
         HeadOnPar = true;
 
       IntImpParGen::DetermineTransition(Pos1,
@@ -564,13 +564,13 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
       IntImpParGen::DeterminePosition(Pos1, TheImpCurveDomain, Pt1_on1, Param1_on1);
       IntImpParGen::DeterminePosition(Pos2, TheParCurveDomain, Pt1_on2, Param1_on2);
 
-      if (Pos1 == IntRes2d_End)
+      if (Pos1 == IntRes2d_Position::IntRes2d_End)
         EndOnImp = true;
-      else if (Pos1 == IntRes2d_Head)
+      else if (Pos1 == IntRes2d_Position::IntRes2d_Head)
         HeadOnImp = true;
-      if (Pos2 == IntRes2d_End)
+      if (Pos2 == IntRes2d_Position::IntRes2d_End)
         EndOnPar = true;
-      else if (Pos2 == IntRes2d_Head)
+      else if (Pos2 == IntRes2d_Position::IntRes2d_Head)
         HeadOnPar = true;
 
       IntImpParGen::DetermineTransition(Pos1,
@@ -586,7 +586,7 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
       //============== Detection du cas : L intersection est en bout
       //==============  sur les 2 domaines
 
-      if (Pos1 != IntRes2d_Middle && Pos2 != IntRes2d_Middle)
+      if (Pos1 != IntRes2d_Position::IntRes2d_Middle && Pos2 != IntRes2d_Position::IntRes2d_Middle)
       {
         double m = 0.5 * (Pt1_on1.X() + Pt1_on2.X());
         Pt1_on1.SetX(m);
@@ -613,13 +613,13 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
         IntImpParGen::DeterminePosition(Pos1, TheImpCurveDomain, Pt2_on1, Param2_on1);
         IntImpParGen::DeterminePosition(Pos2, TheParCurveDomain, Pt2_on2, Param2_on2);
 
-        if (Pos1 == IntRes2d_End)
+        if (Pos1 == IntRes2d_Position::IntRes2d_End)
           EndOnImp = true;
-        else if (Pos1 == IntRes2d_Head)
+        else if (Pos1 == IntRes2d_Position::IntRes2d_Head)
           HeadOnImp = true;
-        if (Pos2 == IntRes2d_End)
+        if (Pos2 == IntRes2d_Position::IntRes2d_End)
           EndOnPar = true;
-        else if (Pos2 == IntRes2d_Head)
+        else if (Pos2 == IntRes2d_Position::IntRes2d_Head)
           HeadOnPar = true;
 
         IntImpParGen::DetermineTransition(Pos1,
@@ -635,7 +635,7 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
         //============== Detection du cas : L intersection est en bout
         //==============  sur les 2 domaines
 
-        if (Pos1 != IntRes2d_Middle && Pos2 != IntRes2d_Middle)
+        if (Pos1 != IntRes2d_Position::IntRes2d_Middle && Pos2 != IntRes2d_Position::IntRes2d_Middle)
         {
           double m = 0.5 * (Pt2_on1.X() + Pt2_on2.X());
           Pt2_on1.SetX(m);
@@ -671,11 +671,11 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
         param2 = TheParCurveDomain.FirstParameter();
         TheImpTool.D2(param1, pt1, Tan1, Norm1);
         ParTool::D2(TheParCurve, param2, pt2, Tan2, Norm2);
-        IntImpParGen::DetermineTransition(IntRes2d_Head,
+        IntImpParGen::DetermineTransition(IntRes2d_Position::IntRes2d_Head,
                                           Tan1,
                                           Norm1,
                                           Trans1,
-                                          IntRes2d_Head,
+                                          IntRes2d_Position::IntRes2d_Head,
                                           Tan2,
                                           Norm2,
                                           Trans2,
@@ -698,11 +698,11 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
         param2 = TheParCurveDomain.LastParameter();
         TheImpTool.D2(param1, pt1, Tan1, Norm1);
         ParTool::D2(TheParCurve, param2, pt2, Tan2, Norm2);
-        IntImpParGen::DetermineTransition(IntRes2d_Head,
+        IntImpParGen::DetermineTransition(IntRes2d_Position::IntRes2d_Head,
                                           Tan1,
                                           Norm1,
                                           Trans1,
-                                          IntRes2d_End,
+                                          IntRes2d_Position::IntRes2d_End,
                                           Tan2,
                                           Norm2,
                                           Trans2,
@@ -729,11 +729,11 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
         param2 = TheParCurveDomain.FirstParameter();
         TheImpTool.D2(param1, pt1, Tan1, Norm1);
         ParTool::D2(TheParCurve, param2, pt2, Tan2, Norm2);
-        IntImpParGen::DetermineTransition(IntRes2d_End,
+        IntImpParGen::DetermineTransition(IntRes2d_Position::IntRes2d_End,
                                           Tan1,
                                           Norm1,
                                           Trans1,
-                                          IntRes2d_Head,
+                                          IntRes2d_Position::IntRes2d_Head,
                                           Tan2,
                                           Norm2,
                                           Trans2,
@@ -756,11 +756,11 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
         param2 = TheParCurveDomain.LastParameter();
         TheImpTool.D2(param1, pt1, Tan1, Norm1);
         ParTool::D2(TheParCurve, param2, pt2, Tan2, Norm2);
-        IntImpParGen::DetermineTransition(IntRes2d_End,
+        IntImpParGen::DetermineTransition(IntRes2d_Position::IntRes2d_End,
                                           Tan1,
                                           Norm1,
                                           Trans1,
-                                          IntRes2d_End,
+                                          IntRes2d_Position::IntRes2d_End,
                                           Tan2,
                                           Norm2,
                                           Trans2,

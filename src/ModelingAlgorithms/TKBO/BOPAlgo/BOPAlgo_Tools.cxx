@@ -863,7 +863,7 @@ bool FindEdgeTangent(const BRepAdaptor_Curve& theCurve, gp_Vec& theTangent)
     return false;
   }
   // for the line the tangent is defined by the direction
-  if (theCurve.GetType() == GeomAbs_Line)
+  if (theCurve.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     theTangent = theCurve.Line().Position().Direction();
     return true;
@@ -902,18 +902,18 @@ bool FindPlane(const BRepAdaptor_Curve& theCurve, gp_Pln& thePlane)
   gp_Vec aVN;
   switch (theCurve.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       return false;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       aVN = theCurve.Circle().Position().Direction();
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       aVN = theCurve.Ellipse().Position().Direction();
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       aVN = theCurve.Hyperbola().Position().Direction();
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       aVN = theCurve.Parabola().Position().Direction();
       break;
     default: {

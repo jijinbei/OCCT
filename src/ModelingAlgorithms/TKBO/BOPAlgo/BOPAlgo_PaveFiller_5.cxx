@@ -176,7 +176,7 @@ void BOPAlgo_PaveFiller::PerformEF(const Message_ProgressRange& theRange)
   //
   int nE, nF;
   //
-  if (myGlue == BOPAlgo_GlueFull)
+  if (myGlue == BOPAlgo_GlueEnum::BOPAlgo_GlueFull)
   {
     // there is no need to intersect edges with faces in this mode
     // just initialize FaceInfo for faces
@@ -385,8 +385,8 @@ void BOPAlgo_PaveFiller::PerformEF(const Message_ProgressRange& theRange)
     if (aNbCPrts)
     {
       BRepAdaptor_Curve aBAC(aE);
-      bLinePlane = (aBAC.GetType() == GeomAbs_Line
-                    && myContext->SurfaceAdaptor(aF).GetType() == GeomAbs_Plane);
+      bLinePlane = (aBAC.GetType() == GeomAbs_CurveType::GeomAbs_Line
+                    && myContext->SurfaceAdaptor(aF).GetType() == GeomAbs_SurfaceType::GeomAbs_Plane);
     }
     //
     for (i = 1; i <= aNbCPrts; ++i)
@@ -991,7 +991,7 @@ void BOPAlgo_PaveFiller::ForceInterfEF(
       if (!myContext->IsPointInFace(aF, gp_Pnt2d(U, V)))
         continue;
 
-      if (aSurfAdaptor.GetType() != GeomAbs_Plane || aBAC.GetType() != GeomAbs_Line)
+      if (aSurfAdaptor.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane || aBAC.GetType() != GeomAbs_CurveType::GeomAbs_Line)
       {
         gp_Pnt aPOnS = aProjPS.NearestPoint();
         gp_Vec aVFNorm(aPOnS, aPOnE);

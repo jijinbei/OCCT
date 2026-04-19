@@ -221,7 +221,7 @@ double Adaptor2d_Line2d::Resolution(const double R3d) const
 
 GeomAbs_CurveType Adaptor2d_Line2d::GetType() const
 {
-  return GeomAbs_Line;
+  return GeomAbs_CurveType::GeomAbs_Line;
 }
 
 //=================================================================================================

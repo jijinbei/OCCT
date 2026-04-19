@@ -126,7 +126,7 @@ BRepBlend_SurfRstEvolRad::BRepBlend_SurfRstEvolRad(const occ::handle<Adaptor3d_S
       maxang(RealFirst()),
       minang(RealLast()),
       distmin(RealLast()),
-      mySShape(BlendFunc_Rational)
+      mySShape(BlendFunc_SectionShape::BlendFunc_Rational)
 
 {
   tevol = Evol;
@@ -716,7 +716,7 @@ void BRepBlend_SurfRstEvolRad::Section(const double Param,
 
 bool BRepBlend_SurfRstEvolRad::IsRational() const
 {
-  return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================
@@ -982,7 +982,7 @@ bool BRepBlend_SurfRstEvolRad::Section(const Blend_Point&            P,
   }
 
   // Linear Case
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts;
     Poles(upp)   = ptrst;
@@ -1105,7 +1105,7 @@ void BRepBlend_SurfRstEvolRad::Section(const Blend_Point&            P,
   Poles2d(Poles2d.Upper()).SetCoord(pt2d.X(), pt2d.Y());
 
   // Linear case
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts;
     Poles(upp)   = ptrst;

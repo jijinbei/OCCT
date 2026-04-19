@@ -327,8 +327,8 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
     //  for (iToo=0; iToo<3; iToo++) {
     //	if (dpOpT[iObj][iToo] <= floatGap) {
     //	  piOT.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(FirstPol, OI[iObj]),
-    //					Intf_VERTEX, OI[iObj], 0, 0.,
-    //					Intf_VERTEX, TI[iToo], 0, 0.,
+    //					Intf_PIType::Intf_VERTEX, OI[iObj], 0, 0.,
+    //					Intf_PIType::Intf_VERTEX, TI[iToo], 0, 0.,
     //					Incidence));
     //	  parO[iObj]=0.;
     //	  parT[iToo]=0.;
@@ -346,11 +346,11 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
         if (dpOpT[iObj][iToo] <= floatGap)
         {
           piOT.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(FirstPol, OI[iObj]),
-                                        Intf_VERTEX,
+                                        Intf_PIType::Intf_VERTEX,
                                         OI[iObj],
                                         0,
                                         0.,
-                                        Intf_VERTEX,
+                                        Intf_PIType::Intf_VERTEX,
                                         TI[iToo],
                                         0,
                                         0.,
@@ -383,11 +383,11 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
                 if (TI[iToo] > TI[inext])
                   parT[iToo] = 1. - parT[iToo];
                 piOT.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(FirstPol, OI[iObj]),
-                                              Intf_VERTEX,
+                                              Intf_PIType::Intf_VERTEX,
                                               OI[iObj],
                                               0,
                                               0.,
-                                              Intf_EDGE,
+                                              Intf_PIType::Intf_EDGE,
                                               std::min(TI[iToo], TI[inext]),
                                               std::max(TI[iToo], TI[inext]),
                                               parT[iToo],
@@ -424,11 +424,11 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
                 if (OI[iObj] > OI[inext])
                   parO[iObj] = 1. - parO[iObj];
                 piOT.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(SeconPol, TI[iToo]),
-                                              Intf_EDGE,
+                                              Intf_PIType::Intf_EDGE,
                                               std::min(OI[iObj], OI[inext]),
                                               std::max(OI[iObj], OI[inext]),
                                               parO[iObj],
-                                              Intf_VERTEX,
+                                              Intf_PIType::Intf_VERTEX,
                                               TI[iToo],
                                               0,
                                               0.,
@@ -453,11 +453,11 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
         if (std::abs(dfOpT[iToo]) <= floatGap)
         {
           piOT.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(SeconPol, TI[iToo]),
-                                        Intf_FACE,
+                                        Intf_PIType::Intf_FACE,
                                         Tri1,
                                         0,
                                         0.,
-                                        Intf_VERTEX,
+                                        Intf_PIType::Intf_VERTEX,
                                         TI[iToo],
                                         0,
                                         0.,
@@ -478,11 +478,11 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
         if (std::abs(dpOfT[iObj]) <= floatGap)
         {
           piOT.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(FirstPol, OI[iObj]),
-                                        Intf_VERTEX,
+                                        Intf_PIType::Intf_VERTEX,
                                         OI[iObj],
                                         0,
                                         0.,
-                                        Intf_FACE,
+                                        Intf_PIType::Intf_FACE,
                                         Tri2,
                                         0,
                                         0.,
@@ -571,11 +571,11 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
                   if (lg <= floatGap)
                   {
                     piOT.Append(Intf_SectionPoint(piO,
-                                                  Intf_EDGE,
+                                                  Intf_PIType::Intf_EDGE,
                                                   std::min(OI[iObj], OI[inext]),
                                                   std::max(OI[iObj], OI[inext]),
                                                   parO[iObj],
-                                                  Intf_EDGE,
+                                                  Intf_PIType::Intf_EDGE,
                                                   std::min(TI[iToo], TI[jnext]),
                                                   std::max(TI[iToo], TI[jnext]),
                                                   parT[iToo],
@@ -608,11 +608,11 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
           if (OI[iObj] > OI[inext])
             parO[iObj] = 1. - parO[iObj];
           piOT.Append(Intf_SectionPoint(piO,
-                                        Intf_EDGE,
+                                        Intf_PIType::Intf_EDGE,
                                         std::min(OI[iObj], OI[inext]),
                                         std::max(OI[iObj], OI[inext]),
                                         parO[iObj],
-                                        Intf_FACE,
+                                        Intf_PIType::Intf_FACE,
                                         Tri2,
                                         0,
                                         0.,
@@ -638,11 +638,11 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
           if (TI[iToo] > TI[jnext])
             parT[iToo] = 1. - parT[iToo];
           piOT.Append(Intf_SectionPoint(piO,
-                                        Intf_FACE,
+                                        Intf_PIType::Intf_FACE,
                                         Tri1,
                                         0,
                                         0.,
-                                        Intf_EDGE,
+                                        Intf_PIType::Intf_EDGE,
                                         std::min(TI[iToo], TI[jnext]),
                                         std::max(TI[iToo], TI[jnext]),
                                         parT[iToo],
@@ -762,14 +762,14 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
         // If there is a covering up : insert the section  line in  the existent
         // list or create a new section line :
 
-        if (piOT(id[0] + 1).TypeOnFirst() == Intf_FACE)
+        if (piOT(id[0] + 1).TypeOnFirst() == Intf_PIType::Intf_FACE)
         {
-          if (piOT(id[1] + 1).TypeOnFirst() == Intf_FACE)
+          if (piOT(id[1] + 1).TypeOnFirst() == Intf_PIType::Intf_FACE)
           {
             ideb = -id[0] - 1; // No line of section possible
             ifin = -id[1] - 1; //
           }
-          else if (piOT(id[1] + 1).TypeOnSecond() != Intf_FACE)
+          else if (piOT(id[1] + 1).TypeOnSecond() != Intf_PIType::Intf_FACE)
           {
             ideb = id[1]; // No line of section possible
             ifin = id[1]; // only a pointersec
@@ -785,14 +785,14 @@ void IntPatch_InterferencePolyhedron::Intersect(const int                  Tri1,
             ifin = -999;
           }
         }
-        else if (piOT(id[0] + 1).TypeOnSecond() == Intf_FACE)
+        else if (piOT(id[0] + 1).TypeOnSecond() == Intf_PIType::Intf_FACE)
         {
-          if (piOT(id[1] + 1).TypeOnSecond() == Intf_FACE)
+          if (piOT(id[1] + 1).TypeOnSecond() == Intf_PIType::Intf_FACE)
           {
             ideb = -id[0] - 1; // No line of section possible
             ifin = -id[1] - 1; //
           }
-          else if (piOT(id[1] + 1).TypeOnFirst() != Intf_FACE)
+          else if (piOT(id[1] + 1).TypeOnFirst() != Intf_PIType::Intf_FACE)
           {
             ideb = id[1]; // No line of section possible
             ifin = id[1]; // only a pointersec
@@ -880,8 +880,8 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
   Intf_PIType tTP[3];
   for (nou = 0; nou < 3; nou++)
   {
-    tOP[nou] = Intf_EXTERNAL;
-    tTP[nou] = Intf_EXTERNAL;
+    tOP[nou] = Intf_PIType::Intf_EXTERNAL;
+    tTP[nou] = Intf_PIType::Intf_EXTERNAL;
   }
 
   int                                     nbpInt = 0;
@@ -897,17 +897,17 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
       if (dpOpT[nob][nou] <= Tolerance)
       {
         Tpi.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(FirstPol, OI[nob]),
-                                     Intf_VERTEX,
+                                     Intf_PIType::Intf_VERTEX,
                                      OI[nob],
                                      0,
                                      0.,
-                                     Intf_VERTEX,
+                                     Intf_PIType::Intf_VERTEX,
                                      TI[nou],
                                      0,
                                      0.,
                                      1.));
-        tOP[nob] = Intf_VERTEX;
-        tTP[nou] = Intf_VERTEX;
+        tOP[nob] = Intf_PIType::Intf_VERTEX;
+        tTP[nou] = Intf_PIType::Intf_VERTEX;
         nbpInt++;
         break;
       }
@@ -919,22 +919,22 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
           if (TI[nou] > TI[nou2])
             par = 1. - par;
           Tpi.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(FirstPol, OI[nob]),
-                                       Intf_VERTEX,
+                                       Intf_PIType::Intf_VERTEX,
                                        OI[nob],
                                        0,
                                        0.,
-                                       Intf_EDGE,
+                                       Intf_PIType::Intf_EDGE,
                                        std::min(TI[nou], TI[nou2]),
                                        std::max(TI[nou], TI[nou2]),
                                        par,
                                        1.));
-          tOP[nob] = Intf_EDGE;
+          tOP[nob] = Intf_PIType::Intf_EDGE;
           nbpInt++;
           break;
         }
       }
     }
-    if (tOP[nob] == Intf_EXTERNAL)
+    if (tOP[nob] == Intf_PIType::Intf_EXTERNAL)
     {
       if (Intf::Contain(IntPatch_PolyhedronTool::Point(SeconPol, TI[0]),
                         IntPatch_PolyhedronTool::Point(SeconPol, TI[1]),
@@ -942,16 +942,16 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
                         IntPatch_PolyhedronTool::Point(FirstPol, OI[nob])))
       {
         Tpi.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(FirstPol, OI[nob]),
-                                     Intf_VERTEX,
+                                     Intf_PIType::Intf_VERTEX,
                                      OI[nob],
                                      0,
                                      0.,
-                                     Intf_FACE,
+                                     Intf_PIType::Intf_FACE,
                                      Tri2,
                                      0,
                                      0.,
                                      1.));
-        tOP[nob] = Intf_FACE;
+        tOP[nob] = Intf_PIType::Intf_FACE;
         nbpInt++;
       }
     }
@@ -965,7 +965,7 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
     for (nou = 0; nou <= 2; nou++)
     {
       nou2 = Pourcent3[nou + 1];
-      if (tTP[nou] == Intf_EXTERNAL)
+      if (tTP[nou] == Intf_PIType::Intf_EXTERNAL)
       {
         for (nob = 0; nob <= 2; nob++)
         {
@@ -978,22 +978,22 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
               if (OI[nob] > OI[nob2])
                 par = 1. - par;
               Tpi.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(SeconPol, TI[nou]),
-                                           Intf_EDGE,
+                                           Intf_PIType::Intf_EDGE,
                                            std::min(OI[nob], OI[nob2]),
                                            std::max(OI[nob], OI[nob2]),
                                            par,
-                                           Intf_VERTEX,
+                                           Intf_PIType::Intf_VERTEX,
                                            TI[nou],
                                            0,
                                            0.,
                                            1.));
-              tTP[nou] = Intf_EDGE;
+              tTP[nou] = Intf_PIType::Intf_EDGE;
               nbpInt++;
               break;
             }
           }
         }
-        if (tTP[nou] == Intf_EXTERNAL)
+        if (tTP[nou] == Intf_PIType::Intf_EXTERNAL)
         {
           if (Intf::Contain(IntPatch_PolyhedronTool::Point(FirstPol, OI[0]),
                             IntPatch_PolyhedronTool::Point(FirstPol, OI[1]),
@@ -1001,22 +1001,22 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
                             IntPatch_PolyhedronTool::Point(SeconPol, TI[nou])))
           {
             Tpi.Append(Intf_SectionPoint(IntPatch_PolyhedronTool::Point(SeconPol, TI[nou]),
-                                         Intf_FACE,
+                                         Intf_PIType::Intf_FACE,
                                          Tri1,
                                          0,
                                          0.,
-                                         Intf_VERTEX,
+                                         Intf_PIType::Intf_VERTEX,
                                          TI[nou],
                                          0,
                                          0.,
                                          1.));
-            tTP[nou] = Intf_FACE;
+            tTP[nou] = Intf_PIType::Intf_FACE;
             nbpInt++;
           }
         }
       }
     }
-    if (tTP[0] != Intf_EXTERNAL && tTP[1] != Intf_EXTERNAL && tTP[2] != Intf_EXTERNAL)
+    if (tTP[0] != Intf_PIType::Intf_EXTERNAL && tTP[1] != Intf_PIType::Intf_EXTERNAL && tTP[2] != Intf_PIType::Intf_EXTERNAL)
       finished = true;
   }
   else
@@ -1065,11 +1065,11 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
             if (TI[nou] > TI[nou2])
               parT[nbpInt] = 1. - parT[nbpInt];
             Tpi.Append(Intf_SectionPoint(lepi,
-                                         Intf_EDGE,
+                                         Intf_PIType::Intf_EDGE,
                                          std::min(OI[nob], OI[nob2]),
                                          std::max(OI[nob], OI[nob2]),
                                          parO[nbpInt],
-                                         Intf_EDGE,
+                                         Intf_PIType::Intf_EDGE,
                                          std::min(TI[nou], TI[nou2]),
                                          std::max(TI[nou], TI[nou2]),
                                          parT[nbpInt],

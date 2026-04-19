@@ -222,8 +222,8 @@ Extrema_GenExtPS::Extrema_GenExtPS()
 {
   myDone = false;
   myInit = false;
-  myFlag = Extrema_ExtFlag_MINMAX;
-  myAlgo = Extrema_ExtAlgo_Grad;
+  myFlag = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX;
+  myAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad;
 }
 
 //=================================================================================================
@@ -360,12 +360,12 @@ void Extrema_GenExtPS::GetGridPoints(const Adaptor3d_Surface& theSurf)
 {
   // creation parametric points for BSpline and Bezier surfaces
   // with taking into account of Degree and NbKnots of BSpline or Bezier geometry
-  if (theSurf.GetType() == GeomAbs_OffsetSurface)
+  if (theSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
   {
     GetGridPoints(*theSurf.BasisSurface());
   }
   // parametric points for BSpline surfaces
-  else if (theSurf.GetType() == GeomAbs_BSplineSurface)
+  else if (theSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     occ::handle<Geom_BSplineSurface> aBspl = theSurf.BSpline();
     if (!aBspl.IsNull())
@@ -377,7 +377,7 @@ void Extrema_GenExtPS::GetGridPoints(const Adaptor3d_Surface& theSurf)
     }
   }
   // calculation parametric points for Bezier surfaces
-  else if (theSurf.GetType() == GeomAbs_BezierSurface)
+  else if (theSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     occ::handle<Geom_BezierSurface> aBezier = theSurf.Bezier();
     if (aBezier.IsNull())
@@ -390,12 +390,12 @@ void Extrema_GenExtPS::GetGridPoints(const Adaptor3d_Surface& theSurf)
     fillParams(aVKnots, aBezier->VDegree(), myvmin, myvsup, myVParams, myvsample);
   }
   // creation points for surfaces based on BSpline or Bezier curves
-  else if (theSurf.GetType() == GeomAbs_SurfaceOfRevolution
-           || theSurf.GetType() == GeomAbs_SurfaceOfExtrusion)
+  else if (theSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution
+           || theSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
   {
     occ::handle<NCollection_HArray1<double>> anArrKnots;
     int                                      aDegree = 0;
-    if (theSurf.BasisCurve()->GetType() == GeomAbs_BSplineCurve)
+    if (theSurf.BasisCurve()->GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
     {
       occ::handle<Geom_BSplineCurve> aBspl = theSurf.BasisCurve()->BSpline();
       if (!aBspl.IsNull())
@@ -404,7 +404,7 @@ void Extrema_GenExtPS::GetGridPoints(const Adaptor3d_Surface& theSurf)
         aDegree    = aBspl->Degree();
       }
     }
-    if (theSurf.BasisCurve()->GetType() == GeomAbs_BezierCurve)
+    if (theSurf.BasisCurve()->GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
     {
       occ::handle<Geom_BezierCurve> aBez = theSurf.BasisCurve()->Bezier();
       if (!aBez.IsNull())
@@ -417,7 +417,7 @@ void Extrema_GenExtPS::GetGridPoints(const Adaptor3d_Surface& theSurf)
     }
     if (anArrKnots.IsNull())
       return;
-    if (theSurf.GetType() == GeomAbs_SurfaceOfRevolution)
+    if (theSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
       fillParams(anArrKnots->Array1(), aDegree, myvmin, myvsup, myVParams, myvsample);
     else
       fillParams(anArrKnots->Array1(), aDegree, myumin, myusup, myUParams, myusample);
@@ -493,7 +493,7 @@ const Extrema_POnSurfParams& Extrema_GenExtPS::ComputeEdgeParameters(
       int anIndices[2];
 
       theParam0.GetIndices(anIndices[0], anIndices[1]);
-      myGridParam.SetElementType(IsUEdge ? Extrema_UIsoEdge : Extrema_VIsoEdge);
+      myGridParam.SetElementType(IsUEdge ? Extrema_ElementType::Extrema_UIsoEdge : Extrema_ElementType::Extrema_VIsoEdge);
       myGridParam.SetSqrDistance(thePoint.SquareDistance(myGridParam.Value()));
       myGridParam.SetIndices(anIndices[0], anIndices[1]);
       return myGridParam;
@@ -554,7 +554,7 @@ void Extrema_GenExtPS::BuildGrid(const gp_Pnt& thePoint)
       {
         const gp_Pnt&         aP1 = aGridPoints.Value(NoU, NoV);
         Extrema_POnSurfParams aParam(myUParams->Value(NoU), myVParams->Value(NoV), aP1);
-        aParam.SetElementType(Extrema_Node);
+        aParam.SetElementType(Extrema_ElementType::Extrema_Node);
         aParam.SetIndices(NoU, NoV);
         myPoints.SetValue(NoU, NoV, aParam);
       }
@@ -594,7 +594,7 @@ void Extrema_GenExtPS::BuildGrid(const gp_Pnt& thePoint)
   }
 
   // For search of minimum compute distances to mesh.
-  if (myFlag == Extrema_ExtFlag_MIN || myFlag == Extrema_ExtFlag_MINMAX)
+  if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MIN || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
   {
     // This is the tolerance of difference of squared values.
     // No need to set it too small.
@@ -701,7 +701,7 @@ void Extrema_GenExtPS::BuildGrid(const gp_Pnt& thePoint)
 
           Extrema_POnSurfParams aParam(aUPar, aVPar, myS->Value(aUPar, aVPar));
 
-          aParam.SetElementType(Extrema_Face);
+          aParam.SetElementType(Extrema_ElementType::Extrema_Face);
           aParam.SetSqrDistance(thePoint.SquareDistance(aParam.Value()));
           aParam.SetIndices(NoU, NoV);
           myFacePntParams.SetValue(NoU, NoV, aParam);
@@ -736,7 +736,7 @@ static double LengthOfIso(const Adaptor3d_Surface& theS,
   double dPar = (thePar2 - thePar1) / (theNbPnts - 1);
   gp_Pnt aP1, aP2;
   double aPar = thePar1 + dPar;
-  if (theIso == GeomAbs_IsoU)
+  if (theIso == GeomAbs_IsoType::GeomAbs_IsoU)
   {
     aP1 = theS.Value(thePar, thePar1);
   }
@@ -747,7 +747,7 @@ static double LengthOfIso(const Adaptor3d_Surface& theS,
 
   for (i = 2; i <= theNbPnts; ++i)
   {
-    if (theIso == GeomAbs_IsoU)
+    if (theIso == GeomAbs_IsoType::GeomAbs_IsoU)
     {
       aP2 = theS.Value(thePar, aPar);
     }
@@ -772,29 +772,29 @@ static void CorrectNbSamples(const Adaptor3d_Surface& theS,
 {
   double aMinLen = 1.e-3;
   int    nbp     = std::min(23, theNbV);
-  double aLenU1  = LengthOfIso(theS, GeomAbs_IsoU, theV1, theV2, nbp, theU1);
+  double aLenU1  = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoU, theV1, theV2, nbp, theU1);
   if (aLenU1 <= aMinLen)
   {
-    double aL = LengthOfIso(theS, GeomAbs_IsoU, theV1, theV2, nbp, .7 * theU1 + 0.3 * theU2);
+    double aL = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoU, theV1, theV2, nbp, .7 * theU1 + 0.3 * theU2);
     aLenU1    = std::max(aL, aLenU1);
   }
-  double aLenU2 = LengthOfIso(theS, GeomAbs_IsoU, theV1, theV2, nbp, theU2);
+  double aLenU2 = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoU, theV1, theV2, nbp, theU2);
   if (aLenU2 <= aMinLen)
   {
-    double aL = LengthOfIso(theS, GeomAbs_IsoU, theV1, theV2, nbp, .3 * theU1 + 0.7 * theU2);
+    double aL = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoU, theV1, theV2, nbp, .3 * theU1 + 0.7 * theU2);
     aLenU2    = std::max(aL, aLenU2);
   }
   nbp           = std::min(23, theNbV);
-  double aLenV1 = LengthOfIso(theS, GeomAbs_IsoV, theU1, theU2, nbp, theV1);
+  double aLenV1 = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoV, theU1, theU2, nbp, theV1);
   if (aLenV1 <= aMinLen)
   {
-    double aL = LengthOfIso(theS, GeomAbs_IsoV, theU1, theU2, nbp, .7 * theV1 + 0.3 * theV2);
+    double aL = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoV, theU1, theU2, nbp, .7 * theV1 + 0.3 * theV2);
     aLenV1    = std::max(aL, aLenV1);
   }
-  double aLenV2 = LengthOfIso(theS, GeomAbs_IsoV, theU1, theU2, nbp, theV2);
+  double aLenV2 = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoV, theU1, theU2, nbp, theV2);
   if (aLenV2 <= aMinLen)
   {
-    double aL = LengthOfIso(theS, GeomAbs_IsoV, theU1, theU2, nbp, .3 * theV1 + 0.7 * theV2);
+    double aL = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoV, theU1, theU2, nbp, .3 * theV1 + 0.7 * theV2);
     aLenV2    = std::max(aL, aLenV2);
   }
   //
@@ -827,7 +827,7 @@ void Extrema_GenExtPS::BuildTree()
   if (!mySphereUBTree.IsNull())
     return;
 
-  if (myS->GetType() == GeomAbs_BSplineSurface)
+  if (myS->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     occ::handle<Geom_BSplineSurface> aBspl   = myS->BSpline();
     int                              aUValue = aBspl->UDegree() * aBspl->NbUKnots();
@@ -926,12 +926,12 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
   myDone = false;
   myF.SetPoint(P);
 
-  if (myAlgo == Extrema_ExtAlgo_Grad)
+  if (myAlgo == Extrema_ExtAlgo::Extrema_ExtAlgo_Grad)
   {
     BuildGrid(P);
     int NoU, NoV;
 
-    if (myFlag == Extrema_ExtFlag_MIN || myFlag == Extrema_ExtFlag_MINMAX)
+    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MIN || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
     {
       Extrema_ElementType anElemType;
       int                 iU;
@@ -950,7 +950,7 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
           isMin      = false;
           anElemType = aParam.GetElementType();
 
-          if (anElemType == Extrema_Face)
+          if (anElemType == Extrema_ElementType::Extrema_Face)
           {
             isMin = true;
           }
@@ -959,15 +959,15 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
             // Check if it is a boundary edge or corner vertex.
             aParam.GetIndices(iU, iV);
 
-            if (anElemType == Extrema_UIsoEdge)
+            if (anElemType == Extrema_ElementType::Extrema_UIsoEdge)
             {
               isMin = (iV == 1 || iV == myvsample);
             }
-            else if (anElemType == Extrema_VIsoEdge)
+            else if (anElemType == Extrema_ElementType::Extrema_VIsoEdge)
             {
               isMin = (iU == 1 || iU == myusample);
             }
-            else if (anElemType == Extrema_Node)
+            else if (anElemType == Extrema_ElementType::Extrema_Node)
             {
               isMin = (iU == 1 || iU == myusample) && (iV == 1 || iV == myvsample);
             }
@@ -975,8 +975,8 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
             if (!isMin)
             {
               // This is a middle element.
-              if (anElemType == Extrema_UIsoEdge
-                  || (anElemType == Extrema_Node && (iU == 1 || iU == myusample)))
+              if (anElemType == Extrema_ElementType::Extrema_UIsoEdge
+                  || (anElemType == Extrema_ElementType::Extrema_Node && (iU == 1 || iU == myusample)))
               {
                 // Check the down face.
                 const Extrema_POnSurfParams& aDownParam = myFacePntParams.Value(NoU, NoV - 1);
@@ -987,8 +987,8 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
                   isMin = (iU == iU2 && iV == iV2);
                 }
               }
-              else if (anElemType == Extrema_VIsoEdge
-                       || (anElemType == Extrema_Node && (iV == 1 || iV == myvsample)))
+              else if (anElemType == Extrema_ElementType::Extrema_VIsoEdge
+                       || (anElemType == Extrema_ElementType::Extrema_Node && (iV == 1 || iV == myvsample)))
               {
                 // Check the right face.
                 const Extrema_POnSurfParams& aRightParam = myFacePntParams.Value(NoU - 1, NoV);
@@ -1012,7 +1012,7 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
 
                 for (i = 0; i < 3 && isMin; i++)
                 {
-                  if (anOtherParam[i]->GetElementType() == Extrema_Node)
+                  if (anOtherParam[i]->GetElementType() == Extrema_ElementType::Extrema_Node)
                   {
                     anOtherParam[i]->GetIndices(iU2, iV2);
                     isMin = (iU == iU2 && iV == iV2);
@@ -1034,7 +1034,7 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
       }
     }
 
-    if (myFlag == Extrema_ExtFlag_MAX || myFlag == Extrema_ExtFlag_MINMAX)
+    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MAX || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
     {
       double Dist;
 
@@ -1069,7 +1069,7 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
   else
   {
     BuildTree();
-    if (myFlag == Extrema_ExtFlag_MIN || myFlag == Extrema_ExtFlag_MINMAX)
+    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MIN || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
     {
       Bnd_Sphere                  aSol = mySphereArray->Value(0);
       Bnd_SphereUBTreeSelectorMin aSelector(mySphereArray, aSol);
@@ -1086,7 +1086,7 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
       aParams.SetIndices(aSph.U(), aSph.V());
       FindSolution(P, aParams);
     }
-    if (myFlag == Extrema_ExtFlag_MAX || myFlag == Extrema_ExtFlag_MINMAX)
+    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MAX || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
     {
       Bnd_Sphere                  aSol = mySphereArray->Value(0);
       Bnd_SphereUBTreeSelectorMax aSelector(mySphereArray, aSol);

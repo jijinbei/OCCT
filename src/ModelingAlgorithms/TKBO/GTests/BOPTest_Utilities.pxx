@@ -747,8 +747,8 @@ public:
     }
 
     // Create fillet maker (matching DRAW blend command)
-    // DRAW uses ChFi3d_Rational by default
-    BRepFilletAPI_MakeFillet aFilletMaker(theShape, ChFi3d_Rational);
+    // DRAW uses ChFi3d_FilletShape::ChFi3d_Rational by default
+    BRepFilletAPI_MakeFillet aFilletMaker(theShape, ChFi3d_FilletShape::ChFi3d_Rational);
 
     // Set parameters exactly like DRAW command does
     // SetParams(ta, tesp, t2d, t3d, t2d, fl) - exact DRAW defaults

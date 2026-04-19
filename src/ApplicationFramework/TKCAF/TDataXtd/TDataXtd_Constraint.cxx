@@ -54,7 +54,7 @@ occ::handle<TDataXtd_Constraint> TDataXtd_Constraint::Set(const TDF_Label& L)
 //=================================================================================================
 
 TDataXtd_Constraint::TDataXtd_Constraint()
-    : myType(TDataXtd_RADIUS),
+    : myType(TDataXtd_ConstraintEnum::TDataXtd_RADIUS),
       myIsReversed(false),
       myIsInverted(false),
       myIsVerified(true)
@@ -348,7 +348,7 @@ void TDataXtd_Constraint::References(const occ::handle<TDF_DataSet>& DS) const
   // bidouille en attendant traitement des contraintes d assemblage en dehors de la part
   //  l attribut placement devrait oriente vers les contraintes de placement en dehors
   int Lim;
-  if (myType >= TDataXtd_MATE && myType <= TDataXtd_FACES_ANGLE)
+  if (myType >= TDataXtd_ConstraintEnum::TDataXtd_MATE && myType <= TDataXtd_ConstraintEnum::TDataXtd_FACES_ANGLE)
     Lim = 1;
   else
     Lim = 3;

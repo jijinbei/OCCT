@@ -370,14 +370,14 @@ void BOPAlgo_PaveFiller::PerformFF(const Message_ProgressRange& theRange)
     }
     myIterator->Value(nF1, nF2);
 
-    if (myGlue == BOPAlgo_GlueOff)
+    if (myGlue == BOPAlgo_GlueEnum::BOPAlgo_GlueOff)
     {
       const TopoDS_Face& aF1 = (*(TopoDS_Face*)(&myDS->Shape(nF1)));
       const TopoDS_Face& aF2 = (*(TopoDS_Face*)(&myDS->Shape(nF2)));
       //
       const BRepAdaptor_Surface& aBAS1 = myContext->SurfaceAdaptor(aF1);
       const BRepAdaptor_Surface& aBAS2 = myContext->SurfaceAdaptor(aF2);
-      if (aBAS1.GetType() == GeomAbs_Plane && aBAS2.GetType() == GeomAbs_Plane)
+      if (aBAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane && aBAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         // Check if the planes are really interfering
         bool bToIntersect = CheckPlanes(nF1, nF2);
@@ -401,7 +401,7 @@ void BOPAlgo_PaveFiller::PerformFF(const Message_ProgressRange& theRange)
       // Keep shift value to use it as the tolerance for intersection curves
       double aShiftValue = 0.;
 
-      if (aBAS1.GetType() != GeomAbs_Plane || aBAS2.GetType() != GeomAbs_Plane)
+      if (aBAS1.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane || aBAS2.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         TopLoc_Location                        aLocation1;
         const occ::handle<Geom_Surface>&       aSurface1 = BRep_Tool::Surface(aF1, aLocation1);
@@ -647,7 +647,7 @@ static void UpdateSavedTolerance(const BOPDS_PDS&                  theDS,
 void BOPAlgo_PaveFiller::MakeBlocks(const Message_ProgressRange& theRange)
 {
   Message_ProgressScope aPSOuter(theRange, nullptr, 4);
-  if (myGlue != BOPAlgo_GlueOff)
+  if (myGlue != BOPAlgo_GlueEnum::BOPAlgo_GlueOff)
   {
     return;
   }
@@ -2100,7 +2100,7 @@ bool BOPAlgo_PaveFiller::IsExistingPaveBlock(
         if (isVtgt1Valid)
         {
           BRepAdaptor_Curve aBAC2(aSp);
-          if (aIC.Type() != GeomAbs_Line || aBAC2.GetType() != GeomAbs_Line)
+          if (aIC.Type() != GeomAbs_CurveType::GeomAbs_Line || aBAC2.GetType() != GeomAbs_CurveType::GeomAbs_Line)
           {
             double aTldp;
             double aTolAdd =
@@ -2618,7 +2618,7 @@ void BOPAlgo_PaveFiller::PutEFPavesOnCurve(const NCollection_Vector<BOPDS_Curve>
   const IntTools_Curve& aIC = aNC.Curve();
   GeomAbs_CurveType     aTypeC;
   aTypeC = aIC.Type();
-  if (aTypeC != GeomAbs_BezierCurve && aTypeC != GeomAbs_BSplineCurve)
+  if (aTypeC != GeomAbs_CurveType::GeomAbs_BezierCurve && aTypeC != GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     return;
   }
@@ -3781,13 +3781,13 @@ double ToleranceFF(const BRepAdaptor_Surface& aBAS1, const BRepAdaptor_Surface& 
   double aTolFF = std::max(aTol1, aTol2);
   //
   bool isAna1, isAna2;
-  isAna1 = (aBAS1.GetType() == GeomAbs_Plane || aBAS1.GetType() == GeomAbs_Cylinder
-            || aBAS1.GetType() == GeomAbs_Cone || aBAS1.GetType() == GeomAbs_Sphere
-            || aBAS1.GetType() == GeomAbs_Torus);
+  isAna1 = (aBAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane || aBAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
+            || aBAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone || aBAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere
+            || aBAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus);
   //
-  isAna2 = (aBAS2.GetType() == GeomAbs_Plane || aBAS2.GetType() == GeomAbs_Cylinder
-            || aBAS2.GetType() == GeomAbs_Cone || aBAS2.GetType() == GeomAbs_Sphere
-            || aBAS2.GetType() == GeomAbs_Torus);
+  isAna2 = (aBAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane || aBAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
+            || aBAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone || aBAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere
+            || aBAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus);
   //
   if (!isAna1 || !isAna2)
   {

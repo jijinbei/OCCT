@@ -784,7 +784,7 @@ Handle(ShapePersistent_BRep::TEdge::pTObjectT) ShapePersistent_BRep::Translate(
       CPCR                            = R;
     }
     // CurveRepresentation is Polygon or Triangulation
-    else if (theTriangleMode == ShapePersistent_WithTriangle)
+    else if (theTriangleMode == ShapePersistent_TriangleMode::ShapePersistent_WithTriangle)
     {
       // CurveRepresentation is Polygon3D
       if (CR->IsPolygon3D())
@@ -872,7 +872,7 @@ Handle(ShapePersistent_BRep::TFace::pTObjectT) ShapePersistent_BRep::Translate(
   PTF->mySurface = ShapePersistent_Geom::Translate(TTF->Surface(), theMap);
 
   // Triangulation
-  if (theTriangleMode == ShapePersistent_WithTriangle)
+  if (theTriangleMode == ShapePersistent_TriangleMode::ShapePersistent_WithTriangle)
   {
     PTF->myTriangulation = ShapePersistent_Poly::Translate(TTF->Triangulation(), theMap);
   }

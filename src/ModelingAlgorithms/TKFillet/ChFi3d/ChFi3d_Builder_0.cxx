@@ -518,9 +518,9 @@ ChFiDS_State ChFi3d_EdgeState(TopoDS_Edge* E, const ChFiDS_Map& EFMap)
   }
   */
 
-  // if(F[0].IsNull() || F[1].IsNull() || F[2].IsNull()) sst = ChFiDS_FreeBoundary;
+  // if(F[0].IsNull() || F[1].IsNull() || F[2].IsNull()) sst = ChFiDS_State::ChFiDS_FreeBoundary;
   if (F2.IsNull() || F4.IsNull() || F6.IsNull())
-    sst = ChFiDS_FreeBoundary;
+    sst = ChFiDS_State::ChFiDS_FreeBoundary;
   else
   {
     TopAbs_Orientation o01, o02, o11, o12, o21, o22;
@@ -534,11 +534,11 @@ ChFiDS_State ChFi3d_EdgeState(TopoDS_Edge* E, const ChFiDS_Map& EFMap)
     j = ChFi3d::ConcaveSide(F5, F6, E[2], o21, o22);
 
     if (o01 == o11 && o02 == o21 && o12 == o22)
-      sst = ChFiDS_AllSame;
+      sst = ChFiDS_State::ChFiDS_AllSame;
     else if (o12 == o22 || i == 10 || j == 10)
-      sst = ChFiDS_OnDiff;
+      sst = ChFiDS_State::ChFiDS_OnDiff;
     else
-      sst = ChFiDS_OnSame;
+      sst = ChFiDS_State::ChFiDS_OnSame;
   }
   return sst;
 }
@@ -559,7 +559,7 @@ GeomAbs_Shape ChFi3d_evalconti(const TopoDS_Edge& /*E*/,
   F.Orientation(TopAbs_FORWARD);
   BRepAdaptor_Surface S(F, false);
   GeomAbs_SurfaceType typ = S.GetType();
-  if (typ != GeomAbs_Cone && typ != GeomAbs_Sphere && typ != GeomAbs_Torus)
+  if (typ != GeomAbs_SurfaceType::GeomAbs_Cone && typ != GeomAbs_SurfaceType::GeomAbs_Sphere && typ != GeomAbs_SurfaceType::GeomAbs_Torus)
     return cont;
   return GeomAbs_CN;
 }
@@ -589,8 +589,8 @@ bool ChFi3d_KParticular(const occ::handle<ChFiDS_Spine>& Spine,
   //
   aST1      = S1.GetType();
   aST2      = S2.GetType();
-  bIsPlane1 = (aST1 == GeomAbs_Plane);
-  bIsPlane2 = (aST2 == GeomAbs_Plane);
+  bIsPlane1 = (aST1 == GeomAbs_SurfaceType::GeomAbs_Plane);
+  bIsPlane2 = (aST2 == GeomAbs_SurfaceType::GeomAbs_Plane);
   if (!(bIsPlane1 || bIsPlane2))
   {
     return !bRet;
@@ -601,46 +601,46 @@ bool ChFi3d_KParticular(const occ::handle<ChFiDS_Spine>& Spine,
   aST1                           = aS1.GetType();
   aST2                           = aS2.GetType();
   //
-  if (aST2 != GeomAbs_Plane && aST2 != GeomAbs_Cylinder && aST2 != GeomAbs_Cone)
+  if (aST2 != GeomAbs_SurfaceType::GeomAbs_Plane && aST2 != GeomAbs_SurfaceType::GeomAbs_Cylinder && aST2 != GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     return !bRet;
   }
   //
   const BRepAdaptor_Curve& bc = Spine->CurrentElementarySpine(IE);
   aCT                         = bc.GetType();
-  if (aCT != GeomAbs_Line && aCT != GeomAbs_Circle)
+  if (aCT != GeomAbs_CurveType::GeomAbs_Line && aCT != GeomAbs_CurveType::GeomAbs_Circle)
   {
     return !bRet;
   }
   //
   aPA = Precision::Angular();
   //
-  if (aST2 == GeomAbs_Plane)
+  if (aST2 == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
-    if (aCT == GeomAbs_Line)
+    if (aCT == GeomAbs_CurveType::GeomAbs_Line)
     {
       return bRet;
     }
   }
-  else if (aST2 == GeomAbs_Cylinder)
+  else if (aST2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     const gp_Dir aD1 = aS1.Plane().Axis().Direction();
     const gp_Dir aD2 = aS2.Cylinder().Axis().Direction();
     //
-    if (aCT == GeomAbs_Line && aD1.IsNormal(aD2, aPA))
+    if (aCT == GeomAbs_CurveType::GeomAbs_Line && aD1.IsNormal(aD2, aPA))
     {
       return bRet;
     }
-    else if (aCT == GeomAbs_Circle && aD1.IsParallel(aD2, aPA))
+    else if (aCT == GeomAbs_CurveType::GeomAbs_Circle && aD1.IsParallel(aD2, aPA))
     {
       return bRet;
     }
   }
-  else if (aST2 == GeomAbs_Cone)
+  else if (aST2 == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     const gp_Dir aD1 = aS1.Plane().Axis().Direction();
     const gp_Dir aD2 = aS2.Cone().Axis().Direction();
-    if (aCT == GeomAbs_Circle && aD1.IsParallel(aD2, aPA))
+    if (aCT == GeomAbs_CurveType::GeomAbs_Circle && aD1.IsParallel(aD2, aPA))
     {
       return bRet;
     }
@@ -754,13 +754,13 @@ void ChFi3d_ExtrSpineCarac(const TopOpeBRepDS_DataStructure& DStr,
   gp_Vec Vbid;
   switch (gs.GetType())
   {
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       gp_Cylinder cyl = gs.Cylinder();
       R               = cyl.Radius();
       ElSLib::D1(pp.X(), pp.Y(), cyl, Pbid, Vbid, V);
     }
     break;
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       gp_Torus tor = gs.Torus();
       R            = tor.MinorRadius();
       ElSLib::D1(pp.X(), pp.Y(), tor, Pbid, V, Vbid);
@@ -1415,38 +1415,38 @@ void ChFi3d_ProjectPCurv(const occ::handle<Adaptor3d_Curve>&   HCg,
                          const double                          tol,
                          double&                               tolreached)
 {
-  if (HSg->GetType() != GeomAbs_BezierSurface && HSg->GetType() != GeomAbs_BSplineSurface)
+  if (HSg->GetType() != GeomAbs_SurfaceType::GeomAbs_BezierSurface && HSg->GetType() != GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
 
     ProjLib_ProjectedCurve Projc(HSg, HCg, tol);
     tolreached = Projc.GetTolerance();
     switch (Projc.GetType())
     {
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Line: {
         Pcurv = new Geom2d_Line(Projc.Line());
       }
       break;
-      case GeomAbs_Circle: {
+      case GeomAbs_CurveType::GeomAbs_Circle: {
         Pcurv = new Geom2d_Circle(Projc.Circle());
       }
       break;
-      case GeomAbs_Ellipse: {
+      case GeomAbs_CurveType::GeomAbs_Ellipse: {
         Pcurv = new Geom2d_Ellipse(Projc.Ellipse());
       }
       break;
-      case GeomAbs_Hyperbola: {
+      case GeomAbs_CurveType::GeomAbs_Hyperbola: {
         Pcurv = new Geom2d_Hyperbola(Projc.Hyperbola());
       }
       break;
-      case GeomAbs_Parabola: {
+      case GeomAbs_CurveType::GeomAbs_Parabola: {
         Pcurv = new Geom2d_Parabola(Projc.Parabola());
       }
       break;
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_CurveType::GeomAbs_BezierCurve: {
         Pcurv = Projc.Bezier();
       }
       break;
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
         Pcurv = Projc.BSpline();
       }
       break;
@@ -2039,9 +2039,9 @@ occ::handle<TopOpeBRepDS_SurfaceCurveInterference> ChFi3d_FilCurveInDS(
 {
   occ::handle<TopOpeBRepDS_SurfaceCurveInterference> SC1;
   SC1 = new TopOpeBRepDS_SurfaceCurveInterference(TopOpeBRepDS_Transition(Et),
-                                                  TopOpeBRepDS_SURFACE,
+                                                  TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE,
                                                   Isurf,
-                                                  TopOpeBRepDS_CURVE,
+                                                  TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE,
                                                   Icurv,
                                                   Pcurv);
   return SC1;
@@ -2053,9 +2053,9 @@ TopAbs_Orientation ChFi3d_TrsfTrans(const IntSurf_TypeTrans T1)
 {
   switch (T1)
   {
-    case IntSurf_In:
+    case IntSurf_TypeTrans::IntSurf_In:
       return TopAbs_FORWARD;
-    case IntSurf_Out:
+    case IntSurf_TypeTrans::IntSurf_Out:
       return TopAbs_REVERSED;
     default:
       break;
@@ -2219,16 +2219,16 @@ occ::handle<TopOpeBRepDS_CurvePointInterference> ChFi3d_FilPointInDS(const TopAb
   occ::handle<TopOpeBRepDS_CurvePointInterference> CP1;
   if (IsVertex)
     CP1 = new TopOpeBRepDS_CurvePointInterference(TopOpeBRepDS_Transition(Et),
-                                                  TopOpeBRepDS_CURVE,
+                                                  TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE,
                                                   Ic,
-                                                  TopOpeBRepDS_VERTEX,
+                                                  TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
                                                   Ip,
                                                   Par);
   else
     CP1 = new TopOpeBRepDS_CurvePointInterference(TopOpeBRepDS_Transition(Et),
-                                                  TopOpeBRepDS_CURVE,
+                                                  TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE,
                                                   Ic,
-                                                  TopOpeBRepDS_POINT,
+                                                  TopOpeBRepDS_Kind::TopOpeBRepDS_POINT,
                                                   Ip,
                                                   Par);
   return CP1;
@@ -2244,9 +2244,9 @@ occ::handle<TopOpeBRepDS_CurvePointInterference> ChFi3d_FilVertexInDS(const TopA
 
   occ::handle<TopOpeBRepDS_CurvePointInterference> CP1 =
     new TopOpeBRepDS_CurvePointInterference(TopOpeBRepDS_Transition(Et),
-                                            TopOpeBRepDS_CURVE,
+                                            TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE,
                                             Ic,
-                                            TopOpeBRepDS_VERTEX,
+                                            TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
                                             Ip,
                                             Par);
   return CP1;
@@ -2269,9 +2269,9 @@ static bool ChFi3d_Orientation(const NCollection_List<occ::handle<TopOpeBRepDS_I
   // known if this is a point or a vertex, because their index can be the same.
   TopOpeBRepDS_Kind typepetit;
   if (isvertex)
-    typepetit = TopOpeBRepDS_VERTEX;
+    typepetit = TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX;
   else
-    typepetit = TopOpeBRepDS_POINT;
+    typepetit = TopOpeBRepDS_Kind::TopOpeBRepDS_POINT;
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator itLI(LI);
   for (; itLI.More(); itLI.Next())
   {
@@ -2336,7 +2336,7 @@ static void QueryAddVertexInEdge(NCollection_List<occ::handle<TopOpeBRepDS_Inter
       TopOpeBRepDS_Kind  kv     = cpi->GeometryType();
       TopAbs_Orientation newOr  = cpi->Transition().Orientation(TopAbs_IN);
       double             newpar = cpi->Parameter();
-      if (IV == newIV && kv == TopOpeBRepDS_VERTEX && Or == newOr
+      if (IV == newIV && kv == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX && Or == newOr
           && std::abs(par - newpar) < 1.e-10)
       {
         return;
@@ -2531,9 +2531,9 @@ void ChFi3d_FilDS(const int                         SolidIndex,
 
     occ::handle<TopOpeBRepDS_SolidSurfaceInterference> SSI =
       new TopOpeBRepDS_SolidSurfaceInterference(TopOpeBRepDS_Transition(Fd->Orientation()),
-                                                TopOpeBRepDS_SOLID,
+                                                TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID,
                                                 SolidIndex,
-                                                TopOpeBRepDS_SURFACE,
+                                                TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE,
                                                 Isurf);
 
     SolidInterfs.Append(SSI);
@@ -3510,12 +3510,12 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
   double Udeb = 0., Ufin = 0.;
   double tolr1, tolr2;
   tolr1 = tolr2 = tolreached = tol3d;
-  if ((S1->GetType() == GeomAbs_Cylinder && S2->GetType() == GeomAbs_Plane)
-      || (S1->GetType() == GeomAbs_Plane && S2->GetType() == GeomAbs_Cylinder))
+  if ((S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder && S2->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
+      || (S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane && S2->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder))
   {
     gp_Pln      pl;
     gp_Cylinder cyl;
-    if (S1->GetType() == GeomAbs_Plane)
+    if (S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       pl  = S1->Plane();
       cyl = S2->Cylinder();
@@ -3528,7 +3528,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
     IntAna_QuadQuadGeo ImpKK(pl, cyl, Precision::Angular(), tol3d);
     bool               isIntDone = ImpKK.IsDone();
 
-    if (ImpKK.TypeInter() == IntAna_Ellipse)
+    if (ImpKK.TypeInter() == IntAna_ResultType::IntAna_Ellipse)
     {
       const gp_Elips anEl    = ImpKK.Ellipse(1);
       const double   aMajorR = anEl.MajorRadius();
@@ -3541,7 +3541,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
       bool c1line = false;
       switch (ImpKK.TypeInter())
       {
-        case IntAna_Line: {
+        case IntAna_ResultType::IntAna_Line: {
           c1line       = true;
           int    nbsol = ImpKK.NbSolutions();
           gp_Lin C1;
@@ -3558,7 +3558,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
           ElCLib::D1(Udeb, C1, Pbid, Vint);
         }
         break;
-        case IntAna_Circle: {
+        case IntAna_ResultType::IntAna_Circle: {
           gp_Circ C1 = ImpKK.Circle(1);
           C3d        = new Geom_Circle(C1);
           Udeb       = ElCLib::Parameter(C1, pdeb);
@@ -3566,7 +3566,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
           ElCLib::D1(Udeb, C1, Pbid, Vint);
         }
         break;
-        case IntAna_Ellipse: {
+        case IntAna_ResultType::IntAna_Ellipse: {
           gp_Elips C1 = ImpKK.Ellipse(1);
           C3d         = new Geom_Ellipse(C1);
           Udeb        = ElCLib::Parameter(C1, pdeb);
@@ -3596,7 +3596,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
       occ::handle<GeomAdaptor_Curve> HC = new GeomAdaptor_Curve();
       HC->Load(C3d, Udeb, Ufin);
       ChFi3d_ProjectPCurv(HC, S1, Pc1, tol3d, tolr1);
-      if (S1->GetType() == GeomAbs_Cylinder)
+      if (S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder)
       {
         double x, y;
         Pc1->Value(Udeb).Coord(x, y);
@@ -3606,7 +3606,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
           Pc1->Translate(gp_Vec2d(x, y));
       }
       ChFi3d_ProjectPCurv(HC, S2, Pc2, tol3d, tolr2);
-      if (S2->GetType() == GeomAbs_Cylinder)
+      if (S2->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder)
       {
         double x, y;
         Pc2->Value(Udeb).Coord(x, y);
@@ -3621,7 +3621,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
       return true;
     }
   }
-  else if (S1->GetType() == GeomAbs_Plane && S2->GetType() == GeomAbs_Plane)
+  else if (S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane && S2->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     IntAna_QuadQuadGeo LInt(S1->Plane(), S2->Plane(), Precision::Angular(), tol3d);
     if (LInt.IsDone())
@@ -4197,7 +4197,7 @@ occ::handle<GeomAdaptor_Surface> ChFi3d_BoundSurf(TopOpeBRepDS_DataStructure&   
   UVl2 = FiArc1.PCurveOnSurf()->Value(FiArc1.LastParameter());
   ChFi3d_Boite(UVf1, UVf2, UVl1, UVl2, Du, Dv, mu, Mu, mv, Mv);
   GeomAbs_SurfaceType styp = S1.GetType();
-  if (styp == GeomAbs_Cylinder)
+  if (styp == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     Dv = std::max(0.5 * Dv, 4. * S1.Cylinder().Radius());
     Du = 0.;
@@ -4205,13 +4205,13 @@ occ::handle<GeomAdaptor_Surface> ChFi3d_BoundSurf(TopOpeBRepDS_DataStructure&   
   }
   // In the case of a torus or cone, it is not necessary that the bounds create a surface with
   // period more than 2PI.
-  else if (styp == GeomAbs_Torus || styp == GeomAbs_Cone)
+  else if (styp == GeomAbs_SurfaceType::GeomAbs_Torus || styp == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     Du = std::min(M_PI - 0.5 * Du, 0.1 * Du);
     Dv = 0.;
     S1.Load(DStr.Surface(Fd1->Surf()).Surface(), mu - Du, Mu + Du, mv, Mv);
   }
-  else if (styp == GeomAbs_Plane)
+  else if (styp == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     Du = std::max(0.5 * Du, 4. * Dv);
     Dv = 0.;
@@ -4387,23 +4387,23 @@ void ChFi3d_Parameters(const occ::handle<Geom_Surface>& S, const gp_Pnt& p3d, do
   GeomAdaptor_Surface gas(S);
   switch (gas.GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       ElSLib::Parameters(gas.Plane(), p3d, u, v);
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       ElSLib::Parameters(gas.Cylinder(), p3d, u, v);
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       ElSLib::Parameters(gas.Cone(), p3d, u, v);
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       ElSLib::Parameters(gas.Sphere(), p3d, u, v);
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       ElSLib::Parameters(gas.Torus(), p3d, u, v);
       break;
-    case GeomAbs_BezierSurface:
-    case GeomAbs_BSplineSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
     default: {
       GeomAPI_ProjectPointOnSurf tool(p3d, S);
       if (tool.NbPoints() != 1)
@@ -4429,27 +4429,27 @@ void ChFi3d_TrimCurve(const occ::handle<Geom_Curve>&  gc,
   GeomAdaptor_Curve gac(gc);
   switch (gac.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       uf = ElCLib::Parameter(gac.Line(), FirstP);
       ul = ElCLib::Parameter(gac.Line(), LastP);
     }
     break;
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       uf = ElCLib::Parameter(gac.Circle(), FirstP);
       ul = ElCLib::Parameter(gac.Circle(), LastP);
     }
     break;
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       uf = ElCLib::Parameter(gac.Ellipse(), FirstP);
       ul = ElCLib::Parameter(gac.Ellipse(), LastP);
     }
     break;
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       uf = ElCLib::Parameter(gac.Hyperbola(), FirstP);
       ul = ElCLib::Parameter(gac.Hyperbola(), LastP);
     }
     break;
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       uf = ElCLib::Parameter(gac.Parabola(), FirstP);
       ul = ElCLib::Parameter(gac.Parabola(), LastP);
     }
@@ -4690,7 +4690,7 @@ Standard_EXPORT void ChFi3d_PerformElSpine(occ::handle<ChFiDS_ElSpine>& HES,
   }
   //
   //  Concatenation des aretes suivantes
-  GeomConvert_CompCurveToBSplineCurve Concat(TC, Convert_QuasiAngular);
+  GeomConvert_CompCurveToBSplineCurve Concat(TC, Convert_ParameterisationType::Convert_QuasiAngular);
   //
   Eold = E;
   for (IEdge = IF + 1; IEdge <= IL; ++IEdge)

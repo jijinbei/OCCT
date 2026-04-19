@@ -507,7 +507,7 @@ void GeomFill_NSections::ComputeSurface()
       occ::handle<Geom_BSplineCurve> curvBS = occ::down_cast<Geom_BSplineCurve>(curv);
       if (curvBS.IsNull())
       {
-        curvBS = GeomConvert::CurveToBSplineCurve(curv, Convert_QuasiAngular);
+        curvBS = GeomConvert::CurveToBSplineCurve(curv, Convert_ParameterisationType::Convert_QuasiAngular);
       }
 
       NCollection_Array1<double> BSK(curvBS->Knots());
@@ -842,7 +842,7 @@ bool GeomFill_NSections::IsConstant(double& Error) const
 
     if (isconst)
     {
-      if (CType == GeomAbs_Circle)
+      if (CType == GeomAbs_CurveType::GeomAbs_Circle)
       {
         gp_Circ C1  = AC1.Circle();
         gp_Circ C2  = AC2.Circle();
@@ -858,7 +858,7 @@ bool GeomFill_NSections::IsConstant(double& Error) const
         }
         isconst = samedir && samerad && samepos;
       }
-      else if (CType == GeomAbs_Line)
+      else if (CType == GeomAbs_CurveType::GeomAbs_Line)
       {
         gp_Lin L1  = AC1.Line();
         gp_Lin L2  = AC2.Line();
@@ -908,7 +908,7 @@ bool GeomFill_NSections::IsConicalLaw(double& Error) const
   {
     GeomAdaptor_Curve AC1(mySections(1));
     GeomAdaptor_Curve AC2(mySections(2));
-    isconic = (AC1.GetType() == GeomAbs_Circle) && (AC2.GetType() == GeomAbs_Circle);
+    isconic = (AC1.GetType() == GeomAbs_CurveType::GeomAbs_Circle) && (AC2.GetType() == GeomAbs_CurveType::GeomAbs_Circle);
     if (isconic)
     {
       gp_Circ C1 = AC1.Circle();

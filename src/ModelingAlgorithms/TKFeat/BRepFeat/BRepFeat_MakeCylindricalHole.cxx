@@ -62,12 +62,12 @@ void BRepFeat_MakeCylindricalHole::Perform(const double Radius)
   }
 
   myIsBlind = false;
-  myStatus  = BRepFeat_NoError;
+  myStatus  = BRepFeat_Status::BRepFeat_NoError;
 
   LocOpe_CurveShapeIntersector theASI(myAxis, aObject);
   if (!theASI.IsDone() || theASI.NbPoints() <= 0)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -113,12 +113,12 @@ void BRepFeat_MakeCylindricalHole::PerformThruNext(const double Radius, const bo
 
   myIsBlind  = false;
   myValidate = Cont;
-  myStatus   = BRepFeat_NoError;
+  myStatus   = BRepFeat_Status::BRepFeat_NoError;
 
   LocOpe_CurveShapeIntersector theASI(myAxis, aObject);
   if (!theASI.IsDone())
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -163,7 +163,7 @@ void BRepFeat_MakeCylindricalHole::PerformThruNext(const double Radius, const bo
   }
   if (!ok)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -190,7 +190,7 @@ void BRepFeat_MakeCylindricalHole::PerformThruNext(const double Radius, const bo
   }
   if (nbparts == 0)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -264,12 +264,12 @@ void BRepFeat_MakeCylindricalHole::PerformUntilEnd(const double Radius, const bo
 
   myIsBlind  = false;
   myValidate = Cont;
-  myStatus   = BRepFeat_NoError;
+  myStatus   = BRepFeat_Status::BRepFeat_NoError;
 
   LocOpe_CurveShapeIntersector theASI(myAxis, aObject);
   if (!theASI.IsDone())
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -304,7 +304,7 @@ void BRepFeat_MakeCylindricalHole::PerformUntilEnd(const double Radius, const bo
   }
   if (!ok)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -331,7 +331,7 @@ void BRepFeat_MakeCylindricalHole::PerformUntilEnd(const double Radius, const bo
   }
   if (nbparts == 0)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -367,12 +367,12 @@ void BRepFeat_MakeCylindricalHole::Perform(const double Radius,
 
   myIsBlind  = false;
   myValidate = Cont;
-  myStatus   = BRepFeat_NoError;
+  myStatus   = BRepFeat_Status::BRepFeat_NoError;
 
   LocOpe_CurveShapeIntersector theASI(myAxis, aObject);
   if (!theASI.IsDone())
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -420,7 +420,7 @@ void BRepFeat_MakeCylindricalHole::Perform(const double Radius,
 
   if (!ok)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -447,7 +447,7 @@ void BRepFeat_MakeCylindricalHole::Perform(const double Radius,
   }
   if (nbparts == 0)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -484,12 +484,12 @@ void BRepFeat_MakeCylindricalHole::PerformBlind(const double Radius,
 
   myIsBlind  = true;
   myValidate = Cont;
-  myStatus   = BRepFeat_NoError;
+  myStatus   = BRepFeat_Status::BRepFeat_NoError;
 
   LocOpe_CurveShapeIntersector theASI(myAxis, aObject);
   if (!theASI.IsDone())
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -509,7 +509,7 @@ void BRepFeat_MakeCylindricalHole::PerformBlind(const double Radius,
   }
   if (!ok)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -518,12 +518,12 @@ void BRepFeat_MakeCylindricalHole::PerformBlind(const double Radius,
   ok = theASI.LocalizeAfter(IndTo, theOr, IFNext, ITNext);
   if (!ok)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
   if (theASI.Point(IFNext).Parameter() <= Length)
   {
-    myStatus = BRepFeat_HoleTooLong;
+    myStatus = BRepFeat_Status::BRepFeat_HoleTooLong;
     return;
   }
 
@@ -542,7 +542,7 @@ void BRepFeat_MakeCylindricalHole::PerformBlind(const double Radius,
   BoxParameters(aObject, myAxis, PMin, PMax);
   if (PMin > Length)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -579,7 +579,7 @@ void BRepFeat_MakeCylindricalHole::PerformBlind(const double Radius,
   }
   if (nbparts == 0)
   {
-    myStatus = BRepFeat_InvalidPlacement;
+    myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement;
     return;
   }
 
@@ -629,20 +629,20 @@ void BRepFeat_MakeCylindricalHole::PerformBlind(const double Radius,
 
 void BRepFeat_MakeCylindricalHole::Build()
 {
-  if (myStatus == BRepFeat_NoError)
+  if (myStatus == BRepFeat_Status::BRepFeat_NoError)
   {
     PerformResult();
     if (!HasErrors())
     {
-      myStatus = (myValidate) ? Validate() : BRepFeat_NoError;
-      if (myStatus == BRepFeat_NoError)
+      myStatus = (myValidate) ? Validate() : BRepFeat_Status::BRepFeat_NoError;
+      if (myStatus == BRepFeat_Status::BRepFeat_NoError)
       {
         myShape = Shape();
       }
     }
     else
     {
-      myStatus = BRepFeat_InvalidPlacement; // why not
+      myStatus = BRepFeat_Status::BRepFeat_InvalidPlacement; // why not
     }
   }
 }
@@ -651,7 +651,7 @@ void BRepFeat_MakeCylindricalHole::Build()
 
 BRepFeat_Status BRepFeat_MakeCylindricalHole::Validate()
 {
-  BRepFeat_Status thestat = BRepFeat_NoError;
+  BRepFeat_Status thestat = BRepFeat_Status::BRepFeat_NoError;
   TopExp_Explorer ex(Shape(), TopAbs_FACE);
   if (myIsBlind)
   { // limit of the hole
@@ -664,7 +664,7 @@ BRepFeat_Status BRepFeat_MakeCylindricalHole::Validate()
     }
     if (!ex.More())
     {
-      thestat = BRepFeat_HoleTooLong;
+      thestat = BRepFeat_Status::BRepFeat_HoleTooLong;
     }
   }
   else
@@ -673,14 +673,14 @@ BRepFeat_Status BRepFeat_MakeCylindricalHole::Validate()
     {
       if (ex.Current().IsSame(myTopFace))
       {
-        return BRepFeat_InvalidPlacement;
+        return BRepFeat_Status::BRepFeat_InvalidPlacement;
       }
     }
     for (ex.ReInit(); ex.More(); ex.Next())
     {
       if (ex.Current().IsSame(myBotFace))
       {
-        return BRepFeat_InvalidPlacement;
+        return BRepFeat_Status::BRepFeat_InvalidPlacement;
       }
     }
   }
@@ -762,7 +762,7 @@ bool GetOffset(const LocOpe_PntFace& PntInfo,
   gp_Dir             NormF;
   CSLib_NormalStatus stat;
   CSLib::Normal(D1U, D1V, Precision::Angular(), stat, NormF);
-  if (stat != CSLib_Defined)
+  if (stat != CSLib_NormalStatus::CSLib_Defined)
     return false;
   double angle = Axis.Direction().Angle(NormF);
   if (std::abs(M_PI / 2. - angle) < Precision::Angular())

@@ -27,7 +27,7 @@
 //! local operation will be performed
 //! -   SelectionShU - selection of a shape up to which a
 //! local operation will be performed.
-enum BRepFeat_PerfSelection
+enum class BRepFeat_PerfSelection
 {
   BRepFeat_NoSelection,
   BRepFeat_SelectionFU,

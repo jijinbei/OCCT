@@ -17,7 +17,7 @@
 #ifndef _CDM_CanCloseStatus_HeaderFile
 #define _CDM_CanCloseStatus_HeaderFile
 
-enum CDM_CanCloseStatus
+enum class CDM_CanCloseStatus
 {
   CDM_CCS_OK,
   CDM_CCS_NotOpen,

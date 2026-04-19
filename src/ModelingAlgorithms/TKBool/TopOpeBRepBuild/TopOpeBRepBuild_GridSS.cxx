@@ -171,9 +171,9 @@ static bool FUN_EPIforEvisoONperiodicF(
   T.Index(iS);
   occ::handle<TopOpeBRepDS_CurvePointInterference> CPI =
     new TopOpeBRepDS_CurvePointInterference(T,
-                                            TopOpeBRepDS_EDGE,
+                                            TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE,
                                             iEinterf,
-                                            TopOpeBRepDS_POINT,
+                                            TopOpeBRepDS_Kind::TopOpeBRepDS_POINT,
                                             iG,
                                             parone);
   loCPI.Append(CPI);
@@ -239,7 +239,7 @@ static void FUN_getEPI(const NCollection_List<occ::handle<TopOpeBRepDS_Interfere
     TopOpeBRepDS_Kind GT, ST;
     int               GI, SI;
     FDS_data(CPI, GT, GI, ST, SI);
-    if (GT != TopOpeBRepDS_POINT || ST != TopOpeBRepDS_FACE)
+    if (GT != TopOpeBRepDS_Kind::TopOpeBRepDS_POINT || ST != TopOpeBRepDS_Kind::TopOpeBRepDS_FACE)
       continue;
     EPI.Append(I);
   }
@@ -512,7 +512,7 @@ void TopOpeBRepBuild_Builder::GFillSurfaceTopologySFS(const TopOpeBRepDS_Surface
   G1.StatesON(TB1, TB2);
   TopOpeBRepDS_Config Conf = G1.Config1();
   TopAbs_State        TB   = TB1;
-  if (Conf == TopOpeBRepDS_DIFFORIENTED)
+  if (Conf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED)
   {
     if (TB1 == TopAbs_OUT)
       TB = TopAbs_IN;
@@ -887,9 +887,9 @@ void TopOpeBRepBuild_Builder::GSplitFaceSFS(const TopoDS_Shape&                 
           { // newFace is built on geometry of refAnc
             bool                samegeom = false;
             TopOpeBRepDS_Config cAnc     = BDS.SameDomainOri(iAnc);
-            if (cAnc == TopOpeBRepDS_SAMEORIENTED)
+            if (cAnc == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED)
               samegeom = true;
-            else if (cAnc == TopOpeBRepDS_DIFFORIENTED)
+            else if (cAnc == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED)
               samegeom = false;
             TopAbs_Orientation orefAnc = BDS.Shape(irefAnc).Orientation();
             if (oAnc != orefAnc)
@@ -1067,12 +1067,12 @@ void TopOpeBRepBuild_Builder::GMergeFaceSFS(const TopoDS_Shape&           FOR,
     if (makecomsam)
     {
       gF = TopOpeBRepBuild_GTool::GComUnsh(TopAbs_FACE, TopAbs_FACE);
-      gF.ChangeConfig(TopOpeBRepDS_SAMEORIENTED, TopOpeBRepDS_SAMEORIENTED);
+      gF.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED, TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
     }
     else if (makecomdif)
     {
       gF = TopOpeBRepBuild_GTool::GComUnsh(TopAbs_FACE, TopAbs_FACE);
-      gF.ChangeConfig(TopOpeBRepDS_SAMEORIENTED, TopOpeBRepDS_DIFFORIENTED);
+      gF.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED, TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
     }
 
     GMergeFaces(*PtrLF1, *PtrLF2, gF);
@@ -1132,11 +1132,11 @@ static bool FUN_SplitEvisoONperiodicF(const occ::handle<TopOpeBRepDS_HDataStruct
 
   // LI3 = {I3 = (T(FACE),EG=EDGE,FS=FACE)}
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> LI1;
-  int nIGtEDGE = FUN_selectGKinterference(LI, TopOpeBRepDS_EDGE, LI1);
+  int nIGtEDGE = FUN_selectGKinterference(LI, TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE, LI1);
   if (nIGtEDGE < 1)
     return true;
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> LI2;
-  int nIStFACE = FUN_selectSKinterference(LI1, TopOpeBRepDS_FACE, LI2);
+  int nIStFACE = FUN_selectSKinterference(LI1, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, LI2);
   if (nIStFACE < 1)
     return true;
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> LI3;
@@ -1881,7 +1881,7 @@ void TopOpeBRepBuild_Builder::FindFacesTouchingEdge(const TopoDS_Shape&         
     TopOpeBRepDS_Kind GT, ST;
     int               GI, SI;
     FDS_data(SSI, GT, GI, ST, SI);
-    if (GT != TopOpeBRepDS_EDGE || ST != TopOpeBRepDS_FACE)
+    if (GT != TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE || ST != TopOpeBRepDS_Kind::TopOpeBRepDS_FACE)
       continue;
     if (GI != anEdgeInd)
       continue;

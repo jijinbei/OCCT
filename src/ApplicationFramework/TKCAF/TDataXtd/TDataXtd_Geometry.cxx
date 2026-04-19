@@ -57,7 +57,7 @@ occ::handle<TDataXtd_Geometry> TDataXtd_Geometry::Set(const TDF_Label& L)
   if (!L.FindAttribute(TDataXtd_Geometry::GetID(), A))
   {
     A = new TDataXtd_Geometry();
-    //    A->SetType(TDataXtd_ANY_GEOM);
+    //    A->SetType(TDataXtd_GeometryEnum::TDataXtd_ANY_GEOM);
     L.AddAttribute(A);
   }
   return A;
@@ -320,19 +320,19 @@ TDataXtd_GeometryEnum TDataXtd_Geometry::Type(const TDF_Label& L)
   {
     return Type(NS);
   }
-  return TDataXtd_ANY_GEOM;
+  return TDataXtd_GeometryEnum::TDataXtd_ANY_GEOM;
 }
 
 //=================================================================================================
 
 TDataXtd_GeometryEnum TDataXtd_Geometry::Type(const occ::handle<TNaming_NamedShape>& NS)
 {
-  TDataXtd_GeometryEnum type(TDataXtd_ANY_GEOM);
+  TDataXtd_GeometryEnum type(TDataXtd_GeometryEnum::TDataXtd_ANY_GEOM);
   const TopoDS_Shape&   shape = TNaming_Tool::GetShape(NS);
   switch (shape.ShapeType())
   {
     case TopAbs_VERTEX: {
-      type = TDataXtd_POINT;
+      type = TDataXtd_GeometryEnum::TDataXtd_POINT;
       break;
     }
     case TopAbs_EDGE: {
@@ -348,15 +348,15 @@ TDataXtd_GeometryEnum TDataXtd_Geometry::Type(const occ::handle<TNaming_NamedSha
         }
         if (curve->IsInstance(STANDARD_TYPE(Geom_Line)))
         {
-          type = TDataXtd_LINE;
+          type = TDataXtd_GeometryEnum::TDataXtd_LINE;
         }
         else if (curve->IsInstance(STANDARD_TYPE(Geom_Circle)))
         {
-          type = TDataXtd_CIRCLE;
+          type = TDataXtd_GeometryEnum::TDataXtd_CIRCLE;
         }
         else if (curve->IsInstance(STANDARD_TYPE(Geom_Ellipse)))
         {
-          type = TDataXtd_ELLIPSE;
+          type = TDataXtd_GeometryEnum::TDataXtd_ELLIPSE;
         }
       }
 #ifdef OCCT_DEBUG
@@ -378,11 +378,11 @@ TDataXtd_GeometryEnum TDataXtd_Geometry::Type(const occ::handle<TNaming_NamedSha
         }
         if (surface->IsInstance(STANDARD_TYPE(Geom_CylindricalSurface)))
         {
-          type = TDataXtd_CYLINDER;
+          type = TDataXtd_GeometryEnum::TDataXtd_CYLINDER;
         }
         else if (surface->IsInstance(STANDARD_TYPE(Geom_Plane)))
         {
-          type = TDataXtd_PLANE;
+          type = TDataXtd_GeometryEnum::TDataXtd_PLANE;
         }
       }
 #ifdef OCCT_DEBUG
@@ -402,7 +402,7 @@ TDataXtd_GeometryEnum TDataXtd_Geometry::Type(const occ::handle<TNaming_NamedSha
 //=================================================================================================
 
 TDataXtd_Geometry::TDataXtd_Geometry()
-    : myType(TDataXtd_ANY_GEOM)
+    : myType(TDataXtd_GeometryEnum::TDataXtd_ANY_GEOM)
 {
 }
 

@@ -504,23 +504,23 @@ static int intconcon(Draw_Interpretor& di, int n, const char** a)
   Handle(NCollection_Shared<IntAna2d_Conic>) pCon;
   switch (T2)
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       pCon.reset(new NCollection_Shared<IntAna2d_Conic>(AC2.Line()));
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       pCon.reset(new NCollection_Shared<IntAna2d_Conic>(AC2.Circle()));
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       pCon.reset(new NCollection_Shared<IntAna2d_Conic>(AC2.Ellipse()));
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       pCon.reset(new NCollection_Shared<IntAna2d_Conic>(AC2.Hyperbola()));
       break;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       pCon.reset(new NCollection_Shared<IntAna2d_Conic>(AC2.Parabola()));
       break;
     }
@@ -533,19 +533,19 @@ static int intconcon(Draw_Interpretor& di, int n, const char** a)
   IntAna2d_AnaIntersection Intersector;
   switch (T1)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       Intersector.Perform(AC1.Line(), *pCon);
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       Intersector.Perform(AC1.Circle(), *pCon);
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       Intersector.Perform(AC1.Ellipse(), *pCon);
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       Intersector.Perform(AC1.Hyperbola(), *pCon);
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       Intersector.Perform(AC1.Parabola(), *pCon);
       break;
     default:

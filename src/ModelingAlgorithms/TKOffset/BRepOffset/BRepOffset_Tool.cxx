@@ -167,7 +167,7 @@ static void FindPeriod(const TopoDS_Face& F, double& umin, double& umax, double&
       return;
     Geom2dAdaptor_Curve PC(C, pf, pl);
     double              i, nbp = 20;
-    if (PC.GetType() == GeomAbs_Line)
+    if (PC.GetType() == GeomAbs_CurveType::GeomAbs_Line)
       nbp = 2;
     double   step = (pl - pf) / nbp;
     gp_Pnt2d P;
@@ -413,31 +413,31 @@ static void BuildPCurves(const TopoDS_Edge& E, const TopoDS_Face& F)
   switch (Proj.GetType())
   {
 
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       C2d = new Geom2d_Line(Proj.Line());
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       C2d = new Geom2d_Circle(Proj.Circle());
       break;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       C2d = new Geom2d_Ellipse(Proj.Ellipse());
       break;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       C2d = new Geom2d_Parabola(Proj.Parabola());
       break;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       C2d = new Geom2d_Hyperbola(Proj.Hyperbola());
       break;
 
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       C2d = Proj.Bezier();
       break;
 
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       C2d = Proj.BSpline();
       break;
     default:
@@ -619,7 +619,7 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
 
   switch (AS.GetType())
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       gp_Ax3 Ax = AS.Plane().Position();
       for (int i = 0; i < n; i++)
       {
@@ -631,7 +631,7 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
       }
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       gp_Ax3 Ax  = AS.Cylinder().Position();
       double Rad = AS.Cylinder().Radius();
       for (int i = 0; i < n; i++)
@@ -644,7 +644,7 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
       }
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       gp_Ax3 Ax  = AS.Cone().Position();
       double Rad = AS.Cone().RefRadius();
       double Alp = AS.Cone().SemiAngle();
@@ -658,7 +658,7 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
       }
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       gp_Ax3 Ax  = AS.Sphere().Position();
       double Rad = AS.Sphere().Radius();
       for (int i = 0; i < n; i++)
@@ -671,7 +671,7 @@ static bool IsOnSurface(const occ::handle<Geom_Curve>&   C,
       }
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       gp_Ax3 Ax = AS.Torus().Position();
       double R1 = AS.Torus().MajorRadius();
       double R2 = AS.Torus().MinorRadius();
@@ -1353,7 +1353,7 @@ void BRepOffset_Tool::Inter3D(const TopoDS_Face&              F1,
   // Check if the faces are planar and not trimmed - in this case
   // the IntTools_FaceFace intersection algorithm will be used directly.
   BRepAdaptor_Surface aBAS1(F1, false), aBAS2(F2, false);
-  if (aBAS1.GetType() == GeomAbs_Plane && aBAS2.GetType() == GeomAbs_Plane)
+  if (aBAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane && aBAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     aBAS1.Initialize(F1, true);
     if (IsInf(aBAS1.LastUParameter()) && IsInf(aBAS1.LastVParameter()))
@@ -1932,8 +1932,8 @@ static void ExtentEdge(const TopoDS_Face& F,
   NE                           = TopoDS::Edge(aLocalEdge);
   //  NE = TopoDS::Edge(E.EmptyCopied());
 
-  if (Type == GeomAbs_Line || Type == GeomAbs_Circle || Type == GeomAbs_Ellipse
-      || Type == GeomAbs_Hyperbola || Type == GeomAbs_Parabola)
+  if (Type == GeomAbs_CurveType::GeomAbs_Line || Type == GeomAbs_CurveType::GeomAbs_Circle || Type == GeomAbs_CurveType::GeomAbs_Ellipse
+      || Type == GeomAbs_CurveType::GeomAbs_Hyperbola || Type == GeomAbs_CurveType::GeomAbs_Parabola)
   {
     return;
   }
@@ -3044,7 +3044,7 @@ void BRepOffset_Tool::CheckBounds(const TopoDS_Face&        F,
       if (!L.IsEmpty() || BRep_Tool::Degenerated(anEdge))
       {
         ChFiDS_TypeOfConcavity OT = L.First().Type();
-        if (OT == ChFiDS_Tangential || BRep_Tool::Degenerated(anEdge))
+        if (OT == ChFiDS_TypeOfConcavity::ChFiDS_Tangential || BRep_Tool::Degenerated(anEdge))
         {
           double                    fpar, lpar;
           occ::handle<Geom2d_Curve> aCurve = BRep_Tool::CurveOnSurface(anEdge, F, fpar, lpar);
@@ -4133,7 +4133,7 @@ bool BRepOffset_Tool::CheckPlanesNormals(const TopoDS_Face& theFace1,
                                          const double       theTolAng)
 {
   BRepAdaptor_Surface aBAS1(theFace1, false), aBAS2(theFace2, false);
-  if (aBAS1.GetType() != GeomAbs_Plane || aBAS2.GetType() != GeomAbs_Plane)
+  if (aBAS1.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane || aBAS2.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     return false;
   }

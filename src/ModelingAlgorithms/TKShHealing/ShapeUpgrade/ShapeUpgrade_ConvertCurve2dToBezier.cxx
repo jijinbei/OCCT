@@ -149,7 +149,7 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
       if (approx.HasResult())
         aBSpline2d = approx.Curve();
       else
-        aBSpline2d = Geom2dConvert::CurveToBSplineCurve(tcurve, Convert_QuasiAngular);
+        aBSpline2d = Geom2dConvert::CurveToBSplineCurve(tcurve, Convert_ParameterisationType::Convert_QuasiAngular);
 
       Shift = First - aBSpline2d->FirstParameter();
       First = aBSpline2d->FirstParameter();
@@ -157,7 +157,7 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
     }
     else if (!myCurve->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)))
     {
-      aBSpline2d = Geom2dConvert::CurveToBSplineCurve(myCurve, Convert_QuasiAngular);
+      aBSpline2d = Geom2dConvert::CurveToBSplineCurve(myCurve, Convert_ParameterisationType::Convert_QuasiAngular);
     }
     else
       aBSpline2d = occ::down_cast<Geom2d_BSplineCurve>(myCurve);

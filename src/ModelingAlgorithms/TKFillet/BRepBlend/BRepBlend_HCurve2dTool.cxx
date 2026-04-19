@@ -30,11 +30,11 @@ int BRepBlend_HCurve2dTool::NbSamples(const occ::handle<Adaptor2d_Curve2d>& C,
   static double     nbsOther = 10.0;
   double            nbs      = nbsOther;
 
-  if (typC == GeomAbs_Line)
+  if (typC == GeomAbs_CurveType::GeomAbs_Line)
     nbs = 2;
-  else if (typC == GeomAbs_BezierCurve)
+  else if (typC == GeomAbs_CurveType::GeomAbs_BezierCurve)
     nbs = 3 + C->Bezier()->NbPoles();
-  else if (typC == GeomAbs_BSplineCurve)
+  else if (typC == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom2d_BSplineCurve> BSC = C->BSpline();
     nbs                                  = BSC->NbKnots();

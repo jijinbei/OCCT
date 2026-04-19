@@ -32,7 +32,7 @@ TEST(ProjLib_ConeTest, ProjectCircle_ParallelAxes_DoneLine)
 
   ProjLib_Cone aProjector(aCone, aCircle);
   ASSERT_TRUE(aProjector.IsDone());
-  EXPECT_EQ(aProjector.GetType(), GeomAbs_Line);
+  EXPECT_EQ(aProjector.GetType(), GeomAbs_CurveType::GeomAbs_Line);
   EXPECT_NEAR(aProjector.Line().Direction().Y(), 0.0, Precision::Angular());
 }
 
@@ -56,6 +56,6 @@ TEST(ProjLib_ConeTest, ProjectCircle_OppositeNormal_DoneLineWithNegativeDirectio
 
   ProjLib_Cone aProjector(aCone, aCircle);
   ASSERT_TRUE(aProjector.IsDone());
-  ASSERT_EQ(aProjector.GetType(), GeomAbs_Line);
+  ASSERT_EQ(aProjector.GetType(), GeomAbs_CurveType::GeomAbs_Line);
   EXPECT_LT(aProjector.Line().Direction().X(), 0.0);
 }

@@ -84,7 +84,7 @@ Standard_EXPORT bool FUN_tool_onapex(const gp_Pnt2d& p2d, const occ::handle<Geom
   double              tol   = Precision::Confusion();
   GeomAbs_SurfaceType ST    = GS.GetType();
   double              toluv = 1.e-8;
-  if (ST == GeomAbs_Cone)
+  if (ST == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     gp_Cone co   = GS.Cone();
     gp_Pnt  apex = co.Apex();
@@ -92,7 +92,7 @@ Standard_EXPORT bool FUN_tool_onapex(const gp_Pnt2d& p2d, const occ::handle<Geom
     double  dist = pnt.Distance(apex);
     isapex       = (dist < tol);
   }
-  if (ST == GeomAbs_Sphere)
+  if (ST == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     double pisur2       = M_PI * .5;
     double v            = p2d.Y();
@@ -122,7 +122,7 @@ Standard_EXPORT gp_Dir FUN_tool_ngS(const gp_Pnt2d& p2d, const occ::handle<Geom_
     GeomAdaptor_Surface GS(S);
     GeomAbs_SurfaceType ST    = GS.GetType();
     double              toluv = 1.e-8;
-    if (ST == GeomAbs_Cone)
+    if (ST == GeomAbs_SurfaceType::GeomAbs_Cone)
     {
       bool nullx = (std::abs(p2d.X()) < toluv);
       bool apex  = nullx && (std::abs(p2d.Y()) < toluv);
@@ -150,7 +150,7 @@ Standard_EXPORT gp_Dir FUN_tool_ngS(const gp_Pnt2d& p2d, const occ::handle<Geom_
         return ng;
       }
     }
-    if (ST == GeomAbs_Sphere)
+    if (ST == GeomAbs_SurfaceType::GeomAbs_Sphere)
     {
       //      double deuxpi = 2*M_PI;
       double pisur2 = M_PI * .5;
@@ -187,7 +187,7 @@ Standard_EXPORT bool FUN_tool_line(const occ::handle<Geom_Curve>& C3d)
 {
   occ::handle<Geom_Curve> C = TopOpeBRepTool_ShapeTool::BASISCURVE(C3d);
   GeomAdaptor_Curve       GC(C);
-  bool                    line = (GC.GetType() == GeomAbs_Line);
+  bool                    line = (GC.GetType() == GeomAbs_CurveType::GeomAbs_Line);
   return line;
 }
 
@@ -195,15 +195,15 @@ Standard_EXPORT bool FUN_tool_line(const occ::handle<Geom_Curve>& C3d)
 Standard_EXPORT bool FUN_quadCT(const GeomAbs_CurveType& CT)
 {
   bool isquad = false;
-  if (CT == GeomAbs_Line)
+  if (CT == GeomAbs_CurveType::GeomAbs_Line)
     isquad = true;
-  if (CT == GeomAbs_Circle)
+  if (CT == GeomAbs_CurveType::GeomAbs_Circle)
     isquad = true;
-  if (CT == GeomAbs_Ellipse)
+  if (CT == GeomAbs_CurveType::GeomAbs_Ellipse)
     isquad = true;
-  if (CT == GeomAbs_Hyperbola)
+  if (CT == GeomAbs_CurveType::GeomAbs_Hyperbola)
     isquad = true;
-  if (CT == GeomAbs_Parabola)
+  if (CT == GeomAbs_CurveType::GeomAbs_Parabola)
     isquad = true;
   return isquad;
 }
@@ -229,15 +229,15 @@ Standard_EXPORT bool FUN_tool_quad(const occ::handle<Geom2d_Curve>& pc)
   Geom2dAdaptor_Curve GC2d(pcb);
   GeomAbs_CurveType   typ    = GC2d.GetType();
   bool                isquad = false;
-  if (typ == GeomAbs_Line)
+  if (typ == GeomAbs_CurveType::GeomAbs_Line)
     isquad = true;
-  if (typ == GeomAbs_Circle)
+  if (typ == GeomAbs_CurveType::GeomAbs_Circle)
     isquad = true;
-  if (typ == GeomAbs_Ellipse)
+  if (typ == GeomAbs_CurveType::GeomAbs_Ellipse)
     isquad = true;
-  if (typ == GeomAbs_Hyperbola)
+  if (typ == GeomAbs_CurveType::GeomAbs_Hyperbola)
     isquad = true;
-  if (typ == GeomAbs_Parabola)
+  if (typ == GeomAbs_CurveType::GeomAbs_Parabola)
     isquad = true;
   return isquad;
 }
@@ -251,7 +251,7 @@ Standard_EXPORT bool FUN_tool_line(const occ::handle<Geom2d_Curve>& pc)
   Geom2dAdaptor_Curve GC2d(pcb);
   GeomAbs_CurveType   typ = GC2d.GetType();
 
-  return typ == GeomAbs_Line;
+  return typ == GeomAbs_CurveType::GeomAbs_Line;
 }
 
 // ----------------------------------------------------------------------
@@ -262,15 +262,15 @@ Standard_EXPORT bool FUN_tool_quad(const occ::handle<Geom_Surface>& S)
   GeomAdaptor_Surface GAS(S);
   GeomAbs_SurfaceType typ    = GAS.GetType();
   bool                isquad = false;
-  if (typ == GeomAbs_Plane)
+  if (typ == GeomAbs_SurfaceType::GeomAbs_Plane)
     isquad = true;
-  if (typ == GeomAbs_Cylinder)
+  if (typ == GeomAbs_SurfaceType::GeomAbs_Cylinder)
     isquad = true;
-  if (typ == GeomAbs_Cone)
+  if (typ == GeomAbs_SurfaceType::GeomAbs_Cone)
     isquad = true;
-  if (typ == GeomAbs_Sphere)
+  if (typ == GeomAbs_SurfaceType::GeomAbs_Sphere)
     isquad = true;
-  if (typ == GeomAbs_Torus)
+  if (typ == GeomAbs_SurfaceType::GeomAbs_Torus)
     isquad = true;
   return isquad;
 }

@@ -749,7 +749,7 @@ bool GeomFill_LocationDraft::IsRotation(double& Error) const
   GeomAbs_CurveType Type;
   Error = 0;
   Type  = myCurve->GetType();
-  if (Type == GeomAbs_Circle)
+  if (Type == GeomAbs_CurveType::GeomAbs_Circle)
   {
     return myLaw->IsOnlyBy3dCurve();
   }

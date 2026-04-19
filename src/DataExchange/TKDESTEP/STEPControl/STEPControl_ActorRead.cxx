@@ -2297,7 +2297,7 @@ TopoDS_Shell STEPControl_ActorRead::closeIDEASShell(
   // Check if the result is closed
   BRepCheck_Shell  checker(TopoDS::Shell(result));
   BRepCheck_Status checkStatus = checker.Closed();
-  if (checkStatus == BRepCheck_NoError)
+  if (checkStatus == BRepCheck_Status::BRepCheck_NoError)
     result.Closed(true);
   else
     return shell; // Cannot close this shell, skip it so...
@@ -2311,7 +2311,7 @@ TopoDS_Shell STEPControl_ActorRead::closeIDEASShell(
     BRepCheck_Shell  subChecker(TopoDS::Shell(result));
     BRepCheck_Status subCheckStatus = subChecker.Closed();
     // If Shell becomes open, just put the deleted face back
-    if (subCheckStatus != BRepCheck_NoError)
+    if (subCheckStatus != BRepCheck_Status::BRepCheck_NoError)
       brepBuilder.Add(result, currentFace);
     else
     {

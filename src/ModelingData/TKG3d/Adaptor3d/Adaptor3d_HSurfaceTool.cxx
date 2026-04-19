@@ -28,15 +28,15 @@ int Adaptor3d_HSurfaceTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S)
 {
   switch (S->GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       return 2;
-    case GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
       return (3 + S->NbUPoles());
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       const int nbs = S->NbUKnots() * S->UDegree();
       return (nbs < 2 ? 2 : nbs);
     }
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       return 20;
     default:
       break;
@@ -48,20 +48,20 @@ int Adaptor3d_HSurfaceTool::NbSamplesV(const occ::handle<Adaptor3d_Surface>& S)
 {
   switch (S->GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       return 2;
-    case GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
       return (3 + S->NbVPoles());
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       const int nbs = S->NbVKnots() * S->VDegree();
       return (nbs < 2 ? 2 : nbs);
     }
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
       return 15;
     default:
       break;
@@ -123,35 +123,35 @@ bool Adaptor3d_HSurfaceTool::IsSurfG1(const occ::handle<Adaptor3d_Surface>& theS
   occ::handle<Geom_BSplineSurface> aBS;
   occ::handle<Geom_BSplineCurve>   aBC;
 
-  if (aS->GetType() == GeomAbs_OffsetSurface)
+  if (aS->GetType() == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
   {
     aS = aS->BasisSurface();
   }
 
-  if (aS->GetType() == GeomAbs_SurfaceOfRevolution || aS->GetType() == GeomAbs_SurfaceOfExtrusion)
+  if (aS->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution || aS->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
   {
     aC = aS->BasisCurve();
   }
 
   if (!aC.IsNull())
   {
-    if (aC->GetType() == GeomAbs_OffsetCurve)
+    if (aC->GetType() == GeomAbs_CurveType::GeomAbs_OffsetCurve)
     {
       occ::handle<Geom_OffsetCurve> aOC = aC->OffsetCurve();
       aC                                = new GeomAdaptor_Curve(aOC->BasisCurve());
     }
 
-    if (aC->GetType() == GeomAbs_BSplineCurve)
+    if (aC->GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
     {
-      if ((theAlongU && aS->GetType() == GeomAbs_SurfaceOfExtrusion)
-          || (!theAlongU && aS->GetType() == GeomAbs_SurfaceOfRevolution))
+      if ((theAlongU && aS->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
+          || (!theAlongU && aS->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution))
       {
         aBC = aC->BSpline();
       }
     }
   }
 
-  if (aS->GetType() == GeomAbs_BSplineSurface)
+  if (aS->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     aBS = aS->BSpline();
 

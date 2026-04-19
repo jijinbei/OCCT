@@ -52,7 +52,7 @@ BlendFunc_CSCircular::BlendFunc_CSCircular(const occ::handle<Adaptor3d_Surface>&
       // prmc, dprmc, istangent, ray, choix, normtg,
       maxang(RealFirst()),
       minang(RealLast()),
-      mySShape(BlendFunc_Rational)
+      mySShape(BlendFunc_SectionShape::BlendFunc_Rational)
 // myTConv
 {
   law = L;
@@ -697,7 +697,7 @@ bool BlendFunc_CSCircular::GetSection(const double Param,
 
 bool BlendFunc_CSCircular::IsRational() const
 {
-  return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================
@@ -796,7 +796,7 @@ void BlendFunc_CSCircular::Section(const Blend_Point&            P,
   Poles2d(Poles2d.Lower()).SetCoord(u1, v1);
 
   // Cas Linear
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts;
     Poles(upp)   = ptc;
@@ -939,7 +939,7 @@ bool BlendFunc_CSCircular::Section(const Blend_Point&            P,
     DPoles2d(Poles2d.Lower()).SetCoord(secmember(1), secmember(2));
   }
 
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts;
     Poles(upp)   = ptc;

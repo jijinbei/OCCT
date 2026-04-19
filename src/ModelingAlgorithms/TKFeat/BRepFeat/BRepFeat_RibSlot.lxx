@@ -19,6 +19,6 @@
 inline BRepFeat_RibSlot::BRepFeat_RibSlot()
     : myFuse(false),
       mySliding(false),
-      myStatusError(BRepFeat_OK)
+      myStatusError(BRepFeat_StatusError::BRepFeat_OK)
 {
 }

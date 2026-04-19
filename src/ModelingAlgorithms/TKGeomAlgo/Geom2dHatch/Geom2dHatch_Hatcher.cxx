@@ -374,7 +374,7 @@ void Geom2dHatch_Hatcher::Trim(const int IndH)
       OK                             = GlobalTransition(PntH);
       AllOK                          = AllOK && OK;
     }
-    Hatching.Status(AllOK ? HatchGen_NoProblem : HatchGen_TransitionFailure);
+    Hatching.Status(AllOK ? HatchGen_ErrorStatus::HatchGen_NoProblem : HatchGen_ErrorStatus::HatchGen_TransitionFailure);
   }
 }
 
@@ -396,13 +396,13 @@ static void IntersectionPointDump(const IntRes2d_IntersectionPoint& Pnt, const i
   std::cout << "-- Position  on first   : ";
   switch (Pnt.TransitionOfFirst().PositionOnCurve())
   {
-    case IntRes2d_Head:
+    case IntRes2d_Position::IntRes2d_Head:
       std::cout << "HEAD";
       break;
-    case IntRes2d_Middle:
+    case IntRes2d_Position::IntRes2d_Middle:
       std::cout << "MIDDLE";
       break;
-    case IntRes2d_End:
+    case IntRes2d_Position::IntRes2d_End:
       std::cout << "END";
       break;
   }
@@ -410,32 +410,32 @@ static void IntersectionPointDump(const IntRes2d_IntersectionPoint& Pnt, const i
   std::cout << "-- IntRes2d:: Transition on first  : ";
   switch (Pnt.TransitionOfFirst().TransitionType())
   {
-    case IntRes2d_In:
+    case IntRes2d_TypeTrans::IntRes2d_In:
       std::cout << "IN";
       break;
-    case IntRes2d_Out:
+    case IntRes2d_TypeTrans::IntRes2d_Out:
       std::cout << "OUT";
       break;
-    case IntRes2d_Touch:
+    case IntRes2d_TypeTrans::IntRes2d_Touch:
       std::cout << "TOUCH";
       break;
-    case IntRes2d_Undecided:
+    case IntRes2d_TypeTrans::IntRes2d_Undecided:
       std::cout << "UNDECIDED";
       break;
   }
   std::cout << std::endl;
-  if (Pnt.TransitionOfFirst().TransitionType() == IntRes2d_Touch)
+  if (Pnt.TransitionOfFirst().TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch)
   {
     std::cout << "-- IntRes2d:: Situation on first   : ";
     switch (Pnt.TransitionOfFirst().Situation())
     {
-      case IntRes2d_Inside:
+      case IntRes2d_Situation::IntRes2d_Inside:
         std::cout << "INSIDE";
         break;
-      case IntRes2d_Outside:
+      case IntRes2d_Situation::IntRes2d_Outside:
         std::cout << "OUTSIDE";
         break;
-      case IntRes2d_Unknown:
+      case IntRes2d_Situation::IntRes2d_Unknown:
         std::cout << "UNKNOWN";
         break;
     }
@@ -446,13 +446,13 @@ static void IntersectionPointDump(const IntRes2d_IntersectionPoint& Pnt, const i
   std::cout << "-- Position  on second  : ";
   switch (Pnt.TransitionOfSecond().PositionOnCurve())
   {
-    case IntRes2d_Head:
+    case IntRes2d_Position::IntRes2d_Head:
       std::cout << "HEAD";
       break;
-    case IntRes2d_Middle:
+    case IntRes2d_Position::IntRes2d_Middle:
       std::cout << "MIDDLE";
       break;
-    case IntRes2d_End:
+    case IntRes2d_Position::IntRes2d_End:
       std::cout << "END";
       break;
   }
@@ -460,32 +460,32 @@ static void IntersectionPointDump(const IntRes2d_IntersectionPoint& Pnt, const i
   std::cout << "-- IntRes2d:: Transition on second : ";
   switch (Pnt.TransitionOfSecond().TransitionType())
   {
-    case IntRes2d_In:
+    case IntRes2d_TypeTrans::IntRes2d_In:
       std::cout << "IN";
       break;
-    case IntRes2d_Out:
+    case IntRes2d_TypeTrans::IntRes2d_Out:
       std::cout << "OUT";
       break;
-    case IntRes2d_Touch:
+    case IntRes2d_TypeTrans::IntRes2d_Touch:
       std::cout << "TOUCH";
       break;
-    case IntRes2d_Undecided:
+    case IntRes2d_TypeTrans::IntRes2d_Undecided:
       std::cout << "UNDECIDED";
       break;
   }
   std::cout << std::endl;
-  if (Pnt.TransitionOfSecond().TransitionType() == IntRes2d_Touch)
+  if (Pnt.TransitionOfSecond().TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch)
   {
     std::cout << "-- IntRes2d:: Situation on second  : ";
     switch (Pnt.TransitionOfSecond().Situation())
     {
-      case IntRes2d_Inside:
+      case IntRes2d_Situation::IntRes2d_Inside:
         std::cout << "INSIDE";
         break;
-      case IntRes2d_Outside:
+      case IntRes2d_Situation::IntRes2d_Outside:
         std::cout << "OUTSIDE";
         break;
-      case IntRes2d_Unknown:
+      case IntRes2d_Situation::IntRes2d_Unknown:
         std::cout << "UNKNOWN";
         break;
     }
@@ -624,13 +624,13 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
       {
         Conf3d = true;
         if (Conf3d)
-          Conf3d = TypePnt1H != IntRes2d_Touch && TypePnt1H != IntRes2d_Undecided;
+          Conf3d = TypePnt1H != IntRes2d_TypeTrans::IntRes2d_Touch && TypePnt1H != IntRes2d_TypeTrans::IntRes2d_Undecided;
         if (Conf3d)
-          Conf3d = TypePnt1E != IntRes2d_Touch && TypePnt1E != IntRes2d_Undecided;
+          Conf3d = TypePnt1E != IntRes2d_TypeTrans::IntRes2d_Touch && TypePnt1E != IntRes2d_TypeTrans::IntRes2d_Undecided;
         if (Conf3d)
-          Conf3d = TypePnt2H != IntRes2d_Touch && TypePnt2H != IntRes2d_Undecided;
+          Conf3d = TypePnt2H != IntRes2d_TypeTrans::IntRes2d_Touch && TypePnt2H != IntRes2d_TypeTrans::IntRes2d_Undecided;
         if (Conf3d)
-          Conf3d = TypePnt2E != IntRes2d_Touch && TypePnt2E != IntRes2d_Undecided;
+          Conf3d = TypePnt2E != IntRes2d_TypeTrans::IntRes2d_Touch && TypePnt2E != IntRes2d_TypeTrans::IntRes2d_Undecided;
         if (Conf3d)
           Conf3d = TypePnt1H == TypePnt2H && TypePnt1E == TypePnt2E;
         if (Conf3d)
@@ -645,22 +645,22 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
         PntE.SetParameter((Pnt1.ParamOnSecond() + Pnt2.ParamOnSecond()) / 2.);
         switch (TrsPnt1E.PositionOnCurve())
         {
-          case IntRes2d_Head: {
+          case IntRes2d_Position::IntRes2d_Head: {
             PntE.SetPosition(TopAbs_FORWARD);
             break;
           }
-          case IntRes2d_Middle: {
+          case IntRes2d_Position::IntRes2d_Middle: {
             switch (TrsPnt2E.PositionOnCurve())
             {
-              case IntRes2d_Head: {
+              case IntRes2d_Position::IntRes2d_Head: {
                 PntE.SetPosition(TopAbs_FORWARD);
                 break;
               }
-              case IntRes2d_Middle: {
+              case IntRes2d_Position::IntRes2d_Middle: {
                 PntE.SetPosition(TopAbs_INTERNAL);
                 break;
               }
-              case IntRes2d_End: {
+              case IntRes2d_Position::IntRes2d_End: {
                 PntE.SetPosition(TopAbs_REVERSED);
                 break;
               }
@@ -670,7 +670,7 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
             }
             break;
           }
-          case IntRes2d_End: {
+          case IntRes2d_Position::IntRes2d_End: {
             PntE.SetPosition(TopAbs_REVERSED);
             break;
           }
@@ -678,32 +678,32 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
             break;
           }
         }
-        PntE.SetIntersectionType((PntE.Position() == TopAbs_INTERNAL) ? HatchGen_TRUE
-                                                                      : HatchGen_TOUCH);
-        PntE.SetStateBefore((TypePnt1H == IntRes2d_In) ? TopAbs_OUT : TopAbs_IN);
-        PntE.SetStateAfter((TypePnt2H == IntRes2d_In) ? TopAbs_OUT : TopAbs_IN);
+        PntE.SetIntersectionType((PntE.Position() == TopAbs_INTERNAL) ? HatchGen_IntersectionType::HatchGen_TRUE
+                                                                      : HatchGen_IntersectionType::HatchGen_TOUCH);
+        PntE.SetStateBefore((TypePnt1H == IntRes2d_TypeTrans::IntRes2d_In) ? TopAbs_OUT : TopAbs_IN);
+        PntE.SetStateAfter((TypePnt2H == IntRes2d_TypeTrans::IntRes2d_In) ? TopAbs_OUT : TopAbs_IN);
 
         HatchGen_PointOnHatching PntH;
         PntH.SetIndex(IndH);
         PntH.SetParameter((Pnt1.ParamOnFirst() + Pnt2.ParamOnFirst()) / 2.);
         switch (TrsPnt1H.PositionOnCurve())
         {
-          case IntRes2d_Head: {
+          case IntRes2d_Position::IntRes2d_Head: {
             PntH.SetPosition(TopAbs_FORWARD);
             break;
           }
-          case IntRes2d_Middle: {
+          case IntRes2d_Position::IntRes2d_Middle: {
             switch (TrsPnt2H.PositionOnCurve())
             {
-              case IntRes2d_Head: {
+              case IntRes2d_Position::IntRes2d_Head: {
                 PntH.SetPosition(TopAbs_FORWARD);
                 break;
               }
-              case IntRes2d_Middle: {
+              case IntRes2d_Position::IntRes2d_Middle: {
                 PntH.SetPosition(TopAbs_INTERNAL);
                 break;
               }
-              case IntRes2d_End: {
+              case IntRes2d_Position::IntRes2d_End: {
                 PntH.SetPosition(TopAbs_REVERSED);
                 break;
               }
@@ -713,7 +713,7 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
             }
             break;
           }
-          case IntRes2d_End: {
+          case IntRes2d_Position::IntRes2d_End: {
             PntH.SetPosition(TopAbs_REVERSED);
             break;
           }
@@ -921,7 +921,7 @@ bool Geom2dHatch_Hatcher::GlobalTransition(HatchGen_PointOnHatching& Point)
     else if (ElementOrientation == TopAbs_EXTERNAL)
       LocalTransition = TopAbs_EXTERNAL;
 
-    else if (PntE.IntersectionType() == HatchGen_TANGENT)
+    else if (PntE.IntersectionType() == HatchGen_IntersectionType::HatchGen_TANGENT)
     {
       if (PntE.Position() == TopAbs_INTERNAL)
       {
@@ -1119,7 +1119,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
   if (!Hatching.TrimDone())
     Trim(IndH);
 
-  if (Hatching.Status() != HatchGen_NoProblem)
+  if (Hatching.Status() != HatchGen_ErrorStatus::HatchGen_NoProblem)
     return;
 
   bool Points           = myKeepPoints;
@@ -1264,7 +1264,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
     {
       if (StateBefore != TopAbs_IN && StateAfter != TopAbs_IN)
       {
-        Hatching.Status(HatchGen_IncompatibleStates);
+        Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncompatibleStates);
         return;
       }
 
@@ -1276,7 +1276,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
           {
             if (NoDomain)
             {
-              Hatching.Status(HatchGen_IncoherentParity);
+              Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
             }
             else
             {
@@ -1300,7 +1300,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
           {
             if (NoDomain)
             {
-              Hatching.Status(HatchGen_IncoherentParity);
+              Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
             }
             else
             {
@@ -1327,7 +1327,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
           {
             if (NoDomain)
             {
-              Hatching.Status(HatchGen_IncoherentParity);
+              Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
             }
             else
             {
@@ -1384,7 +1384,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
             {
               if (NoDomain)
               {
-                Hatching.Status(HatchGen_IncoherentParity);
+                Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
               }
               else
               {
@@ -1412,7 +1412,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
           {
             if (NoDomain)
             {
-              Hatching.Status(HatchGen_IncoherentParity);
+              Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
             }
             else
             {
@@ -1463,7 +1463,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
         {
           if (NoDomain)
           {
-            Hatching.Status(HatchGen_IncoherentParity);
+            Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
           }
           else
           {
@@ -1492,7 +1492,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
         {
           if (NoDomain)
           {
-            Hatching.Status(HatchGen_IncoherentParity);
+            Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
           }
           else
           {
@@ -1520,7 +1520,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
             {
               if (NoDomain)
               {
-                Hatching.Status(HatchGen_IncoherentParity);
+                Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
               }
               else
               {
@@ -1547,7 +1547,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
               {
                 if (NoDomain)
                 {
-                  Hatching.Status(HatchGen_IncoherentParity);
+                  Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
                 }
                 else
                 {
@@ -1571,7 +1571,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
               {
                 if (NoDomain)
                 {
-                  Hatching.Status(HatchGen_IncoherentParity);
+                  Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
                 }
                 else
                 {
@@ -1591,7 +1591,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
       }
       else
       {
-        Hatching.Status(HatchGen_IncompatibleStates);
+        Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncompatibleStates);
         return;
       }
     }
@@ -1620,7 +1620,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
           {
             if (NoDomain)
             {
-              Hatching.Status(HatchGen_IncoherentParity);
+              Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
             }
             else
             {
@@ -1644,7 +1644,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
           {
             if (NoDomain)
             {
-              Hatching.Status(HatchGen_IncoherentParity);
+              Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
             }
             else
             {
@@ -1668,7 +1668,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
           {
             if (NoDomain)
             {
-              Hatching.Status(HatchGen_IncoherentParity);
+              Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
             }
             else
             {
@@ -1692,7 +1692,7 @@ void Geom2dHatch_Hatcher::ComputeDomains(const int IndH)
           {
             if (NoDomain)
             {
-              Hatching.Status(HatchGen_IncoherentParity);
+              Hatching.Status(HatchGen_ErrorStatus::HatchGen_IncoherentParity);
             }
             else
             {

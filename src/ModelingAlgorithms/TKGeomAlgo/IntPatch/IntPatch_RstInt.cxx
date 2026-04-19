@@ -65,10 +65,10 @@ static void Recadre(GeomAbs_SurfaceType                typeS1,
   wlin->Point(Param).Parameters(U1p, V1p, U2p, V2p);
   switch (typeS1)
   {
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       while (U1 < (U1p - 1.5 * M_PI))
         U1 += M_PI + M_PI;
       while (U1 > (U1p + 1.5 * M_PI))
@@ -77,7 +77,7 @@ static void Recadre(GeomAbs_SurfaceType                typeS1,
     default:
       break;
   }
-  if (typeS1 == GeomAbs_Torus)
+  if (typeS1 == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     while (V1 < (V1p - 1.5 * M_PI))
       V1 += M_PI + M_PI;
@@ -87,10 +87,10 @@ static void Recadre(GeomAbs_SurfaceType                typeS1,
 
   switch (typeS2)
   {
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       while (U2 < (U2p - 1.5 * M_PI))
         U2 += M_PI + M_PI;
       while (U2 > (U2p + 1.5 * M_PI))
@@ -99,7 +99,7 @@ static void Recadre(GeomAbs_SurfaceType                typeS1,
     default:
       break;
   }
-  if (typeS2 == GeomAbs_Torus)
+  if (typeS2 == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     while (V2 < (V1p - 1.5 * M_PI))
       V2 += M_PI + M_PI;
@@ -206,7 +206,7 @@ static void GetLinePoint2d(const occ::handle<IntPatch_Line>& L,
   occ::handle<IntPatch_WLine> wlin = occ::down_cast<IntPatch_WLine>(L);
   occ::handle<IntPatch_RLine> rlin = occ::down_cast<IntPatch_RLine>(L);
   IntPatch_IType              typL = L->ArcType();
-  int Nbptlin                      = (typL == IntPatch_Walking ? wlin->NbPnts() : rlin->NbPnts());
+  int Nbptlin                      = (typL == IntPatch_IType::IntPatch_Walking ? wlin->NbPnts() : rlin->NbPnts());
 
   double par   = std::trunc(param);
   int    Irang = int(par);
@@ -219,7 +219,7 @@ static void GetLinePoint2d(const occ::handle<IntPatch_Line>& L,
     par = std::abs(param - par);
 
   double us1, vs1, us2, vs2;
-  if (typL == IntPatch_Walking)
+  if (typL == IntPatch_IType::IntPatch_Walking)
   {
     if (OnFirst)
     {
@@ -283,7 +283,7 @@ static bool FindParameter(const occ::handle<IntPatch_Line>&     L,
   IntPatch_IType              typL = L->ArcType();
   Tgl.SetCoord(0.0, 0.0, 0.0);
 
-  if (typL == IntPatch_Restriction)
+  if (typL == IntPatch_IType::IntPatch_Restriction)
   {
     if (!OnFirst && rlin->IsArcOnS1())
     {
@@ -308,7 +308,7 @@ static bool FindParameter(const occ::handle<IntPatch_Line>&     L,
     return (true);
   }
 
-  else if (typL == IntPatch_Walking)
+  else if (typL == IntPatch_IType::IntPatch_Walking)
   {
     int    i, is, nbpt = wlin->NbPnts();
     double norm1, norm2;
@@ -452,12 +452,12 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
   IntSurf_Transition             transarc, transline;
 
   IntPatch_IType typL = L->ArcType();
-  if (typL == IntPatch_Walking)
+  if (typL == IntPatch_IType::IntPatch_Walking)
   {
     Nbvtx = wlin->NbVertex();
     PLin.SetWLine(OnFirst, wlin);
   }
-  else if (typL == IntPatch_Restriction)
+  else if (typL == IntPatch_IType::IntPatch_Restriction)
   {
     Nbvtx = rlin->NbVertex();
     PLin.SetRLine(OnFirst, rlin);
@@ -501,11 +501,11 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
   bool                                  SurfaceIsPeriodic   = false;
   bool                                  SurfaceIsBiPeriodic = false;
   GeomAbs_SurfaceType                   surfacetype         = (OnFirst ? TypeS1 : TypeS2);
-  if (surfacetype == GeomAbs_Cylinder || surfacetype == GeomAbs_Cone || surfacetype == GeomAbs_Torus
-      || surfacetype == GeomAbs_Sphere)
+  if (surfacetype == GeomAbs_SurfaceType::GeomAbs_Cylinder || surfacetype == GeomAbs_SurfaceType::GeomAbs_Cone || surfacetype == GeomAbs_SurfaceType::GeomAbs_Torus
+      || surfacetype == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     SurfaceIsPeriodic = true;
-    if (surfacetype == GeomAbs_Torus)
+    if (surfacetype == GeomAbs_SurfaceType::GeomAbs_Torus)
     {
       SurfaceIsBiPeriodic = true;
     }
@@ -554,7 +554,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
 
     switch (arc->GetType())
     {
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Line: {
         NbEchant = 10;
 
         double aXmin, aYmin, aXmax, aYmax;
@@ -580,7 +580,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
         }
       }
       break;
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_CurveType::GeomAbs_BezierCurve: {
         NbEchant = (3 + arc->NbPoles());
         if (NbEchant < 10)
           NbEchant = 10;
@@ -588,7 +588,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
           NbEchant = 50;
       }
       break;
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
         // szv:const double nbs = (arc->NbKnots() * arc->Degree())*(arc->LastParameter() -
         // arc->FirstParameter())/(PLast-PFirst);
         const double nbs = (arc->NbKnots() * arc->Degree()) * (PLast - PFirst)
@@ -741,7 +741,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
               arc->D1(paramarc, p2d, d2d);
               U1 = p2d.X();
               V1 = p2d.Y();
-              if (typL == IntPatch_Walking && SurfaceIsPeriodic)
+              if (typL == IntPatch_IType::IntPatch_Walking && SurfaceIsPeriodic)
               {
                 if (OnFirst)
                   Recadre(TypeS1, TypeS2, wlin, ParamApproxOnLine, U1, V1, U2, V2);
@@ -761,7 +761,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                                     ParamApproxOnLine,
                                     OnFirst);
 
-              if (typL == IntPatch_Walking && found && possiblyClosed)
+              if (typL == IntPatch_IType::IntPatch_Walking && found && possiblyClosed)
               {
                 // check in 2d
                 if (SurfaceIsUClosed || SurfaceIsVClosed)
@@ -804,7 +804,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
               for (j = 1; j <= Nbvtx; j++)
               {
                 const IntPatch_Point& Rptline =
-                  (typL == IntPatch_Walking ? wlin->Vertex(j) : rlin->Vertex(j));
+                  (typL == IntPatch_IType::IntPatch_Walking ? wlin->Vertex(j) : rlin->Vertex(j));
                 bool APointOnRstStillExist =
                   ((OnFirst && Rptline.IsOnDomS1() && Rptline.ArcOnS1() == arc)
                    || (!OnFirst && Rptline.IsOnDomS2() && Rptline.ArcOnS2() == arc));
@@ -841,7 +841,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                     {
                       ptline = Rptline;
                       ivtx   = j;
-                      if (surfacetype == GeomAbs_Cone)
+                      if (surfacetype == GeomAbs_SurfaceType::GeomAbs_Cone)
                       {
                         ivtx = 0;
                       }
@@ -875,7 +875,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                 }
               }
 
-              if (typL == IntPatch_Walking)
+              if (typL == IntPatch_IType::IntPatch_Walking)
                 VerifyTgline(wlin, (int)paramline, edgeTol, tgline);
 
               Surf->D1(U1, V1, ptbid, d1u, d1v);
@@ -884,8 +884,8 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
               normsurf = d1u.Crossed(d1v);
               if (normsurf.Magnitude() < gp::Resolution())
               {
-                transline.SetValue(true, IntSurf_Undecided);
-                transarc.SetValue(true, IntSurf_Undecided);
+                transline.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                transarc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
               }
               else
                 IntSurf::MakeTransition(tgline, tgrst, normsurf, transline, transarc);
@@ -909,7 +909,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                 Sommet.SetParameter(paramline); // sur ligne d intersection
                 Sommet.SetArc(OnFirst, arc, paramarc, transline, transarc);
 
-                if (typL == IntPatch_Walking)
+                if (typL == IntPatch_IType::IntPatch_Walking)
                 {
                   wlin->AddVertex(Sommet);
                   Nbvtx++;
@@ -955,7 +955,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                     // ptline.SetParameter(paramline); //-- rajout lbr le 20 nov 97
                     if (VtxOnArc)
                       ptline.SetVertex(OnFirst, vtxarc);
-                    if (typL == IntPatch_Walking)
+                    if (typL == IntPatch_IType::IntPatch_Walking)
                     {
                       if (OnDifferentRst)
                       {
@@ -987,7 +987,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                     Sommet.SetArc(OnFirst, arc, paramarc, transline, transarc);
                     if (VtxOnArc)
                       Sommet.SetVertex(OnFirst, vtxarc);
-                    if (typL == IntPatch_Walking)
+                    if (typL == IntPatch_IType::IntPatch_Walking)
                     {
                       wlin->AddVertex(Sommet);
                       Nbvtx++;
@@ -1012,7 +1012,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                     ptline.SetArc(OnFirst, arc, paramarc, transline, transarc);
                     if (VtxOnArc)
                       ptline.SetVertex(OnFirst, vtxarc);
-                    if (typL == IntPatch_Walking)
+                    if (typL == IntPatch_IType::IntPatch_Walking)
                     {
                       wlin->Replace(ivtx, ptline);
                     }
@@ -1024,7 +1024,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                     for (k = 1; k <= Nbvtx; k++)
                       if (k != ivtx)
                       {
-                        if (typL == IntPatch_Walking)
+                        if (typL == IntPatch_IType::IntPatch_Walking)
                         {
                           ptline = wlin->Vertex(k);
                         }
@@ -1044,7 +1044,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                             ptline.SetArc(OnFirst, arc, paramarc, transline, transarc);
                             if (VtxOnArc)
                               ptline.SetVertex(OnFirst, vtxarc);
-                            if (typL == IntPatch_Walking)
+                            if (typL == IntPatch_IType::IntPatch_Walking)
                             {
                               wlin->Replace(k, ptline);
                             }
@@ -1062,7 +1062,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                     //                on doit avoir vtxons2 = vtxarc... pas de verif...
                     Sommet = ptline;
                     Sommet.SetArc(OnFirst, arc, paramarc, transline, transarc);
-                    if (typL == IntPatch_Walking)
+                    if (typL == IntPatch_IType::IntPatch_Walking)
                     {
                       wlin->AddVertex(Sommet);
                       Nbvtx++;
@@ -1075,7 +1075,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                     for (k = 1; k <= Nbvtx; k++)
                       if (k != ivtx)
                       {
-                        if (typL == IntPatch_Walking)
+                        if (typL == IntPatch_IType::IntPatch_Walking)
                         {
                           ptline = wlin->Vertex(k);
                         }
@@ -1094,7 +1094,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
                               ptline.SetTolerance(vtxTol);
                             Sommet = ptline;
                             Sommet.SetArc(OnFirst, arc, paramarc, transline, transarc);
-                            if (typL == IntPatch_Walking)
+                            if (typL == IntPatch_IType::IntPatch_Walking)
                             {
                               wlin->Replace(k, ptline);
                               wlin->AddVertex(Sommet);
@@ -1118,7 +1118,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
               }
             }
           }
-          if (nbTreated == 2 && typL == IntPatch_Walking)
+          if (nbTreated == 2 && typL == IntPatch_IType::IntPatch_Walking)
           {
             // We processed a tangent zone, and both ends have been treated.
             // So mark WLine as having arc
@@ -1140,18 +1140,18 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
   //--------------------------------------------------------------------------------
   //-- On reprend la ligne et on recale les parametres des vertex.
   //--
-  if (typL == IntPatch_Walking)
+  if (typL == IntPatch_IType::IntPatch_Walking)
   {
     double pu1, pv1, pu2, pv2;
     pu1 = pv1 = pu2 = pv2 = 0.0;
     switch (TypeS1)
     {
-      case GeomAbs_Cylinder:
-      case GeomAbs_Cone:
-      case GeomAbs_Sphere:
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+      case GeomAbs_SurfaceType::GeomAbs_Cone:
+      case GeomAbs_SurfaceType::GeomAbs_Sphere:
         pu1 = M_PI + M_PI;
         break;
-      case GeomAbs_Torus:
+      case GeomAbs_SurfaceType::GeomAbs_Torus:
         pu1 = pv1 = M_PI + M_PI;
         break;
       default: {
@@ -1180,13 +1180,13 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
 
     switch (TypeS2)
     {
-      case GeomAbs_Cylinder:
-      case GeomAbs_Cone:
-      case GeomAbs_Sphere:
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+      case GeomAbs_SurfaceType::GeomAbs_Cone:
+      case GeomAbs_SurfaceType::GeomAbs_Sphere:
 
         pu2 = M_PI + M_PI;
         break;
-      case GeomAbs_Torus:
+      case GeomAbs_SurfaceType::GeomAbs_Torus:
         pu2 = pv2 = M_PI + M_PI;
         break;
       default: {

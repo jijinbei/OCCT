@@ -346,7 +346,7 @@ double ShapeAnalysis_Curve::ProjectAct(const Adaptor3d_Curve& theCurve,
 
     switch (theCurve.GetType())
     {
-      case GeomAbs_Circle: {
+      case GeomAbs_CurveType::GeomAbs_Circle: {
         const gp_Circ& aCirc = theCurve.Circle();
         theProjPoint         = aCirc.Position().Location();
         if (aCirc.Radius() <= gp::Resolution()
@@ -365,25 +365,25 @@ double ShapeAnalysis_Curve::ProjectAct(const Adaptor3d_Curve& theCurve,
       }
       break;
 
-      case GeomAbs_Hyperbola: {
+      case GeomAbs_CurveType::GeomAbs_Hyperbola: {
         theProjParam = ElCLib::Parameter(theCurve.Hyperbola(), thePoint);
         theProjPoint = ElCLib::Value(theProjParam, theCurve.Hyperbola());
       }
       break;
 
-      case GeomAbs_Parabola: {
+      case GeomAbs_CurveType::GeomAbs_Parabola: {
         theProjParam = ElCLib::Parameter(theCurve.Parabola(), thePoint);
         theProjPoint = ElCLib::Value(theProjParam, theCurve.Parabola());
       }
       break;
 
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Line: {
         theProjParam = ElCLib::Parameter(theCurve.Line(), thePoint);
         theProjPoint = ElCLib::Value(theProjParam, theCurve.Line());
       }
       break;
 
-      case GeomAbs_Ellipse: {
+      case GeomAbs_CurveType::GeomAbs_Ellipse: {
         theProjParam    = ElCLib::Parameter(theCurve.Ellipse(), thePoint);
         theProjPoint    = ElCLib::Value(theProjParam, theCurve.Ellipse());
         anIsClosedCurve = true;

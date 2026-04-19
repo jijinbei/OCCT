@@ -116,11 +116,11 @@ bool GeomFill_Frenet::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
     type = C->GetType();
     switch (type)
     {
-      case GeomAbs_Circle:
-      case GeomAbs_Ellipse:
-      case GeomAbs_Hyperbola:
-      case GeomAbs_Parabola:
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Circle:
+      case GeomAbs_CurveType::GeomAbs_Ellipse:
+      case GeomAbs_CurveType::GeomAbs_Hyperbola:
+      case GeomAbs_CurveType::GeomAbs_Parabola:
+      case GeomAbs_CurveType::GeomAbs_Line: {
         // No problem
         isSngl = false;
         break;
@@ -789,7 +789,7 @@ void GeomFill_Frenet::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, gp_Vec& A
 
 bool GeomFill_Frenet::IsConstant() const
 {
-  return (myCurve->GetType() == GeomAbs_Line);
+  return (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line);
 }
 
 //=================================================================================================

@@ -23,7 +23,7 @@ IMPLEMENT_STANDARD_RTTIEXT(BRepMesh_VertexTool, Standard_Transient)
 NCollection_CellFilter_Action BRepMesh_VertexInspector::Inspect(const int theTarget)
 {
   const BRepMesh_Vertex& aVertex = myVertices->Value(theTarget - 1);
-  if (aVertex.Movability() == BRepMesh_Deleted)
+  if (aVertex.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
   {
     myDelNodes.Append(theTarget);
     return CellFilter_Purge;

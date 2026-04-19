@@ -2218,21 +2218,21 @@ double MinStep3D(const TopoDS_Edge&                              theE1,
     GeomAbs_SurfaceType        aSType = aBAS.GetType();
     switch (aSType)
     {
-      case GeomAbs_Cylinder: {
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
         aR = aBAS.Cylinder().Radius();
         break;
       }
-      case GeomAbs_Cone: {
+      case GeomAbs_SurfaceType::GeomAbs_Cone: {
         gp_Lin aL(aBAS.Cone().Axis());
         aR = aL.Distance(aP);
         break;
       }
-      case GeomAbs_Sphere: {
+      case GeomAbs_SurfaceType::GeomAbs_Sphere: {
         aDtMin = std::max(aDtMin, 5.e-4);
         aR     = aBAS.Sphere().Radius();
         break;
       }
-      case GeomAbs_Torus: {
+      case GeomAbs_SurfaceType::GeomAbs_Torus: {
         aR = aBAS.Torus().MajorRadius();
         break;
       }

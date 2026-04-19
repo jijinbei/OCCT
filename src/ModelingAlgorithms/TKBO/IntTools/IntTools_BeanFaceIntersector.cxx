@@ -295,7 +295,7 @@ void IntTools_BeanFaceIntersector::Perform()
   }
 
   // Fast computation of Line/Plane case
-  if (myCurve.GetType() == GeomAbs_Line && mySurface.GetType() == GeomAbs_Plane)
+  if (myCurve.GetType() == GeomAbs_CurveType::GeomAbs_Line && mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     ComputeLinePlane();
     return;
@@ -329,8 +329,8 @@ void IntTools_BeanFaceIntersector::Perform()
      && !Precision::IsInfinite(myVMinParameter) && !Precision::IsInfinite(myVMaxParameter));
   bLocalize =
     bLocalize
-    && (mySurface.GetType() == GeomAbs_BezierSurface || mySurface.GetType() == GeomAbs_OtherSurface
-        || (mySurface.GetType() == GeomAbs_BSplineSurface
+    && (mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_BezierSurface || mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_OtherSurface
+        || (mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface
             && (mySurface.UDegree() > 2 || mySurface.VDegree() > 2)
             && (mySurface.NbUKnots() > 2 && mySurface.NbVKnots() > 2)));
 
@@ -683,8 +683,8 @@ void IntTools_BeanFaceIntersector::ComputeAroundExactIntersection()
 bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
 {
   GeomAbs_CurveType aCT = myCurve.GetType();
-  if (aCT == GeomAbs_BezierCurve || aCT == GeomAbs_BSplineCurve || aCT == GeomAbs_OffsetCurve
-      || aCT == GeomAbs_OtherCurve)
+  if (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve || aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCT == GeomAbs_CurveType::GeomAbs_OffsetCurve
+      || aCT == GeomAbs_CurveType::GeomAbs_OtherCurve)
   {
     // not supported type
     return false;
@@ -696,7 +696,7 @@ bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
   GeomAbs_SurfaceType aST = mySurface.GetType();
 
   // Plane - Circle/Ellipse/Hyperbola/Parabola
-  if (aST == GeomAbs_Plane)
+  if (aST == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     gp_Pln surfPlane = mySurface.Plane();
 
@@ -704,22 +704,22 @@ bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
     gp_Pnt aPLoc;
     switch (aCT)
     {
-      case GeomAbs_Circle: {
+      case GeomAbs_CurveType::GeomAbs_Circle: {
         aDir  = myCurve.Circle().Axis().Direction();
         aPLoc = myCurve.Circle().Location();
         break;
       }
-      case GeomAbs_Ellipse: {
+      case GeomAbs_CurveType::GeomAbs_Ellipse: {
         aDir  = myCurve.Ellipse().Axis().Direction();
         aPLoc = myCurve.Ellipse().Location();
         break;
       }
-      case GeomAbs_Hyperbola: {
+      case GeomAbs_CurveType::GeomAbs_Hyperbola: {
         aDir  = myCurve.Hyperbola().Axis().Direction();
         aPLoc = myCurve.Hyperbola().Location();
         break;
       }
-      case GeomAbs_Parabola: {
+      case GeomAbs_CurveType::GeomAbs_Parabola: {
         aDir  = myCurve.Parabola().Axis().Direction();
         aPLoc = myCurve.Parabola().Location();
         break;
@@ -739,14 +739,14 @@ bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
   }
 
   // Cylinder - Line/Circle
-  else if (aST == GeomAbs_Cylinder)
+  else if (aST == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     gp_Cylinder   aCylinder  = mySurface.Cylinder();
     const gp_Ax1& aCylAxis   = aCylinder.Axis();
     const gp_Dir& aCylDir    = aCylAxis.Direction();
     double        aCylRadius = aCylinder.Radius();
 
-    if (aCT == GeomAbs_Line)
+    if (aCT == GeomAbs_CurveType::GeomAbs_Line)
     {
       gp_Lin aLin = myCurve.Line();
       if (!aLin.Direction().IsParallel(aCylDir, Precision::Angular()))
@@ -758,7 +758,7 @@ bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
       isCoincide   = (aDist < myCriteria);
     }
 
-    else if (aCT == GeomAbs_Circle)
+    else if (aCT == GeomAbs_CurveType::GeomAbs_Circle)
     {
       gp_Circ aCircle = myCurve.Circle();
 
@@ -777,11 +777,11 @@ bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
   }
 
   // Sphere - Line
-  else if (aST == GeomAbs_Sphere)
+  else if (aST == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     gp_Sphere aSph    = mySurface.Sphere();
     gp_Pnt    aSphLoc = aSph.Location();
-    if (aCT == GeomAbs_Line)
+    if (aCT == GeomAbs_CurveType::GeomAbs_Line)
     {
       gp_Lin aLin     = myCurve.Line();
       double aDist    = aLin.Distance(aSphLoc) - aSph.Radius();
@@ -1495,7 +1495,7 @@ bool IntTools_BeanFaceIntersector::LocalizeSolutions(
       if (!theSurfaceData.FindBox(aNewRangeS, aBoxS))
       {
 
-        if (mySurface.GetType() == GeomAbs_BSplineSurface)
+        if (mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
         {
           aBoxS = GetSurfaceBox(mySurface,
                                 aPrevParU,
@@ -1790,7 +1790,7 @@ bool IntTools_BeanFaceIntersector::ComputeLocalized()
   Bnd_Box FBox;
   bool    bFBoxFound = aSurfaceData.FindBox(aSurfaceRange, FBox);
 
-  if (mySurface.GetType() == GeomAbs_BSplineSurface)
+  if (mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     occ::handle<Geom_BSplineSurface> aBsplineSurface =
       occ::down_cast<Geom_BSplineSurface>(myTrsfSurface);

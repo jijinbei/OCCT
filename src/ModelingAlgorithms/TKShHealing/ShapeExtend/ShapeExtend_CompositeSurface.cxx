@@ -78,7 +78,7 @@ bool ShapeExtend_CompositeSurface::Init(
   if (!SetUJointValues(UJoints) || !SetVJointValues(VJoints))
   {
     ok = false;
-    ComputeJointValues(ShapeExtend_Natural);
+    ComputeJointValues(ShapeExtend_Parametrisation::ShapeExtend_Natural);
 #ifdef OCCT_DEBUG
     std::cout << "Warning: ShapeExtend_CompositeSurface::Init: bad joint values" << std::endl;
 #endif
@@ -567,7 +567,7 @@ void ShapeExtend_CompositeSurface::ComputeJointValues(const ShapeExtend_Parametr
   myUJointValues = new NCollection_HArray1<double>(1, NbU + 1);
   myVJointValues = new NCollection_HArray1<double>(1, NbV + 1);
 
-  if (param == ShapeExtend_Natural)
+  if (param == ShapeExtend_Parametrisation::ShapeExtend_Natural)
   {
     double U1, U2, V1, V2, U = 0, V = 0;
     int    i; // svv Jan 10 2000 : porting on DEC
@@ -590,8 +590,8 @@ void ShapeExtend_CompositeSurface::ComputeJointValues(const ShapeExtend_Parametr
   }
   else
   {
-    double stepu = 1., stepv = 1.; // suppose param == ShapeExtend_Uniform
-    if (param == ShapeExtend_Unitary)
+    double stepu = 1., stepv = 1.; // suppose param == ShapeExtend_Parametrisation::ShapeExtend_Uniform
+    if (param == ShapeExtend_Parametrisation::ShapeExtend_Unitary)
     {
       stepu /= NbU;
       stepv /= NbV;

@@ -41,30 +41,30 @@ static bool TransitionToOrientation(const IntSurf_Transition& T, TopAbs_Orientat
   switch (trans)
   {
 
-    case IntSurf_In:
+    case IntSurf_TypeTrans::IntSurf_In:
       result = TopAbs_FORWARD;
       break;
-    case IntSurf_Out:
+    case IntSurf_TypeTrans::IntSurf_Out:
       result = TopAbs_REVERSED;
       break;
 
-    case IntSurf_Touch:
+    case IntSurf_TypeTrans::IntSurf_Touch:
       situa = T.Situation();
       switch (situa)
       {
-        case IntSurf_Inside:
+        case IntSurf_Situation::IntSurf_Inside:
           result = TopAbs_INTERNAL;
           break;
-        case IntSurf_Outside:
+        case IntSurf_Situation::IntSurf_Outside:
           result = TopAbs_EXTERNAL;
           break;
-        case IntSurf_Unknown:
+        case IntSurf_Situation::IntSurf_Unknown:
           Odefined = false;
           break;
       }
       break;
 
-    case IntSurf_Undecided:
+    case IntSurf_TypeTrans::IntSurf_Undecided:
       Odefined = false;
       break;
   }
@@ -228,15 +228,15 @@ TopOpeBRepDS_Transition TopOpeBRep_FFTransitionTool::ProcessFaceTransition(
     switch (trans)
     {
 
-      case IntSurf_In:
+      case IntSurf_TypeTrans::IntSurf_In:
         O = TopAbs_FORWARD;
         break;
 
-      case IntSurf_Out:
+      case IntSurf_TypeTrans::IntSurf_Out:
         O = TopAbs_REVERSED;
         break;
 
-      case IntSurf_Touch: {
+      case IntSurf_TypeTrans::IntSurf_Touch: {
 
         IntSurf_Situation situa;
         situa = (Index == 1) ? L.SituationS1() : L.SituationS2();
@@ -244,15 +244,15 @@ TopOpeBRepDS_Transition TopOpeBRep_FFTransitionTool::ProcessFaceTransition(
         switch (situa)
         {
 
-          case IntSurf_Inside:
+          case IntSurf_Situation::IntSurf_Inside:
             O = TopAbs_INTERNAL;
             break;
 
-          case IntSurf_Outside:
+          case IntSurf_Situation::IntSurf_Outside:
             O = TopAbs_EXTERNAL;
             break;
 
-          case IntSurf_Unknown:
+          case IntSurf_Situation::IntSurf_Unknown:
 
             Odefined = false;
             break;
@@ -260,7 +260,7 @@ TopOpeBRepDS_Transition TopOpeBRep_FFTransitionTool::ProcessFaceTransition(
         break;
       } // case Touch
 
-      case IntSurf_Undecided:
+      case IntSurf_TypeTrans::IntSurf_Undecided:
         Odefined = false;
         break;
 

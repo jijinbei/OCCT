@@ -375,7 +375,7 @@ void GeomConvert_ApproxSurface::Approximate(const occ::handle<Adaptor3d_Surface>
   epsfr->SetValue(1, 4, theTol3d);
 
   // " Init du type d'iso"
-  GeomAbs_IsoType IsoType = GeomAbs_IsoV;
+  GeomAbs_IsoType IsoType = GeomAbs_IsoType::GeomAbs_IsoV;
   int             NbDec;
 
   NbDec = theSurf->NbUIntervals(GeomAbs_C2);

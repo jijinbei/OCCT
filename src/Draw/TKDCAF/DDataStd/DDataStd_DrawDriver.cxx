@@ -128,16 +128,16 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::Drawable(const TDF_Label& L) c
   {
     switch (STD_GEOM->GetType())
     {
-      case TDataXtd_POINT: {
+      case TDataXtd_GeometryEnum::TDataXtd_POINT: {
         return DrawableShape(L, Draw_jaune, false);
       }
-      case TDataXtd_LINE:
-      case TDataXtd_CIRCLE:
-      case TDataXtd_ELLIPSE:
-      case TDataXtd_SPLINE: {
+      case TDataXtd_GeometryEnum::TDataXtd_LINE:
+      case TDataXtd_GeometryEnum::TDataXtd_CIRCLE:
+      case TDataXtd_GeometryEnum::TDataXtd_ELLIPSE:
+      case TDataXtd_GeometryEnum::TDataXtd_SPLINE: {
         return DrawableShape(L, Draw_cyan, false);
       }
-      case TDataXtd_ANY_GEOM: {
+      case TDataXtd_GeometryEnum::TDataXtd_ANY_GEOM: {
         break;
       }
       default: {
@@ -168,7 +168,7 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
   switch (A->GetType())
   {
 
-    case TDataXtd_RADIUS: {
+    case TDataXtd_ConstraintEnum::TDataXtd_RADIUS: {
       if (A->IsPlanar())
       {
         D = new DrawDim_PlanarRadius(TNaming_Tool::GetShape(A->GetGeometry(1)));
@@ -184,35 +184,35 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
     }
     break;
 
-    case TDataXtd_DIAMETER:
+    case TDataXtd_ConstraintEnum::TDataXtd_DIAMETER:
       if (A->IsPlanar())
       {
         D = new DrawDim_PlanarDiameter(TNaming_Tool::GetShape(A->GetGeometry(1)));
       }
       break;
 
-    case TDataXtd_MINOR_RADIUS:
+    case TDataXtd_ConstraintEnum::TDataXtd_MINOR_RADIUS:
       break;
 
-    case TDataXtd_MAJOR_RADIUS:
+    case TDataXtd_ConstraintEnum::TDataXtd_MAJOR_RADIUS:
       break;
 
-    case TDataXtd_TANGENT:
+    case TDataXtd_ConstraintEnum::TDataXtd_TANGENT:
       break;
 
-    case TDataXtd_PARALLEL:
+    case TDataXtd_ConstraintEnum::TDataXtd_PARALLEL:
       break;
 
-    case TDataXtd_PERPENDICULAR:
+    case TDataXtd_ConstraintEnum::TDataXtd_PERPENDICULAR:
       break;
 
-    case TDataXtd_CONCENTRIC:
+    case TDataXtd_ConstraintEnum::TDataXtd_CONCENTRIC:
       break;
 
-    case TDataXtd_COINCIDENT:
+    case TDataXtd_ConstraintEnum::TDataXtd_COINCIDENT:
       break;
 
-    case TDataXtd_DISTANCE: {
+    case TDataXtd_ConstraintEnum::TDataXtd_DISTANCE: {
       if (A->IsPlanar())
       {
         D = new DrawDim_PlanarDistance(TNaming_Tool::GetShape(A->GetGeometry(1)),
@@ -220,7 +220,7 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
       }
       break;
     }
-    case TDataXtd_ANGLE: {
+    case TDataXtd_ConstraintEnum::TDataXtd_ANGLE: {
       if (A->IsPlanar())
       {
         occ::handle<DrawDim_PlanarAngle> DAng =
@@ -246,33 +246,33 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
     }
     break;
 
-    case TDataXtd_EQUAL_RADIUS: {
+    case TDataXtd_ConstraintEnum::TDataXtd_EQUAL_RADIUS: {
     }
 
     break;
 
-    case TDataXtd_SYMMETRY:
+    case TDataXtd_ConstraintEnum::TDataXtd_SYMMETRY:
       break;
 
-    case TDataXtd_MIDPOINT:
+    case TDataXtd_ConstraintEnum::TDataXtd_MIDPOINT:
       break;
 
-    case TDataXtd_EQUAL_DISTANCE:
+    case TDataXtd_ConstraintEnum::TDataXtd_EQUAL_DISTANCE:
       break;
 
-    case TDataXtd_FIX:
+    case TDataXtd_ConstraintEnum::TDataXtd_FIX:
       break;
 
-    case TDataXtd_RIGID:
+    case TDataXtd_ConstraintEnum::TDataXtd_RIGID:
       break;
 
-    case TDataXtd_FROM:
+    case TDataXtd_ConstraintEnum::TDataXtd_FROM:
       break;
 
-    case TDataXtd_AXIS:
+    case TDataXtd_ConstraintEnum::TDataXtd_AXIS:
       break;
 
-    case TDataXtd_MATE: {
+    case TDataXtd_ConstraintEnum::TDataXtd_MATE: {
       TopoDS_Shape aLocalShape = Geometry(A, 1, TopAbs_FACE);
       TopoDS_Face  F1          = TopoDS::Face(aLocalShape);
       aLocalShape              = Geometry(A, 2, TopAbs_FACE);
@@ -284,7 +284,7 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
     }
     break;
 
-    case TDataXtd_ALIGN_FACES: {
+    case TDataXtd_ConstraintEnum::TDataXtd_ALIGN_FACES: {
       TopoDS_Shape aLocalShape = Geometry(A, 1, TopAbs_FACE);
       TopoDS_Face  F1          = TopoDS::Face(aLocalShape);
       aLocalShape              = Geometry(A, 2, TopAbs_FACE);
@@ -296,19 +296,19 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
     }
     break;
 
-    case TDataXtd_ALIGN_AXES:
+    case TDataXtd_ConstraintEnum::TDataXtd_ALIGN_AXES:
       break;
 
-    case TDataXtd_AXES_ANGLE:
+    case TDataXtd_ConstraintEnum::TDataXtd_AXES_ANGLE:
       break;
 
-    case TDataXtd_FACES_ANGLE:
+    case TDataXtd_ConstraintEnum::TDataXtd_FACES_ANGLE:
       break;
 
-    case TDataXtd_ROUND:
+    case TDataXtd_ConstraintEnum::TDataXtd_ROUND:
       break;
 
-    case TDataXtd_OFFSET:
+    case TDataXtd_ConstraintEnum::TDataXtd_OFFSET:
       break;
   }
 
@@ -317,7 +317,7 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
     if (!A->GetValue().IsNull())
     {
       double val = A->GetValue()->Get();
-      Standard_DISABLE_DEPRECATION_WARNINGS if (A->GetValue()->GetDimension() == TDataStd_ANGULAR)
+      Standard_DISABLE_DEPRECATION_WARNINGS if (A->GetValue()->GetDimension() == TDataStd_RealEnum::TDataStd_ANGULAR)
         val = (180. * val) / M_PI;
       Standard_ENABLE_DEPRECATION_WARNINGS D->SetValue(val);
     }

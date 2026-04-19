@@ -59,16 +59,16 @@ static int order(const Adaptor3d_Curve& C)
   switch (C.GetType())
   {
 
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       return 2;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       return 5;
 
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       return std::min(24, 2 * C.Degree());
 
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       return std::min(24, 2 * C.NbPoles() - 1);
 
     default:
@@ -81,16 +81,16 @@ static int order(const Adaptor2d_Curve2d& C)
   switch (C.GetType())
   {
 
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       return 2;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       return 5;
 
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       return std::min(24, 2 * C.Bezier()->Degree());
 
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       return std::min(24, 2 * C.BSpline()->NbPoles() - 1);
 
     default:

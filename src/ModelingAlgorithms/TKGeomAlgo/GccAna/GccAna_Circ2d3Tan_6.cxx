@@ -92,11 +92,11 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedLin& Qualified1,
       const gp_Lin2d           Sol1(Bis1.ThisSolution(i));
       GccInt_IType             typ2 = Sol2->ArcType();
       IntAna2d_AnaIntersection Intp;
-      if (typ2 == GccInt_Lin)
+      if (typ2 == GccInt_IType::GccInt_Lin)
       {
         Intp.Perform(Sol1, Sol2->Line());
       }
-      else if (typ2 == GccInt_Par)
+      else if (typ2 == GccInt_IType::GccInt_Par)
       {
         Intp.Perform(Sol1, IntAna2d_Conic(Sol2->Parabola()));
       }

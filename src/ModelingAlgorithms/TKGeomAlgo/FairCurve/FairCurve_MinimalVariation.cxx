@@ -131,7 +131,7 @@ bool FairCurve_MinimalVariation::Compute(FairCurve_AnalysisCode& ACode,
 
     Ok = Compute(DeltaP1, DeltaP2, DAngle1, DAngle2, DRho1, DRho2, ACode, NbIterations, Toler);
 
-    if (ACode != FairCurve_OK)
+    if (ACode != FairCurve_AnalysisCode::FairCurve_OK)
       End = true;
     if (NewFreeSliding)
       NewSlidingFactor = OldSlidingFactor;
@@ -161,7 +161,7 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
 //======================================================================================
 {
   bool Ok, OkCompute = true;
-  ACode = FairCurve_OK;
+  ACode = FairCurve_AnalysisCode::FairCurve_OK;
 
   // Deformation of the curve by adding a polynom of interpolation
   int L = 2 + NewConstraintOrder1 + NewConstraintOrder2, kk, ii;
@@ -426,7 +426,7 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
     ACode = EMVC.Status();
     if (!LBatten.Value(0, V) || !LBatten.Value(1, V))
     {
-      ACode = FairCurve_NullHeight;
+      ACode = FairCurve_AnalysisCode::FairCurve_NullHeight;
     }
     else
     {
@@ -440,12 +440,12 @@ bool FairCurve_MinimalVariation::Compute(const gp_Vec2d&         DeltaP1,
   // Processing of non convergence
   if (!Newton.IsConverged())
   {
-    ACode = FairCurve_NotConverged;
+    ACode = FairCurve_AnalysisCode::FairCurve_NotConverged;
   }
 
   // Prevention of infinite sliding
   if (NewFreeSliding && VInit(VInit.Upper()) > 2 * LReference)
-    ACode = FairCurve_InfiniteSliding;
+    ACode = FairCurve_AnalysisCode::FairCurve_InfiniteSliding;
 
   // Eventual insertion of Nodes
   bool   NewKnots = false;
@@ -546,16 +546,16 @@ void FairCurve_MinimalVariation::Dump(Standard_OStream& o) const
   o << OldConstraintOrder2 << " | " << NewConstraintOrder2 << std::endl;
   switch (myCode)
   {
-    case FairCurve_OK:
+    case FairCurve_AnalysisCode::FairCurve_OK:
       o << "AnalysisCode : Ok" << std::endl;
       break;
-    case FairCurve_NotConverged:
+    case FairCurve_AnalysisCode::FairCurve_NotConverged:
       o << "AnalysisCode : NotConverged" << std::endl;
       break;
-    case FairCurve_InfiniteSliding:
+    case FairCurve_AnalysisCode::FairCurve_InfiniteSliding:
       o << "AnalysisCode : InfiniteSliding" << std::endl;
       break;
-    case FairCurve_NullHeight:
+    case FairCurve_AnalysisCode::FairCurve_NullHeight:
       o << "AnalysisCode : NullHeight" << std::endl;
       break;
   }

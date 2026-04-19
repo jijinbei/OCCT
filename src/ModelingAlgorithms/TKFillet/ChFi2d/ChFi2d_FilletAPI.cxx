@@ -107,8 +107,8 @@ bool ChFi2d_FilletAPI::IsAnalytical(const TopoDS_Edge& theEdge1, const TopoDS_Ed
 {
   bool              ret(false);
   BRepAdaptor_Curve AC1(theEdge1), AC2(theEdge2);
-  if ((AC1.GetType() == GeomAbs_Line || AC1.GetType() == GeomAbs_Circle)
-      && (AC2.GetType() == GeomAbs_Line || AC2.GetType() == GeomAbs_Circle))
+  if ((AC1.GetType() == GeomAbs_CurveType::GeomAbs_Line || AC1.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
+      && (AC2.GetType() == GeomAbs_CurveType::GeomAbs_Line || AC2.GetType() == GeomAbs_CurveType::GeomAbs_Circle))
   {
     // The edges are lines or arcs of circle.
     // Now check whether they have a common point.

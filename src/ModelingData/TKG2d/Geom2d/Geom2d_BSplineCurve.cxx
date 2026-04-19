@@ -453,7 +453,7 @@ void Geom2d_BSplineCurve::InsertPoleAfter(const int Index, const gp_Pnt2d& P, co
   if (Weight <= gp::Resolution())
     throw Standard_ConstructionError("BSpline curve: InsertPoleAfter: Weight too small");
 
-  if (myKnotSet == GeomAbs_NonUniform || myKnotSet == GeomAbs_PiecewiseBezier)
+  if (myKnotSet == GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform || myKnotSet == GeomAbs_BSplKnotDistribution::GeomAbs_PiecewiseBezier)
   {
     throw Standard_ConstructionError("BSpline curve: InsertPoleAfter: bad knotSet type");
   }
@@ -547,7 +547,7 @@ void Geom2d_BSplineCurve::RemovePole(const int Index)
   if (myPoles.Length() <= 2)
     throw Standard_ConstructionError("BSpline curve: RemovePole: #pole is already minimum");
 
-  if (myKnotSet == GeomAbs_NonUniform || myKnotSet == GeomAbs_PiecewiseBezier)
+  if (myKnotSet == GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform || myKnotSet == GeomAbs_BSplKnotDistribution::GeomAbs_PiecewiseBezier)
     throw Standard_ConstructionError("BSpline curve: RemovePole: bad knotSet type");
 
   int                        i;
@@ -1160,7 +1160,7 @@ void Geom2d_BSplineCurve::updateKnots()
   int MaxKnotMult = 0;
   BSplCLib::KnotAnalysis(myDeg, myPeriodic, myKnots, myMults, myKnotSet, MaxKnotMult);
 
-  if (myKnotSet == GeomAbs_Uniform && !myPeriodic)
+  if (myKnotSet == GeomAbs_BSplKnotDistribution::GeomAbs_Uniform && !myPeriodic)
   {
     myFlatKnots.Resize(myKnots.Lower(), myKnots.Upper(), false);
     myFlatKnots.Assign(myKnots);

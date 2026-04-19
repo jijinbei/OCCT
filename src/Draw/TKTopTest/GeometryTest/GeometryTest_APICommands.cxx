@@ -91,10 +91,10 @@ static int proj(Draw_Interpretor& di, int n, const char** a)
 
   occ::handle<Geom_Curve>   GC = DrawTrSurf::GetCurve(a[1]);
   occ::handle<Geom_Surface> GS;
-  Extrema_ExtAlgo           aProjAlgo = Extrema_ExtAlgo_Grad;
+  Extrema_ExtAlgo           aProjAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad;
 
   if (n == 6 && a[5][0] == 't')
-    aProjAlgo = Extrema_ExtAlgo_Tree;
+    aProjAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Tree;
 
   if (GC.IsNull())
   {

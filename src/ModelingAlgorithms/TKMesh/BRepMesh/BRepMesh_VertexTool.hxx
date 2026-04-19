@@ -120,7 +120,7 @@ public:
   void RemoveLast() { DeleteVertex(Extent()); }
 
   //! Returns the list with indexes of vertices that have movability attribute
-  //! equal to BRepMesh_Deleted and can be replaced with another node.
+  //! equal to BRepMesh_DegreeOfFreedom::BRepMesh_Deleted and can be replaced with another node.
   const IMeshData::ListOfInteger& GetListOfDelNodes() const
   {
     return mySelector.GetListOfDelPoints();

@@ -60,8 +60,8 @@ static bool FUN_hasparam(const occ::handle<TopOpeBRepDS_Interference>& I, double
   // prequesitory : shapes <SIX> -> edge <E>
   // ? <paronE> = parameter of <G> on <E>
   TopOpeBRepDS_Kind GT     = I->GeometryType();
-  bool              point  = (GT == TopOpeBRepDS_POINT);
-  bool              vertex = (GT == TopOpeBRepDS_VERTEX);
+  bool              point  = (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT);
+  bool              vertex = (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
   if (point)
   {
     occ::handle<TopOpeBRepDS_CurvePointInterference> CPI =

@@ -131,15 +131,15 @@ static void Print(Draw_Interpretor& di, const BRepFeat_Status St)
   di << "  Error Status : ";
   switch (St)
   {
-    case BRepFeat_NoError:
+    case BRepFeat_Status::BRepFeat_NoError:
       di << "No error";
       break;
 
-    case BRepFeat_InvalidPlacement:
+    case BRepFeat_Status::BRepFeat_InvalidPlacement:
       di << "Invalid placement";
       break;
 
-    case BRepFeat_HoleTooLong:
+    case BRepFeat_Status::BRepFeat_HoleTooLong:
       di << "Hole too long";
       break;
   }
@@ -384,40 +384,40 @@ static void reportOffsetState(Draw_Interpretor& theCommands, const BRepOffset_Er
 {
   switch (theErrorCode)
   {
-    case BRepOffset_NoError: {
+    case BRepOffset_Error::BRepOffset_NoError: {
       theCommands << "OK. Offset performed successfully.";
       break;
     }
-    case BRepOffset_BadNormalsOnGeometry: {
+    case BRepOffset_Error::BRepOffset_BadNormalsOnGeometry: {
       theCommands << "ERROR. Degenerated normal on input data.";
       break;
     }
-    case BRepOffset_C0Geometry: {
+    case BRepOffset_Error::BRepOffset_C0Geometry: {
       theCommands << "ERROR. C0 continuity of input data.";
       break;
     }
-    case BRepOffset_NullOffset: {
+    case BRepOffset_Error::BRepOffset_NullOffset: {
       theCommands << "ERROR. Null offset of all faces.";
       break;
     }
-    case BRepOffset_NotConnectedShell: {
+    case BRepOffset_Error::BRepOffset_NotConnectedShell: {
       theCommands
         << "ERROR. Incorrect set of faces to remove, the remaining shell is not connected.";
       break;
     }
-    case BRepOffset_CannotTrimEdges: {
+    case BRepOffset_Error::BRepOffset_CannotTrimEdges: {
       theCommands << "ERROR. Can not trim edges.";
       break;
     }
-    case BRepOffset_CannotFuseVertices: {
+    case BRepOffset_Error::BRepOffset_CannotFuseVertices: {
       theCommands << "ERROR. Can not fuse vertices.";
       break;
     }
-    case BRepOffset_CannotExtentEdge: {
+    case BRepOffset_Error::BRepOffset_CannotExtentEdge: {
       theCommands << "ERROR. Can not extent edge.";
       break;
     }
-    case BRepOffset_MixedConnectivity: {
+    case BRepOffset_Error::BRepOffset_MixedConnectivity: {
       theCommands << "ERROR. Mixed connectivity of faces.";
       break;
     }
@@ -1024,13 +1024,13 @@ int thickshell(Draw_Interpretor& theCommands, int n, const char** a)
 
   double Of = Draw::Atof(a[3]);
 
-  GeomAbs_JoinType JT = GeomAbs_Arc;
+  GeomAbs_JoinType JT = GeomAbs_JoinType::GeomAbs_Arc;
   if (n > 4)
   {
     if (!strcmp(a[4], "i"))
-      JT = GeomAbs_Intersection;
+      JT = GeomAbs_JoinType::GeomAbs_Intersection;
     if (!strcmp(a[4], "t"))
-      JT = GeomAbs_Tangent;
+      JT = GeomAbs_JoinType::GeomAbs_Tangent;
   }
 
   bool   Inter = false; // true;
@@ -1041,7 +1041,7 @@ int thickshell(Draw_Interpretor& theCommands, int n, const char** a)
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(theCommands, 1);
 
   BRepOffset_MakeOffset B;
-  B.Initialize(S, Of, Tol, BRepOffset_Skin, Inter, false, JT, true);
+  B.Initialize(S, Of, Tol, BRepOffset_Mode::BRepOffset_Skin, Inter, false, JT, true);
 
   B.MakeOffsetShape(aProgress->Start());
 
@@ -1097,12 +1097,12 @@ static int mkoffsetshape(Draw_Interpretor& theDI, int theArgNb, const char** the
       }
     }
 
-    GeomAbs_JoinType aJoin = GeomAbs_Arc;
+    GeomAbs_JoinType aJoin = GeomAbs_JoinType::GeomAbs_Arc;
     if (theArgNb > 7)
     {
       if (!strcmp(theArgVec[7], "i"))
       {
-        aJoin = GeomAbs_Intersection;
+        aJoin = GeomAbs_JoinType::GeomAbs_Intersection;
       }
     }
 
@@ -1115,7 +1115,7 @@ static int mkoffsetshape(Draw_Interpretor& theDI, int theArgNb, const char** the
       }
     }
     aMaker
-      .PerformByJoin(aShape, anOffVal, aTol, BRepOffset_Skin, anInt, aSelfInt, aJoin, aRemIntEdges);
+      .PerformByJoin(aShape, anOffVal, aTol, BRepOffset_Mode::BRepOffset_Skin, anInt, aSelfInt, aJoin, aRemIntEdges);
   }
 
   if (!aMaker.IsDone())
@@ -1139,10 +1139,10 @@ int offsetshape(Draw_Interpretor& theCommands, int n, const char** a)
 
   double           Of    = Draw::Atof(a[3]);
   bool             Inter = (!strcmp(a[0], "offsetcompshape"));
-  GeomAbs_JoinType JT    = GeomAbs_Arc;
+  GeomAbs_JoinType JT    = GeomAbs_JoinType::GeomAbs_Arc;
   if (!strcmp(a[0], "offsetinter"))
   {
-    JT    = GeomAbs_Intersection;
+    JT    = GeomAbs_JoinType::GeomAbs_Intersection;
     Inter = true;
   }
 
@@ -1158,7 +1158,7 @@ int offsetshape(Draw_Interpretor& theCommands, int n, const char** a)
       Tol = Draw::Atof(a[4]);
     }
   }
-  B.Initialize(S, Of, Tol, BRepOffset_Skin, Inter, false, JT);
+  B.Initialize(S, Of, Tol, BRepOffset_Mode::BRepOffset_Skin, Inter, false, JT);
   //------------------------------------------
   // recuperation et chargement des bouchons.
   //----------------------------------------
@@ -1196,7 +1196,7 @@ static double                TheRadius;
 static bool                  theYaBouchon;
 static double                TheTolerance   = Precision::Confusion();
 static bool                  TheInter       = false;
-static GeomAbs_JoinType      TheJoin        = GeomAbs_Arc;
+static GeomAbs_JoinType      TheJoin        = GeomAbs_JoinType::GeomAbs_Arc;
 static bool                  RemoveIntEdges = false;
 
 int offsetparameter(Draw_Interpretor& di, int n, const char** a)
@@ -1219,10 +1219,10 @@ int offsetparameter(Draw_Interpretor& di, int n, const char** a)
 
     switch (TheJoin)
     {
-      case GeomAbs_Arc:
+      case GeomAbs_JoinType::GeomAbs_Arc:
         di << "Arc";
         break;
-      case GeomAbs_Intersection:
+      case GeomAbs_JoinType::GeomAbs_Intersection:
         di << "Intersection";
         break;
       default:
@@ -1250,11 +1250,11 @@ int offsetparameter(Draw_Interpretor& di, int n, const char** a)
   TheInter     = strcmp(a[2], "p") != 0;
   //
   if (!strcmp(a[3], "a"))
-    TheJoin = GeomAbs_Arc;
+    TheJoin = GeomAbs_JoinType::GeomAbs_Arc;
   else if (!strcmp(a[3], "i"))
-    TheJoin = GeomAbs_Intersection;
+    TheJoin = GeomAbs_JoinType::GeomAbs_Intersection;
   else if (!strcmp(a[3], "t"))
-    TheJoin = GeomAbs_Tangent;
+    TheJoin = GeomAbs_JoinType::GeomAbs_Tangent;
   //
   RemoveIntEdges = (n >= 5) ? !strcmp(a[4], "r") : false;
   //
@@ -1278,7 +1278,7 @@ int offsetload(Draw_Interpretor&, int n, const char** a)
   TheOffset.Initialize(S,
                        Of,
                        TheTolerance,
-                       BRepOffset_Skin,
+                       BRepOffset_Mode::BRepOffset_Skin,
                        TheInter,
                        false,
                        TheJoin,
@@ -2579,7 +2579,7 @@ static int BOSS(Draw_Interpretor& theCommands, int narg, const char** a)
 
     if (V.IsNull())
       return 1;
-    ChFi3d_FilletShape FSh = ChFi3d_Rational;
+    ChFi3d_FilletShape FSh = ChFi3d_FilletShape::ChFi3d_Rational;
     if (Rakk)
       delete Rakk;
     Rakk = new BRepFilletAPI_MakeFillet(V, FSh);

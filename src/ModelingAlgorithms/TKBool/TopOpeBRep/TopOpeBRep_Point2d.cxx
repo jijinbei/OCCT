@@ -32,10 +32,10 @@ TopOpeBRep_Point2d::TopOpeBRep_Point2d()
       myips1(0),
       myips2(0),
       myhasancestors(false),
-      mystatus(TopOpeBRep_P2DUNK),
+      mystatus(TopOpeBRep_P2Dstatus::TopOpeBRep_P2DUNK),
       myindex(0),
       mykeep(true),
-      myedgesconfig(TopOpeBRepDS_UNSHGEOMETRY),
+      myedgesconfig(TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY),
       mytolerance(0.)
 {
 }
@@ -105,20 +105,20 @@ void TopOpeBRep_Point2d::Dump(const int E1index, const int E2index) const
   std::cout << std::endl << "p2d " << index << "  k=" << keep << " pos=" << pos;
   switch (sts)
   {
-    case TopOpeBRep_P2DUNK:
+    case TopOpeBRep_P2Dstatus::TopOpeBRep_P2DUNK:
       std::cout << " sts=u";
       break;
-    case TopOpeBRep_P2DSGF:
+    case TopOpeBRep_P2Dstatus::TopOpeBRep_P2DSGF:
       std::cout << " sts=f";
       break;
-    case TopOpeBRep_P2DSGL:
+    case TopOpeBRep_P2Dstatus::TopOpeBRep_P2DSGL:
       std::cout << " sts=l";
       break;
-    case TopOpeBRep_P2DNEW:
+    case TopOpeBRep_P2Dstatus::TopOpeBRep_P2DNEW:
       std::cout << " sts=n";
       std::cout << " anc=" << ia1 << "," << ia2;
       break;
-    case TopOpeBRep_P2DINT:
+    case TopOpeBRep_P2Dstatus::TopOpeBRep_P2DINT:
       std::cout << " sts=i";
       break;
   } // switch

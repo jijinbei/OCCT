@@ -34,7 +34,7 @@ bool TopOpeBRepDS_CurveIterator::MatchInterference(
   const occ::handle<TopOpeBRepDS_Interference>& I) const
 {
   TopOpeBRepDS_Kind GT = I->GeometryType();
-  bool              r  = (GT == TopOpeBRepDS_CURVE);
+  bool              r  = (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE);
   return r;
 }
 

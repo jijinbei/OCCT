@@ -634,17 +634,17 @@ void CDM_Document::Close()
 {
   switch (CanClose())
   {
-    case CDM_CCS_NotOpen:
+    case CDM_CanCloseStatus::CDM_CCS_NotOpen:
       throw Standard_Failure("cannot close a document that has not been opened");
       break;
-    case CDM_CCS_UnstoredReferenced:
+    case CDM_CanCloseStatus::CDM_CCS_UnstoredReferenced:
       throw Standard_Failure("cannot close an unstored document which is referenced");
       break;
-    case CDM_CCS_ModifiedReferenced:
+    case CDM_CanCloseStatus::CDM_CCS_ModifiedReferenced:
       throw Standard_Failure("cannot close a document which is referenced when "
                              "the document has been modified since it was stored.");
       break;
-    case CDM_CCS_ReferenceRejection:
+    case CDM_CanCloseStatus::CDM_CCS_ReferenceRejection:
       throw Standard_Failure("cannot close this document because a document "
                              "referencing it refuses");
       break;
@@ -669,23 +669,23 @@ void CDM_Document::Close()
 CDM_CanCloseStatus CDM_Document::CanClose() const
 {
   if (!IsOpened())
-    return CDM_CCS_NotOpen;
+    return CDM_CanCloseStatus::CDM_CCS_NotOpen;
 
   if (FromReferencesNumber() != 0)
   {
     if (!IsStored())
-      return CDM_CCS_UnstoredReferenced;
+      return CDM_CanCloseStatus::CDM_CCS_UnstoredReferenced;
     if (IsModified())
-      return CDM_CCS_ModifiedReferenced;
+      return CDM_CanCloseStatus::CDM_CCS_ModifiedReferenced;
 
     NCollection_List<occ::handle<CDM_Reference>>::Iterator it(myFromReferences);
     for (; it.More(); it.Next())
     {
       if (!it.Value()->FromDocument()->CanCloseReference(this, it.Value()->ReferenceIdentifier()))
-        return CDM_CCS_ReferenceRejection;
+        return CDM_CanCloseStatus::CDM_CCS_ReferenceRejection;
     }
   }
-  return CDM_CCS_OK;
+  return CDM_CanCloseStatus::CDM_CCS_OK;
 }
 
 //=================================================================================================

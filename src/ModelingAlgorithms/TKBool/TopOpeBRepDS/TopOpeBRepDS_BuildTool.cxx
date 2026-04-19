@@ -83,7 +83,7 @@ bool FUN_UisoLineOnSphe(const TopoDS_Shape& F, const occ::handle<Geom2d_Curve>& 
 //=================================================================================================
 
 TopOpeBRepDS_BuildTool::TopOpeBRepDS_BuildTool()
-    : myCurveTool(TopOpeBRepTool_APPROX),
+    : myCurveTool(TopOpeBRepTool_OutCurveType::TopOpeBRepTool_APPROX),
       myOverWrite(true),
       myTranslate(true)
 {
@@ -1222,7 +1222,7 @@ void TopOpeBRepDS_BuildTool::Closed(TopoDS_Shape& S, const bool B) const
 
 bool TopOpeBRepDS_BuildTool::Approximation() const
 {
-  return myCurveTool.GetGeomTool().TypeC3D() != TopOpeBRepTool_BSPLINE1;
+  return myCurveTool.GetGeomTool().TypeC3D() != TopOpeBRepTool_OutCurveType::TopOpeBRepTool_BSPLINE1;
 }
 
 void TopOpeBRepDS_BuildTool::UpdateSurface(const TopoDS_Shape&              F,
@@ -1317,7 +1317,7 @@ void  TopOpeBRepDS_BuildTool::RecomputeBSpline1Curve
   occ::handle<Geom2d_Curve> PC2new;
   double tolreached3d,tolreached2d;
 
-  if ( typec3d == TopOpeBRepTool_BSPLINE1 ) {
+  if ( typec3d == TopOpeBRepTool_OutCurveType::TopOpeBRepTool_BSPLINE1 ) {
     if ( compc3d ) {
       C3Dnew = occ::down_cast<Geom_BSplineCurve>(C3D->Copy());
       (occ::down_cast<Geom_BSplineCurve>(C3Dnew))->Segment(parmin,parmax);
@@ -1332,7 +1332,7 @@ void  TopOpeBRepDS_BuildTool::RecomputeBSpline1Curve
     }
   }
 
-  else if ( typec3d == TopOpeBRepTool_APPROX ) {
+  else if ( typec3d == TopOpeBRepTool_OutCurveType::TopOpeBRepTool_APPROX ) {
     if (!comppc1 || !comppc2) throw Standard_NotImplemented("DSBuildToolAPPROX");
     myCurveTool.MakeCurves(parmin,parmax,
                C3D,PC1,PC2,F1,F2,
@@ -1340,7 +1340,7 @@ void  TopOpeBRepDS_BuildTool::RecomputeBSpline1Curve
                tolreached3d,tolreached2d);
   }
 
-  else if ( typec3d == TopOpeBRepTool_INTERPOL ) {
+  else if ( typec3d == TopOpeBRepTool_OutCurveType::TopOpeBRepTool_INTERPOL ) {
     throw Standard_NotImplemented("DSBuildToolINTERPOL");
   }
 

@@ -33,12 +33,12 @@ class gp_XYZ;
 //!
 //! The type of returned value is the one of the following
 //! values:
-//! -  GProp_Mass - volume computation.
-//! -  GProp_CenterMassX, GProp_CenterMassY,
-//! GProp_CenterMassZ - X, Y and Z coordinates of center
+//! -  GProp_ValueType::GProp_Mass - volume computation.
+//! -  GProp_ValueType::GProp_CenterMassX, GProp_ValueType::GProp_CenterMassY,
+//! GProp_ValueType::GProp_CenterMassZ - X, Y and Z coordinates of center
 //! of mass computation.
-//! -  GProp_InertiaXX, GProp_InertiaYY, GProp_InertiaZZ,
-//! GProp_InertiaXY, GProp_InertiaXZ, GProp_InertiaYZ
+//! -  GProp_ValueType::GProp_InertiaXX, GProp_ValueType::GProp_InertiaYY, GProp_ValueType::GProp_InertiaZZ,
+//! GProp_ValueType::GProp_InertiaXY, GProp_ValueType::GProp_InertiaXZ, GProp_ValueType::GProp_InertiaYZ
 //! - moments of inertia computation.
 //!
 //! If the flag IsByPoint is set to true, the value is
@@ -88,17 +88,17 @@ private:
   Standard_EXPORT double VolumeValue(const double X, gp_XYZ& thePMP0, double& theS, double& theD1);
 
   //! Private method. Returns a value for the center of mass
-  //! computation. If the value type other then GProp_CenterMassX,
-  //! GProp_CenterMassY or GProp_CenterMassZ this method returns
+  //! computation. If the value type other then GProp_ValueType::GProp_CenterMassX,
+  //! GProp_ValueType::GProp_CenterMassY or GProp_ValueType::GProp_CenterMassZ this method returns
   //! false. Returns true in case of successful
   //! computation of a value.
   Standard_EXPORT bool CenterMassValue(const double X, double& F);
 
   //! Private method. Computes the value of inertia. The type of
   //! a value returned is defined by the value type. If it is
-  //! other then GProp_InertiaXX, GProp_InertiaYY,
-  //! GProp_InertiaZZ, GProp_InertiaXY, GProp_InertiaXZ or
-  //! GProp_InertiaYZ, the method returns false. Returns
+  //! other then GProp_ValueType::GProp_InertiaXX, GProp_ValueType::GProp_InertiaYY,
+  //! GProp_ValueType::GProp_InertiaZZ, GProp_ValueType::GProp_InertiaXY, GProp_ValueType::GProp_InertiaXZ or
+  //! GProp_ValueType::GProp_InertiaYZ, the method returns false. Returns
   //! true in case of successful computation of a value
   Standard_EXPORT bool InertiaValue(const double X, double& F);
 

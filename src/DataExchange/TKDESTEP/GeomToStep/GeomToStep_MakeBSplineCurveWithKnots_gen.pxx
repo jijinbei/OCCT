@@ -65,11 +65,11 @@ for (i = K.Lower(); i <= K.Upper(); i++)
 }
 
 Distribution = BS->KnotDistribution();
-if (Distribution == GeomAbs_NonUniform)
+if (Distribution == GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform)
   KnotSpec = StepGeom_KnotType::StepGeom_ktUnspecified;
-else if (Distribution == GeomAbs_Uniform)
+else if (Distribution == GeomAbs_BSplKnotDistribution::GeomAbs_Uniform)
   KnotSpec = StepGeom_KnotType::StepGeom_ktUniformKnots;
-else if (Distribution == GeomAbs_QuasiUniform)
+else if (Distribution == GeomAbs_BSplKnotDistribution::GeomAbs_QuasiUniform)
   KnotSpec = StepGeom_KnotType::StepGeom_ktQuasiUniformKnots;
 else
   KnotSpec = StepGeom_KnotType::StepGeom_ktPiecewiseBezierKnots;

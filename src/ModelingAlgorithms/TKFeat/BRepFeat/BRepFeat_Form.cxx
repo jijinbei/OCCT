@@ -71,7 +71,7 @@ void BRepFeat_Form::GlobalPerform()
     if (trc)
       std::cout << " Fields not initialized in BRepFeat_Form" << std::endl;
 #endif
-    myStatusError = BRepFeat_NotInitialized;
+    myStatusError = BRepFeat_StatusError::BRepFeat_NotInitialized;
     NotDone();
     return;
   }
@@ -87,7 +87,7 @@ void BRepFeat_Form::GlobalPerform()
     if (trc)
       std::cout << " Invalid option : myJustFeat + Cut" << std::endl;
 #endif
-    myStatusError = BRepFeat_InvOption;
+    myStatusError = BRepFeat_StatusError::BRepFeat_InvOption;
     NotDone();
     return;
   }
@@ -222,7 +222,7 @@ void BRepFeat_Form::GlobalPerform()
           {
             if (sens == -1)
             {
-              myStatusError = BRepFeat_IntervalOverlap;
+              myStatusError = BRepFeat_StatusError::BRepFeat_IntervalOverlap;
               NotDone();
               return;
             }
@@ -234,7 +234,7 @@ void BRepFeat_Form::GlobalPerform()
           {
             if (sens == 1)
             {
-              myStatusError = BRepFeat_IntervalOverlap;
+              myStatusError = BRepFeat_StatusError::BRepFeat_IntervalOverlap;
               NotDone();
               return;
             }
@@ -573,7 +573,7 @@ void BRepFeat_Form::GlobalPerform()
     }
 
     LocOpe_Operation ope = theGlue.OpeType();
-    if (ope == LocOpe_INVALID || (myFuse && ope != LocOpe_FUSE) || (!myFuse && ope != LocOpe_CUT)
+    if (ope == LocOpe_Operation::LocOpe_INVALID || (myFuse && ope != LocOpe_Operation::LocOpe_FUSE) || (!myFuse && ope != LocOpe_Operation::LocOpe_CUT)
         || (!Collage))
     {
       theOpe    = 2;
@@ -688,17 +688,17 @@ void BRepFeat_Form::GlobalPerform()
     }
 
     // update type of selection
-    if (myPerfSelection == BRepFeat_SelectionU && !UntilInShape)
+    if (myPerfSelection == BRepFeat_PerfSelection::BRepFeat_SelectionU && !UntilInShape)
     {
-      myPerfSelection = BRepFeat_NoSelection;
+      myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
     }
-    else if (myPerfSelection == BRepFeat_SelectionFU && !FromInShape && !UntilInShape)
+    else if (myPerfSelection == BRepFeat_PerfSelection::BRepFeat_SelectionFU && !FromInShape && !UntilInShape)
     {
-      myPerfSelection = BRepFeat_NoSelection;
+      myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
     }
-    else if (myPerfSelection == BRepFeat_SelectionShU && !UntilInShape)
+    else if (myPerfSelection == BRepFeat_PerfSelection::BRepFeat_SelectionShU && !UntilInShape)
     {
-      myPerfSelection = BRepFeat_NoSelection;
+      myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
     }
     else
     {
@@ -712,7 +712,7 @@ void BRepFeat_Form::GlobalPerform()
       exp.Init(trP.Shape(), TopAbs_SOLID);
       if (!exp.More())
       {
-        myStatusError = BRepFeat_EmptyCutResult;
+        myStatusError = BRepFeat_StatusError::BRepFeat_EmptyCutResult;
         NotDone();
         return;
       }
@@ -725,7 +725,7 @@ void BRepFeat_Form::GlobalPerform()
       }
       if (!BRepAlgo::IsValid(theGShape))
       {
-        myStatusError = BRepFeat_InvShape;
+        myStatusError = BRepFeat_StatusError::BRepFeat_InvShape;
         NotDone();
         return;
       }
@@ -778,7 +778,7 @@ void BRepFeat_Form::GlobalPerform()
     //
 
     //--- generation of "just feature" for assembly = Parts of tool
-    bool             bFlag = myPerfSelection != BRepFeat_NoSelection;
+    bool             bFlag = myPerfSelection != BRepFeat_PerfSelection::BRepFeat_NoSelection;
     BRepFeat_Builder theBuilder;
     theBuilder.Init(mySbase, theGShape);
     theBuilder.SetOperation(myFuse, bFlag);
@@ -794,23 +794,23 @@ void BRepFeat_Form::GlobalPerform()
     occ::handle<Geom_Curve> C;
 
     //--- Selection of pieces of tool to be preserved
-    if (!lshape.IsEmpty() && myPerfSelection != BRepFeat_NoSelection)
+    if (!lshape.IsEmpty() && myPerfSelection != BRepFeat_PerfSelection::BRepFeat_NoSelection)
     {
       //      Find ParametricMinMax depending on the constraints of Shape From and Until
       //   -> prmin, prmax, pbmin and pbmax
       C = BarycCurve();
       if (C.IsNull())
       {
-        myStatusError = BRepFeat_EmptyBaryCurve;
+        myStatusError = BRepFeat_StatusError::BRepFeat_EmptyBaryCurve;
         NotDone();
         return;
       }
 
-      if (myPerfSelection == BRepFeat_SelectionSh)
+      if (myPerfSelection == BRepFeat_PerfSelection::BRepFeat_SelectionSh)
       {
         BRepFeat::ParametricMinMax(mySbase, C, prmin, prmax, pbmin, pbmax, flag1);
       }
-      else if (myPerfSelection == BRepFeat_SelectionFU)
+      else if (myPerfSelection == BRepFeat_PerfSelection::BRepFeat_SelectionFU)
       {
         double prmin1, prmax1, prmin2, prmax2;
         double prbmin1, prbmax1, prbmin2, prbmax2;
@@ -842,7 +842,7 @@ void BRepFeat_Form::GlobalPerform()
           pbmax = std::max(prbmax1, prbmax2);
         }
       }
-      else if (myPerfSelection == BRepFeat_SelectionShU)
+      else if (myPerfSelection == BRepFeat_PerfSelection::BRepFeat_SelectionShU)
       {
         double prmin1, prmax1, prmin2, prmax2;
         double prbmin1, prbmax1, prbmin2, prbmax2;
@@ -851,7 +851,7 @@ void BRepFeat_Form::GlobalPerform()
           sens = 1;
         if (sens == 0)
         {
-          myStatusError = BRepFeat_IncDirection;
+          myStatusError = BRepFeat_StatusError::BRepFeat_IncDirection;
           NotDone();
           return;
         }
@@ -874,12 +874,12 @@ void BRepFeat_Form::GlobalPerform()
           pbmax = prbmax2;
         }
       }
-      else if (myPerfSelection == BRepFeat_SelectionU)
+      else if (myPerfSelection == BRepFeat_PerfSelection::BRepFeat_SelectionU)
       {
         double prmin1, prmax1, prbmin1, prbmax1;
         if (sens == 0)
         {
-          myStatusError = BRepFeat_IncDirection;
+          myStatusError = BRepFeat_StatusError::BRepFeat_IncDirection;
           NotDone();
           return;
         }
@@ -908,7 +908,7 @@ void BRepFeat_Form::GlobalPerform()
       //       position of the face of intersection in PartsOfTool (before or after)
       constexpr double delta = Precision::Confusion();
 
-      if (myPerfSelection != BRepFeat_NoSelection)
+      if (myPerfSelection != BRepFeat_PerfSelection::BRepFeat_NoSelection)
       {
         // modif of the test for cts21181 : (prbmax2 and prnmin2) -> (prbmin1 and prbmax1)
         // correction take into account flag2 for pro15323 and flag3 for pro16060
@@ -1145,7 +1145,7 @@ void BRepFeat_Form::GlobalPerform()
           if (trc)
             std::cout << " No parts of tool kept" << std::endl;
 #endif
-          myStatusError = BRepFeat_NoParts;
+          myStatusError = BRepFeat_StatusError::BRepFeat_NoParts;
           NotDone();
           return;
         }
@@ -1211,7 +1211,7 @@ void BRepFeat_Form::GlobalPerform()
     }
   }
 
-  myStatusError = BRepFeat_OK;
+  myStatusError = BRepFeat_StatusError::BRepFeat_OK;
 }
 
 //=================================================================================================

@@ -348,13 +348,13 @@ void BRepMesh_Delaun::superMesh(const Bnd_Box2d& theBox)
   double aDelta    = aDeltaX + aDeltaY;
 
   mySupVert.Append(
-    myMeshData->AddNode(BRepMesh_Vertex((aMinX + aMaxX) / 2, aMaxY + aDeltaMax, BRepMesh_Free)));
+    myMeshData->AddNode(BRepMesh_Vertex((aMinX + aMaxX) / 2, aMaxY + aDeltaMax, BRepMesh_DegreeOfFreedom::BRepMesh_Free)));
 
   mySupVert.Append(
-    myMeshData->AddNode(BRepMesh_Vertex(aMinX - aDelta, aMinY - aDeltaMin, BRepMesh_Free)));
+    myMeshData->AddNode(BRepMesh_Vertex(aMinX - aDelta, aMinY - aDeltaMin, BRepMesh_DegreeOfFreedom::BRepMesh_Free)));
 
   mySupVert.Append(
-    myMeshData->AddNode(BRepMesh_Vertex(aMaxX + aDelta, aMinY - aDeltaMin, BRepMesh_Free)));
+    myMeshData->AddNode(BRepMesh_Vertex(aMaxX + aDelta, aMinY - aDeltaMin, BRepMesh_DegreeOfFreedom::BRepMesh_Free)));
 
   int  e[3];
   bool o[3];
@@ -363,13 +363,13 @@ void BRepMesh_Delaun::superMesh(const Bnd_Box2d& theBox)
     int aFirstNode = aNodeId;
     int aLastNode  = (aNodeId + 1) % 3;
     int aLinkIndex = myMeshData->AddLink(
-      BRepMesh_Edge(mySupVert[aFirstNode], mySupVert[aLastNode], BRepMesh_Free));
+      BRepMesh_Edge(mySupVert[aFirstNode], mySupVert[aLastNode], BRepMesh_DegreeOfFreedom::BRepMesh_Free));
 
     e[aNodeId] = std::abs(aLinkIndex);
     o[aNodeId] = (aLinkIndex > 0);
   }
 
-  mySupTrian = BRepMesh_Triangle(e, o, BRepMesh_Free);
+  mySupTrian = BRepMesh_Triangle(e, o, BRepMesh_DegreeOfFreedom::BRepMesh_Free);
 }
 
 //=======================================================================
@@ -516,8 +516,8 @@ void BRepMesh_Delaun::createTriangles(const int                       theVertexI
       continue;
     }
 
-    BRepMesh_Edge aFirstLink(aNodes[1], aNodes[0], BRepMesh_Free);
-    BRepMesh_Edge aLastLink(aNodes[2], aNodes[1], BRepMesh_Free);
+    BRepMesh_Edge aFirstLink(aNodes[1], aNodes[0], BRepMesh_DegreeOfFreedom::BRepMesh_Free);
+    BRepMesh_Edge aLastLink(aNodes[2], aNodes[1], BRepMesh_DegreeOfFreedom::BRepMesh_Free);
 
     int anEdgesInfo[3] = {myMeshData->AddLink(aFirstLink),
                           isPositive ? anEdgeId : -anEdgeId,
@@ -572,7 +572,7 @@ void BRepMesh_Delaun::createTriangles(const int                       theVertexI
   while (!aLoopEdges.IsEmpty())
   {
     const BRepMesh_Edge& anEdge = GetEdge(std::abs(aLoopEdges.First()));
-    if (anEdge.Movability() != BRepMesh_Deleted)
+    if (anEdge.Movability() != BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
     {
       int anEdgeIdx = aLoopEdges.First();
       meshLeftPolygonOf(std::abs(anEdgeIdx), (anEdgeIdx > 0));
@@ -626,10 +626,10 @@ void BRepMesh_Delaun::createTrianglesOnNewVertices(IMeshData::VectorOfInteger&  
       // - all adjacent triangles should belong to a component connected with this triangle
       if (Contains(aCircleIt.Value(), aVertex, aSqTol, onEgdeId))
       {
-        if (onEgdeId != 0 && GetEdge(onEgdeId).Movability() != BRepMesh_Free)
+        if (onEgdeId != 0 && GetEdge(onEgdeId).Movability() != BRepMesh_DegreeOfFreedom::BRepMesh_Free)
         {
           // We can skip free vertex too close to the frontier edge.
-          if (aVertex.Movability() == BRepMesh_Free)
+          if (aVertex.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Free)
             continue;
 
           // However, we should add vertex that have neighboring frontier edges.
@@ -760,7 +760,7 @@ bool BRepMesh_Delaun::isBoundToFrontier(const int theRefNodeId, const int theRef
           continue;
         }
 
-        if (anEdge.Movability() != BRepMesh_Free)
+        if (anEdge.Movability() != BRepMesh_DegreeOfFreedom::BRepMesh_Free)
           return true;
 
         if (aVisitedLinks.Add(anEdgeId))
@@ -795,7 +795,7 @@ void BRepMesh_Delaun::cleanupMesh()
     {
       const int&           aFreeEdgeId = aFreeEdgesIt.Key();
       const BRepMesh_Edge& anEdge      = GetEdge(aFreeEdgeId);
-      if (anEdge.Movability() == BRepMesh_Frontier)
+      if (anEdge.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Frontier)
         continue;
 
       const BRepMesh_PairOfIndex& aPair = myMeshData->ElementsConnectedTo(aFreeEdgeId);
@@ -1173,7 +1173,7 @@ int BRepMesh_Delaun::findNextPolygonLink(const int&                             
     const BRepMesh_Edge& aNeighbourLink = GetEdge(aNeighbourLinkId);
 
     // Determine whether the link belongs to the mesh
-    if (aNeighbourLink.Movability() == BRepMesh_Free
+    if (aNeighbourLink.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Free
         && myMeshData->ElementsConnectedTo(aNeighbourLinkInfo).IsEmpty())
     {
       theDeadLinks.Add(aNeighbourLinkId);
@@ -1196,7 +1196,7 @@ int BRepMesh_Delaun::findNextPolygonLink(const int&                             
       theLeprousLinks.Add(aNeighbourLinkId);
 
     double anAngle    = theRefLinkDir.Angle(aCurLinkDir);
-    bool   isFrontier = (aNeighbourLink.Movability() == BRepMesh_Frontier);
+    bool   isFrontier = (aNeighbourLink.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
 
     bool isCheckPointOnEdge = true;
     if (isFrontier)
@@ -1262,7 +1262,7 @@ bool BRepMesh_Delaun::checkIntersection(const BRepMesh_Edge&                theL
   if (isSkipLastEdge)
     --aPolyLen;
 
-  bool isFrontier = (theLink.Movability() == BRepMesh_Frontier);
+  bool isFrontier = (theLink.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
 
   for (int aPolyIt = 1; aPolyIt <= aPolyLen; ++aPolyIt)
   {
@@ -1273,7 +1273,7 @@ bool BRepMesh_Delaun::checkIntersection(const BRepMesh_Edge&                theL
       const BRepMesh_Edge& aPolyLink   = GetEdge(aPolyLinkId);
 
       // skip intersections between frontier edges
-      if (aPolyLink.Movability() == BRepMesh_Frontier && isFrontier)
+      if (aPolyLink.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Frontier && isFrontier)
         continue;
 
       gp_Pnt2d                   anIntPnt;
@@ -1298,7 +1298,7 @@ void BRepMesh_Delaun::addTriangle(const int (&theEdgesId)[3],
                                   const int (&theNodesId)[3])
 {
   int aNewTriangleId =
-    myMeshData->AddElement(BRepMesh_Triangle(theEdgesId, theEdgesOri, BRepMesh_Free));
+    myMeshData->AddElement(BRepMesh_Triangle(theEdgesId, theEdgesOri, BRepMesh_DegreeOfFreedom::BRepMesh_Free));
 
   bool isAdded = true;
   if (myInitCircles)
@@ -1457,7 +1457,7 @@ void BRepMesh_Delaun::killTrianglesAroundVertex(
       continue;
 
     const BRepMesh_Edge& aNeighborLink = GetEdge(aNeighborLinkId);
-    if (aNeighborLink.Movability() == BRepMesh_Frontier)
+    if (aNeighborLink.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Frontier)
     {
       // Though, if it lies onto the polygon boundary -
       // take its triangles
@@ -1671,7 +1671,7 @@ int BRepMesh_Delaun::createAndReplacePolygonLink(const int*                    t
                                                  IMeshData::SequenceOfInteger& thePolygon,
                                                  IMeshData::SequenceOfBndB2d&  thePolyBoxes)
 {
-  int aNewEdgeId = myMeshData->AddLink(BRepMesh_Edge(theNodes[0], theNodes[1], BRepMesh_Free));
+  int aNewEdgeId = myMeshData->AddLink(BRepMesh_Edge(theNodes[0], theNodes[1], BRepMesh_DegreeOfFreedom::BRepMesh_Free));
 
   Bnd_B2d aNewBox;
   UpdateBndBox(thePnts[0].Coord(), thePnts[1].Coord(), aNewBox);
@@ -1716,7 +1716,7 @@ void BRepMesh_Delaun::meshPolygon(IMeshData::SequenceOfInteger&   thePolygon,
     int                  aCurEdgeInfo = thePolygon(aPolyIt);
     int                  aCurEdgeId   = std::abs(aCurEdgeInfo);
     const BRepMesh_Edge* aCurEdge     = &GetEdge(aCurEdgeId);
-    if (aCurEdge->Movability() != BRepMesh_Frontier)
+    if (aCurEdge->Movability() != BRepMesh_DegreeOfFreedom::BRepMesh_Frontier)
       continue;
 
     int aCurNodes[2];
@@ -1733,7 +1733,7 @@ void BRepMesh_Delaun::meshPolygon(IMeshData::SequenceOfInteger&   thePolygon,
       int                  aNextEdgeInfo = thePolygon(aNextPolyIt);
       int                  aNextEdgeId   = std::abs(aNextEdgeInfo);
       const BRepMesh_Edge* aNextEdge     = &GetEdge(aNextEdgeId);
-      if (aNextEdge->Movability() != BRepMesh_Frontier)
+      if (aNextEdge->Movability() != BRepMesh_DegreeOfFreedom::BRepMesh_Frontier)
         continue;
 
       int aNextNodes[2];
@@ -2059,7 +2059,7 @@ void BRepMesh_Delaun::decomposeSimplePolygon(IMeshData::SequenceOfInteger& thePo
       Bnd_B2d aBox;
       UpdateBndBox(aLinkFirstVertex.Coord(), aPivotVertex.Coord(), aBox);
 
-      BRepMesh_Edge aCheckLink(aLinkFirstNode, aPivotNode, BRepMesh_Free);
+      BRepMesh_Edge aCheckLink(aLinkFirstNode, aPivotNode, BRepMesh_DegreeOfFreedom::BRepMesh_Free);
 
       int aCheckLinkIt = 2;
       for (; aCheckLinkIt <= aPolyLen; ++aCheckLinkIt)
@@ -2108,8 +2108,8 @@ void BRepMesh_Delaun::decomposeSimplePolygon(IMeshData::SequenceOfInteger& thePo
     return;
   }
 
-  BRepMesh_Edge aNewEdges[2] = {BRepMesh_Edge(aNodes[1], aNodes[2], BRepMesh_Free),
-                                BRepMesh_Edge(aNodes[2], aNodes[0], BRepMesh_Free)};
+  BRepMesh_Edge aNewEdges[2] = {BRepMesh_Edge(aNodes[1], aNodes[2], BRepMesh_DegreeOfFreedom::BRepMesh_Free),
+                                BRepMesh_Edge(aNodes[2], aNodes[0], BRepMesh_DegreeOfFreedom::BRepMesh_Free)};
 
   int aNewEdgesInfo[3] = {aFirstEdgeInfo,
                           myMeshData->AddLink(aNewEdges[0]),
@@ -2305,7 +2305,7 @@ bool BRepMesh_Delaun::UseEdge(const int /*theIndex*/)
           const BRepMesh_Edge& aNextEdge = GetEdge( anEdgeId );
 
           bool isInMesh = true;
-          if ( aNextEdge.Movability() == BRepMesh_Free )
+          if ( aNextEdge.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Free )
           {
             if ( myMeshData->ElemConnectedTo( anEdgeId ).IsEmpty() )
               isInMesh = false;
@@ -2364,7 +2364,7 @@ Handle(IMeshData::MapOfInteger) BRepMesh_Delaun::getEdgesByType(
   for (; anEdgeIt.More(); anEdgeIt.Next())
   {
     int  anEdge  = anEdgeIt.Key();
-    bool isToAdd = (theEdgeType == BRepMesh_Free)
+    bool isToAdd = (theEdgeType == BRepMesh_DegreeOfFreedom::BRepMesh_Free)
                      ? (myMeshData->ElementsConnectedTo(anEdge).Extent() <= 1)
                      : (GetEdge(anEdge).Movability() == theEdgeType);
 
@@ -2455,7 +2455,7 @@ bool BRepMesh_Delaun::Contains(const int              theTriangleId,
   if (aSqMinDist < 0)
     return false;
 
-  const bool isNotFree = (anEdges[aEdgeOnId]->Movability() != BRepMesh_Free);
+  const bool isNotFree = (anEdges[aEdgeOnId]->Movability() != BRepMesh_DegreeOfFreedom::BRepMesh_Free);
   if (aSqMinDist > theSqTolerance)
   {
     if (isNotFree && aDistance[aEdgeOnId] < (aSqModulus[aEdgeOnId] / 5.))

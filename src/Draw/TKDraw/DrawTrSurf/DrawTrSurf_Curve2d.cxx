@@ -141,7 +141,7 @@ void DrawTrSurf_Curve2d::DrawOn(Draw_Display& dis) const
   }
 
   // Draw the curvature Radius
-  if (dispcurvradius && (C2d.GetType() != GeomAbs_Line))
+  if (dispcurvradius && (C2d.GetType() != GeomAbs_CurveType::GeomAbs_Line))
   {
     int                        ii;
     int                        intrv, nbintv = C2d.NbIntervals(GeomAbs_CN);

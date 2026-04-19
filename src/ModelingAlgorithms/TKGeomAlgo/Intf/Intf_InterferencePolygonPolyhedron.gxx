@@ -729,11 +729,11 @@ void Intf_InterferencePolygonPolyhedron::Intersect
   if(t1<0) { if(t2>0) return; } else { if(t2<0) return; } 
 
   Intf_SectionPoint SP(PRes,
-		       Intf_EDGE, 
+		       Intf_PIType::Intf_EDGE, 
 		       0, 
 		       iLin, //-- !!!!! VARIABLE STATIQUE 
 		       t / Norm_BegOEndO, 
-		       Intf_FACE, 
+		       Intf_PIType::Intf_FACE, 
 		       TTri, 0, 0.,1.);
   mySPoins.Append(SP);
 }
@@ -744,7 +744,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
                                                    const int         TTri,
                                                    const Polyhedron& thePolyh)
 {
-  Intf_PIType typOnG = Intf_EDGE;
+  Intf_PIType typOnG = Intf_PIType::Intf_EDGE;
   double      t;
   int         pTri[3];
   ToolPolyh::Triangle(thePolyh, TTri, pTri[0], pTri[1], pTri[2]);
@@ -774,14 +774,14 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
     if (dBegTri <= floatgap && dBegTri >= -floatgap)
     {
       param  = 0.;
-      typOnG = Intf_VERTEX;
+      typOnG = Intf_PIType::Intf_VERTEX;
       if (BeginOfClosedPolygon)
         NoIntersectionWithTriangle = false;
     }
     else if (dEndTri <= floatgap && dEndTri >= -floatgap)
     {
       param                      = 1.;
-      typOnG                     = Intf_VERTEX;
+      typOnG                     = Intf_PIType::Intf_VERTEX;
       NoIntersectionWithTriangle = false;
     }
     if (param < 0. || param > 1.)
@@ -907,7 +907,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
       //--	//-- if (triCon<TTri) return;
       //--	if (triCon==TTri) break;
       //--      }
-      Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_VERTEX, pTri[is], 0, 0., 1.);
+      Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_PIType::Intf_VERTEX, pTri[is], 0, 0., 1.);
       mySPoins.Append(SP);
     }
     else if (sEdge > -1)
@@ -920,7 +920,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
                            0,
                            iLin,
                            param,
-                           Intf_EDGE,
+                           Intf_PIType::Intf_EDGE,
                            std::min(pTri[sEdge], pTri[Pourcent3[sEdge + 1]]),
                            std::max(pTri[sEdge], pTri[Pourcent3[sEdge + 1]]),
                            0.,
@@ -930,7 +930,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
     else if (dPiE[0] > 0. && dPiE[1] > 0. && dPiE[2] > 0.)
     {
       // !!cout<<" 3 Positifs "<<endl;
-      Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_FACE, TTri, 0, 0., 1.);
+      Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_PIType::Intf_FACE, TTri, 0, 0., 1.);
       mySPoins.Append(SP);
     }
     //  Modified by Sergey KHROMOV - Fri Dec  7 14:40:11 2001 Begin
@@ -968,7 +968,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
 
             if (aPar >= 0 && aPar <= aMaxPar)
             {
-              Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_FACE, TTri, 0, 0., 1.);
+              Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_PIType::Intf_FACE, TTri, 0, 0., 1.);
               mySPoins.Append(SP);
             }
           }
@@ -1040,7 +1040,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
                     tmin = pTri_i;
                   }
                   Intf_SectionPoint
-                    SP(spLieu, typOnG, 0, iLin, ParamOnO, Intf_EDGE, tmin, tmax, 0., 1.);
+                    SP(spLieu, typOnG, 0, iLin, ParamOnO, Intf_PIType::Intf_EDGE, tmin, tmax, 0., 1.);
                   mySPoins.Append(SP);
                 }
               }
@@ -1064,7 +1064,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
                                                    const double dBegTri,
                                                    const double dEndTri)
 {
-  Intf_PIType typOnG = Intf_EDGE;
+  Intf_PIType typOnG = Intf_PIType::Intf_EDGE;
   double      t;
   int         pTri[3];
   ToolPolyh::Triangle(thePolyh, TTri, pTri[0], pTri[1], pTri[2]);
@@ -1089,14 +1089,14 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
     if (dBegTri <= floatgap && dBegTri >= -floatgap)
     {
       param  = 0.;
-      typOnG = Intf_VERTEX;
+      typOnG = Intf_PIType::Intf_VERTEX;
       if (BeginOfClosedPolygon)
         NoIntersectionWithTriangle = false;
     }
     else if (dEndTri <= floatgap && dEndTri >= -floatgap)
     {
       param                      = 1.;
-      typOnG                     = Intf_VERTEX;
+      typOnG                     = Intf_PIType::Intf_VERTEX;
       NoIntersectionWithTriangle = false;
     }
     if (param < 0. || param > 1.)
@@ -1222,7 +1222,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
       //--	//-- if (triCon<TTri) return;
       //--	if (triCon==TTri) break;
       //--      }
-      Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_VERTEX, pTri[is], 0, 0., 1.);
+      Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_PIType::Intf_VERTEX, pTri[is], 0, 0., 1.);
       mySPoins.Append(SP);
     }
     else if (sEdge > -1)
@@ -1235,7 +1235,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
                            0,
                            iLin,
                            param,
-                           Intf_EDGE,
+                           Intf_PIType::Intf_EDGE,
                            std::min(pTri[sEdge], pTri[Pourcent3[sEdge + 1]]),
                            std::max(pTri[sEdge], pTri[Pourcent3[sEdge + 1]]),
                            0.,
@@ -1245,7 +1245,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
     else if (dPiE[0] > 0. && dPiE[1] > 0. && dPiE[2] > 0.)
     {
       // !!cout<<" 3 Positifs "<<endl;
-      Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_FACE, TTri, 0, 0., 1.);
+      Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_PIType::Intf_FACE, TTri, 0, 0., 1.);
       mySPoins.Append(SP);
     }
     //  Modified by Sergey KHROMOV - Fri Dec  7 14:40:11 2001 Begin
@@ -1283,7 +1283,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
 
             if (aPar >= 0 && aPar <= aMaxPar)
             {
-              Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_FACE, TTri, 0, 0., 1.);
+              Intf_SectionPoint SP(spLieu, typOnG, 0, iLin, param, Intf_PIType::Intf_FACE, TTri, 0, 0., 1.);
               mySPoins.Append(SP);
             }
           }
@@ -1355,7 +1355,7 @@ void Intf_InterferencePolygonPolyhedron::Intersect(const gp_Pnt&     BegO,
                     tmin = pTri_i;
                   }
                   Intf_SectionPoint
-                    SP(spLieu, typOnG, 0, iLin, ParamOnO, Intf_EDGE, tmin, tmax, 0., 1.);
+                    SP(spLieu, typOnG, 0, iLin, ParamOnO, Intf_PIType::Intf_EDGE, tmin, tmax, 0., 1.);
                   mySPoins.Append(SP);
                 }
               }

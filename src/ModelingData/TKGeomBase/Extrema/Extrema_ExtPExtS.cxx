@@ -491,7 +491,7 @@ static gp_Ax2 GetPosition(const occ::handle<Adaptor3d_Curve>& C)
 {
   switch (C->GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       gp_Lin L   = C->Line();
       gp_Pln Pln = gp_Pln(L.Location(), L.Direction());
       //: abv 30.05.02: OCC  - use constructor instead of Set...s() to avoid exception
@@ -501,13 +501,13 @@ static gp_Ax2 GetPosition(const occ::handle<Adaptor3d_Curve>& C)
       //     Pos.SetYDirection(Pln.Position().Direction());
       return Pos;
     }
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       return C->Circle().Position();
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       return C->Ellipse().Position();
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       return C->Hyperbola().Position();
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       return C->Parabola().Position();
     default:
       return gp_Ax2();
@@ -523,19 +523,19 @@ static void PerformExtPElC(Extrema_ExtPElC&                    E,
 {
   switch (C->GetType())
   {
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       E.Perform(P, C->Hyperbola(), Tol, -Precision::Infinite(), Precision::Infinite());
       return;
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       E.Perform(P, C->Line(), Tol, -Precision::Infinite(), Precision::Infinite());
       return;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       E.Perform(P, C->Circle(), Tol, 0.0, 2.0 * M_PI);
       return;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       E.Perform(P, C->Ellipse(), Tol, 0.0, 2.0 * M_PI);
       return;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       E.Perform(P, C->Parabola(), Tol, -Precision::Infinite(), Precision::Infinite());
       return;
     default:
@@ -552,11 +552,11 @@ static bool IsCaseAnalyticallyComputable(const GeomAbs_CurveType& theType,
   // check type
   switch (theType)
   {
-    case GeomAbs_Line:
-    case GeomAbs_Circle:
-    case GeomAbs_Ellipse:
-    case GeomAbs_Hyperbola:
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       break;
     default:
       return false;
@@ -571,15 +571,15 @@ static gp_Pnt GetValue(const double U, const occ::handle<Adaptor3d_Curve>& C)
 {
   switch (C->GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       return ElCLib::Value(U, C->Line());
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       return ElCLib::Value(U, C->Circle());
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       return ElCLib::Value(U, C->Ellipse());
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       return ElCLib::Value(U, C->Hyperbola());
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       return ElCLib::Value(U, C->Parabola());
     default:
       return gp_Pnt();
@@ -594,15 +594,15 @@ static gp_Pnt GetValue(const double U, const occ::handle<Adaptor3d_Curve>& C)
 //			  const occ::handle<Adaptor3d_Curve>& C)
 //{
 //  switch (C->GetType()) {
-//  case GeomAbs_Line:
+//  case GeomAbs_CurveType::GeomAbs_Line:
 //    return ElCLib::Parameter(C->Line().Translated(vec), P);
-//  case GeomAbs_Circle:
+//  case GeomAbs_CurveType::GeomAbs_Circle:
 //    return ElCLib::Parameter(C->Circle().Translated(vec), P);
-//  case GeomAbs_Ellipse:
+//  case GeomAbs_CurveType::GeomAbs_Ellipse:
 //    return ElCLib::Parameter(C->Ellipse().Translated(vec), P);
-//  case GeomAbs_Hyperbola:
+//  case GeomAbs_CurveType::GeomAbs_Hyperbola:
 //    return ElCLib::Parameter(C->Hyperbola().Translated(vec), P);
-//  case GeomAbs_Parabola:
+//  case GeomAbs_CurveType::GeomAbs_Parabola:
 //    return ElCLib::Parameter(C->Parabola().Translated(vec), P);
 //  default:
 //    return 0;

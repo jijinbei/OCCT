@@ -417,7 +417,7 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
   occ::handle<Geom_TrimmedCurve> mycurve3d = new Geom_TrimmedCurve(start, Udeb, Ufin);
   occ::handle<Geom_BSplineCurve> Bspline =
     GeomConvert::CurveToBSplineCurve(mycurve3d,
-                                     Convert_RationalC1); // #28 rln 19.10.98 UKI60155
+                                     Convert_ParameterisationType::Convert_RationalC1); // #28 rln 19.10.98 UKI60155
   double First = Bspline->FirstParameter();
   double Last  = Bspline->LastParameter();
   res          = TransferCurve(Bspline, First, Last);
@@ -603,7 +603,7 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
     if (approx.HasResult())
       Bspline = approx.Curve();
     if (Bspline.IsNull())
-      Bspline = GeomConvert::CurveToBSplineCurve(copystart, Convert_QuasiAngular);
+      Bspline = GeomConvert::CurveToBSplineCurve(copystart, Convert_ParameterisationType::Convert_QuasiAngular);
     NCollection_Array1<double> Knots(Bspline->Knots());
     BSplCLib::Reparametrize(Udeb, Udeb + 2 * M_PI, Knots);
     Bspline->SetKnots(Knots);

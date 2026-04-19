@@ -120,7 +120,7 @@ BlendFunc_EvolRad::BlendFunc_EvolRad(const occ::handle<Adaptor3d_Surface>& S1,
       lengthmin(RealLast()),
       lengthmax(RealFirst()),
       distmin(RealLast()),
-      mySShape(BlendFunc_Rational)
+      mySShape(BlendFunc_SectionShape::BlendFunc_Rational)
 {
   fevol = Law;
   tevol = Law;
@@ -1239,7 +1239,7 @@ const gp_Vec2d& BlendFunc_EvolRad::Tangent2dOnS2() const
 
 bool BlendFunc_EvolRad::IsRational() const
 {
-  return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================
@@ -1380,7 +1380,7 @@ void BlendFunc_EvolRad::Section(const Blend_Point&            P,
   Poles2d(Poles2d.Lower()).SetCoord(X(1), X(2));
   Poles2d(Poles2d.Upper()).SetCoord(X(3), X(4));
 
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts1;
     Poles(upp)   = pts2;
@@ -1509,7 +1509,7 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
   }
 
   // the linear case is processed...
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts1;
     Poles(upp)   = pts2;
@@ -1866,7 +1866,7 @@ bool BlendFunc_EvolRad::Section(const Blend_Point&            P,
   }
 
   // the linear is processed...
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts1;
     Poles(upp)   = pts2;

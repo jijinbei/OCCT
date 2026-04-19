@@ -47,35 +47,35 @@ void ExtremaPC_Curve::initFromAdaptor(const GeomAdaptor_Curve&   theCurve,
 
   switch (aCurveType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       myEvaluator = ExtremaPC_Line(theCurve.Line(), theDomain);
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       myEvaluator = ExtremaPC_Circle(theCurve.Circle(), theDomain);
       break;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       myEvaluator = ExtremaPC_Ellipse(theCurve.Ellipse(), theDomain);
       break;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       myEvaluator = ExtremaPC_Hyperbola(theCurve.Hyperbola(), theDomain);
       break;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       myEvaluator = ExtremaPC_Parabola(theCurve.Parabola(), theDomain);
       break;
 
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       myEvaluator = ExtremaPC_BezierCurve(theCurve.Bezier(), theDomain);
       break;
 
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       myEvaluator = ExtremaPC_BSplineCurve(theCurve.BSpline(), theDomain);
       break;
 
-    case GeomAbs_OffsetCurve:
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve:
       myEvaluator = ExtremaPC_OffsetCurve(theCurve, theDomain);
       break;
 
@@ -150,29 +150,29 @@ void ExtremaPC_Curve::initFromTransformedCurve(const GeomAdaptor_TransformedCurv
   switch (aCurveType)
   {
     // Elementary curves: Line(), Circle() etc. return already-transformed primitives
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       myEvaluator = ExtremaPC_Line(theCurve.Line(), aDomain);
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       myEvaluator = ExtremaPC_Circle(theCurve.Circle(), aDomain);
       break;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       myEvaluator = ExtremaPC_Ellipse(theCurve.Ellipse(), aDomain);
       break;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       myEvaluator = ExtremaPC_Hyperbola(theCurve.Hyperbola(), aDomain);
       break;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       myEvaluator = ExtremaPC_Parabola(theCurve.Parabola(), aDomain);
       break;
 
     // BSpline/Bezier: use untransformed handle, set up inverse-transform path.
     // For CurveOnSurface the underlying myCurve is empty, so fall through to OtherCurve.
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       if (theCurve.Is3DCurve())
       {
         myEvaluator = ExtremaPC_BSplineCurve(theCurve.Curve().BSpline(), aDomain);
@@ -183,7 +183,7 @@ void ExtremaPC_Curve::initFromTransformedCurve(const GeomAdaptor_TransformedCurv
       myEvaluator  = ExtremaPC_OtherCurve(*myAdaptorRef, aDomain);
       break;
 
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       if (theCurve.Is3DCurve())
       {
         myEvaluator = ExtremaPC_BezierCurve(theCurve.Curve().Bezier(), aDomain);
@@ -195,7 +195,7 @@ void ExtremaPC_Curve::initFromTransformedCurve(const GeomAdaptor_TransformedCurv
       break;
 
     // Offset/Other: use non-owning pointer to caller's TransformedCurve
-    case GeomAbs_OffsetCurve:
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve:
       myAdaptorRef = &theCurve;
       myEvaluator  = ExtremaPC_OffsetCurve(*myAdaptorRef, aDomain);
       break;
@@ -323,7 +323,7 @@ void ExtremaPC_Curve::initFromGeomCurve(const occ::handle<Geom_Curve>&          
   }
   const GeomAbs_CurveType aCurveType = myAdaptorOwned->GetType();
 
-  if (aCurveType == GeomAbs_OffsetCurve)
+  if (aCurveType == GeomAbs_CurveType::GeomAbs_OffsetCurve)
   {
     if (theDomain.has_value())
     {

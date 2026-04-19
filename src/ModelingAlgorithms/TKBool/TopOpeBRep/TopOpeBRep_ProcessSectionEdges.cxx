@@ -68,7 +68,7 @@ void TopOpeBRep_FacesFiller::GetESL(NCollection_List<TopoDS_Shape>& LES)
   {
     const TopOpeBRep_LineInter& L      = myFacesIntersector->CurrentLine();
     TopOpeBRep_TypeLineCurve    t      = L.TypeLineCurve();
-    bool                        isrest = (t == TopOpeBRep_RESTRICTION);
+    bool                        isrest = (t == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION);
 
     if (isrest)
     {
@@ -105,7 +105,7 @@ void TopOpeBRep_FacesFiller::GetESL(NCollection_List<TopoDS_Shape>& LES)
 bool TopOpeBRep_FacesFiller::KeepRLine(const TopOpeBRep_LineInter& L, const bool checkkeep) const
 {
   TopOpeBRep_TypeLineCurve t      = L.TypeLineCurve();
-  bool                     isrest = (t == TopOpeBRep_RESTRICTION);
+  bool                     isrest = (t == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION);
   if (!isrest)
     return false;
   const TopoDS_Edge& EL   = TopoDS::Edge(L.Arc());
@@ -343,7 +343,7 @@ void TopOpeBRep_FacesFiller::ProcessSectionEdges()
     for (; myFacesIntersector->MoreLine(); myFacesIntersector->NextLine())
     {
       TopOpeBRep_LineInter& L = myFacesIntersector->CurrentLine();
-      if (L.TypeLineCurve() != TopOpeBRep_RESTRICTION)
+      if (L.TypeLineCurve() != TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION)
         continue;
       ELI = TopoDS::Edge(L.Arc());
       if (ELI.IsEqual(ELES))
@@ -424,8 +424,8 @@ void TopOpeBRep_FacesFiller::ProcessSectionEdges()
       bool               refFirst   = isClosing1 || !isClosing2;
       myDS->FillShapesSameDomain(E1,
                                  E2,
-                                 TopOpeBRepDS_UNSHGEOMETRY,
-                                 TopOpeBRepDS_UNSHGEOMETRY,
+                                 TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
+                                 TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
                                  refFirst);
     }
   }

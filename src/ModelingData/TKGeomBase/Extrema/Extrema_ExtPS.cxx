@@ -44,7 +44,7 @@ static bool IsoIsDeg(const Adaptor3d_Surface& S,
   gp_Vec D1U, D1V;
   gp_Pnt P;
   double Step, D1NormMax;
-  if (IT == GeomAbs_IsoV)
+  if (IT == GeomAbs_IsoType::GeomAbs_IsoV)
   {
     if (!Precision::IsInfinite(U1) && !Precision::IsInfinite(U2))
     {
@@ -137,7 +137,7 @@ Extrema_ExtPS::Extrema_ExtPS()
       d12(0.0),
       d21(0.0),
       d22(0.0),
-      mytype(GeomAbs_OtherSurface)
+      mytype(GeomAbs_SurfaceType::GeomAbs_OtherSurface)
 {
 }
 
@@ -214,19 +214,19 @@ void Extrema_ExtPS::Initialize(const Adaptor3d_Surface& theS,
   mytolv = theTolV;
   mytype = myS->GetType();
 
-  bool isB = (myS->GetType() == GeomAbs_BSplineSurface || myS->GetType() == GeomAbs_BezierSurface);
+  bool isB = (myS->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface || myS->GetType() == GeomAbs_SurfaceType::GeomAbs_BezierSurface);
 
   int nbU = (isB) ? 44 : 32;
   int nbV = (isB) ? 44 : 32;
 
   bool bUIsoIsDeg = false, bVIsoIsDeg = false;
 
-  if (myS->GetType() != GeomAbs_Plane)
+  if (myS->GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
-    bUIsoIsDeg = IsoIsDeg(theS, myuinf, GeomAbs_IsoU, 0., 1.e-9)
-                 || IsoIsDeg(theS, myusup, GeomAbs_IsoU, 0., 1.e-9);
-    bVIsoIsDeg = IsoIsDeg(theS, myvinf, GeomAbs_IsoV, 0., 1.e-9)
-                 || IsoIsDeg(theS, myvsup, GeomAbs_IsoV, 0., 1.e-9);
+    bUIsoIsDeg = IsoIsDeg(theS, myuinf, GeomAbs_IsoType::GeomAbs_IsoU, 0., 1.e-9)
+                 || IsoIsDeg(theS, myusup, GeomAbs_IsoType::GeomAbs_IsoU, 0., 1.e-9);
+    bVIsoIsDeg = IsoIsDeg(theS, myvinf, GeomAbs_IsoType::GeomAbs_IsoV, 0., 1.e-9)
+                 || IsoIsDeg(theS, myvsup, GeomAbs_IsoType::GeomAbs_IsoV, 0., 1.e-9);
   }
 
   if (bUIsoIsDeg)
@@ -249,23 +249,23 @@ void Extrema_ExtPS::Perform(const gp_Pnt& thePoint)
 
   switch (mytype)
   {
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       myExtPElS.Perform(thePoint, myS->Cylinder(), Precision::Confusion());
       break;
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       myExtPElS.Perform(thePoint, myS->Plane(), Precision::Confusion());
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       myExtPElS.Perform(thePoint, myS->Cone(), Precision::Confusion());
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       myExtPElS.Perform(thePoint, myS->Sphere(), Precision::Confusion());
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       myExtPElS.Perform(thePoint, myS->Torus(), Precision::Confusion());
       break;
 
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
       if (myExtPExtS.IsNull())
       {
         occ::handle<GeomAdaptor_SurfaceOfLinearExtrusion> aS(
@@ -292,7 +292,7 @@ void Extrema_ExtPS::Perform(const gp_Pnt& thePoint)
       return;
     }
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution: {
       if (myExtPRevS.IsNull())
       {
         occ::handle<GeomAdaptor_SurfaceOfRevolution> aS(new GeomAdaptor_SurfaceOfRevolution(

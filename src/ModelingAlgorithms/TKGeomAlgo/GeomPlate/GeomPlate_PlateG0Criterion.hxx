@@ -39,8 +39,8 @@ public:
     const NCollection_Sequence<gp_XY>&    Data,
     const NCollection_Sequence<gp_XYZ>&   G0Data,
     const double                          Maximum,
-    const AdvApp2Var_CriterionType        Type   = AdvApp2Var_Absolute,
-    const AdvApp2Var_CriterionRepartition Repart = AdvApp2Var_Regular);
+    const AdvApp2Var_CriterionType        Type   = AdvApp2Var_CriterionType::AdvApp2Var_Absolute,
+    const AdvApp2Var_CriterionRepartition Repart = AdvApp2Var_CriterionRepartition::AdvApp2Var_Regular);
 
   Standard_EXPORT void Value(AdvApp2Var_Patch& P, const AdvApp2Var_Context& C) const override;
 

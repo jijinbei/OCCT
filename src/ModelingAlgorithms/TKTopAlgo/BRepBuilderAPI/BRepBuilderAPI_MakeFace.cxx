@@ -401,22 +401,22 @@ BRepBuilderAPI_FaceError BRepBuilderAPI_MakeFace::Error() const
   switch (myMakeFace.Error())
   {
 
-    case BRepLib_FaceDone:
-      return BRepBuilderAPI_FaceDone;
+    case BRepLib_FaceError::BRepLib_FaceDone:
+      return BRepBuilderAPI_FaceError::BRepBuilderAPI_FaceDone;
 
-    case BRepLib_NoFace:
-      return BRepBuilderAPI_NoFace;
+    case BRepLib_FaceError::BRepLib_NoFace:
+      return BRepBuilderAPI_FaceError::BRepBuilderAPI_NoFace;
 
-    case BRepLib_NotPlanar:
-      return BRepBuilderAPI_NotPlanar;
+    case BRepLib_FaceError::BRepLib_NotPlanar:
+      return BRepBuilderAPI_FaceError::BRepBuilderAPI_NotPlanar;
 
-    case BRepLib_CurveProjectionFailed:
-      return BRepBuilderAPI_CurveProjectionFailed;
+    case BRepLib_FaceError::BRepLib_CurveProjectionFailed:
+      return BRepBuilderAPI_FaceError::BRepBuilderAPI_CurveProjectionFailed;
 
-    case BRepLib_ParametersOutOfRange:
-      return BRepBuilderAPI_ParametersOutOfRange;
+    case BRepLib_FaceError::BRepLib_ParametersOutOfRange:
+      return BRepBuilderAPI_FaceError::BRepBuilderAPI_ParametersOutOfRange;
   }
 
   // Portage WNT
-  return BRepBuilderAPI_FaceDone;
+  return BRepBuilderAPI_FaceError::BRepBuilderAPI_FaceDone;
 }

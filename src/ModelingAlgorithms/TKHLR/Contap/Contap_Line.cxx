@@ -25,7 +25,7 @@
 Contap_Line::Contap_Line()
 {
   svtx  = new NCollection_HSequence<Contap_Point>();
-  Trans = IntSurf_Undecided;
+  Trans = IntSurf_TypeTrans::IntSurf_Undecided;
 }
 
 void Contap_Line::ResetSeqOfVertex()
@@ -67,14 +67,14 @@ void Contap_Line::Clear()
   if (!curv.IsNull())
     curv->Clear();
   svtx = new NCollection_HSequence<Contap_Point>();
-  typL = Contap_Walking;
+  typL = Contap_IType::Contap_Walking;
 }
 
 void Contap_Line::SetValue(const gp_Lin& L)
 {
   pt   = L.Location();
   dir1 = L.Direction();
-  typL = Contap_Lin;
+  typL = Contap_IType::Contap_Lin;
 }
 
 void Contap_Line::SetValue(const gp_Circ& C)
@@ -83,19 +83,19 @@ void Contap_Line::SetValue(const gp_Circ& C)
   dir1 = C.Position().Direction();
   dir2 = C.Position().XDirection();
   rad  = C.Radius();
-  typL = Contap_Circle;
+  typL = Contap_IType::Contap_Circle;
 }
 
 void Contap_Line::SetValue(const occ::handle<Adaptor2d_Curve2d>& A)
 {
   thearc = A;
-  typL   = Contap_Restriction;
+  typL   = Contap_IType::Contap_Restriction;
 }
 
 void Contap_Line::SetLineOn2S(const occ::handle<IntSurf_LineOn2S>& L)
 {
   curv = L;
-  typL = Contap_Walking;
+  typL = Contap_IType::Contap_Walking;
 }
 
 void Contap_Line::SetTransitionOnS(const IntSurf_TypeTrans T)
@@ -110,7 +110,7 @@ IntSurf_TypeTrans Contap_Line::TransitionOnS() const
 
 const occ::handle<Adaptor2d_Curve2d>& Contap_Line::Arc() const
 {
-  if (typL != Contap_Restriction)
+  if (typL != Contap_IType::Contap_Restriction)
   {
     throw Standard_DomainError();
   }

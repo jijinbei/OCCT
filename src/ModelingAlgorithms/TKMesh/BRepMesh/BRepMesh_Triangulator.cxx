@@ -201,7 +201,7 @@ bool BRepMesh_Triangulator::prepareMeshStructure()
       for (int nn = 1; nn <= aW.Length(); ++nn, ++aNumNode)
       {
         const gp_Pnt2d        aP2d = ProjLib::Project(myPlane, gp_Pnt(myXYZs(aW(nn))));
-        const BRepMesh_Vertex aVertex(aP2d.XY(), aNumNode, BRepMesh_Frontier);
+        const BRepMesh_Vertex aVertex(aP2d.XY(), aNumNode, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
         const int             nnn = myMeshStructure->AddNode(aVertex);
         myIndices->SetValue(aNumNode, nnn);
         myTmpMap.Bind(aNumNode + 1, aW(nn) + 1);
@@ -212,7 +212,7 @@ bool BRepMesh_Triangulator::prepareMeshStructure()
       {
         const BRepMesh_Edge anEdge(myIndices->Value(aOffset + (nn - 1)),
                                    myIndices->Value(aOffset + (nn % aW.Length())),
-                                   BRepMesh_Frontier);
+                                   BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
         myMeshStructure->AddLink(anEdge);
       }
     }
@@ -247,7 +247,7 @@ bool BRepMesh_Triangulator::triangulate(NCollection_List<Poly_Triangle>& thePoly
     {
       const int                aTriangleId = aTriIter.Key();
       const BRepMesh_Triangle& aTriangle   = myMeshStructure->GetElement(aTriangleId);
-      if (aTriangle.Movability() == BRepMesh_Deleted)
+      if (aTriangle.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
       {
         continue;
       }

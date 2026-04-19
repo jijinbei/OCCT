@@ -108,9 +108,9 @@ inline bool IsOriented(const TopoDS_Shape& S)
 BRepCheck_Shell::BRepCheck_Shell(const TopoDS_Shell& S)
     : myNbori(0),
       myCdone(false),
-      myCstat(BRepCheck_NoError),
+      myCstat(BRepCheck_Status::BRepCheck_NoError),
       myOdone(false),
-      myOstat(BRepCheck_NoError)
+      myOstat(BRepCheck_Status::BRepCheck_NoError)
 {
   Init(S);
 }
@@ -152,7 +152,7 @@ void BRepCheck_Shell::Minimum()
 
     if (nbface == 0)
     {
-      BRepCheck::Add(lst, BRepCheck_EmptyShell);
+      BRepCheck::Add(lst, BRepCheck_Status::BRepCheck_EmptyShell);
     }
     else if (nbface >= 2)
     {
@@ -163,13 +163,13 @@ void BRepCheck_Shell::Minimum()
 
       if (mapF.Extent() != nbface)
       {
-        BRepCheck::Add(lst, BRepCheck_NotConnected);
+        BRepCheck::Add(lst, BRepCheck_Status::BRepCheck_NotConnected);
       }
     } // else if (nbface >= 2)
 
     if (lst.IsEmpty())
     {
-      lst.Append(BRepCheck_NoError);
+      lst.Append(BRepCheck_Status::BRepCheck_NoError);
     }
 
     myMapEF.Clear();
@@ -209,7 +209,7 @@ void BRepCheck_Shell::InContext(const TopoDS_Shape& S)
   }
   if (!exp.More())
   {
-    BRepCheck::Add(lst, BRepCheck_SubshapeNotInShape);
+    BRepCheck::Add(lst, BRepCheck_Status::BRepCheck_SubshapeNotInShape);
     return;
   }
 
@@ -219,7 +219,7 @@ void BRepCheck_Shell::InContext(const TopoDS_Shape& S)
 
     case TopAbs_SOLID: {
       BRepCheck_Status fst = Closed();
-      if ((fst == BRepCheck_NotClosed && S.Closed()) || (fst != BRepCheck_NoError))
+      if ((fst == BRepCheck_Status::BRepCheck_NotClosed && S.Closed()) || (fst != BRepCheck_Status::BRepCheck_NoError))
       {
         BRepCheck::Add(lst, fst);
       }
@@ -237,7 +237,7 @@ void BRepCheck_Shell::InContext(const TopoDS_Shape& S)
 
   if (lst.IsEmpty())
   {
-    lst.Append(BRepCheck_NoError);
+    lst.Append(BRepCheck_Status::BRepCheck_NoError);
   }
 }
 
@@ -280,13 +280,13 @@ BRepCheck_Status BRepCheck_Shell::Closed(const bool Update)
   myCdone = true; // it will be done...
 
   NCollection_List<BRepCheck_Status>::Iterator itl(aStatusList);
-  if (itl.Value() != BRepCheck_NoError)
+  if (itl.Value() != BRepCheck_Status::BRepCheck_NoError)
   {
     myCstat = itl.Value();
     return myCstat; // already saved
   }
 
-  myCstat = BRepCheck_NoError;
+  myCstat = BRepCheck_Status::BRepCheck_NoError;
   //
   int                                                           index, aNbF;
   TopExp_Explorer                                               exp, ede;
@@ -325,7 +325,7 @@ BRepCheck_Status BRepCheck_Shell::Closed(const bool Update)
     {
       if (!mapS.Add(aF))
       {
-        myCstat = BRepCheck_RedundantFace;
+        myCstat = BRepCheck_Status::BRepCheck_RedundantFace;
 
         if (Update)
         {
@@ -384,7 +384,7 @@ BRepCheck_Status BRepCheck_Shell::Closed(const bool Update)
   aNbF = mapS.Extent();
   if (myNbori != aNbF)
   {
-    myCstat = BRepCheck_NotConnected;
+    myCstat = BRepCheck_Status::BRepCheck_NotConnected;
     if (Update)
     {
       BRepCheck::Add(aStatusList, myCstat);
@@ -407,7 +407,7 @@ BRepCheck_Status BRepCheck_Shell::Closed(const bool Update)
       // this corresponds to the criteria of a solid (not those of a shell)
       if (nbSet > 1)
       {
-        myCstat = BRepCheck_InvalidMultiConnexity;
+        myCstat = BRepCheck_Status::BRepCheck_InvalidMultiConnexity;
         if (Update)
         {
           BRepCheck::Add(aStatusList, myCstat);
@@ -420,7 +420,7 @@ BRepCheck_Status BRepCheck_Shell::Closed(const bool Update)
     {
       if (!BRep_Tool::Degenerated(TopoDS::Edge(myMapEF.FindKey(i))))
       {
-        myCstat = BRepCheck_NotClosed;
+        myCstat = BRepCheck_Status::BRepCheck_NotClosed;
         if (Update)
         {
           BRepCheck::Add(aStatusList, myCstat);
@@ -464,7 +464,7 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
   myOdone = true;
 
   myOstat = Closed();
-  if (myOstat != BRepCheck_NotClosed && myOstat != BRepCheck_NoError)
+  if (myOstat != BRepCheck_Status::BRepCheck_NotClosed && myOstat != BRepCheck_Status::BRepCheck_NoError)
   {
     if (Update)
     {
@@ -473,10 +473,10 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
     return myOstat;
   }
 
-  myOstat = BRepCheck_NoError;
+  myOstat = BRepCheck_Status::BRepCheck_NoError;
 
   // First the orientation of each face in relation to the shell is found.
-  // It is used to check BRepCheck_RedundantFace
+  // It is used to check BRepCheck_Status::BRepCheck_RedundantFace
 
   NCollection_DataMap<TopoDS_Shape, int, TopTools_ShapeMapHasher> MapOfShapeOrientation;
   TopExp_Explorer                                                 exp, ede;
@@ -485,7 +485,7 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
   {
     if (!MapOfShapeOrientation.Bind(exp.Current(), (int)(exp.Current().Orientation())))
     {
-      myOstat = BRepCheck_RedundantFace;
+      myOstat = BRepCheck_Status::BRepCheck_RedundantFace;
       if (Update)
       {
         BRepCheck::Add(aStatusList, myOstat);
@@ -512,8 +512,8 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
 #endif
 
   // Then the orientation of faces by their connectivity is checked
-  // BRepCheck_BadOrientationOfSubshape and
-  //         BRepCheck_SubshapeNotInShape are checked;
+  // BRepCheck_Status::BRepCheck_BadOrientationOfSubshape and
+  //         BRepCheck_Status::BRepCheck_SubshapeNotInShape are checked;
 
   int                Nbedges = myMapEF.Extent();
   TopoDS_Face        Fref;
@@ -535,7 +535,7 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
 
       if (!MapOfShapeOrientation.IsBound(Fref))
       {
-        myOstat = BRepCheck_SubshapeNotInShape;
+        myOstat = BRepCheck_Status::BRepCheck_SubshapeNotInShape;
         if (Update)
         {
           BRepCheck::Add(aStatusList, myOstat);
@@ -567,7 +567,7 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
           TopoDS_Face        Fcur   = TopoDS::Face(lite.Value());
           if (!MapOfShapeOrientation.IsBound(Fcur))
           {
-            myOstat = BRepCheck_SubshapeNotInShape;
+            myOstat = BRepCheck_Status::BRepCheck_SubshapeNotInShape;
             if (Update)
             {
               BRepCheck::Add(aStatusList, myOstat);
@@ -610,7 +610,7 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
             // modified by NIZHNY-MKK  Thu Oct  2 17:56:47 2003
             if (!bfound || (ede.Current().Orientation() == orient))
             {
-              myOstat = BRepCheck_BadOrientationOfSubshape;
+              myOstat = BRepCheck_Status::BRepCheck_BadOrientationOfSubshape;
               if (Update)
               {
                 BRepCheck::Add(aStatusList, myOstat);
@@ -632,7 +632,7 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
         TopoDS_Face Fcur = TopoDS::Face(lite.Value());
         if (!MapOfShapeOrientation.IsBound(Fcur))
         {
-          myOstat = BRepCheck_SubshapeNotInShape;
+          myOstat = BRepCheck_Status::BRepCheck_SubshapeNotInShape;
           if (Update)
           {
             BRepCheck::Add(aStatusList, myOstat);
@@ -677,7 +677,7 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
 
       if (numF != numR)
       {
-        myOstat = BRepCheck_BadOrientationOfSubshape;
+        myOstat = BRepCheck_Status::BRepCheck_BadOrientationOfSubshape;
         if (Update)
         {
           BRepCheck::Add(aStatusList, myOstat);
@@ -692,9 +692,9 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
   // oriented.
   //          i.e. : if by modification of the orientation of a face it is possible to find
   //          a coherent orientation. (it is not possible on a Moebius band)
-  //          BRepCheck_UnorientableShape is checked
+  //          BRepCheck_Status::BRepCheck_UnorientableShape is checked
 
-  if (myOstat == BRepCheck_BadOrientationOfSubshape)
+  if (myOstat == BRepCheck_Status::BRepCheck_BadOrientationOfSubshape)
   {
     if (!Fref.IsNull())
     {
@@ -710,7 +710,7 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
           voisin.RemoveFirst();
           if (!MapOfShapeOrientation.IsBound(Fref))
           {
-            myOstat = BRepCheck_SubshapeNotInShape;
+            myOstat = BRepCheck_Status::BRepCheck_SubshapeNotInShape;
             if (Update)
             {
               BRepCheck::Add(aStatusList, myOstat);
@@ -759,7 +759,7 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
 
             if (!MapOfShapeOrientation.IsBound(Fcur))
             {
-              myOstat = BRepCheck_SubshapeNotInShape;
+              myOstat = BRepCheck_Status::BRepCheck_SubshapeNotInShape;
               if (Update)
               {
                 BRepCheck::Add(aStatusList, myOstat);
@@ -794,7 +794,7 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
               {
                 // It is necessary to return a face that has been already examined or returned
                 // if one gets nowhere, the shell cannot be oriented.
-                myOstat = BRepCheck_UnorientableShape;
+                myOstat = BRepCheck_Status::BRepCheck_UnorientableShape;
                 if (Update)
                 {
                   BRepCheck::Add(aStatusList, myOstat);
@@ -851,7 +851,7 @@ void BRepCheck_Shell::SetUnorientable()
   {
     aLock.lock();
   }
-  BRepCheck::Add(*myMap(myShape), BRepCheck_UnorientableShape);
+  BRepCheck::Add(*myMap(myShape), BRepCheck_Status::BRepCheck_UnorientableShape);
 }
 
 //=================================================================================================
@@ -860,7 +860,7 @@ bool BRepCheck_Shell::IsUnorientable() const
 {
   if (myOdone)
   {
-    return (myOstat != BRepCheck_NoError);
+    return (myOstat != BRepCheck_Status::BRepCheck_NoError);
   }
 
   occ::handle<NCollection_Shared<NCollection_List<BRepCheck_Status>>> aHList;
@@ -876,7 +876,7 @@ bool BRepCheck_Shell::IsUnorientable() const
 
   for (NCollection_List<BRepCheck_Status>::Iterator itl(aStatusList); itl.More(); itl.Next())
   {
-    if (itl.Value() == BRepCheck_UnorientableShape)
+    if (itl.Value() == BRepCheck_Status::BRepCheck_UnorientableShape)
     {
       return true;
     }

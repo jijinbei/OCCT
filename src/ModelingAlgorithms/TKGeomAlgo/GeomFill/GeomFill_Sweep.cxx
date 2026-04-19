@@ -206,7 +206,7 @@ void GeomFill_Sweep::Build(const occ::handle<GeomFill_SectionLaw>& Section,
   }
 
   // Traitement des produits Formelles
-  if ((!isKPart) && (Methode == GeomFill_Location))
+  if ((!isKPart) && (Methode == GeomFill_ApproxStyle::GeomFill_Location))
   {
     occ::handle<Geom_BSplineSurface> BS;
     BS = mySec->BSplineSurface();
@@ -632,7 +632,7 @@ bool GeomFill_Sweep::BuildKPart()
       UFirst      = AC.FirstParameter();
       ULast       = AC.LastParameter();
       // (1.1.a) Cas Plan
-      if ((SectionType == GeomAbs_Line) && IsTrsf)
+      if ((SectionType == GeomAbs_CurveType::GeomAbs_Line) && IsTrsf)
       {
         //  Modified by skv - Thu Feb  5 11:39:06 2004 OCC5073 Begin
         if (!IsSweepParallelSpine(myLoc, mySec, Tol))
@@ -655,7 +655,7 @@ bool GeomFill_Sweep::BuildKPart()
       }
 
       // (1.1.b) Cas Cylindrique
-      if ((SectionType == GeomAbs_Circle) && IsTrsf)
+      if ((SectionType == GeomAbs_CurveType::GeomAbs_Circle) && IsTrsf)
       {
         const double TolProd = 1.e-6;
 
@@ -842,7 +842,7 @@ bool GeomFill_Sweep::BuildKPart()
       ULast       = AC.LastParameter();
 
       // (2.1) Tore/Sphere ?
-      if ((SectionType == GeomAbs_Circle) && IsTrsf)
+      if ((SectionType == GeomAbs_CurveType::GeomAbs_Circle) && IsTrsf)
       {
         gp_Circ C = AC.Circle();
         double  Radius;
@@ -974,7 +974,7 @@ bool GeomFill_Sweep::BuildKPart()
         }
       }
       // (2.2) Cone / Cylindre
-      if ((SectionType == GeomAbs_Line) && IsTrsf)
+      if ((SectionType == GeomAbs_CurveType::GeomAbs_Line) && IsTrsf)
       {
         gp_Lin L = AC.Line();
         L.Transform(Tf2);

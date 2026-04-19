@@ -48,7 +48,7 @@ ProjLib_Torus::ProjLib_Torus(const gp_Torus& To, const gp_Circ& C)
 
 void ProjLib_Torus::Init(const gp_Torus& To)
 {
-  myType       = GeomAbs_OtherCurve;
+  myType       = GeomAbs_CurveType::GeomAbs_OtherCurve;
   myTorus      = To;
   myIsPeriodic = false;
   isDone       = false;
@@ -80,7 +80,7 @@ static gp_Pnt2d EvalPnt2d(const gp_Vec& Ve, const gp_Torus& To)
 
 void ProjLib_Torus::Project(const gp_Circ& C)
 {
-  myType = GeomAbs_Line;
+  myType = GeomAbs_CurveType::GeomAbs_Line;
 
   gp_Vec Xc(C.Position().XDirection());
   gp_Vec Yc(C.Position().YDirection());

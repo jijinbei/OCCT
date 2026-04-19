@@ -58,7 +58,7 @@ ProjLib_Cone::ProjLib_Cone(const gp_Cone& Co, const gp_Circ& C)
 
 void ProjLib_Cone::Init(const gp_Cone& Co)
 {
-  myType       = GeomAbs_OtherCurve;
+  myType       = GeomAbs_CurveType::GeomAbs_OtherCurve;
   myCone       = Co;
   myIsPeriodic = false;
   isDone       = false;
@@ -91,7 +91,7 @@ void ProjLib_Cone::Project(const gp_Lin& L)
   if (Dv.IsParallel(L.Direction(), Precision::Angular()))
   {
     // L is parallel to U-isoline of the cone.
-    myType = GeomAbs_Line;
+    myType = GeomAbs_CurveType::GeomAbs_Line;
 
     const double aSign = std::copysign(1.0, L.Direction().Dot(Dv));
     gp_Pnt2d     P2d(U, V - aDeltaV * aSign);
@@ -107,7 +107,7 @@ void ProjLib_Cone::Project(const gp_Lin& L)
 
 void ProjLib_Cone::Project(const gp_Circ& C)
 {
-  myType = GeomAbs_Line;
+  myType = GeomAbs_CurveType::GeomAbs_Line;
 
   gp_Ax3 ConePos = myCone.Position();
   gp_Ax3 CircPos = C.Position();

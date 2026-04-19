@@ -231,7 +231,7 @@ static int BuildPcurvesOnPlane(Draw_Interpretor& theDI, int theNArg, const char*
   {
     const TopoDS_Face&  aF = TopoDS::Face(exp.Current());
     BRepAdaptor_Surface aS(aF, false);
-    if (aS.GetType() == GeomAbs_Plane)
+    if (aS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       NCollection_List<TopoDS_Shape> aLE;
       TopExp_Explorer                exp1(aF, TopAbs_EDGE);

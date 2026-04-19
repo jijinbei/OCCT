@@ -45,7 +45,7 @@ FairCurve_EnergyOfBatten::FairCurve_EnergyOfBatten(
       MyBattenLaw(Law),
       MyTension(BSplOrder, FlatKnots, Poles, 1, LengthSliding, Law, FreeSliding),
       MySagging(BSplOrder, FlatKnots, Poles, 1, Law, FreeSliding),
-      MyStatus(FairCurve_OK)
+      MyStatus(FairCurve_AnalysisCode::FairCurve_OK)
 {
 }
 
@@ -82,10 +82,10 @@ bool FairCurve_EnergyOfBatten::Compute(const int DerivativeOrder, math_Vector& R
   bool               Ok = false;
 
   // Blindage contre les longueur de glissement trop exotique
-  MyStatus = FairCurve_OK;
+  MyStatus = FairCurve_AnalysisCode::FairCurve_OK;
   if (MyLengthSliding > 10 * OriginalSliding)
   {
-    MyStatus = FairCurve_InfiniteSliding;
+    MyStatus = FairCurve_AnalysisCode::FairCurve_InfiniteSliding;
     return false;
   }
 

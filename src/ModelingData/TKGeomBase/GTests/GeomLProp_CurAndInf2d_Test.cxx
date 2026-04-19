@@ -109,9 +109,9 @@ TEST_F(GeomLProp_CurAndInf2dTest, Ellipse_PerformCurExt_Types)
   for (int i = 1; i <= aAnalyzer.NbPoints(); ++i)
   {
     const LProp_CIType aType = aAnalyzer.Type(i);
-    if (aType == LProp_MinCur)
+    if (aType == LProp_CIType::LProp_MinCur)
       ++aNbMin;
-    else if (aType == LProp_MaxCur)
+    else if (aType == LProp_CIType::LProp_MaxCur)
       ++aNbMax;
   }
   EXPECT_EQ(aNbMin, 2);
@@ -179,7 +179,7 @@ TEST_F(GeomLProp_CurAndInf2dTest, Hyperbola_PerformCurExt_VertexOnly)
   ASSERT_TRUE(aAnalyzer.IsDone());
   ASSERT_EQ(aAnalyzer.NbPoints(), 1);
   EXPECT_NEAR(aAnalyzer.Parameter(1), 0.0, Precision::PConfusion());
-  EXPECT_EQ(aAnalyzer.Type(1), LProp_MinCur);
+  EXPECT_EQ(aAnalyzer.Type(1), LProp_CIType::LProp_MinCur);
 }
 
 TEST_F(GeomLProp_CurAndInf2dTest, Hyperbola_PerformInf_NoInflections)
@@ -199,7 +199,7 @@ TEST_F(GeomLProp_CurAndInf2dTest, Parabola_PerformCurExt_VertexOnly)
   ASSERT_TRUE(aAnalyzer.IsDone());
   ASSERT_EQ(aAnalyzer.NbPoints(), 1);
   EXPECT_NEAR(aAnalyzer.Parameter(1), 0.0, Precision::PConfusion());
-  EXPECT_EQ(aAnalyzer.Type(1), LProp_MinCur);
+  EXPECT_EQ(aAnalyzer.Type(1), LProp_CIType::LProp_MinCur);
 }
 
 TEST_F(GeomLProp_CurAndInf2dTest, PerformInf_ClearsPreviousExtrema)

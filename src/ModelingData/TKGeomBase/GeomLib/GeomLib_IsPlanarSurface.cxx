@@ -90,26 +90,26 @@ static bool Controle(const occ::handle<Geom_Curve>& C, const gp_Pln& Plan, const
 
   switch (Type)
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       Nb = 2;
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       Nb = 3;
       break;
     }
 
-    case GeomAbs_Ellipse:
-    case GeomAbs_Hyperbola:
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       Nb = 5;
       break;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       Nb = AC.NbPoles();
       break;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       Nb = AC.NbPoles();
       break;
     }
@@ -143,20 +143,20 @@ GeomLib_IsPlanarSurface::GeomLib_IsPlanarSurface(const occ::handle<Geom_Surface>
 
   switch (Type)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       IsPlan = true;
       myPlan = AS.Plane();
       break;
     }
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       IsPlan = false;
       break;
     }
 
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution: {
       bool   Essai = true;
       gp_Pnt P;
       gp_Vec DU, DV, Dn;
@@ -197,7 +197,7 @@ GeomLib_IsPlanarSurface::GeomLib_IsPlanarSurface(const occ::handle<Geom_Surface>
 
       break;
     }
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
       bool   Essai = false;
       double Umin, Umax, Vmin, Vmax;
       double norm;

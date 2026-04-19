@@ -14,9 +14,9 @@
 // commercial license or contractual agreement.
 
 // Modified:	Tue Oct 15 10:12:02 1996
-//              Add ChFi2d_TangencyError (PRO3529)
+//              Add ChFi2d_ConstructionError::ChFi2d_TangencyError (PRO3529)
 // Modified:	Fri Sep 25 09:38:04 1998
-//              status = ChFi2d_NotAuthorized if edges are not
+//              status = ChFi2d_ConstructionError::ChFi2d_NotAuthorized if edges are not
 //              lines or circles  (BUC60288) + partial_result
 
 #include <gp_Pnt2d.hxx>
@@ -62,7 +62,7 @@ static int chfi2d(Draw_Interpretor& di, int n, const char** a)
   }
 
   BRepFilletAPI_MakeFillet2d MF(TopoDS::Face(F));
-  if (MF.Status() == ChFi2d_NotPlanar)
+  if (MF.Status() == ChFi2d_ConstructionError::ChFi2d_NotPlanar)
   {
     di << "chfi2d : not a planar face";
     return 1;
@@ -144,7 +144,7 @@ static int chfi2d(Draw_Interpretor& di, int n, const char** a)
       }
     }
 
-    if (MF.Status() == ChFi2d_TangencyError)
+    if (MF.Status() == ChFi2d_ConstructionError::ChFi2d_TangencyError)
     {
       di << "chfi2d : " << a[i - 2] << " and " << a[i - 1] << " are tangent ";
       if (partial_result)
@@ -155,7 +155,7 @@ static int chfi2d(Draw_Interpretor& di, int n, const char** a)
       return 1;
     }
 
-    if (MF.Status() == ChFi2d_NotAuthorized)
+    if (MF.Status() == ChFi2d_ConstructionError::ChFi2d_NotAuthorized)
     {
       di << "chfi2d : " << a[i - 2] << " or " << a[i - 1] << " is not a line or a circle ";
       if (partial_result)
@@ -166,7 +166,7 @@ static int chfi2d(Draw_Interpretor& di, int n, const char** a)
       return 1;
     }
 
-    if (MF.Status() != ChFi2d_IsDone)
+    if (MF.Status() != ChFi2d_ConstructionError::ChFi2d_IsDone)
     {
       di << "chfi2d : operation failed on " << a[i - 2];
       if (partial_result)

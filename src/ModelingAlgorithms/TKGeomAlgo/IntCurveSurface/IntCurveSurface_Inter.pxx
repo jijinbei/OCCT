@@ -120,26 +120,26 @@ void PerformBounds(const CurveType&           theCurve,
 
   switch (aCurveType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       thePerformConic(CurveTool::Line(theCurve), theCurve, theSurface, UU1, VV1, UU2, VV2);
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       thePerformConic(CurveTool::Circle(theCurve), theCurve, theSurface, UU1, VV1, UU2, VV2);
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       thePerformConic(CurveTool::Ellipse(theCurve), theCurve, theSurface, UU1, VV1, UU2, VV2);
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       thePerformConic(CurveTool::Parabola(theCurve), theCurve, theSurface, UU1, VV1, UU2, VV2);
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       thePerformConic(CurveTool::Hyperbola(theCurve), theCurve, theSurface, UU1, VV1, UU2, VV2);
       break;
     default: {
       int                 nbIntervalsOnCurve = CurveTool::NbIntervals(theCurve, GeomAbs_C2);
       GeomAbs_SurfaceType aSurfaceType       = SurfaceTool::GetType(theSurface);
-      if ((aSurfaceType != GeomAbs_Plane) && (aSurfaceType != GeomAbs_Cylinder)
-          && (aSurfaceType != GeomAbs_Cone) && (aSurfaceType != GeomAbs_Sphere))
+      if ((aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Plane) && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cylinder)
+          && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cone) && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Sphere))
       {
         if (nbIntervalsOnCurve > 1)
         {
@@ -455,10 +455,10 @@ void InternalPerformPolygonBounds(const CurveType&        theCurve,
                                   AppendFunc              theAppend)
 {
   GeomAbs_SurfaceType aSurfaceType = SurfaceTool::GetType(theSurface);
-  if ((aSurfaceType != GeomAbs_Plane) && (aSurfaceType != GeomAbs_Cylinder)
-      && (aSurfaceType != GeomAbs_Cone) && (aSurfaceType != GeomAbs_Sphere))
+  if ((aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Plane) && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cylinder)
+      && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cone) && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Sphere))
   {
-    if (aSurfaceType != GeomAbs_BSplineSurface)
+    if (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
     {
       int nbsu = SurfaceTool::NbSamplesU(theSurface, theU1, theU2);
       int nbsv = SurfaceTool::NbSamplesV(theSurface, theV1, theV2);
@@ -537,24 +537,24 @@ void PerformConicSurfLine(const gp_Lin&           theLine,
 
   switch (aSurfaceType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       IntAna_IntConicQuad LinPlane(theLine,
                                    SurfaceTool::Plane(theSurface),
                                    THE_TOLERANCE_ANGULAIRE);
       theAppendIntAna(theCurve, theSurface, LinPlane);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       IntAna_IntConicQuad LinCylinder(theLine, SurfaceTool::Cylinder(theSurface));
       theAppendIntAna(theCurve, theSurface, LinCylinder);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       IntAna_IntConicQuad LinSphere(theLine, SurfaceTool::Sphere(theSurface));
       theAppendIntAna(theCurve, theSurface, LinSphere);
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       NCollection_Vector<IntCurveSurface_IntersectionPoint> aPoints;
       if (IntCurveSurface_InterUtils::
             ProcessLinTorus<CurveType, CurveTool, SurfaceType, SurfaceTool>(theLine,
@@ -571,7 +571,7 @@ void PerformConicSurfLine(const gp_Lin&           theLine,
         isAnaProcessed = false;
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       constexpr double correction = 1.E+5 * Precision::Angular();
       gp_Cone          cn         = SurfaceTool::Cone(theSurface);
       if (std::abs(cn.SemiAngle()) < M_PI / 2.0 - correction)
@@ -606,7 +606,7 @@ void PerformConicSurfLine(const gp_Lin&           theLine,
 
     if (U1inf || U2inf || V1inf || V2inf)
     {
-      if (aSurfaceType == GeomAbs_SurfaceOfExtrusion)
+      if (aSurfaceType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
       {
         IntCurveSurface_InterUtils::EstLimForInfExtr<SurfaceType, SurfaceTool>(theLine,
                                                                                theSurface,
@@ -622,7 +622,7 @@ void PerformConicSurfLine(const gp_Lin&           theLine,
                                                                                V2new,
                                                                                NoIntersection);
       }
-      else if (aSurfaceType == GeomAbs_SurfaceOfRevolution)
+      else if (aSurfaceType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
       {
         IntCurveSurface_InterUtils::EstLimForInfRevl<SurfaceType, SurfaceTool>(theLine,
                                                                                theSurface,
@@ -636,7 +636,7 @@ void PerformConicSurfLine(const gp_Lin&           theLine,
                                                                                V2new,
                                                                                NoIntersection);
       }
-      else if (aSurfaceType == GeomAbs_OffsetSurface)
+      else if (aSurfaceType == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
       {
         IntCurveSurface_InterUtils::EstLimForInfOffs<SurfaceType, SurfaceTool>(theLine,
                                                                                theSurface,
@@ -706,7 +706,7 @@ void PerformConicSurfCircle(const gp_Circ&      theCircle,
   GeomAbs_SurfaceType aSurfaceType = SurfaceTool::GetType(theSurface);
   switch (aSurfaceType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       IntAna_IntConicQuad CircPlane(theCircle,
                                     SurfaceTool::Plane(theSurface),
                                     THE_TOLERANCE_ANGULAIRE,
@@ -714,17 +714,17 @@ void PerformConicSurfCircle(const gp_Circ&      theCircle,
       theAppendIntAna(theCurve, theSurface, CircPlane);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       IntAna_IntConicQuad CircCylinder(theCircle, SurfaceTool::Cylinder(theSurface));
       theAppendIntAna(theCurve, theSurface, CircCylinder);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       IntAna_IntConicQuad CircCone(theCircle, SurfaceTool::Cone(theSurface));
       theAppendIntAna(theCurve, theSurface, CircCone);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       IntAna_IntConicQuad CircSphere(theCircle, SurfaceTool::Sphere(theSurface));
       theAppendIntAna(theCurve, theSurface, CircSphere);
       break;
@@ -757,7 +757,7 @@ void PerformConicSurfEllipse(const gp_Elips&     theEllipse,
   GeomAbs_SurfaceType aSurfaceType = SurfaceTool::GetType(theSurface);
   switch (aSurfaceType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       IntAna_IntConicQuad EllipsePlane(theEllipse,
                                        SurfaceTool::Plane(theSurface),
                                        THE_TOLERANCE_ANGULAIRE,
@@ -765,17 +765,17 @@ void PerformConicSurfEllipse(const gp_Elips&     theEllipse,
       theAppendIntAna(theCurve, theSurface, EllipsePlane);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       IntAna_IntConicQuad EllipseCylinder(theEllipse, SurfaceTool::Cylinder(theSurface));
       theAppendIntAna(theCurve, theSurface, EllipseCylinder);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       IntAna_IntConicQuad EllipseCone(theEllipse, SurfaceTool::Cone(theSurface));
       theAppendIntAna(theCurve, theSurface, EllipseCone);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       IntAna_IntConicQuad EllipseSphere(theEllipse, SurfaceTool::Sphere(theSurface));
       theAppendIntAna(theCurve, theSurface, EllipseSphere);
       break;
@@ -809,24 +809,24 @@ void PerformConicSurfParabola(const gp_Parab&         theParab,
   GeomAbs_SurfaceType aSurfaceType = SurfaceTool::GetType(theSurface);
   switch (aSurfaceType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       IntAna_IntConicQuad ParabPlane(theParab,
                                      SurfaceTool::Plane(theSurface),
                                      THE_TOLERANCE_ANGULAIRE);
       theAppendIntAna(theCurve, theSurface, ParabPlane);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       IntAna_IntConicQuad ParabCylinder(theParab, SurfaceTool::Cylinder(theSurface));
       theAppendIntAna(theCurve, theSurface, ParabCylinder);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       IntAna_IntConicQuad ParabCone(theParab, SurfaceTool::Cone(theSurface));
       theAppendIntAna(theCurve, theSurface, ParabCone);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       IntAna_IntConicQuad ParabSphere(theParab, SurfaceTool::Sphere(theSurface));
       theAppendIntAna(theCurve, theSurface, ParabSphere);
       break;
@@ -883,24 +883,24 @@ void PerformConicSurfHyperbola(const gp_Hypr&          theHypr,
   GeomAbs_SurfaceType aSurfaceType = SurfaceTool::GetType(theSurface);
   switch (aSurfaceType)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       IntAna_IntConicQuad HyprPlane(theHypr,
                                     SurfaceTool::Plane(theSurface),
                                     THE_TOLERANCE_ANGULAIRE);
       theAppendIntAna(theCurve, theSurface, HyprPlane);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       IntAna_IntConicQuad HyprCylinder(theHypr, SurfaceTool::Cylinder(theSurface));
       theAppendIntAna(theCurve, theSurface, HyprCylinder);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       IntAna_IntConicQuad HyprCone(theHypr, SurfaceTool::Cone(theSurface));
       theAppendIntAna(theCurve, theSurface, HyprCone);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       IntAna_IntConicQuad HyprSphere(theHypr, SurfaceTool::Sphere(theSurface));
       theAppendIntAna(theCurve, theSurface, HyprSphere);
       break;

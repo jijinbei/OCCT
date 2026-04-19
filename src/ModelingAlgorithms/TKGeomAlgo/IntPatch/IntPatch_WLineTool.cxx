@@ -389,12 +389,12 @@ static const int aNbSingleBezier = 30;
 //=========================================================================
 static bool IsSurfPlaneLike(const occ::handle<Adaptor3d_Surface>& theS)
 {
-  if (theS->GetType() == GeomAbs_Plane)
+  if (theS->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     return true;
   }
 
-  if (theS->GetType() == GeomAbs_BSplineSurface)
+  if (theS->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     if (theS->UDegree() == 1 && theS->VDegree() == 1)
     {
@@ -705,23 +705,23 @@ static bool IsIntersectionPoint(const gp_Pnt&                         thePmid,
 
   switch (theS1->GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       ElSLib::Parameters(theS1->Plane(), thePmid, aU1, aV1);
       break;
 
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       ElSLib::Parameters(theS1->Cylinder(), thePmid, aU1, aV1);
       break;
 
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       ElSLib::Parameters(theS1->Sphere(), thePmid, aU1, aV1);
       break;
 
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       ElSLib::Parameters(theS1->Cone(), thePmid, aU1, aV1);
       break;
 
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       ElSLib::Parameters(theS1->Torus(), thePmid, aU1, aV1);
       break;
 
@@ -731,23 +731,23 @@ static bool IsIntersectionPoint(const gp_Pnt&                         thePmid,
 
   switch (theS2->GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       ElSLib::Parameters(theS2->Plane(), thePmid, aU2, aV2);
       break;
 
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       ElSLib::Parameters(theS2->Cylinder(), thePmid, aU2, aV2);
       break;
 
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       ElSLib::Parameters(theS2->Sphere(), thePmid, aU2, aV2);
       break;
 
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       ElSLib::Parameters(theS2->Cone(), thePmid, aU2, aV2);
       break;
 
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       ElSLib::Parameters(theS2->Torus(), thePmid, aU2, aV2);
       break;
 

@@ -183,7 +183,7 @@ void BRepFeat_MakePipe::Perform()
   mySUntil.Nullify();
   ShapeUntilValid();
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_NoSelection;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
   PerfSelectionValid();
   TopoDS_Shape theBase = myPbase;
   LocOpe_Pipe  thePipe(mySpine, theBase);
@@ -246,7 +246,7 @@ void BRepFeat_MakePipe::Perform(const TopoDS_Shape& Until)
     throw Standard_ConstructionError();
   }
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_SelectionU;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionU;
   PerfSelectionValid();
   mySFrom.Nullify();
   ShapeFromValid();
@@ -296,7 +296,7 @@ void BRepFeat_MakePipe::Perform(const TopoDS_Shape& From, const TopoDS_Shape& Un
     }
   }
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_SelectionFU;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionFU;
   PerfSelectionValid();
   TopExp_Explorer exp(From, TopAbs_FACE);
   if (!exp.More())

@@ -181,7 +181,7 @@ void DrawTrSurf_Surface::DrawOn(Draw_Display& dis, const bool Iso) const
     for (i = 1; i <= nbUIsos; i++)
     {
       U += Du;
-      DrawIsoCurveOn(C, GeomAbs_IsoU, U, VFirst, VLast, dis);
+      DrawIsoCurveOn(C, GeomAbs_IsoType::GeomAbs_IsoU, U, VFirst, VLast, dis);
     }
 
     double Dv = (VLast - VFirst) / (nbVIsos + 1);
@@ -189,24 +189,24 @@ void DrawTrSurf_Surface::DrawOn(Draw_Display& dis, const bool Iso) const
     for (j = 1; j <= nbVIsos; j++)
     {
       V += Dv;
-      DrawIsoCurveOn(C, GeomAbs_IsoV, V, UFirst, ULast, dis);
+      DrawIsoCurveOn(C, GeomAbs_IsoType::GeomAbs_IsoV, V, UFirst, ULast, dis);
     }
   }
 
   // draw bounds
   dis.SetColor(boundsLook);
   if (!UfirstInf)
-    DrawIsoCurveOn(C, GeomAbs_IsoU, UFirst, VFirst, VLast, dis);
+    DrawIsoCurveOn(C, GeomAbs_IsoType::GeomAbs_IsoU, UFirst, VFirst, VLast, dis);
   if (!UlastInf)
-    DrawIsoCurveOn(C, GeomAbs_IsoU, ULast, VFirst, VLast, dis);
+    DrawIsoCurveOn(C, GeomAbs_IsoType::GeomAbs_IsoU, ULast, VFirst, VLast, dis);
   if (!VfirstInf)
-    DrawIsoCurveOn(C, GeomAbs_IsoV, VFirst, UFirst, ULast, dis);
+    DrawIsoCurveOn(C, GeomAbs_IsoType::GeomAbs_IsoV, VFirst, UFirst, ULast, dis);
   if (!VlastInf)
-    DrawIsoCurveOn(C, GeomAbs_IsoV, VLast, UFirst, ULast, dis);
+    DrawIsoCurveOn(C, GeomAbs_IsoType::GeomAbs_IsoV, VLast, UFirst, ULast, dis);
 
   // draw marker
   DrawIsoCurveOn(C,
-                 GeomAbs_IsoU,
+                 GeomAbs_IsoType::GeomAbs_IsoU,
                  UFirst + (ULast - UFirst) / 10.,
                  VFirst,
                  VFirst + (VLast - VFirst) / 10.,

@@ -114,7 +114,7 @@ void GCPnts_QuasiUniformAbscissa::initialize(const TheCurve& theC,
                                              const double    theU1,
                                              const double    theU2)
 {
-  if (theC.GetType() != GeomAbs_BezierCurve && theC.GetType() != GeomAbs_BSplineCurve)
+  if (theC.GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve && theC.GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     GCPnts_UniformAbscissa aUA(theC, theNbPoints, theU1, theU2);
     myDone     = aUA.IsDone();

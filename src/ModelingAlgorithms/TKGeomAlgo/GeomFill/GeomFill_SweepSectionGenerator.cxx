@@ -93,7 +93,7 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path, c
   myRadius = Radius;
   GeomAdaptor_Curve ThePath(Path);
 
-  if (ThePath.GetType() == GeomAbs_Circle)
+  if (ThePath.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
 
     myCircPathAxis = ThePath.Circle().Axis();
@@ -120,7 +120,7 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   myRadius = 0;
   GeomAdaptor_Curve ThePath(Path);
 
-  if (ThePath.GetType() == GeomAbs_Circle)
+  if (ThePath.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     myCircPathAxis = ThePath.Circle().Axis();
     myType         = 5;
@@ -144,7 +144,7 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   else
   {
     // JAG
-    myFirstSect = GeomConvert::CurveToBSplineCurve(FirstSect, Convert_QuasiAngular);
+    myFirstSect = GeomConvert::CurveToBSplineCurve(FirstSect, Convert_ParameterisationType::Convert_QuasiAngular);
   }
   if (myFirstSect->IsPeriodic())
     myFirstSect->SetNotPeriodic();
@@ -160,7 +160,7 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   myRadius = 0;
   GeomAdaptor_Curve ThePath(Path);
 
-  if (ThePath.GetType() == GeomAbs_Circle)
+  if (ThePath.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
 
     myCircPathAxis = ThePath.Circle().Axis();
@@ -185,7 +185,7 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   }
   else
   {
-    myFirstSect = GeomConvert::CurveToBSplineCurve(FirstSect, Convert_QuasiAngular);
+    myFirstSect = GeomConvert::CurveToBSplineCurve(FirstSect, Convert_ParameterisationType::Convert_QuasiAngular);
   }
   if (LastSect->IsKind(STANDARD_TYPE(Geom_BSplineCurve)))
   {
@@ -193,7 +193,7 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   }
   else
   {
-    myLastSect = GeomConvert::CurveToBSplineCurve(LastSect, Convert_QuasiAngular);
+    myLastSect = GeomConvert::CurveToBSplineCurve(LastSect, Convert_ParameterisationType::Convert_QuasiAngular);
   }
 
   if (myFirstSect->IsPeriodic())
@@ -302,7 +302,7 @@ void GeomFill_SweepSectionGenerator::Perform(const bool Polynomial)
     occ::handle<Geom_TrimmedCurve> Circ =
       new Geom_TrimmedCurve(new Geom_Circle(CircleAxis, myRadius), 0., 2. * M_PI);
 
-    myFirstSect = GeomConvert::CurveToBSplineCurve(Circ, Convert_QuasiAngular);
+    myFirstSect = GeomConvert::CurveToBSplineCurve(Circ, Convert_ParameterisationType::Convert_QuasiAngular);
   }
 
   if (myType <= 3 && myType >= 1)
@@ -565,7 +565,7 @@ void GeomFill_SweepSectionGenerator::Section(const int                   P,
     double U1 =
       (1 - Alpha) * myAdpFirstSect->FirstParameter() + Alpha * myAdpFirstSect->LastParameter();
 
-    if (myAdpFirstSect->GetType() == GeomAbs_Line)
+    if (myAdpFirstSect->GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       if (Precision::IsInfinite(myAdpFirstSect->FirstParameter())
           || Precision::IsInfinite(myAdpFirstSect->LastParameter()))
@@ -579,7 +579,7 @@ void GeomFill_SweepSectionGenerator::Section(const int                   P,
     double U2 =
       (1 - Alpha) * myAdpLastSect->FirstParameter() + Alpha * myAdpLastSect->LastParameter();
 
-    if (myAdpLastSect->GetType() == GeomAbs_Line)
+    if (myAdpLastSect->GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       if (Precision::IsInfinite(myAdpLastSect->FirstParameter())
           || Precision::IsInfinite(myAdpLastSect->LastParameter()))
@@ -626,9 +626,9 @@ void GeomFill_SweepSectionGenerator::Section(const int                   P,
       occ::handle<Geom_TrimmedCurve> CT   = new Geom_TrimmedCurve(Circ, 0., Angle);
       occ::handle<Geom_BSplineCurve> BS;
       if (myPolynomial)
-        BS = GeomConvert::CurveToBSplineCurve(CT, Convert_Polynomial);
+        BS = GeomConvert::CurveToBSplineCurve(CT, Convert_ParameterisationType::Convert_Polynomial);
       else
-        BS = GeomConvert::CurveToBSplineCurve(CT, Convert_QuasiAngular);
+        BS = GeomConvert::CurveToBSplineCurve(CT, Convert_ParameterisationType::Convert_QuasiAngular);
 
       Poles   = BS->Poles();
       Weigths = BS->WeightsArray();

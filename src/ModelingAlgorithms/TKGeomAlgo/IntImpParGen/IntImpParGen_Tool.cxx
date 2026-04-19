@@ -53,13 +53,13 @@ void Determine_Position(IntRes2d_Position&     Pos1,
                         const double           Param1)
 {
 
-  Pos1 = IntRes2d_Middle;
+  Pos1 = IntRes2d_Position::IntRes2d_Middle;
 
   if (TheDomain.HasFirstPoint())
   {
     if (Pnt1.Distance(TheDomain.FirstPoint()) <= TheDomain.FirstTolerance())
     {
-      Pos1 = IntRes2d_Head;
+      Pos1 = IntRes2d_Position::IntRes2d_Head;
     }
   }
 
@@ -67,15 +67,15 @@ void Determine_Position(IntRes2d_Position&     Pos1,
   {
     if (Pnt1.Distance(TheDomain.LastPoint()) <= TheDomain.LastTolerance())
     {
-      if (Pos1 == IntRes2d_Head)
+      if (Pos1 == IntRes2d_Position::IntRes2d_Head)
       {
         if (std::abs(Param1 - TheDomain.LastParameter())
             < std::abs(Param1 - TheDomain.FirstParameter()))
-          Pos1 = IntRes2d_End;
+          Pos1 = IntRes2d_Position::IntRes2d_End;
       }
       else
       {
-        Pos1 = IntRes2d_End;
+        Pos1 = IntRes2d_Position::IntRes2d_End;
       }
     }
   }
@@ -132,8 +132,8 @@ void Determine_Transition(const IntRes2d_Position Pos1,
       bool opos = (Tan1.Dot(Tan2)) < 0;
       if (!(courbure1 || courbure2))
       {
-        T1.SetValue(true, Pos1, IntRes2d_Unknown, opos);
-        T2.SetValue(true, Pos2, IntRes2d_Unknown, opos);
+        T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Unknown, opos);
+        T2.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Unknown, opos);
       }
       else
       {
@@ -159,44 +159,44 @@ void Determine_Transition(const IntRes2d_Position Pos1,
 
         if (std::abs(Val1 - Val2) <= gp::Resolution())
         {
-          T1.SetValue(true, Pos1, IntRes2d_Unknown, opos);
-          T2.SetValue(true, Pos2, IntRes2d_Unknown, opos);
+          T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Unknown, opos);
+          T2.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Unknown, opos);
         }
         else if (Val2 > Val1)
         {
-          T2.SetValue(true, Pos2, IntRes2d_Inside, opos);
+          T2.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Inside, opos);
           if (opos)
           {
-            T1.SetValue(true, Pos1, IntRes2d_Inside, opos);
+            T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Inside, opos);
           }
           else
           {
-            T1.SetValue(true, Pos1, IntRes2d_Outside, opos);
+            T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Outside, opos);
           }
         }
         else
         { // Val1 > Val2
-          T2.SetValue(true, Pos2, IntRes2d_Outside, opos);
+          T2.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Outside, opos);
           if (opos)
           {
-            T1.SetValue(true, Pos1, IntRes2d_Outside, opos);
+            T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Outside, opos);
           }
           else
           {
-            T1.SetValue(true, Pos1, IntRes2d_Inside, opos);
+            T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Inside, opos);
           }
         }
       }
     }
     else if (sgn < 0)
     {
-      T1.SetValue(false, Pos1, IntRes2d_In);
-      T2.SetValue(false, Pos2, IntRes2d_Out);
+      T1.SetValue(false, Pos1, IntRes2d_TypeTrans::IntRes2d_In);
+      T2.SetValue(false, Pos2, IntRes2d_TypeTrans::IntRes2d_Out);
     }
     else
     { // sgn>0
-      T1.SetValue(false, Pos1, IntRes2d_Out);
-      T2.SetValue(false, Pos2, IntRes2d_In);
+      T1.SetValue(false, Pos1, IntRes2d_TypeTrans::IntRes2d_Out);
+      T2.SetValue(false, Pos2, IntRes2d_TypeTrans::IntRes2d_In);
     }
   }
 }

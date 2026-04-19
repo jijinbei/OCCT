@@ -26,7 +26,7 @@ inline void IntSurf_Transition::SetValue(const bool              Tangent,
 {
 
   tangent = Tangent;
-  typetra = IntSurf_Touch;
+  typetra = IntSurf_TypeTrans::IntSurf_Touch;
   situat  = Situ;
   oppos   = Oppos;
 }
@@ -34,7 +34,7 @@ inline void IntSurf_Transition::SetValue(const bool              Tangent,
 inline void IntSurf_Transition::SetValue()
 {
 
-  typetra = IntSurf_Undecided;
+  typetra = IntSurf_TypeTrans::IntSurf_Undecided;
 }
 
 inline IntSurf_TypeTrans IntSurf_Transition::TransitionType() const
@@ -46,7 +46,7 @@ inline IntSurf_TypeTrans IntSurf_Transition::TransitionType() const
 inline bool IntSurf_Transition::IsTangent() const
 {
 
-  if (typetra == IntSurf_Undecided)
+  if (typetra == IntSurf_TypeTrans::IntSurf_Undecided)
   {
     throw Standard_DomainError();
   }
@@ -56,7 +56,7 @@ inline bool IntSurf_Transition::IsTangent() const
 inline IntSurf_Situation IntSurf_Transition::Situation() const
 {
 
-  if (typetra != IntSurf_Touch)
+  if (typetra != IntSurf_TypeTrans::IntSurf_Touch)
   {
     throw Standard_DomainError();
   }
@@ -66,7 +66,7 @@ inline IntSurf_Situation IntSurf_Transition::Situation() const
 inline bool IntSurf_Transition::IsOpposite() const
 {
 
-  if (typetra != IntSurf_Touch)
+  if (typetra != IntSurf_TypeTrans::IntSurf_Touch)
   {
     throw Standard_DomainError();
   }

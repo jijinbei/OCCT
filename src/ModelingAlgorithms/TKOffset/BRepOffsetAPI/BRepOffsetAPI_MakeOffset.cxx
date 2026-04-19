@@ -51,7 +51,7 @@ static bool NeedsConvertion(const TopoDS_Wire& theWire)
     const TopoDS_Edge& anEdge = TopoDS::Edge(anIter.Value());
     BRepAdaptor_Curve  aBAcurve(anEdge);
     GeomAbs_CurveType  aType = aBAcurve.GetType();
-    if (aType != GeomAbs_Line && aType != GeomAbs_Circle)
+    if (aType != GeomAbs_CurveType::GeomAbs_Line && aType != GeomAbs_CurveType::GeomAbs_Circle)
       return true;
   }
 
@@ -90,7 +90,7 @@ TopoDS_Face BRepOffsetAPI_MakeOffset::ConvertFace(const TopoDS_Face& theFace,
 
 BRepOffsetAPI_MakeOffset::BRepOffsetAPI_MakeOffset()
     : myIsInitialized(false),
-      myJoin(GeomAbs_Arc),
+      myJoin(GeomAbs_JoinType::GeomAbs_Arc),
       myIsOpenResult(false),
       myIsToApprox(false)
 {
@@ -296,7 +296,7 @@ static void BuildDomains(TopoDS_Face&                           myFace,
       TopoDS_Vertex   V = TopoDS::Vertex(exp.Current());
       gp_Pnt2d        PV;
       gp_Pnt          P3d = BRep_Tool::Pnt(V);
-      Extrema_ExtPS   ExtPS(P3d, S, Tol, Tol, Extrema_ExtFlag_MIN);
+      Extrema_ExtPS   ExtPS(P3d, S, Tol, Tol, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
       double          Dist2Min = Precision::Infinite();
       double          Found    = false;
       for (int ie = 1; ie <= ExtPS.NbExt(); ie++)
@@ -351,7 +351,7 @@ void BRepOffsetAPI_MakeOffset::Perform(const double Offset, const double Alt)
         for (; anItl.More(); anItl.Next())
         {
           BRepBuilderAPI_MakeFace aFaceMaker(TopoDS::Wire(anItl.Value()), OnlyPlane);
-          if (aFaceMaker.Error() == BRepBuilderAPI_FaceDone)
+          if (aFaceMaker.Error() == BRepBuilderAPI_FaceError::BRepBuilderAPI_FaceDone)
           {
             aFace = aFaceMaker.Face();
             break;

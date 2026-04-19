@@ -23,13 +23,13 @@ Standard_OStream& TopOpeBRepTool::Print(const TopOpeBRepTool_OutCurveType t, Sta
   // #ifdef OCCT_DEBUG
   switch (t)
   {
-    case TopOpeBRepTool_BSPLINE1:
+    case TopOpeBRepTool_OutCurveType::TopOpeBRepTool_BSPLINE1:
       OS << "BSPLINE1";
       break;
-    case TopOpeBRepTool_APPROX:
+    case TopOpeBRepTool_OutCurveType::TopOpeBRepTool_APPROX:
       OS << "APPROX";
       break;
-    case TopOpeBRepTool_INTERPOL:
+    case TopOpeBRepTool_OutCurveType::TopOpeBRepTool_INTERPOL:
       OS << "INTERPOL";
       break;
     default:

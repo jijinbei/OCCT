@@ -725,7 +725,7 @@ static void RefEdgeInter(
   //
   Geom2dAdaptor_Curve GAC1(pcurve1, f[1], l[1]);
   Geom2dAdaptor_Curve GAC2(pcurve2, f[2], l[2]);
-  if ((GAC1.GetType() == GeomAbs_Line) && (GAC2.GetType() == GeomAbs_Line))
+  if ((GAC1.GetType() == GeomAbs_CurveType::GeomAbs_Line) && (GAC2.GetType() == GeomAbs_CurveType::GeomAbs_Line))
   {
     // Just quickly check if lines coincide
     double anAngle = std::abs(GAC1.Line().Direction().Angle(GAC2.Line().Direction()));
@@ -747,8 +747,8 @@ static void RefEdgeInter(
   //
   if (!Inter2d.IsDone() || !Inter2d.NbPoints())
   {
-    theCoincide = (Inter2d.NbSegments() && (GAC1.GetType() == GeomAbs_Line)
-                   && (GAC2.GetType() == GeomAbs_Line));
+    theCoincide = (Inter2d.NbSegments() && (GAC1.GetType() == GeomAbs_CurveType::GeomAbs_Line)
+                   && (GAC2.GetType() == GeomAbs_CurveType::GeomAbs_Line));
     return;
   }
   //
@@ -1004,12 +1004,12 @@ static int evaluateMaxSegment(const Adaptor3d_CurveOnSurface& aCurveOnSurface)
 
   double aNbSKnots = 0, aNbC2dKnots = 0;
 
-  if (aSurf->GetType() == GeomAbs_BSplineSurface)
+  if (aSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     occ::handle<Geom_BSplineSurface> aBSpline = aSurf->BSpline();
     aNbSKnots = std::max(aBSpline->NbUKnots(), aBSpline->NbVKnots());
   }
-  if (aCurv2d->GetType() == GeomAbs_BSplineCurve)
+  if (aCurv2d->GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     aNbC2dKnots = aCurv2d->NbKnots();
   }
@@ -1071,7 +1071,7 @@ static bool ExtendPCurve(const occ::handle<Geom2d_Curve>& aPCurve,
   gp_Dir2d                              aDBnd;
   occ::handle<Geom2d_Line>              aLin;
   occ::handle<Geom2d_TrimmedCurve>      aSegment;
-  Geom2dConvert_CompCurveToBSplineCurve aCompCurve(aTrCurve, Convert_RationalC1);
+  Geom2dConvert_CompCurveToBSplineCurve aCompCurve(aTrCurve, Convert_ParameterisationType::Convert_RationalC1);
   constexpr double                      aTol   = Precision::Confusion();
   double                                aDelta = std::max(a2Offset, 1.);
 
@@ -1492,7 +1492,7 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
       gp_Dir                              aDBnd;
       occ::handle<Geom_Line>              aLin;
       occ::handle<Geom_TrimmedCurve>      aSegment;
-      GeomConvert_CompCurveToBSplineCurve aCompCurve(aTrCurve, Convert_RationalC1);
+      GeomConvert_CompCurveToBSplineCurve aCompCurve(aTrCurve, Convert_ParameterisationType::Convert_RationalC1);
       constexpr double                    aTol   = Precision::Confusion();
       double                              aDelta = std::max(a2Offset, 1.);
 

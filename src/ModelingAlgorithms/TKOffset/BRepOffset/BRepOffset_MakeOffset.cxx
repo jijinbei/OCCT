@@ -548,7 +548,7 @@ static void FillContours(
         if (BRep_Tool::Degenerated(anEdge))
           continue;
         const NCollection_List<BRepOffset_Interval>& Lint = Analyser.Type(anEdge);
-        if (!Lint.IsEmpty() && Lint.First().Type() == ChFiDS_FreeBound)
+        if (!Lint.IsEmpty() && Lint.First().Type() == ChFiDS_TypeOfConcavity::ChFiDS_FreeBound)
         {
           MapEF.Bind(anEdge, aFace);
           Edges.Append(anEdge);
@@ -844,13 +844,13 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   analyzeProgress(100., aSteps);
 
   if (!CheckInputData(aPS.Next(aSteps(PIOperation_CheckInputData)))
-      || myError != BRepOffset_NoError)
+      || myError != BRepOffset_Error::BRepOffset_NoError)
   {
     // There is error in input data.
     // Check Error() method.
     return;
   }
-  myError           = BRepOffset_NoError;
+  myError           = BRepOffset_Error::BRepOffset_NoError;
   TopAbs_State Side = TopAbs_IN;
   if (myOffset < 0.)
     Side = TopAbs_OUT;
@@ -862,7 +862,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   // There are possible second variant: analytical continuation of arcsin.
   double TolAngleCoeff = std::min(myTol / (std::abs(myOffset * 0.5) + Precision::Confusion()), 1.0);
   double TolAngle      = 4 * std::asin(TolAngleCoeff);
-  if ((myJoin == GeomAbs_Intersection) && myInter && myIsPlanar)
+  if ((myJoin == GeomAbs_JoinType::GeomAbs_Intersection) && myInter && myIsPlanar)
   {
     myAnalyse.SetOffsetValue(myOffset);
     myAnalyse.SetFaceOffsetMap(myFaceOffset);
@@ -875,15 +875,15 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
     const NCollection_List<BRepOffset_Interval>& aLI = myAnalyse.Type(anE);
     if (aLI.IsEmpty())
       continue;
-    if (aLI.Last().Type() == ChFiDS_Mixed)
+    if (aLI.Last().Type() == ChFiDS_TypeOfConcavity::ChFiDS_Mixed)
     {
-      myError = BRepOffset_MixedConnectivity;
+      myError = BRepOffset_Error::BRepOffset_MixedConnectivity;
       return;
     }
   }
   if (!aPS.More())
   {
-    myError = BRepOffset_UserBreak;
+    myError = BRepOffset_Error::BRepOffset_UserBreak;
     return;
   }
   //---------------------------------------------------
@@ -894,11 +894,11 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   //----------------------------
   UpdateFaceOffset();
 
-  if (myJoin == GeomAbs_Arc)
+  if (myJoin == GeomAbs_JoinType::GeomAbs_Arc)
     BuildOffsetByArc(aPS.Next(aSteps(PIOperation_BuildOffsetBy)));
-  else if (myJoin == GeomAbs_Intersection)
+  else if (myJoin == GeomAbs_JoinType::GeomAbs_Intersection)
     BuildOffsetByInter(aPS.Next(aSteps(PIOperation_BuildOffsetBy)));
-  if (myError != BRepOffset_NoError)
+  if (myError != BRepOffset_Error::BRepOffset_NoError)
   {
     return;
   }
@@ -910,12 +910,12 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   // Intersection 3d .
   //-----------------
   Message_ProgressScope aPSInter(aPS.Next(aSteps(PIOperation_Intersection)), nullptr, 100);
-  aPSInter.SetName((myJoin == GeomAbs_Arc) ? "Connect offset faces by arc"
+  aPSInter.SetName((myJoin == GeomAbs_JoinType::GeomAbs_Arc) ? "Connect offset faces by arc"
                                            : "Connect offset faces by intersection");
 
   BRepOffset_Inter3d Inter(myAsDes, Side, myTol);
   Intersection3D(Inter, aPSInter.Next(90));
-  if (myError != BRepOffset_NoError)
+  if (myError != BRepOffset_Error::BRepOffset_NoError)
   {
     return;
   }
@@ -928,7 +928,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   if (!Modif.IsEmpty())
   {
     Intersection2D(Modif, NewEdges, aPSInter.Next(4));
-    if (myError != BRepOffset_NoError)
+    if (myError != BRepOffset_Error::BRepOffset_NoError)
     {
       return;
     }
@@ -938,7 +938,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   // Unwinding 2D and reconstruction of modified faces
   //----------------------------------------------------
   MakeLoops(Modif, aPSInter.Next(4));
-  if (myError != BRepOffset_NoError)
+  if (myError != BRepOffset_Error::BRepOffset_NoError)
   {
     return;
   }
@@ -949,7 +949,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   if (!Modif.IsEmpty())
   {
     MakeFaces(Modif, aPSInter.Next(2));
-    if (myError != BRepOffset_NoError)
+    if (myError != BRepOffset_Error::BRepOffset_NoError)
     {
       return;
     }
@@ -960,7 +960,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   if (myThickening)
   {
     MakeMissingWalls(aPS.Next(aSteps(PIOperation_MakeMissingWalls)));
-    if (myError != BRepOffset_NoError)
+    if (myError != BRepOffset_Error::BRepOffset_NoError)
     {
       return;
     }
@@ -970,7 +970,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   // Construction of shells.
   //-------------------------
   MakeShells(aPS.Next(aSteps(PIOperation_MakeShells)));
-  if (myError != BRepOffset_NoError)
+  if (myError != BRepOffset_Error::BRepOffset_NoError)
   {
     return;
   }
@@ -1003,7 +1003,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   // Creation of solids.
   //----------------------
   MakeSolid(aPS.Next(aSteps(PIOperation_MakeSolid)));
-  if (myError != BRepOffset_NoError)
+  if (myError != BRepOffset_Error::BRepOffset_NoError)
   {
     return;
   }
@@ -1034,7 +1034,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
     aSew.Perform(aPS.Next(aSteps(PIOperation_Sewing) / 2.));
     if (!aPS.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     myOffsetShape = aSew.SewedShape();
@@ -1043,7 +1043,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
     // Offset shape expected to be really closed after sewing.
     myOffsetShape.Closed(true);
     MakeSolid(aPS.Next(aSteps(PIOperation_Sewing) / 2.));
-    if (myError != BRepOffset_NoError)
+    if (myError != BRepOffset_Error::BRepOffset_NoError)
     {
       return;
     }
@@ -1111,7 +1111,7 @@ void BRepOffset_MakeOffset::MakeThickSolid(const Message_ProgressRange& theRange
     if (YaResult == 0)
     {
       myDone  = false;
-      myError = BRepOffset_UnknownError;
+      myError = BRepOffset_Error::BRepOffset_UnknownError;
       return;
     }
 
@@ -1133,7 +1133,7 @@ void BRepOffset_MakeOffset::MakeThickSolid(const Message_ProgressRange& theRange
     if (NbOF < NbF)
     {
       myDone  = false;
-      myError = BRepOffset_UnknownError;
+      myError = BRepOffset_Error::BRepOffset_UnknownError;
       return;
     }
     if (NbOF == NbF)
@@ -1190,14 +1190,14 @@ void BRepOffset_MakeOffset::MakeOffsetFaces(
   {
     if (!aPS.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     const TopoDS_Face& aF = TopoDS::Face(aItLF.Value());
     aCurOffset            = myFaceOffset.IsBound(aF) ? myFaceOffset(aF) : myOffset;
     BRepOffset_Offset              OF(aF, aCurOffset, ShapeTgt, OffsetOutside, myJoin);
     NCollection_List<TopoDS_Shape> Let;
-    myAnalyse.Edges(aF, ChFiDS_Tangential, Let);
+    myAnalyse.Edges(aF, ChFiDS_TypeOfConcavity::ChFiDS_Tangential, Let);
     NCollection_List<TopoDS_Shape>::Iterator itl(Let);
     for (; itl.More(); itl.Next())
     {
@@ -1213,7 +1213,7 @@ void BRepOffset_MakeOffset::MakeOffsetFaces(
         NCollection_List<TopoDS_Shape> LE;
         if (!ShapeTgt.IsBound(V1))
         {
-          myAnalyse.Edges(V1, ChFiDS_Tangential, LE);
+          myAnalyse.Edges(V1, ChFiDS_TypeOfConcavity::ChFiDS_Tangential, LE);
           const NCollection_List<TopoDS_Shape>& LA = myAnalyse.Ancestors(V1);
           if (LE.Extent() == LA.Extent())
             ShapeTgt.Bind(V1, OV1);
@@ -1221,7 +1221,7 @@ void BRepOffset_MakeOffset::MakeOffsetFaces(
         if (!ShapeTgt.IsBound(V2))
         {
           LE.Clear();
-          myAnalyse.Edges(V2, ChFiDS_Tangential, LE);
+          myAnalyse.Edges(V2, ChFiDS_TypeOfConcavity::ChFiDS_Tangential, LE);
           const NCollection_List<TopoDS_Shape>& LA = myAnalyse.Ancestors(V2);
           if (LE.Extent() == LA.Extent())
             ShapeTgt.Bind(V2, OV2);
@@ -1278,7 +1278,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   {
     aSteps.Init(0);
 
-    bool   isInter                                       = myJoin == GeomAbs_Intersection;
+    bool   isInter                                       = myJoin == GeomAbs_JoinType::GeomAbs_Intersection;
     double aFaceInter                                    = isInter ? 25. : 50.;
     double aBuildFaces                                   = isInter ? 50. : 25.;
     aSteps(BuildOffsetByInter_MakeOffsetFaces)           = 5.;
@@ -1302,7 +1302,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   MakeOffsetFaces(MapSF, aPSOuter.Next(aSteps(BuildOffsetByInter_MakeOffsetFaces)));
   if (!aPSOuter.More())
   {
-    myError = BRepOffset_UserBreak;
+    myError = BRepOffset_Error::BRepOffset_UserBreak;
     return;
   }
   //--------------------------------------------------------------------
@@ -1335,7 +1335,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
                         myIsPlanar);
   if (!aPSOuter.More())
   {
-    myError = BRepOffset_UserBreak;
+    myError = BRepOffset_Error::BRepOffset_UserBreak;
     return;
   }
   // Intersection with caps.
@@ -1350,7 +1350,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
                          myIsPlanar);
   if (!aPSOuter.More())
   {
-    myError = BRepOffset_UserBreak;
+    myError = BRepOffset_Error::BRepOffset_UserBreak;
     return;
   }
 
@@ -1370,7 +1370,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
                  AsDes,
                  AsDes2d,
                  aPSOuter.Next(aSteps(BuildOffsetByInter_IntersectEdges)));
-  if (myError != BRepOffset_NoError)
+  if (myError != BRepOffset_Error::BRepOffset_NoError)
   {
     return;
   }
@@ -1398,7 +1398,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
                  aETrimEInf,
                  anEdgesOrigins))
   {
-    myError = BRepOffset_CannotTrimEdges;
+    myError = BRepOffset_Error::BRepOffset_CannotTrimEdges;
     return;
   }
   //
@@ -1422,7 +1422,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   {
     if (!aPS2dOffsets.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     const TopoDS_Face& NEF          = TopoDS::Face(itLFE.Value());
@@ -1444,7 +1444,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   {
     if (!aPS2dCaps.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     const TopoDS_Face& Cork         = TopoDS::Face(myFaces(i));
@@ -1465,7 +1465,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   //
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMFDone;
   //
-  if ((myJoin == GeomAbs_Intersection) && myInter && myIsPlanar)
+  if ((myJoin == GeomAbs_JoinType::GeomAbs_Intersection) && myInter && myIsPlanar)
   {
     BuildSplitsOfExtendedFaces(LFE,
                                myAnalyse,
@@ -1475,7 +1475,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
                                aETrimEInf,
                                IMOE,
                                aPSOuter.Next(aSteps(BuildOffsetByInter_BuildFaces)));
-    if (myError != BRepOffset_NoError)
+    if (myError != BRepOffset_Error::BRepOffset_NoError)
     {
       return;
     }
@@ -1496,7 +1496,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
                       aPSOuter.Next(aSteps(BuildOffsetByInter_BuildFaces)));
     if (!aPSOuter.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
   }
@@ -1514,7 +1514,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   {
     if (!aPSHist.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     const TopoDS_Shape& FI = it.Value();
@@ -1710,7 +1710,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   {
     if (!aPSHist2.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     const TopoDS_Shape&                   Cork = myFaces(i);
@@ -1836,23 +1836,23 @@ void BRepOffset_MakeOffset::BuildOffsetByArc(const Message_ProgressRange& theRan
   //--------------------------------------------------------
   NCollection_DataMap<TopoDS_Shape, BRepOffset_Offset, TopTools_ShapeMapHasher> MapSF;
   MakeOffsetFaces(MapSF, aPSOuter.Next());
-  if (myError != BRepOffset_NoError)
+  if (myError != BRepOffset_Error::BRepOffset_NoError)
   {
     return;
   }
   //--------------------------------------------------------
   // Construction of tubes on edge.
   //--------------------------------------------------------
-  ChFiDS_TypeOfConcavity OT = ChFiDS_Convex;
+  ChFiDS_TypeOfConcavity OT = ChFiDS_TypeOfConcavity::ChFiDS_Convex;
   if (myOffset < 0.)
-    OT = ChFiDS_Concave;
+    OT = ChFiDS_TypeOfConcavity::ChFiDS_Concave;
 
   Message_ProgressScope aPS1(aPSOuter.Next(4), "Constructing tubes on edges", 1, true);
   for (Exp.Init(myFaceComp, TopAbs_EDGE); Exp.More(); Exp.Next(), aPS1.Next())
   {
     if (!aPS1.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     const TopoDS_Edge& E = TopoDS::Edge(Exp.Current());
@@ -1935,7 +1935,7 @@ void BRepOffset_MakeOffset::BuildOffsetByArc(const Message_ProgressRange& theRan
   {
     if (!aPS2.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     const TopoDS_Vertex& V = TopoDS::Vertex(Exp.Current());
@@ -1971,7 +1971,7 @@ void BRepOffset_MakeOffset::BuildOffsetByArc(const Message_ProgressRange& theRan
       // Particular processing if V is at least a free border.
       //-------------------------------------------------------------
       NCollection_List<TopoDS_Shape> LBF;
-      myAnalyse.Edges(V, ChFiDS_FreeBound, LBF);
+      myAnalyse.Edges(V, ChFiDS_TypeOfConcavity::ChFiDS_FreeBound, LBF);
       if (!LBF.IsEmpty())
       {
         bool First = true;
@@ -2002,21 +2002,21 @@ void BRepOffset_MakeOffset::BuildOffsetByArc(const Message_ProgressRange& theRan
   //------------------------------------------------------
   // MAJ SD.
   //------------------------------------------------------
-  ChFiDS_TypeOfConcavity RT = ChFiDS_Concave;
+  ChFiDS_TypeOfConcavity RT = ChFiDS_TypeOfConcavity::ChFiDS_Concave;
   if (myOffset < 0.)
-    RT = ChFiDS_Convex;
+    RT = ChFiDS_TypeOfConcavity::ChFiDS_Convex;
   NCollection_DataMap<TopoDS_Shape, BRepOffset_Offset, TopTools_ShapeMapHasher>::Iterator It(MapSF);
   Message_ProgressScope aPS3(aPSOuter.Next(), nullptr, MapSF.Size());
   for (; It.More(); It.Next(), aPS3.Next())
   {
     if (!aPS3.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     const TopoDS_Shape&      SI = It.Key();
     const BRepOffset_Offset& SF = It.Value();
-    if (SF.Status() == BRepOffset_Reversed || SF.Status() == BRepOffset_Degenerated)
+    if (SF.Status() == BRepOffset_Status::BRepOffset_Reversed || SF.Status() == BRepOffset_Status::BRepOffset_Degenerated)
     {
       //------------------------------------------------
       // Degenerated or returned faces are not stored.
@@ -2159,9 +2159,9 @@ void BRepOffset_MakeOffset::ToContext(
   // Reconstruction of faces.
   //---------------------------
   TopoDS_Face            F, NF;
-  ChFiDS_TypeOfConcavity RT = ChFiDS_Concave;
+  ChFiDS_TypeOfConcavity RT = ChFiDS_TypeOfConcavity::ChFiDS_Concave;
   if (myOffset < 0.)
-    RT = ChFiDS_Convex;
+    RT = ChFiDS_TypeOfConcavity::ChFiDS_Convex;
   TopoDS_Shape       OE, NE;
   TopAbs_Orientation Or;
 
@@ -2252,9 +2252,9 @@ void BRepOffset_MakeOffset::UpdateFaceOffset()
   CopiedMap.Assign(myFaceOffset);
   NCollection_DataMap<TopoDS_Shape, double, TopTools_ShapeMapHasher>::Iterator it(CopiedMap);
 
-  ChFiDS_TypeOfConcavity RT = ChFiDS_Convex;
+  ChFiDS_TypeOfConcavity RT = ChFiDS_TypeOfConcavity::ChFiDS_Convex;
   if (myOffset < 0.)
-    RT = ChFiDS_Concave;
+    RT = ChFiDS_TypeOfConcavity::ChFiDS_Concave;
 
   for (; it.More(); it.Next())
   {
@@ -2267,10 +2267,10 @@ void BRepOffset_MakeOffset::UpdateFaceOffset()
     Build.MakeCompound(Co);
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> Dummy;
     Build.Add(Co, F);
-    if (myJoin == GeomAbs_Arc)
-      myAnalyse.AddFaces(F, Co, Dummy, ChFiDS_Tangential, RT);
+    if (myJoin == GeomAbs_JoinType::GeomAbs_Arc)
+      myAnalyse.AddFaces(F, Co, Dummy, ChFiDS_TypeOfConcavity::ChFiDS_Tangential, RT);
     else
-      myAnalyse.AddFaces(F, Co, Dummy, ChFiDS_Tangential);
+      myAnalyse.AddFaces(F, Co, Dummy, ChFiDS_TypeOfConcavity::ChFiDS_Tangential);
 
     TopExp_Explorer exp(Co, TopAbs_FACE);
     for (; exp.More(); exp.Next())
@@ -2305,7 +2305,7 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
     FacesOfCone;
   // NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> DegEdges;
   TopExp_Explorer Explo(myOffsetShape, TopAbs_FACE);
-  if (myJoin == GeomAbs_Arc)
+  if (myJoin == GeomAbs_JoinType::GeomAbs_Arc)
   {
     for (; Explo.More(); Explo.Next())
     {
@@ -2355,7 +2355,7 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
         }
       } // for (i = 1; i <= Emap.Extent(); i++)
     } // for (; fexp.More(); fexp.Next())
-  } // if (myJoin == GeomAbs_Arc)
+  } // if (myJoin == GeomAbs_JoinType::GeomAbs_Arc)
 
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
     Iterator      Cone(FacesOfCone);
@@ -2729,7 +2729,7 @@ void BRepOffset_MakeOffset::Intersection3D(BRepOffset_Inter3d&          Inter,
     Clock.Start();
   }
 #endif
-  Message_ProgressScope aPS(theRange, nullptr, (myFaces.Extent() && myJoin == GeomAbs_Arc) ? 2 : 1);
+  Message_ProgressScope aPS(theRange, nullptr, (myFaces.Extent() && myJoin == GeomAbs_JoinType::GeomAbs_Arc) ? 2 : 1);
 
   // In the Complete Intersection mode, implemented currently for planar
   // solids only, there is no need to intersect the faces here.
@@ -2738,7 +2738,7 @@ void BRepOffset_MakeOffset::Intersection3D(BRepOffset_Inter3d&          Inter,
   //
   // Make sure to match the parameters in which the method
   // BuildShellsCompleteInter is called.
-  if (myInter && (myJoin == GeomAbs_Intersection) && myIsPlanar && !myThickening
+  if (myInter && (myJoin == GeomAbs_JoinType::GeomAbs_Intersection) && myIsPlanar && !myThickening
       && myFaces.IsEmpty() && IsSolid(myShape))
     return;
 
@@ -2751,7 +2751,7 @@ void BRepOffset_MakeOffset::Intersection3D(BRepOffset_Inter3d&          Inter,
     // it is necessary to calculate Inside taking account of the concavity or convexity of edges
     // between the cap and the part.
 
-    if (myJoin == GeomAbs_Arc)
+    if (myJoin == GeomAbs_JoinType::GeomAbs_Arc)
       Inter.ContextIntByArc(myFaces,
                             InSide,
                             myAnalyse,
@@ -2767,11 +2767,11 @@ void BRepOffset_MakeOffset::Intersection3D(BRepOffset_Inter3d&          Inter,
     Inter.CompletInt(OffsetFaces, myInitOffsetFace, aPS.Next());
     if (!aPS.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& NewEdges = Inter.NewEdges();
-    if (myJoin == GeomAbs_Intersection)
+    if (myJoin == GeomAbs_JoinType::GeomAbs_Intersection)
     {
       BRepOffset_Tool::CorrectOrientation(myFaceComp,
                                           NewEdges,
@@ -2788,7 +2788,7 @@ void BRepOffset_MakeOffset::Intersection3D(BRepOffset_Inter3d&          Inter,
     Inter.ConnexIntByArc(OffsetFaces, myFaceComp, myAnalyse, myInitOffsetFace, aPS.Next());
     if (!aPS.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
   }
@@ -2829,7 +2829,7 @@ void BRepOffset_MakeOffset::Intersection2D(
   {
     if (!aPS.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     const TopoDS_Face& F = TopoDS::Face(Modif(i));
@@ -2875,7 +2875,7 @@ void BRepOffset_MakeOffset::MakeLoops(
   }
   //
   Message_ProgressScope aPS(theRange, nullptr, LF.Extent() + myFaces.Extent());
-  if ((myJoin == GeomAbs_Intersection) && myInter && myIsPlanar)
+  if ((myJoin == GeomAbs_JoinType::GeomAbs_Intersection) && myInter && myIsPlanar)
   {
     BuildSplitsOfTrimmedFaces(LF, myAsDes, myImageOffset, aPS.Next(LF.Extent()));
   }
@@ -2885,7 +2885,7 @@ void BRepOffset_MakeOffset::MakeLoops(
   }
   if (!aPS.More())
   {
-    myError = BRepOffset_UserBreak;
+    myError = BRepOffset_Error::BRepOffset_UserBreak;
     return;
   }
 
@@ -2940,7 +2940,7 @@ void BRepOffset_MakeOffset::MakeFaces(
   }
   //
   Message_ProgressScope aPS(theRange, nullptr, 1);
-  if ((myJoin == GeomAbs_Intersection) && myInter && myIsPlanar)
+  if ((myJoin == GeomAbs_JoinType::GeomAbs_Intersection) && myInter && myIsPlanar)
   {
     BuildSplitsOfTrimmedFaces(LOF, myAsDes, myImageOffset, aPS.Next());
   }
@@ -2950,7 +2950,7 @@ void BRepOffset_MakeOffset::MakeFaces(
   }
   if (!aPS.More())
   {
-    myError = BRepOffset_UserBreak;
+    myError = BRepOffset_Error::BRepOffset_UserBreak;
     return;
   }
 #ifdef OCCT_DEBUG
@@ -3017,7 +3017,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
   {
     if (!aPS.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     TopoDS_Vertex                            StartVertex = TopoDS::Vertex(Contours.FindKey(ic));
@@ -3125,7 +3125,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
 
       OE.Orientation(TopAbs::Reverse(anEdge.Orientation()));
       TopoDS_Edge E3, E4;
-      bool        ArcOnV2 = ((myJoin == GeomAbs_Arc) && (myInitOffsetEdge.HasImage(V2)));
+      bool        ArcOnV2 = ((myJoin == GeomAbs_JoinType::GeomAbs_Arc) && (myInitOffsetEdge.HasImage(V2)));
       if (FirstStep || isBuildFromScratch)
       {
         E4 = BRepLib_MakeEdge(V1, V4);
@@ -3181,7 +3181,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
       gp_Dir                    OffsetDir = gce_MakeDir(PonE, PonOE);
       occ::handle<Geom2d_Line>  EdgeLine2d, OELine2d, aLine2d, aLine2d2;
       bool                      IsPlanar = false;
-      if (BAcurve.GetType() == GeomAbs_Circle && BAcurveOE.GetType() == GeomAbs_Circle)
+      if (BAcurve.GetType() == GeomAbs_CurveType::GeomAbs_Circle && BAcurveOE.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
       {
         gp_Circ aCirc   = BAcurve.Circle();
         gp_Circ aCircOE = BAcurveOE.Circle();
@@ -3540,7 +3540,7 @@ void BRepOffset_MakeOffset::MakeShells(const Message_ProgressRange& theRange)
   {
     if (!aPS.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     TopoDS_Shape aF = it.Value();
@@ -3580,7 +3580,7 @@ void BRepOffset_MakeOffset::MakeShells(const Message_ProgressRange& theRange)
   }
   //
   bool bDone = false;
-  if ((myJoin == GeomAbs_Intersection) && myInter && !myThickening && myFaces.IsEmpty()
+  if ((myJoin == GeomAbs_JoinType::GeomAbs_Intersection) && myInter && !myThickening && myFaces.IsEmpty()
       && IsSolid(myShape) && myIsPlanar)
   {
     //
@@ -3647,7 +3647,7 @@ void BRepOffset_MakeOffset::MakeSolid(const Message_ProgressRange& theRange)
   {
     if (!aPS.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
     TopoDS_Shell Sh = TopoDS::Shell(exp.Current());
@@ -3733,7 +3733,7 @@ void BRepOffset_MakeOffset::SelectShells()
     const NCollection_List<TopoDS_Shape>& LA = myAnalyse.Ancestors(E);
     if (LA.Extent() < 2)
     {
-      if (myAnalyse.Type(E).First().Type() == ChFiDS_FreeBound)
+      if (myAnalyse.Type(E).First().Type() == ChFiDS_TypeOfConcavity::ChFiDS_FreeBound)
       {
         FreeEdges.Add(E);
       }
@@ -3845,12 +3845,12 @@ void BRepOffset_MakeOffset::EncodeRegularity()
         // so, manage case by case
         // Note DUB; for Hidden parts, it is NECESSARY to code CN
         // Analytic Surfaces.
-        if (myJoin == GeomAbs_Intersection)
+        if (myJoin == GeomAbs_JoinType::GeomAbs_Intersection)
         {
           BRepAdaptor_Surface BS(F1, false);
           GeomAbs_SurfaceType SType = BS.GetType();
-          if (SType == GeomAbs_Cylinder || SType == GeomAbs_Cone || SType == GeomAbs_Sphere
-              || SType == GeomAbs_Torus)
+          if (SType == GeomAbs_SurfaceType::GeomAbs_Cylinder || SType == GeomAbs_SurfaceType::GeomAbs_Cone || SType == GeomAbs_SurfaceType::GeomAbs_Sphere
+              || SType == GeomAbs_SurfaceType::GeomAbs_Torus)
           {
             B.Continuity(OE, F1, F1, GeomAbs_CN);
           }
@@ -3943,7 +3943,7 @@ void BRepOffset_MakeOffset::EncodeRegularity()
         if (myAnalyse.HasAncestor(Ed))
         {
           const NCollection_List<BRepOffset_Interval>& LI = myAnalyse.Type(Ed);
-          if (LI.Extent() == 1 && LI.First().Type() == ChFiDS_Tangential)
+          if (LI.Extent() == 1 && LI.First().Type() == ChFiDS_TypeOfConcavity::ChFiDS_Tangential)
           {
             B.Continuity(OE, F1, F2, GeomAbs_G1);
           }
@@ -4063,7 +4063,7 @@ void UpdateTolerance(TopoDS_Shape&                                              
       TopoDS_Edge E         = TopoDS::Edge(Exp.Current());
       bool        isUpdated = false;
       double      aCurrTol  = BRep_Tool::Tolerance(E);
-      if (aBAS.GetType() == GeomAbs_Plane)
+      if (aBAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         // Edge does not seem to have pcurve on plane,
         // so EdgeCorrector does not include it in tolerance calculation
@@ -4197,7 +4197,7 @@ void CorrectSolid(TopoDS_Solid& theSol, NCollection_List<TopoDS_Shape>& theSolLi
 bool BRepOffset_MakeOffset::CheckInputData(const Message_ProgressRange& theRange)
 {
   // Set initial error state.
-  myError = BRepOffset_NoError;
+  myError = BRepOffset_Error::BRepOffset_NoError;
   TopoDS_Shape aTmpShape;
   myBadShape = aTmpShape;
   Message_ProgressScope aPS(theRange, nullptr, 1);
@@ -4219,7 +4219,7 @@ bool BRepOffset_MakeOffset::CheckInputData(const Message_ProgressRange& theRange
     if (!isFound)
     {
       // No face with non-null offset found.
-      myError = BRepOffset_NullOffset;
+      myError = BRepOffset_Error::BRepOffset_NullOffset;
       return false;
     }
   }
@@ -4227,7 +4227,7 @@ bool BRepOffset_MakeOffset::CheckInputData(const Message_ProgressRange& theRange
   // Connectivity of input shape.
   if (!IsConnectedShell(myFaceComp))
   {
-    myError = BRepOffset_NotConnectedShell;
+    myError = BRepOffset_Error::BRepOffset_NotConnectedShell;
     return false;
   }
 
@@ -4242,7 +4242,7 @@ bool BRepOffset_MakeOffset::CheckInputData(const Message_ProgressRange& theRange
   {
     if (!aPS.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return false;
     }
     const TopoDS_Face& aF = TopoDS::Face(anExpSF.Current());
@@ -4261,7 +4261,7 @@ bool BRepOffset_MakeOffset::CheckInputData(const Message_ProgressRange& theRange
     // Continuity check.
     if (aSurf->Continuity() == GeomAbs_C0)
     {
-      myError = BRepOffset_C0Geometry;
+      myError = BRepOffset_Error::BRepOffset_C0Geometry;
       return false;
     }
 
@@ -4286,7 +4286,7 @@ bool BRepOffset_MakeOffset::CheckInputData(const Message_ProgressRange& theRange
         double aVParam = aVmin + (aVmax - aVmin) * j / aPntPerDim;
 
         myError = checkSinglePoint(aUParam, aVParam, aSurf, aBad3dPnts);
-        if (myError != BRepOffset_NoError)
+        if (myError != BRepOffset_Error::BRepOffset_NoError)
           return false;
       }
     }
@@ -4299,7 +4299,7 @@ bool BRepOffset_MakeOffset::CheckInputData(const Message_ProgressRange& theRange
       aPnt2d                  = BRep_Tool::Parameters(aV, aF);
 
       myError = checkSinglePoint(aPnt2d.X(), aPnt2d.Y(), aSurf, aBad3dPnts);
-      if (myError != BRepOffset_NoError)
+      if (myError != BRepOffset_Error::BRepOffset_NoError)
         return false;
     }
   }
@@ -4413,21 +4413,21 @@ BRepOffset_Error checkSinglePoint(const double                      theUParam,
 
     if (!isKnownBadPnt)
     {
-      return BRepOffset_BadNormalsOnGeometry;
+      return BRepOffset_Error::BRepOffset_BadNormalsOnGeometry;
     }
     else
     {
-      return BRepOffset_NoError;
+      return BRepOffset_Error::BRepOffset_NoError;
     }
   } //  if (aD1U.SquareMagnitude() < Precision::SquareConfusion() ||
 
   if (aD1U.IsParallel(aD1V, Precision::Confusion()))
   {
     // Isolines are collinear.
-    return BRepOffset_BadNormalsOnGeometry;
+    return BRepOffset_Error::BRepOffset_BadNormalsOnGeometry;
   }
 
-  return BRepOffset_NoError;
+  return BRepOffset_Error::BRepOffset_NoError;
 }
 
 //=======================================================================
@@ -4515,12 +4515,12 @@ void BRepOffset_MakeOffset::IntersectEdges(
                                             aDMVV,
                                             aPS1.Next()))
     {
-      myError = BRepOffset_CannotExtentEdge;
+      myError = BRepOffset_Error::BRepOffset_CannotExtentEdge;
       return;
     }
     if (!aPS1.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
   }
@@ -4543,7 +4543,7 @@ void BRepOffset_MakeOffset::IntersectEdges(
                                              aPS2.Next());
     if (!aPS2.More())
     {
-      myError = BRepOffset_UserBreak;
+      myError = BRepOffset_Error::BRepOffset_UserBreak;
       return;
     }
   }
@@ -4551,7 +4551,7 @@ void BRepOffset_MakeOffset::IntersectEdges(
   // fuse vertices on edges
   if (!BRepOffset_Inter2d::FuseVertices(aDMVV, theAsDes2d, myImageVV))
   {
-    myError = BRepOffset_CannotFuseVertices;
+    myError = BRepOffset_Error::BRepOffset_CannotFuseVertices;
     return;
   }
 }
@@ -4703,7 +4703,7 @@ bool TrimEdges(
         {
           TopoDS_Edge&      anEdge = TopoDS::Edge(NE);
           BRepAdaptor_Curve aBAC(anEdge);
-          if (aBAC.GetType() == GeomAbs_Line)
+          if (aBAC.GetType() == GeomAbs_CurveType::GeomAbs_Line)
           {
             TopoDS_Edge aNewEdge;
             BRepOffset_Inter2d::ExtentEdge(anEdge, aNewEdge, theOffset);
@@ -4810,7 +4810,7 @@ bool TrimEdge(
   if (!bTrim)
   {
     BRepAdaptor_Curve aBAC(NE);
-    if (aBAC.GetType() == GeomAbs_Line)
+    if (aBAC.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       if (AsDes->HasAscendant(NE))
       {
@@ -5193,7 +5193,7 @@ void BRepOffset_MakeOffset::analyzeProgress(const double                theWhole
   // The main point is to make the proportions valid relatively each other.
 
   // Proportions will be different for different connection types
-  bool isArc = (myJoin == GeomAbs_Arc);
+  bool isArc = (myJoin == GeomAbs_JoinType::GeomAbs_Arc);
   bool isPlanarIntCase =
     myInter && !isArc && myIsPlanar && !myThickening && myFaces.IsEmpty() && IsSolid(myShape);
 
@@ -5229,7 +5229,7 @@ bool BRepOffset_MakeOffset::IsPlanar()
   {
     const TopoDS_Face&  aF = *(TopoDS_Face*)&aExp.Current();
     BRepAdaptor_Surface aBAS(aF, false);
-    if (aBAS.GetType() == GeomAbs_Plane)
+    if (aBAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
       continue;
 
     if (myIsLinearizationAllowed)

@@ -206,14 +206,14 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
   double U0 = p2d.X(), V0 = p2d.Y();
 
   GeomAbs_SurfaceType Type = theData.mySurf->GetType();
-  if ((Type != GeomAbs_BSplineSurface) && (Type != GeomAbs_BezierSurface)
-      && (Type != GeomAbs_OffsetSurface))
+  if ((Type != GeomAbs_SurfaceType::GeomAbs_BSplineSurface) && (Type != GeomAbs_SurfaceType::GeomAbs_BezierSurface)
+      && (Type != GeomAbs_SurfaceType::GeomAbs_OffsetSurface))
   {
     // Analytical cases.
     double S = 0., T = 0.;
     switch (Type)
     {
-      case GeomAbs_Cylinder: {
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
         gp_Cylinder Cylinder = theData.mySurf->Cylinder();
         ElSLib::Parameters(Cylinder, p, S, T);
         if (U0 < Uinf)
@@ -223,7 +223,7 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
         S += decalU * 2 * M_PI;
         break;
       }
-      case GeomAbs_Cone: {
+      case GeomAbs_SurfaceType::GeomAbs_Cone: {
         gp_Cone Cone = theData.mySurf->Cone();
         ElSLib::Parameters(Cone, p, S, T);
         if (U0 < Uinf)
@@ -233,7 +233,7 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
         S += decalU * 2 * M_PI;
         break;
       }
-      case GeomAbs_Sphere: {
+      case GeomAbs_SurfaceType::GeomAbs_Sphere: {
         gp_Sphere Sphere = theData.mySurf->Sphere();
         ElSLib::Parameters(Sphere, p, S, T);
         if (U0 < Uinf)
@@ -256,7 +256,7 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
         }
         break;
       }
-      case GeomAbs_Torus: {
+      case GeomAbs_SurfaceType::GeomAbs_Torus: {
         gp_Torus Torus = theData.mySurf->Torus();
         ElSLib::Parameters(Torus, p, S, T);
         if (U0 < Uinf)
@@ -344,17 +344,17 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
     vSupLi = Vsup;
 
   GeomAdaptor_Surface SurfLittle;
-  if (Type == GeomAbs_BSplineSurface)
+  if (Type == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     occ::handle<Geom_Surface> GBSS(theData.mySurf->BSpline());
     SurfLittle.Load(GBSS, uInfLi, uSupLi, vInfLi, vSupLi);
   }
-  else if (Type == GeomAbs_BezierSurface)
+  else if (Type == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     occ::handle<Geom_Surface> GS(theData.mySurf->Bezier());
     SurfLittle.Load(GS, uInfLi, uSupLi, vInfLi, vSupLi);
   }
-  else if (Type == GeomAbs_OffsetSurface)
+  else if (Type == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
   {
     occ::handle<Geom_Surface> GS = GeomAdaptor::MakeSurface(*theData.mySurf);
     SurfLittle.Load(GS, uInfLi, uSupLi, vInfLi, vSupLi);
@@ -382,7 +382,7 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
   }
 
   // Perform whole param space search.
-  Extrema_ExtPS ext(p, SurfLittle, theData.myTolU, theData.myTolV, Extrema_ExtFlag_MIN);
+  Extrema_ExtPS ext(p, SurfLittle, theData.myTolU, theData.myTolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   if (ext.IsDone() && ext.NbExt() >= 1)
   {
     Dist2Min      = ext.SquareDistance(1);
@@ -664,7 +664,7 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::Perform(
   // if the curve 3d is a BSpline with degree C0, it is cut into sections with degree C1
   // -> bug cts18237
   GeomAbs_CurveType typeCurve = Curve->GetType();
-  if (typeCurve == GeomAbs_BSplineCurve)
+  if (typeCurve == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     NCollection_List<occ::handle<Standard_Transient>> LOfBSpline2d;
     occ::handle<Geom_BSplineCurve>                    BSC     = Curve->BSpline();
@@ -722,35 +722,35 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::Perform(
         typeCurve = InitialCurve2d->GetType();
         switch (typeCurve)
         {
-          case GeomAbs_Line: {
+          case GeomAbs_CurveType::GeomAbs_Line: {
             G2dC = new Geom2d_Line(InitialCurve2d->Line());
             break;
           }
-          case GeomAbs_Circle: {
+          case GeomAbs_CurveType::GeomAbs_Circle: {
             G2dC = new Geom2d_Circle(InitialCurve2d->Circle());
             break;
           }
-          case GeomAbs_Ellipse: {
+          case GeomAbs_CurveType::GeomAbs_Ellipse: {
             G2dC = new Geom2d_Ellipse(InitialCurve2d->Ellipse());
             break;
           }
-          case GeomAbs_Hyperbola: {
+          case GeomAbs_CurveType::GeomAbs_Hyperbola: {
             G2dC = new Geom2d_Hyperbola(InitialCurve2d->Hyperbola());
             break;
           }
-          case GeomAbs_Parabola: {
+          case GeomAbs_CurveType::GeomAbs_Parabola: {
             G2dC = new Geom2d_Parabola(InitialCurve2d->Parabola());
             break;
           }
-          case GeomAbs_BezierCurve: {
+          case GeomAbs_CurveType::GeomAbs_BezierCurve: {
             G2dC = InitialCurve2d->Bezier();
             break;
           }
-          case GeomAbs_BSplineCurve: {
+          case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
             G2dC = InitialCurve2d->BSpline();
             break;
           }
-          case GeomAbs_OtherCurve:
+          case GeomAbs_CurveType::GeomAbs_OtherCurve:
           default:
             break;
         }
@@ -942,15 +942,15 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
   Vinf                     = Surf->FirstVParameter();
   Vsup                     = Surf->LastVParameter();
   GeomAbs_SurfaceType Type = Surf->GetType();
-  if ((Type != GeomAbs_BSplineSurface) && (Type != GeomAbs_BezierSurface)
-      && (Type != GeomAbs_OffsetSurface))
+  if ((Type != GeomAbs_SurfaceType::GeomAbs_BSplineSurface) && (Type != GeomAbs_SurfaceType::GeomAbs_BezierSurface)
+      && (Type != GeomAbs_SurfaceType::GeomAbs_OffsetSurface))
   {
     double S, T;
     //    int usens = 0, vsens = 0;
     // to know the position relatively to the period
     switch (Type)
     {
-        //    case GeomAbs_Plane:
+        //    case GeomAbs_SurfaceType::GeomAbs_Plane:
         //      {
         //	gp_Pln Plane = Surf->Plane();
         //	for ( i = 1 ; i <= NbOfPnts ; i++) {
@@ -960,7 +960,7 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
         //	myProjIsDone = true;
         //	break;
         //      }
-      case GeomAbs_Cylinder: {
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
         //	double Sloc, Tloc;
         double      Sloc;
         int         usens    = 0;
@@ -983,7 +983,7 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
         myProjIsDone = true;
         break;
       }
-      case GeomAbs_Cone: {
+      case GeomAbs_SurfaceType::GeomAbs_Cone: {
         //	double Sloc, Tloc;
         double  Sloc;
         int     usens = 0;
@@ -1006,7 +1006,7 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
         myProjIsDone = true;
         break;
       }
-      case GeomAbs_Sphere: {
+      case GeomAbs_SurfaceType::GeomAbs_Sphere: {
         double    Sloc, Tloc;
         int       usens = 0, vsens = 0; // usens steps by half-period
         bool      vparit = false;
@@ -1049,7 +1049,7 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
         myProjIsDone = true;
         break;
       }
-      case GeomAbs_Torus: {
+      case GeomAbs_SurfaceType::GeomAbs_Torus: {
         double   Sloc, Tloc;
         int      usens = 0, vsens = 0;
         gp_Torus Torus = Surf->Torus();
@@ -1094,7 +1094,7 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
     bool                           areManyZeros = false;
 
     pntproj = Pts(1);
-    Extrema_ExtPS aExtPS(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag_MIN);
+    Extrema_ExtPS aExtPS(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
     double        aMinSqDist = RealLast();
     if (aExtPS.IsDone())
     {
@@ -1189,7 +1189,7 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
               int indExt  = 0;
               int iT      = 1 + (NbOfPnts - 1) / 5 * i;
               pntproj     = Pts(iT);
-              Extrema_ExtPS aTPS(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag_MIN);
+              Extrema_ExtPS aTPS(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
               Dist2Min = 1.e+200;
               if (aTPS.IsDone() && aTPS.NbExt() >= 1)
               {
@@ -1222,7 +1222,7 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
               for (j = tPp + 1; j <= NbOfPnts; ++j)
               {
                 pntproj = Pts(j);
-                Extrema_ExtPS aTPS(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag_MIN);
+                Extrema_ExtPS aTPS(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
                 Dist2Min = RealLast();
                 if (aTPS.IsDone() && aTPS.NbExt() >= 1)
                 {
@@ -1328,7 +1328,7 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
             }
             else
             {
-              Extrema_ExtPS aGlobalExtr(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag_MIN);
+              Extrema_ExtPS aGlobalExtr(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
               if (aGlobalExtr.IsDone())
               {
                 double LocalMinSqDist = RealLast();
@@ -1516,7 +1516,7 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
           }
           if (!myProjIsDone)
           {
-            Extrema_ExtPS ext(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag_MIN);
+            Extrema_ExtPS ext(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
             if (ext.IsDone())
             {
               Dist2Min       = ext.SquareDistance(1);
@@ -1646,11 +1646,11 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::ProjectUsi
   int                 i;
   GeomAbs_SurfaceType TheTypeS = Surf->GetType();
   GeomAbs_CurveType   TheTypeC = Curve->GetType();
-  if (TheTypeS == GeomAbs_Plane)
+  if (TheTypeS == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     double S, T;
     gp_Pln Plane = Surf->Plane();
-    if (TheTypeC == GeomAbs_BSplineCurve)
+    if (TheTypeC == GeomAbs_CurveType::GeomAbs_BSplineCurve)
     {
       myTolReached                       = Precision::Confusion();
       occ::handle<Geom_BSplineCurve> BSC = Curve->BSpline();
@@ -1677,7 +1677,7 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::ProjectUsi
       }
       return new Geom2d_BSplineCurve(Poles2d, Knots, Mults, BSC->Degree(), BSC->IsPeriodic());
     }
-    if (TheTypeC == GeomAbs_BezierCurve)
+    if (TheTypeC == GeomAbs_CurveType::GeomAbs_BezierCurve)
     {
       myTolReached                     = Precision::Confusion();
       occ::handle<Geom_BezierCurve> BC = Curve->Bezier();
@@ -1708,7 +1708,7 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::ProjectUsi
       return new Geom2d_BSplineCurve(Poles2d, Knots, Mults, BC->Degree(), BC->IsPeriodic());
     }
   }
-  if (TheTypeS == GeomAbs_BSplineSurface)
+  if (TheTypeS == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     occ::handle<Geom_BSplineSurface> BSS = Surf->BSpline();
     if ((BSS->MaxDegree() == 1) && (BSS->NbUPoles() == 2) && (BSS->NbVPoles() == 2))
@@ -1723,7 +1723,7 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::ProjectUsi
       {
         int    Dist2Min = IntegerLast();
         double u, v;
-        if (TheTypeC == GeomAbs_BSplineCurve)
+        if (TheTypeC == GeomAbs_CurveType::GeomAbs_BSplineCurve)
         {
           myTolReached                       = Tol3d;
           occ::handle<Geom_BSplineCurve> BSC = Curve->BSpline();
@@ -1769,7 +1769,7 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::ProjectUsi
             return new Geom2d_BSplineCurve(Poles2d, Knots, Mults, BSC->Degree(), BSC->IsPeriodic());
           }
         }
-        if (TheTypeC == GeomAbs_BezierCurve)
+        if (TheTypeC == GeomAbs_CurveType::GeomAbs_BezierCurve)
         {
           myTolReached                     = Tol3d;
           occ::handle<Geom_BezierCurve> BC = Curve->Bezier();
@@ -1822,7 +1822,7 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::ProjectUsi
       }
     }
   }
-  else if (TheTypeS == GeomAbs_BezierSurface)
+  else if (TheTypeS == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     occ::handle<Geom_BezierSurface> BS = Surf->Bezier();
     if ((BS->MaxDegree() == 1) && (BS->NbUPoles() == 2) && (BS->NbVPoles() == 2))
@@ -1839,7 +1839,7 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::ProjectUsi
         double u, v;
 
         //	gp_Pnt pntproj;
-        if (TheTypeC == GeomAbs_BSplineCurve)
+        if (TheTypeC == GeomAbs_CurveType::GeomAbs_BSplineCurve)
         {
           myTolReached                       = Tol3d;
           occ::handle<Geom_BSplineCurve> BSC = Curve->BSpline();
@@ -1885,7 +1885,7 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::ProjectUsi
             return new Geom2d_BSplineCurve(Poles2d, Knots, Mults, BSC->Degree(), BSC->IsPeriodic());
           }
         }
-        if (TheTypeC == GeomAbs_BezierCurve)
+        if (TheTypeC == GeomAbs_CurveType::GeomAbs_BezierCurve)
         {
           myTolReached                     = Tol3d;
           occ::handle<Geom_BezierCurve> BC = Curve->Bezier();
@@ -2000,7 +2000,7 @@ occ::handle<Geom2d_BSplineCurve> ProjLib_ComputeApproxOnPolarSurface::ProjectUsi
 
   Approx_FitAndDivide2d Fit(Deg1, Deg2, Tol3d, Tol2d, true, aFistC, aLastC);
   Fit.SetMaxSegments(aMaxSegments);
-  if (InitCurve2d->GetType() == GeomAbs_Line)
+  if (InitCurve2d->GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     Fit.SetInvOrder(false);
   }

@@ -142,7 +142,7 @@ void PrsDim_SymmetricRelation::ComputeSelection(const occ::handle<SelectMgr_Sele
   {
     BRepAdaptor_Curve cu1(TopoDS::Edge(myFShape));
 
-    if (cu1.GetType() == GeomAbs_Line)
+    if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       //      gp_Lin L1 (myFAttach,myFDirAttach);
       gp_Pnt PjAttachPnt1 = ElCLib::Value(ElCLib::Parameter(laxis, myFAttach), laxis);
@@ -212,7 +212,7 @@ void PrsDim_SymmetricRelation::ComputeSelection(const occ::handle<SelectMgr_Sele
     }
 
     //=======================Pour les arcs======================
-    if (cu1.GetType() == GeomAbs_Circle)
+    if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       occ::handle<Geom_Curve>  aGeomCurve = BRep_Tool::Curve(TopoDS::Edge(myFShape), F, L);
       occ::handle<Geom_Circle> geom_circ1 = occ::down_cast<Geom_Circle>(aGeomCurve);
@@ -358,10 +358,10 @@ void PrsDim_SymmetricRelation::ComputeTwoFacesSymmetric(const occ::handle<Prs3d_
 void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_Presentation>& aprs)
 {
   BRepAdaptor_Curve cu1(TopoDS::Edge(myFShape));
-  if (cu1.GetType() != GeomAbs_Line && cu1.GetType() != GeomAbs_Circle)
+  if (cu1.GetType() != GeomAbs_CurveType::GeomAbs_Line && cu1.GetType() != GeomAbs_CurveType::GeomAbs_Circle)
     return;
   BRepAdaptor_Curve cu2(TopoDS::Edge(mySShape));
-  if (cu2.GetType() != GeomAbs_Line && cu2.GetType() != GeomAbs_Circle)
+  if (cu2.GetType() != GeomAbs_CurveType::GeomAbs_Line && cu2.GetType() != GeomAbs_CurveType::GeomAbs_Circle)
     return;
   //  gp_Pnt pint3d,ptat11,ptat12,ptat21,ptat22;
   gp_Pnt                  ptat11, ptat12, ptat21, ptat22;
@@ -402,14 +402,14 @@ void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_
   gp_Lin                 laxis(geom_line->Lin());
   myAxisDirAttach = laxis.Direction();
 
-  if (cu1.GetType() == GeomAbs_Line)
+  if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     occ::handle<Geom_Line> geom_lin1(occ::down_cast<Geom_Line>(geom1));
     gp_Lin                 l1(geom_lin1->Lin());
     myFDirAttach = l1.Direction();
   }
   gp_Circ circ;
-  if (cu1.GetType() == GeomAbs_Circle)
+  if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     occ::handle<Geom_Circle> geom_cir1(occ::down_cast<Geom_Circle>(geom1));
     gp_Circ                  c(geom_cir1->Circ());
@@ -542,7 +542,7 @@ void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_
   arr->SetLength(myArrowSize);
   arr = la->ArrowAspect();
   arr->SetLength(myArrowSize);
-  if (cu1.GetType() == GeomAbs_Line)
+  if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     DsgPrs_SymmetricPresentation::Add(aprs,
                                       myDrawer,
                                       myFAttach,
@@ -551,7 +551,7 @@ void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_
                                       laxis,
                                       myPosition);
 
-  if (cu1.GetType() == GeomAbs_Circle)
+  if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     DsgPrs_SymmetricPresentation::Add(aprs,
                                       myDrawer,
                                       myFAttach,

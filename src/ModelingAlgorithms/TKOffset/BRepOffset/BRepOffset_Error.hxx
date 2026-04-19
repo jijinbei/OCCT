@@ -17,7 +17,7 @@
 #ifndef _BRepOffset_Error_HeaderFile
 #define _BRepOffset_Error_HeaderFile
 
-enum BRepOffset_Error
+enum class BRepOffset_Error
 {
   BRepOffset_NoError,
   BRepOffset_UnknownError,

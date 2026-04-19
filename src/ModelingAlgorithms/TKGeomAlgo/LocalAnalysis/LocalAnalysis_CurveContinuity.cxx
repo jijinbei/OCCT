@@ -57,7 +57,7 @@ void LocalAnalysis_CurveContinuity::CurvC1(GeomLProp_CLProps& Curv1, GeomLProp_C
   else
   {
     myIsDone      = false;
-    myErrorStatus = LocalAnalysis_NullFirstDerivative;
+    myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_NullFirstDerivative;
   }
 }
 
@@ -102,14 +102,14 @@ void LocalAnalysis_CurveContinuity::CurvC2(GeomLProp_CLProps& Curv1, GeomLProp_C
     else
     {
       myIsDone      = false;
-      myErrorStatus = LocalAnalysis_NullSecondDerivative;
+      myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_NullSecondDerivative;
     }
   }
 
   else
   {
     myIsDone      = false;
-    myErrorStatus = LocalAnalysis_NullFirstDerivative;
+    myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_NullFirstDerivative;
   }
 }
 
@@ -132,7 +132,7 @@ void LocalAnalysis_CurveContinuity::CurvG1(GeomLProp_CLProps& Curv1, GeomLProp_C
   else
   {
     myIsDone      = false;
-    myErrorStatus = LocalAnalysis_TangentNotDefined;
+    myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_TangentNotDefined;
   }
 }
 
@@ -167,13 +167,13 @@ void LocalAnalysis_CurveContinuity::CurvG2(GeomLProp_CLProps& Curv1, GeomLProp_C
     else
     {
       myIsDone      = false;
-      myErrorStatus = LocalAnalysis_NormalNotDefined;
+      myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_NormalNotDefined;
     }
   }
   else
   {
     myIsDone      = false;
-    myErrorStatus = LocalAnalysis_TangentNotDefined;
+    myErrorStatus = LocalAnalysis_StatusErrorType::LocalAnalysis_TangentNotDefined;
   }
 }
 

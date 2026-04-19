@@ -127,11 +127,11 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
       //
       //  The first curve is a circle:
       //
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
 
       switch (type2)
       {
-        case GeomAbs_Line: {
+        case GeomAbs_CurveType::GeomAbs_Line: {
           inverse = true;
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Line(*myC),
                                                                Extrema_Curve2dTool::Circle(C1),
@@ -139,25 +139,25 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
           Results(*aXtream, U11, U12, U21, U22, 2 * M_PI, 0.);
         }
         break;
-        case GeomAbs_Circle: {
+        case GeomAbs_CurveType::GeomAbs_Circle: {
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Circle(C1),
                                                                Extrema_Curve2dTool::Circle(*myC));
           Results(*aXtream, U11, U12, U21, U22, 2 * M_PI, 2 * M_PI);
         }
         break;
-        case GeomAbs_Ellipse: {
+        case GeomAbs_CurveType::GeomAbs_Ellipse: {
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Circle(C1),
                                                                Extrema_Curve2dTool::Ellipse(*myC));
           Results(*aXtream, U11, U12, U21, U22, 2 * M_PI, 2 * M_PI);
         }
         break;
-        case GeomAbs_Parabola: {
+        case GeomAbs_CurveType::GeomAbs_Parabola: {
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Circle(C1),
                                                                Extrema_Curve2dTool::Parabola(*myC));
           Results(*aXtream, U11, U12, U21, U22, 2 * M_PI, 0.);
         }
         break;
-        case GeomAbs_Hyperbola: {
+        case GeomAbs_CurveType::GeomAbs_Hyperbola: {
           aXtream =
             opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Circle(C1),
                                                        Extrema_Curve2dTool::Hyperbola(*myC));
@@ -181,32 +181,32 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
       //
       // The first curve is an ellipse:
       //
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
 
       switch (type2)
       {
-        case GeomAbs_Line: {
+        case GeomAbs_CurveType::GeomAbs_Line: {
           inverse = true;
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Line(*myC),
                                                                Extrema_Curve2dTool::Ellipse(C1));
           Results(*aXtream, U11, U12, U21, U22, 2 * M_PI, 0.);
         }
         break;
-        case GeomAbs_Circle: {
+        case GeomAbs_CurveType::GeomAbs_Circle: {
           inverse = true;
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Circle(*myC),
                                                                Extrema_Curve2dTool::Ellipse(C1));
           Results(*aXtream, U11, U12, U21, U22, 2 * M_PI, 2 * M_PI);
         }
         break;
-        case GeomAbs_Ellipse: {
+        case GeomAbs_CurveType::GeomAbs_Ellipse: {
           aParamSolver = opencascade::make_shared<Extrema_ECC2d>(C1, *myC);
           aParamSolver->SetSingleSolutionFlag(GetSingleSolutionFlag());
           aParamSolver->Perform();
           Results(*aParamSolver, U11, U12, U21, U22, 2 * M_PI, 2 * M_PI);
         }
         break;
-        case GeomAbs_Parabola: {
+        case GeomAbs_CurveType::GeomAbs_Parabola: {
           // Extrema_ExtElC2d Xtrem(Extrema_Curve2dTool::Ellipse(C1),
           // Extrema_Curve2dTool::Parabola(*myC));
           aParamSolver = opencascade::make_shared<Extrema_ECC2d>(C1, *myC);
@@ -215,7 +215,7 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
           Results(*aParamSolver, U11, U12, U21, U22, 2 * M_PI, 0.);
         }
         break;
-        case GeomAbs_Hyperbola: {
+        case GeomAbs_CurveType::GeomAbs_Hyperbola: {
           // Extrema_ExtElC2d Xtrem(Extrema_Curve2dTool::Ellipse(C1),
           // Extrema_Curve2dTool::Hyperbola(*myC));
           aParamSolver = opencascade::make_shared<Extrema_ECC2d>(C1, *myC);
@@ -241,25 +241,25 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
       //
       // The first curve is a parabola:
       //
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
 
       switch (type2)
       {
-        case GeomAbs_Line: {
+        case GeomAbs_CurveType::GeomAbs_Line: {
           inverse = true;
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Line(*myC),
                                                                Extrema_Curve2dTool::Parabola(C1));
           Results(*aXtream, U11, U12, U21, U22, 0., 0.);
         }
         break;
-        case GeomAbs_Circle: {
+        case GeomAbs_CurveType::GeomAbs_Circle: {
           inverse = true;
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Circle(*myC),
                                                                Extrema_Curve2dTool::Parabola(C1));
           Results(*aXtream, U11, U12, U21, U22, 0., 2 * M_PI);
         }
         break;
-        case GeomAbs_Ellipse: {
+        case GeomAbs_CurveType::GeomAbs_Ellipse: {
           // inverse = true;
           // Extrema_ExtElC2d Xtrem(Extrema_Curve2dTool::Ellipse(*myC),
           // Extrema_Curve2dTool::Parabola(C1));
@@ -269,7 +269,7 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
           Results(*aParamSolver, U11, U12, U21, U22, 0., 2 * M_PI);
         }
         break;
-        case GeomAbs_Parabola: {
+        case GeomAbs_CurveType::GeomAbs_Parabola: {
           // Extrema_ExtElC2d Xtrem(Extrema_Curve2dTool::Parabola(C1),
           // Extrema_Curve2dTool::Parabola(*myC));
           aParamSolver = opencascade::make_shared<Extrema_ECC2d>(C1, *myC);
@@ -278,7 +278,7 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
           Results(*aParamSolver, U11, U12, U21, U22, 0., 0.);
         }
         break;
-        case GeomAbs_Hyperbola: {
+        case GeomAbs_CurveType::GeomAbs_Hyperbola: {
           // inverse = true;
           // Extrema_ExtElC2d Xtrem(Extrema_Curve2dTool::Hyperbola(*myC),
           // Extrema_Curve2dTool::Parabola(C1));
@@ -305,25 +305,25 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
       //
       // The first curve is a hyperbola:
       //
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
 
       switch (type2)
       {
-        case GeomAbs_Line: {
+        case GeomAbs_CurveType::GeomAbs_Line: {
           inverse = true;
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Line(*myC),
                                                                Extrema_Curve2dTool::Hyperbola(C1));
           Results(*aXtream, U11, U12, U21, U22, 0., 0.);
         }
         break;
-        case GeomAbs_Circle: {
+        case GeomAbs_CurveType::GeomAbs_Circle: {
           inverse = true;
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Circle(*myC),
                                                                Extrema_Curve2dTool::Hyperbola(C1));
           Results(*aXtream, U11, U12, U21, U22, 0., 2 * M_PI);
         }
         break;
-        case GeomAbs_Ellipse: {
+        case GeomAbs_CurveType::GeomAbs_Ellipse: {
           // inverse = true;
           // Extrema_ExtElC2d Xtrem(Extrema_Curve2dTool::Ellipse(*myC),
           // Extrema_Curve2dTool::Hyperbola(C1));
@@ -333,7 +333,7 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
           Results(*aParamSolver, U11, U12, U21, U22, 0., 2 * M_PI);
         }
         break;
-        case GeomAbs_Parabola: {
+        case GeomAbs_CurveType::GeomAbs_Parabola: {
           // Extrema_ExtElC2d Xtrem(Extrema_Curve2dTool::Hyperbola(C1),
           // Extrema_Curve2dTool::Parabola(*myC));
           aParamSolver = opencascade::make_shared<Extrema_ECC2d>(C1, *myC);
@@ -342,7 +342,7 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
           Results(*aParamSolver, U11, U12, U21, U22, 0., 0.);
         }
         break;
-        case GeomAbs_Hyperbola: {
+        case GeomAbs_CurveType::GeomAbs_Hyperbola: {
           // Extrema_ExtElC2d Xtrem(Extrema_Curve2dTool::Hyperbola(C1),
           // Extrema_Curve2dTool::Hyperbola(*myC));
           aParamSolver = opencascade::make_shared<Extrema_ECC2d>(C1, *myC);
@@ -368,37 +368,37 @@ void Extrema_ExtCC2d::Perform(const Adaptor2d_Curve2d& C1, const double U1, cons
       //
       // The first curve is a line:
       //
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
 
       switch (type2)
       {
-        case GeomAbs_Line: {
+        case GeomAbs_CurveType::GeomAbs_Line: {
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Line(C1),
                                                                Extrema_Curve2dTool::Line(*myC),
                                                                Tol);
           Results(*aXtream, U11, U12, U21, U22, 0., 0.);
         }
         break;
-        case GeomAbs_Circle: {
+        case GeomAbs_CurveType::GeomAbs_Circle: {
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Line(C1),
                                                                Extrema_Curve2dTool::Circle(*myC),
                                                                Tol);
           Results(*aXtream, U11, U12, U21, U22, 0., 2 * M_PI);
         }
         break;
-        case GeomAbs_Ellipse: {
+        case GeomAbs_CurveType::GeomAbs_Ellipse: {
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Line(C1),
                                                                Extrema_Curve2dTool::Ellipse(*myC));
           Results(*aXtream, U11, U12, U21, U22, 0., 2 * M_PI);
         }
         break;
-        case GeomAbs_Parabola: {
+        case GeomAbs_CurveType::GeomAbs_Parabola: {
           aXtream = opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Line(C1),
                                                                Extrema_Curve2dTool::Parabola(*myC));
           Results(*aXtream, U11, U12, U21, U22, 0., 0.);
         }
         break;
-        case GeomAbs_Hyperbola: {
+        case GeomAbs_CurveType::GeomAbs_Hyperbola: {
           aXtream =
             opencascade::make_shared<Extrema_ExtElC2d>(Extrema_Curve2dTool::Line(C1),
                                                        Extrema_Curve2dTool::Hyperbola(*myC));

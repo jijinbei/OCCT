@@ -102,7 +102,7 @@ TCollection_ExtendedString PCDM_ReadWriter::FileFormat(const TCollection_Extende
 
   // conversion to UTF-8 is done inside
   TCollection_AsciiString theFileName(aFileName);
-  if (PCDM::FileDriverType(theFileName, theFileDriver) == PCDM_TOFD_Unknown)
+  if (PCDM::FileDriverType(theFileName, theFileDriver) == PCDM_TypeOfFileDriver::PCDM_TOFD_Unknown)
     return ::TryXmlDriverType(theFileName);
 
   bool theFileIsOpen(false);
@@ -151,7 +151,7 @@ TCollection_ExtendedString PCDM_ReadWriter::FileFormat(Standard_IStream&        
   TCollection_ExtendedString aFormat;
 
   occ::handle<Storage_BaseDriver> aFileDriver;
-  if (PCDM::FileDriverType(theIStream, aFileDriver) == PCDM_TOFD_XmlFile)
+  if (PCDM::FileDriverType(theIStream, aFileDriver) == PCDM_TypeOfFileDriver::PCDM_TOFD_XmlFile)
   {
     return ::TryXmlDriverType(theIStream);
   }

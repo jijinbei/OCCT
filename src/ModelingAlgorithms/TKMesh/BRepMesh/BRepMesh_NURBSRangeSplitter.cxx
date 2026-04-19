@@ -37,7 +37,7 @@ public:
                    const Handle(IMeshData::MapOfReal)&      theControlParamsForbiddenToRemove)
       : myDFace(theDFace),
         mySurface(myDFace->GetSurface()->GeomSurfaceOriginal()),
-        myIsoU(theIsoType == GeomAbs_IsoU),
+        myIsoU(theIsoType == GeomAbs_IsoType::GeomAbs_IsoU),
         myParams(theParams),
         myControlParams(theControlParams),
         myParamsForbiddenToRemove(theParamsForbiddenToRemove),
@@ -296,7 +296,7 @@ void BRepMesh_NURBSRangeSplitter::AdjustRange()
   BRepMesh_DefaultRangeSplitter::AdjustRange();
   mySurfaceType = GetSurface()->GetType();
 
-  if (mySurfaceType == GeomAbs_BezierSurface)
+  if (mySurfaceType == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     const std::pair<double, double>& aRangeU = GetRangeU();
     const std::pair<double, double>& aRangeV = GetRangeV();
@@ -348,7 +348,7 @@ Handle(IMeshData::ListOfPnt2d) BRepMesh_NURBSRangeSplitter::GenerateSurfaceNodes
 
   const Handle(IMeshData::MapOfReal) aParamsToRemove[2] = {
     AnalyticalFilter(GetDFace(),
-                     GeomAbs_IsoV,
+                     GeomAbs_IsoType::GeomAbs_IsoV,
                      aParams[1],
                      aParams[0],
                      aFixedParams[1],
@@ -356,7 +356,7 @@ Handle(IMeshData::ListOfPnt2d) BRepMesh_NURBSRangeSplitter::GenerateSurfaceNodes
       .GetControlParametersToRemove(theParameters),
 
     AnalyticalFilter(GetDFace(),
-                     GeomAbs_IsoU,
+                     GeomAbs_IsoType::GeomAbs_IsoU,
                      aParams[0],
                      aParams[1],
                      aFixedParams[0],

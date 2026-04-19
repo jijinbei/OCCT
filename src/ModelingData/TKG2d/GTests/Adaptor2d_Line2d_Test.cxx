@@ -43,7 +43,7 @@ protected:
 TEST_F(Adaptor2d_Line2dTest, DefaultConstructor)
 {
   Adaptor2d_Line2d aLine;
-  EXPECT_EQ(aLine.GetType(), GeomAbs_Line);
+  EXPECT_EQ(aLine.GetType(), GeomAbs_CurveType::GeomAbs_Line);
 }
 
 TEST_F(Adaptor2d_Line2dTest, ParameterBounds)
@@ -85,7 +85,7 @@ TEST_F(Adaptor2d_Line2dTest, IsNotPeriodic)
 
 TEST_F(Adaptor2d_Line2dTest, GetType)
 {
-  EXPECT_EQ(myLine->GetType(), GeomAbs_Line);
+  EXPECT_EQ(myLine->GetType(), GeomAbs_CurveType::GeomAbs_Line);
 }
 
 TEST_F(Adaptor2d_Line2dTest, Value_AtOrigin)
@@ -220,7 +220,7 @@ TEST_F(Adaptor2d_Line2dTest, ShallowCopy)
   occ::handle<Adaptor2d_Curve2d> aCopy = myLine->ShallowCopy();
   EXPECT_DOUBLE_EQ(aCopy->FirstParameter(), 0.0);
   EXPECT_DOUBLE_EQ(aCopy->LastParameter(), 10.0);
-  EXPECT_EQ(aCopy->GetType(), GeomAbs_Line);
+  EXPECT_EQ(aCopy->GetType(), GeomAbs_CurveType::GeomAbs_Line);
 
   const gp_Pnt2d aPnt = aCopy->Value(5.0);
   EXPECT_NEAR(aPnt.X(), 5.0, Precision::Confusion());

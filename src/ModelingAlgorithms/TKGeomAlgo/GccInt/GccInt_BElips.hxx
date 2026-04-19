@@ -35,7 +35,7 @@ public:
   //! Returns a 2D ellipse which is the geometry of this bisecting curve.
   Standard_EXPORT gp_Elips2d Ellipse() const override;
 
-  //! Returns GccInt_Ell, which is the type of any GccInt_BElips bisecting curve.
+  //! Returns GccInt_IType::GccInt_Ell, which is the type of any GccInt_BElips bisecting curve.
   Standard_EXPORT GccInt_IType ArcType() const override;
 
   DEFINE_STANDARD_RTTIEXT(GccInt_BElips, GccInt_Bisec)

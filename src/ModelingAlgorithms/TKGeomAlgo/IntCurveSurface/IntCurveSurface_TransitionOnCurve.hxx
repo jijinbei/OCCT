@@ -34,7 +34,7 @@
 //!
 //! ( Tangent )
 //! Crb and Surf are C1
-enum IntCurveSurface_TransitionOnCurve
+enum class IntCurveSurface_TransitionOnCurve
 {
   IntCurveSurface_Tangent,
   IntCurveSurface_In,

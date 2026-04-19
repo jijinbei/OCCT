@@ -506,7 +506,7 @@ bool TopOpeBRepTool_TOOL::ParE2d(const gp_Pnt2d&    p2d,
   BRepAdaptor_Curve2d              BC2d(E, F);
   GeomAbs_CurveType                CT  = BC2d.GetType();
   const occ::handle<Geom2d_Curve>& C2d = BC2d.Curve();
-  if (CT == GeomAbs_Line)
+  if (CT == GeomAbs_CurveType::GeomAbs_Line)
   {
     bool     isoU, isoV;
     gp_Pnt2d Loc;
@@ -573,7 +573,7 @@ bool TopOpeBRepTool_TOOL::TggeomE(const double par, const BRepAdaptor_Curve& BC,
   // #endif
   //                          BC.GetType();
   // #ifdef OCCT_DEBUG
-  //   bool apoles = (ct == GeomAbs_BezierCurve)||(ct == GeomAbs_BSplineCurve);
+  //   bool apoles = (ct == GeomAbs_CurveType::GeomAbs_BezierCurve)||(ct == GeomAbs_CurveType::GeomAbs_BSplineCurve);
   // #endif
 
   double f = BC.FirstParameter(), l = BC.LastParameter();
@@ -843,7 +843,7 @@ bool TopOpeBRepTool_TOOL::CurvE(const TopoDS_Edge& E,
   curv = 0.;
   BRepAdaptor_Curve BAC(E);
   GeomAbs_CurveType CT   = BAC.GetType();
-  bool              line = (CT == GeomAbs_Line);
+  bool              line = (CT == GeomAbs_CurveType::GeomAbs_Line);
   double            tola = Precision::Angular() * 1.e3; // NYITOLXPU
   if (line)
   {
@@ -923,11 +923,11 @@ static bool FUN_analyticcS(const gp_Pnt2d&                  uv0,
     return true;
   GeomAdaptor_Surface GS(su);
   GeomAbs_SurfaceType ST    = GS.GetType();
-  bool                plane = (ST == GeomAbs_Plane);
-  bool                cyl   = (ST == GeomAbs_Cylinder);
-  bool                cone  = (ST == GeomAbs_Cone);
-  bool                sphe  = (ST == GeomAbs_Sphere);
-  bool                torus = (ST == GeomAbs_Torus);
+  bool                plane = (ST == GeomAbs_SurfaceType::GeomAbs_Plane);
+  bool                cyl   = (ST == GeomAbs_SurfaceType::GeomAbs_Cylinder);
+  bool                cone  = (ST == GeomAbs_SurfaceType::GeomAbs_Cone);
+  bool                sphe  = (ST == GeomAbs_SurfaceType::GeomAbs_Sphere);
+  bool                torus = (ST == GeomAbs_SurfaceType::GeomAbs_Torus);
 
   bool curvdone = false;
   if (plane)
@@ -1400,7 +1400,7 @@ static bool FUN_ngF(const gp_Pnt2d& uv, const TopoDS_Face& F, gp_Vec& ngF)
   if (kpart)
   {
     GeomAbs_SurfaceType ST = bs.GetType();
-    if (ST == GeomAbs_Cone)
+    if (ST == GeomAbs_SurfaceType::GeomAbs_Cone)
     {
       bool nullx = (std::abs(uv.X()) < tolu);
       bool apex  = nullx && (std::abs(uv.Y()) < tolv);
@@ -1433,7 +1433,7 @@ static bool FUN_ngF(const gp_Pnt2d& uv, const TopoDS_Face& F, gp_Vec& ngF)
         return true;
       }
     }
-    if (ST == GeomAbs_Sphere)
+    if (ST == GeomAbs_SurfaceType::GeomAbs_Sphere)
     {
       double pisur2 = M_PI * .5;
       double u = uv.X(), v = uv.Y();
@@ -1767,13 +1767,13 @@ bool TopOpeBRepTool_TOOL::EdgeONFace(const double       par,
 
   BRepAdaptor_Surface bs(fa);
   GeomAbs_SurfaceType st       = bs.GetType();
-  bool                plane    = (st == GeomAbs_Plane);
-  bool                cylinder = (st == GeomAbs_Cylinder);
+  bool                plane    = (st == GeomAbs_SurfaceType::GeomAbs_Plane);
+  bool                cylinder = (st == GeomAbs_SurfaceType::GeomAbs_Cylinder);
 
   BRepAdaptor_Curve bc(ed);
   GeomAbs_CurveType ct     = bc.GetType();
-  bool              line   = (ct == GeomAbs_Line);
-  bool              circle = (ct == GeomAbs_Circle);
+  bool              line   = (ct == GeomAbs_CurveType::GeomAbs_Line);
+  bool              circle = (ct == GeomAbs_CurveType::GeomAbs_Circle);
 
   double tole   = bc.Tolerance();
   double tol1de = bc.Resolution(tole);
@@ -1792,11 +1792,11 @@ bool TopOpeBRepTool_TOOL::EdgeONFace(const double       par,
     bool   det = true;
     if (circle)
       ne = bc.Circle().Axis().Direction();
-    else if (ct == GeomAbs_Ellipse)
+    else if (ct == GeomAbs_CurveType::GeomAbs_Ellipse)
       ne = bc.Ellipse().Axis().Direction();
-    else if (ct == GeomAbs_Hyperbola)
+    else if (ct == GeomAbs_CurveType::GeomAbs_Hyperbola)
       ne = bc.Hyperbola().Axis().Direction();
-    else if (ct == GeomAbs_Parabola)
+    else if (ct == GeomAbs_CurveType::GeomAbs_Parabola)
       ne = bc.Parabola().Axis().Direction();
     else
       det = false;

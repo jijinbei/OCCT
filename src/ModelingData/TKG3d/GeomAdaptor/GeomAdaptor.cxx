@@ -48,31 +48,31 @@ occ::handle<Geom_Curve> GeomAdaptor::MakeCurve(const Adaptor3d_Curve& HC)
 
   switch (HC.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       C = new Geom_Line(HC.Line());
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       C = new Geom_Circle(HC.Circle());
       break;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       C = new Geom_Ellipse(HC.Ellipse());
       break;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       C = new Geom_Parabola(HC.Parabola());
       break;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       C = new Geom_Hyperbola(HC.Hyperbola());
       break;
 
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       C = occ::down_cast<Geom_BezierCurve>(HC.Bezier()->Copy());
       break;
 
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       C = occ::down_cast<Geom_BSplineCurve>(HC.BSpline()->Copy());
       break;
 
@@ -100,49 +100,49 @@ occ::handle<Geom_Surface> GeomAdaptor::MakeSurface(const Adaptor3d_Surface& HS,
 
   switch (HS.GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       S = new Geom_Plane(HS.Plane());
       break;
 
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       S = new Geom_CylindricalSurface(HS.Cylinder());
       break;
 
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       S = new Geom_ConicalSurface(HS.Cone());
       break;
 
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       S = new Geom_SphericalSurface(HS.Sphere());
       break;
 
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       S = new Geom_ToroidalSurface(HS.Torus());
       break;
 
-    case GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
       S = occ::down_cast<Geom_BezierSurface>(HS.Bezier()->Copy());
       break;
 
-    case GeomAbs_BSplineSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
       S = occ::down_cast<Geom_BSplineSurface>(HS.BSpline()->Copy());
       break;
 
-    case GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
       S = new Geom_SurfaceOfRevolution(GeomAdaptor::MakeCurve(*HS.BasisCurve()),
                                        HS.AxeOfRevolution());
       break;
 
-    case GeomAbs_SurfaceOfExtrusion:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
       S =
         new Geom_SurfaceOfLinearExtrusion(GeomAdaptor::MakeCurve(*HS.BasisCurve()), HS.Direction());
       break;
 
-    case GeomAbs_OffsetSurface:
+    case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
       S = new Geom_OffsetSurface(GeomAdaptor::MakeSurface(*HS.BasisSurface()), HS.OffsetValue());
       break;
 
-    case GeomAbs_OtherSurface:
+    case GeomAbs_SurfaceType::GeomAbs_OtherSurface:
       throw Standard_DomainError("GeomAdaptor::MakeSurface : OtherSurface");
       break;
   }

@@ -295,7 +295,7 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
   //
   aBC.Initialize(aE1);
   aCT = aBC.GetType();
-  if (aCT == GeomAbs_Line)
+  if (aCT == GeomAbs_CurveType::GeomAbs_Line)
   {
     return;
   }
@@ -311,8 +311,8 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
   {
     aRes = 2. * (aTolE1 + aTolE2);
     //
-    if (aCT == GeomAbs_BezierCurve || aCT == GeomAbs_BSplineCurve || aCT == GeomAbs_OffsetCurve
-        || aCT == GeomAbs_OtherCurve)
+    if (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve || aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCT == GeomAbs_CurveType::GeomAbs_OffsetCurve
+        || aCT == GeomAbs_CurveType::GeomAbs_OtherCurve)
     {
 
       if (!i)
@@ -334,7 +334,7 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
       {
         aRes = aBC.Resolution(aRes);
       }
-    } // if (aCT==GeomAbs_BezierCurve||...
+    } // if (aCT==GeomAbs_CurveType::GeomAbs_BezierCurve||...
     else
     {
       aRes = aBC.Resolution(aRes);
@@ -386,8 +386,8 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
   {
     aRes = aTolF;
 
-    if (aCT == GeomAbs_BezierCurve || aCT == GeomAbs_BSplineCurve || aCT == GeomAbs_OffsetCurve
-        || aCT == GeomAbs_OtherCurve)
+    if (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve || aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCT == GeomAbs_CurveType::GeomAbs_OffsetCurve
+        || aCT == GeomAbs_CurveType::GeomAbs_OtherCurve)
     {
 
       if (!i)
@@ -409,7 +409,7 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
       {
         aRes = aBC.Resolution(aRes);
       }
-    } // if (aCT==GeomAbs_BezierCurve||...
+    } // if (aCT==GeomAbs_CurveType::GeomAbs_BezierCurve||...
     else
     {
       aRes = aBC.Resolution(aRes);

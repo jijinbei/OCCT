@@ -126,7 +126,7 @@ const TopoDS_Edge& BRepFilletAPI_MakeFillet2d::BasisEdge(const TopoDS_Edge& E) c
 void BRepFilletAPI_MakeFillet2d::Build(const Message_ProgressRange& /*theRange*/)
 {
   // test if the operation is done
-  if (Status() == ChFi2d_IsDone)
+  if (Status() == ChFi2d_ConstructionError::ChFi2d_IsDone)
   {
     Done();
     myShape = myMakeChFi2d.Result();

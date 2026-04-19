@@ -195,7 +195,7 @@ void IntTools_EdgeEdge::Perform()
   Prepare();
   //
   // 3.1. Check Line/Line case
-  if (myCurve1.GetType() == GeomAbs_Line && myCurve2.GetType() == GeomAbs_Line)
+  if (myCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Line && myCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     ComputeLineLine();
     return;
@@ -214,14 +214,14 @@ void IntTools_EdgeEdge::Perform()
     }
   }
   //
-  if ((myCurve1.GetType() <= GeomAbs_Parabola && myCurve2.GetType() <= GeomAbs_Parabola)
-      && (myCurve1.GetType() == GeomAbs_Line || myCurve2.GetType() == GeomAbs_Line))
+  if ((myCurve1.GetType() <= GeomAbs_CurveType::GeomAbs_Parabola && myCurve2.GetType() <= GeomAbs_CurveType::GeomAbs_Parabola)
+      && (myCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Line || myCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line))
   {
     // Improvement of performance for cases of searching common parts between line
     // and analytical curve. This code allows to define that edges have no
     // common parts more fast, then regular algorithm (FindSolution(...))
     // Check minimal distance between edges
-    BRepExtrema_DistShapeShape aMinDist(myEdge1, myEdge2, Extrema_ExtFlag_MIN);
+    BRepExtrema_DistShapeShape aMinDist(myEdge1, myEdge2, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
     if (aMinDist.IsDone())
     {
       double d = aMinDist.Value();
@@ -1435,19 +1435,19 @@ int TypeToInteger(const GeomAbs_CurveType theCType)
   //
   switch (theCType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       iRet = 0;
       break;
-    case GeomAbs_Hyperbola:
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       iRet = 1;
       break;
-    case GeomAbs_Circle:
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       iRet = 2;
       break;
-    case GeomAbs_BezierCurve:
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       iRet = 3;
       break;
     default:
@@ -1468,36 +1468,36 @@ double ResolutionCoeff(const BRepAdaptor_Curve& theBAC, const IntTools_Range& th
   //
   switch (aCurveType)
   {
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       aResCoeff = 1. / (2 * occ::down_cast<Geom_Circle>(aCurve)->Circ().Radius());
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       aResCoeff = 1. / occ::down_cast<Geom_Ellipse>(aCurve)->MajorRadius();
       break;
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve: {
       const occ::handle<Geom_OffsetCurve>& anOffsetCurve = occ::down_cast<Geom_OffsetCurve>(aCurve);
       const occ::handle<Geom_Curve>&       aBasisCurve   = anOffsetCurve->BasisCurve();
       GeomAdaptor_Curve                    aGBasisCurve(aBasisCurve);
       const GeomAbs_CurveType              aBCType = aGBasisCurve.GetType();
-      if (aBCType == GeomAbs_Line)
+      if (aBCType == GeomAbs_CurveType::GeomAbs_Line)
       {
         break;
       }
-      else if (aBCType == GeomAbs_Circle)
+      else if (aBCType == GeomAbs_CurveType::GeomAbs_Circle)
       {
         aResCoeff = 1. / (2 * (anOffsetCurve->Offset() + aGBasisCurve.Circle().Radius()));
         break;
       }
-      else if (aBCType == GeomAbs_Ellipse)
+      else if (aBCType == GeomAbs_CurveType::GeomAbs_Ellipse)
       {
         aResCoeff = 1. / (anOffsetCurve->Offset() + aGBasisCurve.Ellipse().MajorRadius());
         break;
       }
     }
       [[fallthrough]];
-    case GeomAbs_Hyperbola:
-    case GeomAbs_Parabola:
-    case GeomAbs_OtherCurve: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_OtherCurve: {
       double k, kMin, aDist, aDt, aT1, aT2, aT;
       int    aNbP, i;
       gp_Pnt aP1, aP2;
@@ -1543,30 +1543,30 @@ double Resolution(const occ::handle<Geom_Curve>& theCurve,
   //
   switch (theCurveType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       aRes = theR3D;
       break;
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       double aDt = theResCoeff * theR3D;
       aRes       = (aDt <= 1.) ? 2 * std::asin(aDt) : 2 * M_PI;
       break;
     }
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       occ::down_cast<Geom_BezierCurve>(theCurve)->Resolution(theR3D, aRes);
       break;
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       occ::down_cast<Geom_BSplineCurve>(theCurve)->Resolution(theR3D, aRes);
       break;
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve: {
       const occ::handle<Geom_Curve>& aBasisCurve =
         occ::down_cast<Geom_OffsetCurve>(theCurve)->BasisCurve();
       const GeomAbs_CurveType aBCType = GeomAdaptor_Curve(aBasisCurve).GetType();
-      if (aBCType == GeomAbs_Line)
+      if (aBCType == GeomAbs_CurveType::GeomAbs_Line)
       {
         aRes = theR3D;
         break;
       }
-      else if (aBCType == GeomAbs_Circle)
+      else if (aBCType == GeomAbs_CurveType::GeomAbs_Circle)
       {
         double aDt = theResCoeff * theR3D;
         aRes       = (aDt <= 1.) ? 2 * std::asin(aDt) : 2 * M_PI;

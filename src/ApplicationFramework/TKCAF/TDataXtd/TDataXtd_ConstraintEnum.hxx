@@ -19,7 +19,7 @@
 //! The terms of this enumeration define the types
 //! of available constraint.
 //! ==================
-enum TDataXtd_ConstraintEnum
+enum class TDataXtd_ConstraintEnum
 {
   TDataXtd_RADIUS,
   TDataXtd_DIAMETER,

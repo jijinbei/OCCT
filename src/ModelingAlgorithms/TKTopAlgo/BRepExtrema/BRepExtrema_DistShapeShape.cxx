@@ -191,8 +191,8 @@ struct VertexFunctor
         {
           if (aDist < Solution.Dist[theIndex] - Eps)
           {
-            const BRepExtrema_SolutionElem Sol1(aDist, aPoint1, BRepExtrema_IsVertex, aVertex1);
-            const BRepExtrema_SolutionElem Sol2(aDist, aPoint2, BRepExtrema_IsVertex, aVertex2);
+            const BRepExtrema_SolutionElem Sol1(aDist, aPoint1, BRepExtrema_SupportType::BRepExtrema_IsVertex, aVertex1);
+            const BRepExtrema_SolutionElem Sol2(aDist, aPoint2, BRepExtrema_SupportType::BRepExtrema_IsVertex, aVertex2);
 
             Solution.Shape1[theIndex].Clear();
             Solution.Shape2[theIndex].Clear();
@@ -203,8 +203,8 @@ struct VertexFunctor
           }
           else if (std::abs(aDist - Solution.Dist[theIndex]) < Eps)
           {
-            const BRepExtrema_SolutionElem Sol1(aDist, aPoint1, BRepExtrema_IsVertex, aVertex1);
-            const BRepExtrema_SolutionElem Sol2(aDist, aPoint2, BRepExtrema_IsVertex, aVertex2);
+            const BRepExtrema_SolutionElem Sol1(aDist, aPoint1, BRepExtrema_SupportType::BRepExtrema_IsVertex, aVertex1);
+            const BRepExtrema_SolutionElem Sol2(aDist, aPoint2, BRepExtrema_SupportType::BRepExtrema_IsVertex, aVertex2);
             Solution.Shape1[theIndex].Append(Sol1);
             Solution.Shape2[theIndex].Append(Sol2);
 
@@ -616,8 +616,8 @@ BRepExtrema_DistShapeShape::BRepExtrema_DistShapeShape()
       myEps(Precision::Confusion()),
       myIsInitS1(false),
       myIsInitS2(false),
-      myFlag(Extrema_ExtFlag_MINMAX),
-      myAlgo(Extrema_ExtAlgo_Grad),
+      myFlag(Extrema_ExtFlag::Extrema_ExtFlag_MINMAX),
+      myAlgo(Extrema_ExtAlgo::Extrema_ExtAlgo_Grad),
       myIsMultiThread(false)
 {
 }
@@ -735,7 +735,7 @@ struct TreatmentFunctor
         InnerSol->store(true, std::memory_order_release);
         *DistRef = 0.;
         IsDone->store(true, std::memory_order_release);
-        BRepExtrema_SolutionElem aSolElem(0, aPnt, BRepExtrema_IsVertex, aVertex);
+        BRepExtrema_SolutionElem aSolElem(0, aPnt, BRepExtrema_SupportType::BRepExtrema_IsVertex, aVertex);
         SolutionsShape1->Append(aSolElem);
         SolutionsShape2->Append(aSolElem);
         break;
@@ -987,11 +987,11 @@ TopoDS_Shape BRepExtrema_DistShapeShape::SupportOnShape1(const int N) const
   const BRepExtrema_SolutionElem& sol = mySolutionsShape1.Value(N);
   switch (sol.SupportKind())
   {
-    case BRepExtrema_IsVertex:
+    case BRepExtrema_SupportType::BRepExtrema_IsVertex:
       return sol.Vertex();
-    case BRepExtrema_IsOnEdge:
+    case BRepExtrema_SupportType::BRepExtrema_IsOnEdge:
       return sol.Edge();
-    case BRepExtrema_IsInFace:
+    case BRepExtrema_SupportType::BRepExtrema_IsInFace:
       return sol.Face();
   }
   return TopoDS_Shape();
@@ -1007,11 +1007,11 @@ TopoDS_Shape BRepExtrema_DistShapeShape::SupportOnShape2(const int N) const
   const BRepExtrema_SolutionElem& sol = mySolutionsShape2.Value(N);
   switch (sol.SupportKind())
   {
-    case BRepExtrema_IsVertex:
+    case BRepExtrema_SupportType::BRepExtrema_IsVertex:
       return sol.Vertex();
-    case BRepExtrema_IsOnEdge:
+    case BRepExtrema_SupportType::BRepExtrema_IsOnEdge:
       return sol.Edge();
-    case BRepExtrema_IsInFace:
+    case BRepExtrema_SupportType::BRepExtrema_IsInFace:
       return sol.Face();
   }
   return TopoDS_Shape();
@@ -1025,7 +1025,7 @@ void BRepExtrema_DistShapeShape::ParOnEdgeS1(const int N, double& t) const
     throw StdFail_NotDone("BRepExtrema_DistShapeShape::ParOnEdgeS1: There's no solution");
 
   const BRepExtrema_SolutionElem& sol = mySolutionsShape1.Value(N);
-  if (sol.SupportKind() != BRepExtrema_IsOnEdge)
+  if (sol.SupportKind() != BRepExtrema_SupportType::BRepExtrema_IsOnEdge)
     throw BRepExtrema_UnCompatibleShape(
       "BRepExtrema_DistShapeShape::ParOnEdgeS1: ParOnEdgeS1 is impossible without EDGE");
 
@@ -1040,7 +1040,7 @@ void BRepExtrema_DistShapeShape::ParOnEdgeS2(const int N, double& t) const
     throw StdFail_NotDone("BRepExtrema_DistShapeShape::ParOnEdgeS2: There's no solution");
 
   const BRepExtrema_SolutionElem& sol = mySolutionsShape2.Value(N);
-  if (sol.SupportKind() != BRepExtrema_IsOnEdge)
+  if (sol.SupportKind() != BRepExtrema_SupportType::BRepExtrema_IsOnEdge)
     throw BRepExtrema_UnCompatibleShape(
       "BRepExtrema_DistShapeShape::ParOnEdgeS2: ParOnEdgeS2 is impossible without EDGE");
 
@@ -1055,7 +1055,7 @@ void BRepExtrema_DistShapeShape::ParOnFaceS1(const int N, double& u, double& v) 
     throw StdFail_NotDone("BRepExtrema_DistShapeShape::ParOnFaceS1: There's no solution");
 
   const BRepExtrema_SolutionElem& sol = mySolutionsShape1.Value(N);
-  if (sol.SupportKind() != BRepExtrema_IsInFace)
+  if (sol.SupportKind() != BRepExtrema_SupportType::BRepExtrema_IsInFace)
     throw BRepExtrema_UnCompatibleShape(
       "BRepExtrema_DistShapeShape::ParOnFaceS1: ParOnFaceS1 is impossible without FACE");
 
@@ -1070,7 +1070,7 @@ void BRepExtrema_DistShapeShape::ParOnFaceS2(const int N, double& u, double& v) 
     throw StdFail_NotDone("BRepExtrema_DistShapeShape::ParOnFaceS2: There's no solution");
 
   const BRepExtrema_SolutionElem& sol = mySolutionsShape2.Value(N);
-  if (sol.SupportKind() != BRepExtrema_IsInFace)
+  if (sol.SupportKind() != BRepExtrema_SupportType::BRepExtrema_IsInFace)
     throw BRepExtrema_UnCompatibleShape(
       "BRepExtrema_DistShapeShape::ParOnFaceS2:ParOnFaceS2 is impossible without FACE ");
 
@@ -1103,26 +1103,26 @@ void BRepExtrema_DistShapeShape::Dump(Standard_OStream& o) const
 
     switch (SupportTypeShape1(i))
     {
-      case BRepExtrema_IsVertex:
+      case BRepExtrema_SupportType::BRepExtrema_IsVertex:
         break;
-      case BRepExtrema_IsOnEdge:
+      case BRepExtrema_SupportType::BRepExtrema_IsOnEdge:
         ParOnEdgeS1(i, r1);
         o << "parameter on the first edge :  t= " << r1 << std::endl;
         break;
-      case BRepExtrema_IsInFace:
+      case BRepExtrema_SupportType::BRepExtrema_IsInFace:
         ParOnFaceS1(i, r1, r2);
         o << "parameters on the first face :  u= " << r1 << " v=" << r2 << std::endl;
         break;
     }
     switch (SupportTypeShape2(i))
     {
-      case BRepExtrema_IsVertex:
+      case BRepExtrema_SupportType::BRepExtrema_IsVertex:
         break;
-      case BRepExtrema_IsOnEdge:
+      case BRepExtrema_SupportType::BRepExtrema_IsOnEdge:
         ParOnEdgeS2(i, r1);
         o << "parameter on the second edge : t=" << r1 << std::endl;
         break;
-      case BRepExtrema_IsInFace:
+      case BRepExtrema_SupportType::BRepExtrema_IsInFace:
         ParOnFaceS2(i, r1, r2);
         o << "parameters on the second face : u= " << r1 << " v=" << r2 << std::endl;
         break;

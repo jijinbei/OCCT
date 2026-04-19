@@ -23,7 +23,7 @@
 
 Contap_ArcFunction::Contap_ArcFunction()
     : myMean(1.),
-      myType(Contap_ContourStd),
+      myType(Contap_TFunction::Contap_ContourStd),
       myDir(gp_Dir::D::Z),
       myCosAng(0.0)
 {
@@ -63,19 +63,19 @@ bool Contap_ArcFunction::Value(const double U, double& F)
 
   switch (myType)
   {
-    case Contap_ContourStd: {
+    case Contap_TFunction::Contap_ContourStd: {
       F = (norm.Dot(myDir)) / myMean;
     }
     break;
-    case Contap_ContourPrs: {
+    case Contap_TFunction::Contap_ContourPrs: {
       F = (norm.Dot(gp_Vec(myEye, solpt))) / myMean;
     }
     break;
-    case Contap_DraftStd: {
+    case Contap_TFunction::Contap_DraftStd: {
       F = (norm.Dot(myDir) - myCosAng * norm.Magnitude()) / myMean;
     }
     break;
-    case Contap_DraftPrs:
+    case Contap_TFunction::Contap_DraftPrs:
     default: {
     }
   }
@@ -95,14 +95,14 @@ bool Contap_ArcFunction::Derivative(const double U, double& D)
 
   switch (myType)
   {
-    case Contap_ContourStd: {
+    case Contap_TFunction::Contap_ContourStd: {
       //      dfu = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(myDir))/myMean;
       //      dfv = ((d2uv.Crossed(d1v) + d1u.Crossed(d2v)).Dot(myDir))/myMean;
       dfu = (dnu.Dot(myDir)) / myMean;
       dfv = (dnv.Dot(myDir)) / myMean;
     }
     break;
-    case Contap_ContourPrs: {
+    case Contap_TFunction::Contap_ContourPrs: {
       gp_Vec Ep(myEye, solpt);
       //      dfu = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(Ep))/myMean;
       //      dfv = ((d2uv.Crossed(d1v) + d1u.Crossed(d2v)).Dot(Ep))/myMean;
@@ -110,7 +110,7 @@ bool Contap_ArcFunction::Derivative(const double U, double& D)
       dfv = (dnv.Dot(Ep)) / myMean;
     }
     break;
-    case Contap_DraftStd: {
+    case Contap_TFunction::Contap_DraftStd: {
       /*
       gp_Vec norm(d1u.Crossed(d1v).Normalized());
       gp_Vec dnorm(d2u.Crossed(d1v) + d1u.Crossed(d2uv));
@@ -123,7 +123,7 @@ bool Contap_ArcFunction::Derivative(const double U, double& D)
       dfv = (dnv.Dot(myDir) - myCosAng * dnv.Dot(norm)) / myMean;
     }
     break;
-    case Contap_DraftPrs:
+    case Contap_TFunction::Contap_DraftPrs:
     default: {
     }
   }
@@ -145,7 +145,7 @@ bool Contap_ArcFunction::Values(const double U, double& F, double& D)
 
   switch (myType)
   {
-    case Contap_ContourStd: {
+    case Contap_TFunction::Contap_ContourStd: {
       F = (norm.Dot(myDir)) / myMean;
       //      dfu = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(myDir))/myMean;
       //      dfv = ((d2uv.Crossed(d1v) + d1u.Crossed(d2v)).Dot(myDir))/myMean;
@@ -153,7 +153,7 @@ bool Contap_ArcFunction::Values(const double U, double& F, double& D)
       dfv = (dnv.Dot(myDir)) / myMean;
     }
     break;
-    case Contap_ContourPrs: {
+    case Contap_TFunction::Contap_ContourPrs: {
       gp_Vec Ep(myEye, solpt);
       F = (norm.Dot(Ep)) / myMean;
       //      dfu = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(Ep))/myMean;
@@ -162,7 +162,7 @@ bool Contap_ArcFunction::Values(const double U, double& F, double& D)
       dfv = (dnv.Dot(Ep)) / myMean;
     }
     break;
-    case Contap_DraftStd: {
+    case Contap_TFunction::Contap_DraftStd: {
       F = (norm.Dot(myDir) - myCosAng * norm.Magnitude()) / myMean;
       norm.Normalize();
       /*
@@ -175,7 +175,7 @@ bool Contap_ArcFunction::Values(const double U, double& F, double& D)
       dfv = (dnv.Dot(myDir) - myCosAng * dnv.Dot(norm)) / myMean;
     }
     break;
-    case Contap_DraftPrs:
+    case Contap_TFunction::Contap_DraftPrs:
     default: {
     }
   }

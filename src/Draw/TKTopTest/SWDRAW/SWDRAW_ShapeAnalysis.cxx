@@ -1308,7 +1308,7 @@ static int getanasurf(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  GeomAbs_SurfaceType aTargets[] = {GeomAbs_Plane, GeomAbs_Cylinder, GeomAbs_Cone, GeomAbs_Sphere};
+  GeomAbs_SurfaceType aTargets[] = {GeomAbs_SurfaceType::GeomAbs_Plane, GeomAbs_SurfaceType::GeomAbs_Cylinder, GeomAbs_SurfaceType::GeomAbs_Cone, GeomAbs_SurfaceType::GeomAbs_Sphere};
   int                 isurf      = 0;
   if (n > 3)
   {
@@ -1349,33 +1349,33 @@ static int getanasurf(Draw_Interpretor& di, int n, const char** a)
   occ::handle<Geom_Surface>          aRes;
   switch (aTargets[isurf])
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       gp_Pln aPln;
-      if (aSampleSurf.GetType() == GeomAbs_Plane)
+      if (aSampleSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
         aPln = aSampleSurf.Plane();
       if (aCanonRec.IsPlane(tol, aPln))
         aRes = new Geom_Plane(aPln);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       gp_Cylinder aCyl;
-      if (aSampleSurf.GetType() == GeomAbs_Cylinder)
+      if (aSampleSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder)
         aCyl = aSampleSurf.Cylinder();
       if (aCanonRec.IsCylinder(tol, aCyl))
         aRes = new Geom_CylindricalSurface(aCyl);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       gp_Cone aCon;
-      if (aSampleSurf.GetType() == GeomAbs_Cone)
+      if (aSampleSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone)
         aCon = aSampleSurf.Cone();
       if (aCanonRec.IsCone(tol, aCon))
         aRes = new Geom_ConicalSurface(aCon);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       gp_Sphere aSph;
-      if (aSampleSurf.GetType() == GeomAbs_Sphere)
+      if (aSampleSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
         aSph = aSampleSurf.Sphere();
       if (aCanonRec.IsSphere(tol, aSph))
         aRes = new Geom_SphericalSurface(aSph);
@@ -1418,7 +1418,7 @@ int getanacurve(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  GeomAbs_CurveType aTargets[] = {GeomAbs_Line, GeomAbs_Circle, GeomAbs_Ellipse};
+  GeomAbs_CurveType aTargets[] = {GeomAbs_CurveType::GeomAbs_Line, GeomAbs_CurveType::GeomAbs_Circle, GeomAbs_CurveType::GeomAbs_Ellipse};
   int               icurv      = 0;
   if (n > 3)
   {
@@ -1438,19 +1438,19 @@ int getanacurve(Draw_Interpretor& di, int n, const char** a)
   occ::handle<Geom_Curve>            aRes;
   switch (aTargets[icurv])
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       gp_Lin aLin;
       if (aCanonRec.IsLine(tol, aLin))
         aRes = new Geom_Line(aLin);
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       gp_Circ aCirc;
       if (aCanonRec.IsCircle(tol, aCirc))
         aRes = new Geom_Circle(aCirc);
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       gp_Elips anElips;
       if (aCanonRec.IsEllipse(tol, anElips))
         aRes = new Geom_Ellipse(anElips);

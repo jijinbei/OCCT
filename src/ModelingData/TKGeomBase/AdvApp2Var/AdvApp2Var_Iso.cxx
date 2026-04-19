@@ -31,7 +31,7 @@ IMPLEMENT_STANDARD_RTTIEXT(AdvApp2Var_Iso, Standard_Transient)
 //=================================================================================================
 
 AdvApp2Var_Iso::AdvApp2Var_Iso()
-    : myType(GeomAbs_IsoU),
+    : myType(GeomAbs_IsoType::GeomAbs_IsoU),
       myConstPar(0.5),
       myU0(0.),
       myU1(1.),
@@ -75,7 +75,7 @@ AdvApp2Var_Iso::AdvApp2Var_Iso(const GeomAbs_IsoType type,
       myApprIsDone(false),
       myHasResult(false)
 {
-  if (myType == GeomAbs_IsoU)
+  if (myType == GeomAbs_IsoType::GeomAbs_IsoU)
   {
     myExtremOrder = iv;
     myDerivOrder  = iu;
@@ -139,7 +139,7 @@ void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
   double*                                  ROOTLG = nullptr;
   switch (myType)
   {
-    case GeomAbs_IsoV:
+    case GeomAbs_IsoType::GeomAbs_IsoV:
       ISOFAV    = 2;
       TABDEC[0] = myU0;
       TABDEC[1] = myU1;
@@ -152,7 +152,7 @@ void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
       NDGJAC = Conditions.UJacDeg();
       NCFLIM = Conditions.ULimit();
       break;
-    case GeomAbs_IsoU:
+    case GeomAbs_IsoType::GeomAbs_IsoU:
       ISOFAV    = 1;
       TABDEC[0] = myV0;
       TABDEC[1] = myV1;
@@ -167,7 +167,7 @@ void AdvApp2Var_Iso::MakeApprox(const AdvApp2Var_Context&           Conditions,
       break;
       // #ifndef OCCT_DEBUG
       // pkv f
-    case GeomAbs_NoneIso:
+    case GeomAbs_IsoType::GeomAbs_NoneIso:
       // pkv t
     default:
       break;
@@ -371,7 +371,7 @@ FINISH:
 
 void AdvApp2Var_Iso::ChangeDomain(const double a, const double b)
 {
-  if (myType == GeomAbs_IsoU)
+  if (myType == GeomAbs_IsoType::GeomAbs_IsoU)
   {
     myV0 = a;
     myV1 = b;
@@ -441,7 +441,7 @@ double AdvApp2Var_Iso::Constante() const
 
 double AdvApp2Var_Iso::T0() const
 {
-  if (myType == GeomAbs_IsoU)
+  if (myType == GeomAbs_IsoType::GeomAbs_IsoU)
   {
     return myV0;
   }
@@ -455,7 +455,7 @@ double AdvApp2Var_Iso::T0() const
 
 double AdvApp2Var_Iso::T1() const
 {
-  if (myType == GeomAbs_IsoU)
+  if (myType == GeomAbs_IsoType::GeomAbs_IsoU)
   {
     return myV1;
   }
@@ -497,7 +497,7 @@ double AdvApp2Var_Iso::V1() const
 
 int AdvApp2Var_Iso::UOrder() const
 {
-  if (Type() == GeomAbs_IsoU)
+  if (Type() == GeomAbs_IsoType::GeomAbs_IsoU)
     return myDerivOrder;
   else
     return myExtremOrder;
@@ -507,7 +507,7 @@ int AdvApp2Var_Iso::UOrder() const
 
 int AdvApp2Var_Iso::VOrder() const
 {
-  if (Type() == GeomAbs_IsoV)
+  if (Type() == GeomAbs_IsoType::GeomAbs_IsoV)
     return myDerivOrder;
   else
     return myExtremOrder;

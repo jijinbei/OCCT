@@ -596,13 +596,13 @@ occ::handle<Geom2d_Curve> ShapeBuild_Edge::TransformPCurve(const occ::handle<Geo
       if (approx.HasResult())
         aBSpline2d = approx.Curve();
       else
-        aBSpline2d = Geom2dConvert::CurveToBSplineCurve(tcurve, Convert_QuasiAngular);
+        aBSpline2d = Geom2dConvert::CurveToBSplineCurve(tcurve, Convert_ParameterisationType::Convert_QuasiAngular);
       aFirst = aBSpline2d->FirstParameter();
       aLast  = aBSpline2d->LastParameter();
     }
     else if (!result->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)))
     {
-      aBSpline2d = Geom2dConvert::CurveToBSplineCurve(result, Convert_QuasiAngular);
+      aBSpline2d = Geom2dConvert::CurveToBSplineCurve(result, Convert_ParameterisationType::Convert_QuasiAngular);
     }
     else
       aBSpline2d = occ::down_cast<Geom2d_BSplineCurve>(result);

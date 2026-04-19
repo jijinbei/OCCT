@@ -52,9 +52,9 @@ BlendFunc_CSConstRad::BlendFunc_CSConstRad(const occ::handle<Adaptor3d_Surface>&
       theD(0.0),
       maxang(RealFirst()),
       minang(RealLast()),
-      mySShape(BlendFunc_Rational)
+      mySShape(BlendFunc_SectionShape::BlendFunc_Rational)
 {
-  myTConv = Convert_TgtThetaOver2;
+  myTConv = Convert_ParameterisationType::Convert_TgtThetaOver2;
 }
 
 //=================================================================================================
@@ -665,7 +665,7 @@ bool BlendFunc_CSConstRad::GetSection(const double                Param,
 
 bool BlendFunc_CSConstRad::IsRational() const
 {
-  return (mySShape == BlendFunc_Rational || mySShape == BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================
@@ -767,7 +767,7 @@ void BlendFunc_CSConstRad::Section(const Blend_Point&            P,
   Poles2d(Poles2d.Lower()).SetCoord(u1, v1);
 
   // Cas Linear
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts;
     Poles(upp)   = ptc;
@@ -916,7 +916,7 @@ bool BlendFunc_CSConstRad::Section(const Blend_Point&            P,
   }
 
   // Cas Linear
-  if (mySShape == BlendFunc_Linear)
+  if (mySShape == BlendFunc_SectionShape::BlendFunc_Linear)
   {
     Poles(low)   = pts;
     Poles(upp)   = ptc;

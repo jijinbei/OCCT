@@ -42,30 +42,30 @@ const double HyperbolaLimit = 23.; // ln(MaxParamVal)
 
 static bool IsQuadric(const GeomAbs_SurfaceType theSType)
 {
-  if (theSType == GeomAbs_Plane)
+  if (theSType == GeomAbs_SurfaceType::GeomAbs_Plane)
     return true;
-  if (theSType == GeomAbs_Cylinder)
+  if (theSType == GeomAbs_SurfaceType::GeomAbs_Cylinder)
     return true;
-  if (theSType == GeomAbs_Cone)
+  if (theSType == GeomAbs_SurfaceType::GeomAbs_Cone)
     return true;
-  if (theSType == GeomAbs_Sphere)
+  if (theSType == GeomAbs_SurfaceType::GeomAbs_Sphere)
     return true;
-  if (theSType == GeomAbs_Torus)
+  if (theSType == GeomAbs_SurfaceType::GeomAbs_Torus)
     return true;
   return false;
 }
 
 static bool IsConic(const GeomAbs_CurveType theCType)
 {
-  if (theCType == GeomAbs_Line)
+  if (theCType == GeomAbs_CurveType::GeomAbs_Line)
     return true;
-  if (theCType == GeomAbs_Circle)
+  if (theCType == GeomAbs_CurveType::GeomAbs_Circle)
     return true;
-  if (theCType == GeomAbs_Ellipse)
+  if (theCType == GeomAbs_CurveType::GeomAbs_Ellipse)
     return true;
-  if (theCType == GeomAbs_Hyperbola)
+  if (theCType == GeomAbs_CurveType::GeomAbs_Hyperbola)
     return true;
-  if (theCType == GeomAbs_Parabola)
+  if (theCType == GeomAbs_CurveType::GeomAbs_Parabola)
     return true;
   return false;
 }
@@ -73,11 +73,11 @@ static bool IsConic(const GeomAbs_CurveType theCType)
 // restrict maximal parameter on hyperbola to avoid FPE
 static double GetCurvMaxParamVal(const Adaptor3d_Curve& theC)
 {
-  if (theC.GetType() == GeomAbs_Hyperbola)
+  if (theC.GetType() == GeomAbs_CurveType::GeomAbs_Hyperbola)
   {
     return HyperbolaLimit;
   }
-  if (theC.GetType() == GeomAbs_OffsetCurve)
+  if (theC.GetType() == GeomAbs_CurveType::GeomAbs_OffsetCurve)
   {
     occ::handle<Geom_Curve>        aBC(theC.OffsetCurve()->BasisCurve());
     occ::handle<Geom_TrimmedCurve> aTC = occ::down_cast<Geom_TrimmedCurve>(aBC);
@@ -96,15 +96,15 @@ static void GetSurfMaxParamVals(const Adaptor3d_Surface& theS, double& theUmax, 
 {
   theUmax = theVmax = MaxParamVal;
 
-  if (theS.GetType() == GeomAbs_SurfaceOfExtrusion)
+  if (theS.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
   {
     theUmax = GetCurvMaxParamVal(*theS.BasisCurve());
   }
-  else if (theS.GetType() == GeomAbs_SurfaceOfRevolution)
+  else if (theS.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
   {
     theVmax = GetCurvMaxParamVal(*theS.BasisCurve());
   }
-  else if (theS.GetType() == GeomAbs_OffsetSurface)
+  else if (theS.GetType() == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
   {
     GetSurfMaxParamVals(*theS.BasisSurface(), theUmax, theVmax);
   }

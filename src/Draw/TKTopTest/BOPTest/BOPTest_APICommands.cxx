@@ -91,7 +91,7 @@ int bapibop(Draw_Interpretor& di, int n, const char** a)
   }
 
   BOPAlgo_Operation anOp = BOPTest::GetOperationType(a[2]);
-  if (anOp == BOPAlgo_UNKNOWN)
+  if (anOp == BOPAlgo_Operation::BOPAlgo_UNKNOWN)
   {
     di << "Invalid operation type\n";
     return 0;
@@ -109,20 +109,20 @@ int bapibop(Draw_Interpretor& di, int n, const char** a)
   //
   switch (anOp)
   {
-    case BOPAlgo_COMMON:
+    case BOPAlgo_Operation::BOPAlgo_COMMON:
       pBuilder = &aCommon;
       break;
       //
-    case BOPAlgo_FUSE:
+    case BOPAlgo_Operation::BOPAlgo_FUSE:
       pBuilder = &aFuse;
       break;
       //
-    case BOPAlgo_CUT:
-    case BOPAlgo_CUT21:
+    case BOPAlgo_Operation::BOPAlgo_CUT:
+    case BOPAlgo_Operation::BOPAlgo_CUT21:
       pBuilder = &aCut;
       break;
       //
-    case BOPAlgo_SECTION:
+    case BOPAlgo_Operation::BOPAlgo_SECTION:
       pBuilder = &aSection;
       break;
       //
@@ -138,7 +138,7 @@ int bapibop(Draw_Interpretor& di, int n, const char** a)
   bNonDestructive        = BOPTest_Objects::NonDestructive();
   BOPAlgo_GlueEnum aGlue = BOPTest_Objects::Glue();
   //
-  if (anOp != BOPAlgo_CUT21)
+  if (anOp != BOPAlgo_Operation::BOPAlgo_CUT21)
   {
     pBuilder->SetArguments(aLS);
     pBuilder->SetTools(aLT);

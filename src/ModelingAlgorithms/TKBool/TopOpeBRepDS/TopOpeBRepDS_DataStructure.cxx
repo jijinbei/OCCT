@@ -248,7 +248,7 @@ int TopOpeBRepDS_DataStructure::AddShape(const TopoDS_Shape& S)
     iS = myShapes.Add(S, SD);
     // a shape is its own reference, oriented as itself
     SameDomainRef(iS, iS);
-    SameDomainOri(iS, TopOpeBRepDS_SAMEORIENTED);
+    SameDomainOri(iS, TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
   }
   return iS;
 }
@@ -264,7 +264,7 @@ int TopOpeBRepDS_DataStructure::AddShape(const TopoDS_Shape& S, const int Ianc)
     iS = myShapes.Add(S, SD);
     // a shape is its own reference, oriented as itself
     SameDomainRef(iS, iS);
-    SameDomainOri(iS, TopOpeBRepDS_SAMEORIENTED);
+    SameDomainOri(iS, TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
     AncestorRank(iS, Ianc);
   }
   return iS;
@@ -624,7 +624,7 @@ TopOpeBRepDS_Config TopOpeBRepDS_DataStructure::SameDomainOri(const int I) const
   {
     return myShapes.FindFromIndex(I).mySameDomainOri;
   }
-  return TopOpeBRepDS_UNSHGEOMETRY;
+  return TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY;
 }
 
 //=================================================================================================
@@ -636,7 +636,7 @@ TopOpeBRepDS_Config TopOpeBRepDS_DataStructure::SameDomainOri(const TopoDS_Shape
     {
       return myShapes.FindFromKey(S).mySameDomainOri;
     }
-  return TopOpeBRepDS_UNSHGEOMETRY;
+  return TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY;
 }
 
 //=================================================================================================
@@ -794,7 +794,7 @@ void TopOpeBRepDS_DataStructure::FillShapesSameDomain(const TopoDS_Shape& S1,
   TopOpeBRepDS_ShapeData& SD1    = myShapes.ChangeFromIndex(iS1);
   bool                    isdef1 = SD1.myOrientationDef;
   bool                    todef1 = (!isdef1);
-  if (isdef1 && SD1.mySameDomainOri == TopOpeBRepDS_UNSHGEOMETRY)
+  if (isdef1 && SD1.mySameDomainOri == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY)
     todef1 = true;
   if (todef1)
   {
@@ -806,7 +806,7 @@ void TopOpeBRepDS_DataStructure::FillShapesSameDomain(const TopoDS_Shape& S1,
   TopOpeBRepDS_ShapeData& SD2    = myShapes.ChangeFromIndex(iS2);
   bool                    isdef2 = SD2.myOrientationDef;
   bool                    todef2 = (!isdef2);
-  if (isdef2 && SD2.mySameDomainOri == TopOpeBRepDS_UNSHGEOMETRY)
+  if (isdef2 && SD2.mySameDomainOri == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY)
     todef2 = true;
   if (todef2)
   {
@@ -865,12 +865,12 @@ void TopOpeBRepDS_DataStructure::FillShapesSameDomain(const TopoDS_Shape& S1,
 
   if (r != r1 || todef1)
   { // S1 gets a new reference r
-    TopOpeBRepDS_Config o = TopOpeBRepDS_SAMEORIENTED;
+    TopOpeBRepDS_Config o = TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED;
     if (r != iS1 || todef1)
     {
       bool sso = TopOpeBRepTool_ShapeTool::ShapesSameOriented(S1, Sr);
       if (!sso)
-        o = TopOpeBRepDS_DIFFORIENTED;
+        o = TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
     }
     SameDomainRef(iS1, r);
     SameDomainOri(iS1, o);
@@ -878,12 +878,12 @@ void TopOpeBRepDS_DataStructure::FillShapesSameDomain(const TopoDS_Shape& S1,
 
   if (r != r2 || todef2)
   { // S2 gets a new reference r
-    TopOpeBRepDS_Config o = TopOpeBRepDS_SAMEORIENTED;
+    TopOpeBRepDS_Config o = TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED;
     if (r != iS2 || todef2)
     {
       bool sso = TopOpeBRepTool_ShapeTool::ShapesSameOriented(S2, Sr);
       if (!sso)
-        o = TopOpeBRepDS_DIFFORIENTED;
+        o = TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
     }
     SameDomainRef(iS2, r);
     SameDomainOri(iS2, o);
@@ -906,14 +906,14 @@ void TopOpeBRepDS_DataStructure::FillShapesSameDomain(const TopoDS_Shape&       
   TopOpeBRepDS_ShapeData& SD1    = myShapes.ChangeFromIndex(iS1);
   bool                    isdef1 = SD1.myOrientationDef;
   bool                    todef1 = true;
-  if (c1 == TopOpeBRepDS_UNSHGEOMETRY && isdef1)
+  if (c1 == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY && isdef1)
     todef1 = false;
 
   int                     iS2    = AddShape(S2, 2);
   TopOpeBRepDS_ShapeData& SD2    = myShapes.ChangeFromIndex(iS2);
   bool                    isdef2 = SD2.myOrientationDef;
   bool                    todef2 = true;
-  if (c2 == TopOpeBRepDS_UNSHGEOMETRY && isdef2)
+  if (c2 == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY && isdef2)
     todef2 = false;
 
   if (todef1 || todef2)
@@ -921,10 +921,10 @@ void TopOpeBRepDS_DataStructure::FillShapesSameDomain(const TopoDS_Shape&       
     FillShapesSameDomain(S1, S2, refFirst);
   }
 
-  if (todef1 && c1 == TopOpeBRepDS_UNSHGEOMETRY)
-    SameDomainOri(S1, TopOpeBRepDS_UNSHGEOMETRY);
-  if (todef2 && c2 == TopOpeBRepDS_UNSHGEOMETRY)
-    SameDomainOri(S2, TopOpeBRepDS_UNSHGEOMETRY);
+  if (todef1 && c1 == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY)
+    SameDomainOri(S1, TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
+  if (todef2 && c2 == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY)
+    SameDomainOri(S2, TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
 }
 
 //=================================================================================================

@@ -28,7 +28,7 @@ Geom2dHatch_Hatching::Geom2dHatch_Hatching()
     : myTrimDone(false),
       myTrimFailed(false),
       myIsDone(false),
-      myStatus(HatchGen_NoProblem)
+      myStatus(HatchGen_ErrorStatus::HatchGen_NoProblem)
 {
 }
 
@@ -39,7 +39,7 @@ Geom2dHatch_Hatching::Geom2dHatch_Hatching(const Geom2dAdaptor_Curve& Curve)
       myTrimDone(false),
       myTrimFailed(false),
       myIsDone(false),
-      myStatus(HatchGen_NoProblem)
+      myStatus(HatchGen_ErrorStatus::HatchGen_NoProblem)
 {
 }
 
@@ -94,7 +94,7 @@ void Geom2dHatch_Hatching::TrimFailed(const bool Flag)
 {
   myTrimFailed = Flag;
   if (myTrimFailed)
-    myStatus = HatchGen_TrimFailure;
+    myStatus = HatchGen_ErrorStatus::HatchGen_TrimFailure;
 }
 
 //=======================================================================

@@ -189,7 +189,7 @@ void TopOpeBRep_FacesFiller::LoadLine(TopOpeBRep_LineInter& L)
   myLineINL = binl;
   {
     TopOpeBRep_TypeLineCurve t = L.TypeLineCurve();
-    if (!bchk && binl && t == TopOpeBRep_LINE)
+    if (!bchk && binl && t == TopOpeBRep_TypeLineCurve::TopOpeBRep_LINE)
     {
       bchk = true;
     }
@@ -217,7 +217,7 @@ bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
   TopOpeBRep_TypeLineCurve t     = L.TypeLineCurve();
   int                      nbvp  = L.NbVPoint();
 
-  if (t == TopOpeBRep_WALKING)
+  if (t == TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING)
   {
     if (nbvp < 2)
     {
@@ -227,7 +227,7 @@ bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
       check = false;
     }
   }
-  else if (t == TopOpeBRep_LINE)
+  else if (t == TopOpeBRep_TypeLineCurve::TopOpeBRep_LINE)
   {
     int                            np = 0;
     TopOpeBRep_VPointInterIterator VPI;
@@ -279,10 +279,10 @@ bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
   } // LINE
   else
   {
-    bool notrnotw = (t != TopOpeBRep_RESTRICTION && t != TopOpeBRep_WALKING);
+    bool notrnotw = (t != TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION && t != TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING);
     if (notrnotw)
     {
-      if (t == TopOpeBRep_CIRCLE)
+      if (t == TopOpeBRep_TypeLineCurve::TopOpeBRep_CIRCLE)
       {
         // cto 012 D2, faces 6 et 1, line 3 incorrecte.
 
@@ -302,7 +302,7 @@ bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
           }
         }
       } // CIRCLE
-      else if (t == TopOpeBRep_HYPERBOLA)
+      else if (t == TopOpeBRep_TypeLineCurve::TopOpeBRep_HYPERBOLA)
       {
         int iINON1, iINONn, nINON;
         myLine->VPBounds(iINON1, iINONn, nINON);
@@ -311,7 +311,7 @@ bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
           check = false;
         }
       }
-      else if (t == TopOpeBRep_ELLIPSE)
+      else if (t == TopOpeBRep_TypeLineCurve::TopOpeBRep_ELLIPSE)
       {
         int iINON1, iINONn, nINON;
         myLine->VPBounds(iINON1, iINONn, nINON);
@@ -357,7 +357,7 @@ void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_FacesIntersector&)
   {
     TopOpeBRep_LineInter&          L  = myFacesIntersector->CurrentLine();
     const TopOpeBRep_TypeLineCurve tl = L.TypeLineCurve();
-    bool                           ok = (tl == TopOpeBRep_RESTRICTION);
+    bool                           ok = (tl == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION);
     if (ok)
       VP_Position(L);
   }
@@ -367,7 +367,7 @@ void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_FacesIntersector&)
   {
     TopOpeBRep_LineInter&          L  = myFacesIntersector->CurrentLine();
     const TopOpeBRep_TypeLineCurve tl = L.TypeLineCurve();
-    bool                           ok = (tl != TopOpeBRep_RESTRICTION);
+    bool                           ok = (tl != TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION);
     if (ok)
       VP_Position(L);
   }
@@ -378,7 +378,7 @@ void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_FacesIntersector&)
 void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_LineInter& L)
 {
   myLine      = &L;
-  bool isrest = (L.TypeLineCurve() == TopOpeBRep_RESTRICTION);
+  bool isrest = (L.TypeLineCurve() == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION);
 
   if (!isrest)
     VP_PositionOnL(L);
@@ -445,7 +445,7 @@ void TopOpeBRep_FacesFiller::VP_PositionOnR(TopOpeBRep_LineInter& L)
     else if (Esi == 2)
       BAC2D.Initialize(earc, myF2);
     GeomAbs_CurveType t = BAC2D.GetType();
-    isline              = (t == GeomAbs_Line);
+    isline              = (t == GeomAbs_CurveType::GeomAbs_Line);
   }
 
   for (; VPI.More(); VPI.Next())
@@ -538,7 +538,7 @@ void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_VPointInter&           VP,
 
   bool AssumeINON = false;
   if (myLine)
-    AssumeINON = (myLine->TypeLineCurve() != TopOpeBRep_RESTRICTION);
+    AssumeINON = (myLine->TypeLineCurve() != TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION);
 
   // modified by NIZHNY-MKK  Fri Oct 27 14:50:28 2000.BEGIN
   //   double tol = Precision::Confusion();
@@ -562,7 +562,7 @@ bool TopOpeBRep_FacesFiller::PequalVPonR(const gp_Pnt&           P3D,
                                          TopOpeBRep_LineInter&   Lrest) const
 {
   const TopOpeBRep_TypeLineCurve tOL  = Lrest.TypeLineCurve();
-  bool                           OLok = (tOL == TopOpeBRep_RESTRICTION);
+  bool                           OLok = (tOL == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION);
   if (!OLok)
     return false;
 

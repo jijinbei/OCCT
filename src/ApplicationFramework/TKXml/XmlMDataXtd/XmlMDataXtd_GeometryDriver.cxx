@@ -88,23 +88,23 @@ void XmlMDataXtd_GeometryDriver::Paste(const occ::handle<TDF_Attribute>& theSour
 
 static bool GeometryTypeEnum(const XmlObjMgt_DOMString& theString, TDataXtd_GeometryEnum& theResult)
 {
-  TDataXtd_GeometryEnum aResult = TDataXtd_ANY_GEOM;
+  TDataXtd_GeometryEnum aResult = TDataXtd_GeometryEnum::TDataXtd_ANY_GEOM;
   if (!theString.equals(::GeomAnyString()))
   {
     if (theString.equals(::GeomPointString()))
-      aResult = TDataXtd_POINT;
+      aResult = TDataXtd_GeometryEnum::TDataXtd_POINT;
     else if (theString.equals(::GeomLineString()))
-      aResult = TDataXtd_LINE;
+      aResult = TDataXtd_GeometryEnum::TDataXtd_LINE;
     else if (theString.equals(::GeomCircleString()))
-      aResult = TDataXtd_CIRCLE;
+      aResult = TDataXtd_GeometryEnum::TDataXtd_CIRCLE;
     else if (theString.equals(::GeomEllipseString()))
-      aResult = TDataXtd_ELLIPSE;
+      aResult = TDataXtd_GeometryEnum::TDataXtd_ELLIPSE;
     else if (theString.equals(::GeomSplineString()))
-      aResult = TDataXtd_SPLINE;
+      aResult = TDataXtd_GeometryEnum::TDataXtd_SPLINE;
     else if (theString.equals(::GeomPlaneString()))
-      aResult = TDataXtd_PLANE;
+      aResult = TDataXtd_GeometryEnum::TDataXtd_PLANE;
     else if (theString.equals(::GeomCylinderString()))
-      aResult = TDataXtd_CYLINDER;
+      aResult = TDataXtd_GeometryEnum::TDataXtd_CYLINDER;
     else
       return false;
   }
@@ -118,21 +118,21 @@ static const XmlObjMgt_DOMString& GeometryTypeString(const TDataXtd_GeometryEnum
 {
   switch (theE)
   {
-    case TDataXtd_ANY_GEOM:
+    case TDataXtd_GeometryEnum::TDataXtd_ANY_GEOM:
       return ::GeomAnyString();
-    case TDataXtd_POINT:
+    case TDataXtd_GeometryEnum::TDataXtd_POINT:
       return ::GeomPointString();
-    case TDataXtd_LINE:
+    case TDataXtd_GeometryEnum::TDataXtd_LINE:
       return ::GeomLineString();
-    case TDataXtd_CIRCLE:
+    case TDataXtd_GeometryEnum::TDataXtd_CIRCLE:
       return ::GeomCircleString();
-    case TDataXtd_ELLIPSE:
+    case TDataXtd_GeometryEnum::TDataXtd_ELLIPSE:
       return ::GeomEllipseString();
-    case TDataXtd_SPLINE:
+    case TDataXtd_GeometryEnum::TDataXtd_SPLINE:
       return ::GeomSplineString();
-    case TDataXtd_PLANE:
+    case TDataXtd_GeometryEnum::TDataXtd_PLANE:
       return ::GeomPlaneString();
-    case TDataXtd_CYLINDER:
+    case TDataXtd_GeometryEnum::TDataXtd_CYLINDER:
       return ::GeomCylinderString();
 
     default:

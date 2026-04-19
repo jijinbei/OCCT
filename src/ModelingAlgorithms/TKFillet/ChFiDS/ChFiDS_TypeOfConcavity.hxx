@@ -17,7 +17,7 @@
 #ifndef _ChFiDS_TypeOfConcavity_HeaderFile
 #define _ChFiDS_TypeOfConcavity_HeaderFile
 
-enum ChFiDS_TypeOfConcavity
+enum class ChFiDS_TypeOfConcavity
 {
   ChFiDS_Concave,
   ChFiDS_Convex,

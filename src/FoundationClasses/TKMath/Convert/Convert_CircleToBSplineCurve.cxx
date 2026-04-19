@@ -56,7 +56,7 @@ Convert_CircleToBSplineCurve::Convert_CircleToBSplineCurve(
   NCollection_Array1<double> CosNumerator, SinNumerator;
 
   R = C.Radius();
-  if (Parameterisation != Convert_TgtThetaOver2 && Parameterisation != Convert_RationalC1)
+  if (Parameterisation != Convert_ParameterisationType::Convert_TgtThetaOver2 && Parameterisation != Convert_ParameterisationType::Convert_RationalC1)
   {
     // In case if BuildCosAndSin does not know how to manage the periodicity
     // => trim on 0,2*PI

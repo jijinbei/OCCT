@@ -201,19 +201,19 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
         std::cout << "U iso of parameter: " << UPrm;
         switch (Hatcher.Status(IndH))
         {
-          case HatchGen_NoProblem:
+          case HatchGen_ErrorStatus::HatchGen_NoProblem:
             std::cout << " No Problem" << std::endl;
             break;
-          case HatchGen_TrimFailure:
+          case HatchGen_ErrorStatus::HatchGen_TrimFailure:
             std::cout << " Trim Failure" << std::endl;
             break;
-          case HatchGen_TransitionFailure:
+          case HatchGen_ErrorStatus::HatchGen_TransitionFailure:
             std::cout << " Transition Failure" << std::endl;
             break;
-          case HatchGen_IncoherentParity:
+          case HatchGen_ErrorStatus::HatchGen_IncoherentParity:
             std::cout << " Incoherent Parity" << std::endl;
             break;
-          case HatchGen_IncompatibleStates:
+          case HatchGen_ErrorStatus::HatchGen_IncompatibleStates:
             std::cout << " Incompatible States" << std::endl;
             break;
         }
@@ -304,19 +304,19 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
         std::cout << "V iso of parameter: " << VPrm;
         switch (Hatcher.Status(IndH))
         {
-          case HatchGen_NoProblem:
+          case HatchGen_ErrorStatus::HatchGen_NoProblem:
             std::cout << " No Problem" << std::endl;
             break;
-          case HatchGen_TrimFailure:
+          case HatchGen_ErrorStatus::HatchGen_TrimFailure:
             std::cout << " Trim Failure" << std::endl;
             break;
-          case HatchGen_TransitionFailure:
+          case HatchGen_ErrorStatus::HatchGen_TransitionFailure:
             std::cout << " Transition Failure" << std::endl;
             break;
-          case HatchGen_IncoherentParity:
+          case HatchGen_ErrorStatus::HatchGen_IncoherentParity:
             std::cout << " Incoherent Parity" << std::endl;
             break;
-          case HatchGen_IncompatibleStates:
+          case HatchGen_ErrorStatus::HatchGen_IncompatibleStates:
             std::cout << " Incompatible States" << std::endl;
             break;
         }

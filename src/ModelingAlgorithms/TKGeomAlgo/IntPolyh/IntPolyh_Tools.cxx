@@ -29,7 +29,7 @@ void IntPolyh_Tools::IsEnlargePossible(const occ::handle<Adaptor3d_Surface>& the
 
   // In the context of IntPolyh_Intersection only BSpline and Bezier surfaces
   // should be enlarged
-  if (theSurf->GetType() == GeomAbs_BSplineSurface || theSurf->GetType() == GeomAbs_BezierSurface)
+  if (theSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface || theSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     // Check U periodicity and closeness
     if (!theSurf->IsUClosed() && !theSurf->IsUPeriodic())

@@ -84,7 +84,7 @@ void BRepFeat_Builder::Init(const TopoDS_Shape& theShape, const TopoDS_Shape& th
 void BRepFeat_Builder::SetOperation(const int theFuse)
 {
   myFuse      = theFuse;
-  myOperation = myFuse ? BOPAlgo_FUSE : BOPAlgo_CUT;
+  myOperation = myFuse ? BOPAlgo_Operation::BOPAlgo_FUSE : BOPAlgo_Operation::BOPAlgo_CUT;
 }
 
 //=================================================================================================
@@ -94,11 +94,11 @@ void BRepFeat_Builder::SetOperation(const int theFuse, const bool theFlag)
   myFuse = theFuse;
   if (!theFlag)
   {
-    myOperation = myFuse ? BOPAlgo_FUSE : BOPAlgo_CUT;
+    myOperation = myFuse ? BOPAlgo_Operation::BOPAlgo_FUSE : BOPAlgo_Operation::BOPAlgo_CUT;
   }
   else
   {
-    myOperation = myFuse ? BOPAlgo_CUT21 : BOPAlgo_COMMON;
+    myOperation = myFuse ? BOPAlgo_Operation::BOPAlgo_CUT21 : BOPAlgo_Operation::BOPAlgo_COMMON;
   }
 }
 
@@ -190,7 +190,7 @@ void BRepFeat_Builder::FillRemoved()
 
 void BRepFeat_Builder::PerformResult(const Message_ProgressRange& theRange)
 {
-  myOperation = myFuse ? BOPAlgo_FUSE : BOPAlgo_CUT;
+  myOperation = myFuse ? BOPAlgo_Operation::BOPAlgo_FUSE : BOPAlgo_Operation::BOPAlgo_CUT;
   if (myShapes.IsEmpty())
   {
     BuildShape(theRange);

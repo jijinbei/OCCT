@@ -21,7 +21,7 @@
 //!
 //! Describes the result of attempting to compute a surface normal
 //! from the first derivatives D1U and D1V at a point on a surface.
-enum CSLib_DerivativeStatus
+enum class CSLib_DerivativeStatus
 {
   CSLib_Done,              //!< Normal computed successfully.
   CSLib_D1uIsNull,         //!< D1U has null length: ||D1U|| <= Resolution.

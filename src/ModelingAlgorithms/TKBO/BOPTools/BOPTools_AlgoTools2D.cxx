@@ -295,7 +295,7 @@ void BOPTools_AlgoTools2D::AdjustPCurveOnSurf(const BRepAdaptor_Surface&       a
     //
     if (du == 0.)
     {
-      if (aBAS.GetType() == GeomAbs_Cylinder)
+      if (aBAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder)
       {
         double aR, dFi, aTol;
         //
@@ -528,8 +528,8 @@ void BOPTools_AlgoTools2D::MakePCurveOnFace(const TopoDS_Face&                  
   double aMaxTol   = 1.e3 * aTR;             // 0.0001
   bool   isAnaSurf = ProjLib::IsAnaSurf(aBAHS);
 
-  // when the type of surface is GeomAbs_SurfaceOfRevolution
-  if (pBAS->GetType() == GeomAbs_SurfaceOfRevolution)
+  // when the type of surface is GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution
+  if (pBAS->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
   {
     if (TolReached2d > aTR)
     {

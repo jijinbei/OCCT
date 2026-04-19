@@ -348,8 +348,8 @@ void BOPAlgo_PaveFiller::PerformEE(const Message_ProgressRange& theRange)
       GeomAbs_CurveType aType1 = aBAC1.GetType();
       GeomAbs_CurveType aType2 = aBAC2.GetType();
       //
-      bAnalytical = (aType1 == GeomAbs_Line && aType2 == GeomAbs_Circle)
-                    || (aType1 == GeomAbs_Circle && aType2 == GeomAbs_Line);
+      bAnalytical = (aType1 == GeomAbs_CurveType::GeomAbs_Line && aType2 == GeomAbs_CurveType::GeomAbs_Circle)
+                    || (aType1 == GeomAbs_CurveType::GeomAbs_Circle && aType2 == GeomAbs_CurveType::GeomAbs_Line);
     }
     //
     for (i = 1; i <= aNbCPrts; ++i)
@@ -452,7 +452,7 @@ void BOPAlgo_PaveFiller::PerformEE(const Message_ProgressRange& theRange)
           {
             // increase tolerance for Line/Circle intersection, but do not update
             // the vertex till its intersection with some other shape
-            double aTolMin = (BRepAdaptor_Curve(aE1).GetType() == GeomAbs_Line)
+            double aTolMin = (BRepAdaptor_Curve(aE1).GetType() == GeomAbs_CurveType::GeomAbs_Line)
                                ? (aCR1.Last() - aCR1.First()) / 2.
                                : (aCR2.Last() - aCR2.First()) / 2.;
             if (aTolMin > aTolVnew)
@@ -1138,7 +1138,7 @@ void BOPAlgo_PaveFiller::ForceInterfEE(const Message_ProgressRange& theRange)
         bool bUseAddTol = true;
         {
           BRepAdaptor_Curve aBAC2(aE2);
-          if (aBAC1.GetType() != GeomAbs_Line || aBAC2.GetType() != GeomAbs_Line)
+          if (aBAC1.GetType() != GeomAbs_CurveType::GeomAbs_Line || aBAC2.GetType() != GeomAbs_CurveType::GeomAbs_Line)
           {
             GeomAPI_ProjectPointOnCurve& aProjPC = myContext->ProjPC(aE2);
             aProjPC.Perform(aPm);

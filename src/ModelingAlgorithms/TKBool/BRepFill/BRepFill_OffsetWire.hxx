@@ -53,12 +53,12 @@ public:
   Standard_EXPORT BRepFill_OffsetWire();
 
   Standard_EXPORT BRepFill_OffsetWire(const TopoDS_Face&     Spine,
-                                      const GeomAbs_JoinType Join         = GeomAbs_Arc,
+                                      const GeomAbs_JoinType Join         = GeomAbs_JoinType::GeomAbs_Arc,
                                       const bool             IsOpenResult = false);
 
   //! Initialize the evaluation of Offsetting.
   Standard_EXPORT void Init(const TopoDS_Face&     Spine,
-                            const GeomAbs_JoinType Join         = GeomAbs_Arc,
+                            const GeomAbs_JoinType Join         = GeomAbs_JoinType::GeomAbs_Arc,
                             const bool             IsOpenResult = false);
 
   //! Performs an OffsetWire at an altitude <Alt> from
@@ -71,7 +71,7 @@ public:
                                        const double                    Offset,
                                        const BRepMAT2d_BisectingLocus& Locus,
                                        BRepMAT2d_LinkTopoBilo&         Link,
-                                       const GeomAbs_JoinType          Join = GeomAbs_Arc,
+                                       const GeomAbs_JoinType          Join = GeomAbs_JoinType::GeomAbs_Arc,
                                        const double                    Alt  = 0.0);
 
   Standard_EXPORT bool IsDone() const;

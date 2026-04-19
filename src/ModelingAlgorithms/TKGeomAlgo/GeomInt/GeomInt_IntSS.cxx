@@ -78,7 +78,7 @@ void GeomInt_IntSS::InternalPerform(const double Tol,
   double TolArc     = Tol;
   double TolTang    = Tol;
   double Deflection = 0.1;
-  if (myHS1->GetType() == GeomAbs_BSplineSurface && myHS2->GetType() == GeomAbs_BSplineSurface)
+  if (myHS1->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface && myHS2->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     Deflection /= 10.;
   }

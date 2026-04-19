@@ -28,7 +28,7 @@
 //! have a different multiplicity.
 //!
 //! NonConstant in other cases.
-enum BSplCLib_MultDistribution
+enum class BSplCLib_MultDistribution
 {
   BSplCLib_NonConstant,
   BSplCLib_Constant,

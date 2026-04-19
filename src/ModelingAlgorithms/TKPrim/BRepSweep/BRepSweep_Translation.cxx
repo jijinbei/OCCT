@@ -231,10 +231,10 @@ TopoDS_Shape BRepSweep_Translation::MakeEmptyFace(const TopoDS_Shape&   aGenS,
       switch (AS.GetType())
       {
 
-        case GeomAbs_Plane:
+        case GeomAbs_SurfaceType::GeomAbs_Plane:
           S = new Geom_Plane(AS.Plane());
           break;
-        case GeomAbs_Cylinder:
+        case GeomAbs_SurfaceType::GeomAbs_Cylinder:
           S = new Geom_CylindricalSurface(AS.Cylinder());
           break;
         default:
@@ -316,7 +316,7 @@ void BRepSweep_Translation::SetGeneratingPCurve(const TopoDS_Shape& aNewFace,
   TopoDS_Edge aNewOrientedEdge = TopoDS::Edge(aNewEdge);
   aNewOrientedEdge.Orientation(orien);
 
-  if (AS.GetType() == GeomAbs_Plane)
+  if (AS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     /* nothing is done JAG
         gp_Pln pln = AS.Plane();
@@ -371,7 +371,7 @@ void BRepSweep_Translation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
   TopLoc_Location     Loc;
   GeomAdaptor_Surface AS(BRep_Tool::Surface(TopoDS::Face(aNewFace), Loc));
   gp_Lin2d            L;
-  if (AS.GetType() != GeomAbs_Plane)
+  if (AS.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     L.SetLocation(gp_Pnt2d(BRep_Tool::Parameter(TopoDS::Vertex(aGenV), TopoDS::Edge(aGenE)), 0));
     L.SetDirection(gp_Dir2d(gp_Dir2d::D::NY));

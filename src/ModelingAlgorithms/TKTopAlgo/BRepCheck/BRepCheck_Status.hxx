@@ -17,7 +17,7 @@
 #ifndef _BRepCheck_Status_HeaderFile
 #define _BRepCheck_Status_HeaderFile
 
-enum BRepCheck_Status
+enum class BRepCheck_Status
 {
   BRepCheck_NoError,
   BRepCheck_InvalidPointOnCurve,

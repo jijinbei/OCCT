@@ -70,7 +70,7 @@ public:
         myintusup(Precision::Infinite()),
         myuinf(Precision::Infinite()),
         myusup(Precision::Infinite()),
-        type(GeomAbs_OtherCurve)
+        type(GeomAbs_CurveType::GeomAbs_OtherCurve)
   {
   }
 
@@ -159,27 +159,27 @@ public:
 
     switch (type)
     {
-      case GeomAbs_Circle: {
+      case GeomAbs_CurveType::GeomAbs_Circle: {
         myExtPElC.Perform(theP, TheCurveTool::Circle(aCurve), t3d, myuinf, myusup);
         break;
       }
-      case GeomAbs_Ellipse: {
+      case GeomAbs_CurveType::GeomAbs_Ellipse: {
         myExtPElC.Perform(theP, TheCurveTool::Ellipse(aCurve), t3d, myuinf, myusup);
         break;
       }
-      case GeomAbs_Parabola: {
+      case GeomAbs_CurveType::GeomAbs_Parabola: {
         myExtPElC.Perform(theP, TheCurveTool::Parabola(aCurve), t3d, myuinf, myusup);
         break;
       }
-      case GeomAbs_Hyperbola: {
+      case GeomAbs_CurveType::GeomAbs_Hyperbola: {
         myExtPElC.Perform(theP, TheCurveTool::Hyperbola(aCurve), t3d, myuinf, myusup);
         break;
       }
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Line: {
         myExtPElC.Perform(theP, TheCurveTool::Line(aCurve), t3d, myuinf, myusup);
         break;
       }
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_CurveType::GeomAbs_BezierCurve: {
         myintuinf = myuinf;
         myintusup = myusup;
         mysample  = (TheCurveTool::Bezier(aCurve))->NbPoles() * 2;
@@ -187,7 +187,7 @@ public:
         IntervalPerform(theP);
         return;
       }
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
         auto                              aBSpline  = TheCurveTool::BSpline(aCurve);
         const int                         aFirstIdx = aBSpline->FirstUKnotIndex();
         const int                         aLastIdx  = aBSpline->LastUKnotIndex();
@@ -471,7 +471,7 @@ public:
     }
 
     // Postprocessing
-    if (type == GeomAbs_BSplineCurve || type == GeomAbs_OffsetCurve || type == GeomAbs_OtherCurve)
+    if (type == GeomAbs_CurveType::GeomAbs_BSplineCurve || type == GeomAbs_CurveType::GeomAbs_OffsetCurve || type == GeomAbs_CurveType::GeomAbs_OtherCurve)
     {
       if (mydist1 < Precision::SquareConfusion() || mydist2 < Precision::SquareConfusion())
       {

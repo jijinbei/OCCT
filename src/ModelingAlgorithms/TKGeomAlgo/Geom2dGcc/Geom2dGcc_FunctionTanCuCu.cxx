@@ -32,12 +32,12 @@ void Geom2dGcc_FunctionTanCuCu::InitDerivative(const math_Vector& X,
 {
   switch (TheType)
   {
-    case Geom2dGcc_CuCu: {
+    case Geom2dGcc_Type3::Geom2dGcc_CuCu: {
       Geom2dGcc_CurveTool::D2(TheCurve1, X(1), Point1, Tan1, D21);
       Geom2dGcc_CurveTool::D2(TheCurve2, X(2), Point2, Tan2, D22);
     }
     break;
-    case Geom2dGcc_CiCu: {
+    case Geom2dGcc_Type3::Geom2dGcc_CiCu: {
       ElCLib::D2(X(1), TheCirc1, Point1, Tan1, D21);
       Geom2dGcc_CurveTool::D2(TheCurve2, X(2), Point2, Tan2, D22);
     }
@@ -52,7 +52,7 @@ Geom2dGcc_FunctionTanCuCu::Geom2dGcc_FunctionTanCuCu(const Geom2dAdaptor_Curve& 
 {
   TheCurve1 = C1;
   TheCurve2 = C2;
-  TheType   = Geom2dGcc_CuCu;
+  TheType   = Geom2dGcc_Type3::Geom2dGcc_CuCu;
 }
 
 Geom2dGcc_FunctionTanCuCu::Geom2dGcc_FunctionTanCuCu(const gp_Circ2d&           C1,
@@ -60,7 +60,7 @@ Geom2dGcc_FunctionTanCuCu::Geom2dGcc_FunctionTanCuCu(const gp_Circ2d&           
 {
   TheCirc1  = C1;
   TheCurve2 = C2;
-  TheType   = Geom2dGcc_CiCu;
+  TheType   = Geom2dGcc_Type3::Geom2dGcc_CiCu;
 }
 
 //=========================================================================

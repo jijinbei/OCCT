@@ -63,7 +63,7 @@ static void FDS_reduceONFACEinterferences(
     TopOpeBRepDS_Kind                       GT1, ST1;
     int                                     G1, S1;
     FDS_data(I1, GT1, G1, ST1, S1);
-    if (GT1 == TopOpeBRepDS_POINT)
+    if (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
     {
       hasONFACE = FUN_hasStateShape(I1->Transition(), TopAbs_ON, TopAbs_FACE);
       if (hasONFACE)
@@ -81,7 +81,7 @@ static void FDS_reduceONFACEinterferences(
       TopOpeBRepDS_Kind                       GT1, ST1;
       int                                     G1, S1;
       FDS_data(I1, GT1, G1, ST1, S1);
-      if (GT1 == TopOpeBRepDS_POINT)
+      if (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
       {
         hasONFACE = FUN_hasStateShape(I1->Transition(), TopAbs_ON, TopAbs_FACE);
         if (!hasONFACE)
@@ -134,7 +134,7 @@ static void FUN_ReducerEdge3d(const int                                         
       int              IB1, IA1;
       FDS_Tdata(I1, SB1, IB1, SA1, IA1);
       bool torem = false;
-      if (ST1 == TopOpeBRepDS_EDGE)
+      if (ST1 == TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE)
       {
         const TopoDS_Edge& EE = TopoDS::Edge(BDS.Shape(S1));
         const TopoDS_Face& FF = TopoDS::Face(BDS.Shape(IB1));
@@ -171,7 +171,7 @@ static void FUN_ReducerEdge3d(const int                                         
     // modified by NIZHNY-MKK  Mon Apr  2 15:35:58 2001.BEGIN
     TopoDS_Vertex aVertex;
 
-    if ((GT1 == TopOpeBRepDS_VERTEX) && G1 != 0)
+    if ((GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX) && G1 != 0)
     {
       aVertex = TopoDS::Vertex(BDS.Shape(G1));
     }
@@ -202,7 +202,7 @@ static void FUN_ReducerEdge3d(const int                                         
       // modified by NIZHNY-MKK  Mon Apr  2 15:36:42 2001.BEGIN
       aVertex.Nullify();
 
-      if ((GT2 == TopOpeBRepDS_VERTEX) && G2 != 0)
+      if ((GT2 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX) && G2 != 0)
       {
         aVertex = TopoDS::Vertex(BDS.Shape(G2));
       }
@@ -219,7 +219,7 @@ static void FUN_ReducerEdge3d(const int                                         
         break;
 
       // <Gsta>, <OOv>
-      if (GT1 == TopOpeBRepDS_VERTEX)
+      if (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
       {
         TopoDS_Vertex vG1     = TopoDS::Vertex(BDS.Shape(G1));
         int           rankvG1 = BDS.AncestorRank(vG1);
@@ -271,7 +271,7 @@ static void FUN_ReducerEdge3d(const int                                         
       }
 
       bool init     = !isComplex;
-      bool isvertex = (GT1 == TopOpeBRepDS_VERTEX);
+      bool isvertex = (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
       init          = init || isvertex; // !!!KK a revoir!!!!
 
       if (init)
@@ -313,11 +313,11 @@ static void FUN_ReducerEdge3d(const int                                         
         occ::handle<TopOpeBRepDS_EdgeVertexInterference> EVI(
           occ::down_cast<TopOpeBRepDS_EdgeVertexInterference>(I1));
         newI = new TopOpeBRepDS_EdgeVertexInterference(T,
-                                                       TopOpeBRepDS_FACE,
+                                                       TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
                                                        IB1,
                                                        G1,
                                                        EVI->GBound(),
-                                                       TopOpeBRepDS_UNSHGEOMETRY,
+                                                       TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
                                                        EVI->Parameter());
       }
       if (iscpi)
@@ -325,9 +325,9 @@ static void FUN_ReducerEdge3d(const int                                         
         occ::handle<TopOpeBRepDS_CurvePointInterference> CPI(
           occ::down_cast<TopOpeBRepDS_CurvePointInterference>(I1));
         newI = new TopOpeBRepDS_CurvePointInterference(T,
-                                                       TopOpeBRepDS_FACE,
+                                                       TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
                                                        IB1,
-                                                       TopOpeBRepDS_POINT,
+                                                       TopOpeBRepDS_Kind::TopOpeBRepDS_POINT,
                                                        G1,
                                                        CPI->Parameter());
       }
@@ -350,9 +350,9 @@ static void FUN_ReducerEdge(const int                                           
                             NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& reducedLI)
 //------------------------------------------------------
 {
-  FDS_repvg(BDS, SIX, TopOpeBRepDS_VERTEX, LI, reducedLI);
+  FDS_repvg(BDS, SIX, TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX, LI, reducedLI);
   FDS_reduceONFACEinterferences(LI, BDS, SIX);
-  FDS_repvg(BDS, SIX, TopOpeBRepDS_POINT, LI, reducedLI);
+  FDS_repvg(BDS, SIX, TopOpeBRepDS_Kind::TopOpeBRepDS_POINT, LI, reducedLI);
 }
 
 //------------------------------------------------------
@@ -443,10 +443,10 @@ static void FUN_ReducerSDEdge(const int                                         
           occ::down_cast<TopOpeBRepDS_EdgeVertexInterference>(I1));
         TopOpeBRepDS_Config cEIX = BDS.SameDomainOri(SIX), c1 = BDS.SameDomainOri(IB1);
         TopOpeBRepDS_Config Conf =
-          (cEIX == c1) ? TopOpeBRepDS_SAMEORIENTED : TopOpeBRepDS_DIFFORIENTED;
+          (cEIX == c1) ? TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED : TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
         occ::handle<TopOpeBRepDS_Interference> newI =
           new TopOpeBRepDS_EdgeVertexInterference(T,
-                                                  TopOpeBRepDS_EDGE,
+                                                  TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE,
                                                   IB1,
                                                   G,
                                                   EVI->GBound(),
@@ -582,7 +582,7 @@ Standard_EXPORT void FUN_reclSE(const int                                       
     TopOpeBRepDS_Kind K;
     int               G;
     tki.Value(K, G);
-    if (K != TopOpeBRepDS_VERTEX)
+    if (K != TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
       continue;
 
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.ChangeValue(K, G);
@@ -624,7 +624,7 @@ static void FUN_unkeepEVIonGb1(const TopOpeBRepDS_DataStructure&                
     TopOpeBRepDS_Kind GT, ST;
     int               G, S;
     FDS_data(I, GT, G, ST, S);
-    if (GT != TopOpeBRepDS_VERTEX)
+    if (GT != TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
     {
       it.Next();
       continue;
@@ -733,7 +733,7 @@ static void FUN_reducepure2dI(NCollection_List<occ::handle<TopOpeBRepDS_Interfer
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.ChangeValue(K, G);
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>>  Rloi;
     int                                                       nloi = loi.Extent();
-    bool ok = (nloi == 2) && (K == TopOpeBRepDS_POINT);
+    bool ok = (nloi == 2) && (K == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT);
     if (ok)
       ::FUN_reducepure2dI0(loi, Rloi);
     RLI.Append(Rloi);
@@ -785,7 +785,7 @@ static void FUN_ProcessEdgeInterferences(
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> lF;
   FUN_selectTRASHAinterference(LI, TopAbs_FACE, lF);
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> lFE;
-  FUN_selectSKinterference(lF, TopOpeBRepDS_EDGE, lFE);
+  FUN_selectSKinterference(lF, TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE, lFE);
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> lE;
   FUN_selectTRASHAinterference(LI, TopAbs_EDGE, lE);
 
@@ -924,7 +924,7 @@ void TopOpeBRepDS_EIR::ProcessEdgeInterferences(const int EIX)
     int               G;
     tki.Value(K, G);
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.Value(K, G);
-    if (K == TopOpeBRepDS_POINT)
+    if (K == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
       continue;
     const TopoDS_Shape& vG = BDS.Shape(G);
     TopoDS_Shape        oovG;
@@ -1002,7 +1002,7 @@ void TopOpeBRepDS_EIR::ProcessEdgeInterferences(const int EIX)
       int               G;
       tki.Value(K, G);
       NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.ChangeValue(K, G);
-      if (K != TopOpeBRepDS_POINT)
+      if (K != TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
       {
         LI.Append(loi);
         continue;
@@ -1031,7 +1031,7 @@ void TopOpeBRepDS_EIR::ProcessEdgeInterferences(const int EIX)
         for (; itlifx.More(); itlifx.Next())
         {
           FDS_data(itlifx, I1, GT1, G1, ST1, S1);
-          bool isfci = (GT1 == TopOpeBRepDS_CURVE);
+          bool isfci = (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE);
           if (!isfci)
             continue;
 
@@ -1049,7 +1049,7 @@ void TopOpeBRepDS_EIR::ProcessEdgeInterferences(const int EIX)
           for (; itlic.More(); itlic.Next())
           {
             FDS_data(itlic, I2, GT2, G2, ST2, S2);
-            bool isp = (GT2 == TopOpeBRepDS_POINT);
+            bool isp = (GT2 == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT);
             if (!isp)
               continue;
             if (G2 != G)

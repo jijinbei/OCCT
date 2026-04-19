@@ -506,30 +506,30 @@ BRepBuilderAPI_EdgeError BRepBuilderAPI_MakeEdge2d::Error() const
   switch (myMakeEdge2d.Error())
   {
 
-    case BRepLib_EdgeDone:
-      return BRepBuilderAPI_EdgeDone;
+    case BRepLib_EdgeError::BRepLib_EdgeDone:
+      return BRepBuilderAPI_EdgeError::BRepBuilderAPI_EdgeDone;
 
-    case BRepLib_PointProjectionFailed:
-      return BRepBuilderAPI_PointProjectionFailed;
+    case BRepLib_EdgeError::BRepLib_PointProjectionFailed:
+      return BRepBuilderAPI_EdgeError::BRepBuilderAPI_PointProjectionFailed;
 
-    case BRepLib_ParameterOutOfRange:
-      return BRepBuilderAPI_ParameterOutOfRange;
+    case BRepLib_EdgeError::BRepLib_ParameterOutOfRange:
+      return BRepBuilderAPI_EdgeError::BRepBuilderAPI_ParameterOutOfRange;
 
-    case BRepLib_DifferentPointsOnClosedCurve:
-      return BRepBuilderAPI_DifferentPointsOnClosedCurve;
+    case BRepLib_EdgeError::BRepLib_DifferentPointsOnClosedCurve:
+      return BRepBuilderAPI_EdgeError::BRepBuilderAPI_DifferentPointsOnClosedCurve;
 
-    case BRepLib_PointWithInfiniteParameter:
-      return BRepBuilderAPI_PointWithInfiniteParameter;
+    case BRepLib_EdgeError::BRepLib_PointWithInfiniteParameter:
+      return BRepBuilderAPI_EdgeError::BRepBuilderAPI_PointWithInfiniteParameter;
 
-    case BRepLib_DifferentsPointAndParameter:
-      return BRepBuilderAPI_DifferentsPointAndParameter;
+    case BRepLib_EdgeError::BRepLib_DifferentsPointAndParameter:
+      return BRepBuilderAPI_EdgeError::BRepBuilderAPI_DifferentsPointAndParameter;
 
-    case BRepLib_LineThroughIdenticPoints:
-      return BRepBuilderAPI_LineThroughIdenticPoints;
+    case BRepLib_EdgeError::BRepLib_LineThroughIdenticPoints:
+      return BRepBuilderAPI_EdgeError::BRepBuilderAPI_LineThroughIdenticPoints;
   }
 
   // portage WNT
-  return BRepBuilderAPI_EdgeDone;
+  return BRepBuilderAPI_EdgeError::BRepBuilderAPI_EdgeDone;
 }
 
 //=================================================================================================

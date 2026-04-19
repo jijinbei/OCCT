@@ -85,7 +85,7 @@ TEST(GeomAdaptor_TransformedCurveTest, ConstructWithCurveAndTrsf)
 
   GeomAdaptor_TransformedCurve aCurve(aLine, aTrsf);
   EXPECT_TRUE(aCurve.Is3DCurve());
-  EXPECT_EQ(aCurve.GetType(), GeomAbs_Line);
+  EXPECT_EQ(aCurve.GetType(), GeomAbs_CurveType::GeomAbs_Line);
   EXPECT_EQ(aCurve.Trsf().Form(), gp_Translation);
 }
 
@@ -123,7 +123,7 @@ TEST(GeomAdaptor_TransformedCurveTest, Circle_IdentityTransform)
   gp_Trsf                  aTrsf; // identity
 
   GeomAdaptor_TransformedCurve aCurve(aCircle, aTrsf);
-  EXPECT_EQ(aCurve.GetType(), GeomAbs_Circle);
+  EXPECT_EQ(aCurve.GetType(), GeomAbs_CurveType::GeomAbs_Circle);
 
   NCollection_Array1<double> aParams(1, 5);
   aParams.SetValue(1, 0.0);

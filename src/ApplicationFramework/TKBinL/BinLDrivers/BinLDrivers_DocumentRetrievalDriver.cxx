@@ -58,7 +58,7 @@ IMPLEMENT_STANDARD_RTTIEXT(BinLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDr
 
 BinLDrivers_DocumentRetrievalDriver::BinLDrivers_DocumentRetrievalDriver()
 {
-  myReaderStatus = PCDM_RS_OK;
+  myReaderStatus = PCDM_ReaderStatus::PCDM_RS_OK;
 }
 
 //=================================================================================================
@@ -81,13 +81,13 @@ void BinLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&
     Read(*aFileStream, dData, theNewDocument, theApplication, theFilter, theRange);
     if (!theRange.More())
     {
-      myReaderStatus = PCDM_RS_UserBreak;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UserBreak;
       return;
     }
   }
   else
   {
-    myReaderStatus = PCDM_RS_OpenError;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_OpenError;
   }
 }
 
@@ -106,7 +106,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
                                                const occ::handle<PCDM_ReaderFilter>& theFilter,
                                                const Message_ProgressRange&          theRange)
 {
-  myReaderStatus = PCDM_RS_DriverFailure;
+  myReaderStatus = PCDM_ReaderStatus::PCDM_RS_DriverFailure;
   myMsgDriver    = theApplication->MessageDriver();
 
   const TCollection_ExtendedString aMethStr("BinLDrivers_DocumentRetrievalDriver: ");
@@ -117,7 +117,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
 #ifdef OCCT_DEBUG
     myMsgDriver->Send(aMethStr + "error: null document", Message_Fail);
 #endif
-    myReaderStatus = PCDM_RS_NoDocument;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_NoDocument;
     return;
   }
 
@@ -151,7 +151,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
   {
     // file has no format version
     myMsgDriver->Send(aMethStr + "error: file has no format version", Message_Fail);
-    myReaderStatus = PCDM_RS_FormatFailure;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_FormatFailure;
     return;
   }
   TDocStd_FormatVersion aFileVer =
@@ -160,7 +160,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
   // maintain one-way compatibility starting from version 2+
   if (!CheckDocumentVersion(aFileVer, aCurrVer))
   {
-    myReaderStatus = PCDM_RS_NoVersion;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_NoVersion;
     // file was written with another version
     myMsgDriver->Send(aMethStr + "error: wrong file version: " + aHeaderData->StorageVersion()
                         + " while current is " + TDocStd_Document::CurrentStorageFormatVersion(),
@@ -249,7 +249,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
     {
       // There is no shape section in the file.
       myMsgDriver->Send(aMethStr + "error: shape section is not found", Message_Fail);
-      myReaderStatus = PCDM_RS_ReaderException;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_ReaderException;
       return;
     }
 
@@ -270,7 +270,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
             ReadShapeSection(aCurSection, theIStream, false, aPS.Next());
             if (!aPS.More())
             {
-              myReaderStatus = PCDM_RS_UserBreak;
+              myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UserBreak;
               return;
             }
           }
@@ -297,7 +297,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
       if (aShapeLabel.Length() <= 0 || aShapeLabel != SHAPESECTION_POS)
       {
         myMsgDriver->Send(aMethStr + "error: Format failure", Message_Fail);
-        myReaderStatus = PCDM_RS_FormatFailure;
+        myReaderStatus = PCDM_ReaderStatus::PCDM_RS_FormatFailure;
         return;
       }
 
@@ -322,7 +322,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
         ReadShapeSection(aCurSection, theIStream, false, aPS.Next());
         if (!aPS.More())
         {
-          myReaderStatus = PCDM_RS_UserBreak;
+          myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UserBreak;
           return;
         }
       }
@@ -355,14 +355,14 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
   }
   if (!aPS.More())
   {
-    myReaderStatus = PCDM_RS_UserBreak;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UserBreak;
     return;
   }
 
   Clear();
   if (!aPS.More())
   {
-    myReaderStatus = PCDM_RS_UserBreak;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UserBreak;
     return;
   }
   aPS.Next();
@@ -376,7 +376,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
       TDocStd_Owner::SetDocument(aData, aDoc);
       aDoc->SetComments(aHeaderData->Comments());
     }
-    myReaderStatus = PCDM_RS_OK;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_OK;
   }
 
   // Read Sections (post-reading type)
@@ -445,7 +445,7 @@ int BinLDrivers_DocumentRetrievalDriver::ReadSubTree(
   {
     if (!aPS.More())
     {
-      myReaderStatus = PCDM_RS_UserBreak;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UserBreak;
       return -1;
     }
     if (myUnresolvedLinks.Remove(myPAtt.Id()) && aSkipAttrs)
@@ -551,7 +551,7 @@ int BinLDrivers_DocumentRetrievalDriver::ReadSubTree(
   {
     // unexpected EOF or garbage data
     myMsgDriver->Send(aMethStr + "error: unexpected EOF or garbage data", Message_Fail);
-    myReaderStatus = PCDM_RS_UnrecognizedFileFormat;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UnrecognizedFileFormat;
     return -1;
   }
 
@@ -569,7 +569,7 @@ int BinLDrivers_DocumentRetrievalDriver::ReadSubTree(
     TDF_Label aLab = theLabel.FindChild(aTag, true);
     if (!aPS.More())
     {
-      myReaderStatus = PCDM_RS_UserBreak;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UserBreak;
       return -1;
     }
 
@@ -593,7 +593,7 @@ int BinLDrivers_DocumentRetrievalDriver::ReadSubTree(
   {
     // invalid end label marker
     myMsgDriver->Send(aMethStr + "error: invalid end label marker", Message_Fail);
-    myReaderStatus = PCDM_RS_UnrecognizedFileFormat;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UnrecognizedFileFormat;
     return -1;
   }
   if (!theFilter.IsNull())

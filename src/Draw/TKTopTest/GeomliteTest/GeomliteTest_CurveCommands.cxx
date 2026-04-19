@@ -1225,7 +1225,7 @@ static int minmaxcurandinf(Draw_Interpretor& di, int argc, const char** argv)
     for (int i = 1; i <= Sommets.NbPoints(); i++)
     {
       Couleur = Draw_vert;
-      if (Sommets.Type(i) == LProp_MinCur)
+      if (Sommets.Type(i) == LProp_CIType::LProp_MinCur)
       {
         Couleur = Draw_orange;
         di << "  Maximum of curvature at U =" << Sommets.Parameter(i) << "\n";

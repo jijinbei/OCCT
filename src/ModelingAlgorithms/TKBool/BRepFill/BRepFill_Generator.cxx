@@ -102,7 +102,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
       last1  = curv1->ReversedParameter(ff);
     }
     AdC1.Load(curv1);
-    if (AdC1.GetType() == GeomAbs_Circle)
+    if (AdC1.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       // first circular section
       IType = 1;
@@ -110,7 +110,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
       dist1 = AdC1.Circle().Radius();
       axe1  = AdC1.Circle().Axis();
     }
-    else if (AdC1.GetType() == GeomAbs_Line)
+    else if (AdC1.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       // first straight line section
       IType = 4;
@@ -186,7 +186,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
 
       if (IType > 0 && IType < 4)
       {
-        if (AdC.GetType() != GeomAbs_Circle)
+        if (AdC.GetType() != GeomAbs_CurveType::GeomAbs_Circle)
         {
           // section not circular --> no particular case
           IType = 0;
@@ -264,7 +264,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
       }
       else if (IType >= 4)
       {
-        if (AdC.GetType() != GeomAbs_Line)
+        if (AdC.GetType() != GeomAbs_CurveType::GeomAbs_Line)
         {
           // not a straight line section --> no particular case
           IType = 0;
@@ -308,9 +308,9 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
       }
       else if (IType == -2)
       {
-        if (AdC.GetType() == GeomAbs_Line)
+        if (AdC.GetType() == GeomAbs_CurveType::GeomAbs_Line)
           IType = 4; // plane
-        else if (AdC.GetType() == GeomAbs_Circle)
+        else if (AdC.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
         {
           // the only particular case with degenerated edge at the beginning the cone
           pos = AdC.Circle().Location();
@@ -587,7 +587,7 @@ static TopoDS_Edge CreateNewEdge(
 
 BRepFill_Generator::BRepFill_Generator()
     : myMutableInput(true),
-      myStatus(BRepFill_ThruSectionErrorStatus_NotDone)
+      myStatus(BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotDone)
 {
 }
 
@@ -602,7 +602,7 @@ void BRepFill_Generator::AddWire(const TopoDS_Wire& Wire)
 
 void BRepFill_Generator::Perform()
 {
-  myStatus = BRepFill_ThruSectionErrorStatus_Done;
+  myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Done;
 
   TopoDS_Shell Shell;
   TopoDS_Face  Face;
@@ -742,7 +742,7 @@ void BRepFill_Generator::Perform()
       int IType = DetectKPart(Edge1, Edge2);
       if (IType == -1)
       {
-        myStatus = BRepFill_ThruSectionErrorStatus_Null3DCurve;
+        myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Null3DCurve;
         return;
       }
 
@@ -765,7 +765,7 @@ void BRepFill_Generator::Perform()
           C1 = BRep_Tool::Curve(Edge1, L1, f1, l1);
           if (C1.IsNull())
           {
-            myStatus = BRepFill_ThruSectionErrorStatus_Null3DCurve;
+            myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Null3DCurve;
             return;
           }
         }
@@ -780,7 +780,7 @@ void BRepFill_Generator::Perform()
           C2 = BRep_Tool::Curve(Edge2, L2, f2, l2);
           if (C2.IsNull())
           {
-            myStatus = BRepFill_ThruSectionErrorStatus_Null3DCurve;
+            myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Null3DCurve;
             return;
           }
         }
@@ -835,7 +835,7 @@ void BRepFill_Generator::Perform()
         // particular case
         if (!CreateKPart(Edge1, Edge2, IType, Surf))
         {
-          myStatus = BRepFill_ThruSectionErrorStatus_Null3DCurve;
+          myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Null3DCurve;
           return;
         }
         B.MakeFace(Face, Surf, Precision::Confusion());

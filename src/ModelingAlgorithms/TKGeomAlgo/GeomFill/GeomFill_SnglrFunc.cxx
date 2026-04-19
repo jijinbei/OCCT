@@ -155,5 +155,5 @@ double GeomFill_SnglrFunc::Resolution(const double R3D) const
 
 GeomAbs_CurveType GeomFill_SnglrFunc::GetType() const
 {
-  return GeomAbs_OtherCurve;
+  return GeomAbs_CurveType::GeomAbs_OtherCurve;
 }

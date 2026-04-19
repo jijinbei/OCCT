@@ -123,7 +123,7 @@ public:
   //! If IsFirstParam is equal to true, the face is
   //! initialized by either left of bottom bound. Otherwise it is
   //! initialized by the top or right one.
-  //! If theIsoType is equal to GeomAbs_IsoU, the face is
+  //! If theIsoType is equal to GeomAbs_IsoType::GeomAbs_IsoU, the face is
   //! initialized with either left or right bound. Otherwise -
   //! with either top or bottom one.
   Standard_EXPORT void Load(const bool IsFirstParam, const GeomAbs_IsoType theIsoType);

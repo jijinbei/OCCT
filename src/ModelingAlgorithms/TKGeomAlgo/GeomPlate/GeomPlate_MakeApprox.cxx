@@ -292,7 +292,7 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
   eps3D->Init(Tol3d);
   occ::handle<NCollection_HArray2<double>> epsfr = new NCollection_HArray2<double>(1, 1, 1, 4);
   epsfr->Init(Tol3d);
-  GeomAbs_IsoType myType = GeomAbs_IsoV;
+  GeomAbs_IsoType myType = GeomAbs_IsoType::GeomAbs_IsoV;
   int             myPrec = 0;
 
   AdvApprox_DichoCutting myDec;
@@ -415,7 +415,7 @@ GeomPlate_MakeApprox::GeomPlate_MakeApprox(const occ::handle<GeomPlate_Surface>&
   occ::handle<NCollection_HArray2<double>> epsfr = new NCollection_HArray2<double>(1, 1, 1, 4);
   epsfr->Init(Tol3d);
 
-  GeomAbs_IsoType myType = GeomAbs_IsoV;
+  GeomAbs_IsoType myType = GeomAbs_IsoType::GeomAbs_IsoV;
   int             myPrec = 0;
 
   AdvApprox_DichoCutting myDec;

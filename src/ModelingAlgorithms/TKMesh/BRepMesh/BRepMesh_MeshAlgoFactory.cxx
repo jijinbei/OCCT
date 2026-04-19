@@ -62,7 +62,7 @@ occ::handle<IMeshTools_MeshAlgo> BRepMesh_MeshAlgoFactory::GetAlgo(
 {
   switch (theSurfaceType)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       return theParameters.EnableControlSurfaceDeflectionAllSurfaces
                ? new DeflectionControlMeshAlgo<BRepMesh_DefaultRangeSplitter>::Type
                : (theParameters.InternalVerticesMode
@@ -70,13 +70,13 @@ occ::handle<IMeshTools_MeshAlgo> BRepMesh_MeshAlgoFactory::GetAlgo(
                     : new BaseMeshAlgo::Type);
       break;
 
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       return theParameters.EnableControlSurfaceDeflectionAllSurfaces
                ? new DeflectionControlMeshAlgo<BRepMesh_SphereRangeSplitter>::Type
                : new NodeInsertionMeshAlgo<BRepMesh_SphereRangeSplitter>::Type;
       break;
 
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       return theParameters.EnableControlSurfaceDeflectionAllSurfaces
                ? new DeflectionControlMeshAlgo<BRepMesh_CylinderRangeSplitter>::Type
                : (theParameters.InternalVerticesMode
@@ -84,33 +84,33 @@ occ::handle<IMeshTools_MeshAlgo> BRepMesh_MeshAlgoFactory::GetAlgo(
                     : new BaseMeshAlgo::Type);
       break;
 
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       return theParameters.EnableControlSurfaceDeflectionAllSurfaces
                ? new DeflectionControlMeshAlgo<BRepMesh_ConeRangeSplitter>::Type
                : new NodeInsertionMeshAlgo<BRepMesh_ConeRangeSplitter>::Type;
       break;
 
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       return theParameters.EnableControlSurfaceDeflectionAllSurfaces
                ? new DeflectionControlMeshAlgo<BRepMesh_TorusRangeSplitter>::Type
                : new NodeInsertionMeshAlgo<BRepMesh_TorusRangeSplitter>::Type;
       break;
 
-    case GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
       return new DeflectionControlMeshAlgo<BRepMesh_BoundaryParamsRangeSplitter>::Type;
       break;
 
-    case GeomAbs_SurfaceOfExtrusion:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
       return new DeflectionControlMeshAlgo<BRepMesh_ExtrusionRangeSplitter>::Type;
       break;
 
-    case GeomAbs_BezierSurface:
-    case GeomAbs_BSplineSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
       return new DeflectionControlMeshAlgo<BRepMesh_NURBSRangeSplitter>::Type;
       break;
 
-    case GeomAbs_OffsetSurface:
-    case GeomAbs_OtherSurface:
+    case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
+    case GeomAbs_SurfaceType::GeomAbs_OtherSurface:
     default:
       return new DeflectionControlMeshAlgo<BRepMesh_UndefinedRangeSplitter>::Type;
   }

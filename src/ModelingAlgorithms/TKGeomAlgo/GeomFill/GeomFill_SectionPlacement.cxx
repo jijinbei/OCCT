@@ -203,32 +203,32 @@ GeomFill_SectionPlacement::GeomFill_SectionPlacement(const occ::handle<GeomFill_
     GeomAbs_CurveType TheType = myAdpSection.GetType();
     switch (TheType)
     {
-      case GeomAbs_Circle: {
+      case GeomAbs_CurveType::GeomAbs_Circle: {
         isplan = true;
         TheAxe = myAdpSection.Circle().Axis();
         break;
       }
-      case GeomAbs_Ellipse: {
+      case GeomAbs_CurveType::GeomAbs_Ellipse: {
         isplan = true;
         TheAxe = myAdpSection.Ellipse().Axis();
         break;
       }
-      case GeomAbs_Hyperbola: {
+      case GeomAbs_CurveType::GeomAbs_Hyperbola: {
         isplan = true;
         TheAxe = myAdpSection.Hyperbola().Axis();
         break;
       }
-      case GeomAbs_Parabola: {
+      case GeomAbs_CurveType::GeomAbs_Parabola: {
         isplan = true;
         TheAxe = myAdpSection.Parabola().Axis();
         break;
       }
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Line: {
         NbPoles = 0; // Pas de Plan !!
         break;
       }
-      case GeomAbs_BezierCurve:
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_CurveType::GeomAbs_BezierCurve:
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
         NbPoles = myAdpSection.NbPoles();
         break;
       }
@@ -258,7 +258,7 @@ GeomFill_SectionPlacement::GeomFill_SectionPlacement(const occ::handle<GeomFill_
           last = U2;
       }
       double t, delta;
-      if (myAdpSection.GetType() == GeomAbs_BSplineCurve)
+      if (myAdpSection.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
       {
         occ::handle<Geom_BSplineCurve> BC = occ::down_cast<Geom_BSplineCurve>(myAdpSection.Curve());
         int                            I1, I2, I3, I4;

@@ -17,7 +17,7 @@
 #ifndef _Extrema_ElementType_HeaderFile
 #define _Extrema_ElementType_HeaderFile
 
-enum Extrema_ElementType
+enum class Extrema_ElementType
 {
   Extrema_Node,
   Extrema_UIsoEdge,

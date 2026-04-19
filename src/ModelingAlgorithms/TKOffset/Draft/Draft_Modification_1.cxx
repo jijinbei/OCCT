@@ -654,11 +654,11 @@ bool Draft_Modification::Propagate()
               switch (SLE.GetType())
               {
 
-                case GeomAbs_Plane: {
+                case GeomAbs_SurfaceType::GeomAbs_Plane: {
                   S2 = new Geom_Plane(SLE.Plane());
                 }
                 break;
-                case GeomAbs_Cylinder: {
+                case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
                   S2 = new Geom_CylindricalSurface(SLE.Cylinder());
                 }
                 break;
@@ -758,7 +758,7 @@ void Draft_Modification::Perform()
         gp_Pln             pp1 = P1->Pln();
         gp_Pln             pp2 = P2->Pln();
         IntAna_QuadQuadGeo i2p(pp1, pp2, Precision::Angular(), Precision::Confusion());
-        if (!i2p.IsDone() || i2p.TypeInter() != IntAna_Line)
+        if (!i2p.IsDone() || i2p.TypeInter() != IntAna_ResultType::IntAna_Line)
         {
           errStat  = Draft_FaceRecomputation;
           badShape = FK;
@@ -1763,7 +1763,7 @@ occ::handle<Geom_Surface> Draft_Modification::NewSurface(const occ::handle<Geom_
       i2s.Perform(NeutralPlane, Cy, Precision::Angular(), Precision::Confusion());
       bool isIntDone = i2s.IsDone();
 
-      if (i2s.TypeInter() == IntAna_Ellipse)
+      if (i2s.TypeInter() == IntAna_ResultType::IntAna_Ellipse)
       {
         const gp_Elips anEl    = i2s.Ellipse(1);
         const double   aMajorR = anEl.MajorRadius();
@@ -1771,7 +1771,7 @@ occ::handle<Geom_Surface> Draft_Modification::NewSurface(const occ::handle<Geom_
         isIntDone              = (aMajorR < 100000.0 * aMinorR);
       }
 
-      if (!isIntDone || i2s.TypeInter() != IntAna_Circle)
+      if (!isIntDone || i2s.TypeInter() != IntAna_ResultType::IntAna_Circle)
       {
 #ifdef OCCT_DEBUG
         std::cout << "NewSurfaceCyl:Draft_Intersection_Neutral_Cylinder_NotDone" << std::endl;
@@ -1835,7 +1835,7 @@ occ::handle<Geom_Surface> Draft_Modification::NewSurface(const occ::handle<Geom_
 
     IntAna_QuadQuadGeo i2s;
     i2s.Perform(NeutralPlane, Co1, Precision::Angular(), Precision::Confusion());
-    if (!i2s.IsDone() || i2s.TypeInter() != IntAna_Circle)
+    if (!i2s.IsDone() || i2s.TypeInter() != IntAna_ResultType::IntAna_Circle)
     {
 #ifdef OCCT_DEBUG
       std::cout << "NewSurfaceCone:Draft_Intersection_Neutral_Conical_NotDone" << std::endl;
@@ -2259,7 +2259,7 @@ static double SmartParameter(Draft_EdgeInfo&                  Einf,
       PntArray(1)                                 = P2d;
       PntArray(2)                                 = BCurve->Pole(1);
       occ::handle<Geom2d_BezierCurve>       Patch = new Geom2d_BezierCurve(PntArray);
-      Geom2dConvert_CompCurveToBSplineCurve Concat(BCurve, Convert_QuasiAngular);
+      Geom2dConvert_CompCurveToBSplineCurve Concat(BCurve, Convert_ParameterisationType::Convert_QuasiAngular);
       Concat.Add(Patch, Tol, false);
       BCurve = Concat.BSplineCurve();
     }
@@ -2269,7 +2269,7 @@ static double SmartParameter(Draft_EdgeInfo&                  Einf,
       PntArray(1)                                 = BCurve->Pole(BCurve->NbPoles());
       PntArray(2)                                 = P2d;
       occ::handle<Geom2d_BezierCurve>       Patch = new Geom2d_BezierCurve(PntArray);
-      Geom2dConvert_CompCurveToBSplineCurve Concat(BCurve, Convert_QuasiAngular);
+      Geom2dConvert_CompCurveToBSplineCurve Concat(BCurve, Convert_ParameterisationType::Convert_QuasiAngular);
       Concat.Add(Patch, Tol, true);
       BCurve = Concat.BSplineCurve();
     }
@@ -2330,7 +2330,7 @@ static bool FindRotation(const gp_Pln&            Pl,
 {
   IntAna_QuadQuadGeo i2pl(Pl, NeutralPlane, Precision::Angular(), Precision::Confusion());
 
-  if (i2pl.IsDone() && i2pl.TypeInter() == IntAna_Line)
+  if (i2pl.IsDone() && i2pl.TypeInter() == IntAna_ResultType::IntAna_Line)
   {
     gp_Lin li = i2pl.Line(1);
     // Try to turn around this line

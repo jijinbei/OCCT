@@ -68,7 +68,7 @@ bool TPrsStd_GeometryDriver::Update(const TDF_Label&                    aLabel,
 
   switch (GeomType)
   {
-    case TDataXtd_POINT: {
+    case TDataXtd_GeometryEnum::TDataXtd_POINT: {
       gp_Pnt pt;
       if (!TDataXtd_Geometry::Point(aLabel, pt))
         return false;
@@ -93,7 +93,7 @@ bool TPrsStd_GeometryDriver::Update(const TDF_Label&                    aLabel,
       anAISObject->SetColor(Quantity_NOC_RED);
     }
     break;
-    case TDataXtd_LINE: {
+    case TDataXtd_GeometryEnum::TDataXtd_LINE: {
       gp_Lin ln;
       if (!TDataXtd_Geometry::Line(aLabel, ln))
         return false;
@@ -119,7 +119,7 @@ bool TPrsStd_GeometryDriver::Update(const TDF_Label&                    aLabel,
       anAISObject->SetInfiniteState(true);
       break;
     }
-    case TDataXtd_CIRCLE: {
+    case TDataXtd_GeometryEnum::TDataXtd_CIRCLE: {
       occ::handle<AIS_Line> ais2;
       gp_Circ               cir;
       if (!TDataXtd_Geometry::Circle(aLabel, cir))
@@ -145,7 +145,7 @@ bool TPrsStd_GeometryDriver::Update(const TDF_Label&                    aLabel,
       anAISObject->SetColor(Quantity_NOC_RED);
       break;
     }
-    case TDataXtd_ELLIPSE: {
+    case TDataXtd_GeometryEnum::TDataXtd_ELLIPSE: {
       gp_Elips elp;
       if (!TDataXtd_Geometry::Ellipse(aLabel, elp))
         return false;

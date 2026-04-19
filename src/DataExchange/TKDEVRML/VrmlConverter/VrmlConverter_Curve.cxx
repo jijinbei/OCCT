@@ -86,7 +86,7 @@ static void DrawCurve(const Adaptor3d_Curve&                   aCurve,
   occ::handle<NCollection_HArray1<gp_Vec>> HAV1;
   occ::handle<NCollection_HArray1<int>>    HAI1;
 
-  if (aCurve.GetType() == GeomAbs_BSplineCurve)
+  if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     nbintervals = aCurve.NbKnots() - 1;
     //     std::cout << "NbKnots "<<aCurve.NbKnots() << std::endl;
@@ -95,7 +95,7 @@ static void DrawCurve(const Adaptor3d_Curve&                   aCurve,
 
   switch (aCurve.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       gp_Vec V;
       HAV1 = new NCollection_HArray1<gp_Vec>(1, 2);
       // array of coordinates of line

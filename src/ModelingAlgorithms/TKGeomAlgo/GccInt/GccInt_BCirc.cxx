@@ -27,7 +27,7 @@ GccInt_BCirc::GccInt_BCirc(const gp_Circ2d& Circ)
 
 GccInt_IType GccInt_BCirc::ArcType() const
 {
-  return GccInt_Cir;
+  return GccInt_IType::GccInt_Cir;
 }
 
 gp_Circ2d GccInt_BCirc::Circle() const

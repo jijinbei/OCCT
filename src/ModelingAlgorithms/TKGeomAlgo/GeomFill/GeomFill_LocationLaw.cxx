@@ -80,7 +80,7 @@ int GeomFill_LocationLaw::TraceNumber() const
 
 GeomFill_PipeError GeomFill_LocationLaw::ErrorStatus() const
 {
-  return GeomFill_PipeOk;
+  return GeomFill_PipeError::GeomFill_PipeOk;
 }
 
 // void GeomFill_LocationLaw::Resolution(const int Index,const double

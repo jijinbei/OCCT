@@ -53,15 +53,15 @@ occ::handle<Geom_Surface> CreateGeomSurfaceFromAdaptor(const Adaptor3d_Surface& 
 {
   switch (theSurface.GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       return new Geom_Plane(theSurface.Plane());
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       return new Geom_CylindricalSurface(theSurface.Cylinder());
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       return new Geom_ConicalSurface(theSurface.Cone());
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       return new Geom_SphericalSurface(theSurface.Sphere());
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       return new Geom_ToroidalSurface(theSurface.Torus());
     default:
       return occ::handle<Geom_Surface>();
@@ -117,7 +117,7 @@ occ::handle<Geom_Surface> CreateExtrusionSurface(
 
 GeomGridEval_Surface::GeomGridEval_Surface(const Adaptor3d_Surface& theSurface)
     : myEvaluator(std::monostate{}),
-      mySurfaceType(GeomAbs_OtherSurface)
+      mySurfaceType(GeomAbs_SurfaceType::GeomAbs_OtherSurface)
 {
   initialization(theSurface);
 }
@@ -126,7 +126,7 @@ GeomGridEval_Surface::GeomGridEval_Surface(const Adaptor3d_Surface& theSurface)
 
 GeomGridEval_Surface::GeomGridEval_Surface(const occ::handle<Geom_Surface>& theSurface)
     : myEvaluator(std::monostate{}),
-      mySurfaceType(GeomAbs_OtherSurface)
+      mySurfaceType(GeomAbs_SurfaceType::GeomAbs_OtherSurface)
 {
   initialization(theSurface);
 }
@@ -270,7 +270,7 @@ void GeomGridEval_Surface::initialization(const occ::handle<Geom_Surface>& theSu
   if (theSurface.IsNull())
   {
     myEvaluator.emplace<std::monostate>();
-    mySurfaceType = GeomAbs_OtherSurface;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_OtherSurface;
     return;
   }
 
@@ -279,58 +279,58 @@ void GeomGridEval_Surface::initialization(const occ::handle<Geom_Surface>& theSu
 
   if (auto aPlane = occ::down_cast<Geom_Plane>(aBasisSurf))
   {
-    mySurfaceType = GeomAbs_Plane;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_Plane;
     myEvaluator.emplace<GeomGridEval_Plane>(aPlane);
   }
   else if (auto aCyl = occ::down_cast<Geom_CylindricalSurface>(aBasisSurf))
   {
-    mySurfaceType = GeomAbs_Cylinder;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_Cylinder;
     myEvaluator.emplace<GeomGridEval_Cylinder>(aCyl);
   }
   else if (auto aSphere = occ::down_cast<Geom_SphericalSurface>(aBasisSurf))
   {
-    mySurfaceType = GeomAbs_Sphere;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_Sphere;
     myEvaluator.emplace<GeomGridEval_Sphere>(aSphere);
   }
   else if (auto aCone = occ::down_cast<Geom_ConicalSurface>(aBasisSurf))
   {
-    mySurfaceType = GeomAbs_Cone;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_Cone;
     myEvaluator.emplace<GeomGridEval_Cone>(aCone);
   }
   else if (auto aTorus = occ::down_cast<Geom_ToroidalSurface>(aBasisSurf))
   {
-    mySurfaceType = GeomAbs_Torus;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_Torus;
     myEvaluator.emplace<GeomGridEval_Torus>(aTorus);
   }
   else if (auto aBezier = occ::down_cast<Geom_BezierSurface>(aBasisSurf))
   {
-    mySurfaceType = GeomAbs_BezierSurface;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_BezierSurface;
     myEvaluator.emplace<GeomGridEval_BezierSurface>(aBezier);
   }
   else if (auto aBSpline = occ::down_cast<Geom_BSplineSurface>(aBasisSurf))
   {
-    mySurfaceType = GeomAbs_BSplineSurface;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_BSplineSurface;
     myEvaluator.emplace<GeomGridEval_BSplineSurface>(aBSpline);
   }
   else if (auto anOffset = occ::down_cast<Geom_OffsetSurface>(aBasisSurf))
   {
-    mySurfaceType = GeomAbs_OffsetSurface;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_OffsetSurface;
     myEvaluator.emplace<GeomGridEval_OffsetSurface>(anOffset);
   }
   else if (auto aRevolution = occ::down_cast<Geom_SurfaceOfRevolution>(aBasisSurf))
   {
-    mySurfaceType = GeomAbs_SurfaceOfRevolution;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution;
     myEvaluator.emplace<GeomGridEval_SurfaceOfRevolution>(aRevolution);
   }
   else if (auto anExtrusion = occ::down_cast<Geom_SurfaceOfLinearExtrusion>(aBasisSurf))
   {
-    mySurfaceType = GeomAbs_SurfaceOfExtrusion;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion;
     myEvaluator.emplace<GeomGridEval_SurfaceOfExtrusion>(anExtrusion);
   }
   else
   {
     // Unknown surface type - use OtherSurface fallback
-    mySurfaceType = GeomAbs_OtherSurface;
+    mySurfaceType = GeomAbs_SurfaceType::GeomAbs_OtherSurface;
     myEvaluator.emplace<GeomGridEval_OtherSurface>(aBasisSurf);
   }
 }

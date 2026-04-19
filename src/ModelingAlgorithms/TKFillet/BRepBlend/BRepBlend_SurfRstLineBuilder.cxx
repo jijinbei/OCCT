@@ -281,8 +281,8 @@ void BRepBlend_SurfRstLineBuilder::Perform(Blend_SurfRstFunction&  Func,
     sol = ParDep;
   }
 
-  State = TestArret(Func, false, Blend_OK);
-  if (State != Blend_OK)
+  State = TestArret(Func, false, Blend_Status::Blend_OK);
+  if (State != Blend_Status::Blend_OK)
   {
     return;
   }
@@ -352,7 +352,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
   {
     sens = -1.;
   }
-  Blend_Status                   State = Blend_OnRst12;
+  Blend_Status                   State = Blend_Status::Blend_OnRst12;
   double                         trst  = 0.;
   bool                           recadp, recadrst, recads;
   double                         wp, wrst, ws;
@@ -429,7 +429,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
   {
     if (std::abs(ws - wrst) < tolgui)
     {
-      State  = Blend_OnRst12;
+      State  = Blend_Status::Blend_OnRst12;
       param  = 0.5 * (ws + wrst);
       sol(1) = U;
       sol(2) = V;
@@ -438,7 +438,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
     else if (sens * (ws - wrst) < 0)
     {
       // ground on surf
-      State = Blend_OnRst1;
+      State = Blend_Status::Blend_OnRst1;
       param = ws;
       Arc->Value(solinvs(3)).Coord(U, V);
       sol(1) = U;
@@ -448,7 +448,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
     else
     {
       // ground on rst
-      State  = Blend_OnRst2;
+      State  = Blend_Status::Blend_OnRst2;
       param  = wrst;
       sol(1) = U;
       sol(2) = V;
@@ -459,7 +459,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
   else if (recads)
   {
     // ground on surf
-    State = Blend_OnRst1;
+    State = Blend_Status::Blend_OnRst1;
     param = ws;
     Arc->Value(solinvs(3)).Coord(U, V);
     sol(1) = U;
@@ -470,7 +470,7 @@ bool BRepBlend_SurfRstLineBuilder::PerformFirstSection(Blend_SurfRstFunction&  F
   else if (recadrst)
   {
     // ground on rst
-    State  = Blend_OnRst2;
+    State  = Blend_Status::Blend_OnRst2;
     param  = wrst;
     sol(1) = U;
     sol(2) = V;
@@ -544,7 +544,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
   {
     return;
   }
-  Blend_Status                   State   = Blend_OnRst12;
+  Blend_Status                   State   = Blend_Status::Blend_OnRst12;
   TopAbs_State                   situonc = TopAbs_UNKNOWN, situons = TopAbs_UNKNOWN;
   bool                           decroch = false;
   bool                           Arrive, recadp, recadrst, recads, echecrecad;
@@ -612,13 +612,13 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       rsnld.Root(sol);
       if (!CheckInside(Func, situonc, situons, decroch) && line->NbPoints() == 1)
       {
-        State    = Blend_StepTooLarge;
+        State    = Blend_Status::Blend_StepTooLarge;
         bonpoint = false;
       }
     }
     else
     {
-      State    = Blend_StepTooLarge;
+      State    = Blend_Status::Blend_StepTooLarge;
       bonpoint = false;
     }
     if (bonpoint)
@@ -718,7 +718,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
         {
           if (std::abs(ws - wrst) < tolgui)
           {
-            State  = Blend_OnRst12;
+            State  = Blend_Status::Blend_OnRst12;
             param  = 0.5 * (ws + wrst);
             sol(1) = U;
             sol(2) = V;
@@ -728,7 +728,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
           {
             // ground on surf
             decroch = false;
-            State   = Blend_OnRst1;
+            State   = Blend_Status::Blend_OnRst1;
             param   = ws;
             Arc->Value(solinvs(3)).Coord(U, V);
             sol(1) = U;
@@ -738,7 +738,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
           else
           {
             // ground on rst
-            State  = Blend_OnRst2;
+            State  = Blend_Status::Blend_OnRst2;
             param  = wrst;
             sol(1) = U;
             sol(2) = V;
@@ -749,7 +749,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
         else if (recads)
         {
           // ground on surf
-          State = Blend_OnRst1;
+          State = Blend_Status::Blend_OnRst1;
           param = ws;
           Arc->Value(solinvs(3)).Coord(U, V);
           sol(1) = U;
@@ -760,7 +760,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
         else if (recadrst)
         {
           // ground on rst
-          State  = Blend_OnRst2;
+          State  = Blend_Status::Blend_OnRst2;
           param  = wrst;
           sol(1) = U;
           sol(2) = V;
@@ -769,7 +769,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
         }
         else
         {
-          State = Blend_OK;
+          State = Blend_Status::Blend_OK;
         }
         State = TestArret(Func, true, State);
       }
@@ -779,13 +779,13 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
 #ifdef OCCT_DEBUG
         std::cout << "SurfRstLineBuilder : failed reframing" << std::endl;
 #endif
-        State = Blend_SamePoints;
+        State = Blend_Status::Blend_SamePoints;
       }
     }
 
     switch (State)
     {
-      case Blend_OK: {
+      case Blend_Status::Blend_OK: {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -822,7 +822,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       }
       break;
 
-      case Blend_StepTooLarge: {
+      case Blend_Status::Blend_StepTooLarge: {
         stepw = stepw / 2.;
         if (std::abs(stepw) < tolgui)
         {
@@ -848,7 +848,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       }
       break;
 
-      case Blend_StepTooSmall: {
+      case Blend_Status::Blend_StepTooSmall: {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -886,7 +886,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       }
       break;
 
-      case Blend_OnRst1: {
+      case Blend_Status::Blend_OnRst1: {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -907,7 +907,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       }
       break;
 
-      case Blend_OnRst2: {
+      case Blend_Status::Blend_OnRst2: {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -928,7 +928,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       }
       break;
 
-      case Blend_OnRst12: {
+      case Blend_Status::Blend_OnRst12: {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -949,7 +949,7 @@ void BRepBlend_SurfRstLineBuilder::InternalPerform(Blend_SurfRstFunction&  Func,
       }
       break;
 
-      case Blend_SamePoints: {
+      case Blend_Status::Blend_SamePoints: {
         // Stop
 #ifdef OCCT_DEBUG
         std::cout << "SurfRstLineBuilder Points mixed in the processing" << std::endl;
@@ -1427,24 +1427,24 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnSurf(const Blend_Poi
   if (Norme <= toler3d * toler3d)
   {
     // it can be necessary to force same point
-    return Blend_SamePoints;
+    return Blend_Status::Blend_SamePoints;
   }
   if (!prevpointistangent)
   {
     if (prevNorme <= toler3d * toler3d)
     {
-      return Blend_SamePoints;
+      return Blend_Status::Blend_SamePoints;
     }
     Cosi = sens * Corde * prevTg;
     if (Cosi < 0.)
     { // angle 3d>pi/2. --> return back
-      return Blend_Backward;
+      return Blend_Status::Blend_Backward;
     }
 
     Cosi2 = Cosi * Cosi / prevNorme / Norme;
     if (Cosi2 < CosRef3D)
     {
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
 
@@ -1455,7 +1455,7 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnSurf(const Blend_Poi
     Cosi2 = Cosi * Cosi / Tgsurf.SquareMagnitude() / Norme;
     if (Cosi2 < CosRef3D || Cosi < 0.)
     {
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
 
@@ -1467,15 +1467,15 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnSurf(const Blend_Poi
 
     if (FlecheCourante <= 0.25 * fleche * fleche)
     {
-      return Blend_StepTooSmall;
+      return Blend_Status::Blend_StepTooSmall;
     }
     if (FlecheCourante > fleche * fleche)
     {
       // not too great :
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
-  return Blend_OK;
+  return Blend_Status::Blend_OK;
 }
 
 //=================================================================================================
@@ -1513,24 +1513,24 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnRst(const Blend_Poin
   if (Norme <= toler3d * toler3d)
   {
     // it can be necessary to force same point
-    return Blend_SamePoints;
+    return Blend_Status::Blend_SamePoints;
   }
   if (!prevpointistangent)
   {
     if (prevNorme <= toler3d * toler3d)
     {
-      return Blend_SamePoints;
+      return Blend_Status::Blend_SamePoints;
     }
     Cosi = sens * Corde * prevTg;
     if (Cosi < 0.)
     { // angle 3d>pi/2. --> return back
-      return Blend_Backward;
+      return Blend_Status::Blend_Backward;
     }
 
     Cosi2 = Cosi * Cosi / prevNorme / Norme;
     if (Cosi2 < CosRef3D)
     {
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
 
@@ -1541,7 +1541,7 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnRst(const Blend_Poin
     Cosi2 = Cosi * Cosi / Tgsurf.SquareMagnitude() / Norme;
     if (Cosi2 < CosRef3D || Cosi < 0.)
     {
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
 
@@ -1553,22 +1553,22 @@ Blend_Status BRepBlend_SurfRstLineBuilder::CheckDeflectionOnRst(const Blend_Poin
 
     if (FlecheCourante <= 0.25 * fleche * fleche)
     {
-      return Blend_StepTooSmall;
+      return Blend_Status::Blend_StepTooSmall;
     }
     if (FlecheCourante > fleche * fleche)
     {
       // not too great
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
-  return Blend_OK;
+  return Blend_Status::Blend_OK;
 }
 
 static IntSurf_TypeTrans ConvOrToTra(const TopAbs_Orientation O)
 {
   if (O == TopAbs_FORWARD)
-    return IntSurf_In;
-  return IntSurf_Out;
+    return IntSurf_TypeTrans::IntSurf_In;
+  return IntSurf_TypeTrans::IntSurf_Out;
 }
 
 //=================================================================================================
@@ -1582,7 +1582,7 @@ Blend_Status BRepBlend_SurfRstLineBuilder::TestArret(Blend_SurfRstFunction& Func
   gp_Vec            tgs, tgrst;
   gp_Vec2d          tg2ds, tg2drst;
   Blend_Status      StateS, StateRst;
-  IntSurf_TypeTrans tras = IntSurf_Undecided, trarst = IntSurf_Undecided;
+  IntSurf_TypeTrans tras = IntSurf_TypeTrans::IntSurf_Undecided, trarst = IntSurf_TypeTrans::IntSurf_Undecided;
   Blend_Point       curpoint;
 
   if (Func.IsSolution(sol, tolpoint3d))
@@ -1622,21 +1622,21 @@ Blend_Status BRepBlend_SurfRstLineBuilder::TestArret(Blend_SurfRstFunction& Func
     }
     else
     {
-      StateS = StateRst = Blend_OK;
+      StateS = StateRst = Blend_Status::Blend_OK;
     }
-    if (StateS == Blend_Backward)
+    if (StateS == Blend_Status::Blend_Backward)
     {
-      StateS = Blend_StepTooLarge;
+      StateS = Blend_Status::Blend_StepTooLarge;
       rebrou = true;
     }
-    if (StateRst == Blend_Backward)
+    if (StateRst == Blend_Status::Blend_Backward)
     {
-      StateRst = Blend_StepTooLarge;
+      StateRst = Blend_Status::Blend_StepTooLarge;
       rebrou   = true;
     }
-    if (StateS == Blend_StepTooLarge || StateRst == Blend_StepTooLarge)
+    if (StateS == Blend_Status::Blend_StepTooLarge || StateRst == Blend_Status::Blend_StepTooLarge)
     {
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
 
     if (!comptra && !curpointistangent)
@@ -1649,11 +1649,11 @@ Blend_Status BRepBlend_SurfRstLineBuilder::TestArret(Blend_SurfRstFunction& Func
       {
         if (testra < 0.)
         {
-          tras = IntSurf_In;
+          tras = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (testra > 0.)
         {
-          tras = IntSurf_Out;
+          tras = IntSurf_TypeTrans::IntSurf_Out;
         }
         gp_Pnt2d p2drstref;
         gp_Vec2d tg2drstref;
@@ -1675,33 +1675,33 @@ Blend_Status BRepBlend_SurfRstLineBuilder::TestArret(Blend_SurfRstFunction& Func
         }
       }
     }
-    if (StateS == Blend_OK || StateRst == Blend_OK)
+    if (StateS == Blend_Status::Blend_OK || StateRst == Blend_Status::Blend_OK)
     {
       previousP = curpoint;
       return State;
     }
-    if (StateS == Blend_StepTooSmall && StateRst == Blend_StepTooSmall)
+    if (StateS == Blend_Status::Blend_StepTooSmall && StateRst == Blend_Status::Blend_StepTooSmall)
     {
       previousP = curpoint;
-      if (State == Blend_OK)
+      if (State == Blend_Status::Blend_OK)
       {
-        return Blend_StepTooSmall;
+        return Blend_Status::Blend_StepTooSmall;
       }
       else
       {
         return State;
       }
     }
-    if (State == Blend_OK)
+    if (State == Blend_Status::Blend_OK)
     {
-      return Blend_SamePoints;
+      return Blend_Status::Blend_SamePoints;
     }
     else
     {
       return State;
     }
   }
-  return Blend_StepTooLarge;
+  return Blend_Status::Blend_StepTooLarge;
 }
 
 //=================================================================================================

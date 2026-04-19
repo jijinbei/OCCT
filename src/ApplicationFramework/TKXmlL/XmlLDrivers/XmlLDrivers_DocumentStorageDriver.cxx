@@ -95,7 +95,7 @@ void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>&  
   else
   {
     SetIsError(true);
-    SetStoreStatus(PCDM_SS_WriteFailure);
+    SetStoreStatus(PCDM_StoreStatus::PCDM_SS_WriteFailure);
 
     TCollection_ExtendedString aMsg = TCollection_ExtendedString("Error: the file ") + theFileName
                                       + " cannot be opened for writing";
@@ -133,7 +133,7 @@ void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
     else
     {
       SetIsError(true);
-      SetStoreStatus(PCDM_SS_WriteFailure);
+      SetStoreStatus(PCDM_StoreStatus::PCDM_SS_WriteFailure);
 
       TCollection_ExtendedString aMsg =
         TCollection_ExtendedString("Error: the stream is bad and") + " cannot be used for writing";
@@ -328,14 +328,14 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
       if (!aPS.More())
       {
         SetIsError(true);
-        SetStoreStatus(PCDM_SS_UserBreak);
+        SetStoreStatus(PCDM_StoreStatus::PCDM_SS_UserBreak);
         return IsError();
       }
     }
     catch (Standard_Failure const& anException)
     {
       SetIsError(true);
-      SetStoreStatus(PCDM_SS_Failure);
+      SetStoreStatus(PCDM_StoreStatus::PCDM_SS_Failure);
       TCollection_ExtendedString anErrorString(anException.what());
       aMessageDriver->Send(anErrorString.ToExtString(), Message_Fail);
     }
@@ -343,7 +343,7 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   if (anObjNb <= 0 && !IsError())
   {
     SetIsError(true);
-    SetStoreStatus(PCDM_SS_No_Obj);
+    SetStoreStatus(PCDM_StoreStatus::PCDM_SS_No_Obj);
     TCollection_ExtendedString anErrorString("error occurred");
     aMessageDriver->Send(anErrorString.ToExtString(), Message_Fail);
   }
@@ -362,7 +362,7 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   if (!aPS.More())
   {
     SetIsError(true);
-    SetStoreStatus(PCDM_SS_UserBreak);
+    SetStoreStatus(PCDM_StoreStatus::PCDM_SS_UserBreak);
     return IsError();
   }
   return IsError();

@@ -176,7 +176,7 @@ void ChFi2d_AnaFilletAlgo::Init(const TopoDS_Wire& theWire, const gp_Pln& thePla
 
   // Left neighbour.
   BRepAdaptor_Curve AC1(e1);
-  if (AC1.GetType() != GeomAbs_Line && AC1.GetType() != GeomAbs_Circle)
+  if (AC1.GetType() != GeomAbs_CurveType::GeomAbs_Line && AC1.GetType() != GeomAbs_CurveType::GeomAbs_Circle)
     throw Standard_TypeMismatch("A segment or an arc of circle is expected.");
 
   TopoDS_Vertex v1, v2;
@@ -192,7 +192,7 @@ void ChFi2d_AnaFilletAlgo::Init(const TopoDS_Wire& theWire, const gp_Pln& thePla
   p2.Coord(x12, y12);
 
   segment1 = true;
-  if (AC1.GetType() == GeomAbs_Circle)
+  if (AC1.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     segment1  = false;
     gp_Circ c = AC1.Circle();
@@ -206,7 +206,7 @@ void ChFi2d_AnaFilletAlgo::Init(const TopoDS_Wire& theWire, const gp_Pln& thePla
 
   // Right neighbour.
   BRepAdaptor_Curve AC2(e2);
-  if (AC2.GetType() != GeomAbs_Line && AC2.GetType() != GeomAbs_Circle)
+  if (AC2.GetType() != GeomAbs_CurveType::GeomAbs_Line && AC2.GetType() != GeomAbs_CurveType::GeomAbs_Circle)
     throw Standard_TypeMismatch("A segment or an arc of circle is expected.");
 
   TopExp::Vertices(e2, v1, v2, true);
@@ -221,7 +221,7 @@ void ChFi2d_AnaFilletAlgo::Init(const TopoDS_Wire& theWire, const gp_Pln& thePla
   p2.Coord(x22, y22);
 
   segment2 = true;
-  if (AC2.GetType() == GeomAbs_Circle)
+  if (AC2.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     segment2  = false;
     gp_Circ c = AC2.Circle();

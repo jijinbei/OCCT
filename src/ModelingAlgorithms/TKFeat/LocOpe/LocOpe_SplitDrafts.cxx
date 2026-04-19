@@ -1493,7 +1493,7 @@ static bool NewPlane(const TopoDS_Face& F,
 
   IntAna_QuadQuadGeo i2pl(Plorig, Neutr, Precision::Angular(), Precision::Confusion());
 
-  if (i2pl.IsDone() && i2pl.TypeInter() == IntAna_Line)
+  if (i2pl.IsDone() && i2pl.TypeInter() == IntAna_ResultType::IntAna_Line)
   {
     gp_Lin LinInters = i2pl.Line(1);
     gp_Dir nx        = LinInters.Direction();

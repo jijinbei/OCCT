@@ -339,7 +339,7 @@ void TopOpeBRepBuild_HBuilder::MakeEdgeAncestorMap()
         continue;
       gk = SSI->GeometryType();
       gi = SSI->Geometry();
-      if (gk != TopOpeBRepDS_EDGE)
+      if (gk != TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE)
         continue;
       rf = DS.AncestorRank(fds);
       if (!rf)

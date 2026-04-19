@@ -329,7 +329,7 @@ bool BRepTools_TrsfModification::NewCurve2d(const TopoDS_Edge& E,
     return false;
   }
   GeomAdaptor_Surface GAsurf(S);
-  if (GAsurf.GetType() == GeomAbs_Plane)
+  if (GAsurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     return false;
 
   double                    f, l;

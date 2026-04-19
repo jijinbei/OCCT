@@ -614,18 +614,18 @@ void DomainIntersection(const IntRes2d_Domain& Domain,
     if (U1inf > (Domain.FirstParameter() + Domain.FirstTolerance()))
     {
       Res1inf = U1inf;
-      PosInf  = IntRes2d_Middle;
+      PosInf  = IntRes2d_Position::IntRes2d_Middle;
     }
     else
     {
       Res1inf = Domain.FirstParameter();
-      PosInf  = IntRes2d_Head;
+      PosInf  = IntRes2d_Position::IntRes2d_Head;
     }
   }
   else
   {
     Res1inf = U1inf;
-    PosInf  = IntRes2d_Middle;
+    PosInf  = IntRes2d_Position::IntRes2d_Middle;
   }
 
   if (Domain.HasLastPoint())
@@ -639,24 +639,24 @@ void DomainIntersection(const IntRes2d_Domain& Domain,
     if (U1sup < (Domain.LastParameter() - Domain.LastTolerance()))
     {
       Res1sup = U1sup;
-      PosSup  = IntRes2d_Middle;
+      PosSup  = IntRes2d_Position::IntRes2d_Middle;
     }
     else
     {
       Res1sup = Domain.LastParameter();
-      PosSup  = IntRes2d_End;
+      PosSup  = IntRes2d_Position::IntRes2d_End;
     }
   }
   else
   {
     Res1sup = U1sup;
-    PosSup  = IntRes2d_Middle;
+    PosSup  = IntRes2d_Position::IntRes2d_Middle;
   }
   //-- Si un des points est en bout ,
   //-- on s assure que les parametres sont corrects
   if (Res1inf > Res1sup)
   {
-    if (PosSup == IntRes2d_Middle)
+    if (PosSup == IntRes2d_Position::IntRes2d_Middle)
     {
       Res1sup = Res1inf;
     }
@@ -667,16 +667,16 @@ void DomainIntersection(const IntRes2d_Domain& Domain,
   }
   //--- Traitement des cas ou une intersection vraie est dans la tolerance
   //--  d un des bouts
-  /*if(PosInf==IntRes2d_Head) {
+  /*if(PosInf==IntRes2d_Position::IntRes2d_Head) {
     if(Res1sup <= (Res1inf+Domain.FirstTolerance())) {
       Res1sup=Res1inf;
-      PosSup=IntRes2d_Head;
+      PosSup=IntRes2d_Position::IntRes2d_Head;
     }
   }
-  if(PosSup==IntRes2d_End) {
+  if(PosSup==IntRes2d_Position::IntRes2d_End) {
     if(Res1inf >= (Res1sup-Domain.LastTolerance())) {
       Res1inf=Res1sup;
-      PosInf=IntRes2d_End;
+      PosInf=IntRes2d_Position::IntRes2d_End;
     }
   }*/
 }
@@ -1139,7 +1139,7 @@ void IntCurve_IntConicConic::Perform(const gp_Circ2d&       Circle1,
 IntRes2d_Position FindPositionLL(double& Param, const IntRes2d_Domain& Domain)
 {
   double            aDPar   = Precision::Infinite();
-  IntRes2d_Position aPos    = IntRes2d_Middle;
+  IntRes2d_Position aPos    = IntRes2d_Position::IntRes2d_Middle;
   double            aResPar = Param;
   if (Domain.HasFirstPoint())
   {
@@ -1147,16 +1147,16 @@ IntRes2d_Position FindPositionLL(double& Param, const IntRes2d_Domain& Domain)
     if (aDPar <= Domain.FirstTolerance())
     {
       aResPar = Domain.FirstParameter();
-      aPos    = IntRes2d_Head;
+      aPos    = IntRes2d_Position::IntRes2d_Head;
     }
   }
   if (Domain.HasLastPoint())
   {
     double aD2 = std::abs(Param - Domain.LastParameter());
-    if (aD2 <= Domain.LastTolerance() && (aPos == IntRes2d_Middle || aD2 < aDPar))
+    if (aD2 <= Domain.LastTolerance() && (aPos == IntRes2d_Position::IntRes2d_Middle || aD2 < aDPar))
     {
       aResPar = Domain.LastParameter();
-      aPos    = IntRes2d_End;
+      aPos    = IntRes2d_Position::IntRes2d_End;
     }
   }
   Param = aResPar;
@@ -1213,11 +1213,11 @@ static bool computeIntPoint(const IntRes2d_Domain&      theCurDomain,
   IntRes2d_Position   aPos1a = FindPositionLL(theResSup, theCurDomain);
   IntRes2d_Position   aPos2a = FindPositionLL(aRes2, theDomainOther);
   IntRes2d_TypeTrans  anOtherTrans =
-    (theCurTrans == IntRes2d_Out
-       ? IntRes2d_In
-       : (theCurTrans == IntRes2d_In ? IntRes2d_Out : IntRes2d_Undecided));
+    (theCurTrans == IntRes2d_TypeTrans::IntRes2d_Out
+       ? IntRes2d_TypeTrans::IntRes2d_In
+       : (theCurTrans == IntRes2d_TypeTrans::IntRes2d_In ? IntRes2d_TypeTrans::IntRes2d_Out : IntRes2d_TypeTrans::IntRes2d_Undecided));
 
-  if (theCurTrans != IntRes2d_Undecided)
+  if (theCurTrans != IntRes2d_TypeTrans::IntRes2d_Undecided)
   {
     aT1.SetValue(false, aPos1a, theCurTrans);
     aT2.SetValue(false, aPos2a, anOtherTrans);
@@ -1225,8 +1225,8 @@ static bool computeIntPoint(const IntRes2d_Domain&      theCurDomain,
   else
   {
     bool anOpposite = theCosT1T2 < 0.;
-    aT1.SetValue(false, aPos1a, IntRes2d_Unknown, anOpposite);
-    aT2.SetValue(false, aPos2a, IntRes2d_Unknown, anOpposite);
+    aT1.SetValue(false, aPos1a, IntRes2d_Situation::IntRes2d_Unknown, anOpposite);
+    aT2.SetValue(false, aPos2a, IntRes2d_Situation::IntRes2d_Unknown, anOpposite);
   }
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //--------------------------------------------------
@@ -1432,7 +1432,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
 
       double LongMiniSeg = Tol;
 
-      if (((Res1sup - Res1inf) <= LongMiniSeg) || ((Pos1a == Pos1b) && (Pos1a != IntRes2d_Middle)))
+      if (((Res1sup - Res1inf) <= LongMiniSeg) || ((Pos1a == Pos1b) && (Pos1a != IntRes2d_Position::IntRes2d_Middle)))
       {
         //-------------------------------  Un seul Point -------------------
         //--- lorsque la longueur du segment est inferieure a ??
@@ -1440,8 +1440,8 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
         // gka #0022833
         IntRes2d_TypeTrans aCurTrans =
           (ProdVectTan >= TOLERANCE_ANGULAIRE
-             ? IntRes2d_Out
-             : (ProdVectTan <= -TOLERANCE_ANGULAIRE ? IntRes2d_In : IntRes2d_Undecided));
+             ? IntRes2d_TypeTrans::IntRes2d_Out
+             : (ProdVectTan <= -TOLERANCE_ANGULAIRE ? IntRes2d_TypeTrans::IntRes2d_In : IntRes2d_TypeTrans::IntRes2d_Undecided));
 
         IntRes2d_IntersectionPoint NewPoint1;
         if (computeIntPoint(Domain1,
@@ -1490,7 +1490,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
           //-- Pas de solutions On retourne Vide
         }
         else if ((Res2sup_m_Res2inf > LongMiniSeg)
-                 || ((Pos2a == Pos2b) && (Pos2a != IntRes2d_Middle)))
+                 || ((Pos2a == Pos2b) && (Pos2a != IntRes2d_Position::IntRes2d_Middle)))
         {
           //----------- Calcul des attributs du segment --------------
           //-- Attention, les bornes Res1inf(sup) bougent donc il faut
@@ -1520,18 +1520,18 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
 
           if (ProdVectTan >= TOLERANCE_ANGULAIRE)
           { // &&&&&&&&&&&&&&&
-            T1a.SetValue(false, Pos1a, IntRes2d_Out);
-            T2a.SetValue(false, Pos2a, IntRes2d_In);
+            T1a.SetValue(false, Pos1a, IntRes2d_TypeTrans::IntRes2d_Out);
+            T2a.SetValue(false, Pos2a, IntRes2d_TypeTrans::IntRes2d_In);
           }
           else if (ProdVectTan <= -TOLERANCE_ANGULAIRE)
           {
-            T1a.SetValue(false, Pos1a, IntRes2d_In);
-            T2a.SetValue(false, Pos2a, IntRes2d_Out);
+            T1a.SetValue(false, Pos1a, IntRes2d_TypeTrans::IntRes2d_In);
+            T2a.SetValue(false, Pos2a, IntRes2d_TypeTrans::IntRes2d_Out);
           }
           else
           {
-            T1a.SetValue(false, Pos1a, IntRes2d_Unknown, isOpposite);
-            T2a.SetValue(false, Pos2a, IntRes2d_Unknown, isOpposite);
+            T1a.SetValue(false, Pos1a, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
+            T2a.SetValue(false, Pos2a, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
           }
 
           //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1561,18 +1561,18 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
             //-- Le point sera : Res1inf,Res2inf,T1a(Pos1a),T2a(Pos2a)
             //------------------------------------------------------------
 
-            if (Pos1a == IntRes2d_Head)
+            if (Pos1a == IntRes2d_Position::IntRes2d_Head)
             {
-              if (Pos1b != IntRes2d_End && U1 < Res1inf)
+              if (Pos1b != IntRes2d_Position::IntRes2d_End && U1 < Res1inf)
               {
                 ResultIsAPoint = true;
                 U1             = Res1inf;
                 U2             = Res2inf;
               }
             }
-            if (Pos1b == IntRes2d_End)
+            if (Pos1b == IntRes2d_Position::IntRes2d_End)
             {
-              if (Pos1a != IntRes2d_Head && U1 > Res1sup)
+              if (Pos1a != IntRes2d_Position::IntRes2d_Head && U1 > Res1sup)
               {
                 ResultIsAPoint = true;
                 U1             = Res1sup;
@@ -1580,9 +1580,9 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
               }
             }
 
-            if (Pos2a == IntRes2d_Head)
+            if (Pos2a == IntRes2d_Position::IntRes2d_Head)
             {
-              if (Pos2b != IntRes2d_End && U2 < Res2inf)
+              if (Pos2b != IntRes2d_Position::IntRes2d_End && U2 < Res2inf)
               {
                 ResultIsAPoint = true;
                 U2             = Res2inf;
@@ -1591,9 +1591,9 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
             }
             else
             {
-              if (Pos2a == IntRes2d_End)
+              if (Pos2a == IntRes2d_Position::IntRes2d_End)
               {
-                if (Pos2b != IntRes2d_Head && U2 > Res2inf)
+                if (Pos2b != IntRes2d_Position::IntRes2d_Head && U2 > Res2inf)
                 {
                   ResultIsAPoint = true;
                   U2             = Res2inf;
@@ -1601,9 +1601,9 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
                 }
               }
             }
-            if (Pos2b == IntRes2d_Head)
+            if (Pos2b == IntRes2d_Position::IntRes2d_Head)
             {
-              if (Pos2a != IntRes2d_End && U2 < Res2sup)
+              if (Pos2a != IntRes2d_Position::IntRes2d_End && U2 < Res2sup)
               {
                 ResultIsAPoint = true;
                 U2             = Res2sup;
@@ -1612,9 +1612,9 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
             }
             else
             {
-              if (Pos2b == IntRes2d_End)
+              if (Pos2b == IntRes2d_Position::IntRes2d_End)
               {
-                if (Pos2a != IntRes2d_Head && U2 > Res2sup)
+                if (Pos2a != IntRes2d_Position::IntRes2d_Head && U2 > Res2sup)
                 {
                   ResultIsAPoint = true;
                   U2             = Res2sup;
@@ -1624,51 +1624,51 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
             }
           }
 
-          if ((!ResultIsAPoint) && (Pos1a != IntRes2d_Middle || Pos2a != IntRes2d_Middle))
+          if ((!ResultIsAPoint) && (Pos1a != IntRes2d_Position::IntRes2d_Middle || Pos2a != IntRes2d_Position::IntRes2d_Middle))
           {
             if (ProdVectTan >= TOLERANCE_ANGULAIRE)
             { //&&&&&&&&&&&&&&
-              T1b.SetValue(false, Pos1b, IntRes2d_Out);
-              T2b.SetValue(false, Pos2b, IntRes2d_In);
+              T1b.SetValue(false, Pos1b, IntRes2d_TypeTrans::IntRes2d_Out);
+              T2b.SetValue(false, Pos2b, IntRes2d_TypeTrans::IntRes2d_In);
             }
             else if (ProdVectTan <= -TOLERANCE_ANGULAIRE)
             { //&&&&&&&&&&&&&&
-              T1b.SetValue(false, Pos1b, IntRes2d_In);
-              T2b.SetValue(false, Pos2b, IntRes2d_Out);
+              T1b.SetValue(false, Pos1b, IntRes2d_TypeTrans::IntRes2d_In);
+              T2b.SetValue(false, Pos2b, IntRes2d_TypeTrans::IntRes2d_Out);
             }
             else
             {
-              T1b.SetValue(false, Pos1b, IntRes2d_Unknown, isOpposite);
-              T2b.SetValue(false, Pos2b, IntRes2d_Unknown, isOpposite);
+              T1b.SetValue(false, Pos1b, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
+              T2b.SetValue(false, Pos2b, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
             }
             gp_Pnt2d Ptdebut;
-            if (Pos1a == IntRes2d_Middle)
+            if (Pos1a == IntRes2d_Position::IntRes2d_Middle)
             {
               double t3;
               if (isOpposite)
               {
-                t3 = (Pos2a == IntRes2d_Head) ? Res2sup : Res2inf;
+                t3 = (Pos2a == IntRes2d_Position::IntRes2d_Head) ? Res2sup : Res2inf;
               }
               else
               {
-                t3 = (Pos2a == IntRes2d_Head) ? Res2inf : Res2sup;
+                t3 = (Pos2a == IntRes2d_Position::IntRes2d_Head) ? Res2inf : Res2sup;
               }
               Ptdebut = ElCLib::Value(t3, L2);
               Res1inf = ElCLib::Parameter(L1, Ptdebut);
             }
             else
             {
-              double t4 = (Pos1a == IntRes2d_Head) ? Res1inf : Res1sup;
+              double t4 = (Pos1a == IntRes2d_Position::IntRes2d_Head) ? Res1inf : Res1sup;
               Ptdebut   = ElCLib::Value(t4, L1);
               Res2inf   = ElCLib::Parameter(L2, Ptdebut);
             }
             PtSeg1.SetValues(Ptdebut, Res1inf, Res2inf, T1a, T2a, false);
-            if (Pos1b != IntRes2d_Middle || Pos2b != IntRes2d_Middle)
+            if (Pos1b != IntRes2d_Position::IntRes2d_Middle || Pos2b != IntRes2d_Position::IntRes2d_Middle)
             {
               //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
               //~~ Ajustement des parametres et du point renvoye
               gp_Pnt2d Ptfin;
-              if (Pos1b == IntRes2d_Middle)
+              if (Pos1b == IntRes2d_Position::IntRes2d_Middle)
               {
                 Ptfin   = ElCLib::Value(Res2sup, L2);
                 Res1sup = ElCLib::Parameter(L1, Ptfin);
@@ -1689,18 +1689,18 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
               Pos2b = FindPositionLL(U2, Domain2);
               if (ProdVectTan >= TOLERANCE_ANGULAIRE)
               {
-                T1b.SetValue(false, Pos1b, IntRes2d_Out);
-                T2b.SetValue(false, Pos2b, IntRes2d_In);
+                T1b.SetValue(false, Pos1b, IntRes2d_TypeTrans::IntRes2d_Out);
+                T2b.SetValue(false, Pos2b, IntRes2d_TypeTrans::IntRes2d_In);
               }
               else if (ProdVectTan <= -TOLERANCE_ANGULAIRE)
               {
-                T1b.SetValue(false, Pos1b, IntRes2d_In);
-                T2b.SetValue(false, Pos2b, IntRes2d_Out);
+                T1b.SetValue(false, Pos1b, IntRes2d_TypeTrans::IntRes2d_In);
+                T2b.SetValue(false, Pos2b, IntRes2d_TypeTrans::IntRes2d_Out);
               }
               else
               {
-                T1b.SetValue(false, Pos1b, IntRes2d_Unknown, isOpposite);
-                T2b.SetValue(false, Pos2b, IntRes2d_Unknown, isOpposite);
+                T1b.SetValue(false, Pos1b, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
+                T2b.SetValue(false, Pos2b, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
               }
 
               PtSeg2.SetValues(ElCLib::Value(U2, L2), U1, U2, T1b, T2b, false);
@@ -1716,30 +1716,30 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
               }
             }
 
-          } //-- (Pos1a!=IntRes2d_Middle || Pos2a!=IntRes2d_Middle) --
+          } //-- (Pos1a!=IntRes2d_Position::IntRes2d_Middle || Pos2a!=IntRes2d_Position::IntRes2d_Middle) --
           else
           { //-- Pos1a == Pos2a == Middle
-            if (Pos1b == IntRes2d_Middle)
+            if (Pos1b == IntRes2d_Position::IntRes2d_Middle)
               Pos1b = Pos1a;
-            if (Pos2b == IntRes2d_Middle)
+            if (Pos2b == IntRes2d_Position::IntRes2d_Middle)
               Pos2b = Pos2a;
             if (ResultIsAPoint)
             {
               //-- Middle sur le segment A
               //--
-              if (Pos1b != IntRes2d_Middle || Pos2b != IntRes2d_Middle)
+              if (Pos1b != IntRes2d_Position::IntRes2d_Middle || Pos2b != IntRes2d_Position::IntRes2d_Middle)
               {
                 gp_Pnt2d Ptfin;
-                if (Pos1b == IntRes2d_Middle)
+                if (Pos1b == IntRes2d_Position::IntRes2d_Middle)
                 {
                   double t2;
                   if (isOpposite)
                   {
-                    t2 = (Pos2b == IntRes2d_Head) ? Res2sup : Res2inf;
+                    t2 = (Pos2b == IntRes2d_Position::IntRes2d_Head) ? Res2sup : Res2inf;
                   }
                   else
                   {
-                    t2 = (Pos2b == IntRes2d_Head) ? Res2inf : Res2sup;
+                    t2 = (Pos2b == IntRes2d_Position::IntRes2d_Head) ? Res2inf : Res2sup;
                   }
                   Ptfin   = ElCLib::Value(t2, L2);
                   Res1sup = ElCLib::Parameter(L1, Ptfin);
@@ -1749,7 +1749,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
                 }
                 else
                 {
-                  double t1 = (Pos1b == IntRes2d_Head) ? Res1inf : Res1sup;
+                  double t1 = (Pos1b == IntRes2d_Position::IntRes2d_Head) ? Res1inf : Res1sup;
                   Ptfin     = ElCLib::Value(t1, L1);
                   Res2sup   = ElCLib::Parameter(L2, Ptfin);
                   // modified by NIZHNY-MKK  Tue Feb 15 10:55:08 2000.BEGIN
@@ -1758,18 +1758,18 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
                 }
                 if (ProdVectTan >= TOLERANCE_ANGULAIRE)
                 {
-                  T1b.SetValue(false, Pos1b, IntRes2d_Out);
-                  T2b.SetValue(false, Pos2b, IntRes2d_In);
+                  T1b.SetValue(false, Pos1b, IntRes2d_TypeTrans::IntRes2d_Out);
+                  T2b.SetValue(false, Pos2b, IntRes2d_TypeTrans::IntRes2d_In);
                 }
                 else if (ProdVectTan <= -TOLERANCE_ANGULAIRE)
                 {
-                  T1b.SetValue(false, Pos1b, IntRes2d_In);
-                  T2b.SetValue(false, Pos2b, IntRes2d_Out);
+                  T1b.SetValue(false, Pos1b, IntRes2d_TypeTrans::IntRes2d_In);
+                  T2b.SetValue(false, Pos2b, IntRes2d_TypeTrans::IntRes2d_Out);
                 }
                 else
                 {
-                  T1b.SetValue(false, Pos1b, IntRes2d_Unknown, isOpposite);
-                  T2b.SetValue(false, Pos2b, IntRes2d_Unknown, isOpposite);
+                  T1b.SetValue(false, Pos1b, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
+                  T2b.SetValue(false, Pos2b, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
                 }
                 PtSeg2.SetValues(Ptfin, Res1sup, Res2sup, T1b, T2b, false);
                 Append(PtSeg2);
@@ -1781,18 +1781,18 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
 
                 if (ProdVectTan >= TOLERANCE_ANGULAIRE)
                 {
-                  T1b.SetValue(false, Pos1b, IntRes2d_Out);
-                  T2b.SetValue(false, Pos2b, IntRes2d_In);
+                  T1b.SetValue(false, Pos1b, IntRes2d_TypeTrans::IntRes2d_Out);
+                  T2b.SetValue(false, Pos2b, IntRes2d_TypeTrans::IntRes2d_In);
                 }
                 else if (ProdVectTan <= -TOLERANCE_ANGULAIRE)
                 {
-                  T1b.SetValue(false, Pos1b, IntRes2d_In);
-                  T2b.SetValue(false, Pos2b, IntRes2d_Out);
+                  T1b.SetValue(false, Pos1b, IntRes2d_TypeTrans::IntRes2d_In);
+                  T2b.SetValue(false, Pos2b, IntRes2d_TypeTrans::IntRes2d_Out);
                 }
                 else
                 {
-                  T1b.SetValue(false, Pos1b, IntRes2d_Unknown, isOpposite);
-                  T2b.SetValue(false, Pos2b, IntRes2d_Unknown, isOpposite);
+                  T1b.SetValue(false, Pos1b, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
+                  T2b.SetValue(false, Pos2b, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
                 }
                 PtSeg1.SetValues(ElCLib::Value(U2, L2), U1, U2, T1b, T2b, false);
                 Append(PtSeg1);
@@ -1802,27 +1802,27 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
             {
               PtSeg1.SetValues(ElCLib::Value(U2, L2), U1, U2, T1a, T2a, false);
 
-              if ((Pos1b != IntRes2d_Middle || Pos2b != IntRes2d_Middle))
+              if ((Pos1b != IntRes2d_Position::IntRes2d_Middle || Pos2b != IntRes2d_Position::IntRes2d_Middle))
               {
                 if (ProdVectTan >= TOLERANCE_ANGULAIRE)
                 {
-                  T1b.SetValue(false, Pos1b, IntRes2d_Out);
-                  T2b.SetValue(false, Pos2b, IntRes2d_In);
+                  T1b.SetValue(false, Pos1b, IntRes2d_TypeTrans::IntRes2d_Out);
+                  T2b.SetValue(false, Pos2b, IntRes2d_TypeTrans::IntRes2d_In);
                 }
                 else if (ProdVectTan <= -TOLERANCE_ANGULAIRE)
                 {
-                  T1b.SetValue(false, Pos1b, IntRes2d_In);
-                  T2b.SetValue(false, Pos2b, IntRes2d_Out);
+                  T1b.SetValue(false, Pos1b, IntRes2d_TypeTrans::IntRes2d_In);
+                  T2b.SetValue(false, Pos2b, IntRes2d_TypeTrans::IntRes2d_Out);
                 }
                 else
                 {
-                  T1b.SetValue(false, Pos1b, IntRes2d_Unknown, isOpposite);
-                  T2b.SetValue(false, Pos2b, IntRes2d_Unknown, isOpposite);
+                  T1b.SetValue(false, Pos1b, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
+                  T2b.SetValue(false, Pos2b, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
                 }
                 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 //~~ Ajustement des parametres et du point renvoye
                 gp_Pnt2d Ptfin;
-                if (Pos1b == IntRes2d_Middle)
+                if (Pos1b == IntRes2d_Position::IntRes2d_Middle)
                 {
                   Ptfin   = ElCLib::Value(Res2sup, L2);
                   Res1sup = ElCLib::Parameter(L1, Ptfin);
@@ -1864,8 +1864,8 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
           // gka #0022833
           IntRes2d_TypeTrans aCurTrans =
             (ProdVectTan >= TOLERANCE_ANGULAIRE
-               ? IntRes2d_In
-               : (ProdVectTan <= -TOLERANCE_ANGULAIRE ? IntRes2d_Out : IntRes2d_Undecided));
+               ? IntRes2d_TypeTrans::IntRes2d_In
+               : (ProdVectTan <= -TOLERANCE_ANGULAIRE ? IntRes2d_TypeTrans::IntRes2d_Out : IntRes2d_TypeTrans::IntRes2d_Undecided));
 
           IntRes2d_IntersectionPoint NewPoint1;
           if (computeIntPoint(Domain2,
@@ -2058,8 +2058,8 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
               IntRes2d_Position Pos1, Pos2;
               Pos1 = FindPositionLL(ParamStart, Domain1);
               Pos2 = FindPositionLL(ParamStart2, Domain2);
-              Tinf.SetValue(true, Pos1, IntRes2d_Unknown, isOpposite);
-              Tsup.SetValue(true, Pos2, IntRes2d_Unknown, isOpposite);
+              Tinf.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
+              Tsup.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
               IntRes2d_IntersectionPoint P1(ElCLib::Value(ParamStart, L1),
                                             ParamStart,
                                             ParamStart2,
@@ -2071,8 +2071,8 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
                 //~~~ Le segment est assez long
                 Pos1 = FindPositionLL(ParamEnd, Domain1);
                 Pos2 = FindPositionLL(ParamEnd2, Domain2);
-                Tinf.SetValue(true, Pos1, IntRes2d_Unknown, isOpposite);
-                Tsup.SetValue(true, Pos2, IntRes2d_Unknown, isOpposite);
+                Tinf.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
+                Tsup.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
 
                 IntRes2d_IntersectionPoint   P2(ElCLib::Value(ParamEnd, L1),
                                               ParamEnd,
@@ -2094,8 +2094,8 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
             //~~~ Creation de la demi droite   |----------->
             IntRes2d_Position Pos1 = FindPositionLL(ParamStart, Domain1);
             IntRes2d_Position Pos2 = FindPositionLL(ParamStart2, Domain2);
-            Tinf.SetValue(true, Pos1, IntRes2d_Unknown, isOpposite);
-            Tsup.SetValue(true, Pos2, IntRes2d_Unknown, isOpposite);
+            Tinf.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
+            Tsup.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
 
             IntRes2d_IntersectionPoint   P(ElCLib::Value(ParamStart, L1),
                                          ParamStart,
@@ -2111,8 +2111,8 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
         {
           IntRes2d_Position Pos1 = FindPositionLL(ParamEnd, Domain1);
           IntRes2d_Position Pos2 = FindPositionLL(ParamEnd2, Domain2);
-          Tinf.SetValue(true, Pos1, IntRes2d_Unknown, isOpposite);
-          Tsup.SetValue(true, Pos2, IntRes2d_Unknown, isOpposite);
+          Tinf.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
+          Tsup.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Unknown, isOpposite);
 
           IntRes2d_IntersectionPoint   P2(ElCLib::Value(ParamEnd, L1),
                                         ParamEnd,
@@ -2392,7 +2392,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        Line,
       IntImpParGen::DeterminePosition(Pos2a, LIG_Domain, P2a, Linf);
       Determine_Transition_LC(Pos1a, Tan1, Norm1, T1a, Pos2a, Tan2, Norm2, T2a, Tol);
       double Cinf;
-      if (Pos1a == IntRes2d_End)
+      if (Pos1a == IntRes2d_Position::IntRes2d_End)
       {
         Cinf = CIRC_Domain.LastParameter();
         P1a  = CIRC_Domain.LastPoint();
@@ -2404,7 +2404,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        Line,
         IntImpParGen::DeterminePosition(Pos2a, LIG_Domain, P2a, Linf);
         Determine_Transition_LC(Pos1a, Tan1, Norm1, T1a, Pos2a, Tan2, Norm2, T2a, Tol);
       }
-      else if (Pos1a == IntRes2d_Head)
+      else if (Pos1a == IntRes2d_Position::IntRes2d_Head)
       {
         Cinf = CIRC_Domain.FirstParameter();
         P1a  = CIRC_Domain.FirstPoint();
@@ -2433,7 +2433,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        Line,
         IntImpParGen::DeterminePosition(Pos2b, LIG_Domain, P2b, Lsup);
         Determine_Transition_LC(Pos1b, Tan1, Norm1, T1b, Pos2b, Tan2, Norm2, T2b, Tol);
         double Csup;
-        if (Pos1b == IntRes2d_End)
+        if (Pos1b == IntRes2d_Position::IntRes2d_End)
         {
           Csup = CIRC_Domain.LastParameter();
           P1b  = CIRC_Domain.LastPoint();
@@ -2445,7 +2445,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        Line,
           IntImpParGen::DeterminePosition(Pos2b, LIG_Domain, P2b, Lsup);
           Determine_Transition_LC(Pos1b, Tan1, Norm1, T1b, Pos2b, Tan2, Norm2, T2b, Tol);
         }
-        else if (Pos1b == IntRes2d_Head)
+        else if (Pos1b == IntRes2d_Position::IntRes2d_Head)
         {
           Csup = CIRC_Domain.FirstParameter();
           P1b  = CIRC_Domain.FirstPoint();
@@ -2477,11 +2477,11 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        Line,
         }
         else
         {
-          if (Pos1a != IntRes2d_Middle || Pos2a != IntRes2d_Middle)
+          if (Pos1a != IntRes2d_Position::IntRes2d_Middle || Pos2a != IntRes2d_Position::IntRes2d_Middle)
           {
             Insert(NewPoint1);
           }
-          if (Pos1b != IntRes2d_Middle || Pos2b != IntRes2d_Middle)
+          if (Pos1b != IntRes2d_Position::IntRes2d_Middle || Pos2b != IntRes2d_Position::IntRes2d_Middle)
           {
             Insert(NewPoint2);
           }
@@ -2509,11 +2509,11 @@ const IntRes2d_IntersectionPoint SegmentToPoint(const IntRes2d_IntersectionPoint
                                                 const IntRes2d_Transition&        T2b)
 {
 
-  if ((T1b.PositionOnCurve() == IntRes2d_Middle) && (T2b.PositionOnCurve() == IntRes2d_Middle))
+  if ((T1b.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle) && (T2b.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle))
   {
     return (Pa);
   }
-  if ((T1a.PositionOnCurve() == IntRes2d_Middle) && (T2a.PositionOnCurve() == IntRes2d_Middle))
+  if ((T1a.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle) && (T2a.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle))
   {
     return (Pb);
   }
@@ -2523,12 +2523,12 @@ const IntRes2d_IntersectionPoint SegmentToPoint(const IntRes2d_IntersectionPoint
   double              u1 = Pa.ParamOnFirst();
   double              u2 = Pa.ParamOnSecond();
 
-  if (t1.PositionOnCurve() == IntRes2d_Middle)
+  if (t1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
   {
     t1.SetPosition(T1b.PositionOnCurve());
     u1 = Pb.ParamOnFirst();
   }
-  if (t2.PositionOnCurve() == IntRes2d_Middle)
+  if (t2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
   {
     t2.SetPosition(T2b.PositionOnCurve());
     u2 = Pb.ParamOnSecond();
@@ -2975,7 +2975,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
       IntImpParGen::DeterminePosition(Pos2a, DL, P2a, Linf);
       Determine_Transition_LC(Pos1a, Tan1, Norm1, T1a, Pos2a, Tan2, Norm2, T2a, Tol);
       double Einf;
-      if (Pos1a == IntRes2d_End)
+      if (Pos1a == IntRes2d_Position::IntRes2d_End)
       {
         Einf = DE.LastParameter();
         P1a  = DE.LastPoint();
@@ -2987,7 +2987,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
         IntImpParGen::DeterminePosition(Pos2a, DL, P2a, Linf);
         Determine_Transition_LC(Pos1a, Tan1, Norm1, T1a, Pos2a, Tan2, Norm2, T2a, Tol);
       }
-      else if (Pos1a == IntRes2d_Head)
+      else if (Pos1a == IntRes2d_Position::IntRes2d_Head)
       {
         Einf = DE.FirstParameter();
         P1a  = DE.FirstPoint();
@@ -3022,7 +3022,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
         IntImpParGen::DeterminePosition(Pos2b, DL, P2b, Lsup);
         Determine_Transition_LC(Pos1b, Tan1, Norm1, T1b, Pos2b, Tan2, Norm2, T2b, Tol);
         double Esup;
-        if (Pos1b == IntRes2d_End)
+        if (Pos1b == IntRes2d_Position::IntRes2d_End)
         {
           Esup = DL.LastParameter();
           P1b  = DE.LastPoint();
@@ -3034,7 +3034,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
           IntImpParGen::DeterminePosition(Pos2b, DL, P2b, Lsup);
           Determine_Transition_LC(Pos1b, Tan1, Norm1, T1b, Pos2b, Tan2, Norm2, T2b, Tol);
         }
-        else if (Pos1b == IntRes2d_Head)
+        else if (Pos1b == IntRes2d_Position::IntRes2d_Head)
         {
           Esup = DE.FirstParameter();
           P1b  = DE.FirstPoint();
@@ -3064,11 +3064,11 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
         }
         else
         {
-          if (Pos1a != IntRes2d_Middle || Pos2a != IntRes2d_Middle)
+          if (Pos1a != IntRes2d_Position::IntRes2d_Middle || Pos2a != IntRes2d_Position::IntRes2d_Middle)
           {
             Insert(NewPoint1);
           }
-          if (Pos1b != IntRes2d_Middle || Pos2b != IntRes2d_Middle)
+          if (Pos1b != IntRes2d_Position::IntRes2d_Middle || Pos2b != IntRes2d_Position::IntRes2d_Middle)
           {
             Insert(NewPoint2);
           }

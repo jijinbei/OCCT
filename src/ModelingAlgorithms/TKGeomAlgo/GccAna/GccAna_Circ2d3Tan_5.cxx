@@ -101,24 +101,24 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       GccInt_IType              typ1 = Sol1->ArcType();
       GccInt_IType              typ2 = Sol2->ArcType();
       IntAna2d_AnaIntersection  Intp;
-      if (typ1 == GccInt_Lin)
+      if (typ1 == GccInt_IType::GccInt_Lin)
       {
-        if (typ2 == GccInt_Lin)
+        if (typ2 == GccInt_IType::GccInt_Lin)
         {
           Intp.Perform(Sol1->Line(), Sol2->Line());
         }
-        else if (typ2 == GccInt_Par)
+        else if (typ2 == GccInt_IType::GccInt_Par)
         {
           Intp.Perform(Sol1->Line(), IntAna2d_Conic(Sol2->Parabola()));
         }
       }
-      else if (typ1 == GccInt_Par)
+      else if (typ1 == GccInt_IType::GccInt_Par)
       {
-        if (typ2 == GccInt_Lin)
+        if (typ2 == GccInt_IType::GccInt_Lin)
         {
           Intp.Perform(Sol2->Line(), IntAna2d_Conic(Sol1->Parabola()));
         }
-        else if (typ2 == GccInt_Par)
+        else if (typ2 == GccInt_IType::GccInt_Par)
         {
           Intp.Perform(Sol1->Parabola(), IntAna2d_Conic(Sol2->Parabola()));
         }

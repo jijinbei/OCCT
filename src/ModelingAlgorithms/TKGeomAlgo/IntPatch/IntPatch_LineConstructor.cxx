@@ -55,14 +55,14 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
   bool myHS1IsUPeriodic, myHS1IsVPeriodic;
   switch (typs1)
   {
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       myHS1IsUPeriodic = true;
       myHS1IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       myHS1IsUPeriodic = myHS1IsVPeriodic = true;
       break;
     }
@@ -76,14 +76,14 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
   bool myHS2IsUPeriodic, myHS2IsVPeriodic;
   switch (typs2)
   {
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       myHS2IsUPeriodic = true;
       myHS2IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       myHS2IsUPeriodic = myHS2IsVPeriodic = true;
       break;
     }
@@ -165,19 +165,19 @@ static void Parameters(const occ::handle<Adaptor3d_Surface>& myHS1,
   GeomAbs_SurfaceType typs = myHS1->GetType();
   switch (typs)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       quad1.SetValue(myHS1->Plane());
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       quad1.SetValue(myHS1->Cylinder());
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       quad1.SetValue(myHS1->Cone());
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       quad1.SetValue(myHS1->Sphere());
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       quad1.SetValue(myHS1->Torus());
       break;
     default:
@@ -187,19 +187,19 @@ static void Parameters(const occ::handle<Adaptor3d_Surface>& myHS1,
   typs = myHS2->GetType();
   switch (typs)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       quad2.SetValue(myHS2->Plane());
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       quad2.SetValue(myHS2->Cylinder());
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       quad2.SetValue(myHS2->Cone());
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       quad2.SetValue(myHS2->Sphere());
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       quad2.SetValue(myHS2->Torus());
       break;
     default:
@@ -217,7 +217,7 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
   IntPatch_IType typl   = L->ArcType();
   switch (typl)
   {
-    case IntPatch_Analytic: {
+    case IntPatch_IType::IntPatch_Analytic: {
       occ::handle<IntPatch_ALine> alin(occ::down_cast<IntPatch_ALine>(L));
       if (alin->HasFirstPoint())
       {
@@ -235,7 +235,7 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
       return firstp;
     }
 
-    case IntPatch_Restriction: {
+    case IntPatch_IType::IntPatch_Restriction: {
       occ::handle<IntPatch_RLine> rlin(occ::down_cast<IntPatch_RLine>(L));
       if (rlin->HasFirstPoint())
       {
@@ -247,7 +247,7 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
       }
       return firstp;
     }
-    case IntPatch_Walking: {
+    case IntPatch_IType::IntPatch_Walking: {
 
       occ::handle<IntPatch_WLine> wlin(occ::down_cast<IntPatch_WLine>(L));
       if (wlin->HasFirstPoint())
@@ -271,14 +271,14 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
       {
         switch (typl)
         {
-          case IntPatch_Lin:
-          case IntPatch_Parabola:
-          case IntPatch_Hyperbola:
+          case IntPatch_IType::IntPatch_Lin:
+          case IntPatch_IType::IntPatch_Parabola:
+          case IntPatch_IType::IntPatch_Hyperbola:
             firstp = -Precision::Infinite();
             break;
 
-          case IntPatch_Circle:
-          case IntPatch_Ellipse:
+          case IntPatch_IType::IntPatch_Circle:
+          case IntPatch_IType::IntPatch_Ellipse:
             firstp = 0.;
             break;
           default: {
@@ -299,7 +299,7 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
   IntPatch_IType typl  = L->ArcType();
   switch (typl)
   {
-    case IntPatch_Analytic: {
+    case IntPatch_IType::IntPatch_Analytic: {
       occ::handle<IntPatch_ALine> alin(occ::down_cast<IntPatch_ALine>(L));
 
       if (alin->HasLastPoint())
@@ -318,7 +318,7 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
       return lastp;
     }
 
-    case IntPatch_Restriction: {
+    case IntPatch_IType::IntPatch_Restriction: {
       occ::handle<IntPatch_RLine> rlin(occ::down_cast<IntPatch_RLine>(L));
 
       if (rlin->HasLastPoint())
@@ -331,7 +331,7 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
       }
       return lastp;
     }
-    case IntPatch_Walking: {
+    case IntPatch_IType::IntPatch_Walking: {
       occ::handle<IntPatch_WLine> wlin(occ::down_cast<IntPatch_WLine>(L));
 
       if (wlin->HasLastPoint())
@@ -356,14 +356,14 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
       {
         switch (typl)
         {
-          case IntPatch_Lin:
-          case IntPatch_Parabola:
-          case IntPatch_Hyperbola:
+          case IntPatch_IType::IntPatch_Lin:
+          case IntPatch_IType::IntPatch_Parabola:
+          case IntPatch_IType::IntPatch_Hyperbola:
             lastp = Precision::Infinite();
             break;
 
-          case IntPatch_Circle:
-          case IntPatch_Ellipse:
+          case IntPatch_IType::IntPatch_Circle:
+          case IntPatch_IType::IntPatch_Ellipse:
             lastp = M_PI + M_PI;
             break;
           default: {
@@ -592,12 +592,12 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
   IntPatch_IType typl = L->ArcType();
   switch (typl)
   {
-    case IntPatch_Analytic: {
+    case IntPatch_IType::IntPatch_Analytic: {
       occ::handle<IntPatch_ALine> ALine(occ::down_cast<IntPatch_ALine>(L));
       occ::handle<IntPatch_ALine> alig;
-      if (L->TransitionOnS1() == IntSurf_Undecided)
+      if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Undecided)
         alig = new IntPatch_ALine(ALine->Curve(), L->IsTangent());
-      else if (L->TransitionOnS1() == IntSurf_Touch)
+      else if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Touch)
         alig =
           new IntPatch_ALine(ALine->Curve(), L->IsTangent(), L->SituationS1(), L->SituationS2());
       else
@@ -617,7 +617,7 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
       slin.Append(alig);
       break;
     }
-    case IntPatch_Walking: { //-- ****************************************
+    case IntPatch_IType::IntPatch_Walking: { //-- ****************************************
       occ::handle<IntPatch_WLine>          WLine(occ::down_cast<IntPatch_WLine>(L));
       const occ::handle<IntSurf_LineOn2S>& Lori           = WLine->Curve();
       occ::handle<IntSurf_LineOn2S>        LineOn2S       = new IntSurf_LineOn2S();
@@ -628,9 +628,9 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
         LineOn2S->Add(Lori->Value(k));
       }
       occ::handle<IntPatch_WLine> wlig;
-      if (L->TransitionOnS1() == IntSurf_Undecided)
+      if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Undecided)
         wlig = new IntPatch_WLine(LineOn2S, L->IsTangent());
-      else if (L->TransitionOnS1() == IntSurf_Touch)
+      else if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Touch)
         wlig = new IntPatch_WLine(LineOn2S, L->IsTangent(), L->SituationS1(), L->SituationS2());
       else
         wlig =
@@ -663,14 +663,14 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
 
       break;
     }
-    case IntPatch_Restriction: {
+    case IntPatch_IType::IntPatch_Restriction: {
       occ::handle<IntPatch_RLine> RLine(occ::down_cast<IntPatch_RLine>(L));
       IndexLastVertex  = 2;
       IndexFirstVertex = 1;
       occ::handle<IntPatch_RLine> rlig;
-      if (L->TransitionOnS1() == IntSurf_Undecided)
+      if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Undecided)
         rlig = new IntPatch_RLine(L->IsTangent());
-      else if (L->TransitionOnS1() == IntSurf_Touch)
+      else if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Touch)
         rlig = new IntPatch_RLine(L->IsTangent(), L->SituationS1(), L->SituationS2());
       else
         rlig = new IntPatch_RLine(L->IsTangent(), L->TransitionOnS1(), L->TransitionOnS2());
@@ -705,19 +705,19 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
       slin.Append(rlig);
       break;
     }
-    case IntPatch_Lin:
-    case IntPatch_Parabola:
-    case IntPatch_Hyperbola:
-    case IntPatch_Circle:
-    case IntPatch_Ellipse: {
+    case IntPatch_IType::IntPatch_Lin:
+    case IntPatch_IType::IntPatch_Parabola:
+    case IntPatch_IType::IntPatch_Hyperbola:
+    case IntPatch_IType::IntPatch_Circle:
+    case IntPatch_IType::IntPatch_Ellipse: {
       occ::handle<IntPatch_GLine> GLine(occ::down_cast<IntPatch_GLine>(L));
       occ::handle<IntPatch_GLine> glig;
       switch (typl)
       {
-        case IntPatch_Lin:
-          if (L->TransitionOnS1() == IntSurf_Undecided)
+        case IntPatch_IType::IntPatch_Lin:
+          if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Undecided)
             glig = new IntPatch_GLine(GLine->Line(), L->IsTangent());
-          else if (L->TransitionOnS1() == IntSurf_Touch)
+          else if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Touch)
             glig =
               new IntPatch_GLine(GLine->Line(), L->IsTangent(), L->SituationS1(), L->SituationS2());
           else
@@ -726,10 +726,10 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
                                       L->TransitionOnS1(),
                                       L->TransitionOnS2());
           break;
-        case IntPatch_Parabola:
-          if (L->TransitionOnS1() == IntSurf_Undecided)
+        case IntPatch_IType::IntPatch_Parabola:
+          if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Undecided)
             glig = new IntPatch_GLine(GLine->Parabola(), L->IsTangent());
-          else if (L->TransitionOnS1() == IntSurf_Touch)
+          else if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Touch)
             glig = new IntPatch_GLine(GLine->Parabola(),
                                       L->IsTangent(),
                                       L->SituationS1(),
@@ -740,10 +740,10 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
                                       L->TransitionOnS1(),
                                       L->TransitionOnS2());
           break;
-        case IntPatch_Hyperbola:
-          if (L->TransitionOnS1() == IntSurf_Undecided)
+        case IntPatch_IType::IntPatch_Hyperbola:
+          if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Undecided)
             glig = new IntPatch_GLine(GLine->Hyperbola(), L->IsTangent());
-          else if (L->TransitionOnS1() == IntSurf_Touch)
+          else if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Touch)
             glig = new IntPatch_GLine(GLine->Hyperbola(),
                                       L->IsTangent(),
                                       L->SituationS1(),
@@ -754,10 +754,10 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
                                       L->TransitionOnS1(),
                                       L->TransitionOnS2());
           break;
-        case IntPatch_Circle:
-          if (L->TransitionOnS1() == IntSurf_Undecided)
+        case IntPatch_IType::IntPatch_Circle:
+          if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Undecided)
             glig = new IntPatch_GLine(GLine->Circle(), L->IsTangent());
-          else if (L->TransitionOnS1() == IntSurf_Touch)
+          else if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Touch)
             glig = new IntPatch_GLine(GLine->Circle(),
                                       L->IsTangent(),
                                       L->SituationS1(),
@@ -768,11 +768,11 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
                                       L->TransitionOnS1(),
                                       L->TransitionOnS2());
           break;
-        case IntPatch_Ellipse:
+        case IntPatch_IType::IntPatch_Ellipse:
         default:
-          if (L->TransitionOnS1() == IntSurf_Undecided)
+          if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Undecided)
             glig = new IntPatch_GLine(GLine->Ellipse(), L->IsTangent());
-          else if (L->TransitionOnS1() == IntSurf_Touch)
+          else if (L->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Touch)
             glig = new IntPatch_GLine(GLine->Ellipse(),
                                       L->IsTangent(),
                                       L->SituationS1(),
@@ -788,7 +788,7 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
       IndexLastVertex += AppendSameVertexG(glig, GLine, i, 0, TabIndex);
       if (i != j)
       {
-        if ((typl == IntPatch_Circle || typl == IntPatch_Ellipse) && i > j)
+        if ((typl == IntPatch_IType::IntPatch_Circle || typl == IntPatch_IType::IntPatch_Ellipse) && i > j)
         {
           IntPatch_Point Vtx = GLine->Vertex(j);
           Vtx.SetParameter(GLine->Vertex(j).ParameterOnLine() + M_PI + M_PI);
@@ -891,7 +891,7 @@ static bool TestWLineIsARLine(const NCollection_Sequence<occ::handle<IntPatch_Li
   int                    lastl  = slinref.Length();
   for (int i = 1; i <= lastl; i++)
   {
-    if (slinref.Value(i)->ArcType() == IntPatch_Restriction)
+    if (slinref.Value(i)->ArcType() == IntPatch_IType::IntPatch_Restriction)
     {
       occ::handle<IntPatch_RLine>& rlin = *((occ::handle<IntPatch_RLine>*)&(slinref(i)));
       for (int is = 0; is < 2; is++)
@@ -1203,7 +1203,7 @@ static void TestWLineToRLine(const NCollection_Sequence<occ::handle<IntPatch_Lin
 
         //-- codage de la WLine en RLine
         occ::handle<IntPatch_RLine> rlig =
-          new IntPatch_RLine(true, IntSurf_Unknown, IntSurf_Unknown);
+          new IntPatch_RLine(true, IntSurf_Situation::IntSurf_Unknown, IntSurf_Situation::IntSurf_Unknown);
         if (onFirst)
           rlig->SetArcOnS1(arc);
         else
@@ -1321,7 +1321,7 @@ void IntPatch_LineConstructor::Perform(
   GeomAbs_SurfaceType typs2 = mySurf2->GetType();
 
   IntPatch_IType typl = L->ArcType();
-  if (typl == IntPatch_Analytic)
+  if (typl == IntPatch_IType::IntPatch_Analytic)
   {
     double                      u1, v1, u2, v2;
     occ::handle<IntPatch_ALine> ALine(occ::down_cast<IntPatch_ALine>(L));
@@ -1383,7 +1383,7 @@ void IntPatch_LineConstructor::Perform(
     //-- -------------------------------------------------------------------
     return;
   }
-  else if (typl == IntPatch_Walking)
+  else if (typl == IntPatch_IType::IntPatch_Walking)
   {
     double                      u1, v1, u2, v2;
     occ::handle<IntPatch_WLine> WLine(occ::down_cast<IntPatch_WLine>(L));
@@ -1558,7 +1558,7 @@ void IntPatch_LineConstructor::Perform(
     //-- -------------------------------------------------------------------
     return;
   }
-  else if (typl != IntPatch_Restriction)
+  else if (typl != IntPatch_IType::IntPatch_Restriction)
   { // JAG 01.07.96
     double                      u1, v1, u2, v2;
     occ::handle<IntPatch_GLine> GLine(occ::down_cast<IntPatch_GLine>(L));
@@ -1583,23 +1583,23 @@ void IntPatch_LineConstructor::Perform(
         intrvtested = true;
         double pmid = (firstp + lastp) * 0.5;
         gp_Pnt Pmid;
-        if (typl == IntPatch_Lin)
+        if (typl == IntPatch_IType::IntPatch_Lin)
         {
           Pmid = ElCLib::Value(pmid, GLine->Line());
         }
-        else if (typl == IntPatch_Circle)
+        else if (typl == IntPatch_IType::IntPatch_Circle)
         {
           Pmid = ElCLib::Value(pmid, GLine->Circle());
         }
-        else if (typl == IntPatch_Ellipse)
+        else if (typl == IntPatch_IType::IntPatch_Ellipse)
         {
           Pmid = ElCLib::Value(pmid, GLine->Ellipse());
         }
-        else if (typl == IntPatch_Hyperbola)
+        else if (typl == IntPatch_IType::IntPatch_Hyperbola)
         {
           Pmid = ElCLib::Value(pmid, GLine->Hyperbola());
         }
-        else if (typl == IntPatch_Parabola)
+        else if (typl == IntPatch_IType::IntPatch_Parabola)
         {
           Pmid = ElCLib::Value(pmid, GLine->Parabola());
         }
@@ -1643,7 +1643,7 @@ void IntPatch_LineConstructor::Perform(
         }
       }
     }
-    if (typl == IntPatch_Circle || typl == IntPatch_Ellipse)
+    if (typl == IntPatch_IType::IntPatch_Circle || typl == IntPatch_IType::IntPatch_Ellipse)
     {
       firstp         = GLine->Vertex(nbvtx).ParameterOnLine();
       lastp          = M_PI + M_PI + GLine->Vertex(1).ParameterOnLine();
@@ -1665,7 +1665,7 @@ void IntPatch_LineConstructor::Perform(
           intrvtested = true;
           double pmid = (firstp + lastp) * 0.5;
           gp_Pnt Pmid;
-          if (typl == IntPatch_Circle)
+          if (typl == IntPatch_IType::IntPatch_Circle)
           {
             Pmid = ElCLib::Value(pmid, GLine->Circle());
           }

@@ -41,7 +41,7 @@ Bnd_Box GeomBndLib_OffsetSurface::Box(double theUMin,
   if (!anEquiv.IsNull())
   {
     GeomBndLib_Surface aSurfEval(anEquiv);
-    if (aSurfEval.GetType() != GeomAbs_OtherSurface)
+    if (aSurfEval.GetType() != GeomAbs_SurfaceType::GeomAbs_OtherSurface)
     {
       return aSurfEval.Box(theUMin, theUMax, theVMin, theVMax, theTol);
     }
@@ -71,7 +71,7 @@ Bnd_Box GeomBndLib_OffsetSurface::BoxOptimal(double theUMin,
   if (!anEquiv.IsNull())
   {
     GeomBndLib_Surface aSurfEval(anEquiv);
-    if (aSurfEval.GetType() != GeomAbs_OtherSurface)
+    if (aSurfEval.GetType() != GeomAbs_SurfaceType::GeomAbs_OtherSurface)
     {
       return aSurfEval.BoxOptimal(theUMin, theUMax, theVMin, theVMax, theTol);
     }

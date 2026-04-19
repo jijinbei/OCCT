@@ -427,9 +427,9 @@ BRepTopAdaptor_FClass2d::BRepTopAdaptor_FClass2d(const TopoDS_Face& aFace, const
     if (anIsBadWire)
       TabOrien(1) = -1;
 
-    if (surf->GetType() == GeomAbs_Cone || surf->GetType() == GeomAbs_Cylinder
-        || surf->GetType() == GeomAbs_Torus || surf->GetType() == GeomAbs_Sphere
-        || surf->GetType() == GeomAbs_SurfaceOfRevolution)
+    if (surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cone || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
+        || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Torus || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere
+        || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
 
     {
       double uuu = M_PI + M_PI - (Umax - Umin);
@@ -443,7 +443,7 @@ BRepTopAdaptor_FClass2d::BRepTopAdaptor_FClass2d(const TopoDS_Face& aFace, const
       U1 = U2 = 0.0;
     }
 
-    if (surf->GetType() == GeomAbs_Torus)
+    if (surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
     {
       double uuu = M_PI + M_PI - (Vmax - Vmin);
       if (uuu < 0)

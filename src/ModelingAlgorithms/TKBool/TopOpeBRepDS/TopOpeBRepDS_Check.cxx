@@ -129,41 +129,41 @@ bool TopOpeBRepDS_Check::CheckDS(const int I, const TopOpeBRepDS_Kind K)
   // geometry
   switch (K)
   {
-    case TopOpeBRepDS_SURFACE: {
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE: {
       if (myHDS->NbSurfaces() < I)
       {
         if (myMapSurfaceStatus.IsBound(I))
           myMapSurfaceStatus.UnBind(I);
-        myMapSurfaceStatus.Bind(I, TopOpeBRepDS_NOK);
+        myMapSurfaceStatus.Bind(I, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_NOK);
         return false;
       }
       if (!myMapSurfaceStatus.IsBound(I))
-        myMapSurfaceStatus.Bind(I, TopOpeBRepDS_OK);
+        myMapSurfaceStatus.Bind(I, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_OK);
       return true;
     }
-    case TopOpeBRepDS_CURVE: {
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE: {
       if (myHDS->NbCurves() < I)
       {
         if (myMapCurveStatus.IsBound(I))
           myMapCurveStatus.UnBind(I);
-        myMapCurveStatus.Bind(I, TopOpeBRepDS_NOK);
+        myMapCurveStatus.Bind(I, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_NOK);
         return false;
       }
 
       if (!myMapCurveStatus.IsBound(I))
-        myMapCurveStatus.Bind(I, TopOpeBRepDS_OK);
+        myMapCurveStatus.Bind(I, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_OK);
       return true;
     }
-    case TopOpeBRepDS_POINT: {
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_POINT: {
       if (myHDS->NbPoints() < I)
       {
         if (myMapPointStatus.IsBound(I))
           myMapPointStatus.UnBind(I);
-        myMapPointStatus.Bind(I, TopOpeBRepDS_NOK);
+        myMapPointStatus.Bind(I, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_NOK);
         return false;
       }
       if (!myMapPointStatus.IsBound(I))
-        myMapPointStatus.Bind(I, TopOpeBRepDS_OK);
+        myMapPointStatus.Bind(I, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_OK);
       return true;
     }
     default:
@@ -175,7 +175,7 @@ bool TopOpeBRepDS_Check::CheckDS(const int I, const TopOpeBRepDS_Kind K)
   {
     if (myMapShapeStatus.IsBound(I))
       myMapShapeStatus.UnBind(I);
-    myMapShapeStatus.Bind(I, TopOpeBRepDS_NOK);
+    myMapShapeStatus.Bind(I, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_NOK);
     return false;
   }
   const TopoDS_Shape& S = myHDS->Shape(I);
@@ -184,22 +184,22 @@ bool TopOpeBRepDS_Check::CheckDS(const int I, const TopOpeBRepDS_Kind K)
 
   switch (K)
   {
-    case TopOpeBRepDS_SOLID:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID:
       se = TopAbs_SOLID;
       break;
-    case TopOpeBRepDS_SHELL:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SHELL:
       se = TopAbs_SHELL;
       break;
-    case TopOpeBRepDS_FACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_FACE:
       se = TopAbs_FACE;
       break;
-    case TopOpeBRepDS_WIRE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_WIRE:
       se = TopAbs_WIRE;
       break;
-    case TopOpeBRepDS_EDGE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE:
       se = TopAbs_EDGE;
       break;
-    case TopOpeBRepDS_VERTEX:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX:
       se = TopAbs_VERTEX;
       break;
     default:
@@ -209,11 +209,11 @@ bool TopOpeBRepDS_Check::CheckDS(const int I, const TopOpeBRepDS_Kind K)
   {
     if (myMapShapeStatus.IsBound(I))
       myMapShapeStatus.UnBind(I);
-    myMapShapeStatus.Bind(I, TopOpeBRepDS_NOK);
+    myMapShapeStatus.Bind(I, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_NOK);
     return false;
   }
   if (!myMapShapeStatus.IsBound(I))
-    myMapShapeStatus.Bind(I, TopOpeBRepDS_OK);
+    myMapShapeStatus.Bind(I, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_OK);
   return true;
 }
 
@@ -501,10 +501,10 @@ Standard_OStream& TopOpeBRepDS_Check::PrintMap(
     bool b = true;
     OS << " " << eltstr << "\t(/" << MapStat.Extent() << ")\tnumber ";
 
-    PrintElts(MapStat, TopOpeBRepDS_OK, b, OS);
+    PrintElts(MapStat, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_OK, b, OS);
     if (!b)
       OS << " = OK" << std::endl;
-    PrintElts(MapStat, TopOpeBRepDS_NOK, b, OS);
+    PrintElts(MapStat, TopOpeBRepDS_CheckStatus::TopOpeBRepDS_NOK, b, OS);
     if (!b)
       OS << " = NOK" << std::endl;
   }
@@ -552,10 +552,10 @@ Standard_OStream& TopOpeBRepDS_Check::Print(const TopOpeBRepDS_CheckStatus stat,
 {
   switch (stat)
   {
-    case TopOpeBRepDS_OK:
+    case TopOpeBRepDS_CheckStatus::TopOpeBRepDS_OK:
       OS << "OK";
       break;
-    case TopOpeBRepDS_NOK:
+    case TopOpeBRepDS_CheckStatus::TopOpeBRepDS_NOK:
       OS << "NOK";
       break;
     default:

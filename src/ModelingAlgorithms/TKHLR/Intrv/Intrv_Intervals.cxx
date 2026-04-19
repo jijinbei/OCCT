@@ -75,46 +75,46 @@ void Intrv_Intervals::Subtract(const Intrv_Interval& Tool)
     switch (Tool.Position(myInter(index)))
     {
 
-      case Intrv_Before:
+      case Intrv_Position::Intrv_Before:
         index = myInter.Length(); // sortir
         break;
 
-      case Intrv_JustBefore:
+      case Intrv_Position::Intrv_JustBefore:
         myInter(index).CutAtStart(Tool.End(), Tool.TolEnd()); // modifier le debut
         index = myInter.Length();                             // sortir
         break;
 
-      case Intrv_OverlappingAtStart:
-      case Intrv_JustOverlappingAtStart:
+      case Intrv_Position::Intrv_OverlappingAtStart:
+      case Intrv_Position::Intrv_JustOverlappingAtStart:
         myInter(index).SetStart(Tool.End(), Tool.TolEnd()); // garder la fin
         index = myInter.Length();                           // sortir
         break;
 
-      case Intrv_JustEnclosingAtEnd:
-      case Intrv_Enclosing:
-      case Intrv_Similar:
-      case Intrv_JustEnclosingAtStart:
+      case Intrv_Position::Intrv_JustEnclosingAtEnd:
+      case Intrv_Position::Intrv_Enclosing:
+      case Intrv_Position::Intrv_Similar:
+      case Intrv_Position::Intrv_JustEnclosingAtStart:
         myInter.Remove(index); // detruire et
         index--;               // continuer
         break;
 
-      case Intrv_Inside:
+      case Intrv_Position::Intrv_Inside:
         myInter.InsertAfter(index, myInter(index));
         myInter(index).SetEnd(Tool.Start(), Tool.TolStart());   // garder le debut
         myInter(index + 1).SetStart(Tool.End(), Tool.TolEnd()); // garder la fin
         index = myInter.Length();                               // sortir
         break;
 
-      case Intrv_JustOverlappingAtEnd:
-      case Intrv_OverlappingAtEnd:
+      case Intrv_Position::Intrv_JustOverlappingAtEnd:
+      case Intrv_Position::Intrv_OverlappingAtEnd:
         myInter(index).SetEnd(Tool.Start(), Tool.TolStart()); // garder le debut
         break;                                                // continuer
 
-      case Intrv_JustAfter:
+      case Intrv_Position::Intrv_JustAfter:
         myInter(index).CutAtEnd(Tool.Start(), Tool.TolStart()); // modifier la fin
         break;                                                  // continuer
 
-      case Intrv_After:
+      case Intrv_Position::Intrv_After:
         break; // continuer
     }
     index++;
@@ -144,33 +144,33 @@ void Intrv_Intervals::Unite(const Intrv_Interval& Tool)
     switch (Tins.Position(myInter(index)))
     {
 
-      case Intrv_Before:
+      case Intrv_Position::Intrv_Before:
         Inserted = true;
         myInter.InsertBefore(index, Tins); // inserer avant et
         index = myInter.Length();          // sortir
         break;
 
-      case Intrv_JustBefore:
-      case Intrv_OverlappingAtStart:
+      case Intrv_Position::Intrv_JustBefore:
+      case Intrv_Position::Intrv_OverlappingAtStart:
         Inserted = true;
         myInter(index).SetStart(Tins.Start(), Tins.TolStart()); // changer le debut
         index = myInter.Length();                               // sortir
         break;
 
-      case Intrv_Similar:
+      case Intrv_Position::Intrv_Similar:
         Tins.FuseAtStart(myInter(index).Start(),
                          myInter(index).TolStart()); // modifier le debut
         [[fallthrough]];
-      case Intrv_JustEnclosingAtEnd:
+      case Intrv_Position::Intrv_JustEnclosingAtEnd:
         Tins.FuseAtEnd(myInter(index).End(),
                        myInter(index).TolEnd()); // modifier la fin
         [[fallthrough]];
-      case Intrv_Enclosing:
+      case Intrv_Position::Intrv_Enclosing:
         myInter.Remove(index); // detruire et
         index--;               // continuer
         break;
 
-      case Intrv_JustOverlappingAtEnd:
+      case Intrv_Position::Intrv_JustOverlappingAtEnd:
         Tins.SetStart(myInter(index).Start(),
                       myInter(index).TolStart()); // changer le debut
         Tins.FuseAtEnd(myInter(index).End(),
@@ -179,33 +179,33 @@ void Intrv_Intervals::Unite(const Intrv_Interval& Tool)
         index--;                                 // continuer
         break;
 
-      case Intrv_JustOverlappingAtStart:
+      case Intrv_Position::Intrv_JustOverlappingAtStart:
         Inserted = true;
         myInter(index).FuseAtStart(Tins.Start(), Tins.TolStart()); // modifier le debut
         index = myInter.Length();                                  // sortir
         break;
 
-      case Intrv_JustEnclosingAtStart:
+      case Intrv_Position::Intrv_JustEnclosingAtStart:
         Tins.FuseAtStart(myInter(index).Start(),
                          myInter(index).TolStart()); // modifier le debut
         myInter.Remove(index);                       // detruire et
         index--;                                     // continuer
         break;
 
-      case Intrv_Inside:
+      case Intrv_Position::Intrv_Inside:
         Inserted = true;
         index    = myInter.Length(); // sortir
         break;
 
-      case Intrv_OverlappingAtEnd:
-      case Intrv_JustAfter:
+      case Intrv_Position::Intrv_OverlappingAtEnd:
+      case Intrv_Position::Intrv_JustAfter:
         Tins.SetStart(myInter(index).Start(),
                       myInter(index).TolStart()); // changer le debut
         myInter.Remove(index);                    // detruire et
         index--;                                  // continuer
         break;
 
-      case Intrv_After:
+      case Intrv_Position::Intrv_After:
         break; // continuer
     }
     index++;

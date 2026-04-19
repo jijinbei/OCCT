@@ -27,7 +27,7 @@ GccInt_BLine::GccInt_BLine(const gp_Lin2d& Line)
 
 GccInt_IType GccInt_BLine::ArcType() const
 {
-  return GccInt_Lin;
+  return GccInt_IType::GccInt_Lin;
 }
 
 gp_Lin2d GccInt_BLine::Line() const

@@ -62,11 +62,11 @@ bool GeomFill_DiscreteTrihedron::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
     type = C->GetType();
     switch (type)
     {
-      case GeomAbs_Circle:
-      case GeomAbs_Ellipse:
-      case GeomAbs_Hyperbola:
-      case GeomAbs_Parabola:
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Circle:
+      case GeomAbs_CurveType::GeomAbs_Ellipse:
+      case GeomAbs_CurveType::GeomAbs_Hyperbola:
+      case GeomAbs_CurveType::GeomAbs_Parabola:
+      case GeomAbs_CurveType::GeomAbs_Line: {
         // No problem
         myUseFrenet = true;
         myFrenet->SetCurve(C);
@@ -357,7 +357,7 @@ void GeomFill_DiscreteTrihedron::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal
 
 bool GeomFill_DiscreteTrihedron::IsConstant() const
 {
-  return (myCurve->GetType() == GeomAbs_Line);
+  return (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line);
 }
 
 //=================================================================================================

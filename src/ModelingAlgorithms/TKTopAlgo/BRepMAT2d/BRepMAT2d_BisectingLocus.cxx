@@ -94,8 +94,8 @@ void BRepMAT2d_BisectingLocus::Compute(BRepMAT2d_Explorer&    anExplo,
   //----------------------------------------------------------
   occ::handle<MAT2d_Circuit> ACircuit = new MAT2d_Circuit(aJoinType, IsOpenResult);
   //  Modified by Sergey KHROMOV - Wed Mar  6 17:43:47 2002 Begin
-  //   ACircuit->Perform(Figure,IndexLine,(aSide == MAT_Left));
-  ACircuit->Perform(Figure, anExplo.GetIsClosed(), IndexLine, (aSide == MAT_Left));
+  //   ACircuit->Perform(Figure,IndexLine,(aSide == MAT_Side::MAT_Left));
+  ACircuit->Perform(Figure, anExplo.GetIsClosed(), IndexLine, (aSide == MAT_Side::MAT_Left));
   //  Modified by Sergey KHROMOV - Wed Mar  6 17:43:48 2002 End
 
   // -----------------------

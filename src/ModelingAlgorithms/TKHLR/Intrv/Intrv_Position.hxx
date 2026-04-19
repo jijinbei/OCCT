@@ -17,7 +17,7 @@
 #ifndef _Intrv_Position_HeaderFile
 #define _Intrv_Position_HeaderFile
 
-enum Intrv_Position
+enum class Intrv_Position
 {
   Intrv_Before,
   Intrv_JustBefore,

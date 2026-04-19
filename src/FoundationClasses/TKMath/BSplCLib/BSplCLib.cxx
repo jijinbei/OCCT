@@ -553,7 +553,7 @@ BSplCLib_KnotDistribution BSplCLib::KnotForm(const Array1OfReal& Knots,
 {
   if (FromK1 + 1 > Knots.Upper())
   {
-    return BSplCLib_Uniform;
+    return BSplCLib_KnotDistribution::BSplCLib_Uniform;
   }
 
   double aUi   = std::abs(Knots(FromK1));
@@ -569,14 +569,14 @@ BSplCLib_KnotDistribution BSplCLib::KnotForm(const Array1OfReal& Knots,
 
     if (std::abs(aDU1 - aDU0) > anEps)
     {
-      return BSplCLib_NonUniform;
+      return BSplCLib_KnotDistribution::BSplCLib_NonUniform;
     }
 
     aDU0  = aDU1;
     anEps = Epsilon(aUi) + Epsilon(aUj) + Epsilon(aDU0);
   }
 
-  return BSplCLib_Uniform;
+  return BSplCLib_KnotDistribution::BSplCLib_Uniform;
 }
 
 //=================================================================================================
@@ -589,36 +589,36 @@ BSplCLib_MultDistribution BSplCLib::MultForm(const Array1OfInteger& Mults,
 
   if (aFirst + 1 > Mults.Upper())
   {
-    return BSplCLib_Constant;
+    return BSplCLib_MultDistribution::BSplCLib_Constant;
   }
 
   const int                 aFirstMult = Mults(aFirst);
-  BSplCLib_MultDistribution aForm      = BSplCLib_Constant;
+  BSplCLib_MultDistribution aForm      = BSplCLib_MultDistribution::BSplCLib_Constant;
   int                       aMult      = Mults(aFirst + 1);
 
-  for (int i = aFirst + 1; i <= aLast && aForm != BSplCLib_NonConstant; i++)
+  for (int i = aFirst + 1; i <= aLast && aForm != BSplCLib_MultDistribution::BSplCLib_NonConstant; i++)
   {
     if (i == aFirst + 1)
     {
       if (aMult != aFirstMult)
       {
-        aForm = BSplCLib_QuasiConstant;
+        aForm = BSplCLib_MultDistribution::BSplCLib_QuasiConstant;
       }
     }
     else if (i == aLast)
     {
-      if (aForm == BSplCLib_QuasiConstant)
+      if (aForm == BSplCLib_MultDistribution::BSplCLib_QuasiConstant)
       {
         if (aFirstMult != Mults(i))
         {
-          aForm = BSplCLib_NonConstant;
+          aForm = BSplCLib_MultDistribution::BSplCLib_NonConstant;
         }
       }
       else
       {
         if (aMult != Mults(i))
         {
-          aForm = BSplCLib_NonConstant;
+          aForm = BSplCLib_MultDistribution::BSplCLib_NonConstant;
         }
       }
     }
@@ -626,7 +626,7 @@ BSplCLib_MultDistribution BSplCLib::MultForm(const Array1OfInteger& Mults,
     {
       if (aMult != Mults(i))
       {
-        aForm = BSplCLib_NonConstant;
+        aForm = BSplCLib_MultDistribution::BSplCLib_NonConstant;
       }
       aMult = Mults(i);
     }
@@ -644,36 +644,36 @@ void BSplCLib::KnotAnalysis(const int                         Degree,
                             GeomAbs_BSplKnotDistribution&     KnotForm,
                             int&                              MaxKnotMult)
 {
-  KnotForm = GeomAbs_NonUniform;
+  KnotForm = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
 
   BSplCLib_KnotDistribution KSet = BSplCLib::KnotForm(CKnots, 1, CKnots.Length());
 
-  if (KSet == BSplCLib_Uniform)
+  if (KSet == BSplCLib_KnotDistribution::BSplCLib_Uniform)
   {
     BSplCLib_MultDistribution MSet = BSplCLib::MultForm(CMults, 1, CMults.Length());
     switch (MSet)
     {
-      case BSplCLib_NonConstant:
+      case BSplCLib_MultDistribution::BSplCLib_NonConstant:
         break;
-      case BSplCLib_Constant:
+      case BSplCLib_MultDistribution::BSplCLib_Constant:
         if (CKnots.Length() == 2)
         {
-          KnotForm = GeomAbs_PiecewiseBezier;
+          KnotForm = GeomAbs_BSplKnotDistribution::GeomAbs_PiecewiseBezier;
         }
         else
         {
           if (CMults(1) == 1)
-            KnotForm = GeomAbs_Uniform;
+            KnotForm = GeomAbs_BSplKnotDistribution::GeomAbs_Uniform;
         }
         break;
-      case BSplCLib_QuasiConstant:
+      case BSplCLib_MultDistribution::BSplCLib_QuasiConstant:
         if (CMults(1) == Degree + 1)
         {
           double M = CMults(2);
           if (M == Degree)
-            KnotForm = GeomAbs_PiecewiseBezier;
+            KnotForm = GeomAbs_BSplKnotDistribution::GeomAbs_PiecewiseBezier;
           else if (M == 1)
-            KnotForm = GeomAbs_QuasiUniform;
+            KnotForm = GeomAbs_BSplKnotDistribution::GeomAbs_QuasiUniform;
         }
         break;
     }
@@ -703,7 +703,7 @@ void BSplCLib::Reparametrize(const double U1, const double U2, Array1OfReal& Kno
   double                    ULast     = std::max(U1, U2);
   double                    NewLength = ULast - UFirst;
   BSplCLib_KnotDistribution KSet      = BSplCLib::KnotForm(Knots, Lower, Upper);
-  if (KSet == BSplCLib_Uniform)
+  if (KSet == BSplCLib_KnotDistribution::BSplCLib_Uniform)
   {
     double DU    = NewLength / (Upper - Lower);
     Knots(Lower) = UFirst;

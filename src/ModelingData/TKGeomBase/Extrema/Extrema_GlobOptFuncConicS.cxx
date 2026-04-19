@@ -26,19 +26,19 @@ void Extrema_GlobOptFuncConicS::value(double su, double sv, double& F)
   gp_Pnt aPS = myS->Value(su, sv);
   switch (myCType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       ct = ElCLib::Parameter(myLin, aPS);
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       ct = ElCLib::Parameter(myCirc, aPS);
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       ct = ElCLib::Parameter(myElips, aPS);
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       ct = ElCLib::Parameter(myHypr, aPS);
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       ct = ElCLib::Parameter(myParab, aPS);
       break;
     default:
@@ -46,7 +46,7 @@ void Extrema_GlobOptFuncConicS::value(double su, double sv, double& F)
       return;
   }
   //
-  if (myCType == GeomAbs_Circle || myCType == GeomAbs_Ellipse)
+  if (myCType == GeomAbs_CurveType::GeomAbs_Circle || myCType == GeomAbs_CurveType::GeomAbs_Ellipse)
   {
     if (myTl > 2. * M_PI + Precision::PConfusion())
     {
@@ -141,19 +141,19 @@ void Extrema_GlobOptFuncConicS::LoadConic(const Adaptor3d_Curve* C,
   myCType = myC->GetType();
   switch (myCType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       myLin = myC->Line();
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       myCirc = myC->Circle();
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       myElips = myC->Ellipse();
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       myHypr = myC->Hyperbola();
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       myParab = myC->Parabola();
       break;
     default:
@@ -188,19 +188,19 @@ double Extrema_GlobOptFuncConicS::ConicParameter(const math_Vector& theUV) const
   gp_Pnt aPS = myS->Value(theUV(1), theUV(2));
   switch (myCType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       ct = ElCLib::Parameter(myLin, aPS);
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       ct = ElCLib::Parameter(myCirc, aPS);
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       ct = ElCLib::Parameter(myElips, aPS);
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       ct = ElCLib::Parameter(myHypr, aPS);
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       ct = ElCLib::Parameter(myParab, aPS);
       break;
     default:
@@ -208,7 +208,7 @@ double Extrema_GlobOptFuncConicS::ConicParameter(const math_Vector& theUV) const
       return ct;
   }
   //
-  if (myCType == GeomAbs_Circle || myCType == GeomAbs_Ellipse)
+  if (myCType == GeomAbs_CurveType::GeomAbs_Circle || myCType == GeomAbs_CurveType::GeomAbs_Ellipse)
   {
     if (myTl > 2. * M_PI + Precision::PConfusion())
     {

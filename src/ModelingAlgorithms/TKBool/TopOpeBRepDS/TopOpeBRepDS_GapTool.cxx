@@ -61,7 +61,7 @@ void TopOpeBRepDS_GapTool::Init(const occ::handle<TopOpeBRepDS_HDataStructure>& 
     for (NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it(LI); it.More();
          it.Next())
     {
-      if (it.Value()->GeometryType() == TopOpeBRepDS_POINT)
+      if (it.Value()->GeometryType() == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
       {
         myInterToShape.Bind(it.Value(), S);
         StoreGToI(myGToI, it.Value());
@@ -76,7 +76,7 @@ void TopOpeBRepDS_GapTool::Init(const occ::handle<TopOpeBRepDS_HDataStructure>& 
     for (NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it(LI); it.More();
          it.Next())
     {
-      if (it.Value()->GeometryType() == TopOpeBRepDS_POINT)
+      if (it.Value()->GeometryType() == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
         StoreGToI(myGToI, it.Value());
     }
   }
@@ -87,13 +87,13 @@ void TopOpeBRepDS_GapTool::Init(const occ::handle<TopOpeBRepDS_HDataStructure>& 
 bool TopOpeBRepDS_GapTool::Curve(const occ::handle<TopOpeBRepDS_Interference>& I,
                                  TopOpeBRepDS_Curve&                           C) const
 {
-  if (I->GeometryType() == TopOpeBRepDS_POINT)
+  if (I->GeometryType() == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
   {
     TopOpeBRepDS_Kind GK, SK;
     int               G, S;
 
     I->GKGSKS(GK, G, SK, S);
-    if (SK == TopOpeBRepDS_CURVE)
+    if (SK == TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE)
     {
       C = myHDS->Curve(S);
       return true;
@@ -103,7 +103,7 @@ bool TopOpeBRepDS_GapTool::Curve(const occ::handle<TopOpeBRepDS_Interference>& I
          it.Next())
     {
       it.Value()->GKGSKS(GK, G, SK, S);
-      if (SK == TopOpeBRepDS_CURVE)
+      if (SK == TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE)
       {
         C = myHDS->Curve(S);
         return true;
@@ -142,7 +142,7 @@ NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& TopOpeBRepDS_GapTool::
 bool TopOpeBRepDS_GapTool::EdgeSupport(const occ::handle<TopOpeBRepDS_Interference>& I,
                                        TopoDS_Shape&                                 E) const
 {
-  if (I->GeometryType() == TopOpeBRepDS_POINT)
+  if (I->GeometryType() == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
   {
     if (myInterToShape.IsBound(I))
     {
@@ -193,7 +193,7 @@ bool TopOpeBRepDS_GapTool::ParameterOnEdge(const occ::handle<TopOpeBRepDS_Interf
                                            const TopoDS_Shape&                           E,
                                            double&                                       U) const
 {
-  if (I->GeometryType() == TopOpeBRepDS_POINT)
+  if (I->GeometryType() == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
   {
     if (myInterToShape.IsBound(I))
     {
@@ -229,7 +229,7 @@ void TopOpeBRepDS_GapTool::SetParameterOnEdge(const occ::handle<TopOpeBRepDS_Int
                                               const TopoDS_Shape&                           E,
                                               const double                                  U)
 {
-  if (I->GeometryType() == TopOpeBRepDS_POINT)
+  if (I->GeometryType() == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
   {
     if (myInterToShape.IsBound(I))
     {

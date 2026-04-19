@@ -39,7 +39,7 @@ IntPatch_WLine::IntPatch_WLine(const occ::handle<IntSurf_LineOn2S>& Line,
       myIsPurgerAllowed(true),
       myCreationWay(IntPatch_WLUnknown)
 {
-  typ      = IntPatch_Walking;
+  typ      = IntPatch_IType::IntPatch_Walking;
   curv     = Line;
   u1period = v1period = u2period = v2period = 0.0;
 }
@@ -56,7 +56,7 @@ IntPatch_WLine::IntPatch_WLine(const occ::handle<IntSurf_LineOn2S>& Line,
       myIsPurgerAllowed(true),
       myCreationWay(IntPatch_WLUnknown)
 {
-  typ      = IntPatch_Walking;
+  typ      = IntPatch_IType::IntPatch_Walking;
   curv     = Line;
   u1period = v1period = u2period = v2period = 0.0;
 }
@@ -70,7 +70,7 @@ IntPatch_WLine::IntPatch_WLine(const occ::handle<IntSurf_LineOn2S>& Line, const 
       myIsPurgerAllowed(true),
       myCreationWay(IntPatch_WLUnknown)
 {
-  typ      = IntPatch_Walking;
+  typ      = IntPatch_IType::IntPatch_Walking;
   curv     = Line;
   u1period = v1period = u2period = v2period = 0.0;
 }

@@ -17,7 +17,7 @@
 #ifndef _Contap_IType_HeaderFile
 #define _Contap_IType_HeaderFile
 
-enum Contap_IType
+enum class Contap_IType
 {
   Contap_Lin,
   Contap_Circle,

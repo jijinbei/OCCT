@@ -17,7 +17,7 @@
 #ifndef _Blend_DecrochStatus_HeaderFile
 #define _Blend_DecrochStatus_HeaderFile
 
-enum Blend_DecrochStatus
+enum class Blend_DecrochStatus
 {
   Blend_NoDecroch,
   Blend_DecrochRst1,

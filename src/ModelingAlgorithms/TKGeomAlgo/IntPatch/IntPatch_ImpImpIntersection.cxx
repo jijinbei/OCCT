@@ -317,14 +317,14 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
   bool myHS1IsUPeriodic, myHS1IsVPeriodic;
   switch (typs1)
   {
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       myHS1IsUPeriodic = true;
       myHS1IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       myHS1IsUPeriodic = myHS1IsVPeriodic = true;
       break;
     }
@@ -338,14 +338,14 @@ static void Recadre(const occ::handle<Adaptor3d_Surface>& myHS1,
   bool myHS2IsUPeriodic, myHS2IsVPeriodic;
   switch (typs2)
   {
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       myHS2IsUPeriodic = true;
       myHS2IsVPeriodic = false;
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       myHS2IsUPeriodic = myHS2IsVPeriodic = true;
       break;
     }
@@ -622,8 +622,8 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
 
               if (Normale.SquareMagnitude() < 1e-16)
               {
-                Transline.SetValue(true, IntSurf_Undecided);
-                Transarc.SetValue(true, IntSurf_Undecided);
+                Transline.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                Transarc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
               }
               else
               {
@@ -634,7 +634,7 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
               for (NCollection_List<double>::Iterator anItr(aLParams); anItr.More(); anItr.Next())
               {
                 solpnt.SetParameter(anItr.Value());
-                if (TheType == IntPatch_Analytic)
+                if (TheType == IntPatch_IType::IntPatch_Analytic)
                 {
                   occ::down_cast<IntPatch_ALine>(lin)->AddVertex(solpnt);
                 }
@@ -671,15 +671,15 @@ void PutPointsOnLine(const occ::handle<Adaptor3d_Surface>&                      
                         Vtgrst.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
                         if (Normale.SquareMagnitude() < 1e-16)
                         {
-                          Transline.SetValue(true, IntSurf_Undecided);
-                          Transarc.SetValue(true, IntSurf_Undecided);
+                          Transline.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                          Transarc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
                         }
                         else
                         {
                           IntSurf::MakeTransition(Vtgint, Vtgrst, Normale, Transline, Transarc);
                         }
                         solpnt.SetArc(OnFirst, currentarc, currentparameter, Transline, Transarc);
-                        if (TheType == IntPatch_Analytic)
+                        if (TheType == IntPatch_IType::IntPatch_Analytic)
                         {
                           occ::down_cast<IntPatch_ALine>(lin)->AddVertex(solpnt);
                         }
@@ -757,7 +757,7 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
   {
     const occ::handle<IntPatch_Line>& slinValueii = slin.Value(ii);
     TheType                                       = slinValueii->ArcType();
-    if (TheType == IntPatch_Analytic)
+    if (TheType == IntPatch_IType::IntPatch_Analytic)
     {
       nbvtx = occ::down_cast<IntPatch_ALine>(slinValueii)->NbVertex();
     }
@@ -768,7 +768,7 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
     jj = 1;
     while (jj <= nbvtx)
     {
-      if (TheType == IntPatch_Analytic)
+      if (TheType == IntPatch_IType::IntPatch_Analytic)
       {
         intpt = occ::down_cast<IntPatch_ALine>(slinValueii)->Vertex(jj);
       }
@@ -807,8 +807,8 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
           //-- Si la normale est nulle (apex d un cone) On simule une transition UNKNOWN
           if (Normale.SquareMagnitude() < 1e-16)
           {
-            Transline.SetValue(true, IntSurf_Undecided);
-            Transarc.SetValue(true, IntSurf_Undecided);
+            Transline.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+            Transarc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
           }
           else
           {
@@ -823,7 +823,7 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
           intpt.SetArc(OnFirst, currentarc, currentparameter, Transline, Transarc);
           intpt.SetTolerance(theToler);
 
-          if (TheType == IntPatch_Analytic)
+          if (TheType == IntPatch_IType::IntPatch_Analytic)
           {
             occ::down_cast<IntPatch_ALine>(slinValueii)->Replace(jj, intpt);
           }
@@ -852,8 +852,8 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
                     Vtgrst.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
                     if (Normale.SquareMagnitude() < 1e-16)
                     {
-                      Transline.SetValue(true, IntSurf_Undecided);
-                      Transarc.SetValue(true, IntSurf_Undecided);
+                      Transline.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                      Transarc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
                     }
                     else
                     {
@@ -861,7 +861,7 @@ bool MultiplePoint(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBound
                     }
                     intpt.SetArc(OnFirst, currentarc, currentparameter, Transline, Transarc);
                     intpt.SetTolerance(theToler);
-                    if (TheType == IntPatch_Analytic)
+                    if (TheType == IntPatch_IType::IntPatch_Analytic)
                     {
                       occ::down_cast<IntPatch_ALine>(slinValueii)->AddVertex(intpt);
                     }
@@ -934,7 +934,7 @@ bool PointOnSecondDom(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBo
   bool Retvalue = true;
 
   TheType = lin->ArcType();
-  if (TheType == IntPatch_Analytic)
+  if (TheType == IntPatch_IType::IntPatch_Analytic)
   {
     nbvtx = occ::down_cast<IntPatch_ALine>(lin)->NbVertex();
   }
@@ -945,7 +945,7 @@ bool PointOnSecondDom(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBo
   jj = 1;
   while (jj <= nbvtx)
   {
-    if (TheType == IntPatch_Analytic)
+    if (TheType == IntPatch_IType::IntPatch_Analytic)
     {
       intpt = occ::down_cast<IntPatch_ALine>(lin)->Vertex(jj);
     }
@@ -975,8 +975,8 @@ bool PointOnSecondDom(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBo
         Vtgrst.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
         if (Normale.SquareMagnitude() < 1e-16)
         {
-          Transline.SetValue(true, IntSurf_Undecided);
-          Transarc.SetValue(true, IntSurf_Undecided);
+          Transline.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+          Transarc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
         }
         else
         {
@@ -985,7 +985,7 @@ bool PointOnSecondDom(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBo
         intpt.SetArc(false, currentarc, currentparameter, Transline, Transarc);
         intpt.SetTolerance(theToler);
 
-        if (TheType == IntPatch_Analytic)
+        if (TheType == IntPatch_IType::IntPatch_Analytic)
         {
           occ::down_cast<IntPatch_ALine>(lin)->Replace(jj, intpt);
         }
@@ -1014,8 +1014,8 @@ bool PointOnSecondDom(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBo
                   Vtgrst.SetLinearForm(d2d.X(), d1u, d2d.Y(), d1v);
                   if (Normale.SquareMagnitude() < 1e-16)
                   {
-                    Transline.SetValue(true, IntSurf_Undecided);
-                    Transarc.SetValue(true, IntSurf_Undecided);
+                    Transline.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                    Transarc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
                   }
                   else
                   {
@@ -1023,7 +1023,7 @@ bool PointOnSecondDom(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBo
                   }
                   intpt.SetArc(false, currentarc, currentparameter, Transline, Transarc);
                   intpt.SetTolerance(theToler);
-                  if (TheType == IntPatch_Analytic)
+                  if (TheType == IntPatch_IType::IntPatch_Analytic)
                   {
                     occ::down_cast<IntPatch_ALine>(lin)->AddVertex(intpt);
                   }
@@ -1049,7 +1049,7 @@ bool PointOnSecondDom(const NCollection_Sequence<IntPatch_ThePathPointOfTheSOnBo
     {
       jj = jj + 1;
     }
-    if (TheType == IntPatch_Analytic)
+    if (TheType == IntPatch_IType::IntPatch_Analytic)
     {
       nbvtx = occ::down_cast<IntPatch_ALine>(lin)->NbVertex();
     }
@@ -1101,7 +1101,7 @@ bool FindLine(gp_Pnt&                                                 Psurf,
     }
     const occ::handle<IntPatch_Line>& lin = slin.Value(i);
     typarc                                = lin->ArcType();
-    if (typarc == IntPatch_Analytic)
+    if (typarc == IntPatch_IType::IntPatch_Analytic)
     {
       bool foo;
       lower = occ::down_cast<IntPatch_ALine>(lin)->FirstParameter(foo);
@@ -1129,7 +1129,7 @@ bool FindLine(gp_Pnt&                                                 Psurf,
 
     switch (typarc)
     {
-      case IntPatch_Lin: {
+      case IntPatch_IType::IntPatch_Lin: {
         para = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Line(), Psurf);
         if (para <= upper && para >= lower)
         {
@@ -1144,7 +1144,7 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         }
       }
       break;
-      case IntPatch_Circle: {
+      case IntPatch_IType::IntPatch_Circle: {
         para = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Circle(), Psurf);
         if ((para <= upper && para >= lower)
             || (para + 2. * M_PI <= upper && para + 2. * M_PI >= lower)
@@ -1161,7 +1161,7 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         }
       }
       break;
-      case IntPatch_Ellipse: {
+      case IntPatch_IType::IntPatch_Ellipse: {
         para = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Ellipse(), Psurf);
         if ((para <= upper && para >= lower)
             || (para + 2. * M_PI <= upper && para + 2. * M_PI >= lower)
@@ -1178,7 +1178,7 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         }
       }
       break;
-      case IntPatch_Parabola: {
+      case IntPatch_IType::IntPatch_Parabola: {
         //-- Le calcul du parametre sur une parabole est mal fait ds ElCLib. Il ne tient pas compte
         //-- de la meilleure facon de calculer (axe X ou axe Y). Bilan : Si la parabole est tres
         //-- pointue (focal de l'ordre de 1e-2 et si le point est a un parametre grand, ca foire. )
@@ -1226,7 +1226,7 @@ bool FindLine(gp_Pnt&                                                 Psurf,
         }
       }
       break;
-      case IntPatch_Hyperbola: {
+      case IntPatch_IType::IntPatch_Hyperbola: {
         para = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Hyperbola(), Psurf);
         if (para <= upper && para >= lower)
         {
@@ -1242,7 +1242,7 @@ bool FindLine(gp_Pnt&                                                 Psurf,
       }
       break;
 
-      case IntPatch_Analytic: {
+      case IntPatch_IType::IntPatch_Analytic: {
         occ::handle<IntPatch_ALine> alin(occ::down_cast<IntPatch_ALine>(lin));
         NCollection_List<double>    aLParams;
         alin->FindParameter(Psurf, aLParams);
@@ -1303,10 +1303,10 @@ bool FindLine(gp_Pnt&                                                 Psurf,
       }
       break;
 
-      case IntPatch_Walking: // impossible . c est pour eviter les warnings
+      case IntPatch_IType::IntPatch_Walking: // impossible . c est pour eviter les warnings
       {
       }
-      case IntPatch_Restriction: // impossible . c est pour eviter les warnings
+      case IntPatch_IType::IntPatch_Restriction: // impossible . c est pour eviter les warnings
       {
       }
     }
@@ -1322,32 +1322,32 @@ bool FindLine(gp_Pnt&                                                 Psurf,
   // Computation of tangent vector
   switch (typarc)
   {
-    case IntPatch_Lin:
+    case IntPatch_IType::IntPatch_Lin:
       theLParams.Append(aParaInt);
       Vtgtint = (*((occ::handle<IntPatch_GLine>*)&slin(theLineIdx)))->Line().Direction();
       break;
-    case IntPatch_Circle:
+    case IntPatch_IType::IntPatch_Circle:
       theLParams.Append(aParaInt);
       Vtgtint =
         ElCLib::DN(aParaInt, (*((occ::handle<IntPatch_GLine>*)&slin(theLineIdx)))->Circle(), 1);
       break;
-    case IntPatch_Ellipse:
+    case IntPatch_IType::IntPatch_Ellipse:
       theLParams.Append(aParaInt);
       Vtgtint =
         ElCLib::DN(aParaInt, (*((occ::handle<IntPatch_GLine>*)&slin(theLineIdx)))->Ellipse(), 1);
       break;
-    case IntPatch_Parabola:
+    case IntPatch_IType::IntPatch_Parabola:
       theLParams.Append(aParaInt);
       Vtgtint =
         ElCLib::DN(aParaInt, (*((occ::handle<IntPatch_GLine>*)&slin(theLineIdx)))->Parabola(), 1);
       break;
-    case IntPatch_Hyperbola:
+    case IntPatch_IType::IntPatch_Hyperbola:
       theLParams.Append(aParaInt);
       Vtgtint =
         ElCLib::DN(aParaInt, (*((occ::handle<IntPatch_GLine>*)&slin(theLineIdx)))->Hyperbola(), 1);
       break;
 
-    case IntPatch_Analytic: {
+    case IntPatch_IType::IntPatch_Analytic: {
       if (!occ::down_cast<IntPatch_ALine>(slin(theLineIdx))->D1(theLParams.Last(), pt, Vtgtint))
       {
         // Previously (before the fix #29807) this code tried to process case
@@ -1360,10 +1360,10 @@ bool FindLine(gp_Pnt&                                                 Psurf,
       }
     }
     break;
-    case IntPatch_Walking: // impossible . c est pour eviter les warnings
+    case IntPatch_IType::IntPatch_Walking: // impossible . c est pour eviter les warnings
     {
     }
-    case IntPatch_Restriction: // impossible . c est pour eviter les warnings
+    case IntPatch_IType::IntPatch_Restriction: // impossible . c est pour eviter les warnings
     {
     }
   }
@@ -1393,27 +1393,27 @@ bool SingleLine(const gp_Pnt&                     Psurf,
 
   switch (typarc)
   {
-    case IntPatch_Lin:
+    case IntPatch_IType::IntPatch_Lin:
       parproj = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Line(), Psurf);
       ElCLib::D1(parproj, occ::down_cast<IntPatch_GLine>(lin)->Line(), ptproj, tgint);
       break;
-    case IntPatch_Circle:
+    case IntPatch_IType::IntPatch_Circle:
       parproj = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Circle(), Psurf);
       ElCLib::D1(parproj, occ::down_cast<IntPatch_GLine>(lin)->Circle(), ptproj, tgint);
       break;
-    case IntPatch_Ellipse:
+    case IntPatch_IType::IntPatch_Ellipse:
       parproj = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Ellipse(), Psurf);
       ElCLib::D1(parproj, occ::down_cast<IntPatch_GLine>(lin)->Ellipse(), ptproj, tgint);
       break;
-    case IntPatch_Parabola:
+    case IntPatch_IType::IntPatch_Parabola:
       parproj = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Parabola(), Psurf);
       ElCLib::D1(parproj, occ::down_cast<IntPatch_GLine>(lin)->Parabola(), ptproj, tgint);
       break;
-    case IntPatch_Hyperbola:
+    case IntPatch_IType::IntPatch_Hyperbola:
       parproj = ElCLib::Parameter(occ::down_cast<IntPatch_GLine>(lin)->Hyperbola(), Psurf);
       ElCLib::D1(parproj, occ::down_cast<IntPatch_GLine>(lin)->Hyperbola(), ptproj, tgint);
       break;
-    case IntPatch_Analytic: {
+    case IntPatch_IType::IntPatch_Analytic: {
       occ::handle<IntPatch_ALine> alin(occ::down_cast<IntPatch_ALine>(lin));
       NCollection_List<double>    aLParams;
       alin->FindParameter(Psurf, aLParams);
@@ -1441,10 +1441,10 @@ bool SingleLine(const gp_Pnt&                     Psurf,
       }
     }
     break;
-    case IntPatch_Walking: // impossible . c est pour eviter les warnings
+    case IntPatch_IType::IntPatch_Walking: // impossible . c est pour eviter les warnings
     {
     }
-    case IntPatch_Restriction: // impossible . c est pour eviter les warnings
+    case IntPatch_IType::IntPatch_Restriction: // impossible . c est pour eviter les warnings
     {
     }
   }
@@ -1580,17 +1580,17 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
 
         if (tgline.DotCross(norm2, norm1) > 0.000000001)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (tgline.DotCross(norm2, norm1) < -0.000000001)
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
-          trans1 = trans2 = IntSurf_Undecided;
+          trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
         }
         rline = new IntPatch_RLine(false, trans1, trans2);
         if (OnFirst)
@@ -1623,11 +1623,11 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
       {
         const occ::handle<IntPatch_Line>& slinj = slin(j);
         typ                                     = slinj->ArcType();
-        if (typ == IntPatch_Analytic)
+        if (typ == IntPatch_IType::IntPatch_Analytic)
         {
           Nbpts = occ::down_cast<IntPatch_ALine>(slinj)->NbVertex();
         }
-        else if (typ == IntPatch_Restriction)
+        else if (typ == IntPatch_IType::IntPatch_Restriction)
         {
           Nbpts = occ::down_cast<IntPatch_RLine>(slinj)->NbVertex();
         }
@@ -1637,11 +1637,11 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
         }
         for (k = 1; k <= Nbpts; k++)
         {
-          if (typ == IntPatch_Analytic)
+          if (typ == IntPatch_IType::IntPatch_Analytic)
           {
             ptvtx = occ::down_cast<IntPatch_ALine>(slinj)->Vertex(k);
           }
-          else if (typ == IntPatch_Restriction)
+          else if (typ == IntPatch_IType::IntPatch_Restriction)
           {
             ptvtx = occ::down_cast<IntPatch_RLine>(slinj)->Vertex(k);
           }
@@ -1656,11 +1656,11 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
             {
               ptvtx.SetMultiple(true);
               ptvtx.SetTolerance(TolArc);
-              if (typ == IntPatch_Analytic)
+              if (typ == IntPatch_IType::IntPatch_Analytic)
               {
                 occ::down_cast<IntPatch_ALine>(slinj)->Replace(k, ptvtx);
               }
-              else if (typ == IntPatch_Restriction)
+              else if (typ == IntPatch_IType::IntPatch_Restriction)
               {
                 occ::down_cast<IntPatch_RLine>(slinj)->Replace(k, ptvtx);
               }
@@ -1691,8 +1691,8 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
                 norm1 = d1u.Crossed(d1v);
                 if (norm1.SquareMagnitude() < 1e-16)
                 {
-                  TRest.SetValue(true, IntSurf_Undecided);
-                  TArc.SetValue(true, IntSurf_Undecided);
+                  TRest.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                  TArc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
                 }
                 else
                 {
@@ -1709,8 +1709,8 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
                 norm2 = d1u.Crossed(d1v);
                 if (norm2.SquareMagnitude() < 1e-16)
                 {
-                  TRest.SetValue(true, IntSurf_Undecided);
-                  TArc.SetValue(true, IntSurf_Undecided);
+                  TRest.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                  TArc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
                 }
                 else
                 {
@@ -1733,11 +1733,11 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
             {
               ptvtx.SetMultiple(true);
               ptvtx.SetTolerance(TolArc);
-              if (typ == IntPatch_Analytic)
+              if (typ == IntPatch_IType::IntPatch_Analytic)
               {
                 occ::down_cast<IntPatch_ALine>(slinj)->Replace(k, ptvtx);
               }
-              else if (typ == IntPatch_Restriction)
+              else if (typ == IntPatch_IType::IntPatch_Restriction)
               {
                 occ::down_cast<IntPatch_RLine>(slinj)->Replace(k, ptvtx);
               }
@@ -1769,8 +1769,8 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
                 norm1 = d1u.Crossed(d1v);
                 if (norm1.SquareMagnitude() < 1e-16)
                 {
-                  TRest.SetValue(true, IntSurf_Undecided);
-                  TArc.SetValue(true, IntSurf_Undecided);
+                  TRest.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                  TArc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
                 }
                 else
                 {
@@ -1787,8 +1787,8 @@ void ProcessSegments(const NCollection_Sequence<IntPatch_TheSegmentOfTheSOnBound
                 norm2 = d1u.Crossed(d1v);
                 if (norm2.SquareMagnitude() < 1e-16)
                 {
-                  TRest.SetValue(true, IntSurf_Undecided);
-                  TArc.SetValue(true, IntSurf_Undecided);
+                  TRest.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                  TArc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
                 }
                 else
                 {
@@ -1880,10 +1880,10 @@ static double SquareDistance(const occ::handle<IntPatch_GLine>& theGLine,
   double aSQDist = RealLast();
   switch (theGLine->ArcType())
   {
-    case IntPatch_Lin:
+    case IntPatch_IType::IntPatch_Lin:
       aSQDist = theGLine->Line().SquareDistance(theP);
       break;
-    case IntPatch_Circle:
+    case IntPatch_IType::IntPatch_Circle:
       aSQDist = theGLine->Circle().SquareDistance(theP);
       break;
     default:
@@ -1939,11 +1939,11 @@ static bool IsRLineGood(const IntSurf_Quadric&             Quad1,
   GeomAdaptor_Curve       anAC;
   occ::handle<Geom_Curve> aCurv;
 
-  if (aGType == IntPatch_Ellipse)
+  if (aGType == IntPatch_IType::IntPatch_Ellipse)
     aCurv = new Geom_Ellipse(theGLine->Ellipse());
-  else if (aGType == IntPatch_Parabola)
+  else if (aGType == IntPatch_IType::IntPatch_Parabola)
     aCurv = new Geom_Parabola(theGLine->Parabola());
-  else if (aGType == IntPatch_Hyperbola)
+  else if (aGType == IntPatch_IType::IntPatch_Hyperbola)
     aCurv = new Geom_Hyperbola(theGLine->Hyperbola());
 
   if (!aCurv.IsNull())
@@ -2045,7 +2045,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
     typ1                                    = slini->ArcType();
 
     bool HasToDeleteRLine = false;
-    if (typ1 == IntPatch_Restriction)
+    if (typ1 == IntPatch_IType::IntPatch_Restriction)
     {
       seq_Pnt3d.Clear();
       seq_Real.Clear();
@@ -2055,7 +2055,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
         const occ::handle<IntPatch_Line>& slinj = slin(j);
         Nbpt                                    = seq_Pnt3d.Length(); // important que ce soit ici
         typ2                                    = slinj->ArcType();
-        if (typ2 != IntPatch_Restriction)
+        if (typ2 != IntPatch_IType::IntPatch_Restriction)
         {
           //-- arcref = Handle(IntPatch_RLine)::DownCast (slini)->Arc();
           //-- OnFirst = Handle(IntPatch_RLine)::DownCast (slini)->IsOnFirstSurface();
@@ -2090,7 +2090,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
             paraml = RealLast();
           }
 
-          if (typ2 == IntPatch_Analytic)
+          if (typ2 == IntPatch_IType::IntPatch_Analytic)
           {
             Nbvtx = occ::down_cast<IntPatch_ALine>(slinj)->NbVertex();
           }
@@ -2119,7 +2119,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
 
           for (k = 1; !EdgeDegenere && k <= Nbvtx; k++)
           {
-            if (typ2 == IntPatch_Analytic)
+            if (typ2 == IntPatch_IType::IntPatch_Analytic)
             {
               Ptvtx = occ::down_cast<IntPatch_ALine>(slinj)->Vertex(k);
             }
@@ -2181,7 +2181,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                     for (int ri = 1; ri <= Nblin; ri++)
                     {
                       const occ::handle<IntPatch_Line>& slinri = slin(ri);
-                      if (slinri->ArcType() == IntPatch_Restriction)
+                      if (slinri->ArcType() == IntPatch_IType::IntPatch_Restriction)
                       {
                         if (OnFirst && occ::down_cast<IntPatch_RLine>(slinri)->IsArcOnS1())
                         {
@@ -2217,7 +2217,7 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                 Ptvtx.SetTolerance(_TolArc);
                 newptvtx.SetMultiple(true);
 
-                if (typ2 == IntPatch_Analytic)
+                if (typ2 == IntPatch_IType::IntPatch_Analytic)
                 {
                   occ::down_cast<IntPatch_ALine>(slinj)->Replace(k, Ptvtx);
                 }
@@ -2242,8 +2242,8 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                     norm = d1u.Crossed(d1v); // Quad2.Normale(valpt);
                     if (norm.SquareMagnitude() < 1e-16)
                     {
-                      TRest.SetValue(true, IntSurf_Undecided);
-                      TArc.SetValue(true, IntSurf_Undecided);
+                      TRest.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                      TArc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
                     }
                     else
                     {
@@ -2263,8 +2263,8 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
                     norm = d1u.Crossed(d1v); // Quad1.Normale(valpt);
                     if (norm.SquareMagnitude() < 1e-16)
                     {
-                      TRest.SetValue(true, IntSurf_Undecided);
-                      TArc.SetValue(true, IntSurf_Undecided);
+                      TRest.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+                      TArc.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
                     }
                     else
                     {
@@ -2295,9 +2295,9 @@ void ProcessRLine(NCollection_Sequence<occ::handle<IntPatch_Line>>& slin,
               break;
             }
           }
-        } //-- if (typ2 != IntPatch_Restriction)
+        } //-- if (typ2 != IntPatch_IType::IntPatch_Restriction)
       } //-- for (j=1; j<=Nblin; j++)
-    } //-- if (typ1 == IntPatch_Restriction)
+    } //-- if (typ1 == IntPatch_IType::IntPatch_Restriction)
 
     if (HasToDeleteRLine)
     {
@@ -2835,23 +2835,23 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
 
       switch (typs1)
       {
-        case GeomAbs_Plane: {
+        case GeomAbs_SurfaceType::GeomAbs_Plane: {
           Ptreference = (S1->Plane()).Location();
         }
         break;
-        case GeomAbs_Cylinder: {
+        case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
           Ptreference = ElSLib::Value(0., 0., S1->Cylinder());
         }
         break;
-        case GeomAbs_Sphere: {
+        case GeomAbs_SurfaceType::GeomAbs_Sphere: {
           Ptreference = ElSLib::Value(M_PI / 4., M_PI / 4., S1->Sphere());
         }
         break;
-        case GeomAbs_Cone: {
+        case GeomAbs_SurfaceType::GeomAbs_Cone: {
           Ptreference = ElSLib::Value(0., 10., S1->Cone());
         }
         break;
-        case GeomAbs_Torus: {
+        case GeomAbs_SurfaceType::GeomAbs_Torus: {
           Ptreference = ElSLib::Value(0., 0., S1->Torus());
         }
         break;
@@ -2937,18 +2937,18 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
   for (i = 1; i <= nblin; i++)
   {
     IntPatch_IType thetype = slin.Value(i)->ArcType();
-    if ((thetype == IntPatch_Ellipse) || (thetype == IntPatch_Circle) || (thetype == IntPatch_Lin)
-        || (thetype == IntPatch_Parabola) || (thetype == IntPatch_Hyperbola))
+    if ((thetype == IntPatch_IType::IntPatch_Ellipse) || (thetype == IntPatch_IType::IntPatch_Circle) || (thetype == IntPatch_IType::IntPatch_Lin)
+        || (thetype == IntPatch_IType::IntPatch_Parabola) || (thetype == IntPatch_IType::IntPatch_Hyperbola))
     {
       occ::handle<IntPatch_GLine>& glin = *((occ::handle<IntPatch_GLine>*)&slin.Value(i));
       glin->ComputeVertexParameters(TolArc);
     }
-    else if (thetype == IntPatch_Analytic)
+    else if (thetype == IntPatch_IType::IntPatch_Analytic)
     {
       occ::handle<IntPatch_ALine>& aligold = *((occ::handle<IntPatch_ALine>*)&slin.Value(i));
       aligold->ComputeVertexParameters(TolArc);
     }
-    else if (thetype == IntPatch_Restriction)
+    else if (thetype == IntPatch_IType::IntPatch_Restriction)
     {
       occ::handle<IntPatch_RLine>& rlig = *((occ::handle<IntPatch_RLine>*)&slin.Value(i));
       rlig->ComputeVertexParameters(TolArc);
@@ -2963,7 +2963,7 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     gp_Pnt         P;
     IntPatch_Point point;
     double         u1, v1, u2, v2;
-    if (slin.Value(i)->ArcType() == IntPatch_Circle)
+    if (slin.Value(i)->ArcType() == IntPatch_IType::IntPatch_Circle)
     {
       const occ::handle<IntPatch_GLine>& glin = *((occ::handle<IntPatch_GLine>*)&slin.Value(i));
       if (glin->NbVertex() == 0)
@@ -2987,7 +2987,7 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       }
     }
 
-    else if (slin.Value(i)->ArcType() == IntPatch_Ellipse)
+    else if (slin.Value(i)->ArcType() == IntPatch_IType::IntPatch_Ellipse)
     {
       const occ::handle<IntPatch_GLine>& glin = *((occ::handle<IntPatch_GLine>*)&slin.Value(i));
       if (glin->NbVertex() == 0)
@@ -3024,23 +3024,23 @@ int SetQuad(const occ::handle<Adaptor3d_Surface>& theS,
   int iRet = 0;
   switch (theTS)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       theQuad.SetValue(theS->Plane());
       iRet = 1;
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       theQuad.SetValue(theS->Cylinder());
       iRet = 2;
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       theQuad.SetValue(theS->Cone());
       iRet = 3;
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       theQuad.SetValue(theS->Sphere());
       iRet = 4;
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       theQuad.SetValue(theS->Torus());
       iRet = 5;
       break;
@@ -3084,11 +3084,11 @@ bool IntPP(const IntSurf_Quadric&                            Quad1,
   }
   Same   = false;
   typint = inter.TypeInter();
-  if (typint == IntAna_Same)
+  if (typint == IntAna_ResultType::IntAna_Same)
   { // cas faces confondues
     Same = true;
   }
-  else if (typint != IntAna_Empty)
+  else if (typint != IntAna_ResultType::IntAna_Empty)
   { // on a une ligne
     gp_Lin linsol = inter.Line(1);
     double discri = linsol.Direction().DotCross(Quad2.Normale(linsol.Location()),
@@ -3096,13 +3096,13 @@ bool IntPP(const IntSurf_Quadric&                            Quad1,
 
     if (discri > 0.0)
     {
-      trans1 = IntSurf_Out;
-      trans2 = IntSurf_In;
+      trans1 = IntSurf_TypeTrans::IntSurf_Out;
+      trans2 = IntSurf_TypeTrans::IntSurf_In;
     }
     else
     {
-      trans1 = IntSurf_In;
-      trans2 = IntSurf_Out;
+      trans1 = IntSurf_TypeTrans::IntSurf_In;
+      trans2 = IntSurf_TypeTrans::IntSurf_Out;
     }
     occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(linsol, false, trans1, trans2);
     slin.Append(glig);
@@ -3153,12 +3153,12 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_ResultType::IntAna_Empty: {
       Empty = true;
     }
     break;
 
-    case IntAna_Line: {
+    case IntAna_ResultType::IntAna_Line: {
       gp_Lin linsol = inter.Line(1);
       gp_Pnt orig(linsol.Location());
       if (NbSol == 1)
@@ -3181,26 +3181,26 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
 
         if (Normp.Dot(TestCurvature) > 0.)
         {
-          situcyl = IntSurf_Outside;
+          situcyl = IntSurf_Situation::IntSurf_Outside;
           if (Normp.Dot(Normcyl) > 0.)
           {
-            situp = IntSurf_Inside;
+            situp = IntSurf_Situation::IntSurf_Inside;
           }
           else
           {
-            situp = IntSurf_Outside;
+            situp = IntSurf_Situation::IntSurf_Outside;
           }
         }
         else
         {
-          situcyl = IntSurf_Inside;
+          situcyl = IntSurf_Situation::IntSurf_Inside;
           if (Normp.Dot(Normcyl) > 0.)
           {
-            situp = IntSurf_Outside;
+            situp = IntSurf_Situation::IntSurf_Outside;
           }
           else
           {
-            situp = IntSurf_Inside;
+            situp = IntSurf_Situation::IntSurf_Inside;
           }
         }
         occ::handle<IntPatch_GLine> glig;
@@ -3221,13 +3221,13 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
 
         if (linsol.Direction().DotCross(Quad2.Normale(orig), Quad1.Normale(orig)) > 0.)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(linsol, false, trans1, trans2);
         slin.Append(glig);
@@ -3237,13 +3237,13 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
 
         if (linsol.Direction().DotCross(Quad2.Normale(orig), Quad1.Normale(orig)) > 0.)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         glig = new IntPatch_GLine(linsol, false, trans1, trans2);
         slin.Append(glig);
@@ -3251,7 +3251,7 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
     }
     break;
       //
-    case IntAna_Circle: {
+    case IntAna_ResultType::IntAna_Circle: {
       gp_Circ cirsol;
       gp_Pnt  ptref;
       gp_Vec  Tgt;
@@ -3264,20 +3264,20 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
 
       if (Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref)) > 0.0)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
       slin.Append(glig);
     }
     break;
       //
-    case IntAna_Ellipse: {
+    case IntAna_ResultType::IntAna_Ellipse: {
       gp_Elips elipsol = inter.Ellipse(1);
       gp_Pnt   ptref;
       gp_Vec   Tgt;
@@ -3285,13 +3285,13 @@ bool IntPCy(const IntSurf_Quadric&                            Quad1,
 
       if (Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref)) > 0.0)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(elipsol, false, trans1, trans2);
       slin.Append(glig);
@@ -3351,12 +3351,12 @@ bool IntPSp(const IntSurf_Quadric& Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_ResultType::IntAna_Empty: {
       Empty = true;
     }
     break;
       //
-    case IntAna_Point: {
+    case IntAna_ResultType::IntAna_Point: {
       gp_Pnt psol = inter.Point(1);
       double U1, V1, U2, V2;
       Quad1.Parameters(psol, U1, V1);
@@ -3368,7 +3368,7 @@ bool IntPSp(const IntSurf_Quadric& Quad1,
     }
     break;
       //
-    case IntAna_Circle: {
+    case IntAna_ResultType::IntAna_Circle: {
       cirsol = inter.Circle(1);
       // modified by NIZNHY-PKV Thu Sep 15 11:30:03 2011f
       AdjustToSeam(Sp, cirsol, Tolang);
@@ -3379,13 +3379,13 @@ bool IntPSp(const IntSurf_Quadric& Quad1,
 
       if (Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref)) > 0.)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
       slin.Append(glig);
@@ -3449,7 +3449,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Point: {
+    case IntAna_ResultType::IntAna_Point: {
       gp_Pnt psol = inter.Point(1);
       double U1, V1, U2, V2;
       Quad1.Parameters(psol, U1, V1);
@@ -3461,7 +3461,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Line: {
+    case IntAna_ResultType::IntAna_Line: {
       gp_Lin linsol = inter.Line(1);
       if (linsol.Direction().Dot(Co.Axis().Direction()) < 0.)
       {
@@ -3497,32 +3497,32 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
 
         if (Normp.Dot(TestCurvature) > 0.)
         {
-          situco           = IntSurf_Outside;
-          situco_otherside = IntSurf_Inside;
+          situco           = IntSurf_Situation::IntSurf_Outside;
+          situco_otherside = IntSurf_Situation::IntSurf_Inside;
           if (Normp.Dot(Normco) > 0.)
           {
-            situp           = IntSurf_Inside;
-            situp_otherside = IntSurf_Outside;
+            situp           = IntSurf_Situation::IntSurf_Inside;
+            situp_otherside = IntSurf_Situation::IntSurf_Outside;
           }
           else
           {
-            situp           = IntSurf_Outside;
-            situp_otherside = IntSurf_Inside;
+            situp           = IntSurf_Situation::IntSurf_Outside;
+            situp_otherside = IntSurf_Situation::IntSurf_Inside;
           }
         }
         else
         {
-          situco           = IntSurf_Inside;
-          situco_otherside = IntSurf_Outside;
+          situco           = IntSurf_Situation::IntSurf_Inside;
+          situco_otherside = IntSurf_Situation::IntSurf_Outside;
           if (Normp.Dot(Normco) > 0.)
           {
-            situp           = IntSurf_Outside;
-            situp_otherside = IntSurf_Inside;
+            situp           = IntSurf_Situation::IntSurf_Outside;
+            situp_otherside = IntSurf_Situation::IntSurf_Inside;
           }
           else
           {
-            situp           = IntSurf_Inside;
-            situp_otherside = IntSurf_Outside;
+            situp           = IntSurf_Situation::IntSurf_Inside;
+            situp_otherside = IntSurf_Situation::IntSurf_Outside;
           }
         }
         //----------------------------------------------------------
@@ -3565,13 +3565,13 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
         // la premiere.
         if (linsol.Direction().DotCross(Quad2.Normale(ptbid), Quad1.Normale(ptbid)) > 0.)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
 
         Multpoint = true;
@@ -3608,13 +3608,13 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
         ptbid = ElCLib::Value(para + 5., linsol);
         if (linsol.Direction().DotCross(Quad2.Normale(ptbid), Quad1.Normale(ptbid)) > 0.)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         ptsol.SetParameter(para);
         glig = new IntPatch_GLine(linsol, false, trans1, trans2);
@@ -3638,7 +3638,7 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_ResultType::IntAna_Circle: {
       gp_Circ cirsol = inter.Circle(1);
       // modified by NIZNHY-PKV Thu Sep 15 11:34:04 2011f
       AdjustToSeam(Co, cirsol);
@@ -3649,20 +3649,20 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
 
       if (Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref)) > 0.)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
       slin.Append(glig);
     }
     break;
 
-    case IntAna_Ellipse: {
+    case IntAna_ResultType::IntAna_Ellipse: {
       gp_Elips elipsol = inter.Ellipse(1);
       gp_Pnt   ptref;
       gp_Vec   Tgt;
@@ -3670,20 +3670,20 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
 
       if (Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref)) > 0.)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(elipsol, false, trans1, trans2);
       slin.Append(glig);
     }
     break;
 
-    case IntAna_Parabola: {
+    case IntAna_ResultType::IntAna_Parabola: {
       gp_Parab parabsol = inter.Parabola(1);
 
       gp_Vec Tgtorig(parabsol.YAxis().Direction());
@@ -3691,24 +3691,24 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
         Tgtorig.DotCross(Quad2.Normale(parabsol.Location()), Quad1.Normale(parabsol.Location()));
       if (ptran > 0.00000001)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else if (ptran < -0.00000001)
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       else
       {
-        trans1 = trans2 = IntSurf_Undecided;
+        trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
       }
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(parabsol, false, trans1, trans2);
       slin.Append(glig);
     }
     break;
 
-    case IntAna_Hyperbola: {
+    case IntAna_ResultType::IntAna_Hyperbola: {
       gp_Pnt tophypr;
       gp_Vec Tgttop;
 
@@ -3721,17 +3721,17 @@ bool IntPCo(const IntSurf_Quadric&                            Quad1,
 
         if (qwe > 0.00000001)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (qwe < -0.00000001)
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
-          trans1 = trans2 = IntSurf_Undecided;
+          trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
         }
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(hyprsol, false, trans1, trans2);
         slin.Append(glig);
@@ -3772,11 +3772,11 @@ bool IntPTo(const IntSurf_Quadric&                            theQuad1,
   //
   switch (typint)
   {
-    case IntAna_Empty:
+    case IntAna_ResultType::IntAna_Empty:
       bEmpty = true;
       break;
     //
-    case IntAna_Circle: {
+    case IntAna_ResultType::IntAna_Circle: {
       int               i;
       IntSurf_TypeTrans trans1, trans2;
       gp_Pnt            ptref;
@@ -3793,13 +3793,13 @@ bool IntPTo(const IntSurf_Quadric&                            theQuad1,
         //
         if (Tgt.DotCross(theQuad2.Normale(ptref), theQuad1.Normale(ptref)) > 0.0)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         //
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(aC, false, trans1, trans2);
@@ -3808,7 +3808,7 @@ bool IntPTo(const IntSurf_Quadric&                            theQuad1,
     }
     break;
     //
-    case IntAna_NoGeometricSolution:
+    case IntAna_ResultType::IntAna_NoGeometricSolution:
     default:
       bRet = false;
       break;
@@ -4664,7 +4664,7 @@ void ProcessBounds(const occ::handle<IntPatch_ALine>&                      alig,
 
   while (j <= slin.Length())
   {
-    if (slin.Value(j)->ArcType() == IntPatch_Analytic)
+    if (slin.Value(j)->ArcType() == IntPatch_IType::IntPatch_Analytic)
     {
       const occ::handle<IntPatch_ALine>& aligold = *((occ::handle<IntPatch_ALine>*)&slin.Value(j));
       k                                          = 1;
@@ -4825,17 +4825,17 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_ResultType::IntAna_Empty: {
       Empty = true;
     }
     break;
 
-    case IntAna_Same: {
+    case IntAna_ResultType::IntAna_Same: {
       Same = true;
     }
     break;
 
-    case IntAna_Point: {
+    case IntAna_ResultType::IntAna_Point: {
       gp_Pnt psol(theInter.Point(1));
       ptsol.SetValue(psol, Tol, true);
 
@@ -4848,7 +4848,7 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
     }
     break;
 
-    case IntAna_Line: {
+    case IntAna_ResultType::IntAna_Line: {
       gp_Pnt ptref;
       if (NbSol == 1)
       { // Cylinders are tangent to each other by line
@@ -4874,20 +4874,20 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
 
           if (norm1.Dot(crb1) > 0.)
           {
-            situcyl2 = IntSurf_Inside;
+            situcyl2 = IntSurf_Situation::IntSurf_Inside;
           }
           else
           {
-            situcyl2 = IntSurf_Outside;
+            situcyl2 = IntSurf_Situation::IntSurf_Outside;
           }
 
           if (norm2.Dot(crb2) > 0.)
           {
-            situcyl1 = IntSurf_Inside;
+            situcyl1 = IntSurf_Situation::IntSurf_Inside;
           }
           else
           {
-            situcyl1 = IntSurf_Outside;
+            situcyl1 = IntSurf_Situation::IntSurf_Outside;
           }
         }
         else
@@ -4896,40 +4896,40 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
           {
             if (norm1.Dot(crb1) > 0.)
             {
-              situcyl2 = IntSurf_Inside;
+              situcyl2 = IntSurf_Situation::IntSurf_Inside;
             }
             else
             {
-              situcyl2 = IntSurf_Outside;
+              situcyl2 = IntSurf_Situation::IntSurf_Outside;
             }
 
             if (norm2.Dot(crb2) > 0.)
             {
-              situcyl1 = IntSurf_Outside;
+              situcyl1 = IntSurf_Situation::IntSurf_Outside;
             }
             else
             {
-              situcyl1 = IntSurf_Inside;
+              situcyl1 = IntSurf_Situation::IntSurf_Inside;
             }
           }
           else
           {
             if (norm1.Dot(crb1) > 0.)
             {
-              situcyl2 = IntSurf_Outside;
+              situcyl2 = IntSurf_Situation::IntSurf_Outside;
             }
             else
             {
-              situcyl2 = IntSurf_Inside;
+              situcyl2 = IntSurf_Situation::IntSurf_Inside;
             }
 
             if (norm2.Dot(crb2) > 0.)
             {
-              situcyl1 = IntSurf_Inside;
+              situcyl1 = IntSurf_Situation::IntSurf_Inside;
             }
             else
             {
-              situcyl1 = IntSurf_Outside;
+              situcyl1 = IntSurf_Situation::IntSurf_Outside;
             }
           }
         }
@@ -4949,17 +4949,17 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
           double qwe = lsd.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
           if (qwe > 0.00000001)
           {
-            trans1 = IntSurf_Out;
-            trans2 = IntSurf_In;
+            trans1 = IntSurf_TypeTrans::IntSurf_Out;
+            trans2 = IntSurf_TypeTrans::IntSurf_In;
           }
           else if (qwe < -0.00000001)
           {
-            trans1 = IntSurf_In;
-            trans2 = IntSurf_Out;
+            trans1 = IntSurf_TypeTrans::IntSurf_In;
+            trans2 = IntSurf_TypeTrans::IntSurf_Out;
           }
           else
           {
-            trans1 = trans2 = IntSurf_Undecided;
+            trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
           }
 
           occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(linsol, false, trans1, trans2);
@@ -4969,7 +4969,7 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
     }
     break;
 
-    case IntAna_Ellipse: {
+    case IntAna_ResultType::IntAna_Ellipse: {
       gp_Vec         Tgt;
       gp_Pnt         ptref;
       IntPatch_Point pmult1, pmult2;
@@ -5004,17 +5004,17 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
       double qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
       if (qwe > 0.00000001)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else if (qwe < -0.00000001)
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       else
       {
-        trans1 = trans2 = IntSurf_Undecided;
+        trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
       }
 
       //-- Transition calculee au point 0 -> Trans2 , Trans1
@@ -5080,17 +5080,17 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
       qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
       if (qwe > 0.00000001)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else if (qwe < -0.00000001)
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       else
       {
-        trans1 = trans2 = IntSurf_Undecided;
+        trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
       }
 
       //-- La transition a ete calculee sur un point de cette ligne
@@ -5126,14 +5126,14 @@ bool CyCyAnalyticalIntersect(const IntSurf_Quadric&                            Q
     }
     break;
 
-    case IntAna_Parabola:
-    case IntAna_Hyperbola:
+    case IntAna_ResultType::IntAna_Parabola:
+    case IntAna_ResultType::IntAna_Hyperbola:
       throw Standard_Failure("IntCyCy(): Wrong intersection type!");
 
-    case IntAna_Circle:
+    case IntAna_ResultType::IntAna_Circle:
       // Circle is useful when we will work with trimmed surfaces
       // (two cylinders can be tangent by their basises, e.g. circle)
-    case IntAna_NoGeometricSolution:
+    case IntAna_ResultType::IntAna_NoGeometricSolution:
     default:
       return false;
   }
@@ -7765,7 +7765,7 @@ IntPatch_ImpImpIntersection::IntStatus IntCyCy(
     return IntPatch_ImpImpIntersection::IntStatus_Fail;
   }
 
-  if (anInter.TypeInter() != IntAna_NoGeometricSolution)
+  if (anInter.TypeInter() != IntAna_ResultType::IntAna_NoGeometricSolution)
   {
     if (CyCyAnalyticalIntersect(theQuad1,
                                 theQuad2,
@@ -7992,12 +7992,12 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_ResultType::IntAna_Empty: {
       Empty = true;
     }
     break;
 
-    case IntAna_Point: {
+    case IntAna_ResultType::IntAna_Point: {
       gp_Pnt psol(inter.Point(1));
       double U1, V1, U2, V2;
       Quad1.Parameters(psol, U1, V1);
@@ -8008,7 +8008,7 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_ResultType::IntAna_Circle: {
       cirsol = inter.Circle(1);
       gp_Vec Tgt;
       gp_Pnt ptref;
@@ -8034,26 +8034,26 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
 
         if (Normcyl.Dot(TestCurvature) > 0.)
         {
-          situsp = IntSurf_Outside;
+          situsp = IntSurf_Situation::IntSurf_Outside;
           if (Normsp.Dot(Normcyl) > 0.)
           {
-            situcyl = IntSurf_Inside;
+            situcyl = IntSurf_Situation::IntSurf_Inside;
           }
           else
           {
-            situcyl = IntSurf_Outside;
+            situcyl = IntSurf_Situation::IntSurf_Outside;
           }
         }
         else
         {
-          situsp = IntSurf_Inside;
+          situsp = IntSurf_Situation::IntSurf_Inside;
           if (Normsp.Dot(Normcyl) > 0.)
           {
-            situcyl = IntSurf_Outside;
+            situcyl = IntSurf_Situation::IntSurf_Outside;
           }
           else
           {
-            situcyl = IntSurf_Inside;
+            situcyl = IntSurf_Situation::IntSurf_Inside;
           }
         }
         occ::handle<IntPatch_GLine> glig;
@@ -8071,13 +8071,13 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
       {
         if (Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref)) > 0.0)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
         slin.Append(glig);
@@ -8087,17 +8087,17 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
         double qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
         if (qwe > 0.0000001)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (qwe < -0.0000001)
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
-          trans1 = trans2 = IntSurf_Undecided;
+          trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
         }
         glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
         slin.Append(glig);
@@ -8105,7 +8105,7 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_NoGeometricSolution: {
+    case IntAna_ResultType::IntAna_NoGeometricSolution: {
       gp_Pnt             psol;
       double             U1, V1, U2, V2;
       IntAna_IntQuadQuad anaint(Cy, Sp, Tol);
@@ -8166,17 +8166,17 @@ bool IntCySp(const IntSurf_Quadric&                            Quad1,
             double qwe = tgvalid.DotCross(Quad2.Normale(ptvalid), Quad1.Normale(ptvalid));
             if (qwe > 0.00000001)
             {
-              trans1 = IntSurf_Out;
-              trans2 = IntSurf_In;
+              trans1 = IntSurf_TypeTrans::IntSurf_Out;
+              trans2 = IntSurf_TypeTrans::IntSurf_In;
             }
             else if (qwe < -0.00000001)
             {
-              trans1 = IntSurf_In;
-              trans2 = IntSurf_Out;
+              trans1 = IntSurf_TypeTrans::IntSurf_In;
+              trans2 = IntSurf_TypeTrans::IntSurf_Out;
             }
             else
             {
-              trans1 = trans2 = IntSurf_Undecided;
+              trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
             }
             alig = new IntPatch_ALine(curvsol, false, trans1, trans2);
           }
@@ -8260,12 +8260,12 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_ResultType::IntAna_Empty: {
       Empty = true;
     }
     break;
 
-    case IntAna_Point: {
+    case IntAna_ResultType::IntAna_Point: {
       gp_Pnt psol(inter.Point(1));
       double U1, V1, U2, V2;
       Quad1.Parameters(psol, U1, V1);
@@ -8276,7 +8276,7 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_ResultType::IntAna_Circle: {
       gp_Vec Tgt;
       gp_Pnt ptref;
       int    j;
@@ -8289,17 +8289,17 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
         qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
         if (qwe > 0.00000001)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (qwe < -0.00000001)
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
-          trans1 = trans2 = IntSurf_Undecided;
+          trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
         }
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
         slin.Append(glig);
@@ -8307,7 +8307,7 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_NoGeometricSolution: {
+    case IntAna_ResultType::IntAna_NoGeometricSolution: {
       gp_Pnt             psol;
       double             U1, V1, U2, V2;
       IntAna_IntQuadQuad anaint(Cy, Co, Tol);
@@ -8392,17 +8392,17 @@ bool IntCyCo(const IntSurf_Quadric&                            Quad1,
               double qwe = tgvalid.DotCross(Quad2.Normale(ptvalid), Quad1.Normale(ptvalid));
               if (qwe > 0.00000001)
               {
-                trans1 = IntSurf_Out;
-                trans2 = IntSurf_In;
+                trans1 = IntSurf_TypeTrans::IntSurf_Out;
+                trans2 = IntSurf_TypeTrans::IntSurf_In;
               }
               else if (qwe < -0.00000001)
               {
-                trans1 = IntSurf_In;
-                trans2 = IntSurf_Out;
+                trans1 = IntSurf_TypeTrans::IntSurf_In;
+                trans2 = IntSurf_TypeTrans::IntSurf_Out;
               }
               else
               {
-                trans1 = trans2 = IntSurf_Undecided;
+                trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
               }
               alig = new IntPatch_ALine(curvsol, false, trans1, trans2);
               kept = true;
@@ -8548,18 +8548,18 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_ResultType::IntAna_Empty: {
       Empty = true;
     }
     break;
 
-    case IntAna_Same: {
+    case IntAna_ResultType::IntAna_Same: {
       Same = true;
     }
     break;
 
       // modified by NIZNHY-PKV Wed Nov 30 12:56:06 2005f
-    case IntAna_Line: {
+    case IntAna_ResultType::IntAna_Line: {
       double                      para, aDot;
       gp_Pnt                      aPApex1, aPApex2, ptbid;
       gp_Lin                      linsol;
@@ -8589,8 +8589,8 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
         aDot   = NormC1.Dot(NormC2);
         if (aDot < 0.)
         {
-          situC1 = IntSurf_Outside;
-          situC2 = IntSurf_Outside;
+          situC1 = IntSurf_Situation::IntSurf_Outside;
+          situC2 = IntSurf_Situation::IntSurf_Outside;
         }
         else
         {
@@ -8601,14 +8601,14 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
           aR1 = aLAx1.Distance(ptbid);
           aR2 = aLAx2.Distance(ptbid);
           //
-          situC1 = IntSurf_Inside;
-          situC2 = IntSurf_Outside;
+          situC1 = IntSurf_Situation::IntSurf_Inside;
+          situC2 = IntSurf_Situation::IntSurf_Outside;
           if (aR1 > aR2)
           {                          // Intersection line parametrizes from Apex1 to Apex2,
                                      // clang-format off
-            situC1 = IntSurf_Outside; // So the distance between ptbid and aLAx1 is greater than the
+            situC1 = IntSurf_Situation::IntSurf_Outside; // So the distance between ptbid and aLAx1 is greater than the
                                      // clang-format on
-            situC2 = IntSurf_Inside; // distance between ptbid and aLAx2 and in that case Cone2
+            situC2 = IntSurf_Situation::IntSurf_Inside; // distance between ptbid and aLAx2 and in that case Cone2
                                      // is inside Cone 1
           }
         }
@@ -8639,12 +8639,12 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
           Quad1.Parameters(aPApex1, U1, V1);
           Quad2.Parameters(aPApex1, U2, V2);
           //
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
           if (linsol.Direction().DotCross(Quad2.Normale(ptbid), Quad1.Normale(ptbid)) > 0.)
           {
-            trans1 = IntSurf_Out;
-            trans2 = IntSurf_In;
+            trans1 = IntSurf_TypeTrans::IntSurf_Out;
+            trans2 = IntSurf_TypeTrans::IntSurf_In;
           }
           //
           Multpoint = true;
@@ -8673,7 +8673,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     break;
       // modified by NIZNHY-PKV Wed Nov 30 12:56:10 2005t
 
-    case IntAna_Point: {
+    case IntAna_ResultType::IntAna_Point: {
       gp_Pnt ptcontact;
       gp_Pnt apex1(Co1.Apex());
       gp_Pnt apex2(Co2.Apex());
@@ -8707,7 +8707,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_ResultType::IntAna_Circle: {
       IntPatch_Point aPtsol;
       gp_Vec         Tgt;
       gp_Pnt         ptref;
@@ -8718,17 +8718,17 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
         double qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
         if (qwe > 0.00000001)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (qwe < -0.00000001)
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
-          trans1 = trans2 = IntSurf_Undecided;
+          trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
         }
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
         if (inter.HasCommonGen())
@@ -8746,7 +8746,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Ellipse: {
+    case IntAna_ResultType::IntAna_Ellipse: {
       IntPatch_Point aPtsol;
       gp_Elips       elipsol = inter.Ellipse(1);
 
@@ -8757,17 +8757,17 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
       double qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
       if (qwe > 0.00000001)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else if (qwe < -0.00000001)
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       else
       {
-        trans1 = trans2 = IntSurf_Undecided;
+        trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
       }
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(elipsol, false, trans1, trans2);
       if (inter.HasCommonGen())
@@ -8784,7 +8784,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Hyperbola: {
+    case IntAna_ResultType::IntAna_Hyperbola: {
       IntPatch_Point aPtsol;
       gp_Vec         Tgt;
       gp_Pnt         ptref;
@@ -8795,17 +8795,17 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
         double qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
         if (qwe > 0.00000001)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (qwe < -0.00000001)
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
-          trans1 = trans2 = IntSurf_Undecided;
+          trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
         }
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(hyprsol, false, trans1, trans2);
         if (inter.HasCommonGen())
@@ -8823,7 +8823,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Parabola: {
+    case IntAna_ResultType::IntAna_Parabola: {
       IntPatch_Point aPtsol;
       gp_Parab       parabsol = inter.Parabola(1);
 
@@ -8832,17 +8832,17 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
         Tgtorig.DotCross(Quad2.Normale(parabsol.Location()), Quad1.Normale(parabsol.Location()));
       if (ptran > 0.00000001)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else if (ptran < -0.00000001)
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       else
       {
-        trans1 = trans2 = IntSurf_Undecided;
+        trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
       }
 
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(parabsol, false, trans1, trans2);
@@ -8860,7 +8860,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_NoGeometricSolution: {
+    case IntAna_ResultType::IntAna_NoGeometricSolution: {
       gp_Pnt             psol;
       IntAna_IntQuadQuad anaint(Co1, Co2, Tol);
       if (!anaint.IsDone())
@@ -8935,17 +8935,17 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
             double qwe = tgvalid.DotCross(Quad2.Normale(ptvalid), Quad1.Normale(ptvalid));
             if (qwe > 0.000000001)
             {
-              trans1 = IntSurf_Out;
-              trans2 = IntSurf_In;
+              trans1 = IntSurf_TypeTrans::IntSurf_Out;
+              trans2 = IntSurf_TypeTrans::IntSurf_In;
             }
             else if (qwe < -0.000000001)
             {
-              trans1 = IntSurf_In;
-              trans2 = IntSurf_Out;
+              trans1 = IntSurf_TypeTrans::IntSurf_In;
+              trans2 = IntSurf_TypeTrans::IntSurf_Out;
             }
             else
             {
-              trans1 = trans2 = IntSurf_Undecided;
+              trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
             }
             alig = new IntPatch_ALine(curvsol, false, trans1, trans2);
             kept = true;
@@ -8998,7 +8998,7 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     gce_MakeLin                 aMkLin(aPApex1, aPApex2);
     const gp_Lin&               linsol = aMkLin.Value();
     occ::handle<IntPatch_GLine> glig =
-      new IntPatch_GLine(linsol, true, IntSurf_Undecided, IntSurf_Undecided);
+      new IntPatch_GLine(linsol, true, IntSurf_TypeTrans::IntSurf_Undecided, IntSurf_TypeTrans::IntSurf_Undecided);
 
     const gp_Pnt& aPChar = inter.PChar();
     Quad1.Parameters(aPChar, U1, V1);
@@ -9059,12 +9059,12 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_ResultType::IntAna_Empty: {
       Empty = true;
     }
     break;
 
-    case IntAna_Point: {
+    case IntAna_ResultType::IntAna_Point: {
       gp_Pnt ptcontact;
       gp_Pnt apex(Co.Apex());
       double param;
@@ -9094,7 +9094,7 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_ResultType::IntAna_Circle: {
       gp_Vec Tgt;
       gp_Pnt ptref;
 
@@ -9109,17 +9109,17 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
         double qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
         if (qwe > 0.00000001)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (qwe < -0.00000001)
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
-          trans1 = trans2 = IntSurf_Undecided;
+          trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
         }
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
         slin.Append(glig);
@@ -9128,7 +9128,7 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_PointAndCircle: {
+    case IntAna_ResultType::IntAna_PointAndCircle: {
       gp_Vec Tgt;
       gp_Pnt ptref;
       gp_Pnt apex(Co.Apex());
@@ -9152,34 +9152,34 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
       {
         if (qwe > Precision::PConfusion())
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (qwe < -Precision::PConfusion())
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
-          trans1 = trans2 = IntSurf_Undecided;
+          trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
         }
       }
       else
       {
         if (qwe < -Precision::PConfusion())
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (qwe > Precision::PConfusion())
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
-          trans1 = trans2 = IntSurf_Undecided;
+          trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
         }
       }
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
@@ -9187,7 +9187,7 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_NoGeometricSolution: {
+    case IntAna_ResultType::IntAna_NoGeometricSolution: {
       gp_Pnt             psol;
       IntAna_IntQuadQuad anaint(Co, Sp, Tol);
       if (!anaint.IsDone())
@@ -9256,17 +9256,17 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
             double qwe = tgvalid.DotCross(Quad2.Normale(ptvalid), Quad1.Normale(ptvalid));
             if (qwe > 0.000000001)
             {
-              trans1 = IntSurf_Out;
-              trans2 = IntSurf_In;
+              trans1 = IntSurf_TypeTrans::IntSurf_Out;
+              trans2 = IntSurf_TypeTrans::IntSurf_In;
             }
             else if (qwe < -0.000000001)
             {
-              trans1 = IntSurf_In;
-              trans2 = IntSurf_Out;
+              trans1 = IntSurf_TypeTrans::IntSurf_In;
+              trans2 = IntSurf_TypeTrans::IntSurf_Out;
             }
             else
             {
-              trans1 = trans2 = IntSurf_Undecided;
+              trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
             }
             alig = new IntPatch_ALine(curvsol, false, trans1, trans2);
             kept = true;
@@ -9339,17 +9339,17 @@ bool IntSpSp(const IntSurf_Quadric&                            Quad1,
 
   switch (typint)
   {
-    case IntAna_Empty: {
+    case IntAna_ResultType::IntAna_Empty: {
       Empty = true;
     }
     break;
 
-    case IntAna_Same: {
+    case IntAna_ResultType::IntAna_Same: {
       Same = true;
     }
     break;
 
-    case IntAna_Point: {
+    case IntAna_ResultType::IntAna_Point: {
       gp_Pnt psol(inter.Point(1));
       double U1, V1, U2, V2;
       Quad1.Parameters(psol, U1, V1);
@@ -9361,7 +9361,7 @@ bool IntSpSp(const IntSurf_Quadric&                            Quad1,
     }
     break;
 
-    case IntAna_Circle: {
+    case IntAna_ResultType::IntAna_Circle: {
       gp_Circ cirsol = inter.Circle(1);
       gp_Pnt  ptref;
       gp_Vec  Tgt;
@@ -9370,17 +9370,17 @@ bool IntSpSp(const IntSurf_Quadric&                            Quad1,
       double qwe = Tgt.DotCross(Quad2.Normale(ptref), Quad1.Normale(ptref));
       if (qwe > 0.00000001)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else if (qwe < -0.00000001)
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
       else
       {
-        trans1 = trans2 = IntSurf_Undecided;
+        trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
       }
       occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(cirsol, false, trans1, trans2);
       slin.Append(glig);
@@ -9470,7 +9470,7 @@ bool IntToTo(const IntSurf_Quadric&                            theQuad1,
   bool               bRet = anInt.IsDone();
   if (bRet)
   {
-    if (anInt.TypeInter() == IntAna_Same)
+    if (anInt.TypeInter() == IntAna_ResultType::IntAna_Same)
     {
       bEmpty    = false;
       bSameSurf = true;
@@ -9505,11 +9505,11 @@ static bool TreatResultTorus(const IntSurf_Quadric&                            t
   //
   switch (typint)
   {
-    case IntAna_Empty:
+    case IntAna_ResultType::IntAna_Empty:
       bEmpty = true;
       break;
     //
-    case IntAna_Circle: {
+    case IntAna_ResultType::IntAna_Circle: {
       int               i;
       IntSurf_TypeTrans trans1, trans2;
       gp_Vec            Tgt;
@@ -9526,17 +9526,17 @@ static bool TreatResultTorus(const IntSurf_Quadric&                            t
         double qwe = Tgt.DotCross(theQuad2.Normale(ptref), theQuad1.Normale(ptref));
         if (qwe > 0.00000001)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (qwe < -0.00000001)
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
         else
         {
-          trans1 = trans2 = IntSurf_Undecided;
+          trans1 = trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
         }
         //
         occ::handle<IntPatch_GLine> glig = new IntPatch_GLine(aC, false, trans1, trans2);
@@ -9545,7 +9545,7 @@ static bool TreatResultTorus(const IntSurf_Quadric&                            t
     }
     break;
     //
-    case IntAna_NoGeometricSolution:
+    case IntAna_ResultType::IntAna_NoGeometricSolution:
     default:
       bRet = false;
       break;

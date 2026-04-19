@@ -144,7 +144,7 @@ void DrawTrSurf_Curve::DrawOn(Draw_Display& dis) const
     Draw_Bounds = true;
   }
   // Draw the curvature Radius
-  if (dispcurvradius && (C.GetType() != GeomAbs_Line))
+  if (dispcurvradius && (C.GetType() != GeomAbs_CurveType::GeomAbs_Line))
   {
     int                        ii;
     int                        intrv, nbintv = C.NbIntervals(GeomAbs_CN);

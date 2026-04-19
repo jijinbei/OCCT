@@ -51,22 +51,22 @@ public:
 
   //! Checks if the oriented edges of the wire give a
   //! closed wire. If the wire is closed, returns
-  //! BRepCheck_NoError. Warning: if the first and
+  //! BRepCheck_Status::BRepCheck_NoError. Warning: if the first and
   //! last edge are infinite, the wire will be
   //! considered as a closed one. If <Update> is set to
   //! true, registers the status in the list.
   //! May return (and registers):
-  //! **BRepCheck_NotConnected, if wire is not
+  //! **BRepCheck_Status::BRepCheck_NotConnected, if wire is not
   //! topologically closed
-  //! **BRepCheck_RedundantEdge, if an edge is in wire
+  //! **BRepCheck_Status::BRepCheck_RedundantEdge, if an edge is in wire
   //! more than 3 times or in case of 2 occurrences if
   //! not with FORWARD and REVERSED orientation.
-  //! **BRepCheck_NoError
+  //! **BRepCheck_Status::BRepCheck_NoError
   Standard_EXPORT BRepCheck_Status Closed(const bool Update = false);
 
   //! Checks if edges of the wire give a wire closed in
   //! 2d space.
-  //! Returns BRepCheck_NoError, or BRepCheck_NotClosed
+  //! Returns BRepCheck_Status::BRepCheck_NoError, or BRepCheck_Status::BRepCheck_NotClosed
   //! If <Update> is set to true, registers the
   //! status in the list.
   Standard_EXPORT BRepCheck_Status Closed2d(const TopoDS_Face& F, const bool Update = false);
@@ -78,10 +78,10 @@ public:
   //! <Update> is set to true, registers the
   //! status in the list.
   //! May return (and registers):
-  //! BRepCheck_InvalidDegeneratedFlag,
-  //! BRepCheck_BadOrientationOfSubshape,
-  //! BRepCheck_NotClosed,
-  //! BRepCheck_NoError
+  //! BRepCheck_Status::BRepCheck_InvalidDegeneratedFlag,
+  //! BRepCheck_Status::BRepCheck_BadOrientationOfSubshape,
+  //! BRepCheck_Status::BRepCheck_NotClosed,
+  //! BRepCheck_Status::BRepCheck_NoError
   Standard_EXPORT BRepCheck_Status Orientation(const TopoDS_Face& F, const bool Update = false);
 
   //! Checks if the wire intersect itself on the face
@@ -91,10 +91,10 @@ public:
   //! to true, registers the status in the
   //! list.
   //! May return (and register):
-  //! BRepCheck_EmptyWire,
-  //! BRepCheck_SelfIntersectingWire,
-  //! BRepCheck_NoCurveOnSurface,
-  //! BRepCheck_NoError
+  //! BRepCheck_Status::BRepCheck_EmptyWire,
+  //! BRepCheck_Status::BRepCheck_SelfIntersectingWire,
+  //! BRepCheck_Status::BRepCheck_NoCurveOnSurface,
+  //! BRepCheck_Status::BRepCheck_NoError
   Standard_EXPORT BRepCheck_Status SelfIntersect(const TopoDS_Face& F,
                                                  TopoDS_Edge&       E1,
                                                  TopoDS_Edge&       E2,

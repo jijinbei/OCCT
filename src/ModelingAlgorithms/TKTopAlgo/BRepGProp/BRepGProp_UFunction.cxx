@@ -27,7 +27,7 @@ BRepGProp_UFunction::BRepGProp_UFunction(const BRepGProp_Face& theSurface,
       myVertex(theVertex),
       myCoeffs(theCoeffs),
       myVParam(0.),
-      myValueType(GProp_Unknown),
+      myValueType(GProp_ValueType::GProp_Unknown),
       myIsByPoint(IsByPoint)
 {
 }
@@ -40,7 +40,7 @@ BRepGProp_UFunction::BRepGProp_UFunction(const BRepGProp_Face& theSurface,
 bool BRepGProp_UFunction::Value(const double X, double& F)
 {
   // Volume computation
-  if (myValueType == GProp_Mass)
+  if (myValueType == GProp_ValueType::GProp_Mass)
   {
     gp_XYZ aPMP0;
     double aTmpPar1;
@@ -52,14 +52,14 @@ bool BRepGProp_UFunction::Value(const double X, double& F)
   }
 
   // Center of mass computation
-  if (myValueType == GProp_CenterMassX || myValueType == GProp_CenterMassY
-      || myValueType == GProp_CenterMassZ)
+  if (myValueType == GProp_ValueType::GProp_CenterMassX || myValueType == GProp_ValueType::GProp_CenterMassY
+      || myValueType == GProp_ValueType::GProp_CenterMassZ)
     return CenterMassValue(X, F);
 
   // Inertia computation
-  if (myValueType == GProp_InertiaXX || myValueType == GProp_InertiaYY
-      || myValueType == GProp_InertiaZZ || myValueType == GProp_InertiaXY
-      || myValueType == GProp_InertiaXZ || myValueType == GProp_InertiaYZ)
+  if (myValueType == GProp_ValueType::GProp_InertiaXX || myValueType == GProp_ValueType::GProp_InertiaYY
+      || myValueType == GProp_ValueType::GProp_InertiaZZ || myValueType == GProp_ValueType::GProp_InertiaXY
+      || myValueType == GProp_ValueType::GProp_InertiaXZ || myValueType == GProp_ValueType::GProp_InertiaYZ)
     return InertiaValue(X, F);
 
   return false;
@@ -113,13 +113,13 @@ bool BRepGProp_UFunction::CenterMassValue(const double X, double& F)
   {
     switch (myValueType)
     {
-      case GProp_CenterMassX:
+      case GProp_ValueType::GProp_CenterMassX:
         F *= aPmP0.X();
         break;
-      case GProp_CenterMassY:
+      case GProp_ValueType::GProp_CenterMassY:
         F *= aPmP0.Y();
         break;
-      case GProp_CenterMassZ:
+      case GProp_ValueType::GProp_CenterMassZ:
         F *= aPmP0.Z();
         break;
       default:
@@ -134,13 +134,13 @@ bool BRepGProp_UFunction::CenterMassValue(const double X, double& F)
 
   switch (myValueType)
   {
-    case GProp_CenterMassX:
+    case GProp_ValueType::GProp_CenterMassX:
       F *= (aPmP0.X() - 0.5 * aCoeff[0] * aD1);
       break;
-    case GProp_CenterMassY:
+    case GProp_ValueType::GProp_CenterMassY:
       F *= (aPmP0.Y() - 0.5 * aCoeff[1] * aD1);
       break;
-    case GProp_CenterMassZ:
+    case GProp_ValueType::GProp_CenterMassZ:
       F *= (aPmP0.Z() - 0.5 * aCoeff[2] * aD1);
       break;
     default:
@@ -168,18 +168,18 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
   {
     switch (myValueType)
     {
-      case GProp_InertiaXX:
-      case GProp_InertiaYZ:
+      case GProp_ValueType::GProp_InertiaXX:
+      case GProp_ValueType::GProp_InertiaYZ:
         aParam1 = aPmP0.Y() - aCoeffs[1];
         aParam2 = aPmP0.Z() - aCoeffs[2];
         break;
-      case GProp_InertiaYY:
-      case GProp_InertiaXZ:
+      case GProp_ValueType::GProp_InertiaYY:
+      case GProp_ValueType::GProp_InertiaXZ:
         aParam1 = aPmP0.X() - aCoeffs[0];
         aParam2 = aPmP0.Z() - aCoeffs[2];
         break;
-      case GProp_InertiaZZ:
-      case GProp_InertiaXY:
+      case GProp_ValueType::GProp_InertiaZZ:
+      case GProp_ValueType::GProp_InertiaXY:
         aParam1 = aPmP0.X() - aCoeffs[0];
         aParam2 = aPmP0.Y() - aCoeffs[1];
         break;
@@ -187,8 +187,8 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
         return false;
     }
 
-    if (myValueType == GProp_InertiaXX || myValueType == GProp_InertiaYY
-        || myValueType == GProp_InertiaZZ)
+    if (myValueType == GProp_ValueType::GProp_InertiaXX || myValueType == GProp_ValueType::GProp_InertiaYY
+        || myValueType == GProp_ValueType::GProp_InertiaZZ)
       F *= aParam1 * aParam1 + aParam2 * aParam2;
     else
       F *= -aParam1 * aParam2;
@@ -205,18 +205,18 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
   double aCoeff2;
 
   // Inertia computation for XX, YY and ZZ.
-  if (myValueType == GProp_InertiaXX || myValueType == GProp_InertiaYY
-      || myValueType == GProp_InertiaZZ)
+  if (myValueType == GProp_ValueType::GProp_InertiaXX || myValueType == GProp_ValueType::GProp_InertiaYY
+      || myValueType == GProp_ValueType::GProp_InertiaZZ)
   {
 
-    if (myValueType == GProp_InertiaXX)
+    if (myValueType == GProp_ValueType::GProp_InertiaXX)
     {
       aPPar1  = aPmP0.Y();
       aPPar2  = aPmP0.Z();
       aCoeff1 = aCoeffs[1];
       aCoeff2 = aCoeffs[2];
     }
-    else if (myValueType == GProp_InertiaYY)
+    else if (myValueType == GProp_ValueType::GProp_InertiaYY)
     {
       aPPar1  = aPmP0.X();
       aPPar2  = aPmP0.Z();
@@ -224,7 +224,7 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
       aCoeff2 = aCoeffs[2];
     }
     else
-    { // myValueType == GProp_InertiaZZ
+    { // myValueType == GProp_ValueType::GProp_InertiaZZ
       aPPar1  = aPmP0.X();
       aPPar2  = aPmP0.Y();
       aCoeff1 = aCoeffs[0];
@@ -242,18 +242,18 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
   }
 
   // Inertia computation for XY, YZ and XZ.
-  if (myValueType == GProp_InertiaXY || myValueType == GProp_InertiaYZ
-      || myValueType == GProp_InertiaXZ)
+  if (myValueType == GProp_ValueType::GProp_InertiaXY || myValueType == GProp_ValueType::GProp_InertiaYZ
+      || myValueType == GProp_ValueType::GProp_InertiaXZ)
   {
 
-    if (myValueType == GProp_InertiaXY)
+    if (myValueType == GProp_ValueType::GProp_InertiaXY)
     {
       aPPar1  = aPmP0.X();
       aPPar2  = aPmP0.Y();
       aCoeff1 = aCoeffs[0];
       aCoeff2 = aCoeffs[1];
     }
-    else if (myValueType == GProp_InertiaYZ)
+    else if (myValueType == GProp_ValueType::GProp_InertiaYZ)
     {
       aPPar1  = aPmP0.Y();
       aPPar2  = aPmP0.Z();
@@ -261,7 +261,7 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
       aCoeff2 = aCoeffs[2];
     }
     else
-    { // myValueType == GProp_InertiaXZ
+    { // myValueType == GProp_ValueType::GProp_InertiaXZ
       aPPar1  = aPmP0.X();
       aPPar2  = aPmP0.Z();
       aCoeff1 = aCoeffs[0];

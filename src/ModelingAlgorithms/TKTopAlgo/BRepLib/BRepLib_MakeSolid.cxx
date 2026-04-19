@@ -158,14 +158,14 @@ BRepLib_MakeSolid::operator TopoDS_Solid()
 
 BRepLib_ShapeModification BRepLib_MakeSolid::FaceStatus(const TopoDS_Face& F) const
 {
-  BRepLib_ShapeModification                myStatus = BRepLib_Preserved;
+  BRepLib_ShapeModification                myStatus = BRepLib_ShapeModification::BRepLib_Preserved;
   NCollection_List<TopoDS_Shape>::Iterator anIter(myDeletedFaces);
 
   for (; anIter.More(); anIter.Next())
   {
     if (F.IsSame(anIter.Value()))
     {
-      myStatus = BRepLib_Deleted;
+      myStatus = BRepLib_ShapeModification::BRepLib_Deleted;
       break;
     }
   }

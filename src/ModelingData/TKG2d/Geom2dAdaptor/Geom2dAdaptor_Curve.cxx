@@ -144,7 +144,7 @@ occ::handle<Adaptor2d_Curve2d> Geom2dAdaptor_Curve::ShallowCopy() const
 
 GeomAbs_Shape Geom2dAdaptor_Curve::LocalContinuity(const double U1, const double U2) const
 {
-  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_BSplineCurve, " ");
+  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_CurveType::GeomAbs_BSplineCurve, " ");
   const auto&                       aBSpline = std::get<BSplineData>(myCurveData).Curve;
   int                               Nb       = aBSpline->NbKnots();
   int                               Index1   = 0;
@@ -221,7 +221,7 @@ GeomAbs_Shape Geom2dAdaptor_Curve::LocalContinuity(const double U1, const double
 //=================================================================================================
 
 Geom2dAdaptor_Curve::Geom2dAdaptor_Curve()
-    : myTypeCurve(GeomAbs_OtherCurve),
+    : myTypeCurve(GeomAbs_CurveType::GeomAbs_OtherCurve),
       myFirst(0.0),
       myLast(0.0)
 {
@@ -230,7 +230,7 @@ Geom2dAdaptor_Curve::Geom2dAdaptor_Curve()
 //=================================================================================================
 
 Geom2dAdaptor_Curve::Geom2dAdaptor_Curve(const occ::handle<Geom2d_Curve>& theCrv)
-    : myTypeCurve(GeomAbs_OtherCurve),
+    : myTypeCurve(GeomAbs_CurveType::GeomAbs_OtherCurve),
       myFirst(0.0),
       myLast(0.0)
 {
@@ -242,7 +242,7 @@ Geom2dAdaptor_Curve::Geom2dAdaptor_Curve(const occ::handle<Geom2d_Curve>& theCrv
 Geom2dAdaptor_Curve::Geom2dAdaptor_Curve(const occ::handle<Geom2d_Curve>& theCrv,
                                          const double                     theUFirst,
                                          const double                     theULast)
-    : myTypeCurve(GeomAbs_OtherCurve),
+    : myTypeCurve(GeomAbs_CurveType::GeomAbs_OtherCurve),
       myFirst(theUFirst),
       myLast(theULast)
 {
@@ -253,7 +253,7 @@ Geom2dAdaptor_Curve::Geom2dAdaptor_Curve(const occ::handle<Geom2d_Curve>& theCrv
 
 void Geom2dAdaptor_Curve::Reset()
 {
-  myTypeCurve = GeomAbs_OtherCurve;
+  myTypeCurve = GeomAbs_CurveType::GeomAbs_OtherCurve;
   myCurve.Nullify();
   myCurveData = std::monostate{};
   myFirst = myLast = 0.0;
@@ -280,32 +280,32 @@ void Geom2dAdaptor_Curve::load(const occ::handle<Geom2d_Curve>& C,
     }
     else if (TheType == STANDARD_TYPE(Geom2d_Circle))
     {
-      myTypeCurve = GeomAbs_Circle;
+      myTypeCurve = GeomAbs_CurveType::GeomAbs_Circle;
       myCurveData = occ::down_cast<Geom2d_Circle>(C)->Circ2d();
     }
     else if (TheType == STANDARD_TYPE(Geom2d_Line))
     {
-      myTypeCurve = GeomAbs_Line;
+      myTypeCurve = GeomAbs_CurveType::GeomAbs_Line;
       myCurveData = occ::down_cast<Geom2d_Line>(C)->Lin2d();
     }
     else if (TheType == STANDARD_TYPE(Geom2d_Ellipse))
     {
-      myTypeCurve = GeomAbs_Ellipse;
+      myTypeCurve = GeomAbs_CurveType::GeomAbs_Ellipse;
       myCurveData = occ::down_cast<Geom2d_Ellipse>(C)->Elips2d();
     }
     else if (TheType == STANDARD_TYPE(Geom2d_Parabola))
     {
-      myTypeCurve = GeomAbs_Parabola;
+      myTypeCurve = GeomAbs_CurveType::GeomAbs_Parabola;
       myCurveData = occ::down_cast<Geom2d_Parabola>(C)->Parab2d();
     }
     else if (TheType == STANDARD_TYPE(Geom2d_Hyperbola))
     {
-      myTypeCurve = GeomAbs_Hyperbola;
+      myTypeCurve = GeomAbs_CurveType::GeomAbs_Hyperbola;
       myCurveData = occ::down_cast<Geom2d_Hyperbola>(C)->Hypr2d();
     }
     else if (TheType == STANDARD_TYPE(Geom2d_BezierCurve))
     {
-      myTypeCurve = GeomAbs_BezierCurve;
+      myTypeCurve = GeomAbs_CurveType::GeomAbs_BezierCurve;
       BezierData aBezierData;
       aBezierData.Curve   = occ::down_cast<Geom2d_BezierCurve>(myCurve);
       aBezierData.EvalRep = aBezierData.Curve->EvalRepresentation();
@@ -313,7 +313,7 @@ void Geom2dAdaptor_Curve::load(const occ::handle<Geom2d_Curve>& C,
     }
     else if (TheType == STANDARD_TYPE(Geom2d_BSplineCurve))
     {
-      myTypeCurve = GeomAbs_BSplineCurve;
+      myTypeCurve = GeomAbs_CurveType::GeomAbs_BSplineCurve;
       BSplineData aBSplineData;
       aBSplineData.Curve   = occ::down_cast<Geom2d_BSplineCurve>(myCurve);
       aBSplineData.EvalRep = aBSplineData.Curve->EvalRepresentation();
@@ -321,7 +321,7 @@ void Geom2dAdaptor_Curve::load(const occ::handle<Geom2d_Curve>& C,
     }
     else if (TheType == STANDARD_TYPE(Geom2d_OffsetCurve))
     {
-      myTypeCurve                                   = GeomAbs_OffsetCurve;
+      myTypeCurve                                   = GeomAbs_CurveType::GeomAbs_OffsetCurve;
       occ::handle<Geom2d_OffsetCurve> anOffsetCurve = occ::down_cast<Geom2d_OffsetCurve>(myCurve);
       // Create nested adaptor for base curve and store offset data
       occ::handle<Geom2d_Curve> aBaseCurve = anOffsetCurve->BasisCurve();
@@ -334,7 +334,7 @@ void Geom2dAdaptor_Curve::load(const occ::handle<Geom2d_Curve>& C,
     }
     else
     {
-      myTypeCurve = GeomAbs_OtherCurve;
+      myTypeCurve = GeomAbs_CurveType::GeomAbs_OtherCurve;
     }
   }
   else
@@ -359,11 +359,11 @@ void Geom2dAdaptor_Curve::load(const occ::handle<Geom2d_Curve>& C,
 
 GeomAbs_Shape Geom2dAdaptor_Curve::Continuity() const
 {
-  if (myTypeCurve == GeomAbs_BSplineCurve)
+  if (myTypeCurve == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     return LocalContinuity(myFirst, myLast);
   }
-  else if (myTypeCurve == GeomAbs_OffsetCurve)
+  else if (myTypeCurve == GeomAbs_CurveType::GeomAbs_OffsetCurve)
   {
     GeomAbs_Shape S = occ::down_cast<Geom2d_OffsetCurve>(myCurve)->GetBasisCurveContinuity();
     switch (S)
@@ -386,7 +386,7 @@ GeomAbs_Shape Geom2dAdaptor_Curve::Continuity() const
     }
   }
 
-  else if (myTypeCurve == GeomAbs_OtherCurve)
+  else if (myTypeCurve == GeomAbs_CurveType::GeomAbs_OtherCurve)
   {
     throw Standard_NoSuchObject("Geom2dAdaptor_Curve::Continuity");
   }
@@ -400,7 +400,7 @@ GeomAbs_Shape Geom2dAdaptor_Curve::Continuity() const
 
 int Geom2dAdaptor_Curve::NbIntervals(const GeomAbs_Shape S) const
 {
-  if (myTypeCurve == GeomAbs_BSplineCurve)
+  if (myTypeCurve == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     const auto& aBSpline = std::get<BSplineData>(myCurveData).Curve;
     if ((!aBSpline->IsPeriodic() && S <= Continuity()) || S == GeomAbs_C0)
@@ -442,7 +442,7 @@ int Geom2dAdaptor_Curve::NbIntervals(const GeomAbs_Shape S) const
                                nullptr);
   }
 
-  else if (myTypeCurve == GeomAbs_OffsetCurve)
+  else if (myTypeCurve == GeomAbs_CurveType::GeomAbs_OffsetCurve)
   {
     int           myNbIntervals = 1;
     GeomAbs_Shape BaseS         = GeomAbs_C0;
@@ -481,7 +481,7 @@ int Geom2dAdaptor_Curve::NbIntervals(const GeomAbs_Shape S) const
 
 void Geom2dAdaptor_Curve::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S) const
 {
-  if (myTypeCurve == GeomAbs_BSplineCurve)
+  if (myTypeCurve == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     const auto& aBSpline = std::get<BSplineData>(myCurveData).Curve;
     if ((!aBSpline->IsPeriodic() && S <= Continuity()) || S == GeomAbs_C0)
@@ -525,7 +525,7 @@ void Geom2dAdaptor_Curve::Intervals(NCollection_Array1<double>& T, const GeomAbs
                         &T);
   }
 
-  else if (myTypeCurve == GeomAbs_OffsetCurve)
+  else if (myTypeCurve == GeomAbs_CurveType::GeomAbs_OffsetCurve)
   {
     int           myNbIntervals = 1;
     GeomAbs_Shape BaseS         = GeomAbs_C0;
@@ -607,7 +607,7 @@ double Geom2dAdaptor_Curve::Period() const
 
 void Geom2dAdaptor_Curve::RebuildCache(const double theParameter) const
 {
-  if (myTypeCurve == GeomAbs_BezierCurve)
+  if (myTypeCurve == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     // Create cache for Bezier
     auto&                           aBezierData = std::get<BezierData>(myCurveData);
@@ -622,7 +622,7 @@ void Geom2dAdaptor_Curve::RebuildCache(const double theParameter) const
                                              aBezier->Weights());
     aBezierData.Cache->BuildCache(theParameter, aFlatKnots, aBezier->Poles(), aBezier->Weights());
   }
-  else if (myTypeCurve == GeomAbs_BSplineCurve)
+  else if (myTypeCurve == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     // Create cache for B-spline
     auto&       aBSplineData = std::get<BSplineData>(myCurveData);
@@ -694,27 +694,27 @@ gp_Pnt2d Geom2dAdaptor_Curve::EvalD0(const double theU) const
   gp_Pnt2d     P;
   switch (myTypeCurve)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       P = ElCLib::Value(U, std::get<gp_Lin2d>(myCurveData));
       return P;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       P = ElCLib::Value(U, std::get<gp_Circ2d>(myCurveData));
       return P;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       P = ElCLib::Value(U, std::get<gp_Elips2d>(myCurveData));
       return P;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       P = ElCLib::Value(U, std::get<gp_Hypr2d>(myCurveData));
       return P;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       P = ElCLib::Value(U, std::get<gp_Parab2d>(myCurveData));
       return P;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD0(U);
@@ -726,7 +726,7 @@ gp_Pnt2d Geom2dAdaptor_Curve::EvalD0(const double theU) const
       return P;
     }
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD0(U);
@@ -746,7 +746,7 @@ gp_Pnt2d Geom2dAdaptor_Curve::EvalD0(const double theU) const
       return P;
     }
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD0(U);
@@ -784,27 +784,27 @@ Geom2d_Curve::ResD1 Geom2dAdaptor_Curve::EvalD1(const double theU) const
   Geom2d_Curve::ResD1 aResult;
   switch (myTypeCurve)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       ElCLib::D1(U, std::get<gp_Lin2d>(myCurveData), aResult.Point, aResult.D1);
       return aResult;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       ElCLib::D1(U, std::get<gp_Circ2d>(myCurveData), aResult.Point, aResult.D1);
       return aResult;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       ElCLib::D1(U, std::get<gp_Elips2d>(myCurveData), aResult.Point, aResult.D1);
       return aResult;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       ElCLib::D1(U, std::get<gp_Hypr2d>(myCurveData), aResult.Point, aResult.D1);
       return aResult;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       ElCLib::D1(U, std::get<gp_Parab2d>(myCurveData), aResult.Point, aResult.D1);
       return aResult;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD1(U);
@@ -816,7 +816,7 @@ Geom2d_Curve::ResD1 Geom2dAdaptor_Curve::EvalD1(const double theU) const
       return aResult;
     }
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD1(U);
@@ -836,7 +836,7 @@ Geom2d_Curve::ResD1 Geom2dAdaptor_Curve::EvalD1(const double theU) const
       return aResult;
     }
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD1(U);
@@ -876,28 +876,28 @@ Geom2d_Curve::ResD2 Geom2dAdaptor_Curve::EvalD2(const double theU) const
   Geom2d_Curve::ResD2 aResult;
   switch (myTypeCurve)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       ElCLib::D1(U, std::get<gp_Lin2d>(myCurveData), aResult.Point, aResult.D1);
       aResult.D2.SetCoord(0., 0.);
       return aResult;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       ElCLib::D2(U, std::get<gp_Circ2d>(myCurveData), aResult.Point, aResult.D1, aResult.D2);
       return aResult;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       ElCLib::D2(U, std::get<gp_Elips2d>(myCurveData), aResult.Point, aResult.D1, aResult.D2);
       return aResult;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       ElCLib::D2(U, std::get<gp_Hypr2d>(myCurveData), aResult.Point, aResult.D1, aResult.D2);
       return aResult;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       ElCLib::D2(U, std::get<gp_Parab2d>(myCurveData), aResult.Point, aResult.D1, aResult.D2);
       return aResult;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD2(U);
@@ -909,7 +909,7 @@ Geom2d_Curve::ResD2 Geom2dAdaptor_Curve::EvalD2(const double theU) const
       return aResult;
     }
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD2(U);
@@ -929,7 +929,7 @@ Geom2d_Curve::ResD2 Geom2dAdaptor_Curve::EvalD2(const double theU) const
       return aResult;
     }
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD2(U);
@@ -975,13 +975,13 @@ Geom2d_Curve::ResD3 Geom2dAdaptor_Curve::EvalD3(const double theU) const
   Geom2d_Curve::ResD3 aResult;
   switch (myTypeCurve)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       ElCLib::D1(U, std::get<gp_Lin2d>(myCurveData), aResult.Point, aResult.D1);
       aResult.D2.SetCoord(0., 0.);
       aResult.D3.SetCoord(0., 0.);
       return aResult;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       ElCLib::D3(U,
                  std::get<gp_Circ2d>(myCurveData),
                  aResult.Point,
@@ -990,7 +990,7 @@ Geom2d_Curve::ResD3 Geom2dAdaptor_Curve::EvalD3(const double theU) const
                  aResult.D3);
       return aResult;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       ElCLib::D3(U,
                  std::get<gp_Elips2d>(myCurveData),
                  aResult.Point,
@@ -999,7 +999,7 @@ Geom2d_Curve::ResD3 Geom2dAdaptor_Curve::EvalD3(const double theU) const
                  aResult.D3);
       return aResult;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       ElCLib::D3(U,
                  std::get<gp_Hypr2d>(myCurveData),
                  aResult.Point,
@@ -1008,12 +1008,12 @@ Geom2d_Curve::ResD3 Geom2dAdaptor_Curve::EvalD3(const double theU) const
                  aResult.D3);
       return aResult;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       ElCLib::D2(U, std::get<gp_Parab2d>(myCurveData), aResult.Point, aResult.D1, aResult.D2);
       aResult.D3.SetCoord(0., 0.);
       return aResult;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD3(U);
@@ -1025,7 +1025,7 @@ Geom2d_Curve::ResD3 Geom2dAdaptor_Curve::EvalD3(const double theU) const
       return aResult;
     }
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD3(U);
@@ -1046,7 +1046,7 @@ Geom2d_Curve::ResD3 Geom2dAdaptor_Curve::EvalD3(const double theU) const
       return aResult;
     }
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalD3(U);
@@ -1085,25 +1085,25 @@ gp_Vec2d Geom2dAdaptor_Curve::EvalDN(const double theU, const int theN) const
   const int    N = theN;
   switch (myTypeCurve)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       return ElCLib::DN(U, std::get<gp_Lin2d>(myCurveData), N);
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       return ElCLib::DN(U, std::get<gp_Circ2d>(myCurveData), N);
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       return ElCLib::DN(U, std::get<gp_Elips2d>(myCurveData), N);
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       return ElCLib::DN(U, std::get<gp_Hypr2d>(myCurveData), N);
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       return ElCLib::DN(U, std::get<gp_Parab2d>(myCurveData), N);
 
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       return myCurve->EvalDN(U, N);
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalDN(U, N);
@@ -1117,7 +1117,7 @@ gp_Vec2d Geom2dAdaptor_Curve::EvalDN(const double theU, const int theN) const
         return myCurve->EvalDN(U, N);
     }
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve: {
       if (hasEvalRep(myCurveData))
       {
         return myCurve->EvalDN(U, N);
@@ -1147,24 +1147,24 @@ double Geom2dAdaptor_Curve::Resolution(const double Ruv) const
 {
   switch (myTypeCurve)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       return Ruv;
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       double R = std::get<gp_Circ2d>(myCurveData).Radius();
       if (R > Ruv / 2.)
         return 2 * std::asin(Ruv / (2 * R));
       else
         return 2 * M_PI;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       return Ruv / std::get<gp_Elips2d>(myCurveData).MajorRadius();
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       double res;
       occ::down_cast<Geom2d_BezierCurve>(myCurve)->Resolution(Ruv, res);
       return res;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       double res;
       occ::down_cast<Geom2d_BSplineCurve>(myCurve)->Resolution(Ruv, res);
       return res;
@@ -1183,7 +1183,7 @@ double Geom2dAdaptor_Curve::Resolution(const double Ruv) const
 
 gp_Lin2d Geom2dAdaptor_Curve::Line() const
 {
-  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_Line,
+  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_CurveType::GeomAbs_Line,
                                  "Geom2dAdaptor_Curve::Line() - curve is not a Line");
   return std::get<gp_Lin2d>(myCurveData);
 }
@@ -1192,7 +1192,7 @@ gp_Lin2d Geom2dAdaptor_Curve::Line() const
 
 gp_Circ2d Geom2dAdaptor_Curve::Circle() const
 {
-  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_Circle,
+  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_CurveType::GeomAbs_Circle,
                                  "Geom2dAdaptor_Curve::Circle() - curve is not a Circle");
   return std::get<gp_Circ2d>(myCurveData);
 }
@@ -1201,7 +1201,7 @@ gp_Circ2d Geom2dAdaptor_Curve::Circle() const
 
 gp_Elips2d Geom2dAdaptor_Curve::Ellipse() const
 {
-  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_Ellipse,
+  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_CurveType::GeomAbs_Ellipse,
                                  "Geom2dAdaptor_Curve::Ellipse() - curve is not an Ellipse");
   return std::get<gp_Elips2d>(myCurveData);
 }
@@ -1210,7 +1210,7 @@ gp_Elips2d Geom2dAdaptor_Curve::Ellipse() const
 
 gp_Hypr2d Geom2dAdaptor_Curve::Hyperbola() const
 {
-  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_Hyperbola,
+  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_CurveType::GeomAbs_Hyperbola,
                                  "Geom2dAdaptor_Curve::Hyperbola() - curve is not a Hyperbola");
   return std::get<gp_Hypr2d>(myCurveData);
 }
@@ -1219,7 +1219,7 @@ gp_Hypr2d Geom2dAdaptor_Curve::Hyperbola() const
 
 gp_Parab2d Geom2dAdaptor_Curve::Parabola() const
 {
-  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_Parabola,
+  Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_CurveType::GeomAbs_Parabola,
                                  "Geom2dAdaptor_Curve::Parabola() - curve is not a Parabola");
   return std::get<gp_Parab2d>(myCurveData);
 }
@@ -1228,9 +1228,9 @@ gp_Parab2d Geom2dAdaptor_Curve::Parabola() const
 
 int Geom2dAdaptor_Curve::Degree() const
 {
-  if (myTypeCurve == GeomAbs_BezierCurve)
+  if (myTypeCurve == GeomAbs_CurveType::GeomAbs_BezierCurve)
     return occ::down_cast<Geom2d_BezierCurve>(myCurve)->Degree();
-  else if (myTypeCurve == GeomAbs_BSplineCurve)
+  else if (myTypeCurve == GeomAbs_CurveType::GeomAbs_BSplineCurve)
     return std::get<BSplineData>(myCurveData).Curve->Degree();
   else
     throw Standard_NoSuchObject();
@@ -1242,9 +1242,9 @@ bool Geom2dAdaptor_Curve::IsRational() const
 {
   switch (myTypeCurve)
   {
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       return std::get<BSplineData>(myCurveData).Curve->IsRational();
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       return occ::down_cast<Geom2d_BezierCurve>(myCurve)->IsRational();
     default:
       return false;
@@ -1255,9 +1255,9 @@ bool Geom2dAdaptor_Curve::IsRational() const
 
 int Geom2dAdaptor_Curve::NbPoles() const
 {
-  if (myTypeCurve == GeomAbs_BezierCurve)
+  if (myTypeCurve == GeomAbs_CurveType::GeomAbs_BezierCurve)
     return occ::down_cast<Geom2d_BezierCurve>(myCurve)->NbPoles();
-  else if (myTypeCurve == GeomAbs_BSplineCurve)
+  else if (myTypeCurve == GeomAbs_CurveType::GeomAbs_BSplineCurve)
     return std::get<BSplineData>(myCurveData).Curve->NbPoles();
   else
     throw Standard_NoSuchObject();
@@ -1267,7 +1267,7 @@ int Geom2dAdaptor_Curve::NbPoles() const
 
 int Geom2dAdaptor_Curve::NbKnots() const
 {
-  if (myTypeCurve != GeomAbs_BSplineCurve)
+  if (myTypeCurve != GeomAbs_CurveType::GeomAbs_BSplineCurve)
     throw Standard_NoSuchObject("Geom2dAdaptor_Curve::NbKnots");
   return std::get<BSplineData>(myCurveData).Curve->NbKnots();
 }

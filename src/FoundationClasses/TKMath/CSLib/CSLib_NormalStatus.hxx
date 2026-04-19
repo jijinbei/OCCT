@@ -21,7 +21,7 @@
 //!
 //! Describes the result of attempting to compute the normal N to a surface,
 //! including cases involving derivatives of the normal (DN/du, DN/dv).
-enum CSLib_NormalStatus
+enum class CSLib_NormalStatus
 {
   CSLib_Singular,            //!< Surface is singular at the point (normal undefined).
   CSLib_Defined,             //!< Normal is well-defined and computed successfully.

@@ -36,11 +36,11 @@ public:
   //! examples :
   //! create a ShapeShapeInterference describing :
   //! vertex V of edge E1 found on edge E2 :
-  //! ST,S,GT,G = TopOpeBRepDS_EDGE,E2,TopOpeBRepDS_VERTEX,V
+  //! ST,S,GT,G = TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE,E2,TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,V
   //!
   //! create a ShapeShapeInterference describing
   //! vertex V of edge E found on face F :
-  //! ST,S,GT,G = TopOpeBRepDS_FACE,F,TopOpeBRepDS_VERTEX,V
+  //! ST,S,GT,G = TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,F,TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,V
   //!
   //! <GBound> indicates if shape <G> is a bound of shape <S>.
   //!

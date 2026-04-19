@@ -252,7 +252,7 @@ TEST(GeomGridEval_SurfaceTest, PlaneDispatch)
   GeomAdaptor_Surface     anAdaptor(aGeomPlane);
 
   GeomGridEval_Surface anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Plane);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_SurfaceType::GeomAbs_Plane);
 
   NCollection_Array1<double> aUParams = CreateUniformParams(-5.0, 5.0, 11);
   NCollection_Array1<double> aVParams = CreateUniformParams(-3.0, 3.0, 7);
@@ -277,7 +277,7 @@ TEST(GeomGridEval_SurfaceTest, SphereDispatch)
   GeomAdaptor_Surface anAdaptor(aGeomSphere);
 
   GeomGridEval_Surface anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Sphere);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_SurfaceType::GeomAbs_Sphere);
 
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 13);
   NCollection_Array1<double> aVParams = CreateUniformParams(-M_PI / 2, M_PI / 2, 7);
@@ -301,7 +301,7 @@ TEST(GeomGridEval_SurfaceTest, BSplineDispatch)
   GeomAdaptor_Surface              anAdaptor(aSurf);
 
   GeomGridEval_Surface anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_BSplineSurface);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_SurfaceType::GeomAbs_BSplineSurface);
 
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 1.0, 11);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 1.0, 11);
@@ -330,7 +330,7 @@ TEST(GeomGridEval_SurfaceTest, BezierSurfaceDispatch)
   GeomAdaptor_Surface             anAdaptor(aBezier);
 
   GeomGridEval_Surface anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_BezierSurface);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_SurfaceType::GeomAbs_BezierSurface);
 
   NCollection_Array1<double> aParams = CreateUniformParams(0.0, 1.0, 5);
 
@@ -353,7 +353,7 @@ TEST(GeomGridEval_SurfaceTest, CylinderDispatch)
   GeomAdaptor_Surface anAdaptor(aCyl);
 
   GeomGridEval_Surface anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Cylinder);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_SurfaceType::GeomAbs_Cylinder);
 
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 5.0, 6);
@@ -378,7 +378,7 @@ TEST(GeomGridEval_SurfaceTest, TorusDispatch)
   GeomAdaptor_Surface anAdaptor(aTorus);
 
   GeomGridEval_Surface anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Torus);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_SurfaceType::GeomAbs_Torus);
 
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 2 * M_PI, 9);
@@ -403,7 +403,7 @@ TEST(GeomGridEval_SurfaceTest, ConeDispatch)
   GeomAdaptor_Surface anAdaptor(aCone);
 
   GeomGridEval_Surface anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Cone);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_SurfaceType::GeomAbs_Cone);
 
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 5.0, 6);
@@ -432,7 +432,7 @@ TEST(GeomGridEval_SurfaceTest, SurfaceOfRevolutionFallbackDispatch)
   GeomAdaptor_Surface anAdaptor(aRevSurf);
 
   GeomGridEval_Surface anEval(anAdaptor);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_SurfaceOfRevolution);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution);
 
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 2 * M_PI, 9);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 5.0, 6);
@@ -456,7 +456,7 @@ TEST(GeomGridEval_SurfaceTest, DirectHandleInit)
 
   // Initialize directly from occ::handle<Geom_Surface>
   GeomGridEval_Surface anEval(aPlane);
-  EXPECT_EQ(anEval.GetType(), GeomAbs_Plane);
+  EXPECT_EQ(anEval.GetType(), GeomAbs_SurfaceType::GeomAbs_Plane);
 
   NCollection_Array1<double> aUParams = CreateUniformParams(0.0, 1.0, 5);
   NCollection_Array1<double> aVParams = CreateUniformParams(0.0, 1.0, 5);

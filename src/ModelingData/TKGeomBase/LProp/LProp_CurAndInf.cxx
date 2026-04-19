@@ -28,13 +28,13 @@ void LProp_CurAndInf::AddInflection(const double Param)
   if (theParams.IsEmpty())
   {
     theParams.Append(Param);
-    theTypes.Append(LProp_Inflection);
+    theTypes.Append(LProp_CIType::LProp_Inflection);
     return;
   }
   if (Param > theParams.Last())
   {
     theParams.Append(Param);
-    theTypes.Append(LProp_Inflection);
+    theTypes.Append(LProp_CIType::LProp_Inflection);
     return;
   }
   for (int i = 1; i <= theParams.Length(); i++)
@@ -42,7 +42,7 @@ void LProp_CurAndInf::AddInflection(const double Param)
     if (theParams.Value(i) > Param)
     {
       theParams.InsertBefore(i, Param);
-      theTypes.InsertBefore(i, LProp_Inflection);
+      theTypes.InsertBefore(i, LProp_CIType::LProp_Inflection);
       break;
     }
   }
@@ -54,9 +54,9 @@ void LProp_CurAndInf::AddExtCur(const double Param, const bool IsMin)
 {
   LProp_CIType TypePoint;
   if (IsMin)
-    TypePoint = LProp_MinCur;
+    TypePoint = LProp_CIType::LProp_MinCur;
   else
-    TypePoint = LProp_MaxCur;
+    TypePoint = LProp_CIType::LProp_MaxCur;
 
   if (theParams.IsEmpty())
   {

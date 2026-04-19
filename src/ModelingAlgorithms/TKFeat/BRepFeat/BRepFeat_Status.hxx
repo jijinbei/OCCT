@@ -17,7 +17,7 @@
 #ifndef _BRepFeat_Status_HeaderFile
 #define _BRepFeat_Status_HeaderFile
 
-enum BRepFeat_Status
+enum class BRepFeat_Status
 {
   BRepFeat_NoError,
   BRepFeat_InvalidPlacement,

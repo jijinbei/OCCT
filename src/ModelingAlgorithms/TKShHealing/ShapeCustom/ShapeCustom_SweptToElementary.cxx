@@ -108,26 +108,26 @@ bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
     switch (AS.GetType())
     {
       // skl 18.12.2003 - plane not used, problems in PRO14665.igs
-      // case GeomAbs_Plane : {
+      // case GeomAbs_SurfaceType::GeomAbs_Plane : {
       //  occ::handle<Geom_Plane> Pl = new Geom_Plane(AS.Plane());
       //  S = Pl;
       //} break;
-      case GeomAbs_Cylinder: {
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
         occ::handle<Geom_CylindricalSurface> Cy = new Geom_CylindricalSurface(AS.Cylinder());
         S                                       = Cy;
       }
       break;
-      case GeomAbs_Sphere: {
+      case GeomAbs_SurfaceType::GeomAbs_Sphere: {
         occ::handle<Geom_SphericalSurface> Sp = new Geom_SphericalSurface(AS.Sphere());
         S                                     = Sp;
       }
       break;
-      case GeomAbs_Cone: {
+      case GeomAbs_SurfaceType::GeomAbs_Cone: {
         occ::handle<Geom_ConicalSurface> Co = new Geom_ConicalSurface(AS.Cone());
         S                                   = Co;
       }
       break;
-      case GeomAbs_Torus: {
+      case GeomAbs_SurfaceType::GeomAbs_Torus: {
         occ::handle<Geom_ToroidalSurface> To = new Geom_ToroidalSurface(AS.Torus());
         S                                    = To;
       }
@@ -150,11 +150,11 @@ bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
     switch (AS.GetType())
     {
       // skl 18.12.2003 - plane not used, problems in ims013.igs
-      // case GeomAbs_Plane : {
+      // case GeomAbs_SurfaceType::GeomAbs_Plane : {
       //  occ::handle<Geom_Plane> Pl = new Geom_Plane(AS.Plane());
       //  S = Pl;
       //} break;
-      case GeomAbs_Cylinder: {
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
         occ::handle<Geom_CylindricalSurface> Cy = new Geom_CylindricalSurface(AS.Cylinder());
         S                                       = Cy;
       }

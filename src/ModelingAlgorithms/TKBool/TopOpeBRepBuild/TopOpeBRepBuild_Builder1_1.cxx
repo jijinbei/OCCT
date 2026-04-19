@@ -886,7 +886,7 @@ void TopOpeBRepBuild_Builder1::SplitEdge(
       {
 
         TopOpeBRepDS_Kind IntType1 = aPave1->InterferenceType();
-        bool              Int3d1   = (IntType1 == TopOpeBRepDS_FACE);
+        bool              Int3d1   = (IntType1 == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE);
         bool              HasSDV1  = myDataStructure->HasSameDomain(aV1);
         bool              HasSDV2  = myDataStructure->HasSameDomain(aV2);
         bool              UsedV1   = theUsedVertexMap.Contains(aV1);

@@ -177,8 +177,8 @@ situ = domain->Classify(gp_Pnt2d(sol(1),sol(2)),
   {
     firstsol->ChangeValue(i) = sol(i);
   }
-  State = TestArret(Func, sol, false, Blend_OK);
-  if (State != Blend_OK)
+  State = TestArret(Func, sol, false, Blend_Status::Blend_OK);
+  if (State != Blend_Status::Blend_OK)
   {
     return;
   }
@@ -264,11 +264,11 @@ Blend_Status BRepBlend_CSWalking::TestArret(Blend_CSFunction&  Function,
 // Si c est le cas,
 //  On verifie le critere de fleche sur surf et curv
 //   Si OK, on classifie les point sur surf
-//    Si le point est  dedans : on retourne Blend_OK
+//    Si le point est  dedans : on retourne Blend_Status::Blend_OK
 //    sinon on resout le pb inverse sur la surface
 //   sinon (fleche non OK)
-//    on renvoie Blend_StepTooLarge.
-// sinon on renvoie Blend_StepTooLarge.
+//    on renvoie Blend_Status::Blend_StepTooLarge.
+// sinon on renvoie Blend_Status::Blend_StepTooLarge.
 //
 
 {
@@ -279,7 +279,7 @@ Blend_Status BRepBlend_CSWalking::TestArret(Blend_CSFunction&  Function,
   gp_Pnt2d          pt2d;
   double            pOnC;
   Blend_Status      State1, State2;
-  IntSurf_TypeTrans tras = IntSurf_Undecided;
+  IntSurf_TypeTrans tras = IntSurf_TypeTrans::IntSurf_Undecided;
 
   if (Function.IsSolution(Sol, tolpoint3d))
   {
@@ -305,29 +305,29 @@ Blend_Status BRepBlend_CSWalking::TestArret(Blend_CSFunction&  Function,
       // Pour des pb dans les cheminements point/face on met
       // temporairement le test sur la courbe au placard.
       //      State2 = CheckDeflectionOnCurv(pt2,pOnC,V2);
-      State2 = Blend_StepTooSmall;
+      State2 = Blend_Status::Blend_StepTooSmall;
     }
     else
     {
-      State1 = Blend_OK;
-      State2 = Blend_OK;
+      State1 = Blend_Status::Blend_OK;
+      State2 = Blend_Status::Blend_OK;
     }
 
-    if (State1 == Blend_Backward)
+    if (State1 == Blend_Status::Blend_Backward)
     {
-      State1 = Blend_StepTooLarge;
+      State1 = Blend_Status::Blend_StepTooLarge;
       rebrou = true;
     }
 
-    if (State2 == Blend_Backward)
+    if (State2 == Blend_Status::Blend_Backward)
     {
-      State2 = Blend_StepTooLarge;
+      State2 = Blend_Status::Blend_StepTooLarge;
       rebrou = true;
     }
 
-    if (State1 == Blend_StepTooLarge || State2 == Blend_StepTooLarge)
+    if (State1 == Blend_Status::Blend_StepTooLarge || State2 == Blend_Status::Blend_StepTooLarge)
     {
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
 
     if (!comptra)
@@ -339,18 +339,18 @@ Blend_Status BRepBlend_CSWalking::TestArret(Blend_CSFunction&  Function,
       {
         if (testra < 0.)
         {
-          tras = IntSurf_In;
+          tras = IntSurf_TypeTrans::IntSurf_In;
         }
         else if (testra > 0.)
         {
-          tras = IntSurf_Out;
+          tras = IntSurf_TypeTrans::IntSurf_Out;
         }
         comptra = true;
         line->Set(tras);
       }
     }
 
-    if (State1 == Blend_OK || State2 == Blend_OK)
+    if (State1 == Blend_Status::Blend_OK || State2 == Blend_Status::Blend_OK)
     {
       previousP.SetValue(Function.PointOnS(),
                          Function.PointOnC(),
@@ -366,7 +366,7 @@ Blend_Status BRepBlend_CSWalking::TestArret(Blend_CSFunction&  Function,
 
       return State;
     }
-    if (State1 == Blend_StepTooSmall && State2 == Blend_StepTooSmall)
+    if (State1 == Blend_Status::Blend_StepTooSmall && State2 == Blend_Status::Blend_StepTooSmall)
     {
       previousP.SetValue(Function.PointOnS(),
                          Function.PointOnC(),
@@ -379,9 +379,9 @@ Blend_Status BRepBlend_CSWalking::TestArret(Blend_CSFunction&  Function,
                          V1,
                          V2,
                          V12d);
-      if (State == Blend_OK)
+      if (State == Blend_Status::Blend_OK)
       {
-        return Blend_StepTooSmall;
+        return Blend_Status::Blend_StepTooSmall;
       }
       else
       {
@@ -389,9 +389,9 @@ Blend_Status BRepBlend_CSWalking::TestArret(Blend_CSFunction&  Function,
       }
     }
 
-    if (State == Blend_OK)
+    if (State == Blend_Status::Blend_OK)
     {
-      return Blend_SamePoints;
+      return Blend_Status::Blend_SamePoints;
     }
     else
     {
@@ -400,7 +400,7 @@ Blend_Status BRepBlend_CSWalking::TestArret(Blend_CSFunction&  Function,
   }
   else
   {
-    return Blend_StepTooLarge;
+    return Blend_Status::Blend_StepTooLarge;
   }
 }
 
@@ -437,18 +437,18 @@ Blend_Status BRepBlend_CSWalking::CheckDeflectionOnSurf(const gp_Pnt&   Psurf,
   if (Norme <= toler3d * toler3d || prevNorme <= toler3d * toler3d)
   { // JAG MODIF 25.04.94
     // il faudra peut etre  forcer meme point  JAG MODIF 25.04.94
-    return Blend_SamePoints;
+    return Blend_Status::Blend_SamePoints;
   }
   Cosi = sens * Corde * prevTg;
   if (Cosi < 0.)
   { // angle 3d>pi/2. --> retour arriere
-    return Blend_Backward;
+    return Blend_Status::Blend_Backward;
   }
 
   Cosi2 = Cosi * Cosi / prevNorme / Norme;
   if (Cosi2 < CosRef3D)
   {
-    return Blend_StepTooLarge;
+    return Blend_Status::Blend_StepTooLarge;
   }
 
   previousP.ParametersOnS(paramu, paramv);
@@ -461,12 +461,12 @@ Blend_Status BRepBlend_CSWalking::CheckDeflectionOnSurf(const gp_Pnt&   Psurf,
       (std::abs(previousd2d.X()) < tolu && std::abs(previousd2d.Y()) < tolv))
   {
     // il faudra peut etre  forcer meme point   JAG MODIF 25.04.94
-    return Blend_SamePoints; // point confondu 2d
+    return Blend_Status::Blend_SamePoints; // point confondu 2d
   }
   Cosi = sens * (Du * previousd2d.X() + Dv * previousd2d.Y());
   if (Cosi < 0)
   {
-    return Blend_Backward;
+    return Blend_Status::Blend_Backward;
   }
 
   // Voir s il faut faire le controle sur le signe de prevtg*Tgsurf
@@ -474,7 +474,7 @@ Blend_Status BRepBlend_CSWalking::CheckDeflectionOnSurf(const gp_Pnt&   Psurf,
   Cosi2 = Cosi * Cosi / Tgsurf.SquareMagnitude() / Norme;
   if (Cosi2 < CosRef3D || Cosi < 0.)
   {
-    return Blend_StepTooLarge;
+    return Blend_Status::Blend_StepTooLarge;
   }
 
   // Voir s il faut faire le controle sur le signe de Cosi
@@ -482,7 +482,7 @@ Blend_Status BRepBlend_CSWalking::CheckDeflectionOnSurf(const gp_Pnt&   Psurf,
   Cosi2 = Cosi * Cosi / Duv;
   if (Cosi2 < CosRef2D || Cosi < 0.)
   {
-    return Blend_StepTooLarge;
+    return Blend_Status::Blend_StepTooLarge;
   }
 
   FlecheCourante =
@@ -490,15 +490,15 @@ Blend_Status BRepBlend_CSWalking::CheckDeflectionOnSurf(const gp_Pnt&   Psurf,
 
   if (FlecheCourante <= 0.25 * fleche * fleche)
   {
-    return Blend_StepTooSmall;
+    return Blend_Status::Blend_StepTooSmall;
   }
   if (FlecheCourante > fleche * fleche)
   {
     // pas trop grand : commentaire interessant
-    return Blend_StepTooLarge;
+    return Blend_Status::Blend_StepTooLarge;
   }
 
-  return Blend_OK;
+  return Blend_Status::Blend_OK;
 }
 
 Blend_Status BRepBlend_CSWalking::CheckDeflectionOnCurv(const gp_Pnt& Pcurv,
@@ -529,20 +529,20 @@ Blend_Status BRepBlend_CSWalking::CheckDeflectionOnCurv(const gp_Pnt& Pcurv,
   if (Norme <= toler3d * toler3d)
   { // le 95.01.10
     // il faudra peut etre  forcer meme point  JAG MODIF 25.04.94
-    return Blend_SamePoints;
+    return Blend_Status::Blend_SamePoints;
   }
   else if (prevNorme > toler3d * toler3d)
   {
     Cosi = sens * Corde * prevTg;
     if (Cosi < 0.)
     { // angle 3d>pi/2. --> retour arriere
-      return Blend_Backward;
+      return Blend_Status::Blend_Backward;
     }
 
     Cosi2 = Cosi * Cosi / prevNorme / Norme;
     if (Cosi2 < CosRef3D)
     {
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
 
@@ -551,21 +551,21 @@ Blend_Status BRepBlend_CSWalking::CheckDeflectionOnCurv(const gp_Pnt& Pcurv,
   if (std::abs(Du) < tolu)
   {
     // il faudra peut etre  forcer meme point   JAG MODIF 25.04.94
-    return Blend_SamePoints; // point confondu 2d
+    return Blend_Status::Blend_SamePoints; // point confondu 2d
   }
 
   // Voir s il faut faire le controle sur le signe de prevtg*Tgsurf
 
   if (Tgcurv.Magnitude() <= tolpoint3d)
   {
-    return Blend_SamePoints; // GROS BOBARD EN ATTENDANT
+    return Blend_Status::Blend_SamePoints; // GROS BOBARD EN ATTENDANT
   }
 
   Cosi  = sens * Corde * Tgcurv;
   Cosi2 = Cosi * Cosi / Tgcurv.SquareMagnitude() / Norme;
   if (Cosi2 < CosRef3D || Cosi < 0.)
   {
-    return Blend_StepTooLarge;
+    return Blend_Status::Blend_StepTooLarge;
   }
 
   if (prevNorme > toler3d * toler3d)
@@ -575,15 +575,15 @@ Blend_Status BRepBlend_CSWalking::CheckDeflectionOnCurv(const gp_Pnt& Pcurv,
 
     if (FlecheCourante <= 0.25 * fleche * fleche)
     {
-      return Blend_StepTooSmall;
+      return Blend_Status::Blend_StepTooSmall;
     }
     if (FlecheCourante > fleche * fleche)
     {
       // pas trop grand : commentaire interessant
-      return Blend_StepTooLarge;
+      return Blend_Status::Blend_StepTooLarge;
     }
   }
-  return Blend_OK;
+  return Blend_Status::Blend_OK;
 }
 
 /*
@@ -867,7 +867,7 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
 
     if (!rsnld.IsDone())
     {
-      State = Blend_StepTooLarge;
+      State = Blend_Status::Blend_StepTooLarge;
     }
     else
     {
@@ -906,7 +906,7 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
         if (recad)
         {
           // sol sur surf
-          State = Blend_OnRst1;
+          State = Blend_Status::Blend_OnRst1;
           param = w;
           domain->Init();
           nbarc = 1;
@@ -923,20 +923,20 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
         }
         else
         {
-          State = Blend_OK;
+          State = Blend_Status::Blend_OK;
         }
         State = TestArret(Func, sol, true, State);
       }
       else
       {
         // Echec recadrage. On sort avec PointsConfondus
-        State = Blend_SamePoints;
+        State = Blend_Status::Blend_SamePoints;
       }
     }
 
     switch (State)
     {
-      case Blend_OK: {
+      case Blend_Status::Blend_OK: {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -982,7 +982,7 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
       }
       break;
 
-      case Blend_StepTooLarge: {
+      case Blend_Status::Blend_StepTooLarge: {
         stepw = stepw / 2.;
         if (std::abs(stepw) < tolgui)
         {
@@ -1012,7 +1012,7 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
       }
       break;
 
-      case Blend_StepTooSmall: {
+      case Blend_Status::Blend_StepTooSmall: {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -1058,7 +1058,7 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
       }
       break;
 
-      case Blend_OnRst1: {
+      case Blend_Status::Blend_OnRst1: {
 #ifdef OCCT_DEBUG
         if (Blend_GettraceDRAWSECT())
         {
@@ -1083,7 +1083,7 @@ void BRepBlend_CSWalking::InternalPerform(Blend_CSFunction& Func,
       }
       break;
 
-      case Blend_SamePoints: {
+      case Blend_Status::Blend_SamePoints: {
         // On arrete
         std::cout << " Points confondus dans le cheminement" << std::endl;
         /*

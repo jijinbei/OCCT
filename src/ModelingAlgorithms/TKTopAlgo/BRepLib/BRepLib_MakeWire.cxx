@@ -33,7 +33,7 @@
 //=================================================================================================
 
 BRepLib_MakeWire::BRepLib_MakeWire()
-    : myError(BRepLib_EmptyWire)
+    : myError(BRepLib_WireError::BRepLib_EmptyWire)
 {
 }
 
@@ -98,7 +98,7 @@ void BRepLib_MakeWire::Add(const TopoDS_Wire& W)
   for (TopoDS_Iterator it(W); it.More(); it.Next())
   {
     Add(TopoDS::Edge(it.Value()));
-    if (myError != BRepLib_WireDone)
+    if (myError != BRepLib_WireError::BRepLib_WireDone)
       break;
   }
 }
@@ -156,10 +156,10 @@ void BRepLib_MakeWire::Add(const TopoDS_Edge& E, bool IsCheckGeometryProximity)
     bool connected = false;
     bool copyedge  = false;
 
-    if (myError != BRepLib_NonManifoldWire)
+    if (myError != BRepLib_WireError::BRepLib_NonManifoldWire)
     {
       if (VF.IsNull() || VL.IsNull())
-        myError = BRepLib_NonManifoldWire;
+        myError = BRepLib_WireError::BRepLib_NonManifoldWire;
     }
 
     for (it.Initialize(EE); it.More(); it.Next())
@@ -172,14 +172,14 @@ void BRepLib_MakeWire::Add(const TopoDS_Edge& E, bool IsCheckGeometryProximity)
       {
         connected = true;
         myVertex  = VE;
-        if (myError != BRepLib_NonManifoldWire)
+        if (myError != BRepLib_WireError::BRepLib_NonManifoldWire)
         {
           // is it always so ?
           if (VF.IsSame(VL))
           {
             // Orientation indetermined (in 3d) : Preserve the initial
             if (!VF.IsSame(VE))
-              myError = BRepLib_NonManifoldWire;
+              myError = BRepLib_WireError::BRepLib_NonManifoldWire;
           }
           else
           {
@@ -198,7 +198,7 @@ void BRepLib_MakeWire::Add(const TopoDS_Edge& E, bool IsCheckGeometryProximity)
                 forward = true;
             }
             else
-              myError = BRepLib_NonManifoldWire;
+              myError = BRepLib_WireError::BRepLib_NonManifoldWire;
           }
         }
       }
@@ -216,14 +216,14 @@ void BRepLib_MakeWire::Add(const TopoDS_Edge& E, bool IsCheckGeometryProximity)
           if ((l < BRep_Tool::Tolerance(VE)) || (l < BRep_Tool::Tolerance(VW)))
           {
             copyedge = true;
-            if (myError != BRepLib_NonManifoldWire)
+            if (myError != BRepLib_WireError::BRepLib_NonManifoldWire)
             {
               // is it always so ?
               if (VF.IsSame(VL))
               {
                 // Orientation indetermined (in 3d) : Preserve the initial
                 if (!VF.IsSame(VW))
-                  myError = BRepLib_NonManifoldWire;
+                  myError = BRepLib_WireError::BRepLib_NonManifoldWire;
               }
               else
               {
@@ -242,7 +242,7 @@ void BRepLib_MakeWire::Add(const TopoDS_Edge& E, bool IsCheckGeometryProximity)
                     forward = true;
                 }
                 else
-                  myError = BRepLib_NonManifoldWire;
+                  myError = BRepLib_WireError::BRepLib_NonManifoldWire;
               }
             }
             break;
@@ -257,7 +257,7 @@ void BRepLib_MakeWire::Add(const TopoDS_Edge& E, bool IsCheckGeometryProximity)
 
     if (!connected)
     {
-      myError = BRepLib_DisconnectedWire;
+      myError = BRepLib_WireError::BRepLib_DisconnectedWire;
       NotDone();
       return;
     }
@@ -354,7 +354,7 @@ void BRepLib_MakeWire::Add(const TopoDS_Edge& E, bool IsCheckGeometryProximity)
     TopExp::Vertices(TopoDS::Wire(myShape), VF, VL);
   else
   {
-    if (myError == BRepLib_WireDone)
+    if (myError == BRepLib_WireError::BRepLib_WireDone)
     { // Update only
       TopoDS_Vertex V1, V2, VRef;
       TopExp::Vertices(myEdge, V1, V2);
@@ -367,7 +367,7 @@ void BRepLib_MakeWire::Add(const TopoDS_Edge& E, bool IsCheckGeometryProximity)
 #ifdef OCCT_DEBUG
         std::cout << "MakeWire : There is a PROBLEM !!" << std::endl;
 #endif
-        myError = BRepLib_NonManifoldWire;
+        myError = BRepLib_WireError::BRepLib_NonManifoldWire;
       }
 
       if (VF.IsSame(VL))
@@ -389,11 +389,11 @@ void BRepLib_MakeWire::Add(const TopoDS_Edge& E, bool IsCheckGeometryProximity)
 #ifdef OCCT_DEBUG
           std::cout << "MakeWire : Y A UN PROBLEME !!" << std::endl;
 #endif
-          myError = BRepLib_NonManifoldWire;
+          myError = BRepLib_WireError::BRepLib_NonManifoldWire;
         }
       }
     }
-    if (myError == BRepLib_NonManifoldWire)
+    if (myError == BRepLib_WireError::BRepLib_NonManifoldWire)
     {
       VF = VL = TopoDS_Vertex(); // nullify
     }
@@ -402,7 +402,7 @@ void BRepLib_MakeWire::Add(const TopoDS_Edge& E, bool IsCheckGeometryProximity)
   if (!VF.IsNull() && !VL.IsNull() && VF.IsSame(VL))
     myShape.Closed(true);
 
-  myError = BRepLib_WireDone;
+  myError = BRepLib_WireError::BRepLib_WireDone;
   Done();
 }
 

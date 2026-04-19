@@ -33,7 +33,7 @@ void TopOpeBRepDS_Filter::ProcessCurveInterferences(const int CIX)
     TopOpeBRepDS_Kind                             GT1 = I1->GeometryType();
     TopAbs_Orientation                            O1  = I1->Transition().Orientation(TopAbs_IN);
 
-    if (GT1 == TopOpeBRepDS_VERTEX)
+    if (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
     {
 
       NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it2(it1);

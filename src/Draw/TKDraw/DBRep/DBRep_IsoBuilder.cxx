@@ -308,19 +308,19 @@ void DBRep_IsoBuilder::LoadIsos(const occ::handle<DBRep_Face>& Face) const
         std::cout << "DBRep_IsoBuilder:: U iso of parameter: " << UPrm;
         switch (Status(UInd))
         {
-          case HatchGen_NoProblem:
+          case HatchGen_ErrorStatus::HatchGen_NoProblem:
             std::cout << " No Problem" << std::endl;
             break;
-          case HatchGen_TrimFailure:
+          case HatchGen_ErrorStatus::HatchGen_TrimFailure:
             std::cout << " Trim Failure" << std::endl;
             break;
-          case HatchGen_TransitionFailure:
+          case HatchGen_ErrorStatus::HatchGen_TransitionFailure:
             std::cout << " Transition Failure" << std::endl;
             break;
-          case HatchGen_IncoherentParity:
+          case HatchGen_ErrorStatus::HatchGen_IncoherentParity:
             std::cout << " Incoherent Parity" << std::endl;
             break;
-          case HatchGen_IncompatibleStates:
+          case HatchGen_ErrorStatus::HatchGen_IncompatibleStates:
             std::cout << " Incompatible States" << std::endl;
             break;
         }
@@ -334,7 +334,7 @@ void DBRep_IsoBuilder::LoadIsos(const occ::handle<DBRep_Face>& Face) const
           double V1 = Dom.HasFirstPoint() ? Dom.FirstPoint().Parameter() : myVMin - myInfinite;
           double V2 = Dom.HasSecondPoint() ? Dom.SecondPoint().Parameter() : myVMax + myInfinite;
           NumIso++;
-          Face->Iso(NumIso, GeomAbs_IsoU, UPrm, V1, V2);
+          Face->Iso(NumIso, GeomAbs_IsoType::GeomAbs_IsoU, UPrm, V1, V2);
         }
       }
     }
@@ -351,19 +351,19 @@ void DBRep_IsoBuilder::LoadIsos(const occ::handle<DBRep_Face>& Face) const
         std::cout << "DBRep_IsoBuilder:: V iso of parameter: " << VPrm;
         switch (Status(VInd))
         {
-          case HatchGen_NoProblem:
+          case HatchGen_ErrorStatus::HatchGen_NoProblem:
             std::cout << " No Problem" << std::endl;
             break;
-          case HatchGen_TrimFailure:
+          case HatchGen_ErrorStatus::HatchGen_TrimFailure:
             std::cout << " Trim Failure" << std::endl;
             break;
-          case HatchGen_TransitionFailure:
+          case HatchGen_ErrorStatus::HatchGen_TransitionFailure:
             std::cout << " Transition Failure" << std::endl;
             break;
-          case HatchGen_IncoherentParity:
+          case HatchGen_ErrorStatus::HatchGen_IncoherentParity:
             std::cout << " Incoherent Parity" << std::endl;
             break;
-          case HatchGen_IncompatibleStates:
+          case HatchGen_ErrorStatus::HatchGen_IncompatibleStates:
             std::cout << " Incompatible States" << std::endl;
             break;
         }
@@ -377,7 +377,7 @@ void DBRep_IsoBuilder::LoadIsos(const occ::handle<DBRep_Face>& Face) const
           double U1 = Dom.HasFirstPoint() ? Dom.FirstPoint().Parameter() : myVMin - myInfinite;
           double U2 = Dom.HasSecondPoint() ? Dom.SecondPoint().Parameter() : myVMax + myInfinite;
           NumIso++;
-          Face->Iso(NumIso, GeomAbs_IsoV, VPrm, U1, U2);
+          Face->Iso(NumIso, GeomAbs_IsoType::GeomAbs_IsoV, VPrm, U1, U2);
         }
       }
     }

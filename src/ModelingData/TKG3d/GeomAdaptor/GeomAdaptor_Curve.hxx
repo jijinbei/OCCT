@@ -92,7 +92,7 @@ public:
 
 public:
   GeomAdaptor_Curve()
-      : myTypeCurve(GeomAbs_OtherCurve),
+      : myTypeCurve(GeomAbs_CurveType::GeomAbs_OtherCurve),
         myFirst(0.0),
         myLast(0.0)
   {

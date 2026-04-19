@@ -204,12 +204,12 @@ static int draft(Draw_Interpretor& di, int n, const char** a)
     {
       if (!strcmp(a[cur], "-Ri"))
       {
-        MkDraft.SetOptions(BRepBuilderAPI_RightCorner);
+        MkDraft.SetOptions(BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RightCorner);
         cur++;
       }
       else if (!strcmp(a[cur], "-Ro"))
       {
-        MkDraft.SetOptions(BRepBuilderAPI_RoundCorner);
+        MkDraft.SetOptions(BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RoundCorner);
         cur++;
       }
     }

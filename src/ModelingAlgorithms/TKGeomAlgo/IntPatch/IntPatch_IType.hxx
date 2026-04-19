@@ -17,7 +17,7 @@
 #ifndef _IntPatch_IType_HeaderFile
 #define _IntPatch_IType_HeaderFile
 
-enum IntPatch_IType
+enum class IntPatch_IType
 {
   IntPatch_Lin,
   IntPatch_Circle,

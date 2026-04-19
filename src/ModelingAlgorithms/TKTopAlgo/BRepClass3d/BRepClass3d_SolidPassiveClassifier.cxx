@@ -74,12 +74,12 @@ void BRepClass3d_SolidPassiveClassifier::Compare(const TopoDS_Face& Face, const 
         {
           //-- The intersection point between the line and a face F of the solid
           //-- is in the face F or On a boundary of the face
-          if (myIntersector.Transition() == IntCurveSurface_Out)
+          if (myIntersector.Transition() == IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out)
           {
             //-- The line is going from inside the solid to outside the solid.
             myState = TopAbs_IN;
           }
-          else if (myIntersector.Transition() == IntCurveSurface_In)
+          else if (myIntersector.Transition() == IntCurveSurface_TransitionOnCurve::IntCurveSurface_In)
           {
             myState = TopAbs_OUT;
           }

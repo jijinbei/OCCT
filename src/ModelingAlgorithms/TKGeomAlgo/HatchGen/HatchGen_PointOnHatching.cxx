@@ -35,13 +35,13 @@ HatchGen_PointOnHatching::HatchGen_PointOnHatching(const IntRes2d_IntersectionPo
   myParam = Point.ParamOnFirst();
   switch (Point.TransitionOfFirst().PositionOnCurve())
   {
-    case IntRes2d_Head:
+    case IntRes2d_Position::IntRes2d_Head:
       myPosit = TopAbs_FORWARD;
       break;
-    case IntRes2d_Middle:
+    case IntRes2d_Position::IntRes2d_Middle:
       myPosit = TopAbs_INTERNAL;
       break;
-    case IntRes2d_End:
+    case IntRes2d_Position::IntRes2d_End:
       myPosit = TopAbs_REVERSED;
       break;
   }

@@ -101,7 +101,7 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
   if (aBasis.ShapeType() == TopAbs_WIRE)
   {
     occ::handle<BRepCheck_Wire> aCheck = new BRepCheck_Wire(TopoDS::Wire(aBasis));
-    if (aCheck->Closed(true) == BRepCheck_NoError)
+    if (aCheck->Closed(true) == BRepCheck_Status::BRepCheck_NoError)
     {
       BRepBuilderAPI_MakeFace aMaker(TopoDS::Wire(aBasis), true); // Makes planar face
       if (aMaker.IsDone())
@@ -198,7 +198,7 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
     else if (aResult.ShapeType() == TopAbs_SHELL)
     {
       occ::handle<BRepCheck_Shell> aCheck = new BRepCheck_Shell(TopoDS::Shell(aResult));
-      if (aCheck->Closed() == BRepCheck_NoError)
+      if (aCheck->Closed() == BRepCheck_Status::BRepCheck_NoError)
         aVol = true;
     }
     if (aVol)
@@ -250,7 +250,7 @@ int DNaming_RevolutionDriver::Execute(occ::handle<TFunction_Logbook>& theLog) co
     else if (aResult.ShapeType() == TopAbs_SHELL)
     {
       occ::handle<BRepCheck_Shell> aCheck = new BRepCheck_Shell(TopoDS::Shell(aResult));
-      if (aCheck->Closed() == BRepCheck_NoError)
+      if (aCheck->Closed() == BRepCheck_Status::BRepCheck_NoError)
         aVol = true;
     }
     if (aVol)
@@ -337,7 +337,7 @@ static bool HasDangle(const TopoDS_Shape& ShapeIn)
   else if (ShapeIn.ShapeType() == TopAbs_SHELL)
   {
     occ::handle<BRepCheck_Shell> aCheck = new BRepCheck_Shell(TopoDS::Shell(ShapeIn));
-    return aCheck->Closed() != BRepCheck_NoError;
+    return aCheck->Closed() != BRepCheck_Status::BRepCheck_NoError;
   }
   else if (ShapeIn.ShapeType() == TopAbs_FACE || ShapeIn.ShapeType() == TopAbs_WIRE
            || ShapeIn.ShapeType() == TopAbs_EDGE || ShapeIn.ShapeType() == TopAbs_VERTEX)
@@ -424,7 +424,7 @@ void DNaming_RevolutionDriver::LoadNamingDS(const TDF_Label&       theResultLabe
   if (Basis.ShapeType() == TopAbs_WIRE)
   {
     occ::handle<BRepCheck_Wire> aCheck = new BRepCheck_Wire(TopoDS::Wire(Basis));
-    if (aCheck->Closed() != BRepCheck_NoError)
+    if (aCheck->Closed() != BRepCheck_Status::BRepCheck_NoError)
     {
       isBasisClosed = false; // open
       TopExp::Vertices(TopoDS::Wire(Basis), Vfirst, Vlast);
@@ -437,7 +437,7 @@ void DNaming_RevolutionDriver::LoadNamingDS(const TDF_Label&       theResultLabe
     if (aMakeWire.IsDone())
     {
       occ::handle<BRepCheck_Wire> aCheck = new BRepCheck_Wire(aMakeWire.Wire());
-      if (aCheck->Closed() != BRepCheck_NoError)
+      if (aCheck->Closed() != BRepCheck_Status::BRepCheck_NoError)
       {                        // check for circle case
         isBasisClosed = false; // open
         TopExp::Vertices(TopoDS::Edge(Basis), Vfirst, Vlast);

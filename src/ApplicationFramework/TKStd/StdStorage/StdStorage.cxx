@@ -55,7 +55,7 @@ Storage_Error StdStorage::Read(const TCollection_AsciiString& theFileName,
 {
   // Create a driver appropriate for the given file
   occ::handle<Storage_BaseDriver> aDriver;
-  if (PCDM::FileDriverType(theFileName, aDriver) == PCDM_TOFD_Unknown)
+  if (PCDM::FileDriverType(theFileName, aDriver) == PCDM_TypeOfFileDriver::PCDM_TOFD_Unknown)
     return Storage_VSWrongFileDriver;
 
   // Try to open the file

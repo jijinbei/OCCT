@@ -501,7 +501,7 @@ static int tricheck(Draw_Interpretor& di, int n, const char** a)
         int aNodeIdx = anIndices.Value(j);
         if (j != aLower)
         {
-          BRepMesh_Edge aLink(aPrevNode, aNodeIdx, BRepMesh_Frontier);
+          BRepMesh_Edge aLink(aPrevNode, aNodeIdx, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
           aBoundaryEdgeMap.Add(aLink);
         }
         aPrevNode = aNodeIdx;
@@ -525,7 +525,7 @@ static int tricheck(Draw_Interpretor& di, int n, const char** a)
         int aLastId  = aTriNodes[j % 3];
         int aFirstId = aTriNodes[j - 1];
 
-        BRepMesh_Edge aLink(aFirstId, aLastId, BRepMesh_Free);
+        BRepMesh_Edge aLink(aFirstId, aLastId, BRepMesh_DegreeOfFreedom::BRepMesh_Free);
         if (!aBoundaryEdgeMap.Contains(aLink))
         {
           if (!aFreeEdgeMap.Add(aLink))

@@ -559,7 +559,7 @@ void Extrema_GGenExtCC<TheCurve1,
     aLC               = aMaxLC;
     isConstLockedFlag = true;
   }
-  if (C1.GetType() == GeomAbs_Line)
+  if (C1.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     aMaxDer = 1.0 / C2.Resolution(1.0);
     if (aLC > aMaxDer)
@@ -568,7 +568,7 @@ void Extrema_GGenExtCC<TheCurve1,
       aLC               = aMaxDer;
     }
   }
-  if (C2.GetType() == GeomAbs_Line)
+  if (C2.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     aMaxDer = 1.0 / C1.Resolution(1.0);
     if (aLC > aMaxDer)

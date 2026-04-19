@@ -17,7 +17,7 @@
 #ifndef _IntRes2d_Position_HeaderFile
 #define _IntRes2d_Position_HeaderFile
 
-enum IntRes2d_Position
+enum class IntRes2d_Position
 {
   IntRes2d_Head,
   IntRes2d_Middle,

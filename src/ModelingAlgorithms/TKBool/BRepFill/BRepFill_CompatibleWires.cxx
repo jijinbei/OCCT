@@ -204,13 +204,13 @@ static bool PlaneOfWire(const TopoDS_Wire& W, gp_Pln& P)
       anIter.Initialize(W);
       AdC.Load(BRep_Tool::Curve(TopoDS::Edge(anIter.Value()), first, last));
 
-      if (AdC.GetType() == GeomAbs_Circle)
+      if (AdC.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
       {
         Bary          = AdC.Circle().Location();
         isBaryDefined = true;
       }
 
-      if (AdC.GetType() == GeomAbs_Ellipse)
+      if (AdC.GetType() == GeomAbs_CurveType::GeomAbs_Ellipse)
       {
         Bary          = AdC.Ellipse().Location();
         isBaryDefined = true;
@@ -556,7 +556,7 @@ static bool EdgeIntersectOnWire(
     }
 
     // is the solution a new vertex ?
-    NewVertex = (DSS.SupportTypeShape2(isol) != BRepExtrema_IsVertex);
+    NewVertex = (DSS.SupportTypeShape2(isol) != BRepExtrema_SupportType::BRepExtrema_IsVertex);
     if (NewVertex)
     {
       TopoDS_Edge E   = TopoDS::Edge(DSS.SupportOnShape2(isol));
@@ -730,7 +730,7 @@ static void BuildConnectedEdges(const TopoDS_Wire&              aWire,
 //=================================================================================================
 
 BRepFill_CompatibleWires::BRepFill_CompatibleWires()
-    : myStatus(BRepFill_ThruSectionErrorStatus_NotDone)
+    : myStatus(BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotDone)
 {
 }
 
@@ -749,7 +749,7 @@ void BRepFill_CompatibleWires::Init(const NCollection_Sequence<TopoDS_Shape>& Se
   myInit    = Sections;
   myWork    = Sections;
   myPercent = 0.1;
-  myStatus  = BRepFill_ThruSectionErrorStatus_NotDone;
+  myStatus  = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotDone;
   myMap.Clear();
 }
 
@@ -765,7 +765,7 @@ void BRepFill_CompatibleWires::SetPercent(const double Percent)
 
 bool BRepFill_CompatibleWires::IsDone() const
 {
-  return myStatus == BRepFill_ThruSectionErrorStatus_Done;
+  return myStatus == BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Done;
 }
 
 //=================================================================================================
@@ -810,7 +810,7 @@ bool BRepFill_CompatibleWires::IsDegeneratedLastSection() const
 
 void BRepFill_CompatibleWires::Perform(const bool WithRotation)
 {
-  myStatus = BRepFill_ThruSectionErrorStatus_Done;
+  myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Done;
   // compute origin and orientation on wires to avoid twisted results
   // and update wires to have same number of edges
 
@@ -916,7 +916,7 @@ void BRepFill_CompatibleWires::Perform(const bool WithRotation)
     // All sections are open
     // origin
     SearchOrigin();
-    if (myStatus != BRepFill_ThruSectionErrorStatus_Done)
+    if (myStatus != BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Done)
     {
       return;
     }
@@ -930,7 +930,7 @@ void BRepFill_CompatibleWires::Perform(const bool WithRotation)
   {
     // There are open and closed sections :
     // not processed
-    myStatus = BRepFill_ThruSectionErrorStatus_NotSameTopology;
+    myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotSameTopology;
     return;
   }
 }
@@ -960,12 +960,12 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
   for (i = 1; i <= NbSects; i++)
   {
     occ::handle<BRepCheck_Wire> Checker = new BRepCheck_Wire(TopoDS::Wire(myWork(i)));
-    allClosed                           = (allClosed && (Checker->Closed() == BRepCheck_NoError));
+    allClosed                           = (allClosed && (Checker->Closed() == BRepCheck_Status::BRepCheck_NoError));
     // allClosed = (allClosed && myWork(i).Closed());
   }
   if (!allClosed)
   {
-    myStatus = BRepFill_ThruSectionErrorStatus_NotSameTopology;
+    myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotSameTopology;
     return;
   }
 
@@ -1055,7 +1055,7 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
     SeqOfVertices(wire1, SeqV);
     if (SeqV.Length() > NbMaxV)
     {
-      myStatus = BRepFill_ThruSectionErrorStatus_Failed;
+      myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Failed;
       return;
     }
 
@@ -1150,7 +1150,7 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
     SeqOfVertices(wire1, SeqV);
     if (SeqV.Length() > NbMaxV || SeqV.Length() > SizeMap)
     {
-      myStatus = BRepFill_ThruSectionErrorStatus_Failed;
+      myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Failed;
       return;
     }
 
@@ -1302,7 +1302,7 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
     } // end of for(; itW.More(); itW.Next())
     if (Esol.IsNull())
     {
-      myStatus = BRepFill_ThruSectionErrorStatus_ProfilesInconsistent;
+      myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_ProfilesInconsistent;
       return;
     }
     MW.Add(Esol);
@@ -1400,7 +1400,7 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
   }
   if (nbmin != nbmax)
   {
-    myStatus = BRepFill_ThruSectionErrorStatus_Failed;
+    myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Failed;
     return;
   }
 
@@ -1653,7 +1653,7 @@ void BRepFill_CompatibleWires::SameNumberByACR(const bool report)
   }
   if (nbmax != nbmin)
   {
-    myStatus = BRepFill_ThruSectionErrorStatus_Failed;
+    myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Failed;
     return;
   }
 }
@@ -1700,7 +1700,7 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool /*polar*/)
   */
   if (!allClosed)
   {
-    myStatus = BRepFill_ThruSectionErrorStatus_NotSameTopology;
+    myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotSameTopology;
     return;
   }
 
@@ -2335,7 +2335,7 @@ void BRepFill_CompatibleWires::SearchOrigin()
   }
   if (!allOpen)
   {
-    myStatus = BRepFill_ThruSectionErrorStatus_NotSameTopology;
+    myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotSameTopology;
     return;
   }
 

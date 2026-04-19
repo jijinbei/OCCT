@@ -196,7 +196,7 @@ void BREP_correctgbound(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
       if (SSI.IsNull())
         continue;
       TopOpeBRepDS_Kind GK = SSI->GeometryType();
-      if (GK != TopOpeBRepDS_VERTEX)
+      if (GK != TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
         continue;
 
       ehassiv = true;
@@ -221,7 +221,7 @@ void BREP_correctgbound(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
         continue;
       int               GI = SSI->Geometry();
       TopOpeBRepDS_Kind GK = SSI->GeometryType();
-      if (GK != TopOpeBRepDS_VERTEX)
+      if (GK != TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
         continue;
 
       const TopoDS_Shape& v    = BDS.Shape(GI);
@@ -240,7 +240,7 @@ void BREP_correctgbound(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
         continue;
       int               GI = SSI->Geometry();
       TopOpeBRepDS_Kind GK = SSI->GeometryType();
-      if (GK != TopOpeBRepDS_VERTEX)
+      if (GK != TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
         continue;
       const TopoDS_Shape& v      = BDS.Shape(GI);
       bool                vhassd = HDS->HasSameDomain(v);
@@ -303,7 +303,7 @@ static bool FUN_shareNOG(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
     const occ::handle<TopOpeBRepDS_Interference>& I1 = it1.Value();
     int                                           G  = I1->Geometry();
     TopOpeBRepDS_Kind                             GT = I1->GeometryType();
-    if (GT != TopOpeBRepDS_EDGE)
+    if (GT != TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE)
       continue;
     const TopoDS_Shape& EG = BDS.Shape(G);
     if (map2.Contains(EG))
@@ -316,7 +316,7 @@ static bool FUN_shareNOG(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
     const occ::handle<TopOpeBRepDS_Interference>& I2 = it2.Value();
     int                                           G  = I2->Geometry();
     TopOpeBRepDS_Kind                             GT = I2->GeometryType();
-    if (GT != TopOpeBRepDS_EDGE)
+    if (GT != TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE)
       continue;
     const TopoDS_Shape& EG = BDS.Shape(G);
     if (map1.Contains(EG))
@@ -347,14 +347,14 @@ static bool FUN_shareNOG(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
       const occ::handle<TopOpeBRepDS_Interference>& I1  = iter1.Value();
       int                                           S1  = I1->Support();
       TopOpeBRepDS_Kind                             ST1 = I1->SupportType();
-      if (ST1 != TopOpeBRepDS_EDGE)
+      if (ST1 != TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE)
         continue;
       const TopoDS_Edge& e2 = TopoDS::Edge(BDS.Shape(S1));
       if (!map2.Contains(e2))
         continue;
 
       TopOpeBRepDS_Kind GT1 = I1->GeometryType();
-      if (GT1 == TopOpeBRepDS_POINT)
+      if (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
       {
         occ::handle<TopOpeBRepDS_CurvePointInterference> CPI1 =
           occ::down_cast<TopOpeBRepDS_CurvePointInterference>(I1);

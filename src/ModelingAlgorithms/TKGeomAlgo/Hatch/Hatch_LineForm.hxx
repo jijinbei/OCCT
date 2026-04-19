@@ -18,7 +18,7 @@
 #define _Hatch_LineForm_HeaderFile
 
 //! Form of a trimmed line
-enum Hatch_LineForm
+enum class Hatch_LineForm
 {
   Hatch_XLINE,
   Hatch_YLINE,

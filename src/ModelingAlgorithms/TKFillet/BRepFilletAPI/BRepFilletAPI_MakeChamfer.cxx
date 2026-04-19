@@ -130,7 +130,7 @@ bool BRepFilletAPI_MakeChamfer::IsSymetric(const int IC) const
   ChFiDS_ChamfMethod ChamfMeth = myBuilder.IsChamfer(IC);
   bool               ret       = false;
 
-  if (ChamfMeth == ChFiDS_Sym)
+  if (ChamfMeth == ChFiDS_ChamfMethod::ChFiDS_Sym)
     ret = true;
 
   return ret;
@@ -143,7 +143,7 @@ bool BRepFilletAPI_MakeChamfer::IsTwoDistances(const int IC) const
   ChFiDS_ChamfMethod ChamfMeth = myBuilder.IsChamfer(IC);
   bool               ret       = false;
 
-  if (ChamfMeth == ChFiDS_TwoDist)
+  if (ChamfMeth == ChFiDS_ChamfMethod::ChFiDS_TwoDist)
     ret = true;
 
   return ret;
@@ -156,7 +156,7 @@ bool BRepFilletAPI_MakeChamfer::IsDistanceAngle(const int IC) const
   ChFiDS_ChamfMethod ChamfMeth = myBuilder.IsChamfer(IC);
   bool               ret       = false;
 
-  if (ChamfMeth == ChFiDS_DistAngle)
+  if (ChamfMeth == ChFiDS_ChamfMethod::ChFiDS_DistAngle)
     ret = true;
 
   return ret;

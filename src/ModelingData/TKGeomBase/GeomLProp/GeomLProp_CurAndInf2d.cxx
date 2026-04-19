@@ -56,11 +56,11 @@ void GeomLProp_CurAndInf2d::performCurExt(const occ::handle<Geom2d_Curve>& theCu
 
   switch (aCurveType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       break;
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       const double aUFirst       = anAdaptor.FirstParameter();
       const double aULast        = anAdaptor.LastParameter();
       const double aUFPlus2PI    = aUFirst + 2.0 * M_PI;
@@ -76,7 +76,7 @@ void GeomLProp_CurAndInf2d::performCurExt(const occ::handle<Geom2d_Curve>& theCu
       }
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       const double aUFirst = anAdaptor.FirstParameter();
       const double aULast  = anAdaptor.LastParameter();
       if (aUFirst <= 0.0 && aULast >= 0.0)
@@ -85,7 +85,7 @@ void GeomLProp_CurAndInf2d::performCurExt(const occ::handle<Geom2d_Curve>& theCu
       }
       break;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       const double aUFirst = anAdaptor.FirstParameter();
       const double aULast  = anAdaptor.LastParameter();
       if (aUFirst <= 0.0 && aULast >= 0.0)
@@ -94,7 +94,7 @@ void GeomLProp_CurAndInf2d::performCurExt(const occ::handle<Geom2d_Curve>& theCu
       }
       break;
     }
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       if (anAdaptor.Continuity() >= GeomAbs_C3)
       {
         aNumericInf.PerformCurExt(theCurve, *this);
@@ -144,17 +144,17 @@ void GeomLProp_CurAndInf2d::performInf(const occ::handle<Geom2d_Curve>& theCurve
 
   switch (aCurveType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       break;
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       if (anAdaptor.Continuity() >= GeomAbs_C3)
       {
         aNumericInf.PerformInf(theCurve, *this);

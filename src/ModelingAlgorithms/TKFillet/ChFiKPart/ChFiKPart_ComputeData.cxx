@@ -83,7 +83,7 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
   if (!Spine.IsNull())
   {
     double Radius = Spine->Radius(Iedge);
-    if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Plane)
+    if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       surfok = ChFiKPart_MakeFillet(DStr,
                                     Data,
@@ -96,9 +96,9 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                     Wref,
                                     OrFace1);
     }
-    else if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Cylinder)
+    else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
     {
-      if (ctyp == GeomAbs_Line)
+      if (ctyp == GeomAbs_CurveType::GeomAbs_Line)
         surfok = ChFiKPart_MakeFillet(DStr,
                                       Data,
                                       S1->Plane(),
@@ -127,9 +127,9 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                       OrFace1,
                                       true);
     }
-    else if (typ1 == GeomAbs_Cylinder && typ2 == GeomAbs_Plane)
+    else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Cylinder && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
-      if (ctyp == GeomAbs_Line)
+      if (ctyp == GeomAbs_CurveType::GeomAbs_Line)
         surfok = ChFiKPart_MakeFillet(DStr,
                                       Data,
                                       S2->Plane(),
@@ -158,7 +158,7 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                       OrFace2,
                                       false);
     }
-    else if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Cone)
+    else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Cone)
     {
       surfok = ChFiKPart_MakeFillet(DStr,
                                     Data,
@@ -174,7 +174,7 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                     OrFace1,
                                     true);
     }
-    else if (typ1 == GeomAbs_Cone && typ2 == GeomAbs_Plane)
+    else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Cone && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       surfok = ChFiKPart_MakeFillet(DStr,
                                     Data,
@@ -200,12 +200,12 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
 
     ChFiDS_ChamfMode aMode = CSpine->Mode();
 
-    if (CSpine->IsChamfer() == ChFiDS_Sym)
+    if (CSpine->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_Sym)
     {
       double dis;
       CSpine->GetDist(dis);
 
-      if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Plane)
+      if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         surfok = ChFiKPart_MakeChamfer(DStr,
                                        Data,
@@ -220,9 +220,9 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                        Wref,
                                        OrFace1);
       }
-      else if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Cylinder)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
       {
-        if (ctyp == GeomAbs_Circle)
+        if (ctyp == GeomAbs_CurveType::GeomAbs_Circle)
           surfok = ChFiKPart_MakeChamfer(DStr,
                                          Data,
                                          aMode,
@@ -255,9 +255,9 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                          OrFace1,
                                          true);
       }
-      else if (typ1 == GeomAbs_Cylinder && typ2 == GeomAbs_Plane)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Cylinder && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
-        if (ctyp == GeomAbs_Circle)
+        if (ctyp == GeomAbs_CurveType::GeomAbs_Circle)
           surfok = ChFiKPart_MakeChamfer(DStr,
                                          Data,
                                          aMode,
@@ -290,7 +290,7 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                          OrFace2,
                                          false);
       }
-      else if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Cone)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Cone)
       {
         surfok = ChFiKPart_MakeChamfer(DStr,
                                        Data,
@@ -308,7 +308,7 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                        OrFace1,
                                        true);
       }
-      else if (typ1 == GeomAbs_Cone && typ2 == GeomAbs_Plane)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Cone && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         surfok = ChFiKPart_MakeChamfer(DStr,
                                        Data,
@@ -331,11 +331,11 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
         throw Standard_NotImplemented("particular case not written");
       }
     }
-    else if (CSpine->IsChamfer() == ChFiDS_TwoDist)
+    else if (CSpine->IsChamfer() == ChFiDS_ChamfMethod::ChFiDS_TwoDist)
     {
       double dis1, dis2;
       CSpine->Dists(dis1, dis2);
-      if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Plane)
+      if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         surfok = ChFiKPart_MakeChamfer(DStr,
                                        Data,
@@ -350,9 +350,9 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                        Wref,
                                        OrFace1);
       }
-      else if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Cylinder)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
       {
-        if (ctyp == GeomAbs_Circle)
+        if (ctyp == GeomAbs_CurveType::GeomAbs_Circle)
           surfok = ChFiKPart_MakeChamfer(DStr,
                                          Data,
                                          aMode,
@@ -385,9 +385,9 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                          OrFace1,
                                          true);
       }
-      else if (typ1 == GeomAbs_Cylinder && typ2 == GeomAbs_Plane)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Cylinder && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
-        if (ctyp == GeomAbs_Circle)
+        if (ctyp == GeomAbs_CurveType::GeomAbs_Circle)
           surfok = ChFiKPart_MakeChamfer(DStr,
                                          Data,
                                          aMode,
@@ -420,7 +420,7 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                          OrFace2,
                                          false);
       }
-      else if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Cone)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Cone)
       {
         surfok = ChFiKPart_MakeChamfer(DStr,
                                        Data,
@@ -438,7 +438,7 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                        OrFace1,
                                        true);
       }
-      else if (typ1 == GeomAbs_Cone && typ2 == GeomAbs_Plane)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Cone && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         surfok = ChFiKPart_MakeChamfer(DStr,
                                        Data,
@@ -466,7 +466,7 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
       double dis, Angle;
       bool   DisOnP = true;
       CSpine->GetDistAngle(dis, Angle);
-      if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Plane)
+      if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         surfok = ChFiKPart_MakeChAsym(DStr,
                                       Data,
@@ -481,9 +481,9 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                       OrFace1,
                                       DisOnP);
       }
-      else if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Cylinder)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
       {
-        if (ctyp == GeomAbs_Circle)
+        if (ctyp == GeomAbs_CurveType::GeomAbs_Circle)
           surfok = ChFiKPart_MakeChAsym(DStr,
                                         Data,
                                         S1->Plane(),
@@ -516,9 +516,9 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                         true,
                                         DisOnP);
       }
-      else if (typ1 == GeomAbs_Cylinder && typ2 == GeomAbs_Plane)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Cylinder && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
-        if (ctyp == GeomAbs_Circle)
+        if (ctyp == GeomAbs_CurveType::GeomAbs_Circle)
           surfok = ChFiKPart_MakeChAsym(DStr,
                                         Data,
                                         S2->Plane(),
@@ -551,7 +551,7 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                         false,
                                         DisOnP);
       }
-      else if (typ1 == GeomAbs_Plane && typ2 == GeomAbs_Cone)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Plane && typ2 == GeomAbs_SurfaceType::GeomAbs_Cone)
       {
         surfok = ChFiKPart_MakeChAsym(DStr,
                                       Data,
@@ -569,7 +569,7 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
                                       true,
                                       DisOnP);
       }
-      else if (typ1 == GeomAbs_Cone && typ2 == GeomAbs_Plane)
+      else if (typ1 == GeomAbs_SurfaceType::GeomAbs_Cone && typ2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         surfok = ChFiKPart_MakeChAsym(DStr,
                                       Data,
@@ -616,7 +616,7 @@ bool ChFiKPart_ComputeData::ComputeCorner(TopOpeBRepDS_DataStructure&           
   bool                surfok;
   GeomAbs_SurfaceType typ1 = S1->GetType();
   GeomAbs_SurfaceType typ2 = S2->GetType();
-  if (typ1 != GeomAbs_Plane)
+  if (typ1 != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     throw Standard_ConstructionError("la face du conge torique doit etre plane");
   }
@@ -627,7 +627,7 @@ bool ChFiKPart_ComputeData::ComputeCorner(TopOpeBRepDS_DataStructure&           
   gp_Circ     circ;
   double      First, Last, fu, lu;
   ChFiKPart_CornerSpine(S1, S2, P1S1, P2S1, P1S2, P2S2, majRad, cyl, circ, First, Last);
-  if (typ2 == GeomAbs_Cylinder)
+  if (typ2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     cyl = S2->Cylinder();
     fu  = P1S2.X();
@@ -653,7 +653,7 @@ bool ChFiKPart_ComputeData::ComputeCorner(TopOpeBRepDS_DataStructure&           
                                 true);
   if (surfok)
   {
-    if (typ2 != GeomAbs_Cylinder)
+    if (typ2 != GeomAbs_SurfaceType::GeomAbs_Cylinder)
     {
       Data->ChangeInterferenceOnS2().ChangePCurveOnFace() =
         ChFiKPart_PCurve(P1S2, P2S2, First, Last);
@@ -705,7 +705,7 @@ bool ChFiKPart_ComputeData::ComputeCorner(TopOpeBRepDS_DataStructure&           
   GeomAbs_SurfaceType typ  = S->GetType();
   GeomAbs_SurfaceType typ1 = S1->GetType();
   GeomAbs_SurfaceType typ2 = S2->GetType();
-  if (typ != GeomAbs_Plane || typ1 != GeomAbs_Plane || typ2 != GeomAbs_Plane)
+  if (typ != GeomAbs_SurfaceType::GeomAbs_Plane || typ1 != GeomAbs_SurfaceType::GeomAbs_Plane || typ2 != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     throw Standard_ConstructionError("torus joint only between the planes");
   }

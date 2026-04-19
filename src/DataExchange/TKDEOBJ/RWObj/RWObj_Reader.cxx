@@ -556,7 +556,7 @@ int RWObj_Reader::triangulatePolygon(const NCollection_Array1<int>& theIndices)
     const int       aNodeIndex = theIndices.Value(theIndices.Lower() + aNodeIter);
     const gp_XYZ    aPnt3d     = getNode(aNodeIndex).XYZ();
     gp_XY           aPnt2d(aXDir * aPnt3d, aYDir * aPnt3d);
-    BRepMesh_Vertex aVertex(aPnt2d, aNodeIndex, BRepMesh_Frontier);
+    BRepMesh_Vertex aVertex(aPnt2d, aNodeIndex, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
     anIndexes.Append(aMeshStructure->AddNode(aVertex));
   }
 
@@ -565,7 +565,7 @@ int RWObj_Reader::triangulatePolygon(const NCollection_Array1<int>& theIndices)
   {
     const int     aPtIdx     = isClockwiseOrdered ? aIdx : (aIdx + 1) % anIndexes.Length();
     const int     aNextPtIdx = isClockwiseOrdered ? (aIdx + 1) % anIndexes.Length() : aIdx;
-    BRepMesh_Edge anEdge(anIndexes.Value(aPtIdx), anIndexes.Value(aNextPtIdx), BRepMesh_Frontier);
+    BRepMesh_Edge anEdge(anIndexes.Value(aPtIdx), anIndexes.Value(aNextPtIdx), BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
     aMeshStructure->AddLink(anEdge);
   }
 
@@ -583,7 +583,7 @@ int RWObj_Reader::triangulatePolygon(const NCollection_Array1<int>& theIndices)
     {
       const int                aTriangleId = aTriIter.Key();
       const BRepMesh_Triangle& aTriangle   = aMeshStructure->GetElement(aTriangleId);
-      if (aTriangle.Movability() == BRepMesh_Deleted)
+      if (aTriangle.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
       {
         continue;
       }

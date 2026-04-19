@@ -232,13 +232,13 @@ void ChFi3d_Builder::Compute()
 
   for (itel.Initialize(myListStripe); itel.More(); itel.Next())
   {
-    if ((itel.Value()->Spine()->FirstStatus() <= ChFiDS_BreakPoint))
+    if ((itel.Value()->Spine()->FirstStatus() <= ChFiDS_State::ChFiDS_BreakPoint))
       myVDataMap.Add(itel.Value()->Spine()->FirstVertex(), itel.Value());
-    else if (itel.Value()->Spine()->FirstStatus() == ChFiDS_FreeBoundary)
+    else if (itel.Value()->Spine()->FirstStatus() == ChFiDS_State::ChFiDS_FreeBoundary)
       ExtentOneCorner(itel.Value()->Spine()->FirstVertex(), itel.Value());
-    if ((itel.Value()->Spine()->LastStatus() <= ChFiDS_BreakPoint))
+    if ((itel.Value()->Spine()->LastStatus() <= ChFiDS_State::ChFiDS_BreakPoint))
       myVDataMap.Add(itel.Value()->Spine()->LastVertex(), itel.Value());
-    else if (itel.Value()->Spine()->LastStatus() == ChFiDS_FreeBoundary)
+    else if (itel.Value()->Spine()->LastStatus() == ChFiDS_State::ChFiDS_FreeBoundary)
       ExtentOneCorner(itel.Value()->Spine()->LastVertex(), itel.Value());
   }
   // preanalysis to evaluate the extensions.
@@ -252,7 +252,7 @@ void ChFi3d_Builder::Compute()
   // Construction of the stripe of fillet on each stripe.
   for (itel.Initialize(myListStripe); itel.More(); itel.Next())
   {
-    itel.Value()->Spine()->SetErrorStatus(ChFiDS_Ok);
+    itel.Value()->Spine()->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_Ok);
     try
     {
       OCC_CATCH_SIGNALS
@@ -266,8 +266,8 @@ void ChFi3d_Builder::Compute()
       (void)anException;
       badstripes.Append(itel.Value());
       done = true;
-      if (itel.Value()->Spine()->ErrorStatus() == ChFiDS_Ok)
-        itel.Value()->Spine()->SetErrorStatus(ChFiDS_Error);
+      if (itel.Value()->Spine()->ErrorStatus() == ChFiDS_ErrorStatus::ChFiDS_Ok)
+        itel.Value()->Spine()->SetErrorStatus(ChFiDS_ErrorStatus::ChFiDS_Error);
     }
     if (!done)
       badstripes.Append(itel.Value());
@@ -398,7 +398,7 @@ void ChFi3d_Builder::Compute()
             continue;
           TopOpeBRepDS_Kind gk = II->GeometryType();
           int               gi = II->Geometry();
-          if (gk == TopOpeBRepDS_VERTEX)
+          if (gk == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
           {
             const TopoDS_Vertex& v    = TopoDS::Vertex(myDS->Shape(gi));
             double               tolv = BRep_Tool::Tolerance(v);
@@ -413,7 +413,7 @@ void ChFi3d_Builder::Compute()
             else if (tolc > tolv)
               B1.UpdateVertex(v, tolc);
           }
-          else if (gk == TopOpeBRepDS_POINT)
+          else if (gk == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
           {
             TopOpeBRepDS_Point& p    = DStr.ChangePoint(gi);
             double              tolp = p.Tolerance();
@@ -758,7 +758,7 @@ void ChFi3d_Builder::PerformFilletOnVertex(const int Index)
     switch (i)
     {
       case 1: {
-        if (sp->Status(isfirst) == ChFiDS_FreeBoundary)
+        if (sp->Status(isfirst) == ChFiDS_State::ChFiDS_FreeBoundary)
           return;
         if (nba > 3)
         {

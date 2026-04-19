@@ -102,16 +102,16 @@ void TopOpeBRep_FaceEdgeFiller::Insert(const TopoDS_Shape&                      
       // sur FF
       // NYI : FacePointInterference : on ajoute un point INTERNAL a F
       //      FPI = new TopOpeBRepDS_FacePointInterference(TopAbs_INTERNAL,
-      //					       TopOpeBRepDS_FACE,FFindex,
-      //					       TopOpeBRepDS_POINT,DSPindex,
+      //					       TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,FFindex,
+      //					       TopOpeBRepDS_Kind::TopOpeBRepDS_POINT,DSPindex,
       //					       pUV);
       //      StoreInterference(FPI,EIL1,BDS);
 
       // sur EE
       EPI = TopOpeBRepDS_InterferenceTool::MakeCurveInterference(TEE,
-                                                                 TopOpeBRepDS_FACE,
+                                                                 TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
                                                                  FFindex,
-                                                                 TopOpeBRepDS_POINT,
+                                                                 TopOpeBRepDS_Kind::TopOpeBRepDS_POINT,
                                                                  DSPindex,
                                                                  parE);
       StoreInterference(EPI, EIL2, BDS);
@@ -125,16 +125,16 @@ void TopOpeBRep_FaceEdgeFiller::Insert(const TopoDS_Shape&                      
       // sur FF
       // NYI pour toute arete de F qui accede V , une EVI
       //      EVI = new TopOpeBRepDS_EdgeVertexInterference(Transition ?? <-> TFF,
-      //						    TopOpeBRepDS_EDGE,E de F,
-      //						    TopOpeBRepDS_VERTEX,Vindex,
+      //						    TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE,E de F,
+      //						    TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,Vindex,
       //						    param de V sur E de F);
       //      StoreInterference(EVI,EIL1,BDS);
 
       // sur EE
       EPI = new TopOpeBRepDS_CurvePointInterference(TEE,
-                                                    TopOpeBRepDS_FACE,
+                                                    TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
                                                     FFindex,
-                                                    TopOpeBRepDS_VERTEX,
+                                                    TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
                                                     Vindex,
                                                     parE);
       StoreInterference(EPI, EIL2, BDS);
@@ -147,16 +147,16 @@ void TopOpeBRep_FaceEdgeFiller::Insert(const TopoDS_Shape&                      
       // sur FF
       // NYI : FaceVertexInterference : on ajoute un vertex INTERNAL a F
       //      FVI = new TopOpeBRepDS_FaceVertexInterference(TopAbs_INTERNAL,
-      //					       TopOpeBRepDS_FACE,FFindex,
-      //					       TopOpeBRepDS_VERTEX,Vindex,
+      //					       TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,FFindex,
+      //					       TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,Vindex,
       //					       pUV);
       //      StoreInterference(FPI,EIL1,BDS);
 
       // sur EE
       EPI = new TopOpeBRepDS_CurvePointInterference(TEE,
-                                                    TopOpeBRepDS_FACE,
+                                                    TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
                                                     FFindex,
-                                                    TopOpeBRepDS_VERTEX,
+                                                    TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
                                                     Vindex,
                                                     parE);
       StoreInterference(EPI, EIL2, BDS);
@@ -247,23 +247,23 @@ void TopOpeBRep_FaceEdgeFiller::StoreInterference(
   switch (I->GeometryType())
   {
 
-    case TopOpeBRepDS_SOLID:
-    case TopOpeBRepDS_FACE:
-    case TopOpeBRepDS_EDGE:
-    case TopOpeBRepDS_VERTEX:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_FACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX:
       //    appendtoG = true;
       //    BDS.ChangeShapeInterferences(G).Append(I);
       break;
 
-    case TopOpeBRepDS_SURFACE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_SURFACE:
       BDS.ChangeSurfaceInterferences(G).Append(I);
       break;
 
-    case TopOpeBRepDS_CURVE:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE:
       BDS.ChangeCurveInterferences(G).Append(I);
       break;
 
-    case TopOpeBRepDS_POINT:
+    case TopOpeBRepDS_Kind::TopOpeBRepDS_POINT:
       //    appendtoG = true;
       //    BDS.ChangePointInterferences(G).Append(I);
       break;

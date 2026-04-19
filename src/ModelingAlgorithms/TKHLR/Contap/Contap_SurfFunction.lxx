@@ -18,21 +18,21 @@
 
 inline void Contap_SurfFunction::Set(const gp_Pnt& Eye)
 {
-  myType = Contap_ContourPrs; // pers
+  myType = Contap_TFunction::Contap_ContourPrs; // pers
   myEye  = Eye;
   myAng  = 0.;
 }
 
 inline void Contap_SurfFunction::Set(const gp_Dir& Direction)
 {
-  myType = Contap_ContourStd; // Contour app
+  myType = Contap_TFunction::Contap_ContourStd; // Contour app
   myDir  = Direction;
   myAng  = 0.;
 }
 
 inline void Contap_SurfFunction::Set(const gp_Dir& Direction, const double Angle)
 {
-  myType   = Contap_DraftStd; // Contour vu
+  myType   = Contap_TFunction::Contap_DraftStd; // Contour vu
   myDir    = Direction;
   myAng    = Angle;
   myCosAng = std::cos(M_PI / 2. + Angle);
@@ -40,7 +40,7 @@ inline void Contap_SurfFunction::Set(const gp_Dir& Direction, const double Angle
 
 inline void Contap_SurfFunction::Set(const gp_Pnt& Eye, const double Angle)
 {
-  myType   = Contap_DraftPrs; // Contour vu "conique"...
+  myType   = Contap_TFunction::Contap_DraftPrs; // Contour vu "conique"...
   myEye    = Eye;
   myAng    = Angle;
   myCosAng = std::cos(M_PI / 2. + Angle);

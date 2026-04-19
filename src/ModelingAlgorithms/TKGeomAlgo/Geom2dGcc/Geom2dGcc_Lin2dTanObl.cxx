@@ -52,7 +52,7 @@ Geom2dGcc_Lin2dTanObl::Geom2dGcc_Lin2dTanObl(const Geom2dGcc_QualifiedCurve& Qua
 
   WellDone = false;
   NbrSol   = 0;
-  if (Type1 == GeomAbs_Circle)
+  if (Type1 == GeomAbs_CurveType::GeomAbs_Circle)
   {
     occ::handle<Geom2d_Circle> CCC1 = occ::down_cast<Geom2d_Circle>(CC1);
     gp_Circ2d                  c1(CCC1->Circ2d());
@@ -123,7 +123,7 @@ Geom2dGcc_Lin2dTanObl::Geom2dGcc_Lin2dTanObl(const Geom2dGcc_QualifiedCurve& Qua
 
   WellDone = false;
   NbrSol   = 0;
-  if (Type1 == GeomAbs_Circle)
+  if (Type1 == GeomAbs_CurveType::GeomAbs_Circle)
   {
     occ::handle<Geom2d_Circle> CCC1 = occ::down_cast<Geom2d_Circle>(CC1);
     gp_Circ2d                  c1(CCC1->Circ2d());

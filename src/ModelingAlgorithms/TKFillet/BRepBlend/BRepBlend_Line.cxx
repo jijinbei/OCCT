@@ -18,8 +18,8 @@
 IMPLEMENT_STANDARD_RTTIEXT(BRepBlend_Line, Standard_Transient)
 
 BRepBlend_Line::BRepBlend_Line()
-    : tras1(IntSurf_Undecided),
-      tras2(IntSurf_Undecided),
+    : tras1(IntSurf_TypeTrans::IntSurf_Undecided),
+      tras2(IntSurf_TypeTrans::IntSurf_Undecided),
       hass1(false),
       hass2(false)
 {
@@ -30,8 +30,8 @@ void BRepBlend_Line::Clear()
   seqpt.Clear();
   hass1 = false;
   hass2 = false;
-  tras1 = IntSurf_Undecided;
-  tras2 = IntSurf_Undecided;
+  tras1 = IntSurf_TypeTrans::IntSurf_Undecided;
+  tras2 = IntSurf_TypeTrans::IntSurf_Undecided;
 }
 
 void BRepBlend_Line::Set(const IntSurf_TypeTrans TranS1, const IntSurf_TypeTrans TranS2)

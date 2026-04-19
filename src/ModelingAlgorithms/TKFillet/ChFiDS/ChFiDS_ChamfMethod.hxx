@@ -17,7 +17,7 @@
 #ifndef _ChFiDS_ChamfMethod_HeaderFile
 #define _ChFiDS_ChamfMethod_HeaderFile
 
-enum ChFiDS_ChamfMethod
+enum class ChFiDS_ChamfMethod
 {
   ChFiDS_Sym,
   ChFiDS_TwoDist,

@@ -180,7 +180,7 @@ bool FUN_computeLIFfaces2d(const TopOpeBRepBuild_Builder& BU,
     TopOpeBRepDS_Kind GT, ST;
     int               G, S;
     FDS_Idata(I, SB, IB, SA, IA, GT, G, ST, S);
-    if (ST != TopOpeBRepDS_EDGE)
+    if (ST != TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE)
       return false;
 
     TopoDS_Face FTRA;
@@ -224,7 +224,7 @@ bool FUN_computeLIFfaces2d(const TopOpeBRepBuild_Builder& BU,
       if (ok)
       {
         newT.Index(ITRA);
-        TopOpeBRepDS_Config                    C = TopOpeBRepDS_SAMEORIENTED;
+        TopOpeBRepDS_Config                    C = TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED;
         occ::handle<TopOpeBRepDS_Interference> newI =
           TopOpeBRepDS_InterferenceTool::MakeFaceEdgeInterference(newT, ITRA, IE, true, C);
         pDS2d->AddShapeInterference(F, newI);
@@ -246,7 +246,7 @@ bool FUN_computeLIFfaces2d(const TopOpeBRepBuild_Builder& BU,
       if (ok)
       {
         newT.Index(IF);
-        TopOpeBRepDS_Config                    C = TopOpeBRepDS_SAMEORIENTED;
+        TopOpeBRepDS_Config                    C = TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED;
         occ::handle<TopOpeBRepDS_Interference> newI =
           TopOpeBRepDS_InterferenceTool::MakeFaceEdgeInterference(newT, IF, IE, false, C);
         pDS2d->AddShapeInterference(FTRA, newI);
@@ -256,7 +256,7 @@ bool FUN_computeLIFfaces2d(const TopOpeBRepBuild_Builder& BU,
       if (ok)
       {
         newT.Index(IF);
-        TopOpeBRepDS_Config                    C = TopOpeBRepDS_SAMEORIENTED;
+        TopOpeBRepDS_Config                    C = TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED;
         occ::handle<TopOpeBRepDS_Interference> newI =
           TopOpeBRepDS_InterferenceTool::MakeFaceEdgeInterference(newT, IF, S, true, C);
         pDS2d->AddShapeInterference(FTRA, newI);
@@ -280,7 +280,7 @@ bool FUN_computeLIFfaces2d(const TopOpeBRepBuild_Builder& BU,
       if (ok)
       {
         newT.Index(ITRA);
-        TopOpeBRepDS_Config                    C = TopOpeBRepDS_SAMEORIENTED;
+        TopOpeBRepDS_Config                    C = TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED;
         occ::handle<TopOpeBRepDS_Interference> newI =
           TopOpeBRepDS_InterferenceTool::MakeFaceEdgeInterference(newT, ITRA, S, false, C);
         pDS2d->AddShapeInterference(F, newI);
@@ -746,7 +746,7 @@ void TopOpeBRepBuild_Builder::GFillEdgeWES(const TopoDS_Shape&                  
   GMergeEdgeWES(EOR, GME, WES);
 
   TopOpeBRepBuild_GTopo GSE = G1;
-  GSE.ChangeConfig(TopOpeBRepDS_UNSHGEOMETRY, TopOpeBRepDS_UNSHGEOMETRY);
+  GSE.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY, TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
   GSplitEdgeWES(EOR, LSclass, GSE, WES);
 
 } // GFillEdgeWES
@@ -758,7 +758,7 @@ static void FUN_samgeomori(const TopOpeBRepDS_DataStructure& BDS,
 {
   TopOpeBRepDS_Config cfill = BDS.SameDomainOri(ifil);
   TopAbs_Orientation  oref = BDS.Shape(iref).Orientation(), ofil = BDS.Shape(ifil).Orientation();
-  samgeomori = (cfill == TopOpeBRepDS_SAMEORIENTED);
+  samgeomori = (cfill == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
   if (oref == TopAbs::Complement(ofil))
     samgeomori = !samgeomori;
 }
@@ -1328,7 +1328,7 @@ void TopOpeBRepBuild_Builder::GSplitEdge(const TopoDS_Shape&                   E
   // NYI dans le cas ou l'appel a SplitEdge est utilise pour construire les parties
   // NYI (TopAbs_ON,SOLID) (i.e par la construction des parties (TopAbs_IN,FACE)).
   TopOpeBRepDS_Config c1 = G1.Config1(), c2 = G1.Config2();
-  bool                UUFACE = (c1 == TopOpeBRepDS_UNSHGEOMETRY && c2 == TopOpeBRepDS_UNSHGEOMETRY);
+  bool                UUFACE = (c1 == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY && c2 == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
 
   bool ONSOLID = false;
   if (!LSclass.IsEmpty())

@@ -25,13 +25,13 @@ int Contap_HCurve2dTool::NbSamples(const occ::handle<Adaptor2d_Curve2d>& C,
   double nbs = 10.0;
   switch (C->GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       nbs = 2.;
       break;
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       nbs = 3. + C->NbPoles();
       break;
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       nbs = C->NbKnots();
       nbs *= C->Degree();
       nbs *= C->LastParameter() - C->FirstParameter();

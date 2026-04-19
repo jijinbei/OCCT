@@ -36,47 +36,47 @@ occ::handle<Geom2d_Curve> Geom2dAdaptor::MakeCurve(const Adaptor2d_Curve2d& HC)
   switch (HC.GetType())
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       occ::handle<Geom2d_Line> GL = new Geom2d_Line(HC.Line());
       C2D                         = GL;
     }
     break;
 
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       occ::handle<Geom2d_Circle> GL = new Geom2d_Circle(HC.Circle());
       C2D                           = GL;
     }
     break;
 
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       occ::handle<Geom2d_Ellipse> GL = new Geom2d_Ellipse(HC.Ellipse());
       C2D                            = GL;
     }
     break;
 
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       occ::handle<Geom2d_Parabola> GL = new Geom2d_Parabola(HC.Parabola());
       C2D                             = GL;
     }
     break;
 
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       occ::handle<Geom2d_Hyperbola> GL = new Geom2d_Hyperbola(HC.Hyperbola());
       C2D                              = GL;
     }
     break;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       C2D = HC.Bezier();
     }
     break;
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       C2D = HC.BSpline();
     }
     break;
 
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve: {
       const Geom2dAdaptor_Curve* pGAC = dynamic_cast<const Geom2dAdaptor_Curve*>(&HC);
       if (pGAC != nullptr)
       {

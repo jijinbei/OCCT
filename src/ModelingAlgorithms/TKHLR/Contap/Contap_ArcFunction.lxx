@@ -16,27 +16,27 @@
 
 inline void Contap_ArcFunction::Set(const gp_Dir& Direction, const double Angle)
 {
-  myType   = Contap_DraftStd;
+  myType   = Contap_TFunction::Contap_DraftStd;
   myDir    = Direction;
   myCosAng = std::cos(M_PI / 2. + Angle);
 }
 
 inline void Contap_ArcFunction::Set(const gp_Pnt& Eye, const double Angle)
 {
-  myType   = Contap_DraftPrs;
+  myType   = Contap_TFunction::Contap_DraftPrs;
   myEye    = Eye;
   myCosAng = std::cos(M_PI / 2. + Angle);
 }
 
 inline void Contap_ArcFunction::Set(const gp_Dir& Direction)
 {
-  myType = Contap_ContourStd;
+  myType = Contap_TFunction::Contap_ContourStd;
   myDir  = Direction;
 }
 
 inline void Contap_ArcFunction::Set(const gp_Pnt& Eye)
 {
-  myType = Contap_ContourPrs;
+  myType = Contap_TFunction::Contap_ContourPrs;
   myEye  = Eye;
 }
 

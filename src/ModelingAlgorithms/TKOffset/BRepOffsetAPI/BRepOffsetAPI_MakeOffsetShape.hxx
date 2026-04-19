@@ -58,7 +58,7 @@ public:
   //! applied to the free edges of shape S; currently, only one
   //! construction type is implemented, namely the one where the free
   //! edges do not generate parallels; this corresponds to the default
-  //! value BRepOffset_Skin;
+  //! value BRepOffset_Mode::BRepOffset_Skin;
   //! - Intersection specifies how the algorithm must work in
   //! order to limit the parallels to two adjacent shapes:
   //! - if Intersection is false (default value), the intersection
@@ -75,12 +75,12 @@ public:
   //! implemented, it is recommended to use the default value (false);
   //! - Join defines how to fill the holes that may appear between
   //! parallels to the two adjacent faces. It may take values
-  //! GeomAbs_Arc or GeomAbs_Intersection:
-  //! - if Join is equal to GeomAbs_Arc, then pipes are generated
+  //! GeomAbs_JoinType::GeomAbs_Arc or GeomAbs_JoinType::GeomAbs_Intersection:
+  //! - if Join is equal to GeomAbs_JoinType::GeomAbs_Arc, then pipes are generated
   //! between two free edges of two adjacent parallels,
   //! and spheres are generated on "images" of vertices;
   //! it is the default value,
-  //! - if Join is equal to GeomAbs_Intersection, then the parallels to the
+  //! - if Join is equal to GeomAbs_JoinType::GeomAbs_Intersection, then the parallels to the
   //! two adjacent faces are enlarged and intersected,
   //! so that there are no free edges on parallels to faces.
   //! RemoveIntEdges flag defines whether to remove the INTERNAL edges
@@ -107,10 +107,10 @@ public:
     const TopoDS_Shape&          S,
     const double                 Offset,
     const double                 Tol,
-    const BRepOffset_Mode        Mode           = BRepOffset_Skin,
+    const BRepOffset_Mode        Mode           = BRepOffset_Mode::BRepOffset_Skin,
     const bool                   Intersection   = false,
     const bool                   SelfInter      = false,
-    const GeomAbs_JoinType       Join           = GeomAbs_Arc,
+    const GeomAbs_JoinType       Join           = GeomAbs_JoinType::GeomAbs_Arc,
     const bool                   RemoveIntEdges = false,
     const Message_ProgressRange& theRange       = Message_ProgressRange());
 

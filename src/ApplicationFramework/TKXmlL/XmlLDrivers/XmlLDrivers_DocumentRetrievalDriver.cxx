@@ -155,7 +155,7 @@ static TCollection_AsciiString AbsolutePath(const TCollection_AsciiString& aDirP
 
 XmlLDrivers_DocumentRetrievalDriver::XmlLDrivers_DocumentRetrievalDriver()
 {
-  myReaderStatus = PCDM_RS_OK;
+  myReaderStatus = PCDM_ReaderStatus::PCDM_RS_OK;
 }
 
 //=================================================================================================
@@ -166,7 +166,7 @@ void XmlLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&
                                                const occ::handle<PCDM_ReaderFilter>& theFilter,
                                                const Message_ProgressRange&          theRange)
 {
-  myReaderStatus = PCDM_RS_DriverFailure;
+  myReaderStatus = PCDM_ReaderStatus::PCDM_RS_DriverFailure;
   myFileName     = theFileName;
 
   const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
@@ -178,7 +178,7 @@ void XmlLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&
   }
   else
   {
-    myReaderStatus = PCDM_RS_OpenError;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_OpenError;
 
     TCollection_ExtendedString aMsg = TCollection_ExtendedString("Error: the file ") + theFileName
                                       + " cannot be opened for reading";
@@ -211,7 +211,7 @@ void XmlLDrivers_DocumentRetrievalDriver::Read(Standard_IStream& theIStream,
   {
     TCollection_AsciiString aData;
     std::cout << aParser.GetError(aData) << ": " << aData << std::endl;
-    myReaderStatus = PCDM_RS_FormatFailure;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_FormatFailure;
     return;
   }
   const XmlObjMgt_Element anElement = aParser.getDocument().getDocumentElement();
@@ -269,7 +269,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
       TCollection_ExtendedString aMsg = TCollection_ExtendedString("error: wrong file version: ")
                                         + aDocVerStr + " while current is "
                                         + TDocStd_Document::CurrentStorageFormatVersion();
-      myReaderStatus = PCDM_RS_NoVersion;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_NoVersion;
       if (!aMsgDriver.IsNull())
         aMsgDriver->Send(aMsg.ToExtString(), Message_Fail);
       return;
@@ -462,7 +462,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
 
   if (!aPS.More())
   {
-    myReaderStatus = PCDM_RS_UserBreak;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UserBreak;
     return;
   }
 
@@ -481,9 +481,9 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
     aMsgDriver->Send(aMessage.ToExtString(), Message_Trace);
 #endif
     if (!MakeDocument(theElement, theNewDocument, aPS.Next()))
-      myReaderStatus = PCDM_RS_MakeFailure;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_MakeFailure;
     else
-      myReaderStatus = PCDM_RS_OK;
+      myReaderStatus = PCDM_ReaderStatus::PCDM_RS_OK;
   }
   catch (Standard_Failure const& anException)
   {
@@ -492,7 +492,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
   }
   if (!aPS.More())
   {
-    myReaderStatus = PCDM_RS_UserBreak;
+    myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UserBreak;
     return;
   }
 

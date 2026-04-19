@@ -22,31 +22,31 @@ Standard_OStream& TopOpeBRep::Print(const TopOpeBRep_TypeLineCurve t, Standard_O
 {
   switch (t)
   {
-    case TopOpeBRep_ANALYTIC:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_ANALYTIC:
       OS << "ANALYTIC";
       break;
-    case TopOpeBRep_RESTRICTION:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION:
       OS << "RESTRICTION";
       break;
-    case TopOpeBRep_WALKING:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING:
       OS << "WALKING";
       break;
-    case TopOpeBRep_LINE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_LINE:
       OS << "LINE";
       break;
-    case TopOpeBRep_CIRCLE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_CIRCLE:
       OS << "CIRCLE";
       break;
-    case TopOpeBRep_ELLIPSE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_ELLIPSE:
       OS << "ELLIPSE";
       break;
-    case TopOpeBRep_PARABOLA:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_PARABOLA:
       OS << "PARABOLA";
       break;
-    case TopOpeBRep_HYPERBOLA:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_HYPERBOLA:
       OS << "HYPERBOLA";
       break;
-    case TopOpeBRep_OTHERTYPE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_OTHERTYPE:
       OS << "OTHERTYPE";
       break;
     default:

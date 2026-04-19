@@ -18,7 +18,7 @@
 #define _BRepFeat_StatusError_HeaderFile
 
 //! Describes the error.
-enum BRepFeat_StatusError
+enum class BRepFeat_StatusError
 {
   BRepFeat_OK,
   BRepFeat_BadDirect,

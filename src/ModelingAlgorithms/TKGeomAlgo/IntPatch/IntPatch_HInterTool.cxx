@@ -40,11 +40,11 @@ int IntPatch_HInterTool::NbSamplesV(const occ::handle<Adaptor3d_Surface>& S,
 {
   switch (S->GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       return 2;
-    case GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
       return (3 + S->NbVPoles());
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       int nbs = S->NbVKnots();
       nbs *= S->VDegree();
       if (!S->IsVRational())
@@ -54,16 +54,16 @@ int IntPatch_HInterTool::NbSamplesV(const occ::handle<Adaptor3d_Surface>& S,
       return nbs;
     }
     break;
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
       return 15;
 
-    case GeomAbs_OffsetSurface:
-    case GeomAbs_OtherSurface:
+    case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
+    case GeomAbs_SurfaceType::GeomAbs_OtherSurface:
       return 10;
   }
   return 10;
@@ -75,11 +75,11 @@ int IntPatch_HInterTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S,
 {
   switch (S->GetType())
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       return 2;
-    case GeomAbs_BezierSurface:
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
       return (3 + S->NbUPoles());
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       int nbs = S->NbUKnots();
       nbs *= S->UDegree();
       if (!S->IsURational())
@@ -88,16 +88,16 @@ int IntPatch_HInterTool::NbSamplesU(const occ::handle<Adaptor3d_Surface>& S,
         nbs = 4;
       return nbs;
     }
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       return 20;
 
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_SurfaceOfRevolution:
-    case GeomAbs_SurfaceOfExtrusion:
-    case GeomAbs_OffsetSurface:
-    case GeomAbs_OtherSurface:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
+    case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
+    case GeomAbs_SurfaceType::GeomAbs_OtherSurface:
       return 10;
   }
   return 10;
@@ -229,19 +229,19 @@ int IntPatch_HInterTool::NbSamplesOnArc(const occ::handle<Adaptor2d_Curve2d>& A)
   int nbsOnC = 5;
   switch (CurveType)
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       nbsOnC = 2;
       break;
-    case GeomAbs_Circle:
-    case GeomAbs_Ellipse:
-    case GeomAbs_Hyperbola:
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       nbsOnC = 10;
       break;
-    case GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
       nbsOnC = A->NbPoles();
       break;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       //-- occ::handle<Geom2d_BSplineCurve>& BSC=A->BSpline();
       nbsOnC = 2 + A->NbKnots() * A->Degree();
       break;

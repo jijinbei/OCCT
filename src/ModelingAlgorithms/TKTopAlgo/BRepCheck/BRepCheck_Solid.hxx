@@ -39,20 +39,20 @@ public:
   //!
   //! The scan area is:
   //! 1.  Shells that overlaps each other
-  //! Status:  BRepCheck_InvalidImbricationOfShells
+  //! Status:  BRepCheck_Status::BRepCheck_InvalidImbricationOfShells
   //!
   //! 2.  Detached parts of the solid (vertices, edges)
   //! that have non-internal orientation
-  //! Status:  BRepCheck_BadOrientationOfSubshape
+  //! Status:  BRepCheck_Status::BRepCheck_BadOrientationOfSubshape
   //!
   //! 3.  For closed, non-internal shells:
   //! 3.1 Shells containing entities of the solid that
   //! are outside towards the shells
-  //! Status:  BRepCheck_SubshapeNotInShape
+  //! Status:  BRepCheck_Status::BRepCheck_SubshapeNotInShape
   //!
   //! 3.2 Shells that encloses other Shells
   //! (for non-holes)
-  //! Status:  BRepCheck_EnclosedRegion
+  //! Status:  BRepCheck_Status::BRepCheck_EnclosedRegion
   Standard_EXPORT void Minimum() override;
 
   //! see the parent class for more details

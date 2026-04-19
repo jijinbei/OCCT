@@ -186,26 +186,26 @@ void ProjLib::MakePCurveOfType(const ProjLib_ProjectedCurve& PC, occ::handle<Geo
   switch (PC.GetType())
   {
 
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       C2D = new Geom2d_Line(PC.Line());
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       C2D = new Geom2d_Circle(PC.Circle());
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       C2D = new Geom2d_Ellipse(PC.Ellipse());
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       C2D = new Geom2d_Parabola(PC.Parabola());
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       C2D = new Geom2d_Hyperbola(PC.Hyperbola());
       break;
-    case GeomAbs_BSplineCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve:
       C2D = PC.BSpline();
       break;
-    case GeomAbs_BezierCurve:
-    case GeomAbs_OtherCurve:
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_OtherCurve:
     default:
       throw Standard_NotImplemented("ProjLib::MakePCurveOfType");
       break;
@@ -219,11 +219,11 @@ bool ProjLib::IsAnaSurf(const occ::handle<Adaptor3d_Surface>& theAS)
   switch (theAS->GetType())
   {
 
-    case GeomAbs_Plane:
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       return true;
       break;
     default:

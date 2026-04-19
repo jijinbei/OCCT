@@ -50,7 +50,7 @@ BRepOffset_MakeSimpleOffset::BRepOffset_MakeSimpleOffset()
       myTolerance(Precision::Confusion()),
       myIsBuildSolid(false),
       myMaxAngle(0.0),
-      myError(BRepOffsetSimple_OK),
+      myError(BRepOffsetSimple_Status::BRepOffsetSimple_OK),
       myIsDone(false)
 {
   myReShape = new ShapeBuild_ReShape();
@@ -65,7 +65,7 @@ BRepOffset_MakeSimpleOffset::BRepOffset_MakeSimpleOffset(const TopoDS_Shape& the
       myTolerance(Precision::Confusion()),
       myIsBuildSolid(false),
       myMaxAngle(0.0),
-      myError(BRepOffsetSimple_OK),
+      myError(BRepOffsetSimple_Status::BRepOffsetSimple_OK),
       myIsDone(false)
 {
   myReShape = new ShapeBuild_ReShape();
@@ -87,27 +87,27 @@ TCollection_AsciiString BRepOffset_MakeSimpleOffset::GetErrorMessage() const
 {
   TCollection_AsciiString anError = "";
 
-  if (myError == BRepOffsetSimple_NullInputShape)
+  if (myError == BRepOffsetSimple_Status::BRepOffsetSimple_NullInputShape)
   {
     anError = "Null input shape";
     return anError;
   }
-  else if (myError == BRepOffsetSimple_ErrorOffsetComputation)
+  else if (myError == BRepOffsetSimple_Status::BRepOffsetSimple_ErrorOffsetComputation)
   {
     anError = "Error during offset construction";
     return anError;
   }
-  else if (myError == BRepOffsetSimple_ErrorWallFaceComputation)
+  else if (myError == BRepOffsetSimple_Status::BRepOffsetSimple_ErrorWallFaceComputation)
   {
     anError = "Error during building wall face";
     return anError;
   }
-  else if (myError == BRepOffsetSimple_ErrorInvalidNbShells)
+  else if (myError == BRepOffsetSimple_Status::BRepOffsetSimple_ErrorInvalidNbShells)
   {
     anError = "Result contains two or more shells";
     return anError;
   }
-  else if (myError == BRepOffsetSimple_ErrorNonClosedShell)
+  else if (myError == BRepOffsetSimple_Status::BRepOffsetSimple_ErrorNonClosedShell)
   {
     anError = "Result shell is not closed";
     return anError;
@@ -121,7 +121,7 @@ TCollection_AsciiString BRepOffset_MakeSimpleOffset::GetErrorMessage() const
 void BRepOffset_MakeSimpleOffset::Clear()
 {
   myIsDone   = false;
-  myError    = BRepOffsetSimple_OK;
+  myError    = BRepOffsetSimple_Status::BRepOffsetSimple_OK;
   myMaxAngle = 0.0;
   myMapVE.Clear();
   myReShape->Clear(); // Clear possible stored modifications.
@@ -156,7 +156,7 @@ void BRepOffset_MakeSimpleOffset::Perform()
   // Check shape existence.
   if (myInputShape.IsNull())
   {
-    myError = BRepOffsetSimple_NullInputShape;
+    myError = BRepOffsetSimple_Status::BRepOffsetSimple_NullInputShape;
     return;
   }
 
@@ -170,7 +170,7 @@ void BRepOffset_MakeSimpleOffset::Perform()
 
   if (!myBuilder.IsDone())
   {
-    myError = BRepOffsetSimple_ErrorOffsetComputation;
+    myError = BRepOffsetSimple_Status::BRepOffsetSimple_ErrorOffsetComputation;
     return;
   }
 
@@ -395,7 +395,7 @@ bool BRepOffset_MakeSimpleOffset::BuildMissingWalls()
 
       if (aNewFace.IsNull())
       {
-        myError = BRepOffsetSimple_ErrorWallFaceComputation;
+        myError = BRepOffsetSimple_Status::BRepOffsetSimple_ErrorWallFaceComputation;
         return false;
       }
 
@@ -451,7 +451,7 @@ bool BRepOffset_MakeSimpleOffset::BuildMissingWalls()
     if (!aResShell.IsNull())
     {
       // Shell is not null -> explorer contains two or more shells.
-      myError = BRepOffsetSimple_ErrorInvalidNbShells;
+      myError = BRepOffsetSimple_Status::BRepOffsetSimple_ErrorInvalidNbShells;
       return false;
     }
     aResShell = TopoDS::Shell(anExpSSh.Current());
@@ -459,7 +459,7 @@ bool BRepOffset_MakeSimpleOffset::BuildMissingWalls()
 
   if (!BRep_Tool::IsClosed(aResShell))
   {
-    myError = BRepOffsetSimple_ErrorNonClosedShell;
+    myError = BRepOffsetSimple_Status::BRepOffsetSimple_ErrorNonClosedShell;
     return false;
   }
 

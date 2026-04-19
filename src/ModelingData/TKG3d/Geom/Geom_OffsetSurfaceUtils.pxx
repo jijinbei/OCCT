@@ -388,7 +388,7 @@ bool ComputeDerivatives(int                         theMaxOrder,
 }
 
 //! Attempts to replace a zero derivative by stepping away and recomputing.
-//! This handles CSLib_InfinityOfSolutions case where one derivative is zero.
+//! This handles CSLib_NormalStatus::CSLib_InfinityOfSolutions case where one derivative is zero.
 //!
 //! @tparam BasisSurfType type of basis surface (must have D1 method)
 //! @param[in] theU U parameter
@@ -666,8 +666,8 @@ bool EvaluateD0(double                  theU,
                   OrderU,
                   OrderV);
 
-    // Handle CSLib_InfinityOfSolutions by replacing zero derivative
-    if (aNStatus == CSLib_InfinityOfSolutions)
+    // Handle CSLib_NormalStatus::CSLib_InfinityOfSolutions by replacing zero derivative
+    if (aNStatus == CSLib_NormalStatus::CSLib_InfinityOfSolutions)
     {
       gp_Vec aNewDU = aD1U;
       gp_Vec aNewDV = aD1V;
@@ -686,7 +686,7 @@ bool EvaluateD0(double                  theU,
       }
     }
 
-    if (aNStatus == CSLib_Defined)
+    if (aNStatus == CSLib_NormalStatus::CSLib_Defined)
     {
       theValue.SetXYZ(theValue.XYZ() + theOffset * aOscInfo.Sign() * aNormal.XYZ());
       return true;
@@ -942,8 +942,8 @@ bool EvaluateD1(double                  theU,
                   aOrderU,
                   aOrderV);
 
-    // Handle CSLib_InfinityOfSolutions by replacing zero derivative
-    if (aNStatus == CSLib_InfinityOfSolutions)
+    // Handle CSLib_NormalStatus::CSLib_InfinityOfSolutions by replacing zero derivative
+    if (aNStatus == CSLib_NormalStatus::CSLib_InfinityOfSolutions)
     {
       gp_Vec aNewDU = theD1U;
       gp_Vec aNewDV = theD1V;
@@ -1010,7 +1010,7 @@ bool EvaluateD1(double                  theU,
       }
     }
 
-    if (aNStatus == CSLib_Defined)
+    if (aNStatus == CSLib_NormalStatus::CSLib_Defined)
     {
       // Compute offset point
       theValue.SetXYZ(theValue.XYZ() + theOffset * aSign * aNormal.XYZ());
@@ -1168,12 +1168,12 @@ bool EvaluateD2(double                  theU,
     CSLib::Normal(theD1U, theD1V, THE_D1_MAGNITUDE_TOL, aNStatus, aNormal);
 
     // MaxOrder = 0 for non-singular, 3 for singular
-    const int aMaxOrder = (aNStatus == CSLib_Defined) ? 0 : 3;
+    const int aMaxOrder = (aNStatus == CSLib_NormalStatus::CSLib_Defined) ? 0 : 3;
 
     // Get osculating surface info
     OsculatingInfo                   aOscInfo;
     occ::handle<Geom_BSplineSurface> aOscSurf;
-    if ((aNStatus != CSLib_Defined) && theOscQuery)
+    if ((aNStatus != CSLib_NormalStatus::CSLib_Defined) && theOscQuery)
     {
       aOscInfo.AlongU = theOscQuery->UOsculatingSurface(theU, theV, aOscInfo.IsOpposite, aOscSurf);
       aOscInfo.AlongV = theOscQuery->VOsculatingSurface(theU, theV, aOscInfo.IsOpposite, aOscSurf);
@@ -1248,7 +1248,7 @@ bool EvaluateD2(double                  theU,
                   aOrderU,
                   aOrderV);
 
-    if (aNStatus == CSLib_Defined)
+    if (aNStatus == CSLib_NormalStatus::CSLib_Defined)
     {
       const double aSign = theOffset * aOscInfo.Sign();
 
@@ -1418,12 +1418,12 @@ bool EvaluateD3(double                  theU,
     CSLib::Normal(theD1U, theD1V, THE_D1_MAGNITUDE_TOL, aNStatus, aNormal);
 
     // MaxOrder = 0 for non-singular, 3 for singular
-    const int aMaxOrder = (aNStatus == CSLib_Defined) ? 0 : 3;
+    const int aMaxOrder = (aNStatus == CSLib_NormalStatus::CSLib_Defined) ? 0 : 3;
 
     // Get osculating surface info
     OsculatingInfo                   aOscInfo;
     occ::handle<Geom_BSplineSurface> aOscSurf;
-    if ((aNStatus != CSLib_Defined) && theOscQuery)
+    if ((aNStatus != CSLib_NormalStatus::CSLib_Defined) && theOscQuery)
     {
       aOscInfo.AlongU = theOscQuery->UOsculatingSurface(theU, theV, aOscInfo.IsOpposite, aOscSurf);
       aOscInfo.AlongV = theOscQuery->VOsculatingSurface(theU, theV, aOscInfo.IsOpposite, aOscSurf);
@@ -1499,7 +1499,7 @@ bool EvaluateD3(double                  theU,
                   aOrderU,
                   aOrderV);
 
-    if (aNStatus == CSLib_Defined)
+    if (aNStatus == CSLib_NormalStatus::CSLib_Defined)
     {
       const double aSign = theOffset * aOscInfo.Sign();
 
@@ -1620,7 +1620,7 @@ bool EvaluateDN(double                  theU,
     CSLib_NormalStatus aNStatus;
     CSLib::Normal(aD1U, aD1V, THE_D1_MAGNITUDE_TOL, aNStatus, aNormal);
 
-    const int aMaxOrder = (aNStatus == CSLib_Defined) ? 0 : 3;
+    const int aMaxOrder = (aNStatus == CSLib_NormalStatus::CSLib_Defined) ? 0 : 3;
     int       aOrderU, aOrderV;
 
     // Stack buffers: max size with aMaxOrder=3, theNu=theNv=3 is 7x7=49 and 8x8=64
@@ -1645,7 +1645,7 @@ bool EvaluateDN(double                  theU,
     // Check osculating surface only in singular case
     OsculatingInfo                   aOscInfo;
     occ::handle<Geom_BSplineSurface> aOscSurf;
-    if ((aNStatus != CSLib_Defined) && theOscQuery)
+    if ((aNStatus != CSLib_NormalStatus::CSLib_Defined) && theOscQuery)
     {
       aOscInfo.AlongU = theOscQuery->UOsculatingSurface(theU, theV, aOscInfo.IsOpposite, aOscSurf);
       aOscInfo.AlongV = theOscQuery->VOsculatingSurface(theU, theV, aOscInfo.IsOpposite, aOscSurf);
@@ -1701,7 +1701,7 @@ bool EvaluateDN(double                  theU,
                   aOrderU,
                   aOrderV);
 
-    if (aNStatus == CSLib_Defined)
+    if (aNStatus == CSLib_NormalStatus::CSLib_Defined)
     {
       const double aSign = theOffset * aOscInfo.Sign();
 

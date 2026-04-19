@@ -18,7 +18,7 @@
 #define _HatchGen_ErrorStatus_HeaderFile
 
 //! Error status.
-enum HatchGen_ErrorStatus
+enum class HatchGen_ErrorStatus
 {
   HatchGen_NoProblem,
   HatchGen_TrimFailure,

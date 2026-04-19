@@ -64,9 +64,9 @@ public:
 
   Contap_Point& Vertex(const int Index) const;
 
-  //! Returns Contap_Lin for a line, Contap_Circle for
-  //! a circle, and Contap_Walking for a Walking line,
-  //! Contap_Restriction for a part of boundary.
+  //! Returns Contap_IType::Contap_Lin for a line, Contap_IType::Contap_Circle for
+  //! a circle, and Contap_IType::Contap_Walking for a Walking line,
+  //! Contap_IType::Contap_Restriction for a part of boundary.
   Contap_IType TypeContour() const;
 
   int NbPnts() const;

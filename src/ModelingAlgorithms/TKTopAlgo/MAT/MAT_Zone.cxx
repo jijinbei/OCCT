@@ -66,7 +66,7 @@ void MAT_Zone::Perform(const occ::handle<MAT_BasicElt>& aBasicElt)
   // Determination du premier noeud qui permet de construire la zone en tournant
   // surla gauche.
   // --------------------------------------------------------------------------
-  NextNode  = NodeForTurn(CurrentArc, aBasicElt, MAT_Left);
+  NextNode  = NodeForTurn(CurrentArc, aBasicElt, MAT_Side::MAT_Left);
   StartNode = CurrentArc->TheOtherNode(NextNode);
 
   // -------------------------------------------------------------------------
@@ -79,7 +79,7 @@ void MAT_Zone::Perform(const occ::handle<MAT_BasicElt>& aBasicElt)
 
   while (!NextNode->PendingNode() && (NextNode != StartNode))
   {
-    CurrentArc = CurrentArc->Neighbour(NextNode, MAT_Left);
+    CurrentArc = CurrentArc->Neighbour(NextNode, MAT_Side::MAT_Left);
     frontier.Append(CurrentArc);
     NextNode = CurrentArc->TheOtherNode(NextNode);
   }
@@ -100,14 +100,14 @@ void MAT_Zone::Perform(const occ::handle<MAT_BasicElt>& aBasicElt)
     // Determination du premier noeud qui permet de construire la zone en
     // tournan surla droite.
     // --------------------------------------------------------------------------
-    NextNode = NodeForTurn(CurrentArc, aBasicElt, MAT_Right);
+    NextNode = NodeForTurn(CurrentArc, aBasicElt, MAT_Side::MAT_Right);
 
     // -----------------------------------------------------
     // Cette branche est aussi terminee par un noeud infini.
     // -----------------------------------------------------
     while (!NextNode->Infinite())
     {
-      CurrentArc = CurrentArc->Neighbour(NextNode, MAT_Right);
+      CurrentArc = CurrentArc->Neighbour(NextNode, MAT_Side::MAT_Right);
       frontier.Append(CurrentArc);
       NextNode = CurrentArc->TheOtherNode(NextNode);
     }

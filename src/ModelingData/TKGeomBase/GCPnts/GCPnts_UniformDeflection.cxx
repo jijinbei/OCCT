@@ -212,25 +212,25 @@ static GCPnts_DeflectionType GetDefType(const TheCurve& theC)
 {
   if (theC.NbIntervals(GeomAbs_C2) > 1)
   {
-    return GCPnts_DefComposite;
+    return GCPnts_DeflectionType::GCPnts_DefComposite;
   }
 
   switch (theC.GetType())
   {
-    case GeomAbs_Line:
-      return GCPnts_Linear;
-    case GeomAbs_Circle:
-      return GCPnts_Circular;
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_Line:
+      return GCPnts_DeflectionType::GCPnts_Linear;
+    case GeomAbs_CurveType::GeomAbs_Circle:
+      return GCPnts_DeflectionType::GCPnts_Circular;
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) aBSpline = theC.BSpline();
-      return (aBSpline->NbPoles() == 2) ? GCPnts_Linear : GCPnts_Curved;
+      return (aBSpline->NbPoles() == 2) ? GCPnts_DeflectionType::GCPnts_Linear : GCPnts_DeflectionType::GCPnts_Curved;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) aBezier = theC.Bezier();
-      return (aBezier->NbPoles() == 2) ? GCPnts_Linear : GCPnts_Curved;
+      return (aBezier->NbPoles() == 2) ? GCPnts_DeflectionType::GCPnts_Linear : GCPnts_DeflectionType::GCPnts_Curved;
     }
     default: {
-      return GCPnts_Curved;
+      return GCPnts_DeflectionType::GCPnts_Curved;
     }
   }
 }
@@ -325,17 +325,17 @@ void GCPnts_UniformDeflection::initialize(const TheCurve& theC,
   const GCPnts_DeflectionType aType = GetDefType(theC);
   switch (aType)
   {
-    case GCPnts_Linear:
+    case GCPnts_DeflectionType::GCPnts_Linear:
       myDone = PerformLinear(theC, myParams, myPoints, aU1, aU2);
       break;
-    case GCPnts_Circular:
+    case GCPnts_DeflectionType::GCPnts_Circular:
       myDone = PerformCircular(theC, myParams, myPoints, theDeflection, aU1, aU2);
       break;
-    case GCPnts_Curved:
+    case GCPnts_DeflectionType::GCPnts_Curved:
       myDone =
         PerformCurve(myParams, myPoints, theC, theDeflection, aU1, aU2, anEPSILON, theWithControl);
       break;
-    case GCPnts_DefComposite:
+    case GCPnts_DeflectionType::GCPnts_DefComposite:
       myDone = PerformComposite(myParams,
                                 myPoints,
                                 theC,

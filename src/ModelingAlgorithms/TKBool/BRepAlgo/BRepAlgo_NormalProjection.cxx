@@ -616,11 +616,11 @@ bool BRepAlgo_NormalProjection::IsElementary(const Adaptor3d_Curve& C) const
   type = C.GetType();
   switch (type)
   {
-    case GeomAbs_Line:
-    case GeomAbs_Circle:
-    case GeomAbs_Ellipse:
-    case GeomAbs_Hyperbola:
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       return true;
     default:
       return false;

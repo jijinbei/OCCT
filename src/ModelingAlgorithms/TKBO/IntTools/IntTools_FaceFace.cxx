@@ -258,11 +258,11 @@ static bool isTreatAnalityc(const BRepAdaptor_Surface& theBAS1,
 
   gp_Pln      aS1;
   gp_Cylinder aS2;
-  if (aType1 == GeomAbs_Plane)
+  if (aType1 == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     aS1 = theBAS1.Plane();
   }
-  else if (aType2 == GeomAbs_Plane)
+  else if (aType2 == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     aS1 = theBAS2.Plane();
   }
@@ -271,7 +271,7 @@ static bool isTreatAnalityc(const BRepAdaptor_Surface& theBAS1,
     return true;
   }
 
-  if (aType1 == GeomAbs_Cylinder)
+  if (aType1 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     aS2               = theBAS1.Cylinder();
     const double VMin = theBAS1.FirstVParameter();
@@ -282,7 +282,7 @@ static bool isTreatAnalityc(const BRepAdaptor_Surface& theBAS1,
     else
       aHigh = VMax - VMin;
   }
-  else if (aType2 == GeomAbs_Cylinder)
+  else if (aType2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     aS2 = theBAS2.Cylinder();
 
@@ -301,7 +301,7 @@ static bool isTreatAnalityc(const BRepAdaptor_Surface& theBAS1,
 
   IntAna_QuadQuadGeo inter;
   inter.Perform(aS1, aS2, Tolang, theTol, aHigh);
-  if (inter.TypeInter() == IntAna_Ellipse)
+  if (inter.TypeInter() == IntAna_ResultType::IntAna_Ellipse)
   {
     const gp_Elips anEl    = inter.Ellipse(1);
     const double   aMajorR = anEl.MajorRadius();
@@ -379,12 +379,12 @@ void IntTools_FaceFace::Perform(const TopoDS_Face& aF1,
   double TolTang = TolArc;
 
   const bool isFace1Quad =
-    (aType1 == GeomAbs_Cylinder || aType1 == GeomAbs_Cone || aType1 == GeomAbs_Torus);
+    (aType1 == GeomAbs_SurfaceType::GeomAbs_Cylinder || aType1 == GeomAbs_SurfaceType::GeomAbs_Cone || aType1 == GeomAbs_SurfaceType::GeomAbs_Torus);
 
   const bool isFace2Quad =
-    (aType2 == GeomAbs_Cylinder || aType2 == GeomAbs_Cone || aType2 == GeomAbs_Torus);
+    (aType2 == GeomAbs_SurfaceType::GeomAbs_Cylinder || aType2 == GeomAbs_SurfaceType::GeomAbs_Cone || aType2 == GeomAbs_SurfaceType::GeomAbs_Torus);
 
-  if (aType1 == GeomAbs_Plane && aType2 == GeomAbs_Plane)
+  if (aType1 == GeomAbs_SurfaceType::GeomAbs_Plane && aType2 == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     double umin, umax, vmin, vmax;
     //
@@ -427,9 +427,9 @@ void IntTools_FaceFace::Perform(const TopoDS_Face& aF1,
       }
     }
     return;
-  } // if(aType1==GeomAbs_Plane && aType2==GeomAbs_Plane){
+  } // if(aType1==GeomAbs_SurfaceType::GeomAbs_Plane && aType2==GeomAbs_SurfaceType::GeomAbs_Plane){
 
-  if ((aType1 == GeomAbs_Plane) && isFace2Quad)
+  if ((aType1 == GeomAbs_SurfaceType::GeomAbs_Plane) && isFace2Quad)
   {
     double umin, umax, vmin, vmax;
     // F1
@@ -441,7 +441,7 @@ void IntTools_FaceFace::Perform(const TopoDS_Face& aF1,
     CorrectSurfaceBoundaries(myFace2, myTol * 2., umin, umax, vmin, vmax);
     myHS2->Load(S2, umin, umax, vmin, vmax);
   }
-  else if ((aType2 == GeomAbs_Plane) && isFace1Quad)
+  else if ((aType2 == GeomAbs_SurfaceType::GeomAbs_Plane) && isFace1Quad)
   {
     double umin, umax, vmin, vmax;
     // F1
@@ -474,18 +474,18 @@ void IntTools_FaceFace::Perform(const TopoDS_Face& aF1,
   {
     const double UVMaxStep  = IntPatch_Intersection::DefineUVMaxStep(myHS1, dom1, myHS2, dom2);
     double       Deflection = 0.1;
-    if (aType1 == GeomAbs_BSplineSurface && aType2 == GeomAbs_BSplineSurface)
+    if (aType1 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface && aType2 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
     {
       Deflection /= 10.;
     }
     myIntersector.SetTolerances(TolArc, TolTang, UVMaxStep, Deflection);
   }
 
-  if ((aType1 != GeomAbs_BSplineSurface) && (aType1 != GeomAbs_BezierSurface)
-      && (aType1 != GeomAbs_OtherSurface) && (aType2 != GeomAbs_BSplineSurface)
-      && (aType2 != GeomAbs_BezierSurface) && (aType2 != GeomAbs_OtherSurface))
+  if ((aType1 != GeomAbs_SurfaceType::GeomAbs_BSplineSurface) && (aType1 != GeomAbs_SurfaceType::GeomAbs_BezierSurface)
+      && (aType1 != GeomAbs_SurfaceType::GeomAbs_OtherSurface) && (aType2 != GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+      && (aType2 != GeomAbs_SurfaceType::GeomAbs_BezierSurface) && (aType2 != GeomAbs_SurfaceType::GeomAbs_OtherSurface))
   {
-    if ((aType1 == GeomAbs_Torus) || (aType2 == GeomAbs_Torus))
+    if ((aType1 == GeomAbs_SurfaceType::GeomAbs_Torus) || (aType2 == GeomAbs_SurfaceType::GeomAbs_Torus))
     {
       myListOfPnts.Clear();
     }
@@ -709,7 +709,7 @@ reapprox:;
   L                     = myIntersector.Line(Index);
   typl                  = L->ArcType();
   //
-  if (typl == IntPatch_Walking)
+  if (typl == IntPatch_IType::IntPatch_Walking)
   {
     occ::handle<IntPatch_WLine> aWLine(occ::down_cast<IntPatch_WLine>(L));
     if (aWLine.IsNull())
@@ -733,7 +733,7 @@ reapprox:;
 
   typl = L->ArcType();
 
-  if (typl == IntPatch_Restriction)
+  if (typl == IntPatch_IType::IntPatch_Restriction)
     bAvoidLineConstructor = true;
 
   //
@@ -748,7 +748,7 @@ reapprox:;
       return;
     }
 
-    if (typl != IntPatch_Restriction)
+    if (typl != IntPatch_IType::IntPatch_Restriction)
     {
       aNbParts = myLConstruct.NbParts();
       if (aNbParts <= 0)
@@ -764,20 +764,20 @@ reapprox:;
     // ########################################
     //  Line, Parabola, Hyperbola
     // ########################################
-    case IntPatch_Lin:
-    case IntPatch_Parabola:
-    case IntPatch_Hyperbola: {
-      if (typl == IntPatch_Lin)
+    case IntPatch_IType::IntPatch_Lin:
+    case IntPatch_IType::IntPatch_Parabola:
+    case IntPatch_IType::IntPatch_Hyperbola: {
+      if (typl == IntPatch_IType::IntPatch_Lin)
       {
         newc = new Geom_Line(occ::down_cast<IntPatch_GLine>(L)->Line());
       }
 
-      else if (typl == IntPatch_Parabola)
+      else if (typl == IntPatch_IType::IntPatch_Parabola)
       {
         newc = new Geom_Parabola(occ::down_cast<IntPatch_GLine>(L)->Parabola());
       }
 
-      else if (typl == IntPatch_Hyperbola)
+      else if (typl == IntPatch_IType::IntPatch_Hyperbola)
       {
         newc = new Geom_Hyperbola(occ::down_cast<IntPatch_GLine>(L)->Hyperbola());
       }
@@ -799,7 +799,7 @@ reapprox:;
           //
           occ::handle<Geom_TrimmedCurve> aCT3D = new Geom_TrimmedCurve(newc, fprm, lprm);
           aCurve.SetCurve(aCT3D);
-          if (typl == IntPatch_Parabola)
+          if (typl == IntPatch_IType::IntPatch_Parabola)
           {
             double aTolC = IntTools_Tools::CurveTolerance(aCT3D, myTol);
             aCurve.SetTolerance(aTolC);
@@ -854,9 +854,9 @@ reapprox:;
           //
           GeomAbs_SurfaceType typS1 = myHS1->GetType();
           GeomAbs_SurfaceType typS2 = myHS2->GetType();
-          if (typS1 == GeomAbs_SurfaceOfExtrusion || typS1 == GeomAbs_OffsetSurface
-              || typS1 == GeomAbs_SurfaceOfRevolution || typS2 == GeomAbs_SurfaceOfExtrusion
-              || typS2 == GeomAbs_OffsetSurface || typS2 == GeomAbs_SurfaceOfRevolution)
+          if (typS1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion || typS1 == GeomAbs_SurfaceType::GeomAbs_OffsetSurface
+              || typS1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution || typS2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion
+              || typS2 == GeomAbs_SurfaceType::GeomAbs_OffsetSurface || typS2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
           {
             occ::handle<Geom2d_BSplineCurve> H1;
             mySeqOfCurve.Append(IntTools_Curve(newc, H1, H1));
@@ -879,21 +879,21 @@ reapprox:;
           }
         }
       } // for (i=1; i<=aNbParts; i++) {
-    } // case IntPatch_Lin:  case IntPatch_Parabola:  case IntPatch_Hyperbola:
+    } // case IntPatch_IType::IntPatch_Lin:  case IntPatch_IType::IntPatch_Parabola:  case IntPatch_IType::IntPatch_Hyperbola:
     break;
 
     // ########################################
     //  Circle and Ellipse
     // ########################################
-    case IntPatch_Circle:
-    case IntPatch_Ellipse: {
+    case IntPatch_IType::IntPatch_Circle:
+    case IntPatch_IType::IntPatch_Ellipse: {
 
-      if (typl == IntPatch_Circle)
+      if (typl == IntPatch_IType::IntPatch_Circle)
       {
         newc = new Geom_Circle(occ::down_cast<IntPatch_GLine>(L)->Circle());
       }
       else
-      { // IntPatch_Ellipse
+      { // IntPatch_IType::IntPatch_Ellipse
         newc = new Geom_Ellipse(occ::down_cast<IntPatch_GLine>(L)->Ellipse());
       }
       //
@@ -1005,7 +1005,7 @@ reapprox:;
           fprm = aTC3D->FirstParameter();
           lprm = aTC3D->LastParameter();
           ////
-          if (typl == IntPatch_Circle || typl == IntPatch_Ellipse)
+          if (typl == IntPatch_IType::IntPatch_Circle || typl == IntPatch_IType::IntPatch_Ellipse)
           { ////
             if (myApprox1)
             {
@@ -1099,7 +1099,7 @@ reapprox:;
               IntTools_Curve aCurve;
               aCurve.SetCurve(newc);
               //==============================================
-              if (typl == IntPatch_Circle || typl == IntPatch_Ellipse)
+              if (typl == IntPatch_IType::IntPatch_Circle || typl == IntPatch_IType::IntPatch_Ellipse)
               {
 
                 if (myApprox1)
@@ -1133,7 +1133,7 @@ reapprox:;
                                               C2d);
                   aCurve.SetSecondCurve2d(C2d);
                 }
-              } //  end of if (typl == IntPatch_Circle || typl == IntPatch_Ellipse)
+              } //  end of if (typl == IntPatch_IType::IntPatch_Circle || typl == IntPatch_IType::IntPatch_Ellipse)
               //==============================================
               //
               mySeqOfCurve.Append(aCurve);
@@ -1143,14 +1143,14 @@ reapprox:;
           } //  end of for (int j=0; j<=17; j++)
         } //  end of else { on regarde si on garde
       } // for (i=1; i<=myLConstruct.NbParts(); i++)
-    } // IntPatch_Circle: IntPatch_Ellipse:
+    } // IntPatch_IType::IntPatch_Circle: IntPatch_IType::IntPatch_Ellipse:
     break;
 
-    case IntPatch_Analytic:
+    case IntPatch_IType::IntPatch_Analytic:
       // This case was processed earlier (in IntPatch_Intersection)
       break;
 
-    case IntPatch_Walking: {
+    case IntPatch_IType::IntPatch_Walking: {
       occ::handle<IntPatch_WLine> WL = occ::down_cast<IntPatch_WLine>(L);
 
 #ifdef INTTOOLS_FACEFACE_DEBUG
@@ -1220,11 +1220,11 @@ reapprox:;
         typs2         = myHS2->GetType();
         bool anWithPC = true;
 
-        if (typs1 == GeomAbs_Cylinder && typs2 == GeomAbs_Sphere)
+        if (typs1 == GeomAbs_SurfaceType::GeomAbs_Cylinder && typs2 == GeomAbs_SurfaceType::GeomAbs_Sphere)
         {
           anWithPC = ApproxWithPCurves(myHS1->Cylinder(), myHS2->Sphere());
         }
-        else if (typs1 == GeomAbs_Sphere && typs2 == GeomAbs_Cylinder)
+        else if (typs1 == GeomAbs_SurfaceType::GeomAbs_Sphere && typs2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
         {
           anWithPC = ApproxWithPCurves(myHS2->Cylinder(), myHS1->Sphere());
         }
@@ -1292,12 +1292,12 @@ reapprox:;
           }
 
           bool anApprox = myApprox;
-          if (typs1 == GeomAbs_Plane)
+          if (typs1 == GeomAbs_SurfaceType::GeomAbs_Plane)
           {
             anApprox  = false;
             anApprox1 = true;
           }
-          else if (typs2 == GeomAbs_Plane)
+          else if (typs2 == GeomAbs_SurfaceType::GeomAbs_Plane)
           {
             anApprox  = false;
             anApprox2 = true;
@@ -1327,11 +1327,11 @@ reapprox:;
           //-- lbr :
           //-- Si une des surfaces est un plan , on approxime en 2d
           //-- sur cette surface et on remonte les points 2d en 3d.
-          if (typs1 == GeomAbs_Plane)
+          if (typs1 == GeomAbs_SurfaceType::GeomAbs_Plane)
           {
             theapp3d.Perform(myHS1, myHS2, WL, false, true, myApprox2, ifprm, ilprm);
           }
-          else if (typs2 == GeomAbs_Plane)
+          else if (typs2 == GeomAbs_SurfaceType::GeomAbs_Plane)
           {
             theapp3d.Perform(myHS1, myHS2, WL, false, myApprox1, true, ifprm, ilprm);
           }
@@ -1340,8 +1340,8 @@ reapprox:;
             //
             if (myHS1 != myHS2)
             {
-              if ((typs1 == GeomAbs_BezierSurface || typs1 == GeomAbs_BSplineSurface)
-                  && (typs2 == GeomAbs_BezierSurface || typs2 == GeomAbs_BSplineSurface))
+              if ((typs1 == GeomAbs_SurfaceType::GeomAbs_BezierSurface || typs1 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+                  && (typs2 == GeomAbs_SurfaceType::GeomAbs_BezierSurface || typs2 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface))
               {
 
                 theapp3d.SetParameters(myTolApprox, tol2d, 4, 8, 0, 30, true, aParType);
@@ -1384,10 +1384,10 @@ reapprox:;
           }
           else
           {
-            if (typs1 == GeomAbs_Plane || typs2 == GeomAbs_Plane)
+            if (typs1 == GeomAbs_SurfaceType::GeomAbs_Plane || typs2 == GeomAbs_SurfaceType::GeomAbs_Plane)
             {
               //
-              if (typs1 == GeomAbs_Torus || typs2 == GeomAbs_Torus)
+              if (typs1 == GeomAbs_SurfaceType::GeomAbs_Torus || typs2 == GeomAbs_SurfaceType::GeomAbs_Torus)
               {
                 if (aTolC < 1.e-6)
                 {
@@ -1400,7 +1400,7 @@ reapprox:;
             aNbMultiCurves = theapp3d.NbMultiCurves();
             for (j = 1; j <= aNbMultiCurves; j++)
             {
-              if (typs1 == GeomAbs_Plane)
+              if (typs1 == GeomAbs_SurfaceType::GeomAbs_Plane)
               {
                 const AppParCurves_MultiBSpCurve& mbspc = theapp3d.Value(j);
                 nbpoles                                 = mbspc.NbPoles();
@@ -1484,9 +1484,9 @@ reapprox:;
                 //
                 mySeqOfCurve.Append(aCurve);
 
-              } // if(typs1 == GeomAbs_Plane) {
+              } // if(typs1 == GeomAbs_SurfaceType::GeomAbs_Plane) {
 
-              else if (typs2 == GeomAbs_Plane)
+              else if (typs2 == GeomAbs_SurfaceType::GeomAbs_Plane)
               {
                 const AppParCurves_MultiBSpCurve& mbspc = theapp3d.Value(j);
                 nbpoles                                 = mbspc.NbPoles();
@@ -1604,10 +1604,10 @@ reapprox:;
                   mySeqOfCurve.Append(aCurve);
                 }
 
-              } // else if(typs2 == GeomAbs_Plane)
+              } // else if(typs2 == GeomAbs_SurfaceType::GeomAbs_Plane)
               //
               else
-              { // typs2 != GeomAbs_Plane && typs1 != GeomAbs_Plane
+              { // typs2 != GeomAbs_SurfaceType::GeomAbs_Plane && typs1 != GeomAbs_SurfaceType::GeomAbs_Plane
                 bool                           bIsValid1, bIsValid2;
                 occ::handle<Geom_BSplineCurve> BS;
                 IntTools_Curve                 aCurve;
@@ -1712,10 +1712,10 @@ reapprox:;
           }
         }
       } // else { // X
-    } // case IntPatch_Walking:{
+    } // case IntPatch_IType::IntPatch_Walking:{
     break;
 
-    case IntPatch_Restriction: {
+    case IntPatch_IType::IntPatch_Restriction: {
       occ::handle<IntPatch_RLine> RL = occ::down_cast<IntPatch_RLine>(L);
 
 #ifdef INTTOOLS_FACEFACE_DEBUG
@@ -1825,19 +1825,19 @@ void Parameters(const occ::handle<GeomAdaptor_Surface>& HS1,
 
   switch (typs)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       quad1.SetValue(HS1->Plane());
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       quad1.SetValue(HS1->Cylinder());
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       quad1.SetValue(HS1->Cone());
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       quad1.SetValue(HS1->Sphere());
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       quad1.SetValue(HS1->Torus());
       break;
     default:
@@ -1847,19 +1847,19 @@ void Parameters(const occ::handle<GeomAdaptor_Surface>& HS1,
   typs = HS2->GetType();
   switch (typs)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       quad2.SetValue(HS2->Plane());
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       quad2.SetValue(HS2->Cylinder());
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       quad2.SetValue(HS2->Cone());
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       quad2.SetValue(HS2->Sphere());
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       quad2.SetValue(HS2->Torus());
       break;
     default:
@@ -1935,15 +1935,15 @@ void IntTools_FaceFace::PrepareLines3D(const bool bToSplit)
   aType2    = myHS2->GetType();
   aNbCurves = aNewCvs.Length();
   //
-  if ((aType1 == GeomAbs_Plane && aType2 == GeomAbs_Cone)
-      || (aType2 == GeomAbs_Plane && aType1 == GeomAbs_Cone))
+  if ((aType1 == GeomAbs_SurfaceType::GeomAbs_Plane && aType2 == GeomAbs_SurfaceType::GeomAbs_Cone)
+      || (aType2 == GeomAbs_SurfaceType::GeomAbs_Plane && aType1 == GeomAbs_SurfaceType::GeomAbs_Cone))
   {
     if (aNbCurves == 4)
     {
       GeomAbs_CurveType aCType1;
       //
       aCType1 = aNewCvs(1).Type();
-      if (aCType1 == GeomAbs_Line)
+      if (aCType1 == GeomAbs_CurveType::GeomAbs_Line)
       {
         NCollection_Sequence<IntTools_Curve> aSeqIn, aSeqOut;
         //
@@ -1964,7 +1964,7 @@ void IntTools_FaceFace::PrepareLines3D(const bool bToSplit)
         }
       }
     }
-  } // if ((aType1==GeomAbs_Plane && aType2==GeomAbs_Cone)...
+  } // if ((aType1==GeomAbs_SurfaceType::GeomAbs_Plane && aType2==GeomAbs_SurfaceType::GeomAbs_Cone)...
   //
   // 3. Fill  mySeqOfCurve
   mySeqOfCurve.Clear();
@@ -2025,9 +2025,9 @@ void CorrectSurfaceBoundaries(const TopoDS_Face& theFace,
   isvperiodic = anAdaptorSurface.IsVPeriodic();
   //
   aType = anAdaptorSurface.GetType();
-  if ((aType == GeomAbs_BezierSurface) || (aType == GeomAbs_BSplineSurface)
-      || (aType == GeomAbs_SurfaceOfExtrusion) || (aType == GeomAbs_SurfaceOfRevolution)
-      || (aType == GeomAbs_Cylinder))
+  if ((aType == GeomAbs_SurfaceType::GeomAbs_BezierSurface) || (aType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+      || (aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion) || (aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
+      || (aType == GeomAbs_SurfaceType::GeomAbs_Cylinder))
   {
     enlarge = true;
   }
@@ -2376,7 +2376,7 @@ void PerformPlanes(const occ::handle<GeomAdaptor_Surface>& theS1,
 
   IntAna_ResultType aResType = aPlnInter.TypeInter();
 
-  if (aResType == IntAna_Same)
+  if (aResType == IntAna_ResultType::IntAna_Same)
   {
     theTangentFaces = true;
     return;
@@ -2384,7 +2384,7 @@ void PerformPlanes(const occ::handle<GeomAdaptor_Surface>& theS1,
 
   theTangentFaces = false;
 
-  if (aResType == IntAna_Empty)
+  if (aResType == IntAna_ResultType::IntAna_Empty)
   {
     return;
   }
@@ -2661,8 +2661,8 @@ void ApproxParameters(const occ::handle<GeomAdaptor_Surface>& aHS1,
   aTS2 = aHS2->GetType();
   //
   // Cylinder/Torus
-  if ((aTS1 == GeomAbs_Cylinder && aTS2 == GeomAbs_Torus)
-      || (aTS2 == GeomAbs_Cylinder && aTS1 == GeomAbs_Torus))
+  if ((aTS1 == GeomAbs_SurfaceType::GeomAbs_Cylinder && aTS2 == GeomAbs_SurfaceType::GeomAbs_Torus)
+      || (aTS2 == GeomAbs_SurfaceType::GeomAbs_Cylinder && aTS1 == GeomAbs_SurfaceType::GeomAbs_Torus))
   {
     double      aRC, aRT, dR, aPC;
     gp_Cylinder aCylinder;
@@ -2670,8 +2670,8 @@ void ApproxParameters(const occ::handle<GeomAdaptor_Surface>& aHS1,
     //
     aPC = Precision::Confusion();
     //
-    aCylinder = (aTS1 == GeomAbs_Cylinder) ? aHS1->Cylinder() : aHS2->Cylinder();
-    aTorus    = (aTS1 == GeomAbs_Torus) ? aHS1->Torus() : aHS2->Torus();
+    aCylinder = (aTS1 == GeomAbs_SurfaceType::GeomAbs_Cylinder) ? aHS1->Cylinder() : aHS2->Cylinder();
+    aTorus    = (aTS1 == GeomAbs_SurfaceType::GeomAbs_Torus) ? aHS1->Torus() : aHS2->Torus();
     //
     aRC = aCylinder.Radius();
     aRT = aTorus.MinorRadius();
@@ -2686,7 +2686,7 @@ void ApproxParameters(const occ::handle<GeomAdaptor_Surface>& aHS1,
       iDegMax = 6;
     }
   }
-  if (aTS1 == GeomAbs_Cylinder && aTS2 == GeomAbs_Cylinder)
+  if (aTS1 == GeomAbs_SurfaceType::GeomAbs_Cylinder && aTS2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     iNbIter = 1;
   }
@@ -2704,8 +2704,8 @@ void Tolerances(const occ::handle<GeomAdaptor_Surface>& aHS1,
   aTS2 = aHS2->GetType();
   //
   // Cylinder/Torus
-  if ((aTS1 == GeomAbs_Cylinder && aTS2 == GeomAbs_Torus)
-      || (aTS2 == GeomAbs_Cylinder && aTS1 == GeomAbs_Torus))
+  if ((aTS1 == GeomAbs_SurfaceType::GeomAbs_Cylinder && aTS2 == GeomAbs_SurfaceType::GeomAbs_Torus)
+      || (aTS2 == GeomAbs_SurfaceType::GeomAbs_Cylinder && aTS1 == GeomAbs_SurfaceType::GeomAbs_Torus))
   {
     double      aRC, aRT, dR, aPC;
     gp_Cylinder aCylinder;
@@ -2713,8 +2713,8 @@ void Tolerances(const occ::handle<GeomAdaptor_Surface>& aHS1,
     //
     aPC = Precision::Confusion();
     //
-    aCylinder = (aTS1 == GeomAbs_Cylinder) ? aHS1->Cylinder() : aHS2->Cylinder();
-    aTorus    = (aTS1 == GeomAbs_Torus) ? aHS1->Torus() : aHS2->Torus();
+    aCylinder = (aTS1 == GeomAbs_SurfaceType::GeomAbs_Cylinder) ? aHS1->Cylinder() : aHS2->Cylinder();
+    aTorus    = (aTS1 == GeomAbs_SurfaceType::GeomAbs_Torus) ? aHS1->Torus() : aHS2->Torus();
     //
     aRC = aCylinder.Radius();
     aRT = aTorus.MinorRadius();
@@ -2757,47 +2757,47 @@ int IndexType(const GeomAbs_SurfaceType aType)
   //
   aIndex = 11;
   //
-  if (aType == GeomAbs_Plane)
+  if (aType == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     aIndex = 0;
   }
-  else if (aType == GeomAbs_Cylinder)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     aIndex = 1;
   }
-  else if (aType == GeomAbs_Cone)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     aIndex = 2;
   }
-  else if (aType == GeomAbs_Sphere)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     aIndex = 3;
   }
-  else if (aType == GeomAbs_Torus)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     aIndex = 4;
   }
-  else if (aType == GeomAbs_BezierSurface)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
   {
     aIndex = 5;
   }
-  else if (aType == GeomAbs_BSplineSurface)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     aIndex = 6;
   }
-  else if (aType == GeomAbs_SurfaceOfRevolution)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
   {
     aIndex = 7;
   }
-  else if (aType == GeomAbs_SurfaceOfExtrusion)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
   {
     aIndex = 8;
   }
-  else if (aType == GeomAbs_OffsetSurface)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
   {
     aIndex = 9;
   }
-  else if (aType == GeomAbs_OtherSurface)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_OtherSurface)
   {
     aIndex = 10;
   }

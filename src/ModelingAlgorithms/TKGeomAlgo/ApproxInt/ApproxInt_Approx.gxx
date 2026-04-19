@@ -239,9 +239,9 @@ void ApproxInt_Approx::Perform(const ThePSurface&           Surf1,
   const GeomAbs_SurfaceType typeS2 = ThePSurfaceTool::GetType(Surf2);
 
   const bool isQuadric =
-    ((typeS1 == GeomAbs_Plane) || (typeS1 == GeomAbs_Cylinder) || (typeS1 == GeomAbs_Sphere)
-     || (typeS1 == GeomAbs_Cone) || (typeS2 == GeomAbs_Plane) || (typeS2 == GeomAbs_Cylinder)
-     || (typeS2 == GeomAbs_Sphere) || (typeS2 == GeomAbs_Cone));
+    ((typeS1 == GeomAbs_SurfaceType::GeomAbs_Plane) || (typeS1 == GeomAbs_SurfaceType::GeomAbs_Cylinder) || (typeS1 == GeomAbs_SurfaceType::GeomAbs_Sphere)
+     || (typeS1 == GeomAbs_SurfaceType::GeomAbs_Cone) || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Plane) || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
+     || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Sphere) || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Cone));
 
   if (isQuadric)
   {
@@ -249,19 +249,19 @@ void ApproxInt_Approx::Perform(const ThePSurface&           Surf1,
     bool            SecondIsImplicit = false;
     switch (typeS1)
     {
-      case GeomAbs_Plane:
+      case GeomAbs_SurfaceType::GeomAbs_Plane:
         Quad.SetValue(ThePSurfaceTool::Plane(Surf1));
         break;
 
-      case GeomAbs_Cylinder:
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder:
         Quad.SetValue(ThePSurfaceTool::Cylinder(Surf1));
         break;
 
-      case GeomAbs_Sphere:
+      case GeomAbs_SurfaceType::GeomAbs_Sphere:
         Quad.SetValue(ThePSurfaceTool::Sphere(Surf1));
         break;
 
-      case GeomAbs_Cone:
+      case GeomAbs_SurfaceType::GeomAbs_Cone:
         Quad.SetValue(ThePSurfaceTool::Cone(Surf1));
         break;
 
@@ -269,19 +269,19 @@ void ApproxInt_Approx::Perform(const ThePSurface&           Surf1,
         SecondIsImplicit = true;
         switch (typeS2)
         {
-          case GeomAbs_Plane:
+          case GeomAbs_SurfaceType::GeomAbs_Plane:
             Quad.SetValue(ThePSurfaceTool::Plane(Surf2));
             break;
 
-          case GeomAbs_Cylinder:
+          case GeomAbs_SurfaceType::GeomAbs_Cylinder:
             Quad.SetValue(ThePSurfaceTool::Cylinder(Surf2));
             break;
 
-          case GeomAbs_Sphere:
+          case GeomAbs_SurfaceType::GeomAbs_Sphere:
             Quad.SetValue(ThePSurfaceTool::Sphere(Surf2));
             break;
 
-          case GeomAbs_Cone:
+          case GeomAbs_SurfaceType::GeomAbs_Cone:
             Quad.SetValue(ThePSurfaceTool::Cone(Surf2));
             break;
 

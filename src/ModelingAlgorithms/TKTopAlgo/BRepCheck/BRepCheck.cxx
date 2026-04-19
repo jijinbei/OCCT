@@ -37,7 +37,7 @@ void BRepCheck::Add(NCollection_List<BRepCheck_Status>& lst, const BRepCheck_Sta
   NCollection_List<BRepCheck_Status>::Iterator it(lst);
   while (it.More())
   {
-    if (it.Value() == BRepCheck_NoError && stat != BRepCheck_NoError)
+    if (it.Value() == BRepCheck_Status::BRepCheck_NoError && stat != BRepCheck_Status::BRepCheck_NoError)
     {
       lst.Remove(it);
     }
@@ -62,7 +62,7 @@ bool BRepCheck::SelfIntersection(const TopoDS_Wire& W,
 {
   occ::handle<BRepCheck_Wire> chkw = new BRepCheck_Wire(W);
   BRepCheck_Status            stat = chkw->SelfIntersect(myFace, RetE1, RetE2);
-  return (stat == BRepCheck_SelfIntersectingWire);
+  return (stat == BRepCheck_Status::BRepCheck_SelfIntersectingWire);
 }
 
 //=================================================================================================
@@ -72,7 +72,7 @@ double BRepCheck::PrecCurve(const Adaptor3d_Curve& aAC3D)
   double aXEmax = RealEpsilon();
   //
   GeomAbs_CurveType aCT = aAC3D.GetType();
-  if (aCT == GeomAbs_Ellipse)
+  if (aCT == GeomAbs_CurveType::GeomAbs_Ellipse)
   {
     double aX[5];
     //
@@ -93,7 +93,7 @@ double BRepCheck::PrecCurve(const Adaptor3d_Curve& aAC3D)
         aXEmax = aXE;
       }
     }
-  } // if (aCT=GeomAbs_Ellipse) {
+  } // if (aCT=GeomAbs_CurveType::GeomAbs_Ellipse) {
   //
   return aXEmax;
 }
@@ -105,7 +105,7 @@ double BRepCheck::PrecSurface(const occ::handle<Adaptor3d_Surface>& aAHSurf)
   double aXEmax = RealEpsilon();
   //
   GeomAbs_SurfaceType aST = aAHSurf->GetType();
-  if (aST == GeomAbs_Cone)
+  if (aST == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     gp_Cone aCone = aAHSurf->Cone();
     double  aX[4];
@@ -125,7 +125,7 @@ double BRepCheck::PrecSurface(const occ::handle<Adaptor3d_Surface>& aAHSurf)
         aXEmax = aXE;
       }
     }
-  } // if (aST==GeomAbs_Cone) {
+  } // if (aST==GeomAbs_SurfaceType::GeomAbs_Cone) {
   return aXEmax;
 }
 
@@ -136,116 +136,116 @@ void BRepCheck::Print(const BRepCheck_Status stat, Standard_OStream& OS)
 
   switch (stat)
   {
-    case BRepCheck_NoError:
-      OS << "BRepCheck_NoError\n";
+    case BRepCheck_Status::BRepCheck_NoError:
+      OS << "BRepCheck_Status::BRepCheck_NoError\n";
       break;
-    case BRepCheck_InvalidPointOnCurve:
-      OS << "BRepCheck_InvalidPointOnCurve\n";
+    case BRepCheck_Status::BRepCheck_InvalidPointOnCurve:
+      OS << "BRepCheck_Status::BRepCheck_InvalidPointOnCurve\n";
       break;
-    case BRepCheck_InvalidPointOnCurveOnSurface:
-      OS << "BRepCheck_InvalidPointOnCurveOnSurface\n";
+    case BRepCheck_Status::BRepCheck_InvalidPointOnCurveOnSurface:
+      OS << "BRepCheck_Status::BRepCheck_InvalidPointOnCurveOnSurface\n";
       break;
-    case BRepCheck_InvalidPointOnSurface:
-      OS << "BRepCheck_InvalidPointOnSurface\n";
+    case BRepCheck_Status::BRepCheck_InvalidPointOnSurface:
+      OS << "BRepCheck_Status::BRepCheck_InvalidPointOnSurface\n";
       break;
-    case BRepCheck_No3DCurve:
-      OS << "BRepCheck_No3DCurve\n";
+    case BRepCheck_Status::BRepCheck_No3DCurve:
+      OS << "BRepCheck_Status::BRepCheck_No3DCurve\n";
       break;
-    case BRepCheck_Multiple3DCurve:
-      OS << "BRepCheck_Multiple3DCurve\n";
+    case BRepCheck_Status::BRepCheck_Multiple3DCurve:
+      OS << "BRepCheck_Status::BRepCheck_Multiple3DCurve\n";
       break;
-    case BRepCheck_Invalid3DCurve:
-      OS << "BRepCheck_Invalid3DCurve\n";
+    case BRepCheck_Status::BRepCheck_Invalid3DCurve:
+      OS << "BRepCheck_Status::BRepCheck_Invalid3DCurve\n";
       break;
-    case BRepCheck_NoCurveOnSurface:
-      OS << "BRepCheck_NoCurveOnSurface\n";
+    case BRepCheck_Status::BRepCheck_NoCurveOnSurface:
+      OS << "BRepCheck_Status::BRepCheck_NoCurveOnSurface\n";
       break;
-    case BRepCheck_InvalidCurveOnSurface:
-      OS << "BRepCheck_InvalidCurveOnSurface\n";
+    case BRepCheck_Status::BRepCheck_InvalidCurveOnSurface:
+      OS << "BRepCheck_Status::BRepCheck_InvalidCurveOnSurface\n";
       break;
-    case BRepCheck_InvalidCurveOnClosedSurface:
-      OS << "BRepCheck_InvalidCurveOnClosedSurface\n";
+    case BRepCheck_Status::BRepCheck_InvalidCurveOnClosedSurface:
+      OS << "BRepCheck_Status::BRepCheck_InvalidCurveOnClosedSurface\n";
       break;
-    case BRepCheck_InvalidSameRangeFlag:
-      OS << "BRepCheck_InvalidSameRangeFlag\n";
+    case BRepCheck_Status::BRepCheck_InvalidSameRangeFlag:
+      OS << "BRepCheck_Status::BRepCheck_InvalidSameRangeFlag\n";
       break;
-    case BRepCheck_InvalidSameParameterFlag:
-      OS << "BRepCheck_InvalidSameParameterFlag\n";
+    case BRepCheck_Status::BRepCheck_InvalidSameParameterFlag:
+      OS << "BRepCheck_Status::BRepCheck_InvalidSameParameterFlag\n";
       break;
-    case BRepCheck_InvalidDegeneratedFlag:
-      OS << "BRepCheck_InvalidDegeneratedFlag\n";
+    case BRepCheck_Status::BRepCheck_InvalidDegeneratedFlag:
+      OS << "BRepCheck_Status::BRepCheck_InvalidDegeneratedFlag\n";
       break;
-    case BRepCheck_FreeEdge:
-      OS << "BRepCheck_FreeEdge\n";
+    case BRepCheck_Status::BRepCheck_FreeEdge:
+      OS << "BRepCheck_Status::BRepCheck_FreeEdge\n";
       break;
-    case BRepCheck_InvalidMultiConnexity:
-      OS << "BRepCheck_InvalidMultiConnexity\n";
+    case BRepCheck_Status::BRepCheck_InvalidMultiConnexity:
+      OS << "BRepCheck_Status::BRepCheck_InvalidMultiConnexity\n";
       break;
-    case BRepCheck_InvalidRange:
-      OS << "BRepCheck_InvalidRange\n";
+    case BRepCheck_Status::BRepCheck_InvalidRange:
+      OS << "BRepCheck_Status::BRepCheck_InvalidRange\n";
       break;
-    case BRepCheck_EmptyWire:
-      OS << "BRepCheck_EmptyWire\n";
+    case BRepCheck_Status::BRepCheck_EmptyWire:
+      OS << "BRepCheck_Status::BRepCheck_EmptyWire\n";
       break;
-    case BRepCheck_RedundantEdge:
-      OS << "BRepCheck_RedundantEdge\n";
+    case BRepCheck_Status::BRepCheck_RedundantEdge:
+      OS << "BRepCheck_Status::BRepCheck_RedundantEdge\n";
       break;
-    case BRepCheck_SelfIntersectingWire:
-      OS << "BRepCheck_SelfIntersectingWire\n";
+    case BRepCheck_Status::BRepCheck_SelfIntersectingWire:
+      OS << "BRepCheck_Status::BRepCheck_SelfIntersectingWire\n";
       break;
-    case BRepCheck_NoSurface:
-      OS << "BRepCheck_NoSurface\n";
+    case BRepCheck_Status::BRepCheck_NoSurface:
+      OS << "BRepCheck_Status::BRepCheck_NoSurface\n";
       break;
-    case BRepCheck_InvalidWire:
-      OS << "BRepCheck_InvalidWire\n";
+    case BRepCheck_Status::BRepCheck_InvalidWire:
+      OS << "BRepCheck_Status::BRepCheck_InvalidWire\n";
       break;
-    case BRepCheck_RedundantWire:
-      OS << "BRepCheck_RedundantWire\n";
+    case BRepCheck_Status::BRepCheck_RedundantWire:
+      OS << "BRepCheck_Status::BRepCheck_RedundantWire\n";
       break;
-    case BRepCheck_IntersectingWires:
-      OS << "BRepCheck_IntersectingWires\n";
+    case BRepCheck_Status::BRepCheck_IntersectingWires:
+      OS << "BRepCheck_Status::BRepCheck_IntersectingWires\n";
       break;
-    case BRepCheck_InvalidImbricationOfWires:
-      OS << "BRepCheck_InvalidImbricationOfWires\n";
+    case BRepCheck_Status::BRepCheck_InvalidImbricationOfWires:
+      OS << "BRepCheck_Status::BRepCheck_InvalidImbricationOfWires\n";
       break;
-    case BRepCheck_EmptyShell:
-      OS << "BRepCheck_EmptyShell\n";
+    case BRepCheck_Status::BRepCheck_EmptyShell:
+      OS << "BRepCheck_Status::BRepCheck_EmptyShell\n";
       break;
-    case BRepCheck_RedundantFace:
-      OS << "BRepCheck_RedundantFace\n";
+    case BRepCheck_Status::BRepCheck_RedundantFace:
+      OS << "BRepCheck_Status::BRepCheck_RedundantFace\n";
       break;
-    case BRepCheck_UnorientableShape:
-      OS << "BRepCheck_UnorientableShape\n";
+    case BRepCheck_Status::BRepCheck_UnorientableShape:
+      OS << "BRepCheck_Status::BRepCheck_UnorientableShape\n";
       break;
-    case BRepCheck_NotClosed:
-      OS << "BRepCheck_NotClosed\n";
+    case BRepCheck_Status::BRepCheck_NotClosed:
+      OS << "BRepCheck_Status::BRepCheck_NotClosed\n";
       break;
-    case BRepCheck_NotConnected:
-      OS << "BRepCheck_NotConnected\n";
+    case BRepCheck_Status::BRepCheck_NotConnected:
+      OS << "BRepCheck_Status::BRepCheck_NotConnected\n";
       break;
-    case BRepCheck_SubshapeNotInShape:
-      OS << "BRepCheck_SubshapeNotInShape\n";
+    case BRepCheck_Status::BRepCheck_SubshapeNotInShape:
+      OS << "BRepCheck_Status::BRepCheck_SubshapeNotInShape\n";
       break;
-    case BRepCheck_BadOrientation:
-      OS << "BRepCheck_BadOrientation\n";
+    case BRepCheck_Status::BRepCheck_BadOrientation:
+      OS << "BRepCheck_Status::BRepCheck_BadOrientation\n";
       break;
-    case BRepCheck_BadOrientationOfSubshape:
-      OS << "BRepCheck_BadOrientationOfSubshape\n";
+    case BRepCheck_Status::BRepCheck_BadOrientationOfSubshape:
+      OS << "BRepCheck_Status::BRepCheck_BadOrientationOfSubshape\n";
       break;
-    case BRepCheck_CheckFail:
-      OS << "BRepCheck_CheckFail\n";
+    case BRepCheck_Status::BRepCheck_CheckFail:
+      OS << "BRepCheck_Status::BRepCheck_CheckFail\n";
       break;
-    case BRepCheck_InvalidPolygonOnTriangulation:
-      OS << "BRepCheck_InvalidPolygonOnTriangulation\n";
+    case BRepCheck_Status::BRepCheck_InvalidPolygonOnTriangulation:
+      OS << "BRepCheck_Status::BRepCheck_InvalidPolygonOnTriangulation\n";
       break;
-    case BRepCheck_InvalidToleranceValue:
-      OS << "BRepCheck_InvalidToleranceValue\n";
+    case BRepCheck_Status::BRepCheck_InvalidToleranceValue:
+      OS << "BRepCheck_Status::BRepCheck_InvalidToleranceValue\n";
       break;
-    case BRepCheck_InvalidImbricationOfShells:
-      OS << "BRepCheck_InvalidImbricationOfShells\n";
+    case BRepCheck_Status::BRepCheck_InvalidImbricationOfShells:
+      OS << "BRepCheck_Status::BRepCheck_InvalidImbricationOfShells\n";
       break;
-    case BRepCheck_EnclosedRegion:
-      OS << "BRepCheck_EnclosedRegion\n";
+    case BRepCheck_Status::BRepCheck_EnclosedRegion:
+      OS << "BRepCheck_Status::BRepCheck_EnclosedRegion\n";
       break;
     default:
       break;

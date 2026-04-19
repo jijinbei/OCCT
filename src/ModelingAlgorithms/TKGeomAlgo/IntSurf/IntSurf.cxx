@@ -44,13 +44,13 @@ void IntSurf::MakeTransition(const gp_Vec&       TgFirst,
 
   if (NTgFirst <= Precision::Confusion())
   {
-    TFirst.SetValue(true, IntSurf_Undecided);
-    TSecond.SetValue(true, IntSurf_Undecided);
+    TFirst.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+    TSecond.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
   }
   else if ((NTgSecond <= Precision::Confusion()) || (pvect.Magnitude() <= NTgSecondNTgFirstAngular))
   {
-    TFirst.SetValue(true, IntSurf_Unknown, TgFirst.Dot(TgSecond) < 0.0);
-    TSecond.SetValue(true, IntSurf_Unknown, TgFirst.Dot(TgSecond) < 0.0);
+    TFirst.SetValue(true, IntSurf_Situation::IntSurf_Unknown, TgFirst.Dot(TgSecond) < 0.0);
+    TSecond.SetValue(true, IntSurf_Situation::IntSurf_Unknown, TgFirst.Dot(TgSecond) < 0.0);
   }
   else
   {
@@ -58,18 +58,18 @@ void IntSurf::MakeTransition(const gp_Vec&       TgFirst,
     yu /= NTgSecond * NTgFirst;
     if (yu > 0.0001)
     {
-      TFirst.SetValue(false, IntSurf_In);
-      TSecond.SetValue(false, IntSurf_Out);
+      TFirst.SetValue(false, IntSurf_TypeTrans::IntSurf_In);
+      TSecond.SetValue(false, IntSurf_TypeTrans::IntSurf_Out);
     }
     else if (yu < -0.0001)
     {
-      TFirst.SetValue(false, IntSurf_Out);
-      TSecond.SetValue(false, IntSurf_In);
+      TFirst.SetValue(false, IntSurf_TypeTrans::IntSurf_Out);
+      TSecond.SetValue(false, IntSurf_TypeTrans::IntSurf_In);
     }
     else
     {
-      TFirst.SetValue(true, IntSurf_Undecided);
-      TSecond.SetValue(true, IntSurf_Undecided);
+      TFirst.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
+      TSecond.SetValue(true, IntSurf_TypeTrans::IntSurf_Undecided);
     }
   }
 }

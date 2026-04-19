@@ -66,7 +66,7 @@ void DDataStd::DumpConstraint(const occ::handle<TDataXtd_Constraint>& CTR, Stand
     Standard_DISABLE_DEPRECATION_WARNINGS TDataStd_RealEnum t = CTR->GetValue()->GetDimension();
     TDataStd::Print(t, anOS);
     double val = CTR->GetValue()->Get();
-    if (t == TDataStd_ANGULAR)
+    if (t == TDataStd_RealEnum::TDataStd_ANGULAR)
       val = (180. * val) / M_PI;
     Standard_ENABLE_DEPRECATION_WARNINGS anOS << " ";
     anOS << val;

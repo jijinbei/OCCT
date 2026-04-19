@@ -283,14 +283,14 @@ static int wire(Draw_Interpretor& di, int n, const char** a)
     di << "Wire not done with an error:\n";
     switch (MW.Error())
     {
-      case BRepBuilderAPI_EmptyWire:
-        di << "BRepBuilderAPI_EmptyWire\n";
+      case BRepBuilderAPI_WireError::BRepBuilderAPI_EmptyWire:
+        di << "BRepBuilderAPI_WireError::BRepBuilderAPI_EmptyWire\n";
         break;
-      case BRepBuilderAPI_DisconnectedWire:
-        di << "BRepBuilderAPI_DisconnectedWire\n";
+      case BRepBuilderAPI_WireError::BRepBuilderAPI_DisconnectedWire:
+        di << "BRepBuilderAPI_WireError::BRepBuilderAPI_DisconnectedWire\n";
         break;
-      case BRepBuilderAPI_NonManifoldWire:
-        di << "BRepBuilderAPI_NonManifoldWire\n";
+      case BRepBuilderAPI_WireError::BRepBuilderAPI_NonManifoldWire:
+        di << "BRepBuilderAPI_WireError::BRepBuilderAPI_NonManifoldWire\n";
         break;
       default:
         break;
@@ -1673,7 +1673,7 @@ int mkoffset(Draw_Interpretor& di, int n, const char** a)
   BRepOffsetAPI_MakeOffset Paral;
 
   bool             ToApprox    = false;
-  GeomAbs_JoinType theJoinType = GeomAbs_Arc;
+  GeomAbs_JoinType theJoinType = GeomAbs_JoinType::GeomAbs_Arc;
 
   int anIndArg = 6;
   if (n >= 6)
@@ -1685,7 +1685,7 @@ int mkoffset(Draw_Interpretor& di, int n, const char** a)
     }
 
     if (n >= anIndArg && strcmp(a[anIndArg - 1], "i") == 0)
-      theJoinType = GeomAbs_Intersection;
+      theJoinType = GeomAbs_JoinType::GeomAbs_Intersection;
   }
 
   TopoDS_Shape Base = DBRep::Get(a[2], TopAbs_FACE);
@@ -1753,7 +1753,7 @@ int openoffset(Draw_Interpretor& di, int n, const char** a)
   BRepOffsetAPI_MakeOffset Paral;
 
   bool             ToApprox    = false;
-  GeomAbs_JoinType theJoinType = GeomAbs_Arc;
+  GeomAbs_JoinType theJoinType = GeomAbs_JoinType::GeomAbs_Arc;
 
   int anIndArg = 6;
   if (n >= 6)
@@ -1765,7 +1765,7 @@ int openoffset(Draw_Interpretor& di, int n, const char** a)
     }
 
     if (n >= anIndArg && strcmp(a[anIndArg - 1], "i") == 0)
-      theJoinType = GeomAbs_Intersection;
+      theJoinType = GeomAbs_JoinType::GeomAbs_Intersection;
   }
 
   TopoDS_Shape Base = DBRep::Get(a[2], TopAbs_FACE);
@@ -1973,7 +1973,7 @@ static int arclinconvert(Draw_Interpretor& /*dout*/, int n, const char** a)
   {
     bool                    OnlyPlane = false;
     BRepBuilderAPI_MakeFace aFaceMaker(TopoDS::Wire(aShape), OnlyPlane);
-    if (aFaceMaker.Error() != BRepBuilderAPI_FaceDone)
+    if (aFaceMaker.Error() != BRepBuilderAPI_FaceError::BRepBuilderAPI_FaceDone)
     {
       std::cout << "Error: failed to find a face for the wire " << a[2] << std::endl;
       return 1; // TCL_ERROR

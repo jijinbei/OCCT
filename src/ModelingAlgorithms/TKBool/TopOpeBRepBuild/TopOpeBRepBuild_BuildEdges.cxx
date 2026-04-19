@@ -151,13 +151,13 @@ void TopOpeBRepBuild_Builder::BuildEdges(const occ::handle<TopOpeBRepDS_HDataStr
       {
         int               ig = I->Geometry();
         TopOpeBRepDS_Kind kg = I->GeometryType();
-        if (kg == TopOpeBRepDS_POINT && ig <= np)
+        if (kg == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT && ig <= np)
           tp.ChangeValue(ig) = tp.Value(ig) + 1;
       }
       {
         int               is = I->Support();
         TopOpeBRepDS_Kind ks = I->SupportType();
-        if (ks == TopOpeBRepDS_POINT)
+        if (ks == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
           tp.ChangeValue(is) = tp.Value(is) + 1;
       }
     }
@@ -179,13 +179,13 @@ void TopOpeBRepBuild_Builder::BuildEdges(const occ::handle<TopOpeBRepDS_HDataStr
       {
         int               ig = I->Geometry();
         TopOpeBRepDS_Kind kg = I->GeometryType();
-        if (kg == TopOpeBRepDS_POINT)
+        if (kg == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
           tp.ChangeValue(ig) = tp.Value(ig) + 1;
       }
       {
         int               is1 = I->Support();
         TopOpeBRepDS_Kind ks  = I->SupportType();
-        if (ks == TopOpeBRepDS_POINT)
+        if (ks == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
           tp.ChangeValue(is1) = tp.Value(is1) + 1;
       }
     }

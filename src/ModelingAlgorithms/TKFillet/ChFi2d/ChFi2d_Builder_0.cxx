@@ -16,7 +16,7 @@
 
 // Modified : 08/07/97 : JPI : traitement des edges degeneres comme pour les fillets 2D
 // Modified:	Fri Sep 25 09:38:04 1998
-//              status = ChFi2d_NotAuthorized si les aretes ne sont pas
+//              status = ChFi2d_ConstructionError::ChFi2d_NotAuthorized si les aretes ne sont pas
 //              des droites ou des cercles; fonction IsLineOrCircle
 //              (BUC60288)
 
@@ -83,13 +83,13 @@ TopoDS_Edge ChFi2d_Builder::AddChamfer(const TopoDS_Edge& E1,
 
   if (IsAFillet(E1) || IsAChamfer(E1) || IsAFillet(E2) || IsAChamfer(E2))
   {
-    status = ChFi2d_NotAuthorized;
+    status = ChFi2d_ConstructionError::ChFi2d_NotAuthorized;
     return chamfer;
   } //  if (IsAChamfer ...
 
   if (!IsLineOrCircle(E1, newFace) || !IsLineOrCircle(E2, newFace))
   {
-    status = ChFi2d_NotAuthorized;
+    status = ChFi2d_ConstructionError::ChFi2d_NotAuthorized;
     return chamfer;
   } //  if (!IsLineOrCircle ...
 
@@ -106,15 +106,15 @@ TopoDS_Edge ChFi2d_Builder::AddChamfer(const TopoDS_Edge& E1,
   }
 
   ComputeChamfer(commonVertex, EE1, EE2, D1, D2, E1Mod, E2Mod, chamfer);
-  if (status == ChFi2d_IsDone || status == ChFi2d_FirstEdgeDegenerated
-      || status == ChFi2d_LastEdgeDegenerated || status == ChFi2d_BothEdgesDegenerated)
+  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone || status == ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
+      || status == ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated || status == ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
   {
-    //  if (status == ChFi2d_IsDone) {
+    //  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone) {
     BuildNewWire(EE1, EE2, E1Mod, chamfer, E2Mod);
     basisEdge1 = BasisEdge(EE1);
     basisEdge2 = BasisEdge(EE2);
     UpDateHistory(basisEdge1, basisEdge2, E1Mod, E2Mod, chamfer, 2);
-    status = ChFi2d_IsDone;
+    status = ChFi2d_ConstructionError::ChFi2d_IsDone;
     return TopoDS::Edge(chamfers.Value(chamfers.Length()));
   }
   return chamfer;
@@ -129,7 +129,7 @@ TopoDS_Edge ChFi2d_Builder::AddChamfer(const TopoDS_Edge&   E,
 {
   TopoDS_Edge aChamfer, adjEdge1, adjEdge2;
   status = ChFi2d::FindConnectedEdges(newFace, V, adjEdge1, adjEdge2);
-  if (status == ChFi2d_ConnexionError)
+  if (status == ChFi2d_ConstructionError::ChFi2d_ConnexionError)
     return aChamfer;
 
   // adjEdge1 is a copy of E  with the good orientation
@@ -144,28 +144,28 @@ TopoDS_Edge ChFi2d_Builder::AddChamfer(const TopoDS_Edge&   E,
 
   if (IsAFillet(adjEdge1) || IsAChamfer(adjEdge1) || IsAFillet(adjEdge2) || IsAChamfer(adjEdge2))
   {
-    status = ChFi2d_NotAuthorized;
+    status = ChFi2d_ConstructionError::ChFi2d_NotAuthorized;
     return aChamfer;
   } //  if (IsAChamfer ...
 
   if (!IsLineOrCircle(adjEdge1, newFace) || !IsLineOrCircle(adjEdge2, newFace))
   {
-    status = ChFi2d_NotAuthorized;
+    status = ChFi2d_ConstructionError::ChFi2d_NotAuthorized;
     return aChamfer;
   } //  if (!IsLineOrCircle ...
 
   TopoDS_Edge E1, E2;
   ComputeChamfer(V, adjEdge1, D, Ang, adjEdge2, E1, E2, aChamfer);
   TopoDS_Edge basisEdge1, basisEdge2;
-  if (status == ChFi2d_IsDone || status == ChFi2d_FirstEdgeDegenerated
-      || status == ChFi2d_LastEdgeDegenerated || status == ChFi2d_BothEdgesDegenerated)
+  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone || status == ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
+      || status == ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated || status == ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
   {
-    //  if (status == ChFi2d_IsDone) {
+    //  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone) {
     BuildNewWire(adjEdge1, adjEdge2, E1, aChamfer, E2);
     basisEdge1 = BasisEdge(adjEdge1);
     basisEdge2 = BasisEdge(adjEdge2);
     UpDateHistory(basisEdge1, basisEdge2, E1, E2, aChamfer, 2);
-    status = ChFi2d_IsDone;
+    status = ChFi2d_ConstructionError::ChFi2d_IsDone;
     return TopoDS::Edge(chamfers.Value(chamfers.Length()));
   }
   return aChamfer;
@@ -185,16 +185,16 @@ void ChFi2d_Builder::ComputeChamfer(const TopoDS_Vertex& V,
   TopoDS_Vertex newExtr1, newExtr2;
   bool          Degen1, Degen2;
   Chamfer = BuildChamferEdge(V, E1, E2, D1, D2, newExtr1, newExtr2);
-  if (status != ChFi2d_IsDone)
+  if (status != ChFi2d_ConstructionError::ChFi2d_IsDone)
     return;
   TrimE1 = BuildNewEdge(E1, V, newExtr1, Degen1);
   TrimE2 = BuildNewEdge(E2, V, newExtr2, Degen2);
   if (Degen1 && Degen2)
-    status = ChFi2d_BothEdgesDegenerated;
+    status = ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated;
   if (Degen1 && !Degen2)
-    status = ChFi2d_FirstEdgeDegenerated;
+    status = ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated;
   if (!Degen1 && Degen2)
-    status = ChFi2d_LastEdgeDegenerated;
+    status = ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated;
   //   TrimE1 = BuildNewEdge(E1, V, newExtr1);
   //  TrimE2 = BuildNewEdge(E2, V, newExtr2);
 } // ComputeChamfer
@@ -213,16 +213,16 @@ void ChFi2d_Builder::ComputeChamfer(const TopoDS_Vertex& V,
   TopoDS_Vertex newExtr1, newExtr2;
   bool          Degen1, Degen2;
   Chamfer = BuildChamferEdge(V, E1, D, Ang, E2, newExtr1, newExtr2);
-  if (status != ChFi2d_IsDone)
+  if (status != ChFi2d_ConstructionError::ChFi2d_IsDone)
     return;
   TrimE1 = BuildNewEdge(E1, V, newExtr1, Degen1);
   TrimE2 = BuildNewEdge(E2, V, newExtr2, Degen2);
   if (Degen1 && Degen2)
-    status = ChFi2d_BothEdgesDegenerated;
+    status = ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated;
   if (Degen1 && !Degen2)
-    status = ChFi2d_FirstEdgeDegenerated;
+    status = ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated;
   if (!Degen1 && Degen2)
-    status = ChFi2d_LastEdgeDegenerated;
+    status = ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated;
   //   TrimE1 = BuildNewEdge(E1, V, newExtr1);
   //   TrimE2 = BuildNewEdge(E2, V, newExtr2);
 } // ComputeChamfer
@@ -239,7 +239,7 @@ TopoDS_Edge ChFi2d_Builder::ModifyChamfer(const TopoDS_Edge& Chamfer,
   TopoDS_Edge   adjEdge1, adjEdge2;
   status = ChFi2d::FindConnectedEdges(newFace, aVertex, adjEdge1, adjEdge2);
   TopoDS_Edge aChamfer;
-  if (status == ChFi2d_ConnexionError)
+  if (status == ChFi2d_ConstructionError::ChFi2d_ConnexionError)
     return aChamfer;
 
   // adjEdge1 and adjEdge2 are copies of E1 and E2 with the good orientation
@@ -267,7 +267,7 @@ TopoDS_Edge ChFi2d_Builder::ModifyChamfer(const TopoDS_Edge& Chamfer,
   TopoDS_Edge   adjEdge1, adjEdge2;
   status = ChFi2d::FindConnectedEdges(newFace, aVertex, adjEdge1, adjEdge2);
   TopoDS_Edge aChamfer;
-  if (status == ChFi2d_ConnexionError)
+  if (status == ChFi2d_ConstructionError::ChFi2d_ConnexionError)
     return aChamfer;
 
   if (adjEdge1.IsSame(E))
@@ -304,7 +304,7 @@ TopoDS_Vertex ChFi2d_Builder::RemoveChamfer(const TopoDS_Edge& Chamfer)
 
   TopoDS_Edge adjEdge1, adjEdge2;
   status = ChFi2d::FindConnectedEdges(newFace, firstVertex, adjEdge1, adjEdge2);
-  if (status == ChFi2d_ConnexionError)
+  if (status == ChFi2d_ConstructionError::ChFi2d_ConnexionError)
     return commonVertex;
 
   TopoDS_Edge basisEdge1, basisEdge2, E1, E2;
@@ -316,7 +316,7 @@ TopoDS_Vertex ChFi2d_Builder::RemoveChamfer(const TopoDS_Edge& Chamfer)
     E1 = adjEdge1;
   basisEdge1 = BasisEdge(E1);
   status     = ChFi2d::FindConnectedEdges(newFace, lastVertex, adjEdge1, adjEdge2);
-  if (status == ChFi2d_ConnexionError)
+  if (status == ChFi2d_ConstructionError::ChFi2d_ConnexionError)
     return commonVertex;
   if (adjEdge1.IsSame(Chamfer))
     E2 = adjEdge2;
@@ -327,19 +327,19 @@ TopoDS_Vertex ChFi2d_Builder::RemoveChamfer(const TopoDS_Edge& Chamfer)
   bool          hasConnection = ChFi2d::CommonVertex(basisEdge1, basisEdge2, commonVertex);
   if (!hasConnection)
   {
-    status = ChFi2d_ConnexionError;
+    status = ChFi2d_ConstructionError::ChFi2d_ConnexionError;
     return commonVertex;
   }
   hasConnection = ChFi2d::CommonVertex(E1, Chamfer, connectionE1Chamfer);
   if (!hasConnection)
   {
-    status = ChFi2d_ConnexionError;
+    status = ChFi2d_ConstructionError::ChFi2d_ConnexionError;
     return commonVertex;
   }
   hasConnection = ChFi2d::CommonVertex(E2, Chamfer, connectionE2Chamfer);
   if (!hasConnection)
   {
-    status = ChFi2d_ConnexionError;
+    status = ChFi2d_ConstructionError::ChFi2d_ConnexionError;
     return commonVertex;
   }
 
@@ -471,7 +471,7 @@ TopoDS_Edge ChFi2d_Builder::BuildChamferEdge(const TopoDS_Vertex& V,
   TopoDS_Edge chamfer;
   if (D1 <= 0 || D2 <= 0)
   {
-    status = ChFi2d_ParametersError;
+    status = ChFi2d_ConstructionError::ChFi2d_ParametersError;
     return chamfer;
   } // if ( D1 <=0 ...
 
@@ -518,7 +518,7 @@ TopoDS_Edge ChFi2d_Builder::BuildChamferEdge(const TopoDS_Vertex& V,
   B.UpdateVertex(NewExtr1, param1, AdjEdge1, tol);
   B.UpdateVertex(NewExtr2, param2, AdjEdge2, tol);
 
-  status = ChFi2d_IsDone;
+  status = ChFi2d_ConstructionError::ChFi2d_IsDone;
   return chamfer;
 } // BuildChamferEdge
 
@@ -535,7 +535,7 @@ TopoDS_Edge ChFi2d_Builder::BuildChamferEdge(const TopoDS_Vertex& V,
   TopoDS_Edge chamfer;
   if (D <= 0 || Ang <= 0)
   {
-    status = ChFi2d_ParametersError;
+    status = ChFi2d_ConstructionError::ChFi2d_ParametersError;
     return chamfer;
   } // if ( D <= 0 ...
 
@@ -611,7 +611,7 @@ TopoDS_Edge ChFi2d_Builder::BuildChamferEdge(const TopoDS_Vertex& V,
   B.UpdateVertex(NewExtr1, param1, AdjEdge1, tol);
   B.UpdateVertex(NewExtr2, param2, AdjEdge2, tol);
 
-  status = ChFi2d_IsDone;
+  status = ChFi2d_ConstructionError::ChFi2d_IsDone;
   return chamfer;
 }
 
@@ -626,7 +626,7 @@ gp_Pnt ComputePoint(const TopoDS_Vertex& V, const TopoDS_Edge& E, const double D
   last  = c.LastParameter();
 
   gp_Pnt thePoint;
-  if (c.GetType() == GeomAbs_Line)
+  if (c.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     gp_Pnt        p1, p2;
     TopoDS_Vertex v1, v2;
@@ -651,7 +651,7 @@ gp_Pnt ComputePoint(const TopoDS_Vertex& V, const TopoDS_Edge& E, const double D
     return thePoint;
   } // if (C->IsKind(TYPE ...
 
-  if (c.GetType() == GeomAbs_Circle)
+  if (c.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     gp_Circ       cir    = c.Circle();
     double        radius = cir.Radius();

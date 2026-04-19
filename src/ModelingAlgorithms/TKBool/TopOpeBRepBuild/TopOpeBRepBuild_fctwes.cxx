@@ -144,7 +144,7 @@ void TopOpeBRepBuild_Builder::GFillCurveTopologyWES(const TopOpeBRepDS_CurveIter
   G1.StatesON(TB1, TB2);
   TopOpeBRepDS_Config Conf = G1.Config1();
   TopAbs_State        TB   = TB1;
-  if (Conf == TopOpeBRepDS_DIFFORIENTED)
+  if (Conf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED)
   { // -jyl980525
     //    if      (TB1 == TopAbs_OUT) TB = TopAbs_IN;
     //    else if (TB1 == TopAbs_IN ) TB = TopAbs_OUT;

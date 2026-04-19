@@ -102,7 +102,7 @@ bool BRepMesh_BaseMeshAlgo::initDataStructure()
         {
           const int aNodeIndex = registerNode(aCurve->GetPoint(aPointIndex),
                                               aPCurve->GetPoint(aPointIndex),
-                                              BRepMesh_Frontier,
+                                              BRepMesh_DegreeOfFreedom::BRepMesh_Frontier,
                                               false);
 
           aPCurve->GetIndex(aPointIndex) = aNodeIndex;
@@ -116,7 +116,7 @@ bool BRepMesh_BaseMeshAlgo::initDataStructure()
             {
               // Prevent holes around wire of zero area.
               BRepMesh_Edge& aLink = const_cast<BRepMesh_Edge&>(myStructure->GetLink(aLinkIndex));
-              aLink.SetMovability(BRepMesh_Fixed);
+              aLink.SetMovability(BRepMesh_DegreeOfFreedom::BRepMesh_Fixed);
             }
           }
 
@@ -167,12 +167,12 @@ int BRepMesh_BaseMeshAlgo::addLinkToMesh(const int                theFirstNodeId
   int aLinkIndex;
   if (theOrientation == TopAbs_REVERSED)
     aLinkIndex =
-      myStructure->AddLink(BRepMesh_Edge(theLastNodeId, theFirstNodeId, BRepMesh_Frontier));
+      myStructure->AddLink(BRepMesh_Edge(theLastNodeId, theFirstNodeId, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier));
   else if (theOrientation == TopAbs_INTERNAL)
-    aLinkIndex = myStructure->AddLink(BRepMesh_Edge(theFirstNodeId, theLastNodeId, BRepMesh_Fixed));
+    aLinkIndex = myStructure->AddLink(BRepMesh_Edge(theFirstNodeId, theLastNodeId, BRepMesh_DegreeOfFreedom::BRepMesh_Fixed));
   else
     aLinkIndex =
-      myStructure->AddLink(BRepMesh_Edge(theFirstNodeId, theLastNodeId, BRepMesh_Frontier));
+      myStructure->AddLink(BRepMesh_Edge(theFirstNodeId, theLastNodeId, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier));
 
   return std::abs(aLinkIndex);
 }

@@ -49,9 +49,9 @@ Geom2dGcc_Circ2dTanCen::Geom2dGcc_Circ2dTanCen(const Geom2dGcc_QualifiedCurve&  
 
   gp_Pnt2d pcenter(PCenter->Pnt2d());
   NbrSol = 0;
-  if ((Type1 == GeomAbs_Line || Type1 == GeomAbs_Circle))
+  if ((Type1 == GeomAbs_CurveType::GeomAbs_Line || Type1 == GeomAbs_CurveType::GeomAbs_Circle))
   {
-    if (Type1 == GeomAbs_Circle)
+    if (Type1 == GeomAbs_CurveType::GeomAbs_Circle)
     {
       occ::handle<Geom2d_Circle> CCC1 = occ::down_cast<Geom2d_Circle>(CC1);
       gp_Circ2d                  c1(CCC1->Circ2d());

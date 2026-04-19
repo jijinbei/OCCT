@@ -103,7 +103,7 @@ static bool IsSurfaceUVInfinite(const occ::handle<Geom_Surface>& theSurf)
 static bool IsSurfaceUVPeriodic(const occ::handle<GeomAdaptor_Surface>& theSurf)
 {
   return ((theSurf->IsUPeriodic() && theSurf->IsVPeriodic())
-          || theSurf->GetType() == GeomAbs_Sphere);
+          || theSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere);
 }
 
 //=================================================================================================
@@ -915,7 +915,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
   // Fix possible case on sphere when gap contains degenerated edge
   // and thus has a common part with natural boundary
   // Such hole should be merged with boundary
-  if (mySurf->Adaptor3d()->GetType() == GeomAbs_Sphere && ws.Length() == nb + 1)
+  if (mySurf->Adaptor3d()->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere && ws.Length() == nb + 1)
   {
     occ::handle<ShapeExtend_WireData> bnd = new ShapeExtend_WireData(TopoDS::Wire(ws.Last()));
     // code to become separate method FixTouchingWires()
@@ -2344,7 +2344,7 @@ bool ShapeFix_Face::FixLoopWire(NCollection_Sequence<TopoDS_Shape>& aResWires)
   bool isClosed = true;
 
   // checking that obtained wires is closed in 2D space
-  if (mySurf && mySurf->Adaptor3d()->GetType() != GeomAbs_Plane)
+  if (mySurf && mySurf->Adaptor3d()->GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
 
     TopoDS_Shape emptyCopied = myFace.EmptyCopied();

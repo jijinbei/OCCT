@@ -200,7 +200,7 @@ static bool ProcessMicroEdge(const TopoDS_Edge&                   theEdge,
   }
 
   bool bMicro = BOPTools_AlgoTools::IsMicroEdge(theEdge, theCtx);
-  if (bMicro && BRepAdaptor_Curve(theEdge).GetType() == GeomAbs_Line)
+  if (bMicro && BRepAdaptor_Curve(theEdge).GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     double aLen = BRep_Tool::Pnt(aV1).Distance(BRep_Tool::Pnt(aV2));
     BRep_Builder().UpdateVertex(aV1, aLen / 2.);
@@ -348,7 +348,7 @@ static int NbPoints(const TopoDS_Edge& theEdge)
   BRepAdaptor_Curve aBAC(theEdge);
   switch (aBAC.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       return 1;
     default:
       return 11;
@@ -7983,7 +7983,7 @@ void BRepOffset_BuildOffsetFaces::UpdateValidEdges(
     BOPAlgo_BOP aBOP;
     aBOP.AddArgument(aCEAvoid);
     aBOP.AddTool(anInsideEdges);
-    aBOP.SetOperation(BOPAlgo_CUT);
+    aBOP.SetOperation(BOPAlgo_Operation::BOPAlgo_CUT);
     aBOP.Perform();
     isCut = !aBOP.HasErrors();
 

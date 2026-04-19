@@ -147,7 +147,7 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
     const Contap_Line& Line     = FO.Line(CurLine);
     const int          NbPoints = Line.NbVertex();
     int                CurPoint;
-    if (Line.TypeContour() == Contap_Restriction)
+    if (Line.TypeContour() == Contap_IType::Contap_Restriction)
     {
       // OutLine on restriction
       TopoDS_Edge E = (*(BRepAdaptor_Curve2d*)(Line.Arc().get())).Edge();
@@ -200,7 +200,7 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
             switch (Line.TypeContour())
             {
 
-              case Contap_Lin: {
+              case Contap_IType::Contap_Lin: {
                 C = new Geom_Line(Line.Line());
                 if (withPCurve)
                 {
@@ -211,7 +211,7 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
               }
               break;
 
-              case Contap_Circle: {
+              case Contap_IType::Contap_Circle: {
                 C = new Geom_Circle(Line.Circle());
                 if (withPCurve)
                 {
@@ -227,7 +227,7 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
               }
               break;
 
-              case Contap_Walking: {
+              case Contap_IType::Contap_Walking: {
                 // copy the points
                 int ipF = int(parF);
                 int ipL = int(parL);
@@ -466,7 +466,7 @@ void HLRTopoBRep_DSFiller::InsertFace(const int /*FI*/,
               }
               break;
 
-              case Contap_Restriction: {
+              case Contap_IType::Contap_Restriction: {
                 throw Standard_ProgramError("HLRTopoBRep_DSFiller::InsertFace : Restriction");
               }
               break;

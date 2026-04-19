@@ -21,45 +21,45 @@
 #include <Standard_ConstructionError.hxx>
 
 //! Dimension independent used to implement GCPnts_AbscissaPoint
-//! compute the type and the length ratio if GCPnts_LengthParametrized.
+//! compute the type and the length ratio if GCPnts_AbscissaType::GCPnts_LengthParametrized.
 template <class TheCurve>
 static GCPnts_AbscissaType computeType(const TheCurve& theC, double& theRatio)
 {
   if (theC.NbIntervals(GeomAbs_CN) > 1)
   {
-    return GCPnts_AbsComposite;
+    return GCPnts_AbscissaType::GCPnts_AbsComposite;
   }
 
   switch (theC.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       theRatio = 1.0;
-      return GCPnts_LengthParametrized;
+      return GCPnts_AbscissaType::GCPnts_LengthParametrized;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       theRatio = theC.Circle().Radius();
-      return GCPnts_LengthParametrized;
+      return GCPnts_AbscissaType::GCPnts_LengthParametrized;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) aBz = theC.Bezier();
       if (aBz->NbPoles() == 2 && !aBz->IsRational())
       {
         theRatio = aBz->DN(0, 1).Magnitude();
-        return GCPnts_LengthParametrized;
+        return GCPnts_AbscissaType::GCPnts_LengthParametrized;
       }
-      return GCPnts_Parametrized;
+      return GCPnts_AbscissaType::GCPnts_Parametrized;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) aBs = theC.BSpline();
       if (aBs->NbPoles() == 2 && !aBs->IsRational())
       {
         theRatio = aBs->DN(aBs->FirstParameter(), 1).Magnitude();
-        return GCPnts_LengthParametrized;
+        return GCPnts_AbscissaType::GCPnts_LengthParametrized;
       }
-      return GCPnts_Parametrized;
+      return GCPnts_AbscissaType::GCPnts_Parametrized;
     }
     default: {
-      return GCPnts_Parametrized;
+      return GCPnts_AbscissaType::GCPnts_Parametrized;
     }
   }
 }
@@ -84,16 +84,16 @@ static void Compute(CPnts_AbscissaPoint& theComputer,
   const GCPnts_AbscissaType aType  = computeType(theC, aRatio);
   switch (aType)
   {
-    case GCPnts_LengthParametrized: {
+    case GCPnts_AbscissaType::GCPnts_LengthParametrized: {
       theComputer.SetParameter(theU0 + theAbscis / aRatio);
       return;
     }
-    case GCPnts_Parametrized: {
+    case GCPnts_AbscissaType::GCPnts_Parametrized: {
       theComputer.Init(theC);
       theComputer.Perform(theAbscis, theU0, theUi, theEPSILON);
       return;
     }
-    case GCPnts_AbsComposite: {
+    case GCPnts_AbscissaType::GCPnts_AbsComposite: {
       const int                  aNbIntervals = theC.NbIntervals(GeomAbs_CN);
       NCollection_Array1<double> aTI(1, aNbIntervals + 1);
       theC.Intervals(aTI, GeomAbs_CN);
@@ -174,17 +174,17 @@ static void AdvCompute(CPnts_AbscissaPoint& theComputer,
   const GCPnts_AbscissaType aType  = computeType(theC, aRatio);
   switch (aType)
   {
-    case GCPnts_LengthParametrized: {
+    case GCPnts_AbscissaType::GCPnts_LengthParametrized: {
       theComputer.SetParameter(theU0 + theAbscis / aRatio);
       return;
     }
-    case GCPnts_Parametrized: {
+    case GCPnts_AbscissaType::GCPnts_Parametrized: {
       // theComputer.Init (theC);
       theComputer.Init(theC, theEPSILON); // rbv's modification
       theComputer.AdvPerform(theAbscis, theU0, theUi, theEPSILON);
       return;
     }
-    case GCPnts_AbsComposite: {
+    case GCPnts_AbscissaType::GCPnts_AbsComposite: {
       const int                  aNbIntervals = theC.NbIntervals(GeomAbs_CN);
       NCollection_Array1<double> aTI(1, aNbIntervals + 1);
       theC.Intervals(aTI, GeomAbs_CN);
@@ -378,14 +378,14 @@ double GCPnts_AbscissaPoint::length(const TheCurve& theC,
   const GCPnts_AbscissaType aType  = computeType(theC, aRatio);
   switch (aType)
   {
-    case GCPnts_LengthParametrized: {
+    case GCPnts_AbscissaType::GCPnts_LengthParametrized: {
       return std::abs(theU2 - theU1) * aRatio;
     }
-    case GCPnts_Parametrized: {
+    case GCPnts_AbscissaType::GCPnts_Parametrized: {
       return theTol != nullptr ? CPnts_AbscissaPoint::Length(theC, theU1, theU2, *theTol)
                                : CPnts_AbscissaPoint::Length(theC, theU1, theU2);
     }
-    case GCPnts_AbsComposite: {
+    case GCPnts_AbscissaType::GCPnts_AbsComposite: {
       const int                  aNbIntervals = theC.NbIntervals(GeomAbs_CN);
       NCollection_Array1<double> aTI(1, aNbIntervals + 1);
       theC.Intervals(aTI, GeomAbs_CN);

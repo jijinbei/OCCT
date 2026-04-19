@@ -687,7 +687,7 @@ private: //! @name Private methods performing the operation
     }
 
     // Avoid faces intersection
-    aGFTrim.SetGlue(BOPAlgo_GlueShift);
+    aGFTrim.SetGlue(BOPAlgo_GlueEnum::BOPAlgo_GlueShift);
     aGFTrim.SetRunParallel(myRunParallel);
     aGFTrim.SetNonDestructive(true);
 

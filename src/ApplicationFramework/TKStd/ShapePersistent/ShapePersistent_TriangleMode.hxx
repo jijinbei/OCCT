@@ -14,7 +14,7 @@
 #ifndef _ShapePersistent_TriangleMode_HeaderFile
 #define _ShapePersistent_TriangleMode_HeaderFile
 
-enum ShapePersistent_TriangleMode
+enum class ShapePersistent_TriangleMode
 {
   ShapePersistent_WithTriangle,
   ShapePersistent_WithoutTriangle

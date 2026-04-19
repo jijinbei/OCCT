@@ -95,7 +95,7 @@ static void DrawCurve(const Adaptor3d_Curve&              aCurve,
 {
   int nbintervals = 1;
 
-  if (aCurve.GetType() == GeomAbs_BSplineCurve)
+  if (aCurve.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     nbintervals = aCurve.NbKnots() - 1;
     nbintervals = std::max(1, nbintervals / 3);
@@ -103,7 +103,7 @@ static void DrawCurve(const Adaptor3d_Curve&              aCurve,
 
   switch (aCurve.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       gp_Pnt p1 = aCurve.Value(U1);
       gp_Pnt p2 = aCurve.Value(U2);
       Points.Append(p1);
@@ -154,7 +154,7 @@ static bool MatchCurve(const double           X,
   double retdist;
   switch (aCurve.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       gp_Pnt p1 = aCurve.Value(U1);
       if (std::abs(X - p1.X()) + std::abs(Y - p1.Y()) + std::abs(Z - p1.Z()) <= aDistance)
         return true;
@@ -163,7 +163,7 @@ static bool MatchCurve(const double           X,
         return true;
       return Prs3d::MatchSegment(X, Y, Z, aDistance, p1, p2, retdist);
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       const double Radius = aCurve.Circle().Radius();
       const double DU     = std::sqrt(8.0 * TheDeflection / Radius);
       const double Er     = std::abs(U2 - U1) / DU;

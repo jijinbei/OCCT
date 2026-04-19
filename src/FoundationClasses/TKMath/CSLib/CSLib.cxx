@@ -54,27 +54,27 @@ void CSLib::Normal(const gp_Vec&           theD1U,
 
   if (aD1UMag <= gp::Resolution() && aD1VMag <= gp::Resolution())
   {
-    theStatus = CSLib_D1IsNull;
+    theStatus = CSLib_DerivativeStatus::CSLib_D1IsNull;
   }
   else if (aD1UMag <= gp::Resolution())
   {
-    theStatus = CSLib_D1uIsNull;
+    theStatus = CSLib_DerivativeStatus::CSLib_D1uIsNull;
   }
   else if (aD1VMag <= gp::Resolution())
   {
-    theStatus = CSLib_D1vIsNull;
+    theStatus = CSLib_DerivativeStatus::CSLib_D1vIsNull;
   }
   else
   {
     const double aSin2 = aD1UxD1V.SquareMagnitude() / (aD1UMag * aD1VMag);
     if (aSin2 < theSinTol * theSinTol)
     {
-      theStatus = CSLib_D1uIsParallelD1v;
+      theStatus = CSLib_DerivativeStatus::CSLib_D1uIsParallelD1v;
     }
     else
     {
       theNormal = gp_Dir(aD1UxD1V);
-      theStatus = CSLib_Done;
+      theStatus = CSLib_DerivativeStatus::CSLib_Done;
     }
   }
 }
@@ -107,29 +107,29 @@ void CSLib::Normal(const gp_Vec&       theD1U,
 
   if (aLD1Nu <= RealEpsilon() && aLD1Nv <= RealEpsilon())
   {
-    theStatus = CSLib_D1NIsNull;
+    theStatus = CSLib_NormalStatus::CSLib_D1NIsNull;
     theDone   = false;
   }
   else if (aLD1Nu < RealEpsilon())
   {
-    theStatus = CSLib_D1NuIsNull;
+    theStatus = CSLib_NormalStatus::CSLib_D1NuIsNull;
     theDone   = true;
     theNormal = gp_Dir(aD1Nv);
   }
   else if (aLD1Nv < RealEpsilon())
   {
-    theStatus = CSLib_D1NvIsNull;
+    theStatus = CSLib_NormalStatus::CSLib_D1NvIsNull;
     theDone   = true;
     theNormal = gp_Dir(aD1Nu);
   }
   else if ((aLD1Nv / aLD1Nu) <= RealEpsilon())
   {
-    theStatus = CSLib_D1NvNuRatioIsNull;
+    theStatus = CSLib_NormalStatus::CSLib_D1NvNuRatioIsNull;
     theDone   = false;
   }
   else if ((aLD1Nu / aLD1Nv) <= RealEpsilon())
   {
-    theStatus = CSLib_D1NuNvRatioIsNull;
+    theStatus = CSLib_NormalStatus::CSLib_D1NuNvRatioIsNull;
     theDone   = false;
   }
   else
@@ -139,13 +139,13 @@ void CSLib::Normal(const gp_Vec&       theD1U,
 
     if (aSin2 < theSinTol * theSinTol)
     {
-      theStatus = CSLib_D1NuIsParallelD1Nv;
+      theStatus = CSLib_NormalStatus::CSLib_D1NuIsParallelD1Nv;
       theDone   = true;
       theNormal = gp_Dir(aD1Nu);
     }
     else
     {
-      theStatus = CSLib_InfinityOfSolutions;
+      theStatus = CSLib_NormalStatus::CSLib_InfinityOfSolutions;
       theDone   = false;
     }
   }
@@ -166,7 +166,7 @@ void CSLib::Normal(const gp_Vec&       theD1U,
 
   if (aNMag <= theMagTol || aD1UMag <= theMagTol || aD1VMag <= theMagTol)
   {
-    theStatus = CSLib_Singular;
+    theStatus = CSLib_NormalStatus::CSLib_Singular;
   }
   else
   {
@@ -174,7 +174,7 @@ void CSLib::Normal(const gp_Vec&       theD1U,
     const gp_Dir aD1UDir(theD1U);
     const gp_Dir aD1VDir(theD1V);
     theNormal = gp_Dir(aD1UDir.Crossed(aD1VDir));
-    theStatus = CSLib_Defined;
+    theStatus = CSLib_NormalStatus::CSLib_Defined;
   }
 }
 
@@ -221,13 +221,13 @@ void CSLib::Normal(const int                         theMaxOrder,
   // Vk0 is the first non-null derivative of N: the reference vector.
   if (!aFound)
   {
-    theStatus = CSLib_Singular;
+    theStatus = CSLib_NormalStatus::CSLib_Singular;
     return;
   }
 
   if (anOrder == 0)
   {
-    theStatus = CSLib_Defined;
+    theStatus = CSLib_NormalStatus::CSLib_Defined;
     theNormal = aD.Normalized();
     return;
   }
@@ -263,7 +263,7 @@ void CSLib::Normal(const int                         theMaxOrder,
 
   if (isDefined)
   {
-    theStatus = CSLib_Defined;
+    theStatus = CSLib_NormalStatus::CSLib_Defined;
     theNormal = aD.Normalized();
     return;
   }
@@ -376,11 +376,11 @@ void CSLib::Normal(const int                         theMaxOrder,
   // Determine status based on polynomial sign.
   if (aChangesSign)
   {
-    theStatus = CSLib_InfinityOfSolutions;
+    theStatus = CSLib_NormalStatus::CSLib_InfinityOfSolutions;
   }
   else
   {
-    theStatus       = CSLib_Defined;
+    theStatus       = CSLib_NormalStatus::CSLib_Defined;
     const int aSign = (aVsuiv > 0.0) ? 1 : -1;
     theNormal       = aSign * aVk0.Normalized();
   }

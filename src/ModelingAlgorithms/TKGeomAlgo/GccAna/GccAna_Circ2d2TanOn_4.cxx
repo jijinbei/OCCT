@@ -160,11 +160,11 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
     occ::handle<GccInt_Bisec> Sol  = Bis.ThisSolution();
     GccInt_IType              type = Sol->ArcType();
     IntAna2d_AnaIntersection  Intp;
-    if (type == GccInt_Lin)
+    if (type == GccInt_IType::GccInt_Lin)
     {
       Intp.Perform(OnLine, Sol->Line());
     }
-    if (type == GccInt_Par)
+    if (type == GccInt_IType::GccInt_Par)
     {
       Intp.Perform(OnLine, IntAna2d_Conic(Sol->Parabola()));
     }

@@ -146,7 +146,7 @@ GeomFill_LocationGuide::GeomFill_LocationGuide(
       Sup(1, 3, 0.),
       X(1, 3),
       R(1, 3),
-      myStatus(GeomFill_PipeOk)
+      myStatus(GeomFill_PipeError::GeomFill_PipeOk)
 {
   TolRes.Init(1.e-6);
   myLaw = Triedre; // loi de triedre
@@ -341,7 +341,7 @@ void GeomFill_LocationGuide::SetRotation(const double PrecAngle, double& LastAng
           SOS = true;
           math_Vector RR(1, 3);
           Result.Root(RR);
-          PInt.SetValues(P, RR(2), RR(3), RR(1), IntCurveSurface_Out);
+          PInt.SetValues(P, RR(2), RR(3), RR(1), IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out);
           theU = PInt.U();
           theV = PInt.V();
         }
@@ -354,7 +354,7 @@ void GeomFill_LocationGuide::SetRotation(const double PrecAngle, double& LastAng
       }
       if (!SOS)
       {
-        myStatus = GeomFill_ImpossibleContact;
+        myStatus = GeomFill_PipeError::GeomFill_ImpossibleContact;
         return;
       }
     }
@@ -464,7 +464,7 @@ void GeomFill_LocationGuide::Set(const occ::handle<GeomFill_SectionLaw>& Section
                                  const double                            PrecAngle,
                                  double&                                 LastAngle)
 {
-  myStatus  = GeomFill_PipeOk;
+  myStatus  = GeomFill_PipeError::GeomFill_PipeOk;
   myFirstS  = SFirst;
   myLastS   = SLast;
   LastAngle = PrecAngle;
@@ -485,8 +485,8 @@ void GeomFill_LocationGuide::Set(const occ::handle<GeomFill_SectionLaw>& Section
 void GeomFill_LocationGuide::EraseRotation()
 {
   rotation = false;
-  if (myStatus == GeomFill_ImpossibleContact)
-    myStatus = GeomFill_PipeOk;
+  if (myStatus == GeomFill_PipeError::GeomFill_ImpossibleContact)
+    myStatus = GeomFill_PipeError::GeomFill_PipeOk;
 }
 
 //=================================================================================================
@@ -524,7 +524,7 @@ bool GeomFill_LocationGuide::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
     if (rotation)
       SetRotation(myPoles2d->Value(1, 1).X(), LastAngle);
   }
-  return myStatus == GeomFill_PipeOk;
+  return myStatus == GeomFill_PipeError::GeomFill_PipeOk;
 }
 
 //=================================================================================================
@@ -611,7 +611,7 @@ bool GeomFill_LocationGuide::D0(const double Param, gp_Mat& M, gp_Vec& V)
       std::cout << "LocationGuide::D0 : No Result !" << std::endl;
       TraceRevol(Param, U, myLaw, mySec, myCurve, Trans);
 #endif
-      myStatus = GeomFill_ImpossibleContact;
+      myStatus = GeomFill_PipeError::GeomFill_ImpossibleContact;
       return false;
     }
   }
@@ -689,7 +689,7 @@ bool GeomFill_LocationGuide::D0(const double Param,
       std::cout << "LocationGuide::D0 : No Result !" << std::endl;
       TraceRevol(Param, U, myLaw, mySec, myCurve, Trans);
 #endif
-      myStatus = GeomFill_ImpossibleContact;
+      myStatus = GeomFill_PipeError::GeomFill_ImpossibleContact;
       return false;
     }
   }
@@ -850,7 +850,7 @@ bool GeomFill_LocationGuide::D1(const double Param,
        std::cout << "LocationGuide::D1 : No Result !!"<<std::endl;
        TraceRevol(Param, U, myLaw, mySec, myCurve, Trans);
    #endif
-       myStatus = GeomFill_ImpossibleContact;
+       myStatus = GeomFill_PipeError::GeomFill_ImpossibleContact;
        return false;
          }
    */
@@ -978,7 +978,7 @@ bool GeomFill_LocationGuide::D2(const double Param,
             }//if
           else {
                std::cout <<"LocationGuide::D2 : No Result dans la derivee seconde"<<std::endl;
-           myStatus = GeomFill_ImpossibleContact;
+           myStatus = GeomFill_PipeError::GeomFill_ImpossibleContact;
            }
 
     //------------------------------------------
@@ -1411,7 +1411,7 @@ GeomFill_PipeError GeomFill_LocationGuide::ComputeAutomaticLaw(
   int    ii;
   double t;
 
-  GeomFill_PipeError theStatus = GeomFill_PipeOk;
+  GeomFill_PipeError theStatus = GeomFill_PipeError::GeomFill_PipeOk;
 
   double f = myCurve->FirstParameter();
   double l = myCurve->LastParameter();

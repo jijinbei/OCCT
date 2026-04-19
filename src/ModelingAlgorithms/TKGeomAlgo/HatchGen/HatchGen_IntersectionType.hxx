@@ -19,7 +19,7 @@
 
 //! Intersection type between the hatching and the
 //! element.
-enum HatchGen_IntersectionType
+enum class HatchGen_IntersectionType
 {
   HatchGen_TRUE,
   HatchGen_TOUCH,

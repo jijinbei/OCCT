@@ -170,7 +170,7 @@ static bool OCC23774Test(const TopoDS_Face&  grossPlateFace,
                          const TopoDS_Shape& originalWire,
                          Draw_Interpretor&   di)
 {
-  BRepExtrema_DistShapeShape distShapeShape(grossPlateFace, originalWire, Extrema_ExtFlag_MIN);
+  BRepExtrema_DistShapeShape distShapeShape(grossPlateFace, originalWire, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   if (!distShapeShape.IsDone())
   {
     di << "Distance ShapeShape is Not Done\n";
@@ -206,7 +206,7 @@ static bool OCC23774Test(const TopoDS_Face&  grossPlateFace,
 
   BRepExtrema_DistShapeShape distShapeShape1(grossPlateFace,
                                              step1ModifiedShape,
-                                             Extrema_ExtFlag_MIN);
+                                             Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   if (!distShapeShape1.IsDone())
     return false;
   if (distShapeShape1.Value() > 0.01)
@@ -232,7 +232,7 @@ static bool OCC23774Test(const TopoDS_Face&  grossPlateFace,
   mirror11.PreMultiply(mirror1);
 
   // clang-format off
-  BRepExtrema_DistShapeShape distShapeShape2(grossPlateFace,step2ModifiedShape);//,Extrema_ExtFlag_MIN);
+  BRepExtrema_DistShapeShape distShapeShape2(grossPlateFace,step2ModifiedShape);//,Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   // clang-format on
   if (!distShapeShape2.IsDone())
     return false;
@@ -1060,14 +1060,14 @@ static int OCC24667(Draw_Interpretor& di, int n, const char** a)
   if (Profile.IsNull())
     return 1;
 
-  GeomFill_Trihedron Mode = GeomFill_IsCorrectedFrenet;
+  GeomFill_Trihedron Mode = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet;
   if (n >= 5)
   {
     int iMode = atoi(a[4]);
     if (iMode == 1)
-      Mode = GeomFill_IsFrenet;
+      Mode = GeomFill_Trihedron::GeomFill_IsFrenet;
     else if (iMode == 2)
-      Mode = GeomFill_IsDiscreteTrihedron;
+      Mode = GeomFill_Trihedron::GeomFill_IsDiscreteTrihedron;
   }
 
   bool ForceApproxC1 = false;
@@ -1137,7 +1137,7 @@ static int OCC24931(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
   TCollection_ExtendedString aFileName(argv[1]);
-  PCDM_StoreStatus           aSStatus = PCDM_SS_Failure;
+  PCDM_StoreStatus           aSStatus = PCDM_StoreStatus::PCDM_SS_Failure;
 
   occ::handle<TDocStd_Application> anApp = DDocStd::GetApplication();
   {
@@ -1153,7 +1153,7 @@ static int OCC24931(Draw_Interpretor& di, int argc, const char** argv)
     aSStatus = anApp->SaveAs(aDoc, aFileName);
     anApp->Close(aDoc);
   }
-  QCOMPARE(aSStatus, PCDM_SS_OK);
+  QCOMPARE(aSStatus, PCDM_StoreStatus::PCDM_SS_OK);
   return 0;
 }
 
@@ -1455,8 +1455,8 @@ static int OCC24925(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     aLoader = theArgVec[anArgIter++];
   }
 
-  PCDM_StoreStatus  aSStatus = PCDM_SS_Failure;
-  PCDM_ReaderStatus aRStatus = PCDM_RS_OpenError;
+  PCDM_StoreStatus  aSStatus = PCDM_StoreStatus::PCDM_SS_Failure;
+  PCDM_ReaderStatus aRStatus = PCDM_ReaderStatus::PCDM_RS_OpenError;
 
   occ::handle<TDocStd_Application> anApp = new Test_TDocStd_Application();
   {
@@ -1469,14 +1469,14 @@ static int OCC24925(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     aSStatus = anApp->SaveAs(aDoc, aFileName);
     anApp->Close(aDoc);
   }
-  QA_CHECK("SaveAs()", aSStatus == PCDM_SS_OK, true);
+  QA_CHECK("SaveAs()", aSStatus == PCDM_StoreStatus::PCDM_SS_OK, true);
 
   {
     occ::handle<TDocStd_Document> aDoc;
     aRStatus = anApp->Open(aFileName, aDoc);
     anApp->Close(aDoc);
   }
-  QA_CHECK("Open()  ", aRStatus == PCDM_RS_OK, true);
+  QA_CHECK("Open()  ", aRStatus == PCDM_ReaderStatus::PCDM_RS_OK, true);
   return 0;
 }
 
@@ -2147,19 +2147,19 @@ static int OCC25446(Draw_Interpretor& theDI, int argc, const char** argv)
   //
   switch (aOp)
   {
-    case BOPAlgo_COMMON:
+    case BOPAlgo_Operation::BOPAlgo_COMMON:
       pBuilder = new BRepAlgoAPI_Common(aS1, aS2, aPF);
       break;
-    case BOPAlgo_FUSE:
+    case BOPAlgo_Operation::BOPAlgo_FUSE:
       pBuilder = new BRepAlgoAPI_Fuse(aS1, aS2, aPF);
       break;
-    case BOPAlgo_CUT:
+    case BOPAlgo_Operation::BOPAlgo_CUT:
       pBuilder = new BRepAlgoAPI_Cut(aS1, aS2, aPF);
       break;
-    case BOPAlgo_CUT21:
+    case BOPAlgo_Operation::BOPAlgo_CUT21:
       pBuilder = new BRepAlgoAPI_Cut(aS1, aS2, aPF, false);
       break;
-    case BOPAlgo_SECTION:
+    case BOPAlgo_Operation::BOPAlgo_SECTION:
       pBuilder = new BRepAlgoAPI_Section(aS1, aS2, aPF);
       break;
     default:
@@ -4194,7 +4194,7 @@ static int OCC29412(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theA
 
     BRepBuilderAPI_MakeEdge builder(circle);
 
-    if (builder.Error() == BRepBuilderAPI_EdgeDone)
+    if (builder.Error() == BRepBuilderAPI_EdgeError::BRepBuilderAPI_EdgeDone)
     {
       TopoDS_Edge  E1 = builder.Edge();
       TopoDS_Shape W2 = BRepBuilderAPI_MakeWire(E1).Wire();

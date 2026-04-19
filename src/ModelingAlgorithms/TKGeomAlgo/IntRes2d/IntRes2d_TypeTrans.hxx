@@ -17,7 +17,7 @@
 #ifndef _IntRes2d_TypeTrans_HeaderFile
 #define _IntRes2d_TypeTrans_HeaderFile
 
-enum IntRes2d_TypeTrans
+enum class IntRes2d_TypeTrans
 {
   IntRes2d_In,
   IntRes2d_Out,

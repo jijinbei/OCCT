@@ -27,7 +27,7 @@
 #include <TopoDS_Vertex.hxx>
 #include <TopoDS_Shape.hxx>
 
-enum BRepOffsetSimple_Status
+enum class BRepOffsetSimple_Status
 {
   BRepOffsetSimple_OK,
   BRepOffsetSimple_NullInputShape,

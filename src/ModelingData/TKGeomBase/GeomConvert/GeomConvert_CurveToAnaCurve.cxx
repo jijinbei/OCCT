@@ -43,15 +43,15 @@
 
 GeomConvert_CurveToAnaCurve::GeomConvert_CurveToAnaCurve()
     : myGap(Precision::Infinite()),
-      myConvType(GeomConvert_MinGap),
-      myTarget(GeomAbs_Line)
+      myConvType(GeomConvert_ConvType::GeomConvert_MinGap),
+      myTarget(GeomAbs_CurveType::GeomAbs_Line)
 {
 }
 
 GeomConvert_CurveToAnaCurve::GeomConvert_CurveToAnaCurve(const occ::handle<Geom_Curve>& C)
     : myGap(Precision::Infinite()),
-      myConvType(GeomConvert_MinGap),
-      myTarget(GeomAbs_Line)
+      myConvType(GeomConvert_ConvType::GeomConvert_MinGap),
+      myTarget(GeomAbs_CurveType::GeomAbs_Line)
 {
   myCurve = C;
 }
@@ -696,24 +696,24 @@ occ::handle<Geom_Curve> GeomConvert_CurveToAnaCurve::ComputeCurve(
     c3d                                = aTc->BasisCurve();
   }
 
-  if (theConvType == GeomConvert_Target)
+  if (theConvType == GeomConvert_ConvType::GeomConvert_Target)
   {
     theGap = RealLast();
-    if (theTarget == GeomAbs_Line)
+    if (theTarget == GeomAbs_CurveType::GeomAbs_Line)
     {
       newc3d[0] = ComputeLine(c3d, tolerance, c1, c2, fp[0], lp[0], theGap);
       cf        = fp[0];
       cl        = lp[0];
       return newc3d[0];
     }
-    if (theTarget == GeomAbs_Circle)
+    if (theTarget == GeomAbs_CurveType::GeomAbs_Circle)
     {
       newc3d[1] = ComputeCircle(c3d, tolerance, c1, c2, fp[1], lp[1], theGap);
       cf        = fp[1];
       cl        = lp[1];
       return newc3d[1];
     }
-    if (theTarget == GeomAbs_Ellipse)
+    if (theTarget == GeomAbs_CurveType::GeomAbs_Ellipse)
     {
       newc3d[2] = ComputeEllipse(c3d, tolerance, c1, c2, fp[2], lp[2], theGap);
       cf        = fp[2];
@@ -722,7 +722,7 @@ occ::handle<Geom_Curve> GeomConvert_CurveToAnaCurve::ComputeCurve(
     }
   }
   //
-  if (theConvType == GeomConvert_Simplest)
+  if (theConvType == GeomConvert_ConvType::GeomConvert_Simplest)
   {
     theGap    = RealLast();
     newc3d[0] = ComputeLine(c3d, tolerance, c1, c2, fp[0], lp[0], theGap);
@@ -752,7 +752,7 @@ occ::handle<Geom_Curve> GeomConvert_CurveToAnaCurve::ComputeCurve(
     return newc3d[0];
   }
 
-  //  theConvType == GeomConvert_MinGap
+  //  theConvType == GeomConvert_ConvType::GeomConvert_MinGap
   // recognition in case of small curve
   int imin = -1;
   if ((P1.Distance(P2) < 2 * tolerance) && (P1.Distance(P3) < 2 * tolerance))

@@ -297,7 +297,7 @@ static bool FUN_isonbound(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
 {
   int               G   = I->Geometry();
   TopOpeBRepDS_Kind KG  = I->GeometryType();
-  bool              Gb1 = (KG == TopOpeBRepDS_VERTEX);
+  bool              Gb1 = (KG == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
   if (Gb1)
   {
     occ::handle<TopOpeBRepDS_EdgeVertexInterference> EVI =
@@ -439,7 +439,7 @@ void TopOpeBRepBuild_Builder::GFillPointTopologyPVS(const TopoDS_Shape&         
       TopOpeBRepDS_Kind Kcur;
       int               Gcur;
       tki.Value(Kcur, Gcur);
-      if (Kcur == TopOpeBRepDS_POINT)
+      if (Kcur == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
       {
         tki.Next();
         continue;
@@ -471,7 +471,7 @@ void TopOpeBRepBuild_Builder::GFillPointTopologyPVS(const TopoDS_Shape&         
     {
       const occ::handle<TopOpeBRepDS_Interference>& I  = it.Value();
       TopOpeBRepDS_Kind                             ST = I->SupportType();
-      if (ST != TopOpeBRepDS_FACE)
+      if (ST != TopOpeBRepDS_Kind::TopOpeBRepDS_FACE)
         continue;
       TopAbs_Orientation O      = I->Transition().Orientation(TopAbs_IN);
       bool               FORREV = (O == TopAbs_FORWARD) || (O == TopAbs_REVERSED);
@@ -496,8 +496,8 @@ void TopOpeBRepBuild_Builder::GFillPointTopologyPVS(const TopoDS_Shape&         
     TopOpeBRepDS_Kind                                               Kcur;
     int                                                             Gcur;
     const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LICur = tki.Value(Kcur, Gcur);
-    bool         point  = (Kcur == TopOpeBRepDS_POINT);  // xpu170498
-    bool         vertex = (Kcur == TopOpeBRepDS_VERTEX); // xpu170498
+    bool         point  = (Kcur == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT);  // xpu170498
+    bool         vertex = (Kcur == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX); // xpu170498
     TopoDS_Shape vGsd;
     if (vertex)
       FUN_ds_getoov(BDS.Shape(Gcur), myDataStructure, vGsd); // xpu221098
@@ -506,7 +506,7 @@ void TopOpeBRepBuild_Builder::GFillPointTopologyPVS(const TopoDS_Shape&         
     //          I2d=I2dFE
     //          I1d=(T(E),V,E)
 
-    if ((Kcur == TopOpeBRepDS_VERTEX) && (kp1 == Gcur))
+    if ((Kcur == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX) && (kp1 == Gcur))
     {
       tki.Next();
       continue;
@@ -516,7 +516,7 @@ void TopOpeBRepBuild_Builder::GFillPointTopologyPVS(const TopoDS_Shape&         
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>> LICurcopy;
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>> l3dFcur;
     FDS_assign(LICur, LICurcopy);
-    int n3d = FUN_selectSKinterference(LICurcopy, TopOpeBRepDS_FACE, l3dFcur);
+    int n3d = FUN_selectSKinterference(LICurcopy, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, l3dFcur);
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>> l2dFEcur;
     FDS_assign(LICur, LICurcopy);
     int n2d = FUN_ds_hasI2d(iEDS, LICurcopy, l2dFEcur);
@@ -633,7 +633,7 @@ void TopOpeBRepBuild_Builder::GFillPointTopologyPVS(const TopoDS_Shape&         
       newT.StateBefore(sb);
       newT.StateAfter(sa);
       int                                    S = 0; // dummy
-      bool                                   B = (Kcur == TopOpeBRepDS_POINT)
+      bool                                   B = (Kcur == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
                                                    ? false
                                                    : (occ::down_cast<TopOpeBRepDS_EdgeVertexInterference>(I)->GBound());
       occ::handle<TopOpeBRepDS_Interference> newI =
@@ -714,7 +714,7 @@ void TopOpeBRepBuild_Builder::GFillPointTopologyPVS(const TopoDS_Shape&         
         } // split 2d
         else
         { // split 3d
-          keepinterf1 = (ST1 == TopOpeBRepDS_FACE);
+          keepinterf1 = (ST1 == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE);
         }
       }
       if (keepinterf1)
@@ -808,7 +808,7 @@ void TopOpeBRepBuild_Builder::GFillPointTopologyPVS(const TopoDS_Shape&         
 #endif
 
   bool samegeom = ::TopOpeBRepBuild_FUN_aresamegeom(E, EPVS);
-  if (Conf == TopOpeBRepDS_DIFFORIENTED)
+  if (Conf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED)
     ori = TopAbs::Complement(ori);
 #ifdef OCCT_DEBUG
   if (!TopOpeBRepBuild_GetcontextNOSG())
@@ -1025,19 +1025,19 @@ bool TopOpeBRepBuild_Builder::GParamOnReference(const TopoDS_Vertex& V,
   Geom2dAdaptor_Curve AC(C2D);
   switch (AC.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       P = ElCLib::Parameter(AC.Line(), p2);
       break;
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       P = ElCLib::Parameter(AC.Circle(), p2);
       break;
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       P = ElCLib::Parameter(AC.Ellipse(), p2);
       break;
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       P = ElCLib::Parameter(AC.Hyperbola(), p2);
       break;
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       P = ElCLib::Parameter(AC.Parabola(), p2);
       break;
     default:

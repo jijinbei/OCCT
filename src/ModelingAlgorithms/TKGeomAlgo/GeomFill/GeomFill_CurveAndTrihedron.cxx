@@ -305,7 +305,7 @@ bool GeomFill_CurveAndTrihedron::IsTranslation(double& Error) const
   GeomAbs_CurveType Type;
   Error = 0;
   Type  = myCurve->GetType();
-  if (Type == GeomAbs_Line)
+  if (Type == GeomAbs_CurveType::GeomAbs_Line)
   {
     return (myLaw->IsConstant() || myLaw->IsOnlyBy3dCurve());
   }
@@ -319,7 +319,7 @@ bool GeomFill_CurveAndTrihedron::IsRotation(double& Error) const
   GeomAbs_CurveType Type;
   Error = 0;
   Type  = myCurve->GetType();
-  if (Type == GeomAbs_Circle)
+  if (Type == GeomAbs_CurveType::GeomAbs_Circle)
   {
     return myLaw->IsOnlyBy3dCurve();
   }

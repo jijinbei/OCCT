@@ -21,7 +21,7 @@
 //=================================================================================================
 
 Hatch_Line::Hatch_Line()
-    : myForm(Hatch_ANYLINE)
+    : myForm(Hatch_LineForm::Hatch_ANYLINE)
 {
 }
 

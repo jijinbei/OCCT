@@ -67,7 +67,7 @@ void TopOpeBRepDS_GapFiller::Perform()
     {
       NCollection_List<occ::handle<TopOpeBRepDS_Interference>> ALI;
       const occ::handle<TopOpeBRepDS_Interference>&            I = it.Value();
-      if (I->GeometryType() == TopOpeBRepDS_POINT)
+      if (I->GeometryType() == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
       {
         if (View.Add(I->Geometry()))
         {
@@ -301,7 +301,7 @@ bool TopOpeBRepDS_GapFiller::IsOnEdge(const occ::handle<TopOpeBRepDS_Interferenc
        it.Next())
   {
     const occ::handle<TopOpeBRepDS_Interference>& IC = it.Value();
-    if (IC->SupportType() == TopOpeBRepDS_EDGE)
+    if (IC->SupportType() == TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE)
     {
       const TopoDS_Shape& S1 = myHDS->Shape(IC->Support());
       if (S1.IsSame(E))
@@ -327,7 +327,7 @@ static bool Normal(const occ::handle<TopOpeBRepDS_GapTool>&        A,
   gp_Pnt2d          P2d;
 
   BRepAdaptor_Surface S(F);
-  if (S.GetType() == GeomAbs_Plane)
+  if (S.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     D = S.Plane().Axis().Direction();
     return true;
@@ -339,7 +339,7 @@ static bool Normal(const occ::handle<TopOpeBRepDS_GapTool>&        A,
   {
     const occ::handle<TopOpeBRepDS_Interference>& IC = it.Value();
     IC->GKGSKS(GK, IG, SK, IS);
-    if (SK == TopOpeBRepDS_CURVE)
+    if (SK == TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE)
     {
       const TopOpeBRepDS_Curve& C = HDS->Curve(IS);
       double P = occ::down_cast<TopOpeBRepDS_CurvePointInterference>(IC)->Parameter();

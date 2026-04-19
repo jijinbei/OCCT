@@ -83,7 +83,7 @@ static double MAT2d_TOLCONF = 1.e-7;
 MAT2d_Tool2d::MAT2d_Tool2d()
 {
   theDirection         = 1.;
-  theJoinType          = GeomAbs_Arc; // default
+  theJoinType          = GeomAbs_JoinType::GeomAbs_Arc; // default
   theNumberOfBisectors = 0;
   theNumberOfVecs      = 0;
   theNumberOfPnts      = 0;
@@ -108,7 +108,7 @@ void MAT2d_Tool2d::InitItems(const occ::handle<MAT2d_Circuit>& EquiCircuit)
 
 void MAT2d_Tool2d::Sense(const MAT_Side aside)
 {
-  if (aside == MAT_Left)
+  if (aside == MAT_Side::MAT_Left)
     theDirection = 1.;
   else
     theDirection = -1.;
@@ -577,7 +577,7 @@ bool MAT2d_Tool2d::Projection(const int IEdge, const gp_Pnt2d& PCom, double& Dis
     //---------------------------------------------------------------------
     Geom2dAdaptor_Curve C1(Curve);
     GeomAbs_CurveType   TypeC1 = C1.GetType();
-    if (TypeC1 == GeomAbs_Circle)
+    if (TypeC1 == GeomAbs_CurveType::GeomAbs_Circle)
     {
       double R       = C1.Circle().Radius();
       double EpsCirc = 100. * Eps;
@@ -616,7 +616,7 @@ bool MAT2d_Tool2d::Projection(const int IEdge, const gp_Pnt2d& PCom, double& Dis
     }
     else
     {
-      if (TypeC1 == GeomAbs_Circle)
+      if (TypeC1 == GeomAbs_CurveType::GeomAbs_Circle)
       {
         Distance = C1.Circle().Radius();
       }
@@ -719,7 +719,7 @@ bool MAT2d_Tool2d::IsSameDistance(const occ::handle<MAT_Bisector>& BisectorOne,
 
   double EpsDist = MAT2d_TOLCONF * 300.;
   Distance       = Dist(1);
-  if (theJoinType == GeomAbs_Intersection && Precision::IsInfinite(Distance))
+  if (theJoinType == GeomAbs_JoinType::GeomAbs_Intersection && Precision::IsInfinite(Distance))
   {
     for (int i = 2; i <= 4; i++)
       if (!Precision::IsInfinite(Dist(i)))
@@ -730,7 +730,7 @@ bool MAT2d_Tool2d::IsSameDistance(const occ::handle<MAT_Bisector>& BisectorOne,
   }
   for (int i = 1; i <= 4; i++)
   {
-    if (theJoinType == GeomAbs_Intersection && Precision::IsInfinite(Dist(i)))
+    if (theJoinType == GeomAbs_JoinType::GeomAbs_Intersection && Precision::IsInfinite(Dist(i)))
       continue;
     if (std::abs(Dist(i) - Distance) > EpsDist)
     {

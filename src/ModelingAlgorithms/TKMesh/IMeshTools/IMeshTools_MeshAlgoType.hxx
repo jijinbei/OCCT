@@ -16,7 +16,7 @@
 
 //! Enumerates built-in meshing algorithms factories implementing IMeshTools_MeshAlgoFactory
 //! interface.
-enum IMeshTools_MeshAlgoType
+enum class IMeshTools_MeshAlgoType
 {
   IMeshTools_MeshAlgoType_DEFAULT =
     -1, //!< use global default (IMeshTools_MeshAlgoType_Watson or CSF_MeshAlgo)

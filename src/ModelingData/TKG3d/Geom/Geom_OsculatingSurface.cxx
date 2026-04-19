@@ -120,10 +120,10 @@ void Geom_OsculatingSurface::Init(const occ::handle<Geom_Surface>& theBS, double
 
     int i = 1;
     theBS->Bounds(U1, U2, V1, V2);
-    myAlong[0] = isQPunctual(theBS, V1, GeomAbs_IsoV, TolMin, theTol);
-    myAlong[1] = isQPunctual(theBS, V2, GeomAbs_IsoV, TolMin, theTol);
-    myAlong[2] = isQPunctual(theBS, U1, GeomAbs_IsoU, TolMin, theTol);
-    myAlong[3] = isQPunctual(theBS, U2, GeomAbs_IsoU, TolMin, theTol);
+    myAlong[0] = isQPunctual(theBS, V1, GeomAbs_IsoType::GeomAbs_IsoV, TolMin, theTol);
+    myAlong[1] = isQPunctual(theBS, V2, GeomAbs_IsoType::GeomAbs_IsoV, TolMin, theTol);
+    myAlong[2] = isQPunctual(theBS, U1, GeomAbs_IsoType::GeomAbs_IsoU, TolMin, theTol);
+    myAlong[3] = isQPunctual(theBS, U2, GeomAbs_IsoType::GeomAbs_IsoU, TolMin, theTol);
 #ifdef OCCT_DEBUG
     std::cout << myAlong[0] << std::endl
               << myAlong[1] << std::endl
@@ -194,7 +194,7 @@ void Geom_OsculatingSurface::Init(const occ::handle<Geom_Surface>& theBS, double
 #ifdef OCCT_DEBUG
                 std::cout << "1.k = " << k << std::endl;
 #endif
-                IsQPunc = isQPunctual(L, V1, GeomAbs_IsoV, 0., theTol);
+                IsQPunc = isQPunctual(L, V1, GeomAbs_IsoType::GeomAbs_IsoV, 0., theTol);
                 UKnot   = 1;
                 VKnot   = 1;
                 S       = L;
@@ -220,7 +220,7 @@ void Geom_OsculatingSurface::Init(const occ::handle<Geom_Surface>& theBS, double
 #ifdef OCCT_DEBUG
                   std::cout << "2.k = " << k << std::endl;
 #endif
-                  IsQPunc = isQPunctual(L, V2, GeomAbs_IsoV, 0., theTol);
+                  IsQPunc = isQPunctual(L, V2, GeomAbs_IsoType::GeomAbs_IsoV, 0., theTol);
                   UKnot   = 1;
                   VKnot   = 1;
                   S       = L;
@@ -248,7 +248,7 @@ void Geom_OsculatingSurface::Init(const occ::handle<Geom_Surface>& theBS, double
 #ifdef OCCT_DEBUG
                 std::cout << "2.k = " << k << std::endl;
 #endif
-                IsQPunc = isQPunctual(L, V2, GeomAbs_IsoV, 0., theTol);
+                IsQPunc = isQPunctual(L, V2, GeomAbs_IsoType::GeomAbs_IsoV, 0., theTol);
                 UKnot   = 1;
                 VKnot   = 1;
                 S       = L;
@@ -283,7 +283,7 @@ void Geom_OsculatingSurface::Init(const occ::handle<Geom_Surface>& theBS, double
 #ifdef OCCT_DEBUG
                 std::cout << "1.k = " << k << std::endl;
 #endif
-                IsQPunc = isQPunctual(L, U1, GeomAbs_IsoU, 0., theTol);
+                IsQPunc = isQPunctual(L, U1, GeomAbs_IsoType::GeomAbs_IsoU, 0., theTol);
                 UKnot   = 1;
                 VKnot   = 1;
                 S       = L;
@@ -308,7 +308,7 @@ void Geom_OsculatingSurface::Init(const occ::handle<Geom_Surface>& theBS, double
 #ifdef OCCT_DEBUG
                   std::cout << "2.k = " << k << std::endl;
 #endif
-                  IsQPunc = isQPunctual(L, U2, GeomAbs_IsoU, 0., theTol);
+                  IsQPunc = isQPunctual(L, U2, GeomAbs_IsoType::GeomAbs_IsoU, 0., theTol);
                   UKnot   = 1;
                   VKnot   = 1;
                   S       = L;
@@ -336,7 +336,7 @@ void Geom_OsculatingSurface::Init(const occ::handle<Geom_Surface>& theBS, double
 #ifdef OCCT_DEBUG
                 std::cout << "2.k = " << k << std::endl;
 #endif
-                IsQPunc = isQPunctual(L, U2, GeomAbs_IsoU, 0., theTol);
+                IsQPunc = isQPunctual(L, U2, GeomAbs_IsoType::GeomAbs_IsoU, 0., theTol);
                 UKnot   = 1;
                 VKnot   = 1;
                 S       = L;
@@ -713,7 +713,7 @@ bool Geom_OsculatingSurface::isQPunctual(const occ::handle<Geom_Surface>& theS,
   gp_Vec D1U, D1V;
   gp_Pnt P;
   double Step, D1NormMax;
-  if (theIT == GeomAbs_IsoV)
+  if (theIT == GeomAbs_IsoType::GeomAbs_IsoV)
   {
     Step      = (U2 - U1) / 10;
     D1NormMax = 0.;

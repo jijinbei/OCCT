@@ -17,7 +17,7 @@
 #ifndef _LProp_Status_HeaderFile
 #define _LProp_Status_HeaderFile
 
-enum LProp_Status
+enum class LProp_Status
 {
   LProp_Undecided,
   LProp_Undefined,

@@ -100,7 +100,7 @@ static GeomAbs_CurveType TypeOfEdge(const TopoDS_Edge& anEdge)
 {
   gp_Lin aLin;
   if (IsLinear(anEdge, aLin))
-    return GeomAbs_Line;
+    return GeomAbs_CurveType::GeomAbs_Line;
 
   BRepAdaptor_Curve BAcurve(anEdge);
   return BAcurve.GetType();
@@ -146,7 +146,7 @@ static bool IsValidEdge(const TopoDS_Edge& theEdge, const TopoDS_Face& theFace)
       for (i = 1; i <= DistMini.NbSolution(); i++)
       {
         BRepExtrema_SupportType theType = DistMini.SupportTypeShape2(i);
-        if (theType == BRepExtrema_IsOnEdge)
+        if (theType == BRepExtrema_SupportType::BRepExtrema_IsOnEdge)
           return false;
         // theType is "IsVertex"
         TopoDS_Shape aVertex = DistMini.SupportOnShape2(i);
@@ -700,9 +700,9 @@ void BRepOffsetAPI_MiddlePath::Build(const Message_ProgressRange& /*theRange*/)
             }
             else // types are different
             {
-              if (type_E1 == GeomAbs_Line)
+              if (type_E1 == GeomAbs_CurveType::GeomAbs_Line)
                 ChooseEdge = 1;
-              else if (type_E2 == GeomAbs_Line)
+              else if (type_E2 == GeomAbs_CurveType::GeomAbs_Line)
                 ChooseEdge = 2;
               else // to be developed later...
               {
@@ -807,13 +807,13 @@ void BRepOffsetAPI_MiddlePath::Build(const Message_ProgressRange& /*theRange*/)
   gp_Pnt                           Pnt1, Pnt2;
   for (i = 1; i < NbSecFaces; i++)
   {
-    GeomAbs_CurveType TypeOfMidEdge = GeomAbs_OtherCurve;
+    GeomAbs_CurveType TypeOfMidEdge = GeomAbs_CurveType::GeomAbs_OtherCurve;
     for (j = 1; j <= myPaths.Length(); j++)
     {
       const TopoDS_Shape& aShape = myPaths(j)(i);
       if (aShape.ShapeType() == TopAbs_VERTEX)
       {
-        TypeOfMidEdge = GeomAbs_OtherCurve;
+        TypeOfMidEdge = GeomAbs_CurveType::GeomAbs_OtherCurve;
         break;
       }
       anEdge                  = TopoDS::Edge(aShape);
@@ -824,14 +824,14 @@ void BRepOffsetAPI_MiddlePath::Build(const Message_ProgressRange& /*theRange*/)
       {
         if (aType != TypeOfMidEdge)
         {
-          TypeOfMidEdge = GeomAbs_OtherCurve;
+          TypeOfMidEdge = GeomAbs_CurveType::GeomAbs_OtherCurve;
           break;
         }
       }
     }
-    if (TypeOfMidEdge == GeomAbs_Line)
+    if (TypeOfMidEdge == GeomAbs_CurveType::GeomAbs_Line)
       MidEdges(i) = BRepLib_MakeEdge(Centers(i), Centers(i + 1));
-    else if (TypeOfMidEdge == GeomAbs_Circle)
+    else if (TypeOfMidEdge == GeomAbs_CurveType::GeomAbs_Circle)
     {
       gp_Ax1 theAxis;
       gp_Dir theDir1, theDir2;

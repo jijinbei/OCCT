@@ -22,8 +22,8 @@ TEST(IntCurveSurface_IntersectionPoint, DefaultConstructor_TransitionInitialized
 {
   IntCurveSurface_IntersectionPoint aPt;
 
-  // Transition must be deterministic (initialized to IntCurveSurface_Tangent).
-  EXPECT_EQ(aPt.Transition(), IntCurveSurface_Tangent);
+  // Transition must be deterministic (initialized to IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent).
+  EXPECT_EQ(aPt.Transition(), IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent);
 
   // Scalar fields must be zero-initialized.
   EXPECT_DOUBLE_EQ(aPt.U(), 0.0);
@@ -35,7 +35,7 @@ TEST(IntCurveSurface_IntersectionPoint, DefaultConstructor_TransitionInitialized
 TEST(IntCurveSurface_IntersectionPoint, ValueConstructor_AllFieldsSet)
 {
   gp_Pnt                            aP(1.0, 2.0, 3.0);
-  IntCurveSurface_IntersectionPoint aPt(aP, 0.5, 0.6, 0.7, IntCurveSurface_In);
+  IntCurveSurface_IntersectionPoint aPt(aP, 0.5, 0.6, 0.7, IntCurveSurface_TransitionOnCurve::IntCurveSurface_In);
 
   EXPECT_NEAR(aPt.Pnt().X(), 1.0, 1e-15);
   EXPECT_NEAR(aPt.Pnt().Y(), 2.0, 1e-15);
@@ -43,16 +43,16 @@ TEST(IntCurveSurface_IntersectionPoint, ValueConstructor_AllFieldsSet)
   EXPECT_DOUBLE_EQ(aPt.U(), 0.5);
   EXPECT_DOUBLE_EQ(aPt.V(), 0.6);
   EXPECT_DOUBLE_EQ(aPt.W(), 0.7);
-  EXPECT_EQ(aPt.Transition(), IntCurveSurface_In);
+  EXPECT_EQ(aPt.Transition(), IntCurveSurface_TransitionOnCurve::IntCurveSurface_In);
 }
 
 // SetValues overwrites all fields including transition.
 TEST(IntCurveSurface_IntersectionPoint, SetValues_OverwritesTransition)
 {
   IntCurveSurface_IntersectionPoint aPt;
-  EXPECT_EQ(aPt.Transition(), IntCurveSurface_Tangent);
+  EXPECT_EQ(aPt.Transition(), IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent);
 
   gp_Pnt aP(5.0, 6.0, 7.0);
-  aPt.SetValues(aP, 1.0, 2.0, 3.0, IntCurveSurface_Out);
-  EXPECT_EQ(aPt.Transition(), IntCurveSurface_Out);
+  aPt.SetValues(aP, 1.0, 2.0, 3.0, IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out);
+  EXPECT_EQ(aPt.Transition(), IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out);
 }

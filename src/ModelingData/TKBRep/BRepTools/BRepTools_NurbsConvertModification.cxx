@@ -434,7 +434,7 @@ bool BRepTools_NurbsConvertModification::NewCurve(const TopoDS_Edge&       E,
   //   gp_Trsf trsf(L);
   //   gp_Trsf trsf = L.Transformation();
 
-  //  C = GeomConvert::CurveToBSplineCurve(C,Convert_QuasiAngular);
+  //  C = GeomConvert::CurveToBSplineCurve(C,Convert_ParameterisationType::Convert_QuasiAngular);
 
   C = GeomConvert::CurveToBSplineCurve(C);
 

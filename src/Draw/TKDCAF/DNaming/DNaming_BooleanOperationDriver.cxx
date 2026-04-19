@@ -202,7 +202,7 @@ static bool IsValidSurfType(const TopoDS_Face& theFace)
   BRepAdaptor_Surface          anAdapt(theFace);
   occ::handle<Adaptor3d_Curve> aBasisCurve;
   const GeomAbs_SurfaceType&   aType = anAdapt.GetType();
-  return aType == GeomAbs_Sphere;
+  return aType == GeomAbs_SurfaceType::GeomAbs_Sphere;
 }
 
 //=================================================================================================
@@ -495,8 +495,8 @@ void FindSPErrorEdges(const TopoDS_Shape&                                       
 
           for (; itl.More(); itl.Next())
           {
-            if ((itl.Value() == BRepCheck_InvalidSameParameterFlag)
-                || (itl.Value() == BRepCheck_InvalidCurveOnSurface))
+            if ((itl.Value() == BRepCheck_Status::BRepCheck_InvalidSameParameterFlag)
+                || (itl.Value() == BRepCheck_Status::BRepCheck_InvalidCurveOnSurface))
             {
               theMap.Add(anExpE.Current());
               break;
@@ -513,8 +513,8 @@ void FindSPErrorEdges(const TopoDS_Shape&                                       
 
     for (; itl.More(); itl.Next())
     {
-      if ((itl.Value() == BRepCheck_InvalidSameParameterFlag)
-          || (itl.Value() == BRepCheck_InvalidCurveOnSurface))
+      if ((itl.Value() == BRepCheck_Status::BRepCheck_InvalidSameParameterFlag)
+          || (itl.Value() == BRepCheck_Status::BRepCheck_InvalidCurveOnSurface))
       {
         theMap.Add(theShape);
         break;
@@ -546,7 +546,7 @@ bool FindOtherErrors(const TopoDS_Shape&       theShape,
 
     if (!theMap.Contains(theShape) && !aResult->Status().IsEmpty())
     {
-      if (aResult->Status().First() != BRepCheck_NoError)
+      if (aResult->Status().First() != BRepCheck_Status::BRepCheck_NoError)
       {
         bOtherFound = true;
 
@@ -577,16 +577,16 @@ bool FindOtherErrors(const TopoDS_Shape&       theShape,
                 if (!itl.More())
                   continue;
 
-                if (itl.Value() != BRepCheck_NoError)
+                if (itl.Value() != BRepCheck_Status::BRepCheck_NoError)
                 {
                   if (theMap.Contains(anExpE.Current()))
                   {
                     for (; itl.More(); itl.Next())
                     {
 
-                      if ((itl.Value() != BRepCheck_InvalidSameParameterFlag)
-                          && (itl.Value() != BRepCheck_InvalidCurveOnSurface)
-                          && (itl.Value() != BRepCheck_NoError))
+                      if ((itl.Value() != BRepCheck_Status::BRepCheck_InvalidSameParameterFlag)
+                          && (itl.Value() != BRepCheck_Status::BRepCheck_InvalidCurveOnSurface)
+                          && (itl.Value() != BRepCheck_Status::BRepCheck_NoError))
                       {
                         return true;
                       }
@@ -610,7 +610,7 @@ bool FindOtherErrors(const TopoDS_Shape&       theShape,
           {
             if (!aResult->StatusOnShape().IsEmpty())
             {
-              bOtherFound = (aResult->StatusOnShape().First() != BRepCheck_NoError);
+              bOtherFound = (aResult->StatusOnShape().First() != BRepCheck_Status::BRepCheck_NoError);
             }
           }
         }
@@ -627,7 +627,7 @@ bool FindOtherErrors(const TopoDS_Shape&       theShape,
           {
             if (!aResult->StatusOnShape().IsEmpty())
             {
-              if (aResult->StatusOnShape().First() != BRepCheck_NoError)
+              if (aResult->StatusOnShape().First() != BRepCheck_Status::BRepCheck_NoError)
               {
                 return true;
               }
@@ -642,9 +642,9 @@ bool FindOtherErrors(const TopoDS_Shape&       theShape,
 
       for (; itl.More(); itl.Next())
       {
-        if ((itl.Value() != BRepCheck_InvalidSameParameterFlag)
-            && (itl.Value() != BRepCheck_InvalidCurveOnSurface)
-            && (itl.Value() != BRepCheck_NoError))
+        if ((itl.Value() != BRepCheck_Status::BRepCheck_InvalidSameParameterFlag)
+            && (itl.Value() != BRepCheck_Status::BRepCheck_InvalidCurveOnSurface)
+            && (itl.Value() != BRepCheck_Status::BRepCheck_NoError))
         {
           return true;
         }

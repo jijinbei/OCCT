@@ -439,7 +439,7 @@ void StdPrs_Isolines::addOnSurface(
     {
       TopAbs_Orientation       anOrientation = anEdgeTool.Orientation();
       const Adaptor2d_Curve2d* anEdgeCurve   = &anEdgeTool.Value();
-      if (anEdgeCurve->GetType() != GeomAbs_Line)
+      if (anEdgeCurve->GetType() != GeomAbs_CurveType::GeomAbs_Line)
       {
         GCPnts_QuasiUniformDeflection aSampler(*anEdgeCurve, aSamplerDeflection);
         if (!aSampler.IsDone())
@@ -562,11 +562,11 @@ void StdPrs_Isolines::addOnSurface(
     occ::handle<Geom_Surface> aBSurface;
     GeomAdaptor_Curve         aBSurfaceCurve;
     Adaptor3d_IsoCurve        aCanonicalCurve;
-    if (aSurfType == GeomAbs_BezierSurface)
+    if (aSurfType == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
     {
       aBSurface = theSurface->Bezier();
     }
-    else if (aSurfType == GeomAbs_BSplineSurface)
+    else if (aSurfType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
     {
       aBSurface = theSurface->BSpline();
     }
@@ -600,7 +600,7 @@ void StdPrs_Isolines::addOnSurface(
         }
         else
         {
-          aCanonicalCurve.Load(isIsoU ? GeomAbs_IsoU : GeomAbs_IsoV,
+          aCanonicalCurve.Load(isIsoU ? GeomAbs_IsoType::GeomAbs_IsoU : GeomAbs_IsoType::GeomAbs_IsoV,
                                anIsoParam,
                                aSegmentP1,
                                aSegmentP2);

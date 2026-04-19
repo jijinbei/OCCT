@@ -259,7 +259,7 @@ BRepOffsetAPI_ThruSections::BRepOffsetAPI_ThruSections(const bool   isSolid,
   myCritWeights[1] = .2;
   myCritWeights[2] = .4;
   myUseSmoothing   = false;
-  myStatus         = BRepFill_ThruSectionErrorStatus_NotDone;
+  myStatus         = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotDone;
 }
 
 //=================================================================================================
@@ -279,7 +279,7 @@ void BRepOffsetAPI_ThruSections::Init(const bool isSolid, const bool ruled, cons
   myCritWeights[1] = .2;
   myCritWeights[2] = .4;
   myUseSmoothing   = false;
-  myStatus         = BRepFill_ThruSectionErrorStatus_NotDone;
+  myStatus         = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_NotDone;
 }
 
 //=================================================================================================
@@ -322,7 +322,7 @@ void BRepOffsetAPI_ThruSections::CheckCompatibility(const bool check)
 
 void BRepOffsetAPI_ThruSections::Build(const Message_ProgressRange& /*theRange*/)
 {
-  myStatus = BRepFill_ThruSectionErrorStatus_Done;
+  myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Done;
   myBFGenerator.Nullify();
   // Check set of section for right configuration of punctual sections
   int             i;
@@ -337,7 +337,7 @@ void BRepOffsetAPI_ThruSections::Build(const Message_ProgressRange& /*theRange*/
     }
     if (wdeg)
     {
-      myStatus = BRepFill_ThruSectionErrorStatus_WrongUsage;
+      myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_WrongUsage;
       return;
     }
   }
@@ -354,7 +354,7 @@ void BRepOffsetAPI_ThruSections::Build(const Message_ProgressRange& /*theRange*/
     }
     if (wdeg)
     {
-      myStatus = BRepFill_ThruSectionErrorStatus_WrongUsage;
+      myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_WrongUsage;
       return;
     }
   }
@@ -496,7 +496,7 @@ void BRepOffsetAPI_ThruSections::Build(const Message_ProgressRange& /*theRange*/
     return;
   }
 
-  if (myStatus != BRepFill_ThruSectionErrorStatus_Done)
+  if (myStatus != BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Done)
   {
     NotDone();
     return;
@@ -520,7 +520,7 @@ void BRepOffsetAPI_ThruSections::CreateRuled()
   }
   myBFGenerator->Perform();
   BRepFill_ThruSectionErrorStatus aStatus = myBFGenerator->GetStatus();
-  if (aStatus != BRepFill_ThruSectionErrorStatus_Done)
+  if (aStatus != BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Done)
   {
     myStatus = aStatus;
     return;
@@ -769,7 +769,7 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
 
   if (TS.IsNull())
   {
-    myStatus = BRepFill_ThruSectionErrorStatus_Failed;
+    myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Failed;
     return;
   }
 
@@ -1456,7 +1456,7 @@ const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_ThruSections::Generated(cons
     BRepAdaptor_Surface BAsurf(FirstFace, false);
     TopoDS_Vertex       FirstVertex;
     TopExp::MapShapesAndAncestors(FirstFace, TopAbs_VERTEX, TopAbs_EDGE, VEmap);
-    if (myDegen1 && BAsurf.GetType() == GeomAbs_Plane)
+    if (myDegen1 && BAsurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       // There are only 3 edges in the face in this case:
       // we take 1-st or 3-rd edge
@@ -1576,7 +1576,7 @@ void BRepOffsetAPI_ThruSections::SetCriteriumWeight(const double W1,
 {
   if (W1 < 0 || W2 < 0 || W3 < 0)
   {
-    myStatus = BRepFill_ThruSectionErrorStatus_Failed;
+    myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_Failed;
     return;
   }
   myCritWeights[0] = W1;

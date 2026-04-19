@@ -68,7 +68,7 @@ public:
         myDerOrder(N),
         myCN(4),
         myLinTol(Resolution),
-        myTangentStatus(LProp_Undecided)
+        myTangentStatus(LProp_Status::LProp_Undecided)
   {
     Standard_OutOfRange_Raise_if(N < 0 || N > 3, "GeomLProp_CLProps::GeomLProp_CLProps()");
   }
@@ -81,7 +81,7 @@ public:
         myDerOrder(N),
         myCN(4),
         myLinTol(Resolution),
-        myTangentStatus(LProp_Undecided)
+        myTangentStatus(LProp_Status::LProp_Undecided)
   {
     Standard_OutOfRange_Raise_if(N < 0 || N > 3, "GeomLProp_CLProps::GeomLProp_CLProps()");
     SetParameter(U);
@@ -99,7 +99,7 @@ public:
         myDerOrder(N),
         myCN(0),
         myLinTol(Resolution),
-        myTangentStatus(LProp_Undecided)
+        myTangentStatus(LProp_Status::LProp_Undecided)
   {
     Standard_OutOfRange_Raise_if(N < 0 || N > 3, "GeomLProp_CLProps() - invalid input");
   }

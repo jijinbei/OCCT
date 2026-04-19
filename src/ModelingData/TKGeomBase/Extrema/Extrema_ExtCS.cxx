@@ -46,7 +46,7 @@ Extrema_ExtCS::Extrema_ExtCS()
       mytolS(0.0),
       myucinf(0.0),
       myucsup(0.0),
-      myStype(GeomAbs_OtherSurface)
+      myStype(GeomAbs_SurfaceType::GeomAbs_OtherSurface)
 {
 }
 
@@ -126,30 +126,30 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
   switch (myCtype)
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
 
       switch (myStype)
       {
-        case GeomAbs_Sphere:
+        case GeomAbs_SurfaceType::GeomAbs_Sphere:
           myExtElCS.Perform(C.Line(), myS->Sphere());
           break;
-        case GeomAbs_Cylinder:
+        case GeomAbs_SurfaceType::GeomAbs_Cylinder:
           myExtElCS.Perform(C.Line(), myS->Cylinder());
           break;
-        case GeomAbs_Plane:
+        case GeomAbs_SurfaceType::GeomAbs_Plane:
           myExtElCS.Perform(C.Line(), myS->Plane());
           if (myExtElCS.IsParallel())
             break;
           [[fallthrough]];
 
-        case GeomAbs_Torus:
-        case GeomAbs_Cone:
-        case GeomAbs_BezierSurface:
-        case GeomAbs_BSplineSurface:
-        case GeomAbs_SurfaceOfRevolution:
-        case GeomAbs_SurfaceOfExtrusion:
-        case GeomAbs_OffsetSurface:
-        case GeomAbs_OtherSurface: {
+        case GeomAbs_SurfaceType::GeomAbs_Torus:
+        case GeomAbs_SurfaceType::GeomAbs_Cone:
+        case GeomAbs_SurfaceType::GeomAbs_BezierSurface:
+        case GeomAbs_SurfaceType::GeomAbs_BSplineSurface:
+        case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
+        case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
+        case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
+        case GeomAbs_SurfaceType::GeomAbs_OtherSurface: {
           double cfirst = myucinf, clast = myucsup;
           double ufirst = myS->FirstUParameter(), ulast = myS->LastUParameter(),
                  vfirst = myS->FirstVParameter(), vlast = myS->LastVParameter();
@@ -201,7 +201,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
             double aCPar = (cfirst + clast) / 2.;
             gp_Pnt aPm   = C.Value(aCPar);
             Extrema_ExtPS
-              anExtPS(aPm, *myS, ufirst, ulast, vfirst, vlast, mytolS, mytolS, Extrema_ExtFlag_MIN);
+              anExtPS(aPm, *myS, ufirst, ulast, vfirst, vlast, mytolS, mytolS, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
             myDone = anExtPS.IsDone();
             if (myDone)
             {
@@ -255,26 +255,26 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
       break;
     }
       //  Modified by skv - Thu Jul  7 12:29:34 2005 OCC9134 Begin
-    case GeomAbs_Circle: {
-      if (myStype == GeomAbs_Cylinder)
+    case GeomAbs_CurveType::GeomAbs_Circle: {
+      if (myStype == GeomAbs_SurfaceType::GeomAbs_Cylinder)
       {
         myExtElCS.Perform(C.Circle(), myS->Cylinder());
         break;
       }
-      else if (myStype == GeomAbs_Plane)
+      else if (myStype == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         myExtElCS.Perform(C.Circle(), myS->Plane());
         break;
       }
-      else if (myStype == GeomAbs_Sphere)
+      else if (myStype == GeomAbs_SurfaceType::GeomAbs_Sphere)
       {
         myExtElCS.Perform(C.Circle(), myS->Sphere());
         break;
       }
     }
       [[fallthrough]];
-    case GeomAbs_Hyperbola: {
-      if (myCtype == GeomAbs_Hyperbola && myStype == GeomAbs_Plane)
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
+      if (myCtype == GeomAbs_CurveType::GeomAbs_Hyperbola && myStype == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         //  Modified by skv - Thu Jul  7 12:29:34 2005 OCC9134 End
         myExtElCS.Perform(C.Hyperbola(), myS->Plane());
@@ -327,27 +327,27 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
             aPOnC[i] = C.Value(aT[i]);
             switch (myStype)
             {
-              case GeomAbs_Plane: {
+              case GeomAbs_SurfaceType::GeomAbs_Plane: {
                 ElSLib::Parameters(myS->Plane(), aPOnC[i], U[i], V[i]);
                 aPOnS[i] = ElSLib::Value(U[i], V[i], myS->Plane());
                 break;
               }
-              case GeomAbs_Sphere: {
+              case GeomAbs_SurfaceType::GeomAbs_Sphere: {
                 ElSLib::Parameters(myS->Sphere(), aPOnC[i], U[i], V[i]);
                 aPOnS[i] = ElSLib::Value(U[i], V[i], myS->Sphere());
                 break;
               }
-              case GeomAbs_Cylinder: {
+              case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
                 ElSLib::Parameters(myS->Cylinder(), aPOnC[i], U[i], V[i]);
                 aPOnS[i] = ElSLib::Value(U[i], V[i], myS->Cylinder());
                 break;
               }
-              case GeomAbs_Torus: {
+              case GeomAbs_SurfaceType::GeomAbs_Torus: {
                 ElSLib::Parameters(myS->Torus(), aPOnC[i], U[i], V[i]);
                 aPOnS[i] = ElSLib::Value(U[i], V[i], myS->Torus());
                 break;
               }
-              case GeomAbs_Cone: {
+              case GeomAbs_SurfaceType::GeomAbs_Cone: {
                 ElSLib::Parameters(myS->Cone(), aPOnC[i], U[i], V[i]);
                 aPOnS[i] = ElSLib::Value(U[i], V[i], myS->Cone());
                 break;
@@ -397,7 +397,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
   // Elementary extrema is not done, try generic solution
   Extrema_GenExtCS Ext;
   Ext.Initialize(*myS, NbU, NbV, mytolS);
-  if (myCtype == GeomAbs_Hyperbola)
+  if (myCtype == GeomAbs_CurveType::GeomAbs_Hyperbola)
   {
     double tmin = std::max(-20., C.FirstParameter());
     double tmax = std::min(20., C.LastParameter());
@@ -405,7 +405,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
   }
   else
   {
-    if ((myCtype == GeomAbs_Circle && NbT < 13) || (myCtype == GeomAbs_BSplineCurve && NbT < 13))
+    if ((myCtype == GeomAbs_CurveType::GeomAbs_Circle && NbT < 13) || (myCtype == GeomAbs_CurveType::GeomAbs_BSplineCurve && NbT < 13))
     {
       NbT = 13;
     }

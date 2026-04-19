@@ -117,13 +117,13 @@ GeomToStep_MakeBSplineSurfaceWithKnots::GeomToStep_MakeBSplineSurfaceWithKnots(
 
   UDistribution = BS->UKnotDistribution();
   VDistribution = BS->VKnotDistribution();
-  if (UDistribution == GeomAbs_NonUniform && VDistribution == GeomAbs_NonUniform)
+  if (UDistribution == GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform && VDistribution == GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform)
     KnotSpec = StepGeom_KnotType::StepGeom_ktUnspecified;
-  else if (UDistribution == GeomAbs_Uniform && VDistribution == GeomAbs_Uniform)
+  else if (UDistribution == GeomAbs_BSplKnotDistribution::GeomAbs_Uniform && VDistribution == GeomAbs_BSplKnotDistribution::GeomAbs_Uniform)
     KnotSpec = StepGeom_KnotType::StepGeom_ktUniformKnots;
-  else if (UDistribution == GeomAbs_QuasiUniform && VDistribution == GeomAbs_QuasiUniform)
+  else if (UDistribution == GeomAbs_BSplKnotDistribution::GeomAbs_QuasiUniform && VDistribution == GeomAbs_BSplKnotDistribution::GeomAbs_QuasiUniform)
     KnotSpec = StepGeom_KnotType::StepGeom_ktQuasiUniformKnots;
-  else if (UDistribution == GeomAbs_PiecewiseBezier && VDistribution == GeomAbs_PiecewiseBezier)
+  else if (UDistribution == GeomAbs_BSplKnotDistribution::GeomAbs_PiecewiseBezier && VDistribution == GeomAbs_BSplKnotDistribution::GeomAbs_PiecewiseBezier)
     KnotSpec = StepGeom_KnotType::StepGeom_ktPiecewiseBezierKnots;
   else
     KnotSpec = StepGeom_KnotType::StepGeom_ktUnspecified;

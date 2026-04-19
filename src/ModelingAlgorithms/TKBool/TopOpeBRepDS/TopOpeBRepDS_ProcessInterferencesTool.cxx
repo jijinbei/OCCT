@@ -43,7 +43,7 @@ Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeCPVInterference(
 //-----------------------------------------------------------------------
 {
   occ::handle<TopOpeBRepDS_Interference> I;
-  TopOpeBRepDS_Kind                      SK = TopOpeBRepDS_CURVE;
+  TopOpeBRepDS_Kind                      SK = TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE;
   I = TopOpeBRepDS_InterferenceTool::MakeCurveInterference(T, SK, SI, GK, GI, P);
   return I;
 }
@@ -59,18 +59,18 @@ Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeEPVInterference(
 //-----------------------------------------------------------------------
 {
   occ::handle<TopOpeBRepDS_Interference> I;
-  TopOpeBRepDS_Kind                      SK = TopOpeBRepDS_EDGE;
-  if (GK == TopOpeBRepDS_POINT)
+  TopOpeBRepDS_Kind                      SK = TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE;
+  if (GK == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
   {
     I = TopOpeBRepDS_InterferenceTool::MakeEdgeInterference(T, SK, SI, GK, GI, P);
   }
-  else if (GK == TopOpeBRepDS_VERTEX)
+  else if (GK == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
   {
     I = TopOpeBRepDS_InterferenceTool::MakeEdgeVertexInterference(T,
                                                                   SI,
                                                                   GI,
                                                                   B,
-                                                                  TopOpeBRepDS_UNSHGEOMETRY,
+                                                                  TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
                                                                   P);
     I->GeometryType(GK);
   }
@@ -534,7 +534,7 @@ static int FUN_select3dI(const int                                              
     TopAbs_ShapeEnum SB1, SA1;
     int              IB1, IA1;
     FDS_Tdata(I1, SB1, IB1, SA1, IA1);
-    bool vertex1 = (GT1 == TopOpeBRepDS_VERTEX);
+    bool vertex1 = (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
 
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it2(it1);
     if (it2.More())
@@ -805,7 +805,7 @@ Standard_EXPORT int FUN_select2dI(const int                                     
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> lIE;
   FDS_copy(BDS.ShapeInterferences(SIX), lIE);
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>> l3dF;
-  FUN_selectSKinterference(lIE, TopOpeBRepDS_FACE, l3dF);
+  FUN_selectSKinterference(lIE, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, l3dF);
   for (NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator itt(l3dF); itt.More();
        itt.Next())
     mapftra.Add(itt.Value()->Support());
@@ -979,7 +979,7 @@ Standard_EXPORT int FUN_select1dI(const int                                     
     NCollection_List<occ::handle<TopOpeBRepDS_Interference>>  Rloi;
     int                                                       nloi = loi.Extent();
 
-    bool ok = (K == TopOpeBRepDS_VERTEX);
+    bool ok = (K == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
     ok      = ok && (nloi > 1);
     if (!ok)
     {

@@ -46,39 +46,39 @@ void BlendFunc::GetShape(const BlendFunc_SectionShape  SShape,
 {
   switch (SShape)
   {
-    case BlendFunc_Rational: {
+    case BlendFunc_SectionShape::BlendFunc_Rational: {
       int NbSpan = (int)(std::ceil(3. * std::abs(MaxAng) / 2. / M_PI));
       NbPoles    = 2 * NbSpan + 1;
       NbKnots    = NbSpan + 1;
       Degree     = 2;
       if (NbSpan == 1)
       {
-        TConv = Convert_TgtThetaOver2_1;
+        TConv = Convert_ParameterisationType::Convert_TgtThetaOver2_1;
       }
       else
       { // QuasiAngular affin d'etre C1 (et meme beaucoup plus)
         NbPoles = 7;
         NbKnots = 2;
         Degree  = 6;
-        TConv   = Convert_QuasiAngular;
+        TConv   = Convert_ParameterisationType::Convert_QuasiAngular;
       }
     }
     break;
-    case BlendFunc_QuasiAngular: {
+    case BlendFunc_SectionShape::BlendFunc_QuasiAngular: {
       NbPoles = 7;
       NbKnots = 2;
       Degree  = 6;
-      TConv   = Convert_QuasiAngular;
+      TConv   = Convert_ParameterisationType::Convert_QuasiAngular;
     }
     break;
-    case BlendFunc_Polynomial: {
+    case BlendFunc_SectionShape::BlendFunc_Polynomial: {
       NbPoles = 8;
       NbKnots = 2;
       Degree  = 7;
-      TConv   = Convert_Polynomial;
+      TConv   = Convert_ParameterisationType::Convert_Polynomial;
     }
     break;
-    case BlendFunc_Linear: {
+    case BlendFunc_SectionShape::BlendFunc_Linear: {
       NbPoles = 2;
       NbKnots = 2;
       Degree  = 1;
@@ -102,13 +102,13 @@ void BlendFunc::GetMinimalWeights(const BlendFunc_SectionShape       SShape,
 {
   switch (SShape)
   {
-    case BlendFunc_Polynomial:
-    case BlendFunc_Linear: {
+    case BlendFunc_SectionShape::BlendFunc_Polynomial:
+    case BlendFunc_SectionShape::BlendFunc_Linear: {
       Weights.Init(1);
     }
     break;
-    case BlendFunc_Rational:
-    case BlendFunc_QuasiAngular: {
+    case BlendFunc_SectionShape::BlendFunc_Rational:
+    case BlendFunc_SectionShape::BlendFunc_QuasiAngular: {
       gp_Ax2                         popAx2(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z));
       gp_Circ                        C(popAx2, 1);
       occ::handle<Geom_TrimmedCurve> Sect1 = new Geom_TrimmedCurve(new Geom_Circle(C), 0., MaxAng);
@@ -195,7 +195,7 @@ bool BlendFunc::ComputeNormal(const occ::handle<Adaptor3d_Surface>& Surf,
                 thenormal,
                 OrderU,
                 OrderV);
-  if (stat == CSLib_Defined)
+  if (stat == CSLib_NormalStatus::CSLib_Defined)
   {
     Normal.SetXYZ(thenormal.XYZ());
     return true;
@@ -249,7 +249,7 @@ bool BlendFunc::ComputeDNormal(const occ::handle<Adaptor3d_Surface>& Surf,
                 thenormal,
                 OrderU,
                 OrderV);
-  if (stat == CSLib_Defined)
+  if (stat == CSLib_NormalStatus::CSLib_Defined)
   {
     Normal.SetXYZ(thenormal.XYZ());
     DNu = CSLib::DNNormal(1, 0, DerNUV, OrderU, OrderV);

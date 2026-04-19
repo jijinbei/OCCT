@@ -63,7 +63,7 @@ ProjLib_Cylinder::ProjLib_Cylinder(const gp_Cylinder& Cyl, const gp_Elips& E)
 
 void ProjLib_Cylinder::Init(const gp_Cylinder& Cyl)
 {
-  myType       = GeomAbs_OtherCurve;
+  myType       = GeomAbs_CurveType::GeomAbs_OtherCurve;
   myCylinder   = Cyl;
   myIsPeriodic = false;
   isDone       = false;
@@ -100,7 +100,7 @@ void ProjLib_Cylinder::Project(const gp_Lin& L)
       > Precision::Angular() * Precision::Angular())
     return;
 
-  myType = GeomAbs_Line;
+  myType = GeomAbs_CurveType::GeomAbs_Line;
 
   gp_Pnt2d P2d = EvalPnt2d(L.Location(), myCylinder);
   if (P2d.X() < 0.)
@@ -127,7 +127,7 @@ void ProjLib_Cylinder::Project(const gp_Circ& C)
       > Precision::Angular() * Precision::Angular())
     return;
 
-  myType = GeomAbs_Line;
+  myType = GeomAbs_CurveType::GeomAbs_Line;
 
   gp_Dir ZCyl = aCylPos.XDirection().Crossed(aCylPos.YDirection());
 

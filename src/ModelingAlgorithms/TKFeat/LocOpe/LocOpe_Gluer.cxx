@@ -59,7 +59,7 @@ void LocOpe_Gluer::Init(const TopoDS_Shape& Sbase, const TopoDS_Shape& Snew)
   myDescF.Clear();
   myDone = false;
   myOri  = TopAbs_INTERNAL;
-  myOpe  = LocOpe_INVALID;
+  myOpe  = LocOpe_Operation::LocOpe_INVALID;
 }
 
 //=================================================================================================
@@ -107,16 +107,16 @@ void LocOpe_Gluer::Bind(const TopoDS_Face& Fnew, const TopoDS_Face& Fbase)
     if (myOri == TopAbs_REVERSED)
     {
       mySn.Reverse();
-      myOpe = LocOpe_CUT;
+      myOpe = LocOpe_Operation::LocOpe_CUT;
     }
     else
     {
-      myOpe = LocOpe_FUSE;
+      myOpe = LocOpe_Operation::LocOpe_FUSE;
     }
   }
   else if (Ori != TopAbs_FORWARD)
   {
-    myOpe = LocOpe_INVALID;
+    myOpe = LocOpe_Operation::LocOpe_INVALID;
   }
 
   for (exp.Init(Fnor, TopAbs_EDGE); exp.More(); exp.Next())
@@ -160,7 +160,7 @@ void LocOpe_Gluer::Perform()
   {
     return;
   }
-  if (mySb.IsNull() || mySn.IsNull() || myMapEF.IsEmpty() || myOpe == LocOpe_INVALID)
+  if (mySb.IsNull() || mySn.IsNull() || myMapEF.IsEmpty() || myOpe == LocOpe_Operation::LocOpe_INVALID)
   {
     throw Standard_ConstructionError();
   }
@@ -375,7 +375,7 @@ static TopAbs_Orientation GetOrientation(const TopoDS_Face& Fn, const TopoDS_Fac
                      GAS.LastVParameter(),
                      TolU,
                      TolV);
-  anExtPS.SetFlag(Extrema_ExtFlag_MIN);
+  anExtPS.SetFlag(Extrema_ExtFlag::Extrema_ExtFlag_MIN);
 
   for (exp.Init(Fn, TopAbs_EDGE); exp.More(); exp.Next())
   {

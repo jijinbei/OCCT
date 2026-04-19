@@ -193,7 +193,7 @@ occ::handle<Geom_BSplineCurve> GeomConvert::CurveToBSplineCurve(
     {
       occ::handle<Geom_Circle> TheConic = occ::down_cast<Geom_Circle>(Curv);
       gp_Circ2d                C2d(gp::OX2d(), TheConic->Radius());
-      if (Parameterisation != Convert_RationalC1)
+      if (Parameterisation != Convert_ParameterisationType::Convert_RationalC1)
       {
         Convert_CircleToBSplineCurve Convert(C2d, U1, U2, Parameterisation);
         TheCurve = BSplineCurveBuilder(TheConic, Convert);
@@ -231,7 +231,7 @@ occ::handle<Geom_BSplineCurve> GeomConvert::CurveToBSplineCurve(
     {
       occ::handle<Geom_Ellipse> TheConic = occ::down_cast<Geom_Ellipse>(Curv);
       gp_Elips2d                E2d(gp::OX2d(), TheConic->MajorRadius(), TheConic->MinorRadius());
-      if (Parameterisation != Convert_RationalC1)
+      if (Parameterisation != Convert_ParameterisationType::Convert_RationalC1)
       {
         Convert_EllipseToBSplineCurve Convert(E2d, U1, U2, Parameterisation);
         TheCurve = BSplineCurveBuilder(TheConic, Convert);
@@ -342,11 +342,11 @@ occ::handle<Geom_BSplineCurve> GeomConvert::CurveToBSplineCurve(
     {
       occ::handle<Geom_Ellipse> TheConic = occ::down_cast<Geom_Ellipse>(C);
       gp_Elips2d                E2d(gp::OX2d(), TheConic->MajorRadius(), TheConic->MinorRadius());
-      /*      if (Parameterisation == Convert_TgtThetaOver2_1 ||
-            Parameterisation == Convert_TgtThetaOver2_2) {
+      /*      if (Parameterisation == Convert_ParameterisationType::Convert_TgtThetaOver2_1 ||
+            Parameterisation == Convert_ParameterisationType::Convert_TgtThetaOver2_2) {
           throw Standard_DomainError(); }
 
-            else if ( Parameterisation == Convert_QuasiAngular) {
+            else if ( Parameterisation == Convert_ParameterisationType::Convert_QuasiAngular) {
           Convert_EllipseToBSplineCurve Convert (E2d,
                                  0.0e0,
                                  2.0e0 * M_PI,
@@ -366,11 +366,11 @@ occ::handle<Geom_BSplineCurve> GeomConvert::CurveToBSplineCurve(
     {
       occ::handle<Geom_Circle> TheConic = occ::down_cast<Geom_Circle>(C);
       gp_Circ2d                C2d(gp::OX2d(), TheConic->Radius());
-      /*      if (Parameterisation == Convert_TgtThetaOver2_1 ||
-            Parameterisation == Convert_TgtThetaOver2_2) {
+      /*      if (Parameterisation == Convert_ParameterisationType::Convert_TgtThetaOver2_1 ||
+            Parameterisation == Convert_ParameterisationType::Convert_TgtThetaOver2_2) {
           throw Standard_DomainError(); }
 
-            else if ( Parameterisation == Convert_QuasiAngular) {
+            else if ( Parameterisation == Convert_ParameterisationType::Convert_QuasiAngular) {
           Convert_CircleToBSplineCurve Convert (C2d,
                                 0.0e0,
                                 2.0e0 * M_PI,

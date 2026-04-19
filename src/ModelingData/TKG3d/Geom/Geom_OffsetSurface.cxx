@@ -600,7 +600,7 @@ occ::handle<Geom_Curve> Geom_OffsetSurface::UIso(const double UU) const
   if (anEquivSurface.IsNull())
   {
     GeomAdaptor_Surface aGAsurf(basisSurf);
-    if (aGAsurf.GetType() == GeomAbs_SurfaceOfExtrusion)
+    if (aGAsurf.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
     {
       occ::handle<Geom_Curve> aL = basisSurf->UIso(UU);
 

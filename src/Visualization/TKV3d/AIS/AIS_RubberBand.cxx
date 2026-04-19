@@ -259,7 +259,7 @@ bool AIS_RubberBand::fillTriangles()
   for (int aPtIdx = aPtsLower; aPtIdx <= aPtsUpper; ++aPtIdx)
   {
     gp_XY           aP((double)myPoints.Value(aPtIdx).x(), (double)myPoints.Value(aPtIdx).y());
-    BRepMesh_Vertex aVertex(aP, aPtIdx, BRepMesh_Frontier);
+    BRepMesh_Vertex aVertex(aP, aPtIdx, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
     anIndexes.Append(aMeshStructure->AddNode(aVertex));
   }
 
@@ -276,7 +276,7 @@ bool AIS_RubberBand::fillTriangles()
   {
     int           aPtIdx     = isClockwiseOrdered ? aIdx : (aIdx + 1) % anIndexes.Length();
     int           aNextPtIdx = isClockwiseOrdered ? (aIdx + 1) % anIndexes.Length() : aIdx;
-    BRepMesh_Edge anEdge(anIndexes.Value(aPtIdx), anIndexes.Value(aNextPtIdx), BRepMesh_Frontier);
+    BRepMesh_Edge anEdge(anIndexes.Value(aPtIdx), anIndexes.Value(aNextPtIdx), BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
     aMeshStructure->AddLink(anEdge);
   }
 
@@ -299,7 +299,7 @@ bool AIS_RubberBand::fillTriangles()
     const int                aTriangleId      = aTriangleIt.Key();
     const BRepMesh_Triangle& aCurrentTriangle = aMeshStructure->GetElement(aTriangleId);
 
-    if (aCurrentTriangle.Movability() == BRepMesh_Deleted)
+    if (aCurrentTriangle.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
       continue;
 
     int aTriangleVerts[3];

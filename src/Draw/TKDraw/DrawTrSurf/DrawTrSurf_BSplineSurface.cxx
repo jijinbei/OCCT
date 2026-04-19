@@ -165,13 +165,13 @@ void DrawTrSurf_BSplineSurface::DrawOn(Draw_Display& dis) const
     last  = S->LastUKnotIndex() - 1;
     for (i = first; i <= last; i++)
     {
-      DrawIsoCurveOn(C, GeomAbs_IsoU, S->UKnot(i), Va, Vb, dis);
+      DrawIsoCurveOn(C, GeomAbs_IsoType::GeomAbs_IsoU, S->UKnot(i), Va, Vb, dis);
     }
     first = S->FirstVKnotIndex() + 1;
     last  = S->LastVKnotIndex() - 1;
     for (j = first; j <= last; j++)
     {
-      DrawIsoCurveOn(C, GeomAbs_IsoV, S->VKnot(j), Ua, Ub, dis);
+      DrawIsoCurveOn(C, GeomAbs_IsoType::GeomAbs_IsoV, S->VKnot(j), Ua, Ub, dis);
     }
   }
 

@@ -71,11 +71,11 @@ static bool Project(const occ::handle<Geom2d_Curve>& C, const TopoDS_Vertex& V, 
 {
   gp_Pnt2d            P = Project(V);
   Geom2dAdaptor_Curve AC(C);
-  if (AC.GetType() == GeomAbs_Line)
+  if (AC.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     p = ElCLib::LineParameter(AC.Line().Position(), P);
   }
-  else if (AC.GetType() == GeomAbs_Circle)
+  else if (AC.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     p = ElCLib::CircleParameter(AC.Circle().Position(), P);
   }
@@ -114,7 +114,7 @@ BRepLib_MakeEdge2d::BRepLib_MakeEdge2d(const TopoDS_Vertex& V1, const TopoDS_Ver
   double   l  = P1.Distance(P2);
   if (l <= gp::Resolution())
   {
-    myError = BRepLib_LineThroughIdenticPoints;
+    myError = BRepLib_EdgeError::BRepLib_LineThroughIdenticPoints;
     return;
   }
   gp_Lin2d                 L(P1, gp_Vec2d(P1, P2));
@@ -129,7 +129,7 @@ BRepLib_MakeEdge2d::BRepLib_MakeEdge2d(const gp_Pnt2d& P1, const gp_Pnt2d& P2)
   double l = P1.Distance(P2);
   if (l <= gp::Resolution())
   {
-    myError = BRepLib_LineThroughIdenticPoints;
+    myError = BRepLib_EdgeError::BRepLib_LineThroughIdenticPoints;
     return;
   }
   gp_Lin2d                 L(P1, gp_Vec2d(P1, P2));
@@ -410,14 +410,14 @@ void BRepLib_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
     p1 = C->FirstParameter();
   else if (!Project(C, V1, p1))
   {
-    myError = BRepLib_PointProjectionFailed;
+    myError = BRepLib_EdgeError::BRepLib_PointProjectionFailed;
     return;
   }
   if (V2.IsNull())
     p2 = C->LastParameter();
   else if (!Project(C, V2, p2))
   {
-    myError = BRepLib_PointProjectionFailed;
+    myError = BRepLib_EdgeError::BRepLib_PointProjectionFailed;
     return;
   }
 
@@ -500,7 +500,7 @@ void BRepLib_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& CC,
     // check range
     if ((cf - p1 > epsilon) || (p2 - cl > epsilon))
     {
-      myError = BRepLib_ParameterOutOfRange;
+      myError = BRepLib_EdgeError::BRepLib_ParameterOutOfRange;
       return;
     }
   }
@@ -538,12 +538,12 @@ void BRepLib_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& CC,
     {
       if (!V1.IsSame(V2))
       {
-        myError = BRepLib_DifferentPointsOnClosedCurve;
+        myError = BRepLib_EdgeError::BRepLib_DifferentPointsOnClosedCurve;
         return;
       }
       else if (Point(P1).Distance(BRep_Tool::Pnt(V1)) > preci)
       {
-        myError = BRepLib_DifferentPointsOnClosedCurve;
+        myError = BRepLib_EdgeError::BRepLib_DifferentPointsOnClosedCurve;
         return;
       }
     }
@@ -556,7 +556,7 @@ void BRepLib_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& CC,
     {
       if (!V1.IsNull())
       {
-        myError = BRepLib_PointWithInfiniteParameter;
+        myError = BRepLib_EdgeError::BRepLib_PointWithInfiniteParameter;
         return;
       }
     }
@@ -573,7 +573,7 @@ void BRepLib_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& CC,
     {
       if (!V2.IsNull())
       {
-        myError = BRepLib_PointWithInfiniteParameter;
+        myError = BRepLib_EdgeError::BRepLib_PointWithInfiniteParameter;
         return;
       }
     }

@@ -18,7 +18,7 @@
 #define _GProp_ValueType_HeaderFile
 
 //! Algorithms:
-enum GProp_ValueType
+enum class GProp_ValueType
 {
   GProp_Mass,
   GProp_CenterMassX,

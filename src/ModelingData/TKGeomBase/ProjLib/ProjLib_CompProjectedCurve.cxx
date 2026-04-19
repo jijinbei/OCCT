@@ -481,7 +481,7 @@ static bool InitialPoint(const gp_Pnt&                         Point,
                        S->LastVParameter(),
                        TolU,
                        TolV,
-                       Extrema_ExtFlag_MIN);
+                       Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   int                argmin   = 0;
   double             aMaxDist = theMaxDist;
   if (aMaxDist > 0.)
@@ -655,7 +655,7 @@ void ProjLib_CompProjectedCurve::Init()
     // Avoid usage of extrema result that can be wrong for extrusion.
     if (myMaxDist > 0 &&
 
-        mySurface->GetType() != GeomAbs_SurfaceOfExtrusion)
+        mySurface->GetType() != GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
     {
       double min_val2;
       min_val2 = CExt.SquareDistance(1);
@@ -1582,7 +1582,7 @@ void ProjLib_CompProjectedCurve::D0(const double U, gp_Pnt2d& P) const
   else
   {
     gp_Pnt        thePoint = myCurve->Value(U);
-    Extrema_ExtPS aExtPS(thePoint, *mySurface, myTolU, myTolV, Extrema_ExtFlag_MIN);
+    Extrema_ExtPS aExtPS(thePoint, *mySurface, myTolU, myTolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
     if (aExtPS.IsDone() && aExtPS.NbExt())
     {
       int k, Nend, imin = 1;
@@ -1977,7 +1977,7 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_CompProjectedCurve::Trim(const double Fir
 
 GeomAbs_CurveType ProjLib_CompProjectedCurve::GetType() const
 {
-  return GeomAbs_OtherCurve;
+  return GeomAbs_CurveType::GeomAbs_OtherCurve;
 }
 
 //=================================================================================================
@@ -2048,7 +2048,7 @@ void ProjLib_CompProjectedCurve::UpdateTripleByTrapCriteria(gp_Pnt& thePoint) co
   // Check possible traps cases:
 
   // 25892 bug.
-  if (mySurface->GetType() == GeomAbs_SurfaceOfRevolution)
+  if (mySurface->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
   {
     // Compute maximal deviation from 3D and choose the biggest one.
     double aVRes   = mySurface->VResolution(Precision::Confusion());
@@ -2062,7 +2062,7 @@ void ProjLib_CompProjectedCurve::UpdateTripleByTrapCriteria(gp_Pnt& thePoint) co
   }
 
   // 27135 bug. Trap on degenerated edge.
-  if (mySurface->GetType() == GeomAbs_Sphere
+  if (mySurface->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere
       && (std::abs(thePoint.Z() - mySurface->FirstVParameter()) < Precision::PConfusion()
           || std::abs(thePoint.Z() - mySurface->LastVParameter()) < Precision::PConfusion()
           || std::abs(thePoint.Y() - mySurface->FirstUParameter()) < Precision::PConfusion()
@@ -2121,7 +2121,7 @@ void BuildCurveSplits(const occ::handle<Adaptor3d_Curve>&   theCurve,
                      theSurface->LastVParameter(),
                      theTolU,
                      theTolV);
-  anExtPS.SetFlag(Extrema_ExtFlag_MIN);
+  anExtPS.SetFlag(Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   aDS.myExtPS = &anExtPS;
 
   if (theSurface->IsUPeriodic())

@@ -1474,7 +1474,7 @@ bool ShapeFix_ComposeShell::SplitByLine(ShapeFix_WireSegment&               wire
         for (i = 1; i <= Inter.NbPoints(); i++)
         {
           IntRes2d_IntersectionPoint IP = Inter.Point(i);
-          if (IP.TransitionOfSecond().PositionOnCurve() == IntRes2d_Middle
+          if (IP.TransitionOfSecond().PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle
               || (code != IOR_UNDEF && prevCode != IOR_UNDEF))
           {
             IntLinePar.Append(IP.ParamOnFirst());

@@ -37,40 +37,40 @@ GeomBndLib_Curve2d::GeomBndLib_Curve2d(const Adaptor2d_Curve2d& theCurve)
 
   switch (myCurveType)
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       occ::handle<Geom2d_Line> aLine = new Geom2d_Line(theCurve.Line());
       myEvaluator.emplace<GeomBndLib_Line2d>(aLine);
       break;
     }
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       occ::handle<Geom2d_Circle> aCircle = new Geom2d_Circle(theCurve.Circle());
       myEvaluator.emplace<GeomBndLib_Circle2d>(aCircle);
       break;
     }
-    case GeomAbs_Ellipse: {
+    case GeomAbs_CurveType::GeomAbs_Ellipse: {
       occ::handle<Geom2d_Ellipse> anEllipse = new Geom2d_Ellipse(theCurve.Ellipse());
       myEvaluator.emplace<GeomBndLib_Ellipse2d>(anEllipse);
       break;
     }
-    case GeomAbs_Hyperbola: {
+    case GeomAbs_CurveType::GeomAbs_Hyperbola: {
       occ::handle<Geom2d_Hyperbola> aHyp = new Geom2d_Hyperbola(theCurve.Hyperbola());
       myEvaluator.emplace<GeomBndLib_Hyperbola2d>(aHyp);
       break;
     }
-    case GeomAbs_Parabola: {
+    case GeomAbs_CurveType::GeomAbs_Parabola: {
       occ::handle<Geom2d_Parabola> aPar = new Geom2d_Parabola(theCurve.Parabola());
       myEvaluator.emplace<GeomBndLib_Parabola2d>(aPar);
       break;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       myEvaluator.emplace<GeomBndLib_BezierCurve2d>(theCurve.Bezier());
       break;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       myEvaluator.emplace<GeomBndLib_BSplineCurve2d>(theCurve.BSpline());
       break;
     }
-    case GeomAbs_OffsetCurve: {
+    case GeomAbs_CurveType::GeomAbs_OffsetCurve: {
       const Geom2dAdaptor_Curve* aGA = dynamic_cast<const Geom2dAdaptor_Curve*>(myAdaptorRef);
       if (aGA != nullptr)
       {
@@ -81,12 +81,12 @@ GeomBndLib_Curve2d::GeomBndLib_Curve2d(const Adaptor2d_Curve2d& theCurve)
           break;
         }
       }
-      myCurveType = GeomAbs_OtherCurve;
+      myCurveType = GeomAbs_CurveType::GeomAbs_OtherCurve;
       myEvaluator.emplace<GeomBndLib_OtherCurve2d>(*myAdaptorRef);
       break;
     }
     default: {
-      myCurveType = GeomAbs_OtherCurve;
+      myCurveType = GeomAbs_CurveType::GeomAbs_OtherCurve;
       myEvaluator.emplace<GeomBndLib_OtherCurve2d>(*myAdaptorRef);
       break;
     }
@@ -96,54 +96,54 @@ GeomBndLib_Curve2d::GeomBndLib_Curve2d(const Adaptor2d_Curve2d& theCurve)
 //=================================================================================================
 
 GeomBndLib_Curve2d::GeomBndLib_Curve2d(const occ::handle<Geom2d_Curve>& theCurve)
-    : myCurveType(GeomAbs_OtherCurve)
+    : myCurveType(GeomAbs_CurveType::GeomAbs_OtherCurve)
 {
   auto tryEmplaceEvaluator = [this](const occ::handle<Geom2d_Curve>& theDetectedCurve) {
     if (auto aLine = occ::down_cast<Geom2d_Line>(theDetectedCurve))
     {
-      myCurveType = GeomAbs_Line;
+      myCurveType = GeomAbs_CurveType::GeomAbs_Line;
       myEvaluator.emplace<GeomBndLib_Line2d>(aLine);
       return true;
     }
     if (auto aCircle = occ::down_cast<Geom2d_Circle>(theDetectedCurve))
     {
-      myCurveType = GeomAbs_Circle;
+      myCurveType = GeomAbs_CurveType::GeomAbs_Circle;
       myEvaluator.emplace<GeomBndLib_Circle2d>(aCircle);
       return true;
     }
     if (auto anEllipse = occ::down_cast<Geom2d_Ellipse>(theDetectedCurve))
     {
-      myCurveType = GeomAbs_Ellipse;
+      myCurveType = GeomAbs_CurveType::GeomAbs_Ellipse;
       myEvaluator.emplace<GeomBndLib_Ellipse2d>(anEllipse);
       return true;
     }
     if (auto aHyp = occ::down_cast<Geom2d_Hyperbola>(theDetectedCurve))
     {
-      myCurveType = GeomAbs_Hyperbola;
+      myCurveType = GeomAbs_CurveType::GeomAbs_Hyperbola;
       myEvaluator.emplace<GeomBndLib_Hyperbola2d>(aHyp);
       return true;
     }
     if (auto aPar = occ::down_cast<Geom2d_Parabola>(theDetectedCurve))
     {
-      myCurveType = GeomAbs_Parabola;
+      myCurveType = GeomAbs_CurveType::GeomAbs_Parabola;
       myEvaluator.emplace<GeomBndLib_Parabola2d>(aPar);
       return true;
     }
     if (auto aBez = occ::down_cast<Geom2d_BezierCurve>(theDetectedCurve))
     {
-      myCurveType = GeomAbs_BezierCurve;
+      myCurveType = GeomAbs_CurveType::GeomAbs_BezierCurve;
       myEvaluator.emplace<GeomBndLib_BezierCurve2d>(aBez);
       return true;
     }
     if (auto aBSpl = occ::down_cast<Geom2d_BSplineCurve>(theDetectedCurve))
     {
-      myCurveType = GeomAbs_BSplineCurve;
+      myCurveType = GeomAbs_CurveType::GeomAbs_BSplineCurve;
       myEvaluator.emplace<GeomBndLib_BSplineCurve2d>(aBSpl);
       return true;
     }
     if (auto anOff = occ::down_cast<Geom2d_OffsetCurve>(theDetectedCurve))
     {
-      myCurveType = GeomAbs_OffsetCurve;
+      myCurveType = GeomAbs_CurveType::GeomAbs_OffsetCurve;
       myEvaluator.emplace<GeomBndLib_OffsetCurve2d>(anOff);
       return true;
     }
@@ -166,7 +166,7 @@ GeomBndLib_Curve2d::GeomBndLib_Curve2d(const occ::handle<Geom2d_Curve>& theCurve
   {
     myAdaptorOwned = new Geom2dAdaptor_Curve(theCurve);
   }
-  myCurveType = GeomAbs_OtherCurve;
+  myCurveType = GeomAbs_CurveType::GeomAbs_OtherCurve;
   myEvaluator.emplace<GeomBndLib_OtherCurve2d>(*myAdaptorOwned);
 }
 

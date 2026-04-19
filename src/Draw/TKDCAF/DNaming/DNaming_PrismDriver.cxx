@@ -114,7 +114,7 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   if (aBasis.ShapeType() == TopAbs_WIRE)
   {
     occ::handle<BRepCheck_Wire> aCheck = new BRepCheck_Wire(TopoDS::Wire(aBasis));
-    if (aCheck->Closed(true) == BRepCheck_NoError)
+    if (aCheck->Closed(true) == BRepCheck_Status::BRepCheck_NoError)
     {
       BRepBuilderAPI_MakeFace aMaker(TopoDS::Wire(aBasis), true); // Makes planar face
       if (aMaker.IsDone())
@@ -189,7 +189,7 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   else if (aResult.ShapeType() == TopAbs_SHELL)
   {
     occ::handle<BRepCheck_Shell> aCheck = new BRepCheck_Shell(TopoDS::Shell(aResult));
-    if (aCheck->Closed() == BRepCheck_NoError)
+    if (aCheck->Closed() == BRepCheck_Status::BRepCheck_NoError)
       aVol = true;
   }
 

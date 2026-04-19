@@ -691,7 +691,7 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
         if (hasOOEi) {
           occ::handle<TopOpeBRepDS_Interference> EVI1i =
        ::MakeEPVInterference(T1ondg,iOOEi,PVIndex,par1ondg,
-                          TopOpeBRepDS_VERTEX,TopOpeBRepDS_EDGE,isvertex1);
+                          TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE,isvertex1);
           myHDS->StoreInterference(EVI1i,dgEd);
         }
     */
@@ -701,8 +701,8 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
                                                                           iFi,
                                                                           PVIndex,
                                                                           par1ondg,
-                                                                          TopOpeBRepDS_VERTEX,
-                                                                          TopOpeBRepDS_FACE,
+                                                                          TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
+                                                                          TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
                                                                           isvertex1);
       myHDS->StoreInterference(EVI1, dgEd);
     }
@@ -716,7 +716,7 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
         if (hasOOEi) {
           occ::handle<TopOpeBRepDS_Interference> EVI2i =
        ::MakeEPVInterference(T2ondg,iOOEi,PVIndex,par2ondg,
-                          TopOpeBRepDS_VERTEX,TopOpeBRepDS_EDGE,isvertex2);
+                          TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE,isvertex2);
           myHDS->StoreInterference(EVI2i,dgEd);
         }
     */
@@ -726,8 +726,8 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
                                                                           iFi,
                                                                           PVIndex,
                                                                           par2ondg,
-                                                                          TopOpeBRepDS_VERTEX,
-                                                                          TopOpeBRepDS_FACE,
+                                                                          TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
+                                                                          TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
                                                                           isvertex2);
       myHDS->StoreInterference(EVI2, dgEd);
     }

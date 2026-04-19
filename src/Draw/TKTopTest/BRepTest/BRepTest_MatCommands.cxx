@@ -54,7 +54,7 @@ Standard_IMPORT Draw_Viewer dout;
 static BRepMAT2d_BisectingLocus MapBiLo;
 static BRepMAT2d_Explorer       anExplo;
 static BRepMAT2d_LinkTopoBilo   TopoBilo;
-static MAT_Side                 SideOfMat = MAT_Left;
+static MAT_Side                 SideOfMat = MAT_Side::MAT_Left;
 static bool                     LinkComputed;
 
 static void DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int Indice);
@@ -110,9 +110,9 @@ static int drawcont(Draw_Interpretor&, int, const char**)
 //==========================================================================
 static int mat(Draw_Interpretor&, int n, const char** a)
 {
-  GeomAbs_JoinType theJoinType = GeomAbs_Arc;
+  GeomAbs_JoinType theJoinType = GeomAbs_JoinType::GeomAbs_Arc;
   if (n >= 2 && strcmp(a[1], "i") == 0)
-    theJoinType = GeomAbs_Intersection;
+    theJoinType = GeomAbs_JoinType::GeomAbs_Intersection;
 
   bool IsOpenResult = false;
   if (n == 3 && strcmp(a[2], "o") == 0)
@@ -170,9 +170,9 @@ static int zone(Draw_Interpretor&, int argc, const char** argv)
 static int side(Draw_Interpretor&, int, const char** argv)
 {
   if (!strcmp(argv[1], "right"))
-    SideOfMat = MAT_Right;
+    SideOfMat = MAT_Side::MAT_Right;
   else
-    SideOfMat = MAT_Left;
+    SideOfMat = MAT_Side::MAT_Left;
 
   return 0;
 }

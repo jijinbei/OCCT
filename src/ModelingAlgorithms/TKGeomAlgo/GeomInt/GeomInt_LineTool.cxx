@@ -272,11 +272,11 @@ int GeomInt_LineTool::NbVertex(const occ::handle<IntPatch_Line>& L)
 {
   switch (L->ArcType())
   {
-    case IntPatch_Analytic:
+    case IntPatch_IType::IntPatch_Analytic:
       return occ::down_cast<IntPatch_ALine>(L)->NbVertex();
-    case IntPatch_Restriction:
+    case IntPatch_IType::IntPatch_Restriction:
       return occ::down_cast<IntPatch_RLine>(L)->NbVertex();
-    case IntPatch_Walking:
+    case IntPatch_IType::IntPatch_Walking:
       return occ::down_cast<IntPatch_WLine>(L)->NbVertex();
     default:
       break;
@@ -290,11 +290,11 @@ const IntPatch_Point& GeomInt_LineTool::Vertex(const occ::handle<IntPatch_Line>&
 {
   switch (L->ArcType())
   {
-    case IntPatch_Analytic:
+    case IntPatch_IType::IntPatch_Analytic:
       return occ::down_cast<IntPatch_ALine>(L)->Vertex(I);
-    case IntPatch_Restriction:
+    case IntPatch_IType::IntPatch_Restriction:
       return occ::down_cast<IntPatch_RLine>(L)->Vertex(I);
-    case IntPatch_Walking:
+    case IntPatch_IType::IntPatch_Walking:
       return occ::down_cast<IntPatch_WLine>(L)->Vertex(I);
     default:
       break;
@@ -309,7 +309,7 @@ double GeomInt_LineTool::FirstParameter(const occ::handle<IntPatch_Line>& L)
   const IntPatch_IType typl = L->ArcType();
   switch (typl)
   {
-    case IntPatch_Analytic: {
+    case IntPatch_IType::IntPatch_Analytic: {
       occ::handle<IntPatch_ALine> alin = occ::down_cast<IntPatch_ALine>(L);
       if (alin->HasFirstPoint())
         return alin->FirstPoint().ParameterOnLine();
@@ -320,14 +320,14 @@ double GeomInt_LineTool::FirstParameter(const occ::handle<IntPatch_Line>& L)
       return firstp;
     }
 
-    case IntPatch_Restriction: {
+    case IntPatch_IType::IntPatch_Restriction: {
       occ::handle<IntPatch_RLine> rlin = occ::down_cast<IntPatch_RLine>(L);
       // clang-format off
 	  return (rlin->HasFirstPoint()? rlin->FirstPoint().ParameterOnLine() : -Precision::Infinite()); // a voir selon le type de la ligne 2d
       // clang-format on
     }
 
-    case IntPatch_Walking: {
+    case IntPatch_IType::IntPatch_Walking: {
       occ::handle<IntPatch_WLine> wlin = occ::down_cast<IntPatch_WLine>(L);
       return (wlin->HasFirstPoint() ? wlin->FirstPoint().ParameterOnLine() : 1.);
     }
@@ -338,9 +338,9 @@ double GeomInt_LineTool::FirstParameter(const occ::handle<IntPatch_Line>& L)
         return glin->FirstPoint().ParameterOnLine();
       switch (typl)
       {
-        case IntPatch_Lin:
-        case IntPatch_Parabola:
-        case IntPatch_Hyperbola:
+        case IntPatch_IType::IntPatch_Lin:
+        case IntPatch_IType::IntPatch_Parabola:
+        case IntPatch_IType::IntPatch_Hyperbola:
           return -Precision::Infinite();
         default:
           break;
@@ -357,7 +357,7 @@ double GeomInt_LineTool::LastParameter(const occ::handle<IntPatch_Line>& L)
   const IntPatch_IType typl = L->ArcType();
   switch (typl)
   {
-    case IntPatch_Analytic: {
+    case IntPatch_IType::IntPatch_Analytic: {
       occ::handle<IntPatch_ALine> alin = occ::down_cast<IntPatch_ALine>(L);
       if (alin->HasLastPoint())
         return alin->LastPoint().ParameterOnLine();
@@ -368,14 +368,14 @@ double GeomInt_LineTool::LastParameter(const occ::handle<IntPatch_Line>& L)
       return lastp;
     }
 
-    case IntPatch_Restriction: {
+    case IntPatch_IType::IntPatch_Restriction: {
       occ::handle<IntPatch_RLine> rlin = occ::down_cast<IntPatch_RLine>(L);
       // clang-format off
 	  return (rlin->HasLastPoint()? rlin->LastPoint().ParameterOnLine() : Precision::Infinite()); // a voir selon le type de la ligne 2d
       // clang-format on
     }
 
-    case IntPatch_Walking: {
+    case IntPatch_IType::IntPatch_Walking: {
       occ::handle<IntPatch_WLine> wlin = occ::down_cast<IntPatch_WLine>(L);
       return (wlin->HasLastPoint() ? wlin->LastPoint().ParameterOnLine() : wlin->NbPnts());
     }
@@ -386,12 +386,12 @@ double GeomInt_LineTool::LastParameter(const occ::handle<IntPatch_Line>& L)
         return glin->LastPoint().ParameterOnLine();
       switch (typl)
       {
-        case IntPatch_Lin:
-        case IntPatch_Parabola:
-        case IntPatch_Hyperbola:
+        case IntPatch_IType::IntPatch_Lin:
+        case IntPatch_IType::IntPatch_Parabola:
+        case IntPatch_IType::IntPatch_Hyperbola:
           return Precision::Infinite();
-        case IntPatch_Circle:
-        case IntPatch_Ellipse:
+        case IntPatch_IType::IntPatch_Circle:
+        case IntPatch_IType::IntPatch_Ellipse:
           return 2. * M_PI;
         default:
           break;

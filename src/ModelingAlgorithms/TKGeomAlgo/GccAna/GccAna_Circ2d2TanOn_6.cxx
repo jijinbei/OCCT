@@ -226,19 +226,19 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
       occ::handle<GccInt_Bisec> Sol = Bis.ThisSolution(i);
       GccInt_IType              typ = Sol->ArcType();
       IntAna2d_AnaIntersection  Intp;
-      if (typ == GccInt_Cir)
+      if (typ == GccInt_IType::GccInt_Cir)
       {
         Intp.Perform(OnCirc, Sol->Circle());
       }
-      else if (typ == GccInt_Lin)
+      else if (typ == GccInt_IType::GccInt_Lin)
       {
         Intp.Perform(Sol->Line(), OnCirc);
       }
-      else if (typ == GccInt_Hpr)
+      else if (typ == GccInt_IType::GccInt_Hpr)
       {
         Intp.Perform(OnCirc, IntAna2d_Conic(Sol->Hyperbola()));
       }
-      else if (typ == GccInt_Ell)
+      else if (typ == GccInt_IType::GccInt_Ell)
       {
         Intp.Perform(OnCirc, IntAna2d_Conic(Sol->Ellipse()));
       }

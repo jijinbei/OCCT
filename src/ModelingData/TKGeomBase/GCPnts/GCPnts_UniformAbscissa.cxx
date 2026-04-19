@@ -26,14 +26,14 @@ static double GetParameterLengthRatio(const TheCurve& theC)
 {
   switch (theC.GetType())
   {
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       return theC.Circle().Radius();
     }
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       return 1.0;
     }
-    case GeomAbs_BezierCurve:
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve:
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       if (!theC.IsRational())
       {
         return theC.DN(0.0, 1).Magnitude();
@@ -53,33 +53,33 @@ static GCPnts_AbscissaType GetAbsType(const TheCurve& theC)
 {
   if (theC.NbIntervals(GeomAbs_C1) > 1)
   {
-    return GCPnts_AbsComposite;
+    return GCPnts_AbscissaType::GCPnts_AbsComposite;
   }
 
   switch (theC.GetType())
   {
-    case GeomAbs_Line:
-    case GeomAbs_Circle: {
-      return GCPnts_LengthParametrized;
+    case GeomAbs_CurveType::GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Circle: {
+      return GCPnts_AbscissaType::GCPnts_LengthParametrized;
     }
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BezierCurve) aBZ = theC.Bezier();
       if (aBZ->NbPoles() == 2 && !aBZ->IsRational())
       {
-        return GCPnts_LengthParametrized;
+        return GCPnts_AbscissaType::GCPnts_LengthParametrized;
       }
-      return GCPnts_Parametrized;
+      return GCPnts_AbscissaType::GCPnts_Parametrized;
     }
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       Handle(typename GCPnts_TCurveTypes<TheCurve>::BSplineCurve) aBS = theC.BSpline();
       if (aBS->NbPoles() == 2 && !aBS->IsRational())
       {
-        return GCPnts_LengthParametrized;
+        return GCPnts_AbscissaType::GCPnts_LengthParametrized;
       }
-      return GCPnts_Parametrized;
+      return GCPnts_AbscissaType::GCPnts_Parametrized;
     }
     default: {
-      return GCPnts_Parametrized;
+      return GCPnts_AbscissaType::GCPnts_Parametrized;
     }
   }
 }
@@ -417,7 +417,7 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
   const GCPnts_AbscissaType aType = GetAbsType(theC);
   switch (aType)
   {
-    case GCPnts_LengthParametrized: {
+    case GCPnts_AbscissaType::GCPnts_LengthParametrized: {
       myDone = PerformLengthParametrized(myParams->ChangeArray1(),
                                          theC,
                                          theAbscissa,
@@ -428,8 +428,8 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
                                          anEPSILON);
       break;
     }
-    case GCPnts_Parametrized:
-    case GCPnts_AbsComposite: {
+    case GCPnts_AbscissaType::GCPnts_Parametrized:
+    case GCPnts_AbscissaType::GCPnts_AbsComposite: {
       myDone = Perform(myParams->ChangeArray1(),
                        theC,
                        theAbscissa,
@@ -530,7 +530,7 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
   const GCPnts_AbscissaType aType = GetAbsType(theC);
   switch (aType)
   {
-    case GCPnts_LengthParametrized: {
+    case GCPnts_AbscissaType::GCPnts_LengthParametrized: {
       myDone = PerformLengthParametrized(myParams->ChangeArray1(),
                                          theC,
                                          anAbscissa,
@@ -541,8 +541,8 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
                                          anEPSILON);
       break;
     }
-    case GCPnts_Parametrized:
-    case GCPnts_AbsComposite: {
+    case GCPnts_AbscissaType::GCPnts_Parametrized:
+    case GCPnts_AbscissaType::GCPnts_AbsComposite: {
       myDone = Perform(myParams->ChangeArray1(),
                        theC,
                        anAbscissa,

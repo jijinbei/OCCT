@@ -31,7 +31,7 @@ static const occ::handle<TCollection_HExtendedString> blank = new TCollection_HE
 CDF_Store::CDF_Store()
     : myHasSubComponents(false),
       myIsMainDocument(false),
-      myStatus(PCDM_SS_No_Obj)
+      myStatus(PCDM_StoreStatus::PCDM_SS_No_Obj)
 {
 }
 
@@ -115,7 +115,7 @@ CDF_StoreSetNameStatus CDF_Store::SetName(const TCollection_ExtendedString& aNam
   {
     occ::handle<CDM_MetaData> E = myCurrentDocument->MetaData();
     if (E->Folder() == myCurrentDocument->RequestedFolder() && E->Name() == theName)
-      return CDF_SSNS_OK;
+      return CDF_StoreSetNameStatus::CDF_SSNS_OK;
   }
 
   if (myCurrentDocument->HasRequestedFolder())
@@ -123,16 +123,16 @@ CDF_StoreSetNameStatus CDF_Store::SetName(const TCollection_ExtendedString& aNam
     if (theMetaDataDriver->Find(myCurrentDocument->RequestedFolder(), theName))
     {
       if (theMetaDataDriver->MetaData(myCurrentDocument->RequestedFolder(), theName)->IsRetrieved())
-        return CDF_SSNS_OpenDocument;
+        return CDF_StoreSetNameStatus::CDF_SSNS_OpenDocument;
       else
       {
         myCurrentDocument->SetRequestedName(theName);
-        return CDF_SSNS_ReplacingAnExistentDocument;
+        return CDF_StoreSetNameStatus::CDF_SSNS_ReplacingAnExistentDocument;
       }
     }
   }
   myCurrentDocument->SetRequestedName(theName);
-  return CDF_SSNS_OK;
+  return CDF_StoreSetNameStatus::CDF_SSNS_OK;
 }
 
 CDF_StoreSetNameStatus CDF_Store::SetName(const char16_t* const aName)
@@ -147,7 +147,7 @@ void CDF_Store::Realize(const Message_ProgressRange& theRange)
   occ::handle<CDM_MetaData> m;
   myText   = "";
   myStatus = myList->Store(m, myText, theRange);
-  if (myStatus == PCDM_SS_OK)
+  if (myStatus == PCDM_StoreStatus::PCDM_SS_OK)
     myPath = m->Path();
 }
 

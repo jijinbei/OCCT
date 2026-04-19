@@ -21,7 +21,7 @@ IntCurveSurface_IntersectionPoint::IntCurveSurface_IntersectionPoint()
     : myUSurf(0.0),
       myVSurf(0.0),
       myUCurv(0.0),
-      myTrOnCurv(IntCurveSurface_Tangent)
+      myTrOnCurv(IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent)
 {
 }
 
@@ -79,13 +79,13 @@ void IntCurveSurface_IntersectionPoint::Dump() const
 
   switch (myTrOnCurv)
   {
-    case IntCurveSurface_Tangent:
+    case IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent:
       std::cout << " Tangent ";
       break;
-    case IntCurveSurface_In:
+    case IntCurveSurface_TransitionOnCurve::IntCurveSurface_In:
       std::cout << " In ";
       break;
-    case IntCurveSurface_Out:
+    case IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out:
       std::cout << " Out ";
       break;
 

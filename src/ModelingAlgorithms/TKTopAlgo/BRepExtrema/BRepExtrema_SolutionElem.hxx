@@ -30,7 +30,7 @@ public:
   BRepExtrema_SolutionElem()
       : myDist(0.0),
         myPoint(0.0, 0.0, 0.0),
-        mySupType(BRepExtrema_IsVertex),
+        mySupType(BRepExtrema_SupportType::BRepExtrema_IsVertex),
         myPar1(0.0),
         myPar2(0.0)
   {

@@ -358,7 +358,7 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
     NCollection_Vector<double> aParams;
     switch (c.GetType())
     {
-      case GeomAbs_BezierCurve: {
+      case GeomAbs_CurveType::GeomAbs_BezierCurve: {
         occ::handle<Geom_BezierCurve> GC = c.Bezier();
         NCollection_Array1<double>    aKnots(1, 2);
         aKnots.SetValue(1, GC->FirstParameter());
@@ -367,21 +367,21 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
         fillParams(aKnots, GC->Degree(), dfUf, dfUl, aParams);
         break;
       }
-      case GeomAbs_BSplineCurve: {
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
         occ::handle<Geom_BSplineCurve> GC = c.BSpline();
         fillParams(GC->Knots(), GC->Degree(), dfUf, dfUl, aParams);
         break;
       }
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Line: {
         // Two points on a straight segment
         aParams.Append(dfUf);
         aParams.Append(dfUl);
         break;
       }
-      case GeomAbs_Circle:
-      case GeomAbs_Ellipse:
-      case GeomAbs_Hyperbola:
-      case GeomAbs_Parabola:
+      case GeomAbs_CurveType::GeomAbs_Circle:
+      case GeomAbs_CurveType::GeomAbs_Ellipse:
+      case GeomAbs_CurveType::GeomAbs_Hyperbola:
+      case GeomAbs_CurveType::GeomAbs_Parabola:
         // Four points on other analytical curves
         iNbPoints = 4;
         [[fallthrough]];

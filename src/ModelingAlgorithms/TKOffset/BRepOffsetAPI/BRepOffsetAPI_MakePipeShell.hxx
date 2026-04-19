@@ -96,16 +96,16 @@ public:
   //! than P split <Spline>.
   //! Else the plan define by P and the tangent to the <Spine>
   //! intersect <AuxiliarySpine> in Q.
-  //! If <KeepContact> equals BRepFill_NoContact: The Normal is defined
+  //! If <KeepContact> equals BRepFill_TypeOfContact::BRepFill_NoContact: The Normal is defined
   //! by the vector PQ.
-  //! If <KeepContact> equals BRepFill_Contact: The Normal is defined to
+  //! If <KeepContact> equals BRepFill_TypeOfContact::BRepFill_Contact: The Normal is defined to
   //! achieve that the sweeped section is in contact to the
   //! auxiliarySpine. The width of section is constant all along the path.
   //! In other words, the auxiliary spine lies on the swept surface,
   //! but not necessarily is a boundary of this surface. However,
   //! the auxiliary spine has to be close enough to the main spine
   //! to provide intersection with any section all along the path.
-  //! If <KeepContact> equals BRepFill_ContactOnBorder: The auxiliary spine
+  //! If <KeepContact> equals BRepFill_TypeOfContact::BRepFill_ContactOnBorder: The auxiliary spine
   //! becomes a boundary of the swept surface and the width of section varies
   //! along the path.
   //! Give section to sweep.
@@ -118,7 +118,7 @@ public:
   //! defined by a vertex of the spine
   Standard_EXPORT void SetMode(const TopoDS_Wire&           AuxiliarySpine,
                                const bool                   CurvilinearEquivalence,
-                               const BRepFill_TypeOfContact KeepContact = BRepFill_NoContact);
+                               const BRepFill_TypeOfContact KeepContact = BRepFill_TypeOfContact::BRepFill_NoContact);
 
   //! Adds the section Profile to this framework. First and last
   //! sections may be punctual, so the shape Profile may be
@@ -174,10 +174,10 @@ public:
   Standard_EXPORT bool IsReady() const;
 
   //! Get a status, when Simulate or Build failed. It can be
-  //! BRepBuilderAPI_PipeDone,
-  //! BRepBuilderAPI_PipeNotDone,
-  //! BRepBuilderAPI_PlaneNotIntersectGuide,
-  //! BRepBuilderAPI_ImpossibleContact.
+  //! BRepBuilderAPI_PipeError::BRepBuilderAPI_PipeDone,
+  //! BRepBuilderAPI_PipeError::BRepBuilderAPI_PipeNotDone,
+  //! BRepBuilderAPI_PipeError::BRepBuilderAPI_PlaneNotIntersectGuide,
+  //! BRepBuilderAPI_PipeError::BRepBuilderAPI_ImpossibleContact.
   Standard_EXPORT BRepBuilderAPI_PipeError GetStatus() const;
 
   //! Sets the following tolerance values
@@ -202,22 +202,22 @@ public:
 
   //! Sets the transition mode to manage discontinuities on
   //! the swept shape caused by fractures on the spine. The
-  //! transition mode can be BRepBuilderAPI_Transformed
-  //! (default value), BRepBuilderAPI_RightCorner,
-  //! BRepBuilderAPI_RoundCorner:
+  //! transition mode can be BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed
+  //! (default value), BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RightCorner,
+  //! BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RoundCorner:
   //! -              RepBuilderAPI_Transformed:
   //! discontinuities are treated by
   //! modification of the sweeping mode. The
   //! pipe is "transformed" at the fractures of
   //! the spine. This mode assumes building a
   //! self-intersected shell.
-  //! -              BRepBuilderAPI_RightCorner:
+  //! -              BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RightCorner:
   //! discontinuities are treated like right
   //! corner. Two pieces of the pipe
   //! corresponding to two adjacent
   //! segments of the spine are extended
   //! and intersected at a fracture of the spine.
-  //! -              BRepBuilderAPI_RoundCorner:
+  //! -              BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RoundCorner:
   //! discontinuities are treated like round
   //! corner. The corner is treated as rotation
   //! of the profile around an axis which
@@ -226,19 +226,19 @@ public:
   //! product of directions tangent to the
   //! adjacent segments of the spine at their common point.
   //! Warnings
-  //! The mode BRepBuilderAPI_RightCorner provides a
+  //! The mode BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RightCorner provides a
   //! valid result if intersection of two pieces of the pipe
   //! (corresponding to two adjacent segments of the spine)
   //! in the neighborhood of the spine?s fracture is
   //! connected and planar. This condition can be violated if
   //! the spine is non-linear in some neighborhood of the
   //! fracture or if the profile was set with a scaling law.
-  //! The last mode, BRepBuilderAPI_RoundCorner, will
+  //! The last mode, BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RoundCorner, will
   //! assuredly provide a good result only if a profile was set
   //! with option WithCorrection = True, i.e. it is strictly
   //! orthogonal to the spine.
   Standard_EXPORT void SetTransitionMode(
-    const BRepBuilderAPI_TransitionMode Mode = BRepBuilderAPI_Transformed);
+    const BRepBuilderAPI_TransitionMode Mode = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed);
 
   //! Simulates the resulting shape by calculating its
   //! cross-sections. The spine is divided by this

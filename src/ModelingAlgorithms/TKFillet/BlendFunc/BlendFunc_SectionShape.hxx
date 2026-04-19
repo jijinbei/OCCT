@@ -17,7 +17,7 @@
 #ifndef _BlendFunc_SectionShape_HeaderFile
 #define _BlendFunc_SectionShape_HeaderFile
 
-enum BlendFunc_SectionShape
+enum class BlendFunc_SectionShape
 {
   BlendFunc_Rational,
   BlendFunc_QuasiAngular,

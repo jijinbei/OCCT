@@ -228,7 +228,7 @@ bool MAT2d_Circuit::IsSharpCorner(const occ::handle<Geom2d_Geometry>& Geom1,
   double TolAng = 1.E-8;
   //  Modified by Sergey KHROMOV - Thu Oct 24 19:02:47 2002 End
 
-  if (myJoinType == GeomAbs_Arc)
+  if (myJoinType == GeomAbs_JoinType::GeomAbs_Arc)
   {
     while (NbTest <= 10)
     {
@@ -287,8 +287,8 @@ bool MAT2d_Circuit::IsSharpCorner(const occ::handle<Geom2d_Geometry>& Geom1,
 #endif
 
     return !Intersect.IsDone() || Intersect.IsEmpty();
-  } // end of if (myJoinType == GeomAbs_Arc)
-  else if (myJoinType == GeomAbs_Intersection)
+  } // end of if (myJoinType == GeomAbs_JoinType::GeomAbs_Arc)
+  else if (myJoinType == GeomAbs_JoinType::GeomAbs_Intersection)
   {
     if (std::abs(ProVec) <= TolAng && DotProd < 0)
     {

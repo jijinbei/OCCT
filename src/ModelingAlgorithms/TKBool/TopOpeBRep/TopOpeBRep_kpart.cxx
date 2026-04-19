@@ -100,12 +100,12 @@ static bool FUNBREP_HasSameGPoint(const TopOpeBRepDS_Point&                     
   // <I> geometry.
   int  G      = I->Geometry();
   bool samegp = false;
-  if (I->GeometryType() == TopOpeBRepDS_POINT)
+  if (I->GeometryType() == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
   {
     const TopOpeBRepDS_Point& P = BDS.Point(G);
     samegp                      = DSP.IsEqual(P);
   }
-  else if (I->GeometryType() == TopOpeBRepDS_VERTEX)
+  else if (I->GeometryType() == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
   {
     TopOpeBRepDS_Point P(BDS.Shape(G));
     samegp = DSP.IsEqual(P);
@@ -148,7 +148,7 @@ bool FUNBREP_topowalki_new(const occ::handle<TopOpeBRepDS_Interference>&        
                            TopOpeBRepDS_Transition& transLine)
 //----------------------------------------------------------------------
 {
-  if (L.TypeLineCurve() != TopOpeBRep_WALKING)
+  if (L.TypeLineCurve() != TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING)
   {
     throw Standard_ProgramError("FUNBREP_topowalki_new : line is not a walking");
   }
@@ -269,7 +269,7 @@ bool FUNBREP_topowalki(const occ::handle<TopOpeBRepDS_Interference>&            
                        TopOpeBRepDS_Transition& transLine)
 //----------------------------------------------------------------------
 {
-  if (L.TypeLineCurve() != TopOpeBRep_WALKING)
+  if (L.TypeLineCurve() != TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING)
   {
     throw Standard_ProgramError("FUNBREP_topowalki : line is not a walking");
   }
@@ -452,7 +452,7 @@ bool FUNBREP_topogline_new(const NCollection_List<occ::handle<TopOpeBRepDS_Inter
                            TopOpeBRepDS_Transition& transLine)
 //----------------------------------------------------------------------
 {
-  if (L.TypeLineCurve() == TopOpeBRep_WALKING)
+  if (L.TypeLineCurve() == TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING)
   {
     throw Standard_ProgramError("FUNBREP_topogline_new : line is not a GLine");
   }
@@ -589,7 +589,7 @@ static bool FUNBREP_topogline(const occ::handle<TopOpeBRepDS_Interference>& Ifou
                               TopOpeBRepDS_Transition& transLine)
 //----------------------------------------------------------------------
 {
-  if (L.TypeLineCurve() == TopOpeBRep_WALKING)
+  if (L.TypeLineCurve() == TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING)
   {
     throw Standard_ProgramError("FUNBREP_topogline : line is not a GLine");
   }
@@ -802,7 +802,7 @@ Standard_EXPORT bool FUNBREP_topokpart(
   // OUT/IN or IN/OUT if it is on the beginning or on the end
   // of the line.
 
-  if (L.TypeLineCurve() == TopOpeBRep_WALKING)
+  if (L.TypeLineCurve() == TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING)
   {
     keep = FUNBREP_topowalki(Ifound,
                              DSCIL,

@@ -346,7 +346,7 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
     // U isoline with the UMax parameter.
 
     if (thePtrDomain == nullptr)
-      theSurface.Load(false, GeomAbs_IsoU);
+      theSurface.Load(false, GeomAbs_IsoType::GeomAbs_IsoU);
     else
       theSurface.Load(aPDomain->Value());
 
@@ -384,34 +384,34 @@ double BRepGProp_VinertGK::PrivatePerform(BRepGProp_Face& theSurface,
       switch (k)
       {
         case 1:
-          aValueType = GProp_Mass;
+          aValueType = GProp_ValueType::GProp_Mass;
           break;
         case 2:
-          aValueType = GProp_CenterMassX;
+          aValueType = GProp_ValueType::GProp_CenterMassX;
           break;
         case 3:
-          aValueType = GProp_CenterMassY;
+          aValueType = GProp_ValueType::GProp_CenterMassY;
           break;
         case 4:
-          aValueType = GProp_CenterMassZ;
+          aValueType = GProp_ValueType::GProp_CenterMassZ;
           break;
         case 5:
-          aValueType = GProp_InertiaXX;
+          aValueType = GProp_ValueType::GProp_InertiaXX;
           break;
         case 6:
-          aValueType = GProp_InertiaYY;
+          aValueType = GProp_ValueType::GProp_InertiaYY;
           break;
         case 7:
-          aValueType = GProp_InertiaZZ;
+          aValueType = GProp_ValueType::GProp_InertiaZZ;
           break;
         case 8:
-          aValueType = GProp_InertiaXY;
+          aValueType = GProp_ValueType::GProp_InertiaXY;
           break;
         case 9:
-          aValueType = GProp_InertiaXZ;
+          aValueType = GProp_ValueType::GProp_InertiaXZ;
           break;
         case 10:
-          aValueType = GProp_InertiaYZ;
+          aValueType = GProp_ValueType::GProp_InertiaYZ;
           break;
 
         default:

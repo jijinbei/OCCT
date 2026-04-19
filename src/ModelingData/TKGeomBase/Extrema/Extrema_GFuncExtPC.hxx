@@ -86,10 +86,10 @@ public:
 
     switch (TheCurveTool::GetType(theC))
     {
-      case GeomAbs_BezierCurve:
-      case GeomAbs_BSplineCurve:
-      case GeomAbs_OffsetCurve:
-      case GeomAbs_OtherCurve:
+      case GeomAbs_CurveType::GeomAbs_BezierCurve:
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+      case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+      case GeomAbs_CurveType::GeomAbs_OtherCurve:
         myMaxDerivOrder = MaxOrder;
         myTol           = SearchOfTolerance();
         break;
@@ -114,10 +114,10 @@ public:
 
     switch (TheCurveTool::GetType(theC))
     {
-      case GeomAbs_BezierCurve:
-      case GeomAbs_BSplineCurve:
-      case GeomAbs_OffsetCurve:
-      case GeomAbs_OtherCurve:
+      case GeomAbs_CurveType::GeomAbs_BezierCurve:
+      case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+      case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+      case GeomAbs_CurveType::GeomAbs_OtherCurve:
         myMaxDerivOrder = MaxOrder;
         myTol           = SearchOfTolerance();
         break;

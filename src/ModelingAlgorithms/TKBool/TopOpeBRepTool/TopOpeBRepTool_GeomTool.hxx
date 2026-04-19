@@ -40,7 +40,7 @@ public:
   //! - APPROX to build an approximation curve on the
   //! walking points of <L>.
   Standard_EXPORT TopOpeBRepTool_GeomTool(
-    const TopOpeBRepTool_OutCurveType TypeC3D = TopOpeBRepTool_BSPLINE1,
+    const TopOpeBRepTool_OutCurveType TypeC3D = TopOpeBRepTool_OutCurveType::TopOpeBRepTool_BSPLINE1,
     const bool                        CompC3D = true,
     const bool                        CompPC1 = true,
     const bool                        CompPC2 = true);

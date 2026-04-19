@@ -317,27 +317,27 @@ TopoDS_Shape BRepSweep_Rotation::MakeEmptyFace(const TopoDS_Shape&   aGenS,
     GeomAdaptor_SurfaceOfRevolution AS(HC, myAxe);
     switch (AS.GetType())
     {
-      case GeomAbs_Plane: {
+      case GeomAbs_SurfaceType::GeomAbs_Plane: {
         occ::handle<Geom_Plane> Pl = new Geom_Plane(AS.Plane());
         S                          = Pl;
       }
       break;
-      case GeomAbs_Cylinder: {
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
         occ::handle<Geom_CylindricalSurface> Cy = new Geom_CylindricalSurface(AS.Cylinder());
         S                                       = Cy;
       }
       break;
-      case GeomAbs_Sphere: {
+      case GeomAbs_SurfaceType::GeomAbs_Sphere: {
         occ::handle<Geom_SphericalSurface> Sp = new Geom_SphericalSurface(AS.Sphere());
         S                                     = Sp;
       }
       break;
-      case GeomAbs_Cone: {
+      case GeomAbs_SurfaceType::GeomAbs_Cone: {
         occ::handle<Geom_ConicalSurface> Co = new Geom_ConicalSurface(AS.Cone());
         S                                   = Co;
       }
       break;
-      case GeomAbs_Torus: {
+      case GeomAbs_SurfaceType::GeomAbs_Torus: {
         occ::handle<Geom_ToroidalSurface> To = new Geom_ToroidalSurface(AS.Torus());
         S                                    = To;
       }
@@ -400,7 +400,7 @@ void BRepSweep_Rotation::SetGeneratingPCurve(const TopoDS_Shape& aNewFace,
   gp_Pnt2d            pnt2d;
   gp_Dir2d            dir2d;
   gp_Lin2d            L;
-  if (AS.GetType() == GeomAbs_Plane)
+  if (AS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     gp_Pln                  pln = AS.Plane();
     gp_Ax3                  ax3 = pln.Position();
@@ -428,7 +428,7 @@ void BRepSweep_Rotation::SetGeneratingPCurve(const TopoDS_Shape& aNewFace,
     L.SetLocation(pnt2d);
     L.SetDirection(dir2d);
   }
-  else if (AS.GetType() == GeomAbs_Torus)
+  else if (AS.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     gp_Torus          tor = AS.Torus();
     BRepAdaptor_Curve BC(TopoDS::Edge(aNewEdge));
@@ -463,7 +463,7 @@ void BRepSweep_Rotation::SetGeneratingPCurve(const TopoDS_Shape& aNewFace,
     L.SetLocation(pnt2d);
     L.SetDirection(gp::DY2d());
   }
-  else if (AS.GetType() == GeomAbs_Sphere)
+  else if (AS.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     gp_Sphere         sph = AS.Sphere();
     BRepAdaptor_Curve BC(TopoDS::Edge(aNewEdge));
@@ -509,7 +509,7 @@ void BRepSweep_Rotation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
   switch (AS.GetType())
   {
 
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       gp_Pln pln = AS.Plane();
       gp_Ax3 ax3 = pln.Position();
       gp_Pnt p1  = pln.Location();
@@ -523,7 +523,7 @@ void BRepSweep_Rotation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
     }
     break;
 
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       gp_Cone cone = AS.Cone();
       ElSLib::ConeParameters(cone.Position(), cone.RefRadius(), cone.SemiAngle(), p2, u, v);
       p22d.SetCoord(0., v);
@@ -533,7 +533,7 @@ void BRepSweep_Rotation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
     }
     break;
 
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       gp_Sphere sph = AS.Sphere();
       ElSLib::SphereParameters(sph.Position(), sph.Radius(), p2, u, v);
       p22d.SetCoord(0., v);
@@ -543,7 +543,7 @@ void BRepSweep_Rotation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
     }
     break;
 
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       gp_Pnt            p1;
       double            u1, u2, v1, v2;
       gp_Torus          tor = AS.Torus();
@@ -687,7 +687,7 @@ bool BRepSweep_Rotation::GGDShapeIsToAdd(const TopoDS_Shape&   aNewShape,
   {
     TopLoc_Location     Loc;
     GeomAdaptor_Surface AS(BRep_Tool::Surface(TopoDS::Face(aNewShape), Loc));
-    if (AS.GetType() == GeomAbs_Plane)
+    if (AS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       return (!IsInvariant(aSubGenS));
     }
@@ -722,7 +722,7 @@ bool BRepSweep_Rotation::GDDShapeIsToAdd(const TopoDS_Shape&   aNewShape,
   {
     TopLoc_Location     Loc;
     GeomAdaptor_Surface AS(BRep_Tool::Surface(TopoDS::Face(aNewShape), Loc));
-    if (AS.GetType() == GeomAbs_Plane)
+    if (AS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       return (std::abs(myAng - 2 * M_PI) > Precision::Angular());
     }
@@ -751,7 +751,7 @@ bool BRepSweep_Rotation::SeparatedWires(const TopoDS_Shape&   aNewShape,
   {
     TopLoc_Location     Loc;
     GeomAdaptor_Surface AS(BRep_Tool::Surface(TopoDS::Face(aNewShape), Loc));
-    if (AS.GetType() == GeomAbs_Plane)
+    if (AS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       return (std::abs(myAng - 2 * M_PI) <= Precision::Angular());
     }
@@ -820,20 +820,20 @@ bool BRepSweep_Rotation::IsInvariant(const TopoDS_Shape& aGenS) const
   if (aGenS.ShapeType() == TopAbs_EDGE)
   {
     BRepAdaptor_Curve aC(TopoDS::Edge(aGenS));
-    if (aC.GetType() == GeomAbs_Line || aC.GetType() == GeomAbs_BSplineCurve
-        || aC.GetType() == GeomAbs_BezierCurve)
+    if (aC.GetType() == GeomAbs_CurveType::GeomAbs_Line || aC.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve
+        || aC.GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
     {
       TopoDS_Vertex V1, V2;
       TopExp::Vertices(TopoDS::Edge(aGenS), V1, V2);
       if (IsInvariant(V1) && IsInvariant(V2))
       {
-        if (aC.GetType() == GeomAbs_Line)
+        if (aC.GetType() == GeomAbs_CurveType::GeomAbs_Line)
           return true;
 
         double aTol = std::max(BRep_Tool::Tolerance(V1), BRep_Tool::Tolerance(V2));
         gp_Lin Lin(myAxe.Location(), myAxe.Direction());
         const NCollection_Array1<gp_Pnt>& aPoles =
-          (aC.GetType() == GeomAbs_BSplineCurve ? aC.BSpline()->Poles() : aC.Bezier()->Poles());
+          (aC.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve ? aC.BSpline()->Poles() : aC.Bezier()->Poles());
 
         for (int i = aPoles.Lower(); i <= aPoles.Upper(); i++)
         {

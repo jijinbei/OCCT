@@ -79,9 +79,9 @@ public:
   //! Build the Sweep Surface
   //! Transition define Transition strategy
   //! Approx define Approximation Strategy
-  //! - GeomFill_Section : The composed Function Location X Section
+  //! - GeomFill_ApproxStyle::GeomFill_Section : The composed Function Location X Section
   //! is directly approximated.
-  //! - GeomFill_Location : The location law is approximated, and the
+  //! - GeomFill_ApproxStyle::GeomFill_Location : The location law is approximated, and the
   //! SweepSurface builds an algebraic composition
   //! of approximated location law and section law
   //! This option is Ok, if Section.Surface() methode
@@ -97,9 +97,9 @@ public:
                              NCollection_DataMap<TopoDS_Shape,
                                                  occ::handle<NCollection_HArray2<TopoDS_Shape>>,
                                                  TopTools_ShapeMapHasher>&           Rails,
-                             const BRepFill_TransitionStyle Transition = BRepFill_Modified,
+                             const BRepFill_TransitionStyle Transition = BRepFill_TransitionStyle::BRepFill_Modified,
                              const GeomAbs_Shape            Continuity = GeomAbs_C2,
-                             const GeomFill_ApproxStyle     Approx     = GeomFill_Location,
+                             const GeomFill_ApproxStyle     Approx     = GeomFill_ApproxStyle::GeomFill_Location,
                              const int                      Degmax     = 11,
                              const int                      Segmax     = 30);
 

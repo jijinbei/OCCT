@@ -61,7 +61,7 @@ BOPAlgo_PaveFiller::BOPAlgo_PaveFiller()
   myNonDestructive   = false;
   myIsPrimary        = true;
   myAvoidBuildPCurve = false;
-  myGlue             = BOPAlgo_GlueOff;
+  myGlue             = BOPAlgo_GlueEnum::BOPAlgo_GlueOff;
 }
 
 //=================================================================================================
@@ -78,7 +78,7 @@ BOPAlgo_PaveFiller::BOPAlgo_PaveFiller(const occ::handle<NCollection_BaseAllocat
   myNonDestructive   = false;
   myIsPrimary        = true;
   myAvoidBuildPCurve = false;
-  myGlue             = BOPAlgo_GlueOff;
+  myGlue             = BOPAlgo_GlueEnum::BOPAlgo_GlueOff;
 }
 
 //=================================================================================================
@@ -436,7 +436,7 @@ void BOPAlgo_PaveFiller::fillPISteps(BOPAlgo_PISteps& theSteps) const
   myIterator->Initialize(TopAbs_VERTEX, TopAbs_FACE);
   aVFSize = myIterator->ExpectedLength();
 
-  if (myGlue != BOPAlgo_GlueFull)
+  if (myGlue != BOPAlgo_GlueEnum::BOPAlgo_GlueFull)
   {
     myIterator->Initialize(TopAbs_EDGE, TopAbs_FACE);
     aEFSize = myIterator->ExpectedLength();
@@ -453,9 +453,9 @@ void BOPAlgo_PaveFiller::fillPISteps(BOPAlgo_PISteps& theSteps) const
   theSteps.SetStep(PIOperation_RepeatIntersection, 0.2 * (aVVSize + aVESize + aVFSize));
   theSteps.SetStep(PIOperation_ForceInterfEE, 2 * aEESize);
   theSteps.SetStep(PIOperation_ForceInterfEF, 2 * aEFSize);
-  theSteps.SetStep(PIOperation_PerformFF, (myGlue == BOPAlgo_GlueFull ? 1 : 30) * aFFSize);
+  theSteps.SetStep(PIOperation_PerformFF, (myGlue == BOPAlgo_GlueEnum::BOPAlgo_GlueFull ? 1 : 30) * aFFSize);
   theSteps.SetStep(PIOperation_MakeSplitEdges, aEESize);
-  theSteps.SetStep(PIOperation_MakeBlocks, (myGlue == BOPAlgo_GlueFull ? 0 : 5) * aFFSize);
+  theSteps.SetStep(PIOperation_MakeBlocks, (myGlue == BOPAlgo_GlueEnum::BOPAlgo_GlueFull ? 0 : 5) * aFFSize);
   theSteps.SetStep(PIOperation_MakePCurves, myAvoidBuildPCurve ? 0 : 0.2 * (aEESize + aEFSize));
   theSteps.SetStep(PIOperation_ProcessDE, 0.1 * aEESize);
 }

@@ -137,12 +137,12 @@ void IntTools_TopolTool::ComputeSamplePoints()
 
   switch (typS)
   {
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       nbsu = 10;
       nbsv = 10;
     }
     break;
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       double aRadius     = myS->Cylinder().Radius();
       double aMaxAngle   = M_PI * 0.5;
       double aDeflection = 1.e-02;
@@ -171,7 +171,7 @@ void IntTools_TopolTool::ComputeSamplePoints()
         nbsv = aMaxNbSample;
     }
     break;
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       gp_Cone aCone = myS->Cone();
       gp_Circ aCircle =
         ElSLib::ConeVIso(aCone.Position(), aCone.RefRadius(), aCone.SemiAngle(), vinf);
@@ -208,12 +208,12 @@ void IntTools_TopolTool::ComputeSamplePoints()
         nbsv = aMaxNbSample;
     }
     break;
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       gp_Circ aCircle;
       double  aRadius1, aRadius2;
 
-      if (typS == GeomAbs_Torus)
+      if (typS == GeomAbs_SurfaceType::GeomAbs_Torus)
       {
         gp_Torus aTorus = myS->Torus();
         aCircle =
@@ -269,7 +269,7 @@ void IntTools_TopolTool::ComputeSamplePoints()
         nbsv = aMaxNbSample;
     }
     break;
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       nbsv = 3 + myS->NbVPoles();
       nbsu = 3 + myS->NbUPoles();
 
@@ -285,7 +285,7 @@ void IntTools_TopolTool::ComputeSamplePoints()
         nbsv = 10;
     }
     break;
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       nbsv = myS->NbVKnots();
       nbsv *= myS->VDegree();
       if (nbsv < 4)
@@ -320,7 +320,7 @@ void IntTools_TopolTool::ComputeSamplePoints()
       }
     }
     break;
-    case GeomAbs_SurfaceOfExtrusion: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: {
       nbsu = 15;
       nbsv = (int)(vsup - vinf);
       nbsv /= 10;
@@ -330,7 +330,7 @@ void IntTools_TopolTool::ComputeSamplePoints()
         nbsv = aMaxNbSample;
     }
     break;
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution: {
       nbsv = 15;
       nbsu = 15;
     }

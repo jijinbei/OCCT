@@ -70,7 +70,7 @@ TEST(GeomBndLib_Curve2dTest, Line_FiniteSegment)
 {
   occ::handle<Geom2d_Line> aLine = new Geom2d_Line(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 1.0));
   GeomBndLib_Curve2d       aCurve(aLine);
-  EXPECT_EQ(aCurve.GetType(), GeomAbs_Line);
+  EXPECT_EQ(aCurve.GetType(), GeomAbs_CurveType::GeomAbs_Line);
 
   Bnd_Box2d aBox;
   aCurve.Add(0.0, 10.0, 0.0, aBox);
@@ -109,7 +109,7 @@ TEST(GeomBndLib_Curve2dTest, Circle_Full)
   occ::handle<Geom2d_Circle> aCircle =
     new Geom2d_Circle(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0)), aRadius);
   GeomBndLib_Curve2d aCurve(aCircle);
-  EXPECT_EQ(aCurve.GetType(), GeomAbs_Circle);
+  EXPECT_EQ(aCurve.GetType(), GeomAbs_CurveType::GeomAbs_Circle);
 
   Bnd_Box2d aBox;
   aCurve.Add(0.0, aBox);
@@ -169,7 +169,7 @@ TEST(GeomBndLib_Curve2dTest, Ellipse_Full)
                        aMajR,
                        aMinR);
   GeomBndLib_Curve2d aCurve(anEllipse);
-  EXPECT_EQ(aCurve.GetType(), GeomAbs_Ellipse);
+  EXPECT_EQ(aCurve.GetType(), GeomAbs_CurveType::GeomAbs_Ellipse);
 
   Bnd_Box2d aBox;
   aCurve.Add(0.0, aBox);
@@ -212,7 +212,7 @@ TEST(GeomBndLib_Curve2dTest, Hyperbola_FiniteArc)
                          aMajR,
                          aMinR);
   GeomBndLib_Curve2d aCurve(aHyp);
-  EXPECT_EQ(aCurve.GetType(), GeomAbs_Hyperbola);
+  EXPECT_EQ(aCurve.GetType(), GeomAbs_CurveType::GeomAbs_Hyperbola);
 
   Bnd_Box2d    aBox;
   const double aU = 1.0;
@@ -257,7 +257,7 @@ TEST(GeomBndLib_Curve2dTest, Parabola_FiniteArc)
     new Geom2d_Parabola(gp_Ax22d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0), gp_Dir2d(0.0, 1.0)),
                         aFocal);
   GeomBndLib_Curve2d aCurve(aParab);
-  EXPECT_EQ(aCurve.GetType(), GeomAbs_Parabola);
+  EXPECT_EQ(aCurve.GetType(), GeomAbs_CurveType::GeomAbs_Parabola);
 
   Bnd_Box2d    aBox;
   const double aU = 5.0;
@@ -301,7 +301,7 @@ TEST(GeomBndLib_Curve2dTest, BezierCurve_Simple)
 
   occ::handle<Geom2d_BezierCurve> aBez = new Geom2d_BezierCurve(aPoles);
   GeomBndLib_Curve2d              aCurve(aBez);
-  EXPECT_EQ(aCurve.GetType(), GeomAbs_BezierCurve);
+  EXPECT_EQ(aCurve.GetType(), GeomAbs_CurveType::GeomAbs_BezierCurve);
 
   Bnd_Box2d aBox;
   aCurve.Add(Precision::Confusion(), aBox);
@@ -364,7 +364,7 @@ TEST(GeomBndLib_Curve2dTest, BSplineCurve_Simple)
 
   occ::handle<Geom2d_BSplineCurve> aBSpl = new Geom2d_BSplineCurve(aPoles, aKnots, aMults, 2);
   GeomBndLib_Curve2d               aCurve(aBSpl);
-  EXPECT_EQ(aCurve.GetType(), GeomAbs_BSplineCurve);
+  EXPECT_EQ(aCurve.GetType(), GeomAbs_CurveType::GeomAbs_BSplineCurve);
 
   Bnd_Box2d aBox;
   aCurve.Add(Precision::Confusion(), aBox);
@@ -425,7 +425,7 @@ TEST(GeomBndLib_Curve2dTest, AdaptorConstructor_Circle)
   // Construct from adaptor
   Geom2dAdaptor_Curve anAdaptor(aCircle);
   GeomBndLib_Curve2d  aCurveA(anAdaptor);
-  EXPECT_EQ(aCurveA.GetType(), GeomAbs_Circle);
+  EXPECT_EQ(aCurveA.GetType(), GeomAbs_CurveType::GeomAbs_Circle);
 
   Bnd_Box2d aBoxA;
   aCurveA.Add(Precision::Confusion(), aBoxA);
@@ -494,7 +494,7 @@ TEST(GeomBndLib_Curve2dTest, TrimmedCurveHandle_UsesBasisSpecialization)
     new Geom2d_Circle(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0)), 10.0);
   occ::handle<Geom2d_TrimmedCurve> aTrim = new Geom2d_TrimmedCurve(aCircle, 0.0, M_PI / 2.0);
   GeomBndLib_Curve2d               aCurve(aTrim);
-  EXPECT_EQ(aCurve.GetType(), GeomAbs_Circle);
+  EXPECT_EQ(aCurve.GetType(), GeomAbs_CurveType::GeomAbs_Circle);
 
   Geom2dAdaptor_Curve anAdaptor(aTrim);
   Bnd_Box2d           aNewBox;

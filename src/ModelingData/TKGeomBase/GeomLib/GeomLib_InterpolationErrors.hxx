@@ -19,7 +19,7 @@
 
 //! in case the interpolation errors out, this
 //! tells what happened
-enum GeomLib_InterpolationErrors
+enum class GeomLib_InterpolationErrors
 {
   GeomLib_NoError,
   GeomLib_NotEnoughtPoints,

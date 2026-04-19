@@ -39,7 +39,7 @@
 //=================================================================================================
 
 BRepLib_MakeShell::BRepLib_MakeShell()
-    : myError(BRepLib_EmptyShell)
+    : myError(BRepLib_ShellError::BRepLib_EmptyShell)
 {
 }
 
@@ -80,7 +80,7 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
       occ::down_cast<Geom_RectangularTrimmedSurface>(S);
     BS = RTS->BasisSurface();
   }
-  myError              = BRepLib_EmptyShell;
+  myError              = BRepLib_ShellError::BRepLib_EmptyShell;
   constexpr double tol = Precision::Confusion();
 
   // Make a shell from a surface
@@ -220,7 +220,7 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
 
       // the surface
       occ::handle<Geom_Surface> SS = occ::down_cast<Geom_Surface>(BS->Copy());
-      if (GS.GetType() == GeomAbs_BSplineSurface && Segment)
+      if (GS.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface && Segment)
       {
         occ::down_cast<Geom_BSplineSurface>(SS)->Segment(upars(iu),
                                                          upars(iu + 1),
@@ -393,7 +393,7 @@ void BRepLib_MakeShell::Init(const occ::handle<Geom_Surface>& S,
     B.Degenerated(anEdge, isDegenerated);
   }
 
-  myError = BRepLib_ShellDone;
+  myError = BRepLib_ShellError::BRepLib_ShellDone;
   Done();
 }
 

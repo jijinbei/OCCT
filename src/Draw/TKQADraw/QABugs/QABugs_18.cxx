@@ -56,9 +56,9 @@ static int OCC267(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<TDocStd_Application> A = DDocStd::GetApplication();
 
   PCDM_StoreStatus theStatus = A->SaveAs(D, path);
-  if (theStatus == PCDM_SS_OK)
+  if (theStatus == PCDM_StoreStatus::PCDM_SS_OK)
   {
-    di << "OCC267 : PCDM_StoreStatus = PCDM_SS_OK\n";
+    di << "OCC267 : PCDM_StoreStatus = PCDM_StoreStatus::PCDM_SS_OK\n";
   }
   else
   {

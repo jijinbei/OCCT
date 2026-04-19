@@ -68,12 +68,12 @@ bool StdSelect_EdgeFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) co
       return true;
     case StdSelect_TypeOfEdge::StdSelect_Line: {
       BRepAdaptor_Curve curv(TopoDS::Edge(sh));
-      return (curv.GetType() == GeomAbs_Line);
+      return (curv.GetType() == GeomAbs_CurveType::GeomAbs_Line);
     }
     break;
     case StdSelect_TypeOfEdge::StdSelect_Circle:
       BRepAdaptor_Curve curv(TopoDS::Edge(sh));
-      return (curv.GetType() == GeomAbs_Circle);
+      return (curv.GetType() == GeomAbs_CurveType::GeomAbs_Circle);
   }
 
   return false;

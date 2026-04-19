@@ -141,7 +141,7 @@ bool BRepBuilderAPI_MakeSolid::IsDeleted(const TopoDS_Shape& S)
   {
     BRepLib_ShapeModification aStatus = myMakeSolid.FaceStatus(TopoDS::Face(S));
 
-    if (aStatus == BRepLib_Deleted)
+    if (aStatus == BRepLib_ShapeModification::BRepLib_Deleted)
       return true;
   }
 

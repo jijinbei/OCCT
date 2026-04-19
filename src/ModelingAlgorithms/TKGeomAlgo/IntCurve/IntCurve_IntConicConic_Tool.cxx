@@ -52,43 +52,43 @@ void Determine_Transition_LC(const IntRes2d_Position Pos1,
 
     if (std::abs(Val1 - Val2) <= gp::Resolution())
     {
-      T1.SetValue(true, Pos1, IntRes2d_Unknown, opos);
-      T2.SetValue(true, Pos2, IntRes2d_Unknown, opos);
+      T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Unknown, opos);
+      T2.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Unknown, opos);
     }
     else if (Val2 > Val1)
     {
-      T2.SetValue(true, Pos2, IntRes2d_Inside, opos);
+      T2.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Inside, opos);
       if (opos)
       {
-        T1.SetValue(true, Pos1, IntRes2d_Inside, opos);
+        T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Inside, opos);
       }
       else
       {
-        T1.SetValue(true, Pos1, IntRes2d_Outside, opos);
+        T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Outside, opos);
       }
     }
     else
     { // Val1 > Val2
-      T2.SetValue(true, Pos2, IntRes2d_Outside, opos);
+      T2.SetValue(true, Pos2, IntRes2d_Situation::IntRes2d_Outside, opos);
       if (opos)
       {
-        T1.SetValue(true, Pos1, IntRes2d_Outside, opos);
+        T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Outside, opos);
       }
       else
       {
-        T1.SetValue(true, Pos1, IntRes2d_Inside, opos);
+        T1.SetValue(true, Pos1, IntRes2d_Situation::IntRes2d_Inside, opos);
       }
     }
   }
   else if (sgn < 0)
   {
-    T1.SetValue(false, Pos1, IntRes2d_In);
-    T2.SetValue(false, Pos2, IntRes2d_Out);
+    T1.SetValue(false, Pos1, IntRes2d_TypeTrans::IntRes2d_In);
+    T2.SetValue(false, Pos2, IntRes2d_TypeTrans::IntRes2d_Out);
   }
   else
   {
-    T1.SetValue(false, Pos1, IntRes2d_Out);
-    T2.SetValue(false, Pos2, IntRes2d_In);
+    T1.SetValue(false, Pos1, IntRes2d_TypeTrans::IntRes2d_Out);
+    T2.SetValue(false, Pos2, IntRes2d_TypeTrans::IntRes2d_In);
   }
 }
 

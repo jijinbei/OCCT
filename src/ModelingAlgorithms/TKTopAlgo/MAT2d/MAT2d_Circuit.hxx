@@ -40,7 +40,7 @@ class MAT2d_Circuit : public Standard_Transient
 {
 
 public:
-  Standard_EXPORT MAT2d_Circuit(const GeomAbs_JoinType aJoinType    = GeomAbs_Arc,
+  Standard_EXPORT MAT2d_Circuit(const GeomAbs_JoinType aJoinType    = GeomAbs_JoinType::GeomAbs_Arc,
                                 const bool             IsOpenResult = false);
 
   Standard_EXPORT void Perform(

@@ -17,7 +17,7 @@
 #ifndef _Blend_Status_HeaderFile
 #define _Blend_Status_HeaderFile
 
-enum Blend_Status
+enum class Blend_Status
 {
   Blend_StepTooLarge,
   Blend_StepTooSmall,

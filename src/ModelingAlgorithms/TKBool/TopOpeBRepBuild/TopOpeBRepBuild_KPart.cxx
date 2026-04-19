@@ -597,7 +597,7 @@ void TopOpeBRepBuild_Builder::MergeKPartiskoletge()
 
   TopOpeBRepDS_Config config2 = BDS.SameDomainOri(fac2);
 
-  bool SameOriented = (config2 == TopOpeBRepDS_SAMEORIENTED);
+  bool SameOriented = (config2 == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
 
   const TopoDS_Shape* pfGRE = nullptr;
   const TopoDS_Shape* pfSMA = nullptr;
@@ -1820,8 +1820,8 @@ void TopOpeBRepBuild_Builder::KPiskoletgeanalyse(const TopOpeBRepDS_Config confi
 
   ires = RESUNDEF;
 
-  bool SameOriented = (config2 == TopOpeBRepDS_SAMEORIENTED);
-  bool DiffOriented = (config2 == TopOpeBRepDS_DIFFORIENTED);
+  bool SameOriented = (config2 == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
+  bool DiffOriented = (config2 == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
 
   //  bool com = Opecom();
   //  bool c12 = Opec12();

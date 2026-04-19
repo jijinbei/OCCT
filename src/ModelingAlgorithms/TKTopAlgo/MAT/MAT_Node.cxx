@@ -56,13 +56,13 @@ void MAT_Node::LinkedArcs(NCollection_Sequence<occ::handle<MAT_Arc>>& S) const
 
   S.Append(LA);
 
-  if (LA->HasNeighbour(Me, MAT_Left))
+  if (LA->HasNeighbour(Me, MAT_Side::MAT_Left))
   {
-    occ::handle<MAT_Arc> CA = LA->Neighbour(Me, MAT_Left);
+    occ::handle<MAT_Arc> CA = LA->Neighbour(Me, MAT_Side::MAT_Left);
     while (CA != LA)
     {
       S.Append(CA);
-      CA = CA->Neighbour(Me, MAT_Left);
+      CA = CA->Neighbour(Me, MAT_Side::MAT_Left);
     }
   }
 }
@@ -79,10 +79,10 @@ void MAT_Node::NearElts(NCollection_Sequence<occ::handle<MAT_BasicElt>>& S) cons
   S.Append(LA->FirstElement());
   S.Append(LA->SecondElement());
 
-  if (LA->HasNeighbour(Me, MAT_Left))
+  if (LA->HasNeighbour(Me, MAT_Side::MAT_Left))
   {
 
-    occ::handle<MAT_Arc> CA   = LA->Neighbour(Me, MAT_Left);
+    occ::handle<MAT_Arc> CA   = LA->Neighbour(Me, MAT_Side::MAT_Left);
     bool                 Pair = false;
 
     //---------------------------------------------------------
@@ -101,7 +101,7 @@ void MAT_Node::NearElts(NCollection_Sequence<occ::handle<MAT_BasicElt>>& S) cons
       {
         Pair = true;
       }
-      CA = CA->Neighbour(Me, MAT_Left);
+      CA = CA->Neighbour(Me, MAT_Side::MAT_Left);
     }
   }
 }
@@ -118,7 +118,7 @@ double MAT_Node::Distance() const
 bool MAT_Node::PendingNode() const
 {
   occ::handle<MAT_Node> Me = this;
-  return (!((MAT_Arc*)aLinkedArc)->HasNeighbour(Me, MAT_Left));
+  return (!((MAT_Arc*)aLinkedArc)->HasNeighbour(Me, MAT_Side::MAT_Left));
 }
 
 //=================================================================================================

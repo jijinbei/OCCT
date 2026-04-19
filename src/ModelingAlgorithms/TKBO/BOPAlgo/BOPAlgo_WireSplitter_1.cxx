@@ -792,7 +792,7 @@ double Angle2D(const TopoDS_Vertex&                 aV,
   dt = std::max(aGAC2D.Resolution(tol2d), Precision::PConfusion());
   //
   aType = aGAC2D.GetType();
-  if (aType != GeomAbs_Line)
+  if (aType != GeomAbs_CurveType::GeomAbs_Line)
   {
     GeomLProp_CLProps2d LProp(aC2D, aTV, 2, Precision::PConfusion());
     if (LProp.IsTangentDefined())
@@ -870,7 +870,7 @@ double Tolerance2D(const TopoDS_Vertex& aV, const BRepAdaptor_Surface& aGAS)
   {
     aTol2D = aTolV3D;
   }
-  if (aType == GeomAbs_BSplineSurface)
+  if (aType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     aTol2D = 1.1 * aTol2D;
   }

@@ -247,7 +247,7 @@ static bool IsIntersect(const occ::handle<Adaptor3d_Curve>& theC, const gp_Ax1& 
 {
   const gp_Lin anAxis(theAxe);
   // Quick test for circle
-  if (theC->GetType() == GeomAbs_Circle)
+  if (theC->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     gp_Circ       aCirc  = theC->Circle();
     const gp_Pnt& aCentr = aCirc.Location();

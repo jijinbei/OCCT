@@ -426,11 +426,11 @@ void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const Message_ProgressRange& t
     const TopoDS_Face&  aF = (*(TopoDS_Face*)(&aSI.Shape()));
     BRepAdaptor_Surface BAsurf(aF, false);
     GeomAbs_SurfaceType aSurfType = BAsurf.GetType();
-    if (aSurfType == GeomAbs_Plane || aSurfType == GeomAbs_Cylinder || aSurfType == GeomAbs_Cone
-        || aSurfType == GeomAbs_Sphere)
+    if (aSurfType == GeomAbs_SurfaceType::GeomAbs_Plane || aSurfType == GeomAbs_SurfaceType::GeomAbs_Cylinder || aSurfType == GeomAbs_SurfaceType::GeomAbs_Cone
+        || aSurfType == GeomAbs_SurfaceType::GeomAbs_Sphere)
       continue;
 
-    if (aSurfType == GeomAbs_Torus)
+    if (aSurfType == GeomAbs_SurfaceType::GeomAbs_Torus)
     {
       gp_Torus aTorus       = BAsurf.Torus();
       double   aMajorRadius = aTorus.MajorRadius();

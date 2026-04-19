@@ -130,7 +130,7 @@ void BRepClass3d_SClassifier::PerformInfinitePoint(BRepClass3d_SolidExplorer& aS
       TopoDS_Face aF = *iFace;
 
       TopAbs_State                      aState      = TopAbs_OUT;
-      IntCurveSurface_TransitionOnCurve aTransition = IntCurveSurface_Tangent;
+      IntCurveSurface_TransitionOnCurve aTransition = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent;
 
       aParam = 0.1 + 0.8 * aRandomGenerator.NextReal(); // random number in range [0.1, 0.9]
       bFound = BRepClass3d_SolidExplorer::FindAPointInTheFace(aF, aPoint, aU, aV, aParam);
@@ -174,14 +174,14 @@ void BRepClass3d_SClassifier::PerformInfinitePoint(BRepClass3d_SolidExplorer& aS
 
       if (aState == TopAbs_IN)
       {
-        if (aTransition == IntCurveSurface_Out)
+        if (aTransition == IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out)
         {
           //-- The line is going from inside the solid to outside
           //-- the solid.
           myState = 3; //-- IN --
           return;
         }
-        else if (aTransition == IntCurveSurface_In)
+        else if (aTransition == IntCurveSurface_TransitionOnCurve::IntCurveSurface_In)
         {
           myState = 4; //-- OUT --
           return;
@@ -327,7 +327,7 @@ void BRepClass3d_SClassifier::Perform(BRepClass3d_SolidExplorer& SolidExplorer,
           continue;
         }
 
-        IntCurveSurface_TransitionOnCurve tran = IntCurveSurface_Tangent;
+        IntCurveSurface_TransitionOnCurve tran = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent;
         int                               Tst  = GetTransi(f1, f2, EE, param, L, tran);
         if (Tst == 1 && std::abs(Lpar) < std::abs(parmin))
         {
@@ -386,7 +386,7 @@ void BRepClass3d_SClassifier::Perform(BRepClass3d_SolidExplorer& SolidExplorer,
                                       aBAS,
                                       Precision::PConfusion(),
                                       Precision::PConfusion(),
-                                      Extrema_ExtFlag_MIN);
+                                      Extrema_ExtFlag::Extrema_ExtFlag_MIN);
                   if (aProj.IsDone() && aProj.NbExt() > 0)
                   {
                     int    i, indmin = 0;
@@ -440,7 +440,7 @@ void BRepClass3d_SClassifier::Perform(BRepClass3d_SolidExplorer& SolidExplorer,
                     // -- of the solid is in the face F
 
                     IntCurveSurface_TransitionOnCurve tran = Intersector3d.Transition(i);
-                    if (tran == IntCurveSurface_Tangent)
+                    if (tran == IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent)
                     {
 #ifdef OCCT_DEBUG
                       std::cout << "*Problem ds BRepClass3d_SClassifier.cxx" << std::endl;
@@ -633,7 +633,7 @@ static int GetTransi(const TopoDS_Face&                 f1,
       || std::abs(LDir.Dot(nf2)) < Precision::Angular())
   {
     // line is orthogonal to normal(s)
-    // trans = IntCurveSurface_Tangent;
+    // trans = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent;
     return -1;
   }
 
@@ -643,9 +643,9 @@ static int GetTransi(const TopoDS_Face&                 f1,
     if (std::abs(angD) < Precision::Angular())
       return -1;
     else if (angD > 0)
-      trans = IntCurveSurface_Out;
+      trans = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out;
     else // angD < -Precision::Angular())
-      trans = IntCurveSurface_In;
+      trans = IntCurveSurface_TransitionOnCurve::IntCurveSurface_In;
     return 1;
   }
 
@@ -658,9 +658,9 @@ static int GetTransi(const TopoDS_Face&                 f1,
   double sAD = nf2.Dot(ProjL);
 
   if (fAD < -Precision::Angular() && sAD < -Precision::Angular())
-    trans = IntCurveSurface_In;
+    trans = IntCurveSurface_TransitionOnCurve::IntCurveSurface_In;
   else if (fAD > Precision::Angular() && sAD > Precision::Angular())
-    trans = IntCurveSurface_Out;
+    trans = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out;
   else
     return 0;
   return 1;
@@ -672,9 +672,9 @@ static void Trans(const double parmin, IntCurveSurface_TransitionOnCurve& tran, 
 {
   // if parmin is negative we should reverse transition
   if (parmin < 0)
-    tran = (tran == IntCurveSurface_Out ? IntCurveSurface_In : IntCurveSurface_Out);
+    tran = (tran == IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out ? IntCurveSurface_TransitionOnCurve::IntCurveSurface_In : IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out);
 
-  if (tran == IntCurveSurface_Out)
+  if (tran == IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out)
     //-- The line is going from inside the solid to outside
     //-- the solid.
     state = 3; // IN

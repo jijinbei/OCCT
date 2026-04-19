@@ -512,22 +512,22 @@ static void solution(const occ::handle<GccInt_Bisec>& Bis, const char* name, con
 
   switch (Bis->ArcType())
   {
-    case GccInt_Lin:
+    case GccInt_IType::GccInt_Lin:
       DrawTrSurf::Set(temp, new Geom2d_Line(Bis->Line()));
       break;
-    case GccInt_Cir:
+    case GccInt_IType::GccInt_Cir:
       DrawTrSurf::Set(temp, new Geom2d_Circle(Bis->Circle()));
       break;
-    case GccInt_Ell:
+    case GccInt_IType::GccInt_Ell:
       DrawTrSurf::Set(temp, new Geom2d_Ellipse(Bis->Ellipse()));
       break;
-    case GccInt_Par:
+    case GccInt_IType::GccInt_Par:
       DrawTrSurf::Set(temp, new Geom2d_Parabola(Bis->Parabola()));
       break;
-    case GccInt_Hpr:
+    case GccInt_IType::GccInt_Hpr:
       DrawTrSurf::Set(temp, new Geom2d_Hyperbola(Bis->Hyperbola()));
       break;
-    case GccInt_Pnt:
+    case GccInt_IType::GccInt_Pnt:
       DrawTrSurf::Set(temp, Bis->Point());
       break;
   }

@@ -95,9 +95,9 @@ public:
 
   //! Build the Sweeep Surface
   //! ApproxStyle defines Approximation Strategy
-  //! - GeomFill_Section : The composed Function : Location X Section
+  //! - GeomFill_ApproxStyle::GeomFill_Section : The composed Function : Location X Section
   //! is directly approximated.
-  //! - GeomFill_Location : The location law is approximated, and the
+  //! - GeomFill_ApproxStyle::GeomFill_Location : The location law is approximated, and the
   //! SweepSurface is build algebric composition
   //! of approximated location law and section law
   //! This option is Ok, if Section.Surface() methode
@@ -109,7 +109,7 @@ public:
   //!
   //! raise If Domain are infinite or Profile not set.
   Standard_EXPORT void Build(const occ::handle<GeomFill_SectionLaw>& Section,
-                             const GeomFill_ApproxStyle              Methode    = GeomFill_Location,
+                             const GeomFill_ApproxStyle              Methode    = GeomFill_ApproxStyle::GeomFill_Location,
                              const GeomAbs_Shape                     Continuity = GeomAbs_C2,
                              const int                               Degmax     = 10,
                              const int                               Segmax     = 30);

@@ -483,34 +483,34 @@ static int converting(Draw_Interpretor&, int n, const char** a)
   if (n < 3)
     return 1;
 
-  Convert_ParameterisationType Parameterisation = Convert_TgtThetaOver2;
+  Convert_ParameterisationType Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2;
   if (strcmp(a[n - 1], "qa") == 0)
   {
-    Parameterisation = Convert_QuasiAngular;
+    Parameterisation = Convert_ParameterisationType::Convert_QuasiAngular;
   }
   else if (strcmp(a[n - 1], "c1") == 0)
   {
-    Parameterisation = Convert_RationalC1;
+    Parameterisation = Convert_ParameterisationType::Convert_RationalC1;
   }
   else if (strcmp(a[n - 1], "s1") == 0)
   {
-    Parameterisation = Convert_TgtThetaOver2_1;
+    Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2_1;
   }
   else if (strcmp(a[n - 1], "s2") == 0)
   {
-    Parameterisation = Convert_TgtThetaOver2_2;
+    Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2_2;
   }
   else if (strcmp(a[n - 1], "s3") == 0)
   {
-    Parameterisation = Convert_TgtThetaOver2_3;
+    Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2_3;
   }
   else if (strcmp(a[n - 1], "s4") == 0)
   {
-    Parameterisation = Convert_TgtThetaOver2_4;
+    Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2_4;
   }
   else if (strcmp(a[n - 1], "po") == 0)
   {
-    Parameterisation = Convert_Polynomial;
+    Parameterisation = Convert_ParameterisationType::Convert_Polynomial;
   }
 
   occ::handle<Geom_Curve> GC = DrawTrSurf::GetCurve(a[2]);
@@ -552,58 +552,58 @@ static int tocanon(Draw_Interpretor& di, int n, const char** a)
   if (n < 3)
     return 1;
 
-  GeomConvert_ConvType aConvType = GeomConvert_Simplest;
-  GeomAbs_CurveType    aCurv     = GeomAbs_Line;
-  GeomAbs_SurfaceType  aSurf     = GeomAbs_Plane;
+  GeomConvert_ConvType aConvType = GeomConvert_ConvType::GeomConvert_Simplest;
+  GeomAbs_CurveType    aCurv     = GeomAbs_CurveType::GeomAbs_Line;
+  GeomAbs_SurfaceType  aSurf     = GeomAbs_SurfaceType::GeomAbs_Plane;
   if (n > 4)
   {
     if (strcmp(a[4], "sim") == 0)
     {
-      aConvType = GeomConvert_Simplest;
+      aConvType = GeomConvert_ConvType::GeomConvert_Simplest;
     }
     else if (strcmp(a[4], "gap") == 0)
     {
-      aConvType = GeomConvert_MinGap;
+      aConvType = GeomConvert_ConvType::GeomConvert_MinGap;
     }
     else if (strcmp(a[4], "lin") == 0)
     {
-      aConvType = GeomConvert_Target;
-      aCurv     = GeomAbs_Line;
+      aConvType = GeomConvert_ConvType::GeomConvert_Target;
+      aCurv     = GeomAbs_CurveType::GeomAbs_Line;
     }
     else if (strcmp(a[4], "cir") == 0)
     {
-      aConvType = GeomConvert_Target;
-      aCurv     = GeomAbs_Circle;
+      aConvType = GeomConvert_ConvType::GeomConvert_Target;
+      aCurv     = GeomAbs_CurveType::GeomAbs_Circle;
     }
     else if (strcmp(a[4], "ell") == 0)
     {
-      aConvType = GeomConvert_Target;
-      aCurv     = GeomAbs_Ellipse;
+      aConvType = GeomConvert_ConvType::GeomConvert_Target;
+      aCurv     = GeomAbs_CurveType::GeomAbs_Ellipse;
     }
     else if (strcmp(a[4], "pln") == 0)
     {
-      aConvType = GeomConvert_Target;
-      aSurf     = GeomAbs_Plane;
+      aConvType = GeomConvert_ConvType::GeomConvert_Target;
+      aSurf     = GeomAbs_SurfaceType::GeomAbs_Plane;
     }
     else if (strcmp(a[4], "cyl") == 0)
     {
-      aConvType = GeomConvert_Target;
-      aSurf     = GeomAbs_Cylinder;
+      aConvType = GeomConvert_ConvType::GeomConvert_Target;
+      aSurf     = GeomAbs_SurfaceType::GeomAbs_Cylinder;
     }
     else if (strcmp(a[4], "con") == 0)
     {
-      aConvType = GeomConvert_Target;
-      aSurf     = GeomAbs_Cone;
+      aConvType = GeomConvert_ConvType::GeomConvert_Target;
+      aSurf     = GeomAbs_SurfaceType::GeomAbs_Cone;
     }
     else if (strcmp(a[4], "sph") == 0)
     {
-      aConvType = GeomConvert_Target;
-      aSurf     = GeomAbs_Sphere;
+      aConvType = GeomConvert_ConvType::GeomConvert_Target;
+      aSurf     = GeomAbs_SurfaceType::GeomAbs_Sphere;
     }
     else if (strcmp(a[4], "tor") == 0)
     {
-      aConvType = GeomConvert_Target;
-      aSurf     = GeomAbs_Torus;
+      aConvType = GeomConvert_ConvType::GeomConvert_Target;
+      aSurf     = GeomAbs_SurfaceType::GeomAbs_Torus;
     }
   }
 
@@ -625,7 +625,7 @@ static int tocanon(Draw_Interpretor& di, int n, const char** a)
     {
       GeomConvert_SurfToAnaSurf aSurfToAna(GS);
       aSurfToAna.SetConvType(aConvType);
-      if (aConvType == GeomConvert_Target)
+      if (aConvType == GeomConvert_ConvType::GeomConvert_Target)
         aSurfToAna.SetTarget(aSurf);
       occ::handle<Geom_Surface> anAnaSurf = aSurfToAna.ConvertToAnalytical(tol);
       if (!anAnaSurf.IsNull())
@@ -642,7 +642,7 @@ static int tocanon(Draw_Interpretor& di, int n, const char** a)
   {
     GeomConvert_CurveToAnaCurve aCurvToAna(GC);
     aCurvToAna.SetConvType(aConvType);
-    if (aConvType == GeomConvert_Target)
+    if (aConvType == GeomConvert_ConvType::GeomConvert_Target)
       aCurvToAna.SetTarget(aCurv);
 
     occ::handle<Geom_Curve> anAnaCurv;

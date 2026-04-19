@@ -63,7 +63,7 @@ static bool IsLineOrCircle(const TopoDS_Edge& E, const TopoDS_Face& F);
 //=================================================================================================
 
 ChFi2d_Builder::ChFi2d_Builder()
-    : status(ChFi2d_NotPlanar)
+    : status(ChFi2d_ConstructionError::ChFi2d_NotPlanar)
 {
 }
 
@@ -73,7 +73,7 @@ ChFi2d_Builder::ChFi2d_Builder(const TopoDS_Face& F)
 {
   if (F.IsNull())
   {
-    status = ChFi2d_NoFace;
+    status = ChFi2d_ConstructionError::ChFi2d_NoFace;
     return;
   }
   TopLoc_Location Loc;
@@ -85,10 +85,10 @@ ChFi2d_Builder::ChFi2d_Builder(const TopoDS_Face& F)
     newFace = refFace = F;
     newFace.Orientation(TopAbs_FORWARD);
     BRepLib::BuildCurves3d(newFace);
-    status = ChFi2d_Ready;
+    status = ChFi2d_ConstructionError::ChFi2d_Ready;
   }
   else
-    status = ChFi2d_NotPlanar;
+    status = ChFi2d_ConstructionError::ChFi2d_NotPlanar;
 } // ChFi2d_Builder
 
 //=================================================================================================
@@ -97,7 +97,7 @@ void ChFi2d_Builder::Init(const TopoDS_Face& F)
 {
   if (F.IsNull())
   {
-    status = ChFi2d_NoFace;
+    status = ChFi2d_ConstructionError::ChFi2d_NoFace;
     return;
   }
   fillets.Clear();
@@ -111,10 +111,10 @@ void ChFi2d_Builder::Init(const TopoDS_Face& F)
   {
     newFace = refFace = F;
     newFace.Orientation(TopAbs_FORWARD);
-    status = ChFi2d_Ready;
+    status = ChFi2d_ConstructionError::ChFi2d_Ready;
   }
   else
-    status = ChFi2d_NotPlanar;
+    status = ChFi2d_ConstructionError::ChFi2d_NotPlanar;
 } // Init
 
 //=================================================================================================
@@ -123,7 +123,7 @@ void ChFi2d_Builder::Init(const TopoDS_Face& RefFace, const TopoDS_Face& ModFace
 {
   if (RefFace.IsNull() || ModFace.IsNull())
   {
-    status = ChFi2d_NoFace;
+    status = ChFi2d_ConstructionError::ChFi2d_NoFace;
     return;
   }
   fillets.Clear();
@@ -135,14 +135,14 @@ void ChFi2d_Builder::Init(const TopoDS_Face& RefFace, const TopoDS_Face& ModFace
   //  if (!surf->IsKind(STANDARD_TYPE(Geom_Plane))) {
   if (!BRep_Tool::Surface(RefFace, loc)->IsKind(STANDARD_TYPE(Geom_Plane)))
   {
-    status = ChFi2d_NotPlanar;
+    status = ChFi2d_ConstructionError::ChFi2d_NotPlanar;
     return;
   }
 
   refFace = RefFace;
   newFace = ModFace;
   newFace.Orientation(TopAbs_FORWARD);
-  status = ChFi2d_Ready;
+  status = ChFi2d_ConstructionError::ChFi2d_Ready;
 
   // Research in newFace all the edges which not appear in RefFace
   // The sequence newEdges will contains this edges.
@@ -185,7 +185,7 @@ void ChFi2d_Builder::Init(const TopoDS_Face& RefFace, const TopoDS_Face& ModFace
       }
       else
       {
-        status = ChFi2d_InitialisationError;
+        status = ChFi2d_ConstructionError::ChFi2d_InitialisationError;
         return;
       } // else ...
     } // this edge is ...
@@ -237,30 +237,30 @@ TopoDS_Edge ChFi2d_Builder::AddFillet(const TopoDS_Vertex& V, const double Radiu
   TopoDS_Edge adjEdge1, adjEdge2, basisEdge1, basisEdge2;
   TopoDS_Edge adjEdge1Mod, adjEdge2Mod, fillet;
   status = ChFi2d::FindConnectedEdges(newFace, V, adjEdge1, adjEdge2);
-  if (status == ChFi2d_ConnexionError)
+  if (status == ChFi2d_ConstructionError::ChFi2d_ConnexionError)
     return fillet;
 
   if (IsAFillet(adjEdge1) || IsAChamfer(adjEdge1) || IsAFillet(adjEdge2) || IsAChamfer(adjEdge2))
   {
-    status = ChFi2d_NotAuthorized;
+    status = ChFi2d_ConstructionError::ChFi2d_NotAuthorized;
     return fillet;
   } //  if (IsAFillet ...
 
   if (!IsLineOrCircle(adjEdge1, newFace) || !IsLineOrCircle(adjEdge2, newFace))
   {
-    status = ChFi2d_NotAuthorized;
+    status = ChFi2d_ConstructionError::ChFi2d_NotAuthorized;
     return fillet;
   } //  if (!IsLineOrCircle ...
 
   ComputeFillet(V, adjEdge1, adjEdge2, Radius, adjEdge1Mod, adjEdge2Mod, fillet);
-  if (status == ChFi2d_IsDone || status == ChFi2d_FirstEdgeDegenerated
-      || status == ChFi2d_LastEdgeDegenerated || status == ChFi2d_BothEdgesDegenerated)
+  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone || status == ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
+      || status == ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated || status == ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
   {
     BuildNewWire(adjEdge1, adjEdge2, adjEdge1Mod, fillet, adjEdge2Mod);
     basisEdge1 = BasisEdge(adjEdge1);
     basisEdge2 = BasisEdge(adjEdge2);
     UpDateHistory(basisEdge1, basisEdge2, adjEdge1Mod, adjEdge2Mod, fillet, 1);
-    status = ChFi2d_IsDone;
+    status = ChFi2d_ConstructionError::ChFi2d_IsDone;
     return TopoDS::Edge(fillets.Value(fillets.Length()));
   }
   return fillet;
@@ -301,7 +301,7 @@ TopoDS_Vertex ChFi2d_Builder::RemoveFillet(const TopoDS_Edge& Fillet)
 
   TopoDS_Edge adjEdge1, adjEdge2;
   status = ChFi2d::FindConnectedEdges(newFace, firstVertex, adjEdge1, adjEdge2);
-  if (status == ChFi2d_ConnexionError)
+  if (status == ChFi2d_ConstructionError::ChFi2d_ConnexionError)
     return commonVertex;
 
   TopoDS_Edge basisEdge1, basisEdge2, E1, E2;
@@ -313,7 +313,7 @@ TopoDS_Vertex ChFi2d_Builder::RemoveFillet(const TopoDS_Edge& Fillet)
     E1 = adjEdge1;
   basisEdge1 = BasisEdge(E1);
   status     = ChFi2d::FindConnectedEdges(newFace, lastVertex, adjEdge1, adjEdge2);
-  if (status == ChFi2d_ConnexionError)
+  if (status == ChFi2d_ConstructionError::ChFi2d_ConnexionError)
     return commonVertex;
   if (adjEdge1.IsSame(Fillet))
     E2 = adjEdge2;
@@ -324,19 +324,19 @@ TopoDS_Vertex ChFi2d_Builder::RemoveFillet(const TopoDS_Edge& Fillet)
   bool          hasConnection = ChFi2d::CommonVertex(basisEdge1, basisEdge2, commonVertex);
   if (!hasConnection)
   {
-    status = ChFi2d_ConnexionError;
+    status = ChFi2d_ConstructionError::ChFi2d_ConnexionError;
     return commonVertex;
   }
   hasConnection = ChFi2d::CommonVertex(E1, Fillet, connectionE1Fillet);
   if (!hasConnection)
   {
-    status = ChFi2d_ConnexionError;
+    status = ChFi2d_ConstructionError::ChFi2d_ConnexionError;
     return commonVertex;
   }
   hasConnection = ChFi2d::CommonVertex(E2, Fillet, connectionE2Fillet);
   if (!hasConnection)
   {
-    status = ChFi2d_ConnexionError;
+    status = ChFi2d_ConstructionError::ChFi2d_ConnexionError;
     return commonVertex;
   }
 
@@ -467,16 +467,16 @@ void ChFi2d_Builder::ComputeFillet(const TopoDS_Vertex& V,
   TopoDS_Vertex newExtr1, newExtr2;
   bool          Degen1, Degen2;
   Fillet = BuildFilletEdge(V, E1, E2, Radius, newExtr1, newExtr2);
-  if (status != ChFi2d_IsDone)
+  if (status != ChFi2d_ConstructionError::ChFi2d_IsDone)
     return;
   TrimE1 = BuildNewEdge(E1, V, newExtr1, Degen1);
   TrimE2 = BuildNewEdge(E2, V, newExtr2, Degen2);
   if (Degen1 && Degen2)
-    status = ChFi2d_BothEdgesDegenerated;
+    status = ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated;
   if (Degen1 && !Degen2)
-    status = ChFi2d_FirstEdgeDegenerated;
+    status = ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated;
   if (!Degen1 && Degen2)
-    status = ChFi2d_LastEdgeDegenerated;
+    status = ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated;
 } // ComputeFillet
 
 //=================================================================================================
@@ -516,7 +516,7 @@ void ChFi2d_Builder::BuildNewWire(const TopoDS_Edge& OldE1,
     {
       if (theEdge == OldE1)
       {
-        if (status != ChFi2d_FirstEdgeDegenerated && status != ChFi2d_BothEdgesDegenerated)
+        if (status != ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
         {
           B.Add(newWire, E1);
         }
@@ -528,7 +528,7 @@ void ChFi2d_Builder::BuildNewWire(const TopoDS_Edge& OldE1,
       } // if (theEdge == ...
       else
       {
-        if (status != ChFi2d_LastEdgeDegenerated && status != ChFi2d_BothEdgesDegenerated)
+        if (status != ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
         {
           B.Add(newWire, E2);
         }
@@ -611,7 +611,7 @@ TopoDS_Edge ChFi2d_Builder::BuildNewEdge(const TopoDS_Edge&   E1,
   }
   TopoDS_Edge       anEdge;
   BRepLib_EdgeError error = makeEdge.Error();
-  if (error == BRepLib_LineThroughIdenticPoints || PonctualEdge)
+  if (error == BRepLib_EdgeError::BRepLib_LineThroughIdenticPoints || PonctualEdge)
   {
     IsDegenerated = true;
     anEdge        = E1;
@@ -644,7 +644,7 @@ void ChFi2d_Builder::UpDateHistory(const TopoDS_Edge& E1,
   }
 
   history.UnBind(E1);
-  if (status != ChFi2d_FirstEdgeDegenerated && status != ChFi2d_BothEdgesDegenerated)
+  if (status != ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
   {
     if (!E1.IsSame(TrimE1))
     {
@@ -652,7 +652,7 @@ void ChFi2d_Builder::UpDateHistory(const TopoDS_Edge& E1,
     }
   }
   history.UnBind(E2);
-  if (status != ChFi2d_LastEdgeDegenerated && status != ChFi2d_BothEdgesDegenerated)
+  if (status != ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
   {
     if (!E2.IsSame(TrimE2))
     {
@@ -839,7 +839,7 @@ TopoDS_Edge ChFi2d_Builder::BuildFilletEdge(const TopoDS_Vertex& V,
     if (!Ve4.IsOpposite(Ve3, Precision::Angular()))
     {
       // There is a true tangency point and the calculation is stopped
-      status = ChFi2d_TangencyError;
+      status = ChFi2d_ConstructionError::ChFi2d_TangencyError;
       return filletEdge;
     }
     // Otherwise this is a downcast point, and the calculation is continued
@@ -924,12 +924,12 @@ TopoDS_Edge ChFi2d_Builder::BuildFilletEdge(const TopoDS_Vertex& V,
                                  Tol);
   if (!Fillet.IsDone() || Fillet.NbSolutions() == 0)
   {
-    status = ChFi2d_ComputationError;
+    status = ChFi2d_ConstructionError::ChFi2d_ComputationError;
     return filletEdge;
   }
   else if (Fillet.NbSolutions() >= 1)
   {
-    status               = ChFi2d_IsDone;
+    status               = ChFi2d_ConstructionError::ChFi2d_IsDone;
     int           numsol = 1;
     int           nsol   = 1;
     TopoDS_Vertex Vertex1, Vertex2;
@@ -999,7 +999,7 @@ TopoDS_Edge ChFi2d_Builder::BuildFilletEdge(const TopoDS_Vertex& V,
     }
     if (!inside)
     {
-      status = ChFi2d_ComputationError;
+      status = ChFi2d_ConstructionError::ChFi2d_ComputationError;
       return filletEdge;
     }
 
@@ -1018,7 +1018,7 @@ TopoDS_Edge ChFi2d_Builder::BuildFilletEdge(const TopoDS_Vertex& V,
     }
     if (!inside)
     {
-      status = ChFi2d_ComputationError;
+      status = ChFi2d_ConstructionError::ChFi2d_ComputationError;
       return filletEdge;
     }
 

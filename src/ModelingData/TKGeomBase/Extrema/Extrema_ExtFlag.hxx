@@ -17,7 +17,7 @@
 #ifndef _Extrema_ExtFlag_HeaderFile
 #define _Extrema_ExtFlag_HeaderFile
 
-enum Extrema_ExtFlag
+enum class Extrema_ExtFlag
 {
   Extrema_ExtFlag_MIN,
   Extrema_ExtFlag_MAX,

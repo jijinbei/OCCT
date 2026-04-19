@@ -40,7 +40,7 @@
 //! bool isValid = aCh.IsValid();
 //! 2. Methods SetData and Perform
 //! BRepAlgoAPI_Check aCh;
-//! aCh.SetData(theS1, theS2, BOPAlgo_FUSE, false);
+//! aCh.SetData(theS1, theS2, BOPAlgo_Operation::BOPAlgo_FUSE, false);
 //! aCh.Perform();
 //! bool isValid = aCh.IsValid();
 //!
@@ -85,7 +85,7 @@ public: //! @name Constructors
   Standard_EXPORT BRepAlgoAPI_Check(
     const TopoDS_Shape&          theS1,
     const TopoDS_Shape&          theS2,
-    const BOPAlgo_Operation      theOp    = BOPAlgo_UNKNOWN,
+    const BOPAlgo_Operation      theOp    = BOPAlgo_Operation::BOPAlgo_UNKNOWN,
     const bool                   bTestSE  = true,
     const bool                   bTestSI  = true,
     const Message_ProgressRange& theRange = Message_ProgressRange());
@@ -122,7 +122,7 @@ public: //! @name Initializing the algorithm
   //!                       on self-interference or not; by default it is set to TRUE;
   void SetData(const TopoDS_Shape&     theS1,
                const TopoDS_Shape&     theS2,
-               const BOPAlgo_Operation theOp   = BOPAlgo_UNKNOWN,
+               const BOPAlgo_Operation theOp   = BOPAlgo_Operation::BOPAlgo_UNKNOWN,
                const bool              bTestSE = true,
                const bool              bTestSI = true)
   {

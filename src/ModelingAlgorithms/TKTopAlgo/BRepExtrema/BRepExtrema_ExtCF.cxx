@@ -36,7 +36,7 @@ BRepExtrema_ExtCF::BRepExtrema_ExtCF(const TopoDS_Edge& E, const TopoDS_Face& F)
 void BRepExtrema_ExtCF::Initialize(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
   BRepAdaptor_Surface Surf(F);
-  if (Surf.GetType() == GeomAbs_OtherSurface || !BRep_Tool::IsGeometric(E))
+  if (Surf.GetType() == GeomAbs_SurfaceType::GeomAbs_OtherSurface || !BRep_Tool::IsGeometric(E))
     return; // protect against non-geometric type (e.g. triangulation)
   BRepAdaptor_Curve aC(E);
   myHS = new BRepAdaptor_Surface(Surf);

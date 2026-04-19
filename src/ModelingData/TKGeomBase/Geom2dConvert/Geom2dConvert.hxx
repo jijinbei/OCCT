@@ -150,10 +150,10 @@ public:
   //! Standard_ConstructionError:
   //! -   if C is a complete circle or ellipse, and if
   //! Parameterisation is not equal to
-  //! Convert_TgtThetaOver2 or to Convert_RationalC1, or
+  //! Convert_ParameterisationType::Convert_TgtThetaOver2 or to Convert_ParameterisationType::Convert_RationalC1, or
   //! -   if C is a trimmed circle or ellipse and if
   //! Parameterisation is equal to
-  //! Convert_TgtThetaOver2_1 and if U2 - U1 >
+  //! Convert_ParameterisationType::Convert_TgtThetaOver2_1 and if U2 - U1 >
   //! 0.9999 * Pi where U1 and U2 are
   //! respectively the first and the last parameters of the
   //! trimmed curve (this method of parameterization
@@ -161,14 +161,14 @@ public:
   //! half-ellipse, for example), or
   //! -   if C is a trimmed circle or ellipse and
   //! Parameterisation is equal to
-  //! Convert_TgtThetaOver2_2 and U2 - U1 >
+  //! Convert_ParameterisationType::Convert_TgtThetaOver2_2 and U2 - U1 >
   //! 1.9999 * Pi where U1 and U2 are
   //! respectively the first and the last parameters of the
   //! trimmed curve (this method of parameterization
   //! cannot be used to convert a quasi-complete circle or ellipse).
   Standard_EXPORT static occ::handle<Geom2d_BSplineCurve> CurveToBSplineCurve(
     const occ::handle<Geom2d_Curve>&   C,
-    const Convert_ParameterisationType Parameterisation = Convert_TgtThetaOver2);
+    const Convert_ParameterisationType Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   //! This Method concatenates G1 the ArrayOfCurves as far
   //! as it is possible.

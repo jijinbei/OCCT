@@ -164,28 +164,28 @@ int bop(Draw_Interpretor& di, int n, const char** a)
 
 int bopcommon(Draw_Interpretor& di, int n, const char** a)
 {
-  return bopsmt(di, n, a, BOPAlgo_COMMON);
+  return bopsmt(di, n, a, BOPAlgo_Operation::BOPAlgo_COMMON);
 }
 
 //=================================================================================================
 
 int bopfuse(Draw_Interpretor& di, int n, const char** a)
 {
-  return bopsmt(di, n, a, BOPAlgo_FUSE);
+  return bopsmt(di, n, a, BOPAlgo_Operation::BOPAlgo_FUSE);
 }
 
 //=================================================================================================
 
 int bopcut(Draw_Interpretor& di, int n, const char** a)
 {
-  return bopsmt(di, n, a, BOPAlgo_CUT);
+  return bopsmt(di, n, a, BOPAlgo_Operation::BOPAlgo_CUT);
 }
 
 //=================================================================================================
 
 int boptuc(Draw_Interpretor& di, int n, const char** a)
 {
-  return bopsmt(di, n, a, BOPAlgo_CUT21);
+  return bopsmt(di, n, a, BOPAlgo_Operation::BOPAlgo_CUT21);
 }
 
 //=================================================================================================
@@ -331,28 +331,28 @@ int bopsection(Draw_Interpretor& di, int n, const char** a)
 
 int bcommon(Draw_Interpretor& di, int n, const char** a)
 {
-  return bsmt(di, n, a, BOPAlgo_COMMON);
+  return bsmt(di, n, a, BOPAlgo_Operation::BOPAlgo_COMMON);
 }
 
 //=================================================================================================
 
 int bfuse(Draw_Interpretor& di, int n, const char** a)
 {
-  return bsmt(di, n, a, BOPAlgo_FUSE);
+  return bsmt(di, n, a, BOPAlgo_Operation::BOPAlgo_FUSE);
 }
 
 //=================================================================================================
 
 int bcut(Draw_Interpretor& di, int n, const char** a)
 {
-  return bsmt(di, n, a, BOPAlgo_CUT);
+  return bsmt(di, n, a, BOPAlgo_Operation::BOPAlgo_CUT);
 }
 
 //=================================================================================================
 
 int btuc(Draw_Interpretor& di, int n, const char** a)
 {
-  return bsmt(di, n, a, BOPAlgo_CUT21);
+  return bsmt(di, n, a, BOPAlgo_Operation::BOPAlgo_CUT21);
 }
 
 //=================================================================================================

@@ -20,7 +20,7 @@
 
 inline BRepFeat_MakeCylindricalHole::BRepFeat_MakeCylindricalHole()
     : myAxDef(false),
-      myStatus(BRepFeat_NoError),
+      myStatus(BRepFeat_Status::BRepFeat_NoError),
       myIsBlind(false),
       myValidate(false)
 {

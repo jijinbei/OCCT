@@ -274,17 +274,17 @@ void ShapeFix_EdgeProjAux::Init2d(const double preci)
       theSurface->Bounds(uf, ul, vf, vl);
       // Correct surface limits for extrusion/revolution surfaces based on hyperbola
       // 23 is ln(1.0e+10)
-      if (SA.GetType() == GeomAbs_SurfaceOfExtrusion)
+      if (SA.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
       {
-        if (SA.BasisCurve()->GetType() == GeomAbs_Hyperbola)
+        if (SA.BasisCurve()->GetType() == GeomAbs_CurveType::GeomAbs_Hyperbola)
         {
           uf = std::max(uf, -23.);
           ul = std::min(ul, 23.);
         }
       }
-      if (SA.GetType() == GeomAbs_SurfaceOfRevolution)
+      if (SA.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
       {
-        if (SA.BasisCurve()->GetType() == GeomAbs_Hyperbola)
+        if (SA.BasisCurve()->GetType() == GeomAbs_CurveType::GeomAbs_Hyperbola)
         {
           vf = std::max(vf, -23.);
           vl = std::min(vl, 23.);

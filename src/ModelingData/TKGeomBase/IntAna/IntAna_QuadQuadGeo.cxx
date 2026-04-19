@@ -327,7 +327,7 @@ double EstimDist(const gp_Cone& theCon1, const gp_Cone& theCon2)
 IntAna_QuadQuadGeo::IntAna_QuadQuadGeo()
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -364,7 +364,7 @@ IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Pln& P1,
                                        const double  Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -411,7 +411,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln& P1,
   if (aMVD <= TolAng)
   {
     // normalles are collinear - planes are same or parallel
-    typeres = (std::abs(dist1) <= Tol && std::abs(dist2) <= Tol) ? IntAna_Same : IntAna_Empty;
+    typeres = (std::abs(dist1) <= Tol && std::abs(dist2) <= Tol) ? IntAna_ResultType::IntAna_Same : IntAna_ResultType::IntAna_Empty;
   }
   else
   {
@@ -440,7 +440,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln& P1,
 
     pt1     = gp_Pnt((X1 + X2) * 0.5, (Y1 + Y2) * 0.5, (Z1 + Z2) * 0.5);
     dir1    = gp_Dir(vd);
-    typeres = IntAna_Line;
+    typeres = IntAna_ResultType::IntAna_Line;
     nbint   = 1;
     //
     //-------------------------------------------------------
@@ -518,7 +518,7 @@ IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Pln&      P,
                                        const double       H)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -603,7 +603,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&      P,
     // The result of the Plane-Cylinder intersection is of line type.
     // There are 1 or 2 lines
 
-    typeres = IntAna_Line;
+    typeres = IntAna_ResultType::IntAna_Line;
     omega.SetCoord(X - dist * A, Y - dist * B, Z - dist * C);
 
     if (std::abs(std::abs(dist) - radius) < Tol)
@@ -670,12 +670,12 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&      P,
     }
     //  else nbint = 0
 
-    // debug JAG : nbint = 0 should be replaced by typeres = IntAna_Empty
+    // debug JAG : nbint = 0 should be replaced by typeres = IntAna_ResultType::IntAna_Empty
     // and not just be removed...
 
     else
     {
-      typeres = IntAna_Empty;
+      typeres = IntAna_ResultType::IntAna_Empty;
     }
   }
   else
@@ -692,7 +692,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&      P,
     {
 
       // Construct a circle with the X and Y axes of the cylinder
-      typeres = IntAna_Circle;
+      typeres = IntAna_ResultType::IntAna_Circle;
 
       dir1   = axec.Direction(); // Z axis
       dir2   = Cl.Position().XDirection();
@@ -702,7 +702,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&      P,
     {
 
       // construct an ellipse
-      typeres = IntAna_Ellipse;
+      typeres = IntAna_ResultType::IntAna_Ellipse;
       cost    = std::abs(axec.Direction().XYZ().Dot(normp));
       axex    = axey.Crossed(normp);
 
@@ -725,7 +725,7 @@ IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Pln&  P,
                                        const double   Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -800,7 +800,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
 
     if (std::abs(costa) < Tolang)
     { // plane parallel to the generatrix
-      typeres = IntAna_Line;
+      typeres = IntAna_ResultType::IntAna_Line;
       nbint   = 1;
       gp_XYZ ptonaxe(apex.XYZ() + 10. * (Co.Axis().Direction().XYZ()));
       // point on the axis of the cone on the positive z side
@@ -812,7 +812,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
     }
     else if (cost < sina)
     { // plane "interior" to the cone
-      typeres = IntAna_Line;
+      typeres = IntAna_ResultType::IntAna_Line;
       nbint   = 2;
       pt1     = apex;
       pt2     = apex;
@@ -822,7 +822,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
     }
     else
     { // plane "exterior" to the cone
-      typeres = IntAna_Point;
+      typeres = IntAna_ResultType::IntAna_Point;
       nbint   = 1;
       pt1     = apex;
     }
@@ -837,7 +837,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
     {
       // The plane contains the direction of the cone axis. The solution is
       // the hyperbola
-      typeres = IntAna_Hyperbola;
+      typeres = IntAna_ResultType::IntAna_Hyperbola;
       nbint   = 2;
       pt1.SetXYZ(apex.XYZ() - dist * normp);
       pt2  = pt1;
@@ -867,7 +867,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
 
       if (std::abs(costa) < Tolang)
       { // plane parallel to a generatrix
-        typeres     = IntAna_Parabola;
+        typeres     = IntAna_ResultType::IntAna_Parabola;
         nbint       = 1;
         deltacenter = distance / 2. / cosa;
         axex.Normalize();
@@ -878,7 +878,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
       }
       else if (sint < Tolang)
       { // plane perpendicular to the axis
-        typeres = IntAna_Circle;
+        typeres = IntAna_ResultType::IntAna_Circle;
         nbint   = 1;
         pt1     = center;
         dir1    = Co.Position().Direction();
@@ -887,7 +887,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
       }
       else if (cost < sina)
       {
-        typeres = IntAna_Hyperbola;
+        typeres = IntAna_ResultType::IntAna_Hyperbola;
         nbint   = 2;
         axex.Normalize();
 
@@ -901,7 +901,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
       }
       else
       { // here cost > sina
-        typeres       = IntAna_Ellipse;
+        typeres       = IntAna_ResultType::IntAna_Ellipse;
         nbint         = 1;
         double radius = cost * sina * cosa * distance / (cost * cost - sina * sina);
         deltacenter   = sint * sina * sina * distance / (cost * cost - sina * sina);
@@ -920,7 +920,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
   //-- Return False -> Treatment by biparametric method
   static double EllipseLimit   = 1.0E+9; // OCC513(apo) 1000000
   static double HyperbolaLimit = 2.0E+6; // OCC537(apo) 50000
-  if (typeres == IntAna_Ellipse && nbint >= 1)
+  if (typeres == IntAna_ResultType::IntAna_Ellipse && nbint >= 1)
   {
     if (std::abs(param1) > EllipseLimit || std::abs(param1bis) > EllipseLimit)
     {
@@ -928,7 +928,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
       return;
     }
   }
-  if (typeres == IntAna_Hyperbola && nbint >= 2)
+  if (typeres == IntAna_ResultType::IntAna_Hyperbola && nbint >= 2)
   {
     if (std::abs(param2) > HyperbolaLimit || std::abs(param2bis) > HyperbolaLimit)
     {
@@ -936,7 +936,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
       return;
     }
   }
-  if (typeres == IntAna_Hyperbola && nbint >= 1)
+  if (typeres == IntAna_ResultType::IntAna_Hyperbola && nbint >= 1)
   {
     if (std::abs(param1) > HyperbolaLimit || std::abs(param1bis) > HyperbolaLimit)
     {
@@ -953,7 +953,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln&  P,
 IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Pln& P, const gp_Sphere& S)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -981,8 +981,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln& P, const gp_Sphere& S)
   double X, Y, Z;
 
   nbint = 0;
-  // debug JAG : on met typeres = IntAna_Empty par defaut...
-  typeres = IntAna_Empty;
+  // debug JAG : on met typeres = IntAna_ResultType::IntAna_Empty par defaut...
+  typeres = IntAna_ResultType::IntAna_Empty;
 
   P.Coefficients(A, B, C, D);
   S.Location().Coord(X, Y, Z);
@@ -995,14 +995,14 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln& P, const gp_Sphere& S)
     // we have a single solution: the projection point of the sphere center
     // onto the plane
     nbint   = 1;
-    typeres = IntAna_Point;
+    typeres = IntAna_ResultType::IntAna_Point;
     pt1.SetCoord(X - dist * A, Y - dist * B, Z - dist * C);
   }
   else if (std::abs(dist) < radius)
   {
     // we have a circle solution
     nbint   = 1;
-    typeres = IntAna_Circle;
+    typeres = IntAna_ResultType::IntAna_Circle;
     pt1.SetCoord(X - dist * A, Y - dist * B, Z - dist * C);
     dir1 = P.Axis().Direction();
     if (!P.Direct())
@@ -1021,7 +1021,7 @@ IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Cylinder& Cyl1,
                                        const double       Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -1067,11 +1067,11 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl1, const gp_Cylinder& Cyl
     {
       if (RmR <= Tol)
       {
-        typeres = IntAna_Same;
+        typeres = IntAna_ResultType::IntAna_Same;
       }
       else
       {
-        typeres = IntAna_Empty;
+        typeres = IntAna_ResultType::IntAna_Empty;
       }
     }
     else
@@ -1092,13 +1092,13 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl1, const gp_Cylinder& Cyl
       double R1pR2 = R1 + R2;
       if (DistA1A2 > (R1pR2 + Tol))
       {
-        typeres = IntAna_Empty;
+        typeres = IntAna_ResultType::IntAna_Empty;
         nbint   = 0;
       }
       else if ((R1pR2 - DistA1A2) <= RealSmall())
       {
         //-- 1 Tangent line -------------------------------------OK
-        typeres = IntAna_Line;
+        typeres = IntAna_ResultType::IntAna_Line;
 
         nbint           = 1;
         dir1            = DirCyl;
@@ -1110,7 +1110,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl1, const gp_Cylinder& Cyl
       else if (DistA1A2 > RmR)
       {
         //-- 2 lines ---------------------------------------------OK
-        typeres = IntAna_Line;
+        typeres = IntAna_ResultType::IntAna_Line;
         nbint   = 2;
         dir1    = DirCyl;
         dir2    = dir1;
@@ -1192,7 +1192,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl1, const gp_Cylinder& Cyl
       else if (DistA1A2 > (RmR - Tol))
       {
         //-- 1 Tangent ------------------------------------------OK
-        typeres       = IntAna_Line;
+        typeres       = IntAna_ResultType::IntAna_Line;
         nbint         = 1;
         dir1          = DirCyl;
         double R1_RmR = R1 / RmR;
@@ -1207,7 +1207,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl1, const gp_Cylinder& Cyl
       else
       {
         nbint   = 0;
-        typeres = IntAna_Empty;
+        typeres = IntAna_ResultType::IntAna_Empty;
       }
     }
   }
@@ -1217,7 +1217,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl1, const gp_Cylinder& Cyl
     {
       //-- PI/2 between the two axis   and   Intersection
       //-- and identical radius
-      typeres        = IntAna_Ellipse;
+      typeres        = IntAna_ResultType::IntAna_Ellipse;
       nbint          = 2;
       gp_Dir DirCyl1 = Cyl1.Position().Direction();
       gp_Dir DirCyl2 = Cyl2.Position().Direction();
@@ -1230,7 +1230,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl1, const gp_Cylinder& Cyl
 
       if (A == 0.0 || B == 0.0)
       {
-        typeres = IntAna_Same;
+        typeres = IntAna_ResultType::IntAna_Same;
         return;
       }
 
@@ -1260,7 +1260,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl1, const gp_Cylinder& Cyl
     {
       if (std::abs(DistA1A2 - Cyl1.Radius() - Cyl2.Radius()) < Tol)
       {
-        typeres = IntAna_Point;
+        typeres = IntAna_ResultType::IntAna_Point;
         double d, p1, p2;
 
         gp_Dir D1 = Cyl1.Axis().Direction();
@@ -1282,7 +1282,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl1, const gp_Cylinder& Cyl
       }
       else
       {
-        typeres = IntAna_NoGeometricSolution;
+        typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
       }
     }
   }
@@ -1293,7 +1293,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl1, const gp_Cylinder& Cyl
 IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Cylinder& Cyl, const gp_Cone& Con, const double Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -1327,11 +1327,11 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl, const gp_Cone& Con, con
     dir1 = dir2 = dir;
     param1 = param2 = Cyl.Radius();
     nbint           = 2;
-    typeres         = IntAna_Circle;
+    typeres         = IntAna_ResultType::IntAna_Circle;
   }
   else
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
   }
 }
 
@@ -1342,7 +1342,7 @@ IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Cylinder& Cyl,
                                        const double       Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -1371,14 +1371,14 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl, const gp_Sphere& Sph, c
   {
     if (Sph.Radius() < Cyl.Radius())
     {
-      typeres = IntAna_Empty;
+      typeres = IntAna_ResultType::IntAna_Empty;
     }
     else
     {
       double dist = std::sqrt(Sph.Radius() * Sph.Radius() - Cyl.Radius() * Cyl.Radius());
       gp_Dir dir  = Cyl.Position().Direction();
       dir1 = dir2 = dir;
-      typeres     = IntAna_Circle;
+      typeres     = IntAna_ResultType::IntAna_Circle;
       pt1.SetCoord(Pt.X() + dist * dir.X(), Pt.Y() + dist * dir.Y(), Pt.Z() + dist * dir.Z());
       nbint  = 1;
       param1 = Cyl.Radius();
@@ -1392,7 +1392,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl, const gp_Sphere& Sph, c
   }
   else
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
   }
 }
 
@@ -1401,7 +1401,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl, const gp_Sphere& Sph, c
 IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Cone& Con1, const gp_Cone& Con2, const double Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -1479,7 +1479,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     {
       if (fabs(d) < TOL_APEX_CONF)
       {
-        typeres = IntAna_Point;
+        typeres = IntAna_ResultType::IntAna_Point;
         nbint   = 1;
         pt1     = P;
         return;
@@ -1493,17 +1493,17 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
       param2 = std::abs(x * tg1);
       dir1 = dir2 = D;
       nbint       = 2;
-      typeres     = IntAna_Circle;
+      typeres     = IntAna_ResultType::IntAna_Circle;
     }
     else
     {
       if (fabs(d) < TOL_APEX_CONF)
       {
-        typeres = IntAna_Same;
+        typeres = IntAna_ResultType::IntAna_Same;
       }
       else
       {
-        typeres = IntAna_Circle;
+        typeres = IntAna_ResultType::IntAna_Circle;
         nbint   = 1;
         x       = d * 0.5;
         pt1.SetCoord(P.X() + x * D.X(), P.Y() + x * D.Y(), P.Z() + x * D.Z());
@@ -1549,8 +1549,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     {
       switch (INTER_QUAD_PLN.TypeInter())
       {
-        case IntAna_Ellipse: {
-          typeres    = IntAna_Ellipse;
+        case IntAna_ResultType::IntAna_Ellipse: {
+          typeres    = IntAna_ResultType::IntAna_Ellipse;
           gp_Elips E = INTER_QUAD_PLN.Ellipse(1);
           pt1        = E.Location();
           dir1       = E.Position().Direction();
@@ -1560,8 +1560,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint      = 1;
           break;
         }
-        case IntAna_Circle: {
-          typeres   = IntAna_Circle;
+        case IntAna_ResultType::IntAna_Circle: {
+          typeres   = IntAna_ResultType::IntAna_Circle;
           gp_Circ C = INTER_QUAD_PLN.Circle(1);
           pt1       = C.Location();
           dir1      = C.Position().XDirection();
@@ -1570,8 +1570,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint     = 1;
           break;
         }
-        case IntAna_Hyperbola: {
-          typeres   = IntAna_Hyperbola;
+        case IntAna_ResultType::IntAna_Hyperbola: {
+          typeres   = IntAna_ResultType::IntAna_Hyperbola;
           gp_Hypr H = INTER_QUAD_PLN.Hyperbola(1);
           pt1 = pt2 = H.Location();
           dir1      = H.Position().Direction();
@@ -1581,8 +1581,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint                 = 2;
           break;
         }
-        case IntAna_Line: {
-          typeres  = IntAna_Line;
+        case IntAna_ResultType::IntAna_Line: {
+          typeres  = IntAna_ResultType::IntAna_Line;
           gp_Lin H = INTER_QUAD_PLN.Line(1);
           pt1 = pt2 = H.Location();
           dir1 = dir2 = H.Position().Direction();
@@ -1592,7 +1592,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           break;
         }
         default:
-          typeres = IntAna_NoGeometricSolution;
+          typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
       }
     }
   }
@@ -1658,7 +1658,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     //
     if (aRD2 > (aR2 + Tol))
     {
-      typeres = IntAna_Empty; // nothing
+      typeres = IntAna_ResultType::IntAna_Empty; // nothing
       return;
     }
     //
@@ -1701,7 +1701,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     aIntr.Perform(aPln1, aPln2, Tol, Tol);
     if (!aIntr.IsDone() || 0 == aIntr.NbSolutions())
     {
-      typeres = IntAna_NoGeometricSolution;
+      typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
       return;
     }
     //
@@ -1715,7 +1715,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     //
     // Final part
     //
-    typeres = IntAna_Line;
+    typeres = IntAna_ResultType::IntAna_Line;
     //
     param1    = 0.;
     param2    = 0.;
@@ -1757,7 +1757,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     gp_Pnt p = ElSLib::Value(u, v, Con2);
     if (aPApex1.SquareDistance(p) > tol2)
     {
-      typeres = IntAna_NoGeometricSolution;
+      typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
       return;
     }
     //
@@ -1765,7 +1765,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     p = ElSLib::Value(u, v, Con1);
     if (aPApex2.SquareDistance(p) > tol2)
     {
-      typeres = IntAna_NoGeometricSolution;
+      typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
       return;
     }
 
@@ -1799,7 +1799,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     else if (aGen1.SquareDistance(aGen2) > tol2)
     {
       // Something wrong ???
-      typeres = IntAna_NoGeometricSolution;
+      typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
       return;
     }
     else
@@ -1827,8 +1827,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
     {
       switch (INTER_QUAD_PLN.TypeInter())
       {
-        case IntAna_Ellipse: {
-          typeres    = IntAna_Ellipse;
+        case IntAna_ResultType::IntAna_Ellipse: {
+          typeres    = IntAna_ResultType::IntAna_Ellipse;
           gp_Elips E = INTER_QUAD_PLN.Ellipse(1);
           pt1        = E.Location();
           dir1       = E.Position().Direction();
@@ -1838,8 +1838,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint      = 1;
           break;
         }
-        case IntAna_Circle: {
-          typeres   = IntAna_Circle;
+        case IntAna_ResultType::IntAna_Circle: {
+          typeres   = IntAna_ResultType::IntAna_Circle;
           gp_Circ C = INTER_QUAD_PLN.Circle(1);
           pt1       = C.Location();
           dir1      = C.Position().XDirection();
@@ -1848,8 +1848,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint     = 1;
           break;
         }
-        case IntAna_Parabola: {
-          typeres      = IntAna_Parabola;
+        case IntAna_ResultType::IntAna_Parabola: {
+          typeres      = IntAna_ResultType::IntAna_Parabola;
           gp_Parab Prb = INTER_QUAD_PLN.Parabola(1);
           pt1          = Prb.Location();
           dir1         = Prb.Position().Direction();
@@ -1858,8 +1858,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           nbint        = 1;
           break;
         }
-        case IntAna_Hyperbola: {
-          typeres   = IntAna_Hyperbola;
+        case IntAna_ResultType::IntAna_Hyperbola: {
+          typeres   = IntAna_ResultType::IntAna_Hyperbola;
           gp_Hypr H = INTER_QUAD_PLN.Hyperbola(1);
           pt1 = pt2 = H.Location();
           dir1      = H.Position().Direction();
@@ -1870,14 +1870,14 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
           break;
         }
         default:
-          typeres = IntAna_NoGeometricSolution;
+          typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
       }
     }
   }
 
   else
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
   }
 }
 
@@ -1886,7 +1886,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
 IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Sphere& Sph, const gp_Cone& Con, const double Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -1944,11 +1944,11 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph, const gp_Cone& Con, const
       int nbsol = Eq.NbSolutions();
       if (nbsol == 0)
       {
-        typeres = IntAna_Empty;
+        typeres = IntAna_ResultType::IntAna_Empty;
       }
       else
       {
-        typeres = IntAna_Circle;
+        typeres = IntAna_ResultType::IntAna_Circle;
         if (nbsol >= 1)
         {
           double x                = Eq.Value(1);
@@ -1962,7 +1962,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph, const gp_Cone& Con, const
           dir1   = ConDir;
           if (param1 <= myEPSILON_MINI_CIRCLE_RADIUS)
           {
-            typeres = IntAna_PointAndCircle;
+            typeres = IntAna_ResultType::IntAna_PointAndCircle;
             param1  = 0.0;
           }
         }
@@ -1979,7 +1979,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph, const gp_Cone& Con, const
           dir2   = ConDir;
           if (param2 <= myEPSILON_MINI_CIRCLE_RADIUS)
           {
-            typeres = IntAna_PointAndCircle;
+            typeres = IntAna_ResultType::IntAna_PointAndCircle;
             param2  = 0.0;
           }
         }
@@ -1992,7 +1992,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph, const gp_Cone& Con, const
   }
   else
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
   }
 }
 
@@ -2003,7 +2003,7 @@ IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Sphere& Sph1,
                                        const double     Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -2032,7 +2032,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph1, const gp_Sphere& Sph2, c
   double R1    = Sph1.Radius();
   double R2    = Sph2.Radius();
   double Rmin, Rmax;
-  typeres   = IntAna_Empty;
+  typeres   = IntAna_ResultType::IntAna_Empty;
   param2bis = 0.0; //-- to avoid param2bis unused warning
 
   if (R1 > R2)
@@ -2048,7 +2048,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph1, const gp_Sphere& Sph2, c
 
   if (dO1O2 <= Tol && (std::abs(R1 - R2) <= Tol))
   {
-    typeres = IntAna_Same;
+    typeres = IntAna_ResultType::IntAna_Same;
   }
   else
   {
@@ -2070,7 +2070,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph1, const gp_Sphere& Sph2, c
     //----------------------------------------------------------------------
     if (t >= 0.0 && t <= Tol)
     {
-      typeres = IntAna_Point;
+      typeres = IntAna_ResultType::IntAna_Point;
       nbint   = 1;
       double t2;
       if (R1 == Rmax)
@@ -2092,7 +2092,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph1, const gp_Sphere& Sph2, c
       //-----------------------------------------------------------------
       if ((dO1O2 > (R1 + R2 + Tol)) || (Rmax > (dO1O2 + Rmin + Tol)))
       {
-        typeres = IntAna_Empty;
+        typeres = IntAna_ResultType::IntAna_Empty;
       }
       else
       {
@@ -2106,12 +2106,12 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph1, const gp_Sphere& Sph2, c
 
         if (Beta <= myEPSILON_MINI_CIRCLE_RADIUS)
         {
-          typeres = IntAna_Point;
+          typeres = IntAna_ResultType::IntAna_Point;
           Alpha   = (R1 + (dO1O2 - R2)) * 0.5;
         }
         else
         {
-          typeres = IntAna_Circle;
+          typeres = IntAna_ResultType::IntAna_Circle;
           dir1    = Dir;
           param1  = Beta;
         }
@@ -2128,7 +2128,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph1, const gp_Sphere& Sph2, c
 IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Pln& Pln, const gp_Torus& Tor, const double Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -2158,7 +2158,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln& Pln, const gp_Torus& Tor, const d
   aRMaj = Tor.MajorRadius();
   if (aRMin >= aRMaj)
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
     return;
   }
   //
@@ -2171,7 +2171,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln& Pln, const gp_Torus& Tor, const d
   bNormal   = !bParallel ? aTorAx.IsNormal(aPlnAx, myEPSILON_AXES_PARA) : false;
   if (!bNormal && !bParallel)
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
     return;
   }
   //
@@ -2191,7 +2191,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln& Pln, const gp_Torus& Tor, const d
     aDR = std::abs(aDist) - aRMin;
     if (aDR > aTolNum)
     {
-      typeres = IntAna_Empty;
+      typeres = IntAna_ResultType::IntAna_Empty;
       return;
     }
     //
@@ -2200,7 +2200,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln& Pln, const gp_Torus& Tor, const d
       aDist = (aDist < 0) ? -aRMin : aRMin;
     }
     //
-    typeres = IntAna_Circle;
+    typeres = IntAna_ResultType::IntAna_Circle;
     //
     pt1.SetCoord(X - aDist * A, Y - aDist * B, Z - aDist * C);
     aDt    = std::sqrt(std::abs(aRMin * aRMin - aDist * aDist));
@@ -2221,11 +2221,11 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln& Pln, const gp_Torus& Tor, const d
     aDist = Pln.Distance(aTorLoc);
     if (aDist > myEPSILON_DISTANCE)
     {
-      typeres = IntAna_NoGeometricSolution;
+      typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
       return;
     }
     //
-    typeres = IntAna_Circle;
+    typeres = IntAna_ResultType::IntAna_Circle;
     param2 = param1 = aRMin;
     dir2 = dir1 = aPlnAx.Direction();
     nbint       = 2;
@@ -2243,7 +2243,7 @@ IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Cylinder& Cyl,
                                        const double       Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -2273,7 +2273,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl, const gp_Torus& Tor, co
   aRMaj = Tor.MajorRadius();
   if (aRMin >= aRMaj)
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
     return;
   }
   //
@@ -2286,7 +2286,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl, const gp_Torus& Tor, co
   if (!aTorAx.IsParallel(aCylAx, myEPSILON_AXES_PARA)
       || (aLin.Distance(aLocCyl) > myEPSILON_DISTANCE))
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
     return;
   }
   //
@@ -2295,11 +2295,11 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl, const gp_Torus& Tor, co
   aRCyl = Cyl.Radius();
   if (((aRCyl + Tol) < (aRMaj - aRMin)) || ((aRCyl - Tol) > (aRMaj + aRMin)))
   {
-    typeres = IntAna_Empty;
+    typeres = IntAna_ResultType::IntAna_Empty;
     return;
   }
   //
-  typeres = IntAna_Circle;
+  typeres = IntAna_ResultType::IntAna_Circle;
   //
   double aDist   = std::sqrt(std::abs(aRMin * aRMin - (aRCyl - aRMaj) * (aRCyl - aRMaj)));
   gp_XYZ aTorLoc = aTorAx.Location().XYZ();
@@ -2322,7 +2322,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cylinder& Cyl, const gp_Torus& Tor, co
 IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Cone& Con, const gp_Torus& Tor, const double Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -2352,7 +2352,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con, const gp_Torus& Tor, const 
   aRMaj = Tor.MajorRadius();
   if (aRMin >= aRMaj)
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
     return;
   }
   //
@@ -2365,7 +2365,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con, const gp_Torus& Tor, const 
   if (!aTorAx.IsParallel(aConAx, myEPSILON_AXES_PARA)
       || (aLin.Distance(aConApex) > myEPSILON_DISTANCE))
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
     return;
   }
   //
@@ -2384,7 +2384,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con, const gp_Torus& Tor, const 
   gp_Dir aDL   = aConL.Position().Direction();
   gp_Dir aXDir = Tor.XAxis().Direction();
   //
-  typeres = IntAna_Empty;
+  typeres = IntAna_ResultType::IntAna_Empty;
   //
   for (i = 0; i < 2; ++i)
   {
@@ -2400,7 +2400,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con, const gp_Torus& Tor, const 
       continue;
     }
     //
-    typeres = IntAna_Circle;
+    typeres = IntAna_ResultType::IntAna_Circle;
     //
     gp_XYZ aPh = aPCT.XYZ() - aDist * aConL.Normal(aPCT).Direction().XYZ();
     aDt        = std::sqrt(std::abs(aRMin * aRMin - aDist * aDist));
@@ -2461,7 +2461,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con, const gp_Torus& Tor, const 
 IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Sphere& Sph, const gp_Torus& Tor, const double Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -2491,7 +2491,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph, const gp_Torus& Tor, cons
   aRMaj = Tor.MajorRadius();
   if (aRMin >= aRMaj)
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
     return;
   }
   //
@@ -2501,7 +2501,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph, const gp_Torus& Tor, cons
   //
   if (aLin.Distance(aSphLoc) > myEPSILON_DISTANCE)
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
     return;
   }
   //
@@ -2516,11 +2516,11 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph, const gp_Torus& Tor, cons
   aDist = aVec12.Magnitude();
   if (((aDist - Tol) > (aRMin + aRSph)) || ((aDist + Tol) < std::abs(aRMin - aRSph)))
   {
-    typeres = IntAna_Empty;
+    typeres = IntAna_ResultType::IntAna_Empty;
     return;
   }
   //
-  typeres = IntAna_Circle;
+  typeres = IntAna_ResultType::IntAna_Circle;
   //
   double anAlpha, aBeta;
   //
@@ -2553,7 +2553,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Sphere& Sph, const gp_Torus& Tor, cons
 IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Torus& Tor1, const gp_Torus& Tor2, const double Tol)
     : done(false),
       nbint(0),
-      typeres(IntAna_Empty),
+      typeres(IntAna_ResultType::IntAna_Empty),
       pt1(0, 0, 0),
       pt2(0, 0, 0),
       pt3(0, 0, 0),
@@ -2593,20 +2593,20 @@ void IntAna_QuadQuadGeo::Perform(const gp_Torus& Tor1, const gp_Torus& Tor2, con
   gp_Lin aL1(anAx1);
   if (!anAx1.IsParallel(anAx2, myEPSILON_AXES_PARA) || (aL1.Distance(aLoc2) > myEPSILON_DISTANCE))
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
     return;
   }
   //
   if (aLoc1.IsEqual(aLoc2, Tol) && (std::abs(aRMin1 - aRMin2) <= Tol)
       && (std::abs(aRMaj1 - aRMaj2) <= Tol))
   {
-    typeres = IntAna_Same;
+    typeres = IntAna_ResultType::IntAna_Same;
     return;
   }
   //
   if (aRMin1 >= aRMaj1 || aRMin2 >= aRMaj2)
   {
-    typeres = IntAna_NoGeometricSolution;
+    typeres = IntAna_ResultType::IntAna_NoGeometricSolution;
     return;
   }
   //
@@ -2621,11 +2621,11 @@ void IntAna_QuadQuadGeo::Perform(const gp_Torus& Tor1, const gp_Torus& Tor2, con
   aDist = aV12.Magnitude();
   if (((aDist - Tol) > (aRMin1 + aRMin2)) || ((aDist + Tol) < std::abs(aRMin1 - aRMin2)))
   {
-    typeres = IntAna_Empty;
+    typeres = IntAna_ResultType::IntAna_Empty;
     return;
   }
   //
-  typeres = IntAna_Circle;
+  typeres = IntAna_ResultType::IntAna_Circle;
   //
   double anAlpha, aBeta;
   //
@@ -2665,7 +2665,7 @@ gp_Pnt IntAna_QuadQuadGeo::Point(const int n) const
   {
     throw Standard_DomainError();
   }
-  if (typeres == IntAna_PointAndCircle)
+  if (typeres == IntAna_ResultType::IntAna_PointAndCircle)
   {
     if (n != 1)
     {
@@ -2675,7 +2675,7 @@ gp_Pnt IntAna_QuadQuadGeo::Point(const int n) const
       return (pt1);
     return (pt2);
   }
-  else if (typeres == IntAna_Point)
+  else if (typeres == IntAna_ResultType::IntAna_Point)
   {
     if (n == 1)
       return (pt1);
@@ -2694,7 +2694,7 @@ gp_Lin IntAna_QuadQuadGeo::Line(const int n) const
   {
     throw StdFail_NotDone();
   }
-  if ((n > nbint) || (n < 1) || (typeres != IntAna_Line))
+  if ((n > nbint) || (n < 1) || (typeres != IntAna_ResultType::IntAna_Line))
   {
     throw Standard_DomainError();
   }
@@ -2716,7 +2716,7 @@ gp_Circ IntAna_QuadQuadGeo::Circle(const int n) const
   {
     throw StdFail_NotDone();
   }
-  if (typeres == IntAna_PointAndCircle)
+  if (typeres == IntAna_ResultType::IntAna_PointAndCircle)
   {
     if (n != 1)
     {
@@ -2726,7 +2726,7 @@ gp_Circ IntAna_QuadQuadGeo::Circle(const int n) const
       return (gp_Circ(DirToAx2(pt1, dir1), param1));
     return (gp_Circ(DirToAx2(pt2, dir2), param2));
   }
-  else if ((n > nbint) || (n < 1) || (typeres != IntAna_Circle))
+  else if ((n > nbint) || (n < 1) || (typeres != IntAna_ResultType::IntAna_Circle))
   {
     throw Standard_DomainError();
   }
@@ -2756,7 +2756,7 @@ gp_Elips IntAna_QuadQuadGeo::Ellipse(const int n) const
   {
     throw StdFail_NotDone();
   }
-  if ((n > nbint) || (n < 1) || (typeres != IntAna_Ellipse))
+  if ((n > nbint) || (n < 1) || (typeres != IntAna_ResultType::IntAna_Ellipse))
   {
     throw Standard_DomainError();
   }
@@ -2797,7 +2797,7 @@ gp_Parab IntAna_QuadQuadGeo::Parabola(const int n) const
   {
     throw StdFail_NotDone();
   }
-  if (typeres != IntAna_Parabola)
+  if (typeres != IntAna_ResultType::IntAna_Parabola)
   {
     throw Standard_DomainError();
   }
@@ -2816,7 +2816,7 @@ gp_Hypr IntAna_QuadQuadGeo::Hyperbola(const int n) const
   {
     throw StdFail_NotDone();
   }
-  if ((n > nbint) || (n < 1) || (typeres != IntAna_Hyperbola))
+  if ((n > nbint) || (n < 1) || (typeres != IntAna_ResultType::IntAna_Hyperbola))
   {
     throw Standard_DomainError();
   }

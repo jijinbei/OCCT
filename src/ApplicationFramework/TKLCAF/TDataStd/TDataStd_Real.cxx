@@ -72,7 +72,7 @@ occ::handle<TDataStd_Real> TDataStd_Real::Set(const TDF_Label&     L,
 
 TDataStd_Real::TDataStd_Real()
     : myValue(RealFirst()),
-      myDimension(TDataStd_SCALAR),
+      myDimension(TDataStd_RealEnum::TDataStd_SCALAR),
       myID(GetID())
 {
 }

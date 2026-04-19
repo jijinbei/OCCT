@@ -53,7 +53,7 @@ void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>&  
                                               const Message_ProgressRange&      theRange)
 {
   SetIsError(false);
-  SetStoreStatus(PCDM_SS_OK);
+  SetStoreStatus(PCDM_StoreStatus::PCDM_SS_OK);
 
   myFileName = theFileName;
 
@@ -68,7 +68,7 @@ void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>&  
   else
   {
     SetIsError(true);
-    SetStoreStatus(PCDM_SS_WriteFailure);
+    SetStoreStatus(PCDM_StoreStatus::PCDM_SS_WriteFailure);
   }
 }
 
@@ -86,7 +86,7 @@ void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
   if (aDoc.IsNull())
   {
     SetIsError(true);
-    SetStoreStatus(PCDM_SS_Doc_IsNull);
+    SetStoreStatus(PCDM_StoreStatus::PCDM_SS_Doc_IsNull);
   }
   else
   {
@@ -104,7 +104,7 @@ void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
     myTypesMap.Clear();
     if (IsError())
     {
-      SetStoreStatus(PCDM_SS_Info_Section_Error);
+      SetStoreStatus(PCDM_StoreStatus::PCDM_SS_Info_Section_Error);
       return;
     }
 
@@ -144,7 +144,7 @@ void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
     if (!aPS.More())
     {
       SetIsError(true);
-      SetStoreStatus(PCDM_SS_UserBreak);
+      SetStoreStatus(PCDM_StoreStatus::PCDM_SS_UserBreak);
       return;
     }
 
@@ -160,7 +160,7 @@ void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
     if (!aPS.More())
     {
       SetIsError(true);
-      SetStoreStatus(PCDM_SS_UserBreak);
+      SetStoreStatus(PCDM_StoreStatus::PCDM_SS_UserBreak);
       return;
     }
 
@@ -189,13 +189,13 @@ void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
       myMsgDriver->Send("BinLDrivers_DocumentStorageDriver, no objects written", Message_Info);
 #endif
       SetIsError(true);
-      SetStoreStatus(PCDM_SS_No_Obj);
+      SetStoreStatus(PCDM_StoreStatus::PCDM_SS_No_Obj);
     }
     myRelocTable.Clear();
     if (!aPS.More())
     {
       SetIsError(true);
-      SetStoreStatus(PCDM_SS_UserBreak);
+      SetStoreStatus(PCDM_StoreStatus::PCDM_SS_UserBreak);
       return;
     }
     aPS.Next();
@@ -208,7 +208,7 @@ void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
       myMsgDriver->Send(anErrorStr + (int)theOStream.rdstate(), Message_Info);
 #endif
       SetIsError(true);
-      SetStoreStatus(PCDM_SS_WriteFailure);
+      SetStoreStatus(PCDM_StoreStatus::PCDM_SS_WriteFailure);
     }
   }
 }
@@ -300,7 +300,7 @@ void BinLDrivers_DocumentStorageDriver::WriteSubTree(const TDF_Label&           
   if (!aPS.More())
   {
     SetIsError(true);
-    SetStoreStatus(PCDM_SS_UserBreak);
+    SetStoreStatus(PCDM_StoreStatus::PCDM_SS_UserBreak);
     return;
   }
   // Write the end attributes list marker
@@ -318,7 +318,7 @@ void BinLDrivers_DocumentStorageDriver::WriteSubTree(const TDF_Label&           
     if (!aPS.More())
     {
       SetIsError(true);
-      SetStoreStatus(PCDM_SS_UserBreak);
+      SetStoreStatus(PCDM_StoreStatus::PCDM_SS_UserBreak);
       return;
     }
     WriteSubTree(aChildLab, theOS, theQuickPart, aPS.Next());

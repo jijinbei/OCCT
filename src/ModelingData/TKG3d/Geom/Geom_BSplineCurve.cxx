@@ -1075,7 +1075,7 @@ void Geom_BSplineCurve::updateKnots()
   int MaxKnotMult = 0;
   BSplCLib::KnotAnalysis(myDeg, myPeriodic, myKnots, myMults, myKnotSet, MaxKnotMult);
 
-  if (myKnotSet == GeomAbs_Uniform && !myPeriodic)
+  if (myKnotSet == GeomAbs_BSplKnotDistribution::GeomAbs_Uniform && !myPeriodic)
   {
     myFlatKnots.Resize(myKnots.Lower(), myKnots.Upper(), false);
     myFlatKnots.Assign(myKnots);

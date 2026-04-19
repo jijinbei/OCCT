@@ -246,7 +246,7 @@ void TopOpeBRep_FacesIntersector::Perform(const TopoDS_Shape& F1,
   for (InitLine(); MoreLine(); NextLine())
   {
     TopOpeBRep_LineInter& L = CurrentLine();
-    if (L.TypeLineCurve() == TopOpeBRep_RESTRICTION)
+    if (L.TypeLineCurve() == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION)
     {
       const TopoDS_Shape& E = L.Arc();
       myEdgeRestrictionMap.Add(E);
@@ -308,7 +308,7 @@ bool TopOpeBRep_FacesIntersector::SameDomain() const
 
   bool sd = myIntersector.TangentFaces();
 
-  // bool plpl = (mySurfaceType1 == GeomAbs_Plane) && (mySurfaceType2 == GeomAbs_Plane);
+  // bool plpl = (mySurfaceType1 == GeomAbs_SurfaceType::GeomAbs_Plane) && (mySurfaceType2 == GeomAbs_SurfaceType::GeomAbs_Plane);
 
   //  if (!plpl) return false;
   return sd;
@@ -921,7 +921,7 @@ static occ::handle<IntPatch_RLine> BuildRLine(
 
       if (buildrline)
       {
-        IntSurf_TypeTrans trans1 = IntSurf_Undecided, trans2 = IntSurf_Undecided;
+        IntSurf_TypeTrans trans1 = IntSurf_TypeTrans::IntSurf_Undecided, trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
 
         occ::handle<IntSurf_LineOn2S> aLineOn2S = new IntSurf_LineOn2S();
 
@@ -932,13 +932,13 @@ static occ::handle<IntPatch_RLine> BuildRLine(
 
           const occ::handle<IntSurf_LineOn2S>& Lori = atmpWLine->Curve();
 
-          if (atmpWLine->TransitionOnS1() != IntSurf_Undecided
-              && atmpWLine->TransitionOnS1() != IntSurf_Touch)
+          if (atmpWLine->TransitionOnS1() != IntSurf_TypeTrans::IntSurf_Undecided
+              && atmpWLine->TransitionOnS1() != IntSurf_TypeTrans::IntSurf_Touch)
           {
             trans1 = atmpWLine->TransitionOnS1();
           }
-          if (atmpWLine->TransitionOnS2() != IntSurf_Undecided
-              && atmpWLine->TransitionOnS2() != IntSurf_Touch)
+          if (atmpWLine->TransitionOnS2() != IntSurf_TypeTrans::IntSurf_Undecided
+              && atmpWLine->TransitionOnS2() != IntSurf_TypeTrans::IntSurf_Touch)
           {
             trans2 = atmpWLine->TransitionOnS2();
           }
@@ -1017,7 +1017,7 @@ static void TestWLinesToAnArc(NCollection_Sequence<occ::handle<IntPatch_Line>>& 
   {
     for (int i = 1; i <= slin.Length(); i++)
     {
-      if (slin.Value(i)->ArcType() != IntPatch_Walking)
+      if (slin.Value(i)->ArcType() != IntPatch_IType::IntPatch_Walking)
         continue;
       const occ::handle<IntPatch_WLine>& aWLine = *((occ::handle<IntPatch_WLine>*)&(slin.Value(i)));
       int                                nbvtx  = aWLine->NbVertex();
@@ -1169,7 +1169,7 @@ static void MergeWLinesIfAllSegmentsAlongRestriction(
     NbWLines = 0;
     for (i = 1; i <= theSlin.Length(); i++)
     {
-      if (theSlin.Value(i)->ArcType() != IntPatch_Walking)
+      if (theSlin.Value(i)->ArcType() != IntPatch_IType::IntPatch_Walking)
         continue;
       NbWLines++;
       const occ::handle<IntPatch_WLine>& aWLine =
@@ -1331,7 +1331,7 @@ static int GetArc(NCollection_Sequence<occ::handle<IntPatch_Line>>& theSlin,
 
     for (i = 1; i <= theSlin.Length(); i++)
     {
-      if (theSlin.Value(i)->ArcType() != IntPatch_Walking)
+      if (theSlin.Value(i)->ArcType() != IntPatch_IType::IntPatch_Walking)
         continue;
 
       const occ::handle<IntPatch_WLine>& aWLine =
@@ -1399,7 +1399,7 @@ static int GetArc(NCollection_Sequence<occ::handle<IntPatch_Line>>& theSlin,
                            theSurfaceTool->LastVParameter(),
                            CheckTol,
                            CheckTol);
-    anExtPSTool.SetFlag(Extrema_ExtFlag_MIN);
+    anExtPSTool.SetFlag(Extrema_ExtFlag::Extrema_ExtFlag_MIN);
 
     // classification gaps
     //  a. min - first
@@ -1479,7 +1479,7 @@ static int GetArc(NCollection_Sequence<occ::handle<IntPatch_Line>>& theSlin,
                         theSurfaceObj->LastVParameter(),
                         CheckTol,
                         CheckTol);
-  anExtPSObj.SetFlag(Extrema_ExtFlag_MIN);
+  anExtPSObj.SetFlag(Extrema_ExtFlag::Extrema_ExtFlag_MIN);
 
   Extrema_ExtPS anExtPSTool2;
   anExtPSTool2.Initialize(*theSurfaceTool,
@@ -1489,7 +1489,7 @@ static int GetArc(NCollection_Sequence<occ::handle<IntPatch_Line>>& theSlin,
                           theSurfaceTool->LastVParameter(),
                           CheckTol,
                           CheckTol);
-  anExtPSTool2.SetFlag(Extrema_ExtFlag_MIN);
+  anExtPSTool2.SetFlag(Extrema_ExtFlag::Extrema_ExtFlag_MIN);
 
   // create IntSurf_LineOn2S from points < PointsFromArc >
   for (i = 1; i <= PointsFromArc.Length(); i++)
@@ -1588,21 +1588,21 @@ static occ::handle<IntPatch_WLine> GetMergedWLineOnRestriction(
     return mWLine;
   }
   //
-  IntSurf_TypeTrans trans1 = IntSurf_Undecided;
-  IntSurf_TypeTrans trans2 = IntSurf_Undecided;
+  IntSurf_TypeTrans trans1 = IntSurf_TypeTrans::IntSurf_Undecided;
+  IntSurf_TypeTrans trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
   int               i      = 0;
 
   for (i = 1; i <= theSlin.Length(); i++)
   {
-    if (theSlin.Value(i)->ArcType() != IntPatch_Walking)
+    if (theSlin.Value(i)->ArcType() != IntPatch_IType::IntPatch_Walking)
       continue;
 
     const occ::handle<IntPatch_WLine>& aWLine =
       *((occ::handle<IntPatch_WLine>*)&(theSlin.Value(i)));
 
-    if (aWLine->TransitionOnS1() != IntSurf_Undecided && aWLine->TransitionOnS1() != IntSurf_Touch)
+    if (aWLine->TransitionOnS1() != IntSurf_TypeTrans::IntSurf_Undecided && aWLine->TransitionOnS1() != IntSurf_TypeTrans::IntSurf_Touch)
       trans1 = aWLine->TransitionOnS1();
-    if (aWLine->TransitionOnS2() != IntSurf_Undecided && aWLine->TransitionOnS2() != IntSurf_Touch)
+    if (aWLine->TransitionOnS2() != IntSurf_TypeTrans::IntSurf_Undecided && aWLine->TransitionOnS2() != IntSurf_TypeTrans::IntSurf_Touch)
       trans2 = aWLine->TransitionOnS2();
   }
 

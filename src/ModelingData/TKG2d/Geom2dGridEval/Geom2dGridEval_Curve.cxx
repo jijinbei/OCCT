@@ -46,7 +46,7 @@ occ::handle<Geom2d_Curve> ExtractBasisCurve(const occ::handle<Geom2d_Curve>& the
 
 Geom2dGridEval_Curve::Geom2dGridEval_Curve(const Adaptor2d_Curve2d& theCurve)
     : myEvaluator(std::monostate{}),
-      myCurveType(GeomAbs_OtherCurve)
+      myCurveType(GeomAbs_CurveType::GeomAbs_OtherCurve)
 {
   initialization(theCurve);
 }
@@ -55,7 +55,7 @@ Geom2dGridEval_Curve::Geom2dGridEval_Curve(const Adaptor2d_Curve2d& theCurve)
 
 Geom2dGridEval_Curve::Geom2dGridEval_Curve(const occ::handle<Geom2d_Curve>& theCurve)
     : myEvaluator(std::monostate{}),
-      myCurveType(GeomAbs_OtherCurve)
+      myCurveType(GeomAbs_CurveType::GeomAbs_OtherCurve)
 {
   initialization(theCurve);
 }
@@ -83,7 +83,7 @@ void Geom2dGridEval_Curve::initialization(const occ::handle<Geom2d_Curve>& theCu
   if (theCurve.IsNull())
   {
     myEvaluator.emplace<std::monostate>();
-    myCurveType = GeomAbs_OtherCurve;
+    myCurveType = GeomAbs_CurveType::GeomAbs_OtherCurve;
     return;
   }
 
@@ -92,49 +92,49 @@ void Geom2dGridEval_Curve::initialization(const occ::handle<Geom2d_Curve>& theCu
 
   if (auto aLine = occ::down_cast<Geom2d_Line>(aBasisCurve))
   {
-    myCurveType = GeomAbs_Line;
+    myCurveType = GeomAbs_CurveType::GeomAbs_Line;
     myEvaluator.emplace<Geom2dGridEval_Line>(aLine);
   }
   else if (auto aCircle = occ::down_cast<Geom2d_Circle>(aBasisCurve))
   {
-    myCurveType = GeomAbs_Circle;
+    myCurveType = GeomAbs_CurveType::GeomAbs_Circle;
     myEvaluator.emplace<Geom2dGridEval_Circle>(aCircle);
   }
   else if (auto anEllipse = occ::down_cast<Geom2d_Ellipse>(aBasisCurve))
   {
-    myCurveType = GeomAbs_Ellipse;
+    myCurveType = GeomAbs_CurveType::GeomAbs_Ellipse;
     myEvaluator.emplace<Geom2dGridEval_Ellipse>(anEllipse);
   }
   else if (auto aHyperbola = occ::down_cast<Geom2d_Hyperbola>(aBasisCurve))
   {
-    myCurveType = GeomAbs_Hyperbola;
+    myCurveType = GeomAbs_CurveType::GeomAbs_Hyperbola;
     myEvaluator.emplace<Geom2dGridEval_Hyperbola>(aHyperbola);
   }
   else if (auto aParabola = occ::down_cast<Geom2d_Parabola>(aBasisCurve))
   {
-    myCurveType = GeomAbs_Parabola;
+    myCurveType = GeomAbs_CurveType::GeomAbs_Parabola;
     myEvaluator.emplace<Geom2dGridEval_Parabola>(aParabola);
   }
   else if (auto aBezier = occ::down_cast<Geom2d_BezierCurve>(aBasisCurve))
   {
-    myCurveType = GeomAbs_BezierCurve;
+    myCurveType = GeomAbs_CurveType::GeomAbs_BezierCurve;
     myEvaluator.emplace<Geom2dGridEval_BezierCurve>(aBezier);
   }
   else if (auto aBSpline = occ::down_cast<Geom2d_BSplineCurve>(aBasisCurve))
   {
-    myCurveType = GeomAbs_BSplineCurve;
+    myCurveType = GeomAbs_CurveType::GeomAbs_BSplineCurve;
     myEvaluator.emplace<Geom2dGridEval_BSplineCurve>(aBSpline);
   }
   else if (auto anOffset = occ::down_cast<Geom2d_OffsetCurve>(aBasisCurve))
   {
-    myCurveType = GeomAbs_OffsetCurve;
+    myCurveType = GeomAbs_CurveType::GeomAbs_OffsetCurve;
     myEvaluator.emplace<Geom2dGridEval_OffsetCurve>(anOffset);
   }
   else
   {
     // Unknown curve type - set uninitialized
     myEvaluator.emplace<std::monostate>();
-    myCurveType = GeomAbs_OtherCurve;
+    myCurveType = GeomAbs_CurveType::GeomAbs_OtherCurve;
   }
 }
 

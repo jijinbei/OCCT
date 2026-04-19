@@ -17,7 +17,7 @@
 #ifndef _GeomAbs_SurfaceType_HeaderFile
 #define _GeomAbs_SurfaceType_HeaderFile
 
-enum GeomAbs_SurfaceType
+enum class GeomAbs_SurfaceType
 {
   GeomAbs_Plane,
   GeomAbs_Cylinder,

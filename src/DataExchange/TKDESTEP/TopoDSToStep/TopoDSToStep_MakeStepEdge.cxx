@@ -263,7 +263,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
 #endif
     BRepAdaptor_Surface SA = BRepAdaptor_Surface(aTool.CurrentFace());
 
-    if ((SA.GetType() == GeomAbs_Plane) && (CA.GetType() == GeomAbs_Line))
+    if ((SA.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane) && (CA.GetType() == GeomAbs_CurveType::GeomAbs_Line))
     {
       U1                       = CA.FirstParameter();
       U2                       = CA.LastParameter();

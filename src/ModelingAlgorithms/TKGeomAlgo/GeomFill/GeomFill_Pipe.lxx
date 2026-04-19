@@ -53,5 +53,5 @@ inline double GeomFill_Pipe::ErrorOnSurf() const
 
 inline bool GeomFill_Pipe::IsDone() const
 {
-  return myStatus == GeomFill_PipeOk;
+  return myStatus == GeomFill_PipeError::GeomFill_PipeOk;
 }

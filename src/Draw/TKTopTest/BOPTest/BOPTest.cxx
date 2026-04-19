@@ -150,30 +150,30 @@ BOPAlgo_Operation BOPTest::GetOperationType(const char* const theOp)
     {
       return static_cast<BOPAlgo_Operation>(iOp);
     }
-    return BOPAlgo_UNKNOWN;
+    return BOPAlgo_Operation::BOPAlgo_UNKNOWN;
   }
 
   // Check for the meaningful symbolic operation parameter
   if (anOp == "common")
   {
-    return BOPAlgo_COMMON;
+    return BOPAlgo_Operation::BOPAlgo_COMMON;
   }
   else if (anOp == "fuse")
   {
-    return BOPAlgo_FUSE;
+    return BOPAlgo_Operation::BOPAlgo_FUSE;
   }
   else if (anOp == "cut")
   {
-    return BOPAlgo_CUT;
+    return BOPAlgo_Operation::BOPAlgo_CUT;
   }
   else if (anOp == "tuc" || anOp == "cut21")
   {
-    return BOPAlgo_CUT21;
+    return BOPAlgo_Operation::BOPAlgo_CUT21;
   }
   else if (anOp == "section")
   {
-    return BOPAlgo_SECTION;
+    return BOPAlgo_Operation::BOPAlgo_SECTION;
   }
 
-  return BOPAlgo_UNKNOWN;
+  return BOPAlgo_Operation::BOPAlgo_UNKNOWN;
 }

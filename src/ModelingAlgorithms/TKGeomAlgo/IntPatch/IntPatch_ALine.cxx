@@ -33,7 +33,7 @@ IntPatch_ALine::IntPatch_ALine(const IntAna_Curve&     C,
       indf(0),
       indl(0)
 {
-  typ  = IntPatch_Analytic;
+  typ  = IntPatch_IType::IntPatch_Analytic;
   curv = C;
 }
 
@@ -47,7 +47,7 @@ IntPatch_ALine::IntPatch_ALine(const IntAna_Curve&     C,
       indf(0),
       indl(0)
 {
-  typ  = IntPatch_Analytic;
+  typ  = IntPatch_IType::IntPatch_Analytic;
   curv = C;
 }
 
@@ -58,7 +58,7 @@ IntPatch_ALine::IntPatch_ALine(const IntAna_Curve& C, const bool Tang)
       indf(0),
       indl(0)
 {
-  typ  = IntPatch_Analytic;
+  typ  = IntPatch_IType::IntPatch_Analytic;
   curv = C;
 }
 

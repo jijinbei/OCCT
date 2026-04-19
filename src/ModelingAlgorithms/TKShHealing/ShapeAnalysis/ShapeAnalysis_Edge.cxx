@@ -882,7 +882,7 @@ bool ShapeAnalysis_Edge::CheckOverlapping(const TopoDS_Edge& theEdge1,
     {
       BRepExtrema_SupportType aType1 = aMinDist.SupportTypeShape1(i);
       double                  aEndLength, aStartLength, aLengthP;
-      if (aType1 == BRepExtrema_IsVertex)
+      if (aType1 == BRepExtrema_SupportType::BRepExtrema_IsVertex)
       {
         TopoDS_Shape  aSupportShape1 = aMinDist.SupportOnShape1(i);
         TopoDS_Vertex aV1, aV2;
@@ -892,7 +892,7 @@ bool ShapeAnalysis_Edge::CheckOverlapping(const TopoDS_Edge& theEdge1,
         else
           aLengthP = aLength;
       }
-      else if (aType1 == BRepExtrema_IsOnEdge)
+      else if (aType1 == BRepExtrema_SupportType::BRepExtrema_IsOnEdge)
       {
         double aParam1, aFirst, aLast;
         aMinDist.ParOnEdgeS1(i, aParam1);

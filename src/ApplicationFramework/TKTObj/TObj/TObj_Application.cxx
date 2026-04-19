@@ -70,7 +70,7 @@ bool TObj_Application::SaveDocument(const occ::handle<TDocStd_Document>& theSour
                                     const TCollection_ExtendedString&    theTargetFile)
 {
   const PCDM_StoreStatus aStatus = SaveAs(theSourceDoc, theTargetFile);
-  myIsError                      = (aStatus != PCDM_SS_OK);
+  myIsError                      = (aStatus != PCDM_StoreStatus::PCDM_SS_OK);
   if (myIsError)
     SetError(aStatus, theTargetFile);
 
@@ -88,7 +88,7 @@ bool TObj_Application::SaveDocument(const occ::handle<TDocStd_Document>& theSour
                                     Standard_OStream&                    theOStream)
 {
   const PCDM_StoreStatus aStatus = SaveAs(theSourceDoc, theOStream);
-  myIsError                      = (aStatus != PCDM_SS_OK);
+  myIsError                      = (aStatus != PCDM_StoreStatus::PCDM_SS_OK);
   if (myIsError)
     SetError(aStatus, "");
 
@@ -102,7 +102,7 @@ bool TObj_Application::SaveDocument(const occ::handle<TDocStd_Document>& theSour
 bool TObj_Application::LoadDocument(const TCollection_ExtendedString& theSourceFile,
                                     occ::handle<TDocStd_Document>&    theTargetDoc)
 {
-  PCDM_ReaderStatus aStatus = PCDM_RS_ReaderException;
+  PCDM_ReaderStatus aStatus = PCDM_ReaderStatus::PCDM_RS_ReaderException;
   {
     try
     {
@@ -116,7 +116,7 @@ bool TObj_Application::LoadDocument(const TCollection_ExtendedString& theSourceF
       (void)anException;
     }
   }
-  myIsError = (aStatus != PCDM_RS_OK);
+  myIsError = (aStatus != PCDM_ReaderStatus::PCDM_RS_OK);
   if (myIsError)
     SetError(aStatus, theSourceFile);
 
@@ -133,7 +133,7 @@ bool TObj_Application::LoadDocument(const TCollection_ExtendedString& theSourceF
 bool TObj_Application::LoadDocument(Standard_IStream&              theIStream,
                                     occ::handle<TDocStd_Document>& theTargetDoc)
 {
-  PCDM_ReaderStatus aStatus = PCDM_RS_ReaderException;
+  PCDM_ReaderStatus aStatus = PCDM_ReaderStatus::PCDM_RS_ReaderException;
   {
     try
     {
@@ -147,7 +147,7 @@ bool TObj_Application::LoadDocument(Standard_IStream&              theIStream,
       (void)anException;
     }
   }
-  myIsError = (aStatus != PCDM_RS_OK);
+  myIsError = (aStatus != PCDM_ReaderStatus::PCDM_RS_OK);
   if (myIsError)
     SetError(aStatus, "");
 
@@ -196,22 +196,22 @@ void TObj_Application::SetError(const PCDM_StoreStatus            theStatus,
 {
   switch (theStatus)
   {
-    case PCDM_SS_DriverFailure:
+    case PCDM_StoreStatus::PCDM_SS_DriverFailure:
       ErrorMessage(Message_Msg("TObj_Appl_SDriverFailure") << theInfo);
       break;
-    case PCDM_SS_WriteFailure:
+    case PCDM_StoreStatus::PCDM_SS_WriteFailure:
       ErrorMessage(Message_Msg("TObj_Appl_SWriteFailure") << theInfo);
       break;
-    case PCDM_SS_Failure:
+    case PCDM_StoreStatus::PCDM_SS_Failure:
       ErrorMessage(Message_Msg("TObj_Appl_SFailure") << theInfo);
       break;
-    case PCDM_SS_Doc_IsNull:
+    case PCDM_StoreStatus::PCDM_SS_Doc_IsNull:
       ErrorMessage(Message_Msg("TObj_Appl_SDocIsNull") << theInfo);
       break;
-    case PCDM_SS_No_Obj:
+    case PCDM_StoreStatus::PCDM_SS_No_Obj:
       ErrorMessage(Message_Msg("TObj_Appl_SNoObj") << theInfo);
       break;
-    case PCDM_SS_Info_Section_Error:
+    case PCDM_StoreStatus::PCDM_SS_Info_Section_Error:
       ErrorMessage(Message_Msg("TObj_Appl_SInfoSectionError") << theInfo);
       break;
     default:
@@ -230,52 +230,52 @@ void TObj_Application::SetError(const PCDM_ReaderStatus           theStatus,
 {
   switch (theStatus)
   {
-    case PCDM_RS_UnknownDocument:
+    case PCDM_ReaderStatus::PCDM_RS_UnknownDocument:
       ErrorMessage(Message_Msg("TObj_Appl_RUnknownDocument") << theInfo);
       break;
-    case PCDM_RS_AlreadyRetrieved:
+    case PCDM_ReaderStatus::PCDM_RS_AlreadyRetrieved:
       ErrorMessage(Message_Msg("TObj_Appl_RAlreadyRetrieved") << theInfo);
       break;
-    case PCDM_RS_AlreadyRetrievedAndModified:
+    case PCDM_ReaderStatus::PCDM_RS_AlreadyRetrievedAndModified:
       ErrorMessage(Message_Msg("TObj_Appl_RAlreadyRetrievedAndModified") << theInfo);
       break;
-    case PCDM_RS_NoDriver:
+    case PCDM_ReaderStatus::PCDM_RS_NoDriver:
       ErrorMessage(Message_Msg("TObj_Appl_RNoDriver") << theInfo);
       break;
-    case PCDM_RS_UnknownFileDriver:
+    case PCDM_ReaderStatus::PCDM_RS_UnknownFileDriver:
       ErrorMessage(Message_Msg("TObj_Appl_RNoDriver") << theInfo);
       break;
-    case PCDM_RS_OpenError:
+    case PCDM_ReaderStatus::PCDM_RS_OpenError:
       ErrorMessage(Message_Msg("TObj_Appl_ROpenError") << theInfo);
       break;
-    case PCDM_RS_NoVersion:
+    case PCDM_ReaderStatus::PCDM_RS_NoVersion:
       ErrorMessage(Message_Msg("TObj_Appl_RNoVersion") << theInfo);
       break;
-    case PCDM_RS_NoModel:
+    case PCDM_ReaderStatus::PCDM_RS_NoModel:
       ErrorMessage(Message_Msg("TObj_Appl_RNoModel") << theInfo);
       break;
-    case PCDM_RS_NoDocument:
+    case PCDM_ReaderStatus::PCDM_RS_NoDocument:
       ErrorMessage(Message_Msg("TObj_Appl_RNoDocument") << theInfo);
       break;
-    case PCDM_RS_FormatFailure:
+    case PCDM_ReaderStatus::PCDM_RS_FormatFailure:
       ErrorMessage(Message_Msg("TObj_Appl_RFormatFailure") << theInfo);
       break;
-    case PCDM_RS_TypeNotFoundInSchema:
+    case PCDM_ReaderStatus::PCDM_RS_TypeNotFoundInSchema:
       ErrorMessage(Message_Msg("TObj_Appl_RTypeNotFound") << theInfo);
       break;
-    case PCDM_RS_UnrecognizedFileFormat:
+    case PCDM_ReaderStatus::PCDM_RS_UnrecognizedFileFormat:
       ErrorMessage(Message_Msg("TObj_Appl_RBadFileFormat") << theInfo);
       break;
-    case PCDM_RS_MakeFailure:
+    case PCDM_ReaderStatus::PCDM_RS_MakeFailure:
       ErrorMessage(Message_Msg("TObj_Appl_RMakeFailure") << theInfo);
       break;
-    case PCDM_RS_PermissionDenied:
+    case PCDM_ReaderStatus::PCDM_RS_PermissionDenied:
       ErrorMessage(Message_Msg("TObj_Appl_RPermissionDenied") << theInfo);
       break;
-    case PCDM_RS_DriverFailure:
+    case PCDM_ReaderStatus::PCDM_RS_DriverFailure:
       ErrorMessage(Message_Msg("TObj_Appl_RDriverFailure") << theInfo);
       break;
-    case PCDM_RS_ReaderException:
+    case PCDM_ReaderStatus::PCDM_RS_ReaderException:
       ErrorMessage(Message_Msg("TObj_Appl_RException") << theInfo);
       break;
     default:

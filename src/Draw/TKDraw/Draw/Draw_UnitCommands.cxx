@@ -101,7 +101,7 @@ static int converttoMDTV(Draw_Interpretor& di, int argc, const char** argv)
   double      aData = Draw::Atof(argv[1]);
   const char* aUnit = argv[2];
 
-  UnitsAPI::SetLocalSystem(UnitsAPI_MDTV);
+  UnitsAPI::SetLocalSystem(UnitsAPI_SystemUnits::UnitsAPI_MDTV);
   double res = UnitsAPI::AnyToLS(aData, aUnit);
   di << "result: " << res << "\n";
 

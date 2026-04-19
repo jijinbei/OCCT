@@ -27,7 +27,7 @@ int Geom2dInt_Geom2dCurveTool::NbSamples(const Adaptor2d_Curve2d& C,
   GeomAbs_CurveType typC = C.GetType();
   int               nbs  = C.NbSamples();
 
-  if (typC == GeomAbs_BSplineCurve)
+  if (typC == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     double t = C.LastParameter() - C.FirstParameter();
     if (t > Precision::PConfusion())
@@ -45,7 +45,7 @@ int Geom2dInt_Geom2dCurveTool::NbSamples(const Adaptor2d_Curve2d& C,
         nbs = aMinPntNb;
     }
   }
-  else if (typC == GeomAbs_Circle)
+  else if (typC == GeomAbs_CurveType::GeomAbs_Circle)
   {
     // Try to reach deflection = eps*R, eps = 0.01
     const double minR = 1.; // eps = 0.01
@@ -68,7 +68,7 @@ int Geom2dInt_Geom2dCurveTool::NbSamples(const Adaptor2d_Curve2d& C)
 {
   int               nbs  = C.NbSamples();
   GeomAbs_CurveType typC = C.GetType();
-  if (typC == GeomAbs_Circle)
+  if (typC == GeomAbs_CurveType::GeomAbs_Circle)
   {
     // Try to reach deflection = eps*R, eps = 0.01
     const double minR = 1.; // eps = 0.01

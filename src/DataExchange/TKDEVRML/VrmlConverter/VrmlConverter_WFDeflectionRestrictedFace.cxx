@@ -146,7 +146,7 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
   {
     TopAbs_Orientation       Orient    = ToolRst.Orientation();
     const Adaptor2d_Curve2d* TheRCurve = &ToolRst.Value();
-    if (TheRCurve->GetType() != GeomAbs_Line)
+    if (TheRCurve->GetType() != GeomAbs_CurveType::GeomAbs_Line)
     {
       GCPnts_QuasiUniformDeflection UDP(*TheRCurve, Deflection);
       if (UDP.IsDone())
@@ -253,7 +253,7 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
             b1 = b1 == RealFirst() ? -aLimit : b1;
             b2 = b2 == RealLast() ? aLimit : b2;
 
-            anIso.Load(GeomAbs_IsoU, Coord, b1, b2);
+            anIso.Load(GeomAbs_IsoType::GeomAbs_IsoU, Coord, b1, b2);
 
             VrmlConverter_DeflectionCurve::Add(anOStream, anIso, Deflection, aDrawer);
           }
@@ -301,7 +301,7 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
             b1 = b1 == RealFirst() ? -aLimit : b1;
             b2 = b2 == RealLast() ? aLimit : b2;
 
-            anIso.Load(GeomAbs_IsoV, Coord, b1, b2);
+            anIso.Load(GeomAbs_IsoType::GeomAbs_IsoV, Coord, b1, b2);
 
             VrmlConverter_DeflectionCurve::Add(anOStream, anIso, Deflection, aDrawer);
           }

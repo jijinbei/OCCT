@@ -27,7 +27,7 @@ GccInt_BElips::GccInt_BElips(const gp_Elips2d& Ellipse)
 
 GccInt_IType GccInt_BElips::ArcType() const
 {
-  return GccInt_Ell;
+  return GccInt_IType::GccInt_Ell;
 }
 
 gp_Elips2d GccInt_BElips::Ellipse() const

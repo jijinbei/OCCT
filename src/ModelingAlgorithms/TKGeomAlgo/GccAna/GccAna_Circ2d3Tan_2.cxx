@@ -105,11 +105,11 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
       IntAna2d_AnaIntersection  Intp;
       for (int k = 1; k <= nbsolution2; k++)
       {
-        if (typ1 == GccInt_Lin)
+        if (typ1 == GccInt_IType::GccInt_Lin)
         {
           Intp.Perform(Sol1->Line(), Bis2.ThisSolution(k));
         }
-        else if (typ1 == GccInt_Par)
+        else if (typ1 == GccInt_IType::GccInt_Par)
         {
           Intp.Perform(Bis2.ThisSolution(k), IntAna2d_Conic(Sol1->Parabola()));
         }

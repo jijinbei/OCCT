@@ -23,7 +23,7 @@
 BRepAlgoAPI_Check::BRepAlgoAPI_Check()
     : myTestSE(true),
       myTestSI(true),
-      myOperation(BOPAlgo_UNKNOWN)
+      myOperation(BOPAlgo_Operation::BOPAlgo_UNKNOWN)
 {
 }
 
@@ -36,7 +36,7 @@ BRepAlgoAPI_Check::BRepAlgoAPI_Check(const TopoDS_Shape&          theS,
     : myS1(theS),
       myTestSE(bTestSE),
       myTestSI(bTestSI),
-      myOperation(BOPAlgo_UNKNOWN)
+      myOperation(BOPAlgo_Operation::BOPAlgo_UNKNOWN)
 {
   Perform(theRange);
 }
@@ -96,7 +96,7 @@ void BRepAlgoAPI_Check::Perform(const Message_ProgressRange& theRange)
   if (!isValidS1 || !isValidS2)
   {
     BOPAlgo_CheckResult aRes;
-    aRes.SetCheckStatus(BOPAlgo_NotValid);
+    aRes.SetCheckStatus(BOPAlgo_CheckStatus::BOPAlgo_NotValid);
     if (!isValidS1)
     {
       aRes.SetShape1(myS1);

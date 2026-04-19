@@ -222,7 +222,7 @@ static void FUN_VPgeometryfound(
   occ::handle<TopOpeBRepDS_Interference>&                         IOOEPI) // (only if on2edges)
 //-----------------------------------------------------------------------
 {
-  bool         Lrest = (L.TypeLineCurve() == TopOpeBRep_RESTRICTION);
+  bool         Lrest = (L.TypeLineCurve() == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION);
   TopoDS_Shape Erest;
   double       parErest = 0;
   int          rkErest  = 0;
@@ -389,7 +389,7 @@ Standard_EXPORT void FUN_VPIndex(
   // v has already been stored in the DS
 
   if (PVIndex == 0)
-    PVKind = (SIisvertex || OOisvertex) ? TopOpeBRepDS_VERTEX : TopOpeBRepDS_POINT;
+    PVKind = (SIisvertex || OOisvertex) ? TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX : TopOpeBRepDS_Kind::TopOpeBRepDS_POINT;
 
   if (hasOOedge && !Gfound)
   {
@@ -543,7 +543,7 @@ Standard_EXPORT bool FUN_newtransEdge(const occ::handle<TopOpeBRepDS_HDataStruct
     TopoDS_Edge              OOER;
     bool                     onOOface = false;
     TopOpeBRep_TypeLineCurve typL     = L.TypeLineCurve();
-    if (typL == TopOpeBRep_RESTRICTION)
+    if (typL == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION)
     {
       onOOface = true;
       OOER     = TopoDS::Edge(L.Arc());
@@ -744,7 +744,7 @@ static void FUN_processCPI(TopOpeBRep_FacesFiller&        FF,
     if (Gfound)
       GKCPV = PVKind;
     else
-      GKCPV = (SIisvertex || OOisvertex) ? TopOpeBRepDS_VERTEX : TopOpeBRepDS_POINT;
+      GKCPV = (SIisvertex || OOisvertex) ? TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX : TopOpeBRepDS_Kind::TopOpeBRepDS_POINT;
 
     CPI = ::MakeCPVInterference(ttransLine, 0, PVIndex, parline, GKCPV);
     FF.StoreCurveInterference(CPI);
@@ -861,8 +861,8 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
   //              <TransLine>, <transEdge>
   // ===================================================================
 
-  bool wline        = (myLine->TypeLineCurve() == TopOpeBRep_WALKING);
-  bool grestriction = (myLine->TypeLineCurve() == TopOpeBRep_RESTRICTION);
+  bool wline        = (myLine->TypeLineCurve() == TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING);
+  bool grestriction = (myLine->TypeLineCurve() == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION);
   bool glinenotoned = !wline && !grestriction && !myLineIsonEdge;
 
   // lasttransLine (for walking line)
@@ -1113,7 +1113,7 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
 
   // modified by NIZHNY-MKK  Tue Apr  3 12:08:38 2001.BEGIN
   bool ismultiplekind = foundPVIndex && !EPIfound && !CPIfound && (SIisvertex || OOisvertex)
-                        && (PVKind == TopOpeBRepDS_POINT);
+                        && (PVKind == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT);
 
   //   if (!foundPVIndex) FUN_VPIndex ((*this),(*myLine),VP,ShapeIndex,myHDS,myDSCIL, //in
   if (!foundPVIndex || ismultiplekind)
@@ -1139,7 +1139,7 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
   }
 
   bool VPonedge = false;
-  if (PVKind == TopOpeBRepDS_VERTEX)
+  if (PVKind == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
     VPonedge = ::FUN_onedge(PDS, edge);
   if (myLineINL)
   {
@@ -1189,7 +1189,7 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
       {
         T.Index(iOOFace);
         EPIf =
-          MakeEPVInterference(T, iOOFace, PVIndex, paredge, PVKind, TopOpeBRepDS_FACE, SIisvertex);
+          MakeEPVInterference(T, iOOFace, PVIndex, paredge, PVKind, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, SIisvertex);
       }
       myHDS->StoreInterference(EPIf, edge);
       if (on2edges || hasONedge)
@@ -1399,7 +1399,7 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
                                                                               PVIndex,
                                                                               OOparedge,
                                                                               PVKind,
-                                                                              TopOpeBRepDS_FACE,
+                                                                              TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
                                                                               OOisvertex);
           myHDS->StoreInterference(OOEPIf, OOedge);
         }
@@ -1507,7 +1507,7 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
       TopOpeBRepDS_Transition T = transEdge;
       T.Index(iOOFace);
       EPIf =
-        MakeEPVInterference(T, iOOFace, PVIndex, paredge, PVKind, TopOpeBRepDS_FACE, SIisvertex);
+        MakeEPVInterference(T, iOOFace, PVIndex, paredge, PVKind, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, SIisvertex);
     }
     myHDS->StoreInterference(EPIf, edge);
   } // addEPI

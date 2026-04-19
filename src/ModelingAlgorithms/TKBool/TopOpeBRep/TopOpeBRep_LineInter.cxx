@@ -81,45 +81,45 @@ void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
   IntPatch_IType type = L->ArcType();
   switch (type)
   {
-    case IntPatch_Analytic:
-      myTypeLineCurve = TopOpeBRep_ANALYTIC;
+    case IntPatch_IType::IntPatch_Analytic:
+      myTypeLineCurve = TopOpeBRep_TypeLineCurve::TopOpeBRep_ANALYTIC;
       break;
-    case IntPatch_Restriction:
-      myTypeLineCurve = TopOpeBRep_RESTRICTION;
+    case IntPatch_IType::IntPatch_Restriction:
+      myTypeLineCurve = TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION;
       break;
-    case IntPatch_Walking:
-      myTypeLineCurve = TopOpeBRep_WALKING;
+    case IntPatch_IType::IntPatch_Walking:
+      myTypeLineCurve = TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING;
       break;
-    case IntPatch_Lin:
-      myTypeLineCurve = TopOpeBRep_LINE;
+    case IntPatch_IType::IntPatch_Lin:
+      myTypeLineCurve = TopOpeBRep_TypeLineCurve::TopOpeBRep_LINE;
       break;
-    case IntPatch_Circle:
-      myTypeLineCurve = TopOpeBRep_CIRCLE;
+    case IntPatch_IType::IntPatch_Circle:
+      myTypeLineCurve = TopOpeBRep_TypeLineCurve::TopOpeBRep_CIRCLE;
       break;
-    case IntPatch_Ellipse:
-      myTypeLineCurve = TopOpeBRep_ELLIPSE;
+    case IntPatch_IType::IntPatch_Ellipse:
+      myTypeLineCurve = TopOpeBRep_TypeLineCurve::TopOpeBRep_ELLIPSE;
       break;
-    case IntPatch_Parabola:
-      myTypeLineCurve = TopOpeBRep_PARABOLA;
+    case IntPatch_IType::IntPatch_Parabola:
+      myTypeLineCurve = TopOpeBRep_TypeLineCurve::TopOpeBRep_PARABOLA;
       break;
-    case IntPatch_Hyperbola:
-      myTypeLineCurve = TopOpeBRep_HYPERBOLA;
+    case IntPatch_IType::IntPatch_Hyperbola:
+      myTypeLineCurve = TopOpeBRep_TypeLineCurve::TopOpeBRep_HYPERBOLA;
       break;
     default:
-      myTypeLineCurve = TopOpeBRep_OTHERTYPE;
+      myTypeLineCurve = TopOpeBRep_TypeLineCurve::TopOpeBRep_OTHERTYPE;
       SetOK(false);
       break;
   }
 
   switch (type)
   {
-    case IntPatch_Analytic:
+    case IntPatch_IType::IntPatch_Analytic:
       myILA = occ::down_cast<IntPatch_ALine>(L);
       break;
-    case IntPatch_Restriction:
+    case IntPatch_IType::IntPatch_Restriction:
       myILR = occ::down_cast<IntPatch_RLine>(L);
       break;
-    case IntPatch_Walking:
+    case IntPatch_IType::IntPatch_Walking:
       myILW = occ::down_cast<IntPatch_WLine>(L);
       break;
     default: //"geometric" line
@@ -128,7 +128,7 @@ void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
   }
 
   // transform an analytic line to a walking line
-  if (myTypeLineCurve == TopOpeBRep_ANALYTIC)
+  if (myTypeLineCurve == TopOpeBRep_TypeLineCurve::TopOpeBRep_ANALYTIC)
   {
     NCollection_Sequence<occ::handle<IntPatch_Line>> aSLin;
     FUN_ALINETOWLINE(myILA, new BRepAdaptor_Surface(S1), new BRepAdaptor_Surface(S2), aSLin);
@@ -136,35 +136,35 @@ void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
     if (aSLin.Length() > 0)
       myILW = occ::down_cast<IntPatch_WLine>(aSLin.Value(1));
 
-    myTypeLineCurve = TopOpeBRep_WALKING;
+    myTypeLineCurve = TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING;
   }
 
   // number of points found on restriction(s)
   int n = 0;
   switch (myTypeLineCurve)
   {
-    case TopOpeBRep_ANALYTIC:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_ANALYTIC:
       n = myILA->NbVertex();
       break;
-    case TopOpeBRep_RESTRICTION:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION:
       n = myILR->NbVertex();
       break;
-    case TopOpeBRep_WALKING:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING:
       n = myILW->NbVertex();
       break;
-    case TopOpeBRep_LINE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_LINE:
       n = myILG->NbVertex();
       break;
-    case TopOpeBRep_CIRCLE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_CIRCLE:
       n = myILG->NbVertex();
       break;
-    case TopOpeBRep_ELLIPSE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_ELLIPSE:
       n = myILG->NbVertex();
       break;
-    case TopOpeBRep_PARABOLA:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_PARABOLA:
       n = myILG->NbVertex();
       break;
-    case TopOpeBRep_HYPERBOLA:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_HYPERBOLA:
       n = myILG->NbVertex();
       break;
     default:
@@ -180,13 +180,13 @@ void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
     TopOpeBRep_VPointInter& VP = myHAVP->ChangeValue(i);
     switch (myTypeLineCurve)
     {
-      case TopOpeBRep_ANALYTIC:
+      case TopOpeBRep_TypeLineCurve::TopOpeBRep_ANALYTIC:
         VP.SetPoint(myILA->Vertex(i));
         break;
-      case TopOpeBRep_RESTRICTION:
+      case TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION:
         VP.SetPoint(myILR->Vertex(i));
         break;
-      case TopOpeBRep_WALKING:
+      case TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING:
         VP.SetPoint(myILW->Vertex(i));
         break;
       default:
@@ -252,7 +252,7 @@ void TopOpeBRep_LineInter::SetIsVClosed()
 
   /*bool newV = true;
   if (!newV) {
-    if (myTypeLineCurve != TopOpeBRep_WALKING) {
+    if (myTypeLineCurve != TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING) {
       myIsVClosed = false;
       return;
     }
@@ -375,8 +375,8 @@ bool TopOpeBRep_LineInter::IsPeriodic() const
 {
   switch (myTypeLineCurve)
   {
-    case TopOpeBRep_CIRCLE:
-    case TopOpeBRep_ELLIPSE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_CIRCLE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_ELLIPSE:
       return true;
     default:
       break;
@@ -441,7 +441,7 @@ int TopOpeBRep_LineInter::NbWPoint() const
 {
   switch (myTypeLineCurve)
   {
-    case TopOpeBRep_WALKING:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING:
       return myILW->NbPnts();
     default:
       break;
@@ -455,10 +455,10 @@ const TopOpeBRep_WPointInter& TopOpeBRep_LineInter::WPoint(const int IW)
 {
   switch (myTypeLineCurve)
   {
-    case TopOpeBRep_RESTRICTION:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION:
       myCurrentWP.Set(myILR->Point(IW));
       break;
-    case TopOpeBRep_WALKING:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING:
       myCurrentWP.Set(myILW->Point(IW));
       break;
     default:
@@ -475,19 +475,19 @@ occ::handle<Geom_Curve> TopOpeBRep_LineInter::Curve() const
   occ::handle<Geom_Curve> C3D;
   switch (myTypeLineCurve)
   {
-    case TopOpeBRep_LINE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_LINE:
       C3D = new Geom_Line(myILG->Line());
       break;
-    case TopOpeBRep_CIRCLE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_CIRCLE:
       C3D = new Geom_Circle(myILG->Circle());
       break;
-    case TopOpeBRep_ELLIPSE:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_ELLIPSE:
       C3D = new Geom_Ellipse(myILG->Ellipse());
       break;
-    case TopOpeBRep_PARABOLA:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_PARABOLA:
       C3D = new Geom_Parabola(myILG->Parabola());
       break;
-    case TopOpeBRep_HYPERBOLA:
+    case TopOpeBRep_TypeLineCurve::TopOpeBRep_HYPERBOLA:
       C3D = new Geom_Hyperbola(myILG->Hyperbola());
       break;
     default:
@@ -521,7 +521,7 @@ occ::handle<Geom_Curve> TopOpeBRep_LineInter::Curve(const double parmin, const d
 
 const TopoDS_Shape& TopOpeBRep_LineInter::Arc() const
 {
-  if (myTypeLineCurve == TopOpeBRep_RESTRICTION)
+  if (myTypeLineCurve == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION)
   {
     if (myILR->IsArcOnS1())
     {
@@ -546,7 +546,7 @@ const TopoDS_Shape& TopOpeBRep_LineInter::Arc() const
 
 bool TopOpeBRep_LineInter::ArcIsEdge(const int Index) const
 {
-  if (myTypeLineCurve == TopOpeBRep_RESTRICTION)
+  if (myTypeLineCurve == TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION)
   {
     const bool r = myILR->IsArcOnS1();
     return (Index == 2 ? !r : r);

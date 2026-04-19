@@ -18,9 +18,9 @@ double IntSurf_QuadricTool::Tolerance(const IntSurf_Quadric& Q)
 {
   switch (Q.TypeQuadric())
   {
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       return 2.e-6 * Q.Sphere().Radius();
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       return 2.e-6 * Q.Cylinder().Radius();
     default:
       break;

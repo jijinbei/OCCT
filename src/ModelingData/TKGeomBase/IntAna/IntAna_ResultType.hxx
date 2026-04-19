@@ -17,7 +17,7 @@
 #ifndef _IntAna_ResultType_HeaderFile
 #define _IntAna_ResultType_HeaderFile
 
-enum IntAna_ResultType
+enum class IntAna_ResultType
 {
   IntAna_Point,
   IntAna_Line,

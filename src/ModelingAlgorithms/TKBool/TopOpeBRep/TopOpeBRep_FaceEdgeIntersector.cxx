@@ -253,11 +253,11 @@ TopOpeBRepDS_Transition TopOpeBRep_FaceEdgeIntersector::Transition(
   { //--   Edge In <=>   Rentre ds la matiere face
     switch (IP.Transition())
     {
-      case IntCurveSurface_In:
+      case IntCurveSurface_TransitionOnCurve::IntCurveSurface_In:
         stB = TopAbs_OUT;
         stA = TopAbs_IN;
         break;
-      case IntCurveSurface_Out:
+      case IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out:
         stB = TopAbs_IN;
         stA = TopAbs_OUT;
         break;
@@ -284,10 +284,10 @@ TopOpeBRepDS_Transition TopOpeBRep_FaceEdgeIntersector::Transition(
   { //-- Face On est toujours ds la face .
     switch (IP.Transition())
     {
-      case IntCurveSurface_In:
+      case IntCurveSurface_TransitionOnCurve::IntCurveSurface_In:
         stB = stA = TopAbs_IN;
         break;
-      case IntCurveSurface_Out:
+      case IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out:
         stB = stA = TopAbs_IN;
         break;
       default:

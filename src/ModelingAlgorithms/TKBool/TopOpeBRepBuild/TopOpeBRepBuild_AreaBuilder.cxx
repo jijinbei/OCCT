@@ -74,13 +74,13 @@ TopAbs_State TopOpeBRepBuild_AreaBuilder::CompareLoopWithListOfLoop(
     const occ::handle<TopOpeBRepBuild_Loop>& curL = LoopIter.Value();
     switch (what)
     {
-      case TopOpeBRepBuild_ANYLOOP:
+      case TopOpeBRepBuild_LoopEnum::TopOpeBRepBuild_ANYLOOP:
         totest = true;
         break;
-      case TopOpeBRepBuild_BOUNDARY:
+      case TopOpeBRepBuild_LoopEnum::TopOpeBRepBuild_BOUNDARY:
         totest = curL->IsShape();
         break;
-      case TopOpeBRepBuild_BLOCK:
+      case TopOpeBRepBuild_LoopEnum::TopOpeBRepBuild_BLOCK:
         totest = !curL->IsShape();
         break;
       default:
@@ -158,7 +158,7 @@ void TopOpeBRepBuild_AreaBuilder::InitAreaBuilder(TopOpeBRepBuild_LoopSet&      
         const NCollection_List<occ::handle<TopOpeBRepBuild_Loop>>& aArea = AreaIter.Value();
         if (aArea.IsEmpty())
           continue;
-        state = CompareLoopWithListOfLoop(LC, L, aArea, TopOpeBRepBuild_BLOCK);
+        state = CompareLoopWithListOfLoop(LC, L, aArea, TopOpeBRepBuild_LoopEnum::TopOpeBRepBuild_BLOCK);
         if (state == TopAbs_UNKNOWN)
           Atomize(state, TopAbs_IN);
         Loopinside = (state == TopAbs_IN);
@@ -197,7 +197,7 @@ void TopOpeBRepBuild_AreaBuilder::InitAreaBuilder(TopOpeBRepBuild_LoopSet&      
         const NCollection_List<occ::handle<TopOpeBRepBuild_Loop>>& aArea = AreaIter.Value();
         if (aArea.IsEmpty())
           continue;
-        state = CompareLoopWithListOfLoop(LC, L, aArea, TopOpeBRepBuild_ANYLOOP);
+        state = CompareLoopWithListOfLoop(LC, L, aArea, TopOpeBRepBuild_LoopEnum::TopOpeBRepBuild_ANYLOOP);
         if (state == TopAbs_UNKNOWN)
           Atomize(state, TopAbs_IN);
         Loopinside = (state == TopAbs_IN);

@@ -576,14 +576,14 @@ bool Approx_CurveOnSurface::isIsoLine(const occ::handle<Adaptor2d_Curve2d>& theC
 
   // Test type.
   const GeomAbs_CurveType aType = theC2D->GetType();
-  if (aType == GeomAbs_Line)
+  if (aType == GeomAbs_CurveType::GeomAbs_Line)
   {
     gp_Lin2d aLin2d   = theC2D->Line();
     aLoc2d            = aLin2d.Location();
     aDir2d            = aLin2d.Direction();
     isAppropriateType = true;
   }
-  else if (aType == GeomAbs_BSplineCurve)
+  else if (aType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     occ::handle<Geom2d_BSplineCurve> aBSpline2d = theC2D->BSpline();
     if (aBSpline2d->Degree() != 1 || aBSpline2d->NbPoles() != 2)
@@ -599,7 +599,7 @@ bool Approx_CurveOnSurface::isIsoLine(const occ::handle<Adaptor2d_Curve2d>& theC
 
     isAppropriateType = true;
   }
-  else if (aType == GeomAbs_BezierCurve)
+  else if (aType == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     occ::handle<Geom2d_BezierCurve> aBezier2d = theC2D->Bezier();
     if (aBezier2d->Degree() != 1 || aBezier2d->NbPoles() != 2)
@@ -654,7 +654,7 @@ bool Approx_CurveOnSurface::buildC3dOnIsoLine(const occ::handle<Adaptor2d_Curve2
   if (aGeomAdapter.IsNull())
     return false;
 
-  if (mySurf->GetType() == GeomAbs_Sphere)
+  if (mySurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
     return false;
 
   // Extract isoline
@@ -730,7 +730,7 @@ bool Approx_CurveOnSurface::buildC3dOnIsoLine(const occ::handle<Adaptor2d_Curve2
   }
 
   // Convert arbitrary curve type to the b-spline.
-  myCurve3d = GeomConvert::CurveToBSplineCurve(aC3d, Convert_QuasiAngular);
+  myCurve3d = GeomConvert::CurveToBSplineCurve(aC3d, Convert_ParameterisationType::Convert_QuasiAngular);
   if (!theIsForward)
     myCurve3d->Reverse();
 

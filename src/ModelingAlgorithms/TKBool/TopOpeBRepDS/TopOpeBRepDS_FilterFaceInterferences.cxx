@@ -55,8 +55,8 @@ void TopOpeBRepDS_Filter::ProcessFaceInterferences(
   lw.Append(lUU);
 
   ::FUN_selectTRASHAinterference(lw, TopAbs_FACE, lF);
-  ::FUN_selectGKinterference(lF, TopOpeBRepDS_EDGE, lFE);
-  ::FUN_selectSKinterference(lFE, TopOpeBRepDS_FACE, lFEF);
+  ::FUN_selectGKinterference(lF, TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE, lFE);
+  ::FUN_selectSKinterference(lFE, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, lFEF);
   ::FUN_selectTRASHAinterference(lw, TopAbs_EDGE, lE);
 
   LI.Clear();

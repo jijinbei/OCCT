@@ -42,27 +42,27 @@ TopoDS_Edge HLRBRep::MakeEdge(const HLRBRep_Curve& ec, const double U1, const do
 
   switch (ec.GetType())
   {
-    case GeomAbs_Line:
+    case GeomAbs_CurveType::GeomAbs_Line:
       Edg = BRepLib_MakeEdge2d(ec.Line(), sta, end);
       break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       Edg = BRepLib_MakeEdge2d(ec.Circle(), sta, end);
       break;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       Edg = BRepLib_MakeEdge2d(ec.Ellipse(), sta, end);
       break;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       Edg = BRepLib_MakeEdge2d(ec.Hyperbola(), sta, end);
       break;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       Edg = BRepLib_MakeEdge2d(ec.Parabola(), sta, end);
       break;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       NCollection_Array1<gp_Pnt2d>    Poles(1, ec.NbPoles());
       occ::handle<Geom2d_BezierCurve> ec2d;
       if (ec.IsRational())
@@ -82,7 +82,7 @@ TopoDS_Edge HLRBRep::MakeEdge(const HLRBRep_Curve& ec, const double U1, const do
       break;
     }
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       occ::handle<Geom2d_BSplineCurve> ec2d;
       GeomAdaptor_Curve                GAcurve = ec.GetCurve().Curve();
       TopoDS_Edge                      anEdge  = ec.GetCurve().Edge();

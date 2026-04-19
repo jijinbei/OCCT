@@ -17,7 +17,7 @@
 #ifndef _GeomFill_PipeError_HeaderFile
 #define _GeomFill_PipeError_HeaderFile
 
-enum GeomFill_PipeError
+enum class GeomFill_PipeError
 {
   GeomFill_PipeOk,
   GeomFill_PipeNotOk,

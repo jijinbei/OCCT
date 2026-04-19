@@ -88,8 +88,8 @@ static IntPatch_SpecPntType IsPoleOrSeam(const occ::handle<Adaptor3d_Surface>& t
 
     switch (aType)
     {
-      case GeomAbs_Sphere:
-      case GeomAbs_Cone: {
+      case GeomAbs_SurfaceType::GeomAbs_Sphere:
+      case GeomAbs_SurfaceType::GeomAbs_Cone: {
         if (IntPatch_SpecialPoints::AddSingularPole((isReversed ? theS2 : theS1),
                                                     (isReversed ? theS1 : theS2),
                                                     thePIsoRef,
@@ -103,8 +103,8 @@ static IntPatch_SpecPntType IsPoleOrSeam(const occ::handle<Adaptor3d_Surface>& t
         }
       }
         [[fallthrough]];
-      case GeomAbs_Torus:
-        if (aType == GeomAbs_Torus)
+      case GeomAbs_SurfaceType::GeomAbs_Torus:
+        if (aType == GeomAbs_SurfaceType::GeomAbs_Torus)
         {
           if (IntPatch_SpecialPoints::AddCrossUVIsoPoint((isReversed ? theS2 : theS1),
                                                          (isReversed ? theS1 : theS2),
@@ -118,7 +118,7 @@ static IntPatch_SpecPntType IsPoleOrSeam(const occ::handle<Adaptor3d_Surface>& t
           }
         }
         [[fallthrough]];
-      case GeomAbs_Cylinder:
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder:
         theSingularSurfaceID = i + 1;
         AddVertexPoint(theLine, theVertex, theArrPeriods);
         return IntPatch_SPntSeamU;
@@ -155,23 +155,23 @@ IntPatch_ALineToWLine::IntPatch_ALineToWLine(const occ::handle<Adaptor3d_Surface
 
   switch (aTyps1)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       myQuad1.SetValue(theS1->Plane());
       break;
 
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       myQuad1.SetValue(theS1->Cylinder());
       break;
 
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       myQuad1.SetValue(theS1->Sphere());
       break;
 
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       myQuad1.SetValue(theS1->Cone());
       break;
 
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       myQuad1.SetValue(theS1->Torus());
       break;
 
@@ -181,22 +181,22 @@ IntPatch_ALineToWLine::IntPatch_ALineToWLine(const occ::handle<Adaptor3d_Surface
 
   switch (aTyps2)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       myQuad2.SetValue(theS2->Plane());
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       myQuad2.SetValue(theS2->Cylinder());
       break;
 
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       myQuad2.SetValue(theS2->Sphere());
       break;
 
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       myQuad2.SetValue(theS2->Cone());
       break;
 
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       myQuad2.SetValue(theS2->Torus());
       break;
 
@@ -274,14 +274,14 @@ void IntPatch_ALineToWLine::CorrectEndPoint(occ::handle<IntSurf_LineOn2S>& theLi
     bool anIsOnFirst = (ii == 1);
 
     const IntSurf_Quadric& aQuad = (ii == 1) ? myQuad1 : myQuad2;
-    if (aQuad.TypeQuadric() == GeomAbs_Cone)
+    if (aQuad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Cone)
     {
       const gp_Cone aCone  = aQuad.Cone();
       const gp_Pnt  anApex = aCone.Apex();
       if (anApex.SquareDistance(aPntOn2S.Value()) > aSqTol)
         continue;
     }
-    else if (aQuad.TypeQuadric() == GeomAbs_Sphere)
+    else if (aQuad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Sphere)
     {
       double aU, aV;
       aPntOn2S.ParametersOnSurface(anIsOnFirst, aU, aV);
@@ -315,7 +315,7 @@ double IntPatch_ALineToWLine::GetSectionRadius(const gp_Pnt& thePnt3d) const
   for (int i = 0; i < 2; i++)
   {
     const IntSurf_Quadric& aQuad = i ? myQuad2 : myQuad1;
-    if (aQuad.TypeQuadric() == GeomAbs_Cone)
+    if (aQuad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Cone)
     {
       const gp_Cone aCone = aQuad.Cone();
       const gp_XYZ  aRVec = thePnt3d.XYZ() - aCone.Apex().XYZ();
@@ -323,7 +323,7 @@ double IntPatch_ALineToWLine::GetSectionRadius(const gp_Pnt& thePnt3d) const
 
       aRetVal = std::min(aRetVal, std::abs(aRVec.Dot(aDir) * std::tan(aCone.SemiAngle())));
     }
-    else if (aQuad.TypeQuadric() == GeomAbs_Sphere)
+    else if (aQuad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Sphere)
     {
       const gp_Sphere aSphere = aQuad.Sphere();
       const gp_XYZ    aRVec   = thePnt3d.XYZ() - aSphere.Location().XYZ();
@@ -852,7 +852,7 @@ void IntPatch_ALineToWLine::MakeWLine(
     //-----------------------------------------------------------------
     occ::handle<IntPatch_WLine> aWLine;
     //
-    if (theALine->TransitionOnS1() == IntSurf_Touch)
+    if (theALine->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Touch)
     {
       aWLine = new IntPatch_WLine(aLinOn2S,
                                   theALine->IsTangent(),
@@ -860,7 +860,7 @@ void IntPatch_ALineToWLine::MakeWLine(
                                   theALine->SituationS2());
       aWLine->SetCreatingWayInfo(IntPatch_WLine::IntPatch_WLImpImp);
     }
-    else if (theALine->TransitionOnS1() == IntSurf_Undecided)
+    else if (theALine->TransitionOnS1() == IntSurf_TypeTrans::IntSurf_Undecided)
     {
       aWLine = new IntPatch_WLine(aLinOn2S, theALine->IsTangent());
       aWLine->SetCreatingWayInfo(IntPatch_WLine::IntPatch_WLImpImp);
@@ -876,17 +876,17 @@ void IntPatch_ALineToWLine::MakeWLine(
 
       const double dotcross = tgvalid.DotCross(aNQ2, aNQ1);
 
-      IntSurf_TypeTrans trans1 = IntSurf_Undecided, trans2 = IntSurf_Undecided;
+      IntSurf_TypeTrans trans1 = IntSurf_TypeTrans::IntSurf_Undecided, trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
 
       if (dotcross > myTolTransition)
       {
-        trans1 = IntSurf_Out;
-        trans2 = IntSurf_In;
+        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+        trans2 = IntSurf_TypeTrans::IntSurf_In;
       }
       else if (dotcross < -myTolTransition)
       {
-        trans1 = IntSurf_In;
-        trans2 = IntSurf_Out;
+        trans1 = IntSurf_TypeTrans::IntSurf_In;
+        trans2 = IntSurf_TypeTrans::IntSurf_Out;
       }
 
       aWLine = new IntPatch_WLine(aLinOn2S, theALine->IsTangent(), trans1, trans2);

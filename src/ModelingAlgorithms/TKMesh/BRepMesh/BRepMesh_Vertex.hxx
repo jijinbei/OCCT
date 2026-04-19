@@ -31,7 +31,7 @@ public:
   //! Default constructor
   BRepMesh_Vertex()
       : myLocation3d(0),
-        myMovability(BRepMesh_Free)
+        myMovability(BRepMesh_DegreeOfFreedom::BRepMesh_Free)
   {
   }
 
@@ -92,7 +92,7 @@ public:
   //! @return TRUE if equal, FALSE if not.
   bool IsEqual(const BRepMesh_Vertex& theOther) const
   {
-    if (myMovability == BRepMesh_Deleted || theOther.myMovability == BRepMesh_Deleted)
+    if (myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted || theOther.myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
     {
       return false;
     }

@@ -32,7 +32,7 @@ TEST(LProp_CurAndInfTest, AddInflection)
   EXPECT_FALSE(aResult.IsEmpty());
   EXPECT_EQ(aResult.NbPoints(), 1);
   EXPECT_DOUBLE_EQ(aResult.Parameter(1), 1.5);
-  EXPECT_EQ(aResult.Type(1), LProp_Inflection);
+  EXPECT_EQ(aResult.Type(1), LProp_CIType::LProp_Inflection);
 }
 
 TEST(LProp_CurAndInfTest, AddExtCur_Minimum)
@@ -42,7 +42,7 @@ TEST(LProp_CurAndInfTest, AddExtCur_Minimum)
 
   EXPECT_EQ(aResult.NbPoints(), 1);
   EXPECT_DOUBLE_EQ(aResult.Parameter(1), 2.0);
-  EXPECT_EQ(aResult.Type(1), LProp_MinCur);
+  EXPECT_EQ(aResult.Type(1), LProp_CIType::LProp_MinCur);
 }
 
 TEST(LProp_CurAndInfTest, AddExtCur_Maximum)
@@ -52,7 +52,7 @@ TEST(LProp_CurAndInfTest, AddExtCur_Maximum)
 
   EXPECT_EQ(aResult.NbPoints(), 1);
   EXPECT_DOUBLE_EQ(aResult.Parameter(1), 3.0);
-  EXPECT_EQ(aResult.Type(1), LProp_MaxCur);
+  EXPECT_EQ(aResult.Type(1), LProp_CIType::LProp_MaxCur);
 }
 
 TEST(LProp_CurAndInfTest, MultiplePoints_SortedByParameter)
@@ -81,9 +81,9 @@ TEST(LProp_CurAndInfTest, MultiplePoints_CorrectTypes)
   aResult.AddExtCur(5.0, false); // MaxCur
 
   EXPECT_EQ(aResult.NbPoints(), 3);
-  EXPECT_EQ(aResult.Type(1), LProp_MinCur);
-  EXPECT_EQ(aResult.Type(2), LProp_Inflection);
-  EXPECT_EQ(aResult.Type(3), LProp_MaxCur);
+  EXPECT_EQ(aResult.Type(1), LProp_CIType::LProp_MinCur);
+  EXPECT_EQ(aResult.Type(2), LProp_CIType::LProp_Inflection);
+  EXPECT_EQ(aResult.Type(3), LProp_CIType::LProp_MaxCur);
 }
 
 TEST(LProp_CurAndInfTest, Clear)
@@ -108,7 +108,7 @@ TEST(LProp_CurAndInfTest, Clear_ThenRefill)
   aResult.AddExtCur(5.0, false);
   EXPECT_EQ(aResult.NbPoints(), 1);
   EXPECT_DOUBLE_EQ(aResult.Parameter(1), 5.0);
-  EXPECT_EQ(aResult.Type(1), LProp_MaxCur);
+  EXPECT_EQ(aResult.Type(1), LProp_CIType::LProp_MaxCur);
 }
 
 TEST(LProp_CurAndInfTest, Parameter_OutOfRange_Throws)

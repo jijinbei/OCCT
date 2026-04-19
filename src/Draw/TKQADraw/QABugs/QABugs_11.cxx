@@ -550,8 +550,8 @@ int OCC165(Draw_Interpretor& di, int n, const char** a)
   DBRep::Set("face", theFace);
 
   double           anAlt   = 0.;
-  GeomAbs_JoinType theJoin = GeomAbs_Intersection;
-  // GeomAbs_Intersection; //GeomAbs_Arc;
+  GeomAbs_JoinType theJoin = GeomAbs_JoinType::GeomAbs_Intersection;
+  // GeomAbs_JoinType::GeomAbs_Intersection; //GeomAbs_JoinType::GeomAbs_Arc;
   BRepOffsetAPI_MakeOffset aMakeOffset(theFace, theJoin);
   aMakeOffset.AddWire(theWire);
 
@@ -670,7 +670,7 @@ static int OCC305(Draw_Interpretor& di, int argc, const char** argv)
   // aContext->SetColor( res, Quantity_NOC_RED );
   // aContext->Display( res );
 
-  // BRepOffsetAPI_MakeOffset off(wire, GeomAbs_Arc);
+  // BRepOffsetAPI_MakeOffset off(wire, GeomAbs_JoinType::GeomAbs_Arc);
   // off.Perform(0.5, 0);
 
   // printf("\n IsDone = %d", off.IsDone());
@@ -705,31 +705,31 @@ static int OCC381_Save(Draw_Interpretor& di, int nb, const char** a)
     return 0;
   }
   PCDM_StoreStatus theStatus = A->Save(D, theStatusMessage);
-  if (theStatus != PCDM_SS_OK)
+  if (theStatus != PCDM_StoreStatus::PCDM_SS_OK)
   {
     switch (theStatus)
     {
-      case PCDM_SS_DriverFailure: {
+      case PCDM_StoreStatus::PCDM_SS_DriverFailure: {
         di << "Error saving document: Could not store , no driver found to make it\n";
         break;
       }
-      case PCDM_SS_WriteFailure: {
+      case PCDM_StoreStatus::PCDM_SS_WriteFailure: {
         di << "Error saving document: Write access failure\n";
         break;
       }
-      case PCDM_SS_Failure: {
+      case PCDM_StoreStatus::PCDM_SS_Failure: {
         di << "Error saving document: Write failure\n";
         break;
       }
-      case PCDM_SS_Doc_IsNull: {
+      case PCDM_StoreStatus::PCDM_SS_Doc_IsNull: {
         di << "Error saving document: No document to save\n";
         break;
       }
-      case PCDM_SS_No_Obj: {
+      case PCDM_StoreStatus::PCDM_SS_No_Obj: {
         di << "Error saving document: No objects written\n";
         break;
       }
-      case PCDM_SS_Info_Section_Error: {
+      case PCDM_StoreStatus::PCDM_SS_Info_Section_Error: {
         di << "Error saving document: Write info section failure\n";
         break;
       }
@@ -758,31 +758,31 @@ static int OCC381_SaveAs(Draw_Interpretor& di, int nb, const char** a)
 
   TCollection_ExtendedString theStatusMessage;
   PCDM_StoreStatus           theStatus = A->SaveAs(D, path, theStatusMessage);
-  if (theStatus != PCDM_SS_OK)
+  if (theStatus != PCDM_StoreStatus::PCDM_SS_OK)
   {
     switch (theStatus)
     {
-      case PCDM_SS_DriverFailure: {
+      case PCDM_StoreStatus::PCDM_SS_DriverFailure: {
         di << "Error saving document: Could not store , no driver found to make it\n";
         break;
       }
-      case PCDM_SS_WriteFailure: {
+      case PCDM_StoreStatus::PCDM_SS_WriteFailure: {
         di << "Error saving document: Write access failure\n";
         break;
       }
-      case PCDM_SS_Failure: {
+      case PCDM_StoreStatus::PCDM_SS_Failure: {
         di << "Error saving document: Write failure\n";
         break;
       }
-      case PCDM_SS_Doc_IsNull: {
+      case PCDM_StoreStatus::PCDM_SS_Doc_IsNull: {
         di << "Error saving document: No document to save\n";
         break;
       }
-      case PCDM_SS_No_Obj: {
+      case PCDM_StoreStatus::PCDM_SS_No_Obj: {
         di << "Error saving document: No objects written\n";
         break;
       }
-      case PCDM_SS_Info_Section_Error: {
+      case PCDM_StoreStatus::PCDM_SS_Info_Section_Error: {
         di << "Error saving document: Write info section failure\n";
         break;
       }
@@ -874,7 +874,7 @@ static int OCC363(Draw_Interpretor& di, int argc, const char** argv)
     // 3. Open document
     TCollection_ExtendedString    name(argv[2]);
     occ::handle<TDocStd_Document> Doc;
-    if (App->Open(name, Doc) != PCDM_RS_OK)
+    if (App->Open(name, Doc) != PCDM_ReaderStatus::PCDM_RS_OK)
     {
       di << "Error OCC363 : document was not opened successfully\n";
       return 1;
@@ -3910,8 +3910,8 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   occ::handle<TDF_Reference> ref   = TDF_Reference::Set(doc_std->Main(), Lstd3);
   //
   // Save
-  // if (app->SaveAs(doc_std, "W:\\doc.std") != PCDM_SS_OK)
-  if (app->SaveAs(doc_std, aFile1) != PCDM_SS_OK)
+  // if (app->SaveAs(doc_std, "W:\\doc.std") != PCDM_StoreStatus::PCDM_SS_OK)
+  if (app->SaveAs(doc_std, aFile1) != PCDM_StoreStatus::PCDM_SS_OK)
     return 1;
   intlist.Nullify();
   dbllist.Nullify();
@@ -3922,8 +3922,8 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   ref.Nullify();
   app->Close(doc_std);
   doc_std.Nullify();
-  // if (app->Open("W:\\doc.std", doc_std_open) != PCDM_RS_OK)
-  if (app->Open(aFile1, doc_std_open) != PCDM_RS_OK)
+  // if (app->Open("W:\\doc.std", doc_std_open) != PCDM_ReaderStatus::PCDM_RS_OK)
+  if (app->Open(aFile1, doc_std_open) != PCDM_ReaderStatus::PCDM_RS_OK)
     return 2;
   if (!doc_std_open->Main().IsAttribute(TDataStd_Tick::GetID()))
     return 3;
@@ -4056,15 +4056,15 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   ref   = TDF_Reference::Set(doc_xml->Main(), Lstd3);
   //
   // Save
-  // if (app->SaveAs(doc_xml, "W:\\doc.xml") != PCDM_SS_OK)
-  if (app->SaveAs(doc_xml, aFile2) != PCDM_SS_OK)
+  // if (app->SaveAs(doc_xml, "W:\\doc.xml") != PCDM_StoreStatus::PCDM_SS_OK)
+  if (app->SaveAs(doc_xml, aFile2) != PCDM_StoreStatus::PCDM_SS_OK)
     return 1;
   intlist.Nullify();
   ref.Nullify();
   app->Close(doc_xml);
   doc_xml.Nullify();
-  // if (app->Open("W:\\doc.xml", doc_xml_open) != PCDM_RS_OK)
-  if (app->Open(aFile2, doc_xml_open) != PCDM_RS_OK)
+  // if (app->Open("W:\\doc.xml", doc_xml_open) != PCDM_ReaderStatus::PCDM_RS_OK)
+  if (app->Open(aFile2, doc_xml_open) != PCDM_ReaderStatus::PCDM_RS_OK)
     return 2;
   if (!doc_xml_open->Main().IsAttribute(TDataStd_Tick::GetID()))
     return 3;
@@ -4217,15 +4217,15 @@ int TestOpenSave(const TCollection_ExtendedString& aFile1,
   ref   = TDF_Reference::Set(doc_bin->Main(), Lstd3);
   //
   // Save
-  // if (app->SaveAs(doc_bin, "W:\\doc.cbf") != PCDM_SS_OK)
-  if (app->SaveAs(doc_bin, aFile3) != PCDM_SS_OK)
+  // if (app->SaveAs(doc_bin, "W:\\doc.cbf") != PCDM_StoreStatus::PCDM_SS_OK)
+  if (app->SaveAs(doc_bin, aFile3) != PCDM_StoreStatus::PCDM_SS_OK)
     return 1;
   intlist.Nullify();
   ref.Nullify();
   app->Close(doc_bin);
   doc_bin.Nullify();
-  // if (app->Open("W:\\doc.cbf", doc_bin_open) != PCDM_RS_OK)
-  if (app->Open(aFile3, doc_bin_open) != PCDM_RS_OK)
+  // if (app->Open("W:\\doc.cbf", doc_bin_open) != PCDM_ReaderStatus::PCDM_RS_OK)
+  if (app->Open(aFile3, doc_bin_open) != PCDM_ReaderStatus::PCDM_RS_OK)
     return 2;
   if (!doc_bin_open->Main().IsAttribute(TDataStd_Tick::GetID()))
     return 3;

@@ -62,8 +62,8 @@ public:
                                    const int                NbV,
                                    const double             TolU,
                                    const double             TolV,
-                                   const Extrema_ExtFlag    F = Extrema_ExtFlag_MINMAX,
-                                   const Extrema_ExtAlgo    A = Extrema_ExtAlgo_Grad);
+                                   const Extrema_ExtFlag    F = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+                                   const Extrema_ExtAlgo    A = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
 
   //! It calculates all the distances.
   //! The function F(u,v)=distance(P,S(u,v)) has an
@@ -87,8 +87,8 @@ public:
                                    const double             Vsup,
                                    const double             TolU,
                                    const double             TolV,
-                                   const Extrema_ExtFlag    F = Extrema_ExtFlag_MINMAX,
-                                   const Extrema_ExtAlgo    A = Extrema_ExtAlgo_Grad);
+                                   const Extrema_ExtFlag    F = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+                                   const Extrema_ExtAlgo    A = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
 
   Standard_EXPORT void Initialize(const Adaptor3d_Surface& S,
                                   const int                NbU,

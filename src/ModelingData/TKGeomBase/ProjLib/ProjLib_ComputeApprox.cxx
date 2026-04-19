@@ -118,27 +118,27 @@ static gp_Pnt2d Function_Value(const double                          U,
   switch (SType)
   {
 
-    case GeomAbs_Plane: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane: {
       gp_Pln Plane = mySurface->Plane();
       ElSLib::Parameters(Plane, P3d, S, T);
       break;
     }
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       gp_Cylinder Cylinder = mySurface->Cylinder();
       ElSLib::Parameters(Cylinder, P3d, S, T);
       break;
     }
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       gp_Cone Cone = mySurface->Cone();
       ElSLib::Parameters(Cone, P3d, S, T);
       break;
     }
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       gp_Sphere Sphere = mySurface->Sphere();
       ElSLib::Parameters(Sphere, P3d, S, T);
       break;
     }
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       gp_Torus Torus = mySurface->Torus();
       ElSLib::Parameters(Torus, P3d, S, T);
       break;
@@ -157,7 +157,7 @@ static gp_Pnt2d Function_Value(const double                          U,
 
   if (VCouture)
   {
-    if (SType == GeomAbs_Sphere)
+    if (SType == GeomAbs_SurfaceType::GeomAbs_Sphere)
     {
       if (std::abs(S - U1) > M_PI)
       {
@@ -197,11 +197,11 @@ static bool Function_D1(const double                          U,
 
   switch (Type)
   {
-    case GeomAbs_Plane:
-    case GeomAbs_Cone:
-    case GeomAbs_Cylinder:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       gp_Vec D1U, D1V;
       gp_Vec T;
       myCurve->D1(U, P3d, T);
@@ -278,7 +278,7 @@ static void Function_SetUVBounds(double&                               myU1,
   switch (mySurface->GetType())
   {
 
-    case GeomAbs_Cone: {
+    case GeomAbs_SurfaceType::GeomAbs_Cone: {
       double           tol  = Epsilon(1.);
       constexpr double ptol = Precision::PConfusion();
       gp_Cone          Cone = mySurface->Cone();
@@ -304,9 +304,9 @@ static void Function_SetUVBounds(double&                               myU1,
 
       switch (myCurve->GetType())
       {
-        case GeomAbs_Parabola:
-        case GeomAbs_Hyperbola:
-        case GeomAbs_Ellipse: {
+        case GeomAbs_CurveType::GeomAbs_Parabola:
+        case GeomAbs_CurveType::GeomAbs_Hyperbola:
+        case GeomAbs_CurveType::GeomAbs_Ellipse: {
           double U1, U2, V1, V2, U, V;
           ElSLib::Parameters(Cone, P1, U1, V1);
           ElSLib::Parameters(Cone, P2, U2, V2);
@@ -335,7 +335,7 @@ static void Function_SetUVBounds(double&                               myU1,
           myU1 = U1;
           myU2 = U1;
           Uf   = U1;
-          if (myCurve->GetType() == GeomAbs_Line)
+          if (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line)
           {
             int nbp = 3;
             Step    = (W2 - W1) / (nbp - 1);
@@ -430,11 +430,11 @@ static void Function_SetUVBounds(double&                               myU1,
     } // case Cone
     break;
 
-    case GeomAbs_Cylinder: {
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
       gp_Cylinder Cylinder = mySurface->Cylinder();
       VCouture             = false;
 
-      if (myCurve->GetType() == GeomAbs_Ellipse)
+      if (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse)
       {
 
         double U1, U2, V1, V2, U, V;
@@ -556,10 +556,10 @@ static void Function_SetUVBounds(double&                               myU1,
     }
     break;
     //
-    case GeomAbs_Sphere: {
+    case GeomAbs_SurfaceType::GeomAbs_Sphere: {
       VCouture     = false;
       gp_Sphere SP = mySurface->Sphere();
-      if (myCurve->GetType() == GeomAbs_Circle)
+      if (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
       {
         UCouture = true;
 
@@ -764,7 +764,7 @@ static void Function_SetUVBounds(double&                               myU1,
         myV2 = 1.e+100;
         // box+sphere <<
 
-      } // if ( myCurve->GetType() == GeomAbs_Circle)
+      } // if ( myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
 
       else
       {
@@ -837,7 +837,7 @@ static void Function_SetUVBounds(double&                               myU1,
     }
     break;
     //
-    case GeomAbs_Torus: {
+    case GeomAbs_SurfaceType::GeomAbs_Torus: {
       gp_Torus TR = mySurface->Torus();
       double   U1, V1, U, V, dU, dV;
       ElSLib::Parameters(TR, P1, U1, V1);
@@ -1114,21 +1114,21 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
 
   bool SurfIsAnal = ProjLib::IsAnaSurf(S);
 
-  bool CurvIsAnal = (CType != GeomAbs_BSplineCurve) && (CType != GeomAbs_BezierCurve)
-                    && (CType != GeomAbs_OffsetCurve) && (CType != GeomAbs_OtherCurve);
+  bool CurvIsAnal = (CType != GeomAbs_CurveType::GeomAbs_BSplineCurve) && (CType != GeomAbs_CurveType::GeomAbs_BezierCurve)
+                    && (CType != GeomAbs_CurveType::GeomAbs_OffsetCurve) && (CType != GeomAbs_CurveType::GeomAbs_OtherCurve);
 
   bool simplecase = SurfIsAnal && CurvIsAnal;
-  if (CType == GeomAbs_BSplineCurve || CType == GeomAbs_BezierCurve)
+  if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve || CType == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     int aNbKnots = 1;
-    if (CType == GeomAbs_BSplineCurve)
+    if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
     {
       aNbKnots = C->NbKnots();
     }
     simplecase = simplecase && C->Degree() <= 2 && aNbKnots <= 2;
   }
 
-  if (CType == GeomAbs_BSplineCurve && SType == GeomAbs_Plane)
+  if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve && SType == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
 
     // get the poles and eventually the weights
@@ -1160,7 +1160,7 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
       myBSpline = new Geom2d_BSplineCurve(Poles, Knots, Mults, BS->Degree(), BS->IsPeriodic());
     }
   }
-  else if (CType == GeomAbs_BezierCurve && SType == GeomAbs_Plane)
+  else if (CType == GeomAbs_CurveType::GeomAbs_BezierCurve && SType == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
 
     // get the poles and eventually the weights
@@ -1352,27 +1352,27 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
     double u = 0., v = 0.;
     switch (SType)
     {
-      case GeomAbs_Plane: {
+      case GeomAbs_SurfaceType::GeomAbs_Plane: {
         gp_Pln Plane = S->Plane();
         ElSLib::Parameters(Plane, P3d, u, v);
         break;
       }
-      case GeomAbs_Cylinder: {
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder: {
         gp_Cylinder Cylinder = S->Cylinder();
         ElSLib::Parameters(Cylinder, P3d, u, v);
         break;
       }
-      case GeomAbs_Cone: {
+      case GeomAbs_SurfaceType::GeomAbs_Cone: {
         gp_Cone Cone = S->Cone();
         ElSLib::Parameters(Cone, P3d, u, v);
         break;
       }
-      case GeomAbs_Sphere: {
+      case GeomAbs_SurfaceType::GeomAbs_Sphere: {
         gp_Sphere Sphere = S->Sphere();
         ElSLib::Parameters(Sphere, P3d, u, v);
         break;
       }
-      case GeomAbs_Torus: {
+      case GeomAbs_SurfaceType::GeomAbs_Torus: {
         gp_Torus Torus = S->Torus();
         ElSLib::Parameters(Torus, P3d, u, v);
         break;
@@ -1385,7 +1385,7 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
     int    number;
     if (F.VCouture)
     {
-      if (SType == GeomAbs_Sphere && std::abs(u - F.myU1) > M_PI)
+      if (SType == GeomAbs_SurfaceType::GeomAbs_Sphere && std::abs(u - F.myU1) > M_PI)
       {
         ToMirror = true;
         dv       = -M_PI;
@@ -1395,7 +1395,7 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
       number      = (int)(std::floor((newV - v) / (F.myV2 - F.myV1)));
       dv -= number * (F.myV2 - F.myV1);
     }
-    if (F.UCouture || (F.VCouture && SType == GeomAbs_Sphere))
+    if (F.UCouture || (F.VCouture && SType == GeomAbs_SurfaceType::GeomAbs_Sphere))
     {
       double   aNbPer;
       gp_Pnt2d P2d = F.Value(Umid);

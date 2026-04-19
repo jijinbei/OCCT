@@ -48,7 +48,7 @@ void Hatch_Hatcher::AddLine(const gp_Dir2d& D, const double Dist)
   double   Y = D.Y();
   gp_Pnt2d O(-Y * Dist, X * Dist);
   gp_Lin2d L(O, D);
-  AddLine(L, Hatch_ANYLINE);
+  AddLine(L, Hatch_LineForm::Hatch_ANYLINE);
 }
 
 //=================================================================================================
@@ -58,7 +58,7 @@ void Hatch_Hatcher::AddXLine(const double X)
   gp_Pnt2d O(X, 0);
   gp_Dir2d D(gp_Dir2d::D::Y);
   gp_Lin2d L(O, D);
-  AddLine(L, Hatch_XLINE);
+  AddLine(L, Hatch_LineForm::Hatch_XLINE);
 }
 
 //=================================================================================================
@@ -68,7 +68,7 @@ void Hatch_Hatcher::AddYLine(const double Y)
   gp_Pnt2d O(0, Y);
   gp_Dir2d D(gp_Dir2d::D::X);
   gp_Lin2d L(O, D);
-  AddLine(L, Hatch_YLINE);
+  AddLine(L, Hatch_LineForm::Hatch_YLINE);
 }
 
 //=================================================================================================
@@ -180,13 +180,13 @@ double Hatch_Hatcher::Coordinate(const int I) const
   switch (myLines(I).myForm)
   {
 
-    case Hatch_XLINE:
+    case Hatch_LineForm::Hatch_XLINE:
       return myLines(I).myLin.Location().X();
 
-    case Hatch_YLINE:
+    case Hatch_LineForm::Hatch_YLINE:
       return myLines(I).myLin.Location().Y();
 
-    case Hatch_ANYLINE:
+    case Hatch_LineForm::Hatch_ANYLINE:
       throw Standard_OutOfRange("Hatcher : not an X or Y line");
   }
 

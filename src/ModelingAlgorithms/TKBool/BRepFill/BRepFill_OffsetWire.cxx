@@ -234,14 +234,14 @@ static bool KPartCircle(
     occ::handle<Geom2d_Curve>        aPCurve = BRep_Tool::CurveOnSurface(E, mySpine, f, l);
     occ::handle<Geom2dAdaptor_Curve> AHC     = new Geom2dAdaptor_Curve(aPCurve, f, l);
     occ::handle<Geom2d_Curve>        OC;
-    if (AHC->GetType() == GeomAbs_Line)
+    if (AHC->GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       if (E.Orientation() == TopAbs_FORWARD)
         anOffset *= -1;
       Adaptor2d_OffsetCurve Off(AHC, anOffset);
       OC = new Geom2d_Line(Off.Line());
     }
-    else if (AHC->GetType() == GeomAbs_Circle)
+    else if (AHC->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       if (E.Orientation() == TopAbs_FORWARD)
         anOffset *= -1;
@@ -350,7 +350,7 @@ void BRepFill_OffsetWire::Init(const TopoDS_Face&     Spine,
   //-----------------------------------------------------
 
   Exp.Perform(myWorkSpine);
-  myBilo.Compute(Exp, 1, MAT_Left, myJoinType, myIsOpenResult);
+  myBilo.Compute(Exp, 1, MAT_Side::MAT_Left, myJoinType, myIsOpenResult);
   myLink.Perform(Exp, myBilo);
 }
 
@@ -562,7 +562,7 @@ void BRepFill_OffsetWire::Perform(const double Offset, const double Alt)
         newExp.Perform(myWorkSpine);
         BRepMAT2d_BisectingLocus newBilo;
         BRepMAT2d_LinkTopoBilo   newLink;
-        newBilo.Compute(newExp, 1, MAT_Left, myJoinType, myIsOpenResult);
+        newBilo.Compute(newExp, 1, MAT_Side::MAT_Left, myJoinType, myIsOpenResult);
 
         if (!newBilo.IsDone())
         {
@@ -772,7 +772,7 @@ void BRepFill_OffsetWire::PerformWithBiLo(const TopoDS_Face&              Spine,
   }
 
   // Remove possible hanging arcs on vertices
-  if (myIsOpenResult && myJoinType == GeomAbs_Arc)
+  if (myIsOpenResult && myJoinType == GeomAbs_JoinType::GeomAbs_Arc)
   {
     if (!myMap.IsEmpty() && myMap.FindKey(1).ShapeType() == TopAbs_VERTEX)
     {
@@ -868,7 +868,7 @@ void BRepFill_OffsetWire::PerformWithBiLo(const TopoDS_Face&              Spine,
       //				   MapNodeVertex,VE);
     }
 
-    if (myJoinType == GeomAbs_Intersection)
+    if (myJoinType == GeomAbs_JoinType::GeomAbs_Intersection)
       StartOnEdge = EndOnEdge = false;
 
     //---------------------------------------------
@@ -1248,7 +1248,7 @@ void BRepFill_OffsetWire::UpdateDetromp(
 {
   int ii = 1;
 
-  if (myJoinType == GeomAbs_Intersection)
+  if (myJoinType == GeomAbs_JoinType::GeomAbs_Intersection)
   {
     for (; ii <= Vertices.Length(); ii++)
     {
@@ -1257,7 +1257,7 @@ void BRepFill_OffsetWire::UpdateDetromp(
       Detromp(Shape2).Append(aVertex);
     }
   }
-  else // myJoinType == GeomAbs_Arc
+  else // myJoinType == GeomAbs_JoinType::GeomAbs_Arc
   {
     double        U1, U2;
     TopoDS_Vertex V1, V2;
@@ -1327,14 +1327,14 @@ void BRepFill_OffsetWire::UpdateDetromp(
         }
       }
     }
-    // else if(myJoinType != GeomAbs_Arc)
+    // else if(myJoinType != GeomAbs_JoinType::GeomAbs_Arc)
     //{
     //   if (!V1.IsNull()) {
     //     Detromp(Shape1).Append(V1);
     //     Detromp(Shape2).Append(V1);
     //   }
     // }
-  } // end of else (myJoinType==GeomAbs_Arc)
+  } // end of else (myJoinType==GeomAbs_JoinType::GeomAbs_Arc)
 }
 
 //=================================================================================================
@@ -2063,7 +2063,7 @@ void MakeOffset(const TopoDS_Edge&                                              
   }
 
   Geom2dAdaptor_Curve AC(G2d, f, l);
-  if (AC.GetType() == GeomAbs_Circle)
+  if (AC.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     // if the offset is greater otr equal to the radius and the side of the
     // concavity of the circle => edge null.
@@ -2082,14 +2082,14 @@ void MakeOffset(const TopoDS_Edge&                                              
       occ::handle<Geom2d_Circle>       CC = new Geom2d_Circle(Off.Circle());
 
       double Delta = 2 * M_PI - l + f;
-      if (theJoinType == GeomAbs_Arc)
+      if (theJoinType == GeomAbs_JoinType::GeomAbs_Arc)
       {
         if (ToExtendFirstPar)
           f -= 0.2 * Delta;
         if (ToExtendLastPar)
           l += 0.2 * Delta;
       }
-      else // GeomAbs_Intersection
+      else // GeomAbs_JoinType::GeomAbs_Intersection
       {
         if (ToExtendFirstPar && ToExtendLastPar)
         {
@@ -2110,7 +2110,7 @@ void MakeOffset(const TopoDS_Edge&                                              
       G2dOC = new Geom2d_TrimmedCurve(CC, f, l);
     }
   }
-  else if (AC.GetType() == GeomAbs_Line)
+  else if (AC.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     occ::handle<Geom2dAdaptor_Curve> AHC = new Geom2dAdaptor_Curve(G2d);
     Adaptor2d_OffsetCurve            Off(AHC, anOffset);
@@ -2118,16 +2118,16 @@ void MakeOffset(const TopoDS_Edge&                                              
     double                           Delta = (l - f);
     if (ToExtendFirstPar)
     {
-      if (theJoinType == GeomAbs_Arc)
+      if (theJoinType == GeomAbs_JoinType::GeomAbs_Arc)
         f -= Delta;
-      else // GeomAbs_Intersection
+      else // GeomAbs_JoinType::GeomAbs_Intersection
         f = -Precision::Infinite();
     }
     if (ToExtendLastPar)
     {
-      if (theJoinType == GeomAbs_Arc)
+      if (theJoinType == GeomAbs_JoinType::GeomAbs_Arc)
         l += Delta;
-      else // GeomAbs_Intersection
+      else // GeomAbs_JoinType::GeomAbs_Intersection
         l = Precision::Infinite();
     }
     G2dOC = new Geom2d_TrimmedCurve(CC, f, l);
@@ -2521,7 +2521,7 @@ static void CheckBadEdges(const TopoDS_Face&              Spine,
         Geom2dAdaptor_Curve AC(G2d, f, l);
         GeomAbs_CurveType   aCType = AC.GetType();
 
-        if (aCType != GeomAbs_Line && aCType != GeomAbs_Circle)
+        if (aCType != GeomAbs_CurveType::GeomAbs_Line && aCType != GeomAbs_CurveType::GeomAbs_Circle)
         {
 
           bool reverse = false;

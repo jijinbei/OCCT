@@ -21,7 +21,7 @@
 
 TopOpeBRepDS_ShapeData::TopOpeBRepDS_ShapeData()
     : mySameDomainRef(0),
-      mySameDomainOri(TopOpeBRepDS_UNSHGEOMETRY),
+      mySameDomainOri(TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY),
       mySameDomainInd(0),
       myOrientation(TopAbs_FORWARD),
       myOrientationDef(false),

@@ -132,7 +132,7 @@ static void PerformTransition(const BRepFill_TransitionStyle     Mode,
   if (!Loc.IsNull())
   {
     Loc->DeleteTransform();
-    if (Mode == BRepFill_Modified)
+    if (Mode == BRepFill_TransitionStyle::BRepFill_Modified)
       Loc->TransformInG0Law();
     else
       Loc->TransformInCompatibleLaw(angmin);
@@ -208,9 +208,9 @@ BRepFill_PipeShell::BRepFill_PipeShell(const TopoDS_Wire& Spine)
     : mySpine(Spine),
       myForceApproxC1(false),
       myIsAutomaticLaw(false),
-      myTrihedron(GeomFill_IsCorrectedFrenet),
-      myTransition(BRepFill_Modified),
-      myStatus(GeomFill_PipeOk),
+      myTrihedron(GeomFill_Trihedron::GeomFill_IsCorrectedFrenet),
+      myTransition(BRepFill_TransitionStyle::BRepFill_Modified),
+      myStatus(GeomFill_PipeError::GeomFill_PipeOk),
       myIsBuildHistory(true)
 {
   myLocation.Nullify();
@@ -240,12 +240,12 @@ void BRepFill_PipeShell::Set(const bool IsFrenet)
   occ::handle<GeomFill_TrihedronLaw> TLaw;
   if (IsFrenet)
   {
-    myTrihedron = GeomFill_IsFrenet;
+    myTrihedron = GeomFill_Trihedron::GeomFill_IsFrenet;
     TLaw        = new (GeomFill_Frenet)();
   }
   else
   {
-    myTrihedron = GeomFill_IsFrenet;
+    myTrihedron = GeomFill_Trihedron::GeomFill_IsFrenet;
     TLaw        = new (GeomFill_CorrectedFrenet)();
   }
   occ::handle<GeomFill_CurveAndTrihedron> Loc = new (GeomFill_CurveAndTrihedron)(TLaw);
@@ -261,7 +261,7 @@ void BRepFill_PipeShell::SetDiscrete()
 {
   occ::handle<GeomFill_TrihedronLaw> TLaw;
 
-  myTrihedron = GeomFill_IsDiscreteTrihedron;
+  myTrihedron = GeomFill_Trihedron::GeomFill_IsDiscreteTrihedron;
   TLaw        = new (GeomFill_DiscreteTrihedron)();
 
   occ::handle<GeomFill_CurveAndTrihedron> Loc = new (GeomFill_CurveAndTrihedron)(TLaw);
@@ -273,7 +273,7 @@ void BRepFill_PipeShell::SetDiscrete()
 
 void BRepFill_PipeShell::Set(const gp_Ax2& Axe)
 {
-  myTrihedron = GeomFill_IsFixed;
+  myTrihedron = GeomFill_Trihedron::GeomFill_IsFixed;
   gp_Vec V1, V2;
   V1.SetXYZ(Axe.Direction().XYZ());
   V2.SetXYZ(Axe.XDirection().XYZ());
@@ -289,7 +289,7 @@ void BRepFill_PipeShell::Set(const gp_Ax2& Axe)
 //=======================================================================
 void BRepFill_PipeShell::Set(const gp_Dir& BiNormal)
 {
-  myTrihedron = GeomFill_IsConstantNormal;
+  myTrihedron = GeomFill_Trihedron::GeomFill_IsConstantNormal;
 
   occ::handle<GeomFill_ConstantBiNormal>  TLaw = new (GeomFill_ConstantBiNormal)(BiNormal);
   occ::handle<GeomFill_CurveAndTrihedron> Loc  = new (GeomFill_CurveAndTrihedron)(TLaw);
@@ -311,7 +311,7 @@ bool BRepFill_PipeShell::Set(const TopoDS_Shape& SpineSupport)
   if (B)
   {
     myLocation  = loc;
-    myTrihedron = GeomFill_IsDarboux;
+    myTrihedron = GeomFill_Trihedron::GeomFill_IsDarboux;
     mySection.Nullify(); // It is required to relocalize the sections.
   }
   return B;
@@ -330,7 +330,7 @@ void BRepFill_PipeShell::Set(const TopoDS_Wire&           AuxiliarySpine,
   TheGuide     = AuxiliarySpine;
   bool SpClose = mySpine.Closed(), GuideClose = AuxiliarySpine.Closed();
 
-  if (KeepContact == BRepFill_ContactOnBorder)
+  if (KeepContact == BRepFill_TypeOfContact::BRepFill_ContactOnBorder)
     myIsAutomaticLaw = true;
 
   if (!SpClose && !GuideClose)
@@ -377,10 +377,10 @@ void BRepFill_PipeShell::Set(const TopoDS_Wire&           AuxiliarySpine,
 
   if (CurvilinearEquivalence)
   { // trihedron by curvilinear reduced abscissa
-    if (KeepContact == BRepFill_Contact || KeepContact == BRepFill_ContactOnBorder)
-      myTrihedron = GeomFill_IsGuideACWithContact; // with rotation
+    if (KeepContact == BRepFill_TypeOfContact::BRepFill_Contact || KeepContact == BRepFill_TypeOfContact::BRepFill_ContactOnBorder)
+      myTrihedron = GeomFill_Trihedron::GeomFill_IsGuideACWithContact; // with rotation
     else
-      myTrihedron = GeomFill_IsGuideAC; // without rotation
+      myTrihedron = GeomFill_Trihedron::GeomFill_IsGuideAC; // without rotation
 
     occ::handle<GeomFill_GuideTrihedronAC> TLaw = new (GeomFill_GuideTrihedronAC)(Guide);
     occ::handle<GeomFill_LocationGuide>    Loc  = new (GeomFill_LocationGuide)(TLaw);
@@ -388,10 +388,10 @@ void BRepFill_PipeShell::Set(const TopoDS_Wire&           AuxiliarySpine,
   }
   else
   { // trihedron by plane
-    if (KeepContact == BRepFill_Contact || KeepContact == BRepFill_ContactOnBorder)
-      myTrihedron = GeomFill_IsGuidePlanWithContact; // with rotation
+    if (KeepContact == BRepFill_TypeOfContact::BRepFill_Contact || KeepContact == BRepFill_TypeOfContact::BRepFill_ContactOnBorder)
+      myTrihedron = GeomFill_Trihedron::GeomFill_IsGuidePlanWithContact; // with rotation
     else
-      myTrihedron = GeomFill_IsGuidePlan; // without rotation
+      myTrihedron = GeomFill_Trihedron::GeomFill_IsGuidePlan; // without rotation
 
     occ::handle<GeomFill_GuideTrihedronPlan> TLaw = new (GeomFill_GuideTrihedronPlan)(Guide);
     occ::handle<GeomFill_LocationGuide>      Loc  = new (GeomFill_LocationGuide)(TLaw);
@@ -668,7 +668,7 @@ bool BRepFill_PipeShell::Build()
   // 1) Preparation
   Prepare();
 
-  if (myStatus != GeomFill_PipeOk)
+  if (myStatus != GeomFill_PipeError::GeomFill_PipeOk)
   {
     BRep_Builder B;
     TopoDS_Shell Sh;
@@ -716,7 +716,7 @@ bool BRepFill_PipeShell::Build()
   MkSw.SetBounds(TopoDS::Wire(myFirst), TopoDS::Wire(myLast));
 
   GeomAbs_Shape theContinuity = GeomAbs_C2;
-  if (myTrihedron == GeomFill_IsDiscreteTrihedron)
+  if (myTrihedron == GeomFill_Trihedron::GeomFill_IsDiscreteTrihedron)
     theContinuity = GeomAbs_C0;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> Dummy;
   NCollection_DataMap<TopoDS_Shape,
@@ -732,12 +732,12 @@ bool BRepFill_PipeShell::Build()
              Dummy3,
              myTransition,
              theContinuity,
-             GeomFill_Location,
+             GeomFill_ApproxStyle::GeomFill_Location,
              myMaxDegree,
              myMaxSegments);
 
   myStatus = myLocation->GetStatus();
-  Ok       = (MkSw.IsDone() && (myStatus == GeomFill_PipeOk));
+  Ok       = (MkSw.IsDone() && (myStatus == GeomFill_PipeError::GeomFill_PipeOk));
 
   if (Ok)
   {
@@ -785,8 +785,8 @@ bool BRepFill_PipeShell::Build()
     TopoDS_Shell Sh;
     B.MakeShell(Sh);
     myShape = Sh; // Nullify
-    if (myStatus == GeomFill_PipeOk)
-      myStatus = GeomFill_PipeNotOk;
+    if (myStatus == GeomFill_PipeError::GeomFill_PipeOk)
+      myStatus = GeomFill_PipeError::GeomFill_PipeNotOk;
   }
   return Ok;
 }
@@ -941,7 +941,7 @@ void BRepFill_PipeShell::Prepare()
   {
     switch (myTrihedron)
     {
-      case GeomFill_IsCorrectedFrenet: {
+      case GeomFill_Trihedron::GeomFill_IsCorrectedFrenet: {
         occ::handle<GeomFill_TrihedronLaw>      TLaw = new (GeomFill_CorrectedFrenet)();
         occ::handle<GeomFill_CurveAndTrihedron> Loc  = new (GeomFill_CurveAndTrihedron)(TLaw);
         myLocation                                   = new (BRepFill_Edge3DLaw)(mySpine, Loc);
@@ -1120,8 +1120,8 @@ void BRepFill_PipeShell::Prepare()
   } // else
 
   //  modify the law of location if contact
-  if ((myTrihedron == GeomFill_IsGuidePlanWithContact)
-      || (myTrihedron == GeomFill_IsGuideACWithContact))
+  if ((myTrihedron == GeomFill_Trihedron::GeomFill_IsGuidePlanWithContact)
+      || (myTrihedron == GeomFill_Trihedron::GeomFill_IsGuideACWithContact))
   {
     double                              fs, f, l, Delta, Length;
     occ::handle<GeomFill_LocationGuide> Loc;
@@ -1143,7 +1143,7 @@ void BRepFill_PipeShell::Prepare()
 
   myStatus = myLocation->GetStatus();
   if (!mySection->IsDone())
-    myStatus = GeomFill_PipeNotOk;
+    myStatus = GeomFill_PipeError::GeomFill_PipeNotOk;
 }
 
 //=======================================================================
@@ -1175,8 +1175,8 @@ void BRepFill_PipeShell::Place(const BRepFill_Section& Sec,
 //=======================================================================
 void BRepFill_PipeShell::ResetLoc()
 {
-  if ((myTrihedron == GeomFill_IsGuidePlanWithContact)
-      || (myTrihedron == GeomFill_IsGuideACWithContact))
+  if ((myTrihedron == GeomFill_Trihedron::GeomFill_IsGuidePlanWithContact)
+      || (myTrihedron == GeomFill_Trihedron::GeomFill_IsGuideACWithContact))
   {
     occ::handle<GeomFill_LocationGuide> Loc;
     for (int isec = 1; isec <= myLocation->NbLaw(); isec++)

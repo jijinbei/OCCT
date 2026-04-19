@@ -298,9 +298,9 @@ bool TopOpeBRepDS_TOOL::GetConfig(const occ::handle<TopOpeBRepDS_HDataStructure>
   const TopoDS_Edge&  esd    = TopoDS::Edge(HDS->Shape(iesd));
   TopAbs_Orientation  oesd   = esd.Orientation();
   TopOpeBRepDS_Config conf   = HDS->SameDomainOrientation(e);
-  bool                unsh   = (conf == TopOpeBRepDS_UNSHGEOMETRY);
+  bool                unsh   = (conf == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
   TopOpeBRepDS_Config confsd = HDS->SameDomainOrientation(esd);
-  bool                unshsd = (confsd == TopOpeBRepDS_UNSHGEOMETRY);
+  bool                unshsd = (confsd == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
   if (!unsh && !unshsd)
   {
     bool sameori = (conf == confsd);

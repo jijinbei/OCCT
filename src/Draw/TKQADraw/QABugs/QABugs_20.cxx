@@ -2876,7 +2876,7 @@ static int OCC28131(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 
   //////////////////////////////////////
   GeomFill_BSplineCurves fill2;
-  fill2.Init(outer_e_bsp_geom, curve1, curve2, GeomFill_CoonsStyle);
+  fill2.Init(outer_e_bsp_geom, curve1, curve2, GeomFill_FillingStyle::GeomFill_CoonsStyle);
 
   const occ::handle<Geom_BSplineSurface>& surf_geom = fill2.Surface();
 
@@ -2889,10 +2889,10 @@ static int OCC28131(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
     TopoDS_Solid first_solid;
     {
       BRepOffset_MakeOffset myOffsetShape(filled_face, -offset_thick, 1e-4,
-        BRepOffset_Skin, //Mode
+        BRepOffset_Mode::BRepOffset_Skin, //Mode
         false, //Intersection
         false, //SelfInter
-        GeomAbs_Intersection, //Join
+        GeomAbs_JoinType::GeomAbs_Intersection, //Join
         true, //Thickening
         false //RemoveIntEdges
         ); //RemoveInvalidFaces
@@ -3281,7 +3281,7 @@ void* threadFunction(void* theArgs)
       {
 
         PCDM_ReaderStatus aStatus = anApp->Open(aDocName, aDoc);
-        if (aStatus != PCDM_RS_OK)
+        if (aStatus != PCDM_ReaderStatus::PCDM_RS_OK)
         {
           args->finished = true;
           *(args->res)   = -1;
@@ -3962,7 +3962,7 @@ private:
   {
     occ::handle<TDocStd_Document> aNewDoc;
     const PCDM_ReaderStatus       aReaderStatus = myXdeApp->Open(myFilePath, aNewDoc);
-    if (aReaderStatus != PCDM_RS_OK)
+    if (aReaderStatus != PCDM_ReaderStatus::PCDM_RS_OK)
     {
       Message::SendFail("Error occurred while reading the file");
       return;

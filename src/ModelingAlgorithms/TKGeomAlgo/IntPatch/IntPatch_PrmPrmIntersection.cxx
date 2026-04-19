@@ -93,7 +93,7 @@ static void SeveralWlinesProcessing(const occ::handle<Adaptor3d_Surface>& theSur
     {
       const occ::handle<IntPatch_Line>& aSLine = theSLin.Value(iL);
       IntPatch_IType                    aType  = aSLine->ArcType();
-      if (aType != IntPatch_Walking)
+      if (aType != IntPatch_IType::IntPatch_Walking)
         continue;
       const occ::handle<IntPatch_WLine> aWLine = occ::down_cast<IntPatch_WLine>(aSLine);
       int                               tnbV   = aWLine->NbVertex();
@@ -617,13 +617,13 @@ void IntPatch_PrmPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
                     norm2 = d1u.Crossed(d1v);
                     if (tgline.DotCross(norm2, norm1) > 0.)
                     {
-                      trans1 = IntSurf_Out;
-                      trans2 = IntSurf_In;
+                      trans1 = IntSurf_TypeTrans::IntSurf_Out;
+                      trans2 = IntSurf_TypeTrans::IntSurf_In;
                     }
                     else
                     {
-                      trans1 = IntSurf_In;
-                      trans2 = IntSurf_Out;
+                      trans1 = IntSurf_TypeTrans::IntSurf_In;
+                      trans2 = IntSurf_TypeTrans::IntSurf_Out;
                     }
 
                     double                      TolTang = TolTangency;
@@ -804,13 +804,13 @@ void IntPatch_PrmPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
                 norm2 = d1u.Crossed(d1v);
                 if (tgline.DotCross(norm2, norm1) > 0.)
                 {
-                  trans1 = IntSurf_Out;
-                  trans2 = IntSurf_In;
+                  trans1 = IntSurf_TypeTrans::IntSurf_Out;
+                  trans2 = IntSurf_TypeTrans::IntSurf_In;
                 }
                 else
                 {
-                  trans1 = IntSurf_In;
-                  trans2 = IntSurf_Out;
+                  trans1 = IntSurf_TypeTrans::IntSurf_In;
+                  trans2 = IntSurf_TypeTrans::IntSurf_Out;
                 }
 
                 double                      TolTang = TolTangency;
@@ -1062,13 +1062,13 @@ void IntPatch_PrmPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
                     norm2 = d1u.Crossed(d1v);
                     if (tgline.DotCross(norm2, norm1) > 0.)
                     {
-                      trans1 = IntSurf_Out;
-                      trans2 = IntSurf_In;
+                      trans1 = IntSurf_TypeTrans::IntSurf_Out;
+                      trans2 = IntSurf_TypeTrans::IntSurf_In;
                     }
                     else
                     {
-                      trans1 = IntSurf_In;
-                      trans2 = IntSurf_Out;
+                      trans1 = IntSurf_TypeTrans::IntSurf_In;
+                      trans2 = IntSurf_TypeTrans::IntSurf_Out;
                     }
 
                     IntSurf_LineOn2S LineOn2S;
@@ -1266,13 +1266,13 @@ void IntPatch_PrmPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
                   norm2 = d1u.Crossed(d1v);
                   if (tgline.DotCross(norm2, norm1) > 0.)
                   {
-                    trans1 = IntSurf_Out;
-                    trans2 = IntSurf_In;
+                    trans1 = IntSurf_TypeTrans::IntSurf_Out;
+                    trans2 = IntSurf_TypeTrans::IntSurf_In;
                   }
                   else
                   {
-                    trans1 = IntSurf_In;
-                    trans2 = IntSurf_Out;
+                    trans1 = IntSurf_TypeTrans::IntSurf_In;
+                    trans2 = IntSurf_TypeTrans::IntSurf_Out;
                   }
 
                   IntSurf_LineOn2S LineOn2S;
@@ -1491,19 +1491,19 @@ void SectionPointToParameters(const Intf_SectionPoint&   Sp,
   Sp.InfoFirst(typ, Adr1, Adr2, Param);
   switch (typ)
   {
-    case Intf_VERTEX: //-- Adr1 est le numero du vertex
+    case Intf_PIType::Intf_VERTEX: //-- Adr1 est le numero du vertex
     {
       Poly1.Parameters(Adr1, u1, v1);
       break;
     }
-    case Intf_EDGE: {
+    case Intf_PIType::Intf_EDGE: {
       Poly1.Parameters(Adr1, u1, v1);
       Poly1.Parameters(Adr2, u, v);
       u1 += Param * (u - u1);
       v1 += Param * (v - v1);
       break;
     }
-    case Intf_FACE: {
+    case Intf_PIType::Intf_FACE: {
       double ua, va, ub, vb, uc, vc, ca, cb, cc, cabc;
       Poly1.Triangle(Adr1, Pt1, Pt2, Pt3);
       gp_Pnt PA(Poly1.Point(Pt1));
@@ -1535,19 +1535,19 @@ void SectionPointToParameters(const Intf_SectionPoint&   Sp,
   Sp.InfoSecond(typ, Adr1, Adr2, Param);
   switch (typ)
   {
-    case Intf_VERTEX: //-- Adr1 est le numero du vertex
+    case Intf_PIType::Intf_VERTEX: //-- Adr1 est le numero du vertex
     {
       Poly2.Parameters(Adr1, u2, v2);
       break;
     }
-    case Intf_EDGE: {
+    case Intf_PIType::Intf_EDGE: {
       Poly2.Parameters(Adr1, u2, v2);
       Poly2.Parameters(Adr2, u, v);
       u2 += Param * (u - u2);
       v2 += Param * (v - v2);
       break;
     }
-    case Intf_FACE: {
+    case Intf_PIType::Intf_FACE: {
       double ua, va, ub, vb, uc, vc, ca, cb, cc, cabc;
       Poly2.Triangle(Adr1, Pt1, Pt2, Pt3);
       gp_Pnt PA(Poly2.Point(Pt1));
@@ -1957,13 +1957,13 @@ void IntPatch_PrmPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
               norm2 = d1u.Crossed(d1v);
               if (tgline.DotCross(norm2, norm1) >= 0.)
               {
-                trans1 = IntSurf_Out;
-                trans2 = IntSurf_In;
+                trans1 = IntSurf_TypeTrans::IntSurf_Out;
+                trans2 = IntSurf_TypeTrans::IntSurf_In;
               }
               else
               {
-                trans1 = IntSurf_In;
-                trans2 = IntSurf_Out;
+                trans1 = IntSurf_TypeTrans::IntSurf_In;
+                trans2 = IntSurf_TypeTrans::IntSurf_Out;
               }
 
               double                      TolTang = TolTangency;
@@ -2121,13 +2121,13 @@ void IntPatch_PrmPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
         norm2 = d1u.Crossed(d1v);
         if (tgline.DotCross(norm2, norm1) > 0.)
         {
-          trans1 = IntSurf_Out;
-          trans2 = IntSurf_In;
+          trans1 = IntSurf_TypeTrans::IntSurf_Out;
+          trans2 = IntSurf_TypeTrans::IntSurf_In;
         }
         else
         {
-          trans1 = IntSurf_In;
-          trans2 = IntSurf_Out;
+          trans1 = IntSurf_TypeTrans::IntSurf_In;
+          trans2 = IntSurf_TypeTrans::IntSurf_Out;
         }
 
         double                      TolTang = TolTangency;
@@ -2687,13 +2687,13 @@ void IntPatch_PrmPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
                       norm2 = d1u.Crossed(d1v);
                       if (tgline.DotCross(norm2, norm1) >= 0.)
                       {
-                        trans1 = IntSurf_Out;
-                        trans2 = IntSurf_In;
+                        trans1 = IntSurf_TypeTrans::IntSurf_Out;
+                        trans2 = IntSurf_TypeTrans::IntSurf_In;
                       }
                       else
                       {
-                        trans1 = IntSurf_In;
-                        trans2 = IntSurf_Out;
+                        trans1 = IntSurf_TypeTrans::IntSurf_In;
+                        trans2 = IntSurf_TypeTrans::IntSurf_Out;
                       }
 
                       double                      TolTang = TolTangency;
@@ -2928,13 +2928,13 @@ void IntPatch_PrmPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
                 norm2 = d1u.Crossed(d1v);
                 if (tgline.DotCross(norm2, norm1) > 0.)
                 {
-                  trans1 = IntSurf_Out;
-                  trans2 = IntSurf_In;
+                  trans1 = IntSurf_TypeTrans::IntSurf_Out;
+                  trans2 = IntSurf_TypeTrans::IntSurf_In;
                 }
                 else
                 {
-                  trans1 = IntSurf_In;
-                  trans2 = IntSurf_Out;
+                  trans1 = IntSurf_TypeTrans::IntSurf_In;
+                  trans2 = IntSurf_TypeTrans::IntSurf_Out;
                 }
 
                 double                      TolTang = TolTangency;
@@ -3133,13 +3133,13 @@ void IntPatch_PrmPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
               norm2 = d1u.Crossed(d1v);
               if (tgline.DotCross(norm2, norm1) > 0.)
               {
-                trans1 = IntSurf_Out;
-                trans2 = IntSurf_In;
+                trans1 = IntSurf_TypeTrans::IntSurf_Out;
+                trans2 = IntSurf_TypeTrans::IntSurf_In;
               }
               else
               {
-                trans1 = IntSurf_In;
-                trans2 = IntSurf_Out;
+                trans1 = IntSurf_TypeTrans::IntSurf_In;
+                trans2 = IntSurf_TypeTrans::IntSurf_Out;
               }
 
               double                      TolTang = TolTangency;

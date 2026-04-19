@@ -53,10 +53,10 @@ public:
     const TopoDS_Shape&          S,
     const double                 Offset,
     const double                 Tol,
-    const BRepOffset_Mode        Mode           = BRepOffset_Skin,
+    const BRepOffset_Mode        Mode           = BRepOffset_Mode::BRepOffset_Skin,
     const bool                   Intersection   = false,
     const bool                   SelfInter      = false,
-    const GeomAbs_JoinType       Join           = GeomAbs_Arc,
+    const GeomAbs_JoinType       Join           = GeomAbs_JoinType::GeomAbs_Arc,
     const bool                   Thickening     = false,
     const bool                   RemoveIntEdges = false,
     const Message_ProgressRange& theRange       = Message_ProgressRange());
@@ -64,10 +64,10 @@ public:
   Standard_EXPORT void Initialize(const TopoDS_Shape&    S,
                                   const double           Offset,
                                   const double           Tol,
-                                  const BRepOffset_Mode  Mode           = BRepOffset_Skin,
+                                  const BRepOffset_Mode  Mode           = BRepOffset_Mode::BRepOffset_Skin,
                                   const bool             Intersection   = false,
                                   const bool             SelfInter      = false,
-                                  const GeomAbs_JoinType Join           = GeomAbs_Arc,
+                                  const GeomAbs_JoinType Join           = GeomAbs_JoinType::GeomAbs_Arc,
                                   const bool             Thickening     = false,
                                   const bool             RemoveIntEdges = false);
 

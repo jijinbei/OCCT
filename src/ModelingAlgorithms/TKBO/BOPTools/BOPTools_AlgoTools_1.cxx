@@ -891,7 +891,7 @@ void CorrectEdgeTolerance(
         GC->Range(f, l);
         if (SameRange && (f != First || l != Last))
         {
-          return; // BRepCheck_InvalidSameRangeFlag;
+          return; // BRepCheck_Status::BRepCheck_InvalidSameRangeFlag;
         }
 
         occ::handle<Geom_Surface> Sb = cr->Surface();

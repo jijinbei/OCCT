@@ -1034,7 +1034,7 @@ int AdvApp2Var_Patch::CutSense() const
 
 int AdvApp2Var_Patch::CutSense(const AdvApp2Var_Criterion& Crit, const int NumDec) const
 {
-  bool CritRel = (Crit.Type() == AdvApp2Var_Relative);
+  bool CritRel = (Crit.Type() == AdvApp2Var_CriterionType::AdvApp2Var_Relative);
   if (CritRel && !IsApproximated())
   {
     return myCutSense;

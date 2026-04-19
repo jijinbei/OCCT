@@ -472,7 +472,7 @@ void HLRBRep_Intersector::SimulateOnePoint(HLRBRep_EdgeData* theEdge1,
 
   IntRes2d_Transition Tr1, Tr2;
   IntRes2d_Position   Pos1, Pos2;
-  Pos1 = Pos2 = IntRes2d_Middle;
+  Pos1 = Pos2 = IntRes2d_Position::IntRes2d_Middle;
 
   IntImpParGen::DetermineTransition(Pos1, T13, Tr1, Pos2, T23, Tr2, 0.0);
   myTypePerform = 0;
@@ -496,11 +496,11 @@ void HLRBRep_Intersector::Perform(const gp_Lin& L, const double P)
   const GeomAbs_SurfaceType typ = HLRBRep_SurfaceTool::GetType(mySurface);
   switch (typ)
   {
-    case GeomAbs_Plane:
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       myCSIntersector.Perform(L, mySurface);
       break;
     default: {

@@ -202,10 +202,10 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
       // extra solutions those would cause *Exception*: incoherent intersection
 
       GeomAbs_CurveType CType = AC.GetType(), BisType = ABis.GetType();
-      bool              canElongateC = CType != GeomAbs_BezierCurve && CType != GeomAbs_BSplineCurve
-                          && CType != GeomAbs_OffsetCurve && CType != GeomAbs_OtherCurve;
-      bool canElongateBis = BisType != GeomAbs_BezierCurve && BisType != GeomAbs_BSplineCurve
-                            && BisType != GeomAbs_OffsetCurve && BisType != GeomAbs_OtherCurve;
+      bool              canElongateC = CType != GeomAbs_CurveType::GeomAbs_BezierCurve && CType != GeomAbs_CurveType::GeomAbs_BSplineCurve
+                          && CType != GeomAbs_CurveType::GeomAbs_OffsetCurve && CType != GeomAbs_CurveType::GeomAbs_OtherCurve;
+      bool canElongateBis = BisType != GeomAbs_CurveType::GeomAbs_BezierCurve && BisType != GeomAbs_CurveType::GeomAbs_BSplineCurve
+                            && BisType != GeomAbs_CurveType::GeomAbs_OffsetCurve && BisType != GeomAbs_CurveType::GeomAbs_OtherCurve;
 
       occ::handle<Geom2d_TrimmedCurve> TBis = occ::down_cast<Geom2d_TrimmedCurve>(Bis);
       occ::handle<Geom2d_TrimmedCurve> TC2d = occ::down_cast<Geom2d_TrimmedCurve>(C2d);
@@ -320,10 +320,10 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
     switch (GAS.GetType())
     {
 
-      case GeomAbs_Sphere:
+      case GeomAbs_SurfaceType::GeomAbs_Sphere:
         Axis = GAS.Sphere().Position();
         break;
-      case GeomAbs_Cone: {
+      case GeomAbs_SurfaceType::GeomAbs_Cone: {
         //----------------------------------------------------------
         // if myFace1 is not at the same side of the apex as the point
         // of parameter 0 0 on the cone => phase = M_PI.
@@ -332,13 +332,13 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
         Phase = EvalPhase(Edge, Face, GAS, Axis);
         break;
       }
-      case GeomAbs_Torus:
+      case GeomAbs_SurfaceType::GeomAbs_Torus:
         Axis = GAS.Torus().Position();
         break;
-      case GeomAbs_Cylinder:
+      case GeomAbs_SurfaceType::GeomAbs_Cylinder:
         Axis = GAS.Cylinder().Position();
         break;
-      case GeomAbs_SurfaceOfRevolution: {
+      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution: {
         //----------------------------------------------------------
         // if myFace1 is not at the same side of the apex as the point
         // of parameter 0 0 on the cone => phase = M_PI.

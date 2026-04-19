@@ -195,14 +195,14 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
   GeomAbs_SurfaceType STy = S.GetType();
   BRep_Builder        TheBuilder;
 
-  if (STy != GeomAbs_Plane)
+  if (STy != GeomAbs_SurfaceType::GeomAbs_Plane)
   { // if plane buildcurve3d manage KPart
-    if (CTy == GeomAbs_Line)
+    if (CTy == GeomAbs_CurveType::GeomAbs_Line)
     {
       gp_Dir2d D = C.Line().Direction();
       if (D.IsParallel(gp::DX2d(), Precision::Angular()))
       { // Iso V.
-        if (STy == GeomAbs_Sphere)
+        if (STy == GeomAbs_SurfaceType::GeomAbs_Sphere)
         {
           gp_Pnt2d P = C.Line().Location();
           if (std::abs(std::abs(P.Y()) - M_PI / 2.) < Precision::PConfusion())
@@ -224,7 +224,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           }
           IsComputed = true;
         }
-        else if (STy == GeomAbs_Cylinder)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cylinder)
         {
           gp_Cylinder Cyl  = S.Cylinder();
           gp_Pnt2d    P    = C.Line().Location();
@@ -239,7 +239,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           UpdateEdge(Edge, Circle, Loc, Tol);
           IsComputed = true;
         }
-        else if (STy == GeomAbs_Cone)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cone)
         {
           gp_Cone  Cone = S.Cone();
           gp_Pnt2d P    = C.Line().Location();
@@ -254,7 +254,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           UpdateEdge(Edge, Circle, Loc, Tol);
           IsComputed = true;
         }
-        else if (STy == GeomAbs_Torus)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Torus)
         {
           gp_Torus Tore = S.Torus();
           gp_Pnt2d P    = C.Line().Location();
@@ -272,7 +272,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
       }
       else if (D.IsParallel(gp::DY2d(), Precision::Angular()))
       { // Iso U.
-        if (STy == GeomAbs_Sphere)
+        if (STy == GeomAbs_SurfaceType::GeomAbs_Sphere)
         {
           gp_Sphere Sph  = S.Sphere();
           gp_Pnt2d  P    = C.Line().Location();
@@ -296,7 +296,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           UpdateEdge(Edge, Circle, Loc, Tol);
           IsComputed = true;
         }
-        else if (STy == GeomAbs_Cylinder)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cylinder)
         {
           gp_Cylinder Cyl = S.Cylinder();
           gp_Pnt2d    P   = C.Line().Location();
@@ -310,7 +310,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           UpdateEdge(Edge, Line, Loc, Tol);
           IsComputed = true;
         }
-        else if (STy == GeomAbs_Cone)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Cone)
         {
           gp_Cone  Cone = S.Cone();
           gp_Pnt2d P    = C.Line().Location();
@@ -324,7 +324,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           UpdateEdge(Edge, Line, Loc, Tol);
           IsComputed = true;
         }
-        else if (STy == GeomAbs_Torus)
+        else if (STy == GeomAbs_SurfaceType::GeomAbs_Torus)
         {
           gp_Torus Tore = S.Torus();
           gp_Pnt2d P    = C.Line().Location();
@@ -497,7 +497,7 @@ void BRepOffset_Offset::Init(
   bool   HasSingularity = false;
   double uf1, uf2, vf1, vf2, fpar, lpar;
   BRepTools::UVBounds(Face, uf1, uf2, vf1, vf2);
-  if ((!OffsetOutside || JoinType != GeomAbs_Arc)
+  if ((!OffsetOutside || JoinType != GeomAbs_JoinType::GeomAbs_Arc)
       && (TheSurf->DynamicType() == STANDARD_TYPE(Geom_ConicalSurface)
           || TheSurf->DynamicType() == STANDARD_TYPE(Geom_OffsetSurface)))
   {
@@ -1031,7 +1031,7 @@ void BRepOffset_Offset::Init(const TopoDS_Edge&  Path,
 {
   bool C1Denerated = false;
   bool C2Denerated = false;
-  myStatus         = BRepOffset_Good;
+  myStatus         = BRepOffset_Status::BRepOffset_Good;
   myShape          = Path;
 
   TopLoc_Location Loc;
@@ -1065,7 +1065,7 @@ void BRepOffset_Offset::Init(const TopoDS_Edge&  Path,
     C1->Transform(Loc.Transformation());
     HEdge1 = new GeomAdaptor_Curve(C1);
     GeomAdaptor_Curve AC1(C1);
-    if (AC1.GetType() == GeomAbs_Circle)
+    if (AC1.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       C1Denerated = (AC1.Circle().Radius() < Precision::Confusion());
     }
@@ -1094,7 +1094,7 @@ void BRepOffset_Offset::Init(const TopoDS_Edge&  Path,
     C2->Transform(Loc.Transformation());
     HEdge2 = new GeomAdaptor_Curve(C2);
     GeomAdaptor_Curve AC2(C2);
-    if (AC2.GetType() == GeomAbs_Circle)
+    if (AC2.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       C2Denerated = (AC2.Circle().Radius() < Precision::Confusion());
     }
@@ -1439,7 +1439,7 @@ void BRepOffset_Offset::Init(const TopoDS_Vertex&                  Vertex,
                              const double                          TolApp,
                              const GeomAbs_Shape                   Conti)
 {
-  myStatus = BRepOffset_Good;
+  myStatus = BRepOffset_Status::BRepOffset_Good;
   myShape  = Vertex;
 
   // evaluate the Ax3 of the Sphere

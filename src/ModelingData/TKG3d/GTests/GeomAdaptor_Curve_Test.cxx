@@ -284,5 +284,5 @@ TEST_F(GeomAdaptor_Curve_Test, Constructor_WithValidRange_Success)
   GeomAdaptor_Curve anAdaptor(myCircle, aFirst, aLast);
   EXPECT_DOUBLE_EQ(anAdaptor.FirstParameter(), aFirst);
   EXPECT_DOUBLE_EQ(anAdaptor.LastParameter(), aLast);
-  EXPECT_EQ(anAdaptor.GetType(), GeomAbs_Circle);
+  EXPECT_EQ(anAdaptor.GetType(), GeomAbs_CurveType::GeomAbs_Circle);
 }

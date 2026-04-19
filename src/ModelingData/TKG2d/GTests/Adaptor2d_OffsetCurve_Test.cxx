@@ -127,7 +127,7 @@ TEST_F(Adaptor2d_OffsetCurveTest, NbIntervals)
 TEST_F(Adaptor2d_OffsetCurveTest, GetType_Line)
 {
   Adaptor2d_OffsetCurve anOffset(myBaseLine, 3.0);
-  EXPECT_EQ(anOffset.GetType(), GeomAbs_Line);
+  EXPECT_EQ(anOffset.GetType(), GeomAbs_CurveType::GeomAbs_Line);
 }
 
 TEST_F(Adaptor2d_OffsetCurveTest, IsNotClosed)
@@ -178,7 +178,7 @@ TEST_F(Adaptor2d_OffsetCurveTest, Curve_ReturnsBaseCurve)
   Adaptor2d_OffsetCurve                 anOffset(myBaseLine, 3.0);
   const occ::handle<Adaptor2d_Curve2d>& aCurve = anOffset.Curve();
   EXPECT_FALSE(aCurve.IsNull());
-  EXPECT_EQ(aCurve->GetType(), GeomAbs_Line);
+  EXPECT_EQ(aCurve->GetType(), GeomAbs_CurveType::GeomAbs_Line);
 }
 
 TEST_F(Adaptor2d_OffsetCurveTest, Trim)

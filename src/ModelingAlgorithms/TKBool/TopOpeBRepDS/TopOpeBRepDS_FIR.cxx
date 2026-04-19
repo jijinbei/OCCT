@@ -27,8 +27,8 @@
 #include <TopOpeBRepTool_TOPOLOGY.hxx>
 #include <TopOpeBRepTool_SC.hxx>
 
-#define MDSke TopOpeBRepDS_EDGE
-#define MDSkf TopOpeBRepDS_FACE
+#define MDSke TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE
+#define MDSkf TopOpeBRepDS_Kind::TopOpeBRepDS_FACE
 
 Standard_EXPORT bool FUN_Parameters(const gp_Pnt& Pnt, const TopoDS_Shape& F, double& u, double& v);
 Standard_EXPORT bool FUN_edgeofface(const TopoDS_Shape& E, const TopoDS_Shape& F);
@@ -115,9 +115,9 @@ bool FUN_findPonF(const TopoDS_Edge&                                            
       else
       {
         pardef = false;
-        if (GT1 == TopOpeBRepDS_POINT)
+        if (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
           P = BDS.Point(G1).Point();
-        else if (GT1 == TopOpeBRepDS_VERTEX)
+        else if (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
           P = BRep_Tool::Pnt(TopoDS::Vertex(BDS.Shape(G1)));
         if (pardef)
         {

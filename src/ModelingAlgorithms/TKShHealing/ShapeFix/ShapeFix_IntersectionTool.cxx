@@ -823,18 +823,18 @@ static void SelectIntPnt(const Geom2dInt_GInter&     Inter,
   {
     // possible second point is better?
     int status1 = 0, status2 = 0;
-    if (Tr1.PositionOnCurve() == IntRes2d_Middle)
+    if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
       status1 += 1;
-    if (Tr2.PositionOnCurve() == IntRes2d_Middle)
+    if (Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
       status1 += 2;
     IntRes2d_IntersectionPoint IP2;
     IntRes2d_Transition        Tr12, Tr22;
     IP2  = Inter.Point(2);
     Tr12 = IP2.TransitionOfFirst();
     Tr22 = IP2.TransitionOfSecond();
-    if (Tr12.PositionOnCurve() == IntRes2d_Middle)
+    if (Tr12.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
       status2 += 1;
-    if (Tr22.PositionOnCurve() == IntRes2d_Middle)
+    if (Tr22.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
       status2 += 2;
     if (status2 > status1)
     {
@@ -983,7 +983,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
           IntRes2d_IntersectionPoint IP;
           IntRes2d_Transition        Tr1, Tr2;
           SelectIntPnt(Inter, IP, Tr1, Tr2);
-          if (Tr1.PositionOnCurve() == IntRes2d_Middle && Tr2.PositionOnCurve() == IntRes2d_Middle)
+          if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
           {
             double        param1 = IP.ParamOnFirst();
             double        param2 = IP.ParamOnSecond();
@@ -1098,7 +1098,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                 continue;
             }
           }
-          if (Tr1.PositionOnCurve() == IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Middle)
+          if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
           {
             // find needed vertex from edge2 and split edge1 using it
             double param1 = IP.ParamOnFirst();
@@ -1117,7 +1117,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               break;
             }
           }
-          if (Tr1.PositionOnCurve() != IntRes2d_Middle && Tr2.PositionOnCurve() == IntRes2d_Middle)
+          if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
           {
             // find needed vertex from edge1 and split edge2 using it
             double param2 = IP.ParamOnSecond();
@@ -1136,7 +1136,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               continue;
             }
           }
-          if (Tr1.PositionOnCurve() != IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Middle)
+          if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
           {
             // union vertexes
             if (UnionVertexes(sewd, edge1, edge2, num2, boxes, B2))
@@ -1751,8 +1751,8 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
               IntRes2d_IntersectionPoint IP;
               IntRes2d_Transition        Tr1, Tr2;
               SelectIntPnt(Inter, IP, Tr1, Tr2);
-              if (Tr1.PositionOnCurve() == IntRes2d_Middle
-                  && Tr2.PositionOnCurve() == IntRes2d_Middle)
+              if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle
+                  && Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
               {
                 // create new vertex and split both edges
                 double        param1 = IP.ParamOnFirst();
@@ -1782,8 +1782,8 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                 if (isSplitEdge2)
                   continue;
               }
-              if (Tr1.PositionOnCurve() == IntRes2d_Middle
-                  && Tr2.PositionOnCurve() != IntRes2d_Middle)
+              if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle
+                  && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
               {
                 // find needed vertex from edge2 and split edge1 using it
                 double param1 = IP.ParamOnFirst();
@@ -1802,8 +1802,8 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                   break;
                 }
               }
-              if (Tr1.PositionOnCurve() != IntRes2d_Middle
-                  && Tr2.PositionOnCurve() == IntRes2d_Middle)
+              if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle
+                  && Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
               {
                 // find needed vertex from edge1 and split edge2 using it
                 double param2 = IP.ParamOnSecond();
@@ -1822,8 +1822,8 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                   continue;
                 }
               }
-              if (Tr1.PositionOnCurve() != IntRes2d_Middle
-                  && Tr2.PositionOnCurve() != IntRes2d_Middle)
+              if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle
+                  && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
               {
                 // union vertexes
                 if (UnionVertexes(sewd2, edge1, edge2, num2, boxes2, B2))

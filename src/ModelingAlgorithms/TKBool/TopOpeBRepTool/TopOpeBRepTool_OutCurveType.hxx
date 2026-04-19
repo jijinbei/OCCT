@@ -17,7 +17,7 @@
 #ifndef _TopOpeBRepTool_OutCurveType_HeaderFile
 #define _TopOpeBRepTool_OutCurveType_HeaderFile
 
-enum TopOpeBRepTool_OutCurveType
+enum class TopOpeBRepTool_OutCurveType
 {
   TopOpeBRepTool_BSPLINE1,
   TopOpeBRepTool_APPROX,

@@ -94,11 +94,11 @@ void PrsDim_OffsetDimension::Compute(const occ::handle<PrsMgr_PresentationManage
   BRepAdaptor_Surface surf1(TopoDS::Face(myFShape));
   BRepAdaptor_Surface surf2(TopoDS::Face(mySShape));
 
-  if (surf1.GetType() == GeomAbs_Cylinder || surf1.GetType() == GeomAbs_Cone
-      || surf1.GetType() == GeomAbs_Torus)
+  if (surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder || surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
+      || surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
-    if (surf2.GetType() == GeomAbs_Cylinder || surf2.GetType() == GeomAbs_Cone
-        || surf2.GetType() == GeomAbs_Torus)
+    if (surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder || surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
+        || surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
     {
       ComputeTwoAxesOffset(aprs, aInvertTrsf);
     }
@@ -232,17 +232,17 @@ void PrsDim_OffsetDimension::ComputeTwoAxesOffset(const occ::handle<Prs3d_Presen
 
   gp_Ax1 Ax1Surf1, Ax1Surf2;
 
-  if (surf1.GetType() == GeomAbs_Cylinder)
+  if (surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     gp_Cylinder aCyl = surf1.Cylinder();
     Ax1Surf1         = aCyl.Axis();
   }
-  else if (surf1.GetType() == GeomAbs_Cone)
+  else if (surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     gp_Cone aCone = surf1.Cone();
     Ax1Surf1      = aCone.Axis();
   }
-  else if (surf1.GetType() == GeomAbs_Torus)
+  else if (surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     gp_Torus aTore = surf1.Torus();
     Ax1Surf1       = aTore.Axis();
@@ -253,17 +253,17 @@ void PrsDim_OffsetDimension::ComputeTwoAxesOffset(const occ::handle<Prs3d_Presen
   gp_Pnt P1First     = surf1.Value(FirstUParam, FirstVParam);
   gp_Pnt P1Last      = surf1.Value(FirstUParam, LastVParam);
 
-  if (surf2.GetType() == GeomAbs_Cylinder)
+  if (surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     gp_Cylinder aCyl = surf2.Cylinder();
     Ax1Surf2         = aCyl.Axis();
   }
-  else if (surf2.GetType() == GeomAbs_Cone)
+  else if (surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     gp_Cone aCone = surf2.Cone();
     Ax1Surf2      = aCone.Axis();
   }
-  else if (surf2.GetType() == GeomAbs_Torus)
+  else if (surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     gp_Torus aTore = surf2.Torus();
     Ax1Surf2       = aTore.Axis();

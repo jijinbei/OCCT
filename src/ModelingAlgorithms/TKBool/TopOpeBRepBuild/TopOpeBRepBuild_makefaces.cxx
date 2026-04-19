@@ -355,7 +355,7 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
   //  GeomAbs_SurfaceType tt1 = GAS1.GetType();
   //  occ::handle<Standard_Type> T = Surf->DynamicType();
   //  bool istrim = ( T == STANDARD_TYPE(Geom_RectangularTrimmedSurface) );
-  //  if ( istrim && tt1 == GeomAbs_Plane) Surf =
+  //  if ( istrim && tt1 == GeomAbs_SurfaceType::GeomAbs_Plane) Surf =
   //  occ::down_cast<Geom_RectangularTrimmedSurface>(Surf)->BasisSurface();
   double       tolFF = BRep_Tool::Tolerance(TopoDS::Face(FF));
   BRep_Builder BB;

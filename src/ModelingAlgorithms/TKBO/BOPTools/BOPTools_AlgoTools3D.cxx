@@ -545,7 +545,7 @@ int BOPTools_AlgoTools3D::PointNearEdge(const TopoDS_Edge& aE,
   // NPAL19220
   GeomAdaptor_Surface aGAS(aS);
   aTS = aGAS.GetType();
-  if (aTS == GeomAbs_BSplineSurface)
+  if (aTS == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     if (aETol > 1.e-5)
     {
@@ -555,11 +555,11 @@ int BOPTools_AlgoTools3D::PointNearEdge(const TopoDS_Edge& aE,
   if (aETol > 1.e-5 || aFTol > 1.e-5)
   {
     //
-    if (aTS != GeomAbs_Sphere)
+    if (aTS != GeomAbs_SurfaceType::GeomAbs_Sphere)
     {
       gp_Vec2d transVec(aDP);
       transVal = aDt2D + aETol + aFTol;
-      if (aTS == GeomAbs_Cylinder)
+      if (aTS == GeomAbs_SurfaceType::GeomAbs_Cylinder)
       { // pkv/909/F8
         double aR, dT;
         //
@@ -607,7 +607,7 @@ int BOPTools_AlgoTools3D::PointNearEdge(const TopoDS_Edge&                   aE,
   //
   aS = BRep_Tool::Surface(aF);
   aGAS.Load(aS);
-  if (aGAS.GetType() == GeomAbs_Cylinder || aGAS.GetType() == GeomAbs_Sphere)
+  if (aGAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder || aGAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     dT2D = 10. * dT2D;
   }

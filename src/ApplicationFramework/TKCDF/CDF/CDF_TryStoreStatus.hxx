@@ -17,7 +17,7 @@
 #ifndef _CDF_TryStoreStatus_HeaderFile
 #define _CDF_TryStoreStatus_HeaderFile
 
-enum CDF_TryStoreStatus
+enum class CDF_TryStoreStatus
 {
   CDF_TS_OK,
   CDF_TS_NoCurrentDocument,

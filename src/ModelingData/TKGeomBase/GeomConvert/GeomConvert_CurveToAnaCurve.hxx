@@ -62,8 +62,8 @@ public:
     double&                        cf,
     double&                        cl,
     double&                        theGap,
-    const GeomConvert_ConvType     theCurvType = GeomConvert_MinGap,
-    const GeomAbs_CurveType        theTarget   = GeomAbs_Line);
+    const GeomConvert_ConvType     theCurvType = GeomConvert_ConvType::GeomConvert_MinGap,
+    const GeomAbs_CurveType        theTarget   = GeomAbs_CurveType::GeomAbs_Line);
 
   //! Tries to convert the given curve to circle with given
   //! tolerance. Returns NULL curve if conversion is

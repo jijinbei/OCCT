@@ -214,7 +214,7 @@ void BRepFeat_MakeDPrism::Perform(const double Height)
   mySUntil.Nullify();
   ShapeUntilValid();
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_NoSelection;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
   PerfSelectionValid();
 
   double theheight = Height / cos(myAngle);
@@ -234,7 +234,7 @@ void BRepFeat_MakeDPrism::Perform(const double Height)
   if (exp.More())
   {
     NotDone();
-    myStatusError = BRepFeat_InvFirstShape;
+    myStatusError = BRepFeat_StatusError::BRepFeat_InvFirstShape;
     return;
   }
 
@@ -299,7 +299,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& Until)
   //  myPbase.Orientation(TopAbs_FORWARD);
 
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_SelectionU;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionU;
   PerfSelectionValid();
   mySFrom.Nullify();
   ShapeFromValid();
@@ -325,7 +325,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& Until)
     if (exp.More())
     {
       NotDone();
-      myStatusError = BRepFeat_InvFirstShape;
+      myStatusError = BRepFeat_StatusError::BRepFeat_InvFirstShape;
       return;
     }
 
@@ -445,7 +445,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
   //  myPbase.Orientation(TopAbs_FORWARD);
 
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_SelectionFU;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionFU;
   PerfSelectionValid();
 
   TopExp_Explorer exp(From, TopAbs_FACE);
@@ -467,7 +467,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
   if (Trfu != Trff)
   {
     NotDone();
-    myStatusError = BRepFeat_IncTypes;
+    myStatusError = BRepFeat_StatusError::BRepFeat_IncTypes;
     return;
   }
   occ::handle<Geom_Curve> C = TestCurve(myPbase);
@@ -542,7 +542,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NoIntersectU;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NoIntersectU;
       return;
     }
     if (ASI2.IsDone() && ASI2.NbPoints(1) >= 1)
@@ -555,7 +555,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NoIntersectF;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NoIntersectF;
       return;
     }
     TopoDS_Shape Comp;
@@ -567,7 +567,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NullToolU;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NullToolU;
       return;
     }
     TopoDS_Solid SS = BRepFeat::Tool(mySFrom, FFrom, OrF);
@@ -576,7 +576,7 @@ void BRepFeat_MakeDPrism::Perform(const TopoDS_Shape& From, const TopoDS_Shape& 
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NullToolF;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NullToolF;
       return;
     }
 
@@ -614,7 +614,7 @@ void BRepFeat_MakeDPrism::PerformUntilEnd()
   if (trc)
     std::cout << "BRepFeat_MakeDPrism::PerformUntilEnd()" << std::endl;
 #endif
-  myPerfSelection = BRepFeat_SelectionSh;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionSh;
   PerfSelectionValid();
   myGluedF.Clear();
   mySUntil.Nullify();
@@ -665,7 +665,7 @@ void BRepFeat_MakeDPrism::PerformFromEnd(const TopoDS_Shape& Until)
     throw Standard_ConstructionError();
   }
   //  myPbase.Orientation(TopAbs_FORWARD);
-  myPerfSelection = BRepFeat_SelectionShU;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionShU;
   PerfSelectionValid();
   mySFrom.Nullify();
   ShapeFromValid();
@@ -681,7 +681,7 @@ void BRepFeat_MakeDPrism::PerformFromEnd(const TopoDS_Shape& Until)
   if (VraiDPrism.IsNull())
   {
     NotDone();
-    myStatusError = BRepFeat_NullRealTool;
+    myStatusError = BRepFeat_StatusError::BRepFeat_NullRealTool;
     return;
   }
 
@@ -763,7 +763,7 @@ void BRepFeat_MakeDPrism::PerformFromEnd(const TopoDS_Shape& Until)
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NullToolU;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NullToolU;
       return;
     }
 
@@ -773,7 +773,7 @@ void BRepFeat_MakeDPrism::PerformFromEnd(const TopoDS_Shape& Until)
     else
     {
       NotDone();
-      myStatusError = BRepFeat_NullToolF;
+      myStatusError = BRepFeat_StatusError::BRepFeat_NullToolF;
       return;
     }
 
@@ -818,11 +818,11 @@ void BRepFeat_MakeDPrism::PerformThruAll()
   ShapeFromValid();
   if (myFuse == 0)
   {
-    myPerfSelection = BRepFeat_NoSelection;
+    myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
   }
   else
   {
-    myPerfSelection = BRepFeat_SelectionSh;
+    myPerfSelection = BRepFeat_PerfSelection::BRepFeat_SelectionSh;
   }
 
   PerfSelectionValid();
@@ -883,7 +883,7 @@ void BRepFeat_MakeDPrism::PerformUntilHeight(const TopoDS_Shape& Until, const do
   }
   //  myPbase.Orientation(TopAbs_FORWARD);
   myGluedF.Clear();
-  myPerfSelection = BRepFeat_NoSelection;
+  myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
   PerfSelectionValid();
   mySFrom.Nullify();
   ShapeFromValid();
@@ -908,7 +908,7 @@ void BRepFeat_MakeDPrism::PerformUntilHeight(const TopoDS_Shape& Until, const do
     if (exp.More())
     {
       NotDone();
-      myStatusError = BRepFeat_InvFirstShape;
+      myStatusError = BRepFeat_StatusError::BRepFeat_InvFirstShape;
       return;
     }
 

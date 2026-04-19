@@ -87,7 +87,7 @@ void TopOpeBRep_Hctxee2d::SetEdges(const TopoDS_Edge&         E1,
   if (S1 == S2 && L1 == L2)
     memesupport = true;
 
-  if (ST1 == GeomAbs_Plane || memesfaces || memesupport)
+  if (ST1 == GeomAbs_SurfaceType::GeomAbs_Plane || memesfaces || memesupport)
   {
     occ::handle<Geom2d_Curve> PC2 = FC2D_CurveOnSurface(myEdge2, F1, first, last, tolpc);
     myCurve2.Load(PC2);

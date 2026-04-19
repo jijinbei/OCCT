@@ -71,7 +71,7 @@ void BRepMesh_MeshTool::Legalize(const int theLinkIndex)
 
     aUsedLinks.Add(aLinkIndex);
     const BRepMesh_Edge& aLink = myStructure->GetLink(aLinkIndex);
-    if (aLink.Movability() != BRepMesh_Frontier)
+    if (aLink.Movability() != BRepMesh_DegreeOfFreedom::BRepMesh_Frontier)
     {
       const BRepMesh_PairOfIndex& aPair = myStructure->ElementsConnectedTo(aLinkIndex);
       if (aPair.Extent() == 2)
@@ -131,7 +131,7 @@ void BRepMesh_MeshTool::CleanFrontierLinks()
   IMeshData::MapOfInteger               aTrianglesToErase;
   IMeshData::MapOfIntegerInteger        aLoopEdges(1, aAlloc);
 
-  Handle(IMeshData::MapOfInteger)   aFrontier = GetEdgesByType(BRepMesh_Frontier);
+  Handle(IMeshData::MapOfInteger)   aFrontier = GetEdgesByType(BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
   IMeshData::IteratorOfMapOfInteger aFrontierIt(*aFrontier);
   for (; aFrontierIt.More(); aFrontierIt.Next())
   {
@@ -208,12 +208,12 @@ void BRepMesh_MeshTool::EraseFreeLinks()
     if (myStructure->ElementsConnectedTo(i).IsEmpty())
     {
       BRepMesh_Edge& anEdge = (BRepMesh_Edge&)myStructure->GetLink(i);
-      if (anEdge.Movability() == BRepMesh_Deleted)
+      if (anEdge.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
       {
         continue;
       }
 
-      anEdge.SetMovability(BRepMesh_Free);
+      anEdge.SetMovability(BRepMesh_DegreeOfFreedom::BRepMesh_Free);
       myStructure->RemoveLink(i);
     }
   }
@@ -237,7 +237,7 @@ void BRepMesh_MeshTool::collectTrianglesOnFreeLinksAroundNodesOf(
     aStack.pop();
 
     const BRepMesh_Edge& aLink = myStructure->GetLink(aLinkIndex);
-    if (aLink.Movability() == BRepMesh_Free
+    if (aLink.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Free
         && (aLink.FirstNode() == theConstraint.FirstNode()
             || aLink.LastNode() == theConstraint.FirstNode()
             || aLink.FirstNode() == theConstraint.LastNode()

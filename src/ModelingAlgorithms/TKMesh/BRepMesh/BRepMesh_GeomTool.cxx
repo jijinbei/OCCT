@@ -39,22 +39,22 @@ void ComputeErrFactors(const double                          theDeflection,
 
   switch (theFace->GetType())
   {
-    case GeomAbs_Cylinder:
-    case GeomAbs_Cone:
-    case GeomAbs_Sphere:
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       break;
 
-    case GeomAbs_SurfaceOfExtrusion:
-    case GeomAbs_SurfaceOfRevolution: {
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
+    case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution: {
       occ::handle<Adaptor3d_Curve> aCurve = theFace->BasisCurve();
-      if (aCurve->GetType() == GeomAbs_BSplineCurve && aCurve->Degree() > 2)
+      if (aCurve->GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve && aCurve->Degree() > 2)
       {
         theErrFactorV /= (aCurve->Degree() * aCurve->NbKnots());
       }
       break;
     }
-    case GeomAbs_BezierSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BezierSurface: {
       if (theFace->UDegree() > 2)
       {
         theErrFactorU /= (theFace->UDegree());
@@ -65,7 +65,7 @@ void ComputeErrFactors(const double                          theDeflection,
       }
       break;
     }
-    case GeomAbs_BSplineSurface: {
+    case GeomAbs_SurfaceType::GeomAbs_BSplineSurface: {
       if (theFace->UDegree() > 2)
       {
         theErrFactorU /= (theFace->UDegree() * theFace->NbUKnots());
@@ -77,7 +77,7 @@ void ComputeErrFactors(const double                          theDeflection,
       break;
     }
 
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
     default:
       theErrFactorU = theErrFactorV = 1.;
   }
@@ -89,7 +89,7 @@ void AdjustCellsCounts(const occ::handle<Adaptor3d_Surface>& theFace,
                        int&                                  theCellsCountV)
 {
   const GeomAbs_SurfaceType aType = theFace->GetType();
-  if (aType == GeomAbs_OtherSurface)
+  if (aType == GeomAbs_SurfaceType::GeomAbs_OtherSurface)
   {
     // fallback to the default behavior
     theCellsCountU = theCellsCountV = -1;
@@ -97,33 +97,33 @@ void AdjustCellsCounts(const occ::handle<Adaptor3d_Surface>& theFace,
   }
 
   double aSqNbVert = theNbVertices;
-  if (aType == GeomAbs_Plane)
+  if (aType == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     theCellsCountU = theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
   }
-  else if (aType == GeomAbs_Cylinder || aType == GeomAbs_Cone)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_Cylinder || aType == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
   }
-  else if (aType == GeomAbs_SurfaceOfExtrusion || aType == GeomAbs_SurfaceOfRevolution)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion || aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
   {
     occ::handle<Adaptor3d_Curve> aCurve = theFace->BasisCurve();
-    if (aCurve->GetType() == GeomAbs_Line
-        || (aCurve->GetType() == GeomAbs_BSplineCurve && aCurve->Degree() < 2))
+    if (aCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line
+        || (aCurve->GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve && aCurve->Degree() < 2))
     {
       // planar, cylindrical, conical cases
-      if (aType == GeomAbs_SurfaceOfExtrusion)
+      if (aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
         theCellsCountU = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
       else
         theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
     }
-    if (aType == GeomAbs_SurfaceOfExtrusion)
+    if (aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
     {
       // V is always a line
       theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
     }
   }
-  else if (aType == GeomAbs_BezierSurface || aType == GeomAbs_BSplineSurface)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_BezierSurface || aType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     if (theFace->UDegree() < 2)
     {
@@ -150,7 +150,7 @@ BRepMesh_GeomTool::BRepMesh_GeomTool(const BRepAdaptor_Curve& theCurve,
                                      const int                theMinPointsNb,
                                      const double             theMinSize)
     : myEdge(&theCurve.Edge()),
-      myIsoType(GeomAbs_NoneIso)
+      myIsoType(GeomAbs_IsoType::GeomAbs_NoneIso)
 {
   myDiscretTool.Initialize(theCurve,
                            theFirstParam,
@@ -229,7 +229,7 @@ bool BRepMesh_GeomTool::Value(const int    theIndex,
   thePoint = myDiscretTool.Value(theIndex);
   theParam = myDiscretTool.Parameter(theIndex);
 
-  if (myIsoType == GeomAbs_IsoU)
+  if (myIsoType == GeomAbs_IsoType::GeomAbs_IsoU)
     theUV.SetCoord(theIsoParam, theParam);
   else
     theUV.SetCoord(theParam, theIsoParam);
@@ -252,7 +252,7 @@ bool BRepMesh_GeomTool::Normal(const occ::handle<BRepAdaptor_Surface>& theSurfac
 
   CSLib_DerivativeStatus aStatus;
   CSLib::Normal(aD1U, aD1V, Precision::Angular(), aStatus, theNormal);
-  if (aStatus != CSLib_Done)
+  if (aStatus != CSLib_DerivativeStatus::CSLib_Done)
   {
     gp_Vec aD2U, aD2V, aD2UV;
     theSurface->D2(theParamU, theParamV, thePoint, aD1U, aD1V, aD2U, aD2V, aD2UV);
@@ -439,14 +439,14 @@ std::pair<int, int> BRepMesh_GeomTool::CellsCount(
   const std::pair<double, double>& aDelta  = theRangeSplitter->GetDelta();
 
   int aCellsCountU, aCellsCountV;
-  if (aType == GeomAbs_Torus)
+  if (aType == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     aCellsCountU =
       (int)std::ceil(std::pow(2, std::log10((aRangeU.second - aRangeU.first) / aDelta.first)));
     aCellsCountV =
       (int)std::ceil(std::pow(2, std::log10((aRangeV.second - aRangeV.first) / aDelta.second)));
   }
-  else if (aType == GeomAbs_Cylinder)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
     aCellsCountU =
       (int)std::ceil(std::pow(2,

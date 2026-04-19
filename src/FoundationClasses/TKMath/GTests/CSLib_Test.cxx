@@ -73,7 +73,7 @@ TEST_F(CSLibNormalTest, Normal_FromD1U_D1V_OrthogonalVectors)
 
   CSLib::Normal(aD1U, aD1V, 1e-10, aStatus, aNormal);
 
-  EXPECT_EQ(aStatus, CSLib_Done);
+  EXPECT_EQ(aStatus, CSLib_DerivativeStatus::CSLib_Done);
   checkDirEqual(aNormal, gp_Dir(0.0, 0.0, 1.0));
 }
 
@@ -88,7 +88,7 @@ TEST_F(CSLibNormalTest, Normal_FromD1U_D1V_ScaledVectors)
 
   CSLib::Normal(aD1U, aD1V, 1e-10, aStatus, aNormal);
 
-  EXPECT_EQ(aStatus, CSLib_Done);
+  EXPECT_EQ(aStatus, CSLib_DerivativeStatus::CSLib_Done);
   checkDirEqual(aNormal, gp_Dir(0.0, 0.0, 1.0));
 }
 
@@ -103,7 +103,7 @@ TEST_F(CSLibNormalTest, Normal_FromD1U_D1V_ParallelVectors)
 
   CSLib::Normal(aD1U, aD1V, 1e-6, aStatus, aNormal);
 
-  EXPECT_EQ(aStatus, CSLib_D1uIsParallelD1v);
+  EXPECT_EQ(aStatus, CSLib_DerivativeStatus::CSLib_D1uIsParallelD1v);
 }
 
 TEST_F(CSLibNormalTest, Normal_FromD1U_D1V_D1UIsNull)
@@ -116,7 +116,7 @@ TEST_F(CSLibNormalTest, Normal_FromD1U_D1V_D1UIsNull)
 
   CSLib::Normal(aD1U, aD1V, 1e-10, aStatus, aNormal);
 
-  EXPECT_EQ(aStatus, CSLib_D1uIsNull);
+  EXPECT_EQ(aStatus, CSLib_DerivativeStatus::CSLib_D1uIsNull);
 }
 
 TEST_F(CSLibNormalTest, Normal_FromD1U_D1V_D1VIsNull)
@@ -129,7 +129,7 @@ TEST_F(CSLibNormalTest, Normal_FromD1U_D1V_D1VIsNull)
 
   CSLib::Normal(aD1U, aD1V, 1e-10, aStatus, aNormal);
 
-  EXPECT_EQ(aStatus, CSLib_D1vIsNull);
+  EXPECT_EQ(aStatus, CSLib_DerivativeStatus::CSLib_D1vIsNull);
 }
 
 TEST_F(CSLibNormalTest, Normal_FromD1U_D1V_BothNull)
@@ -142,7 +142,7 @@ TEST_F(CSLibNormalTest, Normal_FromD1U_D1V_BothNull)
 
   CSLib::Normal(aD1U, aD1V, 1e-10, aStatus, aNormal);
 
-  EXPECT_EQ(aStatus, CSLib_D1IsNull);
+  EXPECT_EQ(aStatus, CSLib_DerivativeStatus::CSLib_D1IsNull);
 }
 
 // Test Normal with MagTol (third overload)
@@ -156,7 +156,7 @@ TEST_F(CSLibNormalTest, Normal_WithMagTol_Defined)
 
   CSLib::Normal(aD1U, aD1V, 1e-10, aStatus, aNormal);
 
-  EXPECT_EQ(aStatus, CSLib_Defined);
+  EXPECT_EQ(aStatus, CSLib_NormalStatus::CSLib_Defined);
   checkDirEqual(aNormal, gp_Dir(0.0, 0.0, 1.0));
 }
 
@@ -171,7 +171,7 @@ TEST_F(CSLibNormalTest, Normal_WithMagTol_Singular)
 
   CSLib::Normal(aD1U, aD1V, 1e-10, aStatus, aNormal);
 
-  EXPECT_EQ(aStatus, CSLib_Singular);
+  EXPECT_EQ(aStatus, CSLib_NormalStatus::CSLib_Singular);
 }
 
 // Test DNNUV function
@@ -497,25 +497,25 @@ TEST_F(CSLibNormalPolyDefTest, Derivative_NumericalApproximation)
 TEST(CSLibEnumTest, DerivativeStatus_AllValues)
 {
   // Verify all enum values are distinct
-  EXPECT_NE(CSLib_Done, CSLib_D1uIsNull);
-  EXPECT_NE(CSLib_Done, CSLib_D1vIsNull);
-  EXPECT_NE(CSLib_Done, CSLib_D1IsNull);
-  EXPECT_NE(CSLib_Done, CSLib_D1uD1vRatioIsNull);
-  EXPECT_NE(CSLib_Done, CSLib_D1vD1uRatioIsNull);
-  EXPECT_NE(CSLib_Done, CSLib_D1uIsParallelD1v);
+  EXPECT_NE(CSLib_DerivativeStatus::CSLib_Done, CSLib_DerivativeStatus::CSLib_D1uIsNull);
+  EXPECT_NE(CSLib_DerivativeStatus::CSLib_Done, CSLib_DerivativeStatus::CSLib_D1vIsNull);
+  EXPECT_NE(CSLib_DerivativeStatus::CSLib_Done, CSLib_DerivativeStatus::CSLib_D1IsNull);
+  EXPECT_NE(CSLib_DerivativeStatus::CSLib_Done, CSLib_DerivativeStatus::CSLib_D1uD1vRatioIsNull);
+  EXPECT_NE(CSLib_DerivativeStatus::CSLib_Done, CSLib_DerivativeStatus::CSLib_D1vD1uRatioIsNull);
+  EXPECT_NE(CSLib_DerivativeStatus::CSLib_Done, CSLib_DerivativeStatus::CSLib_D1uIsParallelD1v);
 }
 
 TEST(CSLibEnumTest, NormalStatus_AllValues)
 {
   // Verify all enum values are distinct
-  EXPECT_NE(CSLib_Singular, CSLib_Defined);
-  EXPECT_NE(CSLib_Singular, CSLib_InfinityOfSolutions);
-  EXPECT_NE(CSLib_Singular, CSLib_D1NuIsNull);
-  EXPECT_NE(CSLib_Singular, CSLib_D1NvIsNull);
-  EXPECT_NE(CSLib_Singular, CSLib_D1NIsNull);
-  EXPECT_NE(CSLib_Singular, CSLib_D1NuNvRatioIsNull);
-  EXPECT_NE(CSLib_Singular, CSLib_D1NvNuRatioIsNull);
-  EXPECT_NE(CSLib_Singular, CSLib_D1NuIsParallelD1Nv);
+  EXPECT_NE(CSLib_NormalStatus::CSLib_Singular, CSLib_NormalStatus::CSLib_Defined);
+  EXPECT_NE(CSLib_NormalStatus::CSLib_Singular, CSLib_NormalStatus::CSLib_InfinityOfSolutions);
+  EXPECT_NE(CSLib_NormalStatus::CSLib_Singular, CSLib_NormalStatus::CSLib_D1NuIsNull);
+  EXPECT_NE(CSLib_NormalStatus::CSLib_Singular, CSLib_NormalStatus::CSLib_D1NvIsNull);
+  EXPECT_NE(CSLib_NormalStatus::CSLib_Singular, CSLib_NormalStatus::CSLib_D1NIsNull);
+  EXPECT_NE(CSLib_NormalStatus::CSLib_Singular, CSLib_NormalStatus::CSLib_D1NuNvRatioIsNull);
+  EXPECT_NE(CSLib_NormalStatus::CSLib_Singular, CSLib_NormalStatus::CSLib_D1NvNuRatioIsNull);
+  EXPECT_NE(CSLib_NormalStatus::CSLib_Singular, CSLib_NormalStatus::CSLib_D1NuIsParallelD1Nv);
 }
 
 //=================================================================================================
@@ -543,7 +543,7 @@ TEST_F(CSLibIntegrationTest, PlanarSurface_ConstantNormal)
 
   CSLib::Normal(aD1U, aD1V, 1e-10, aStatus, aNormal);
 
-  EXPECT_EQ(aStatus, CSLib_Done);
+  EXPECT_EQ(aStatus, CSLib_DerivativeStatus::CSLib_Done);
   checkDirEqual(aNormal, gp_Dir(0.0, 0.0, 1.0));
 }
 
@@ -564,7 +564,7 @@ TEST_F(CSLibIntegrationTest, CylindricalSurface_VaryingNormal)
 
     CSLib::Normal(aD1U, aD1V, 1e-10, aStatus, aNormal);
 
-    EXPECT_EQ(aStatus, CSLib_Done);
+    EXPECT_EQ(aStatus, CSLib_DerivativeStatus::CSLib_Done);
     checkDirEqual(aNormal, gp_Dir(1.0, 0.0, 0.0));
   }
 
@@ -578,7 +578,7 @@ TEST_F(CSLibIntegrationTest, CylindricalSurface_VaryingNormal)
 
     CSLib::Normal(aD1U, aD1V, 1e-10, aStatus, aNormal);
 
-    EXPECT_EQ(aStatus, CSLib_Done);
+    EXPECT_EQ(aStatus, CSLib_DerivativeStatus::CSLib_Done);
     checkDirEqual(aNormal, gp_Dir(0.0, 1.0, 0.0));
   }
 }

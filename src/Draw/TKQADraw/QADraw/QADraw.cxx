@@ -60,13 +60,13 @@ static int QATestExtremaSS(Draw_Interpretor& theInterpretor, int theArgNb, const
     return 1;
   }
 
-  Extrema_ExtFlag aFlag = Extrema_ExtFlag_MIN;
+  Extrema_ExtFlag aFlag = Extrema_ExtFlag::Extrema_ExtFlag_MIN;
   if (theArgNb > 3)
   {
     int aVal = Draw::Atoi(theArgs[3]);
     if (aVal > 0)
     {
-      aFlag = aVal == 1 ? Extrema_ExtFlag_MAX : Extrema_ExtFlag_MINMAX;
+      aFlag = aVal == 1 ? Extrema_ExtFlag::Extrema_ExtFlag_MAX : Extrema_ExtFlag::Extrema_ExtFlag_MINMAX;
     }
   }
 

@@ -27,7 +27,7 @@ class BRepMesh_NURBSRangeSplitter : public BRepMesh_UVParamRangeSplitter
 public:
   //! Constructor.
   BRepMesh_NURBSRangeSplitter()
-      : mySurfaceType(GeomAbs_OtherSurface)
+      : mySurfaceType(GeomAbs_SurfaceType::GeomAbs_OtherSurface)
   {
   }
 

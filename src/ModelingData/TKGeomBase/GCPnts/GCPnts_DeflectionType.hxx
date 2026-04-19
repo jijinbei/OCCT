@@ -17,7 +17,7 @@
 #ifndef _GCPnts_DeflectionType_HeaderFile
 #define _GCPnts_DeflectionType_HeaderFile
 
-enum GCPnts_DeflectionType
+enum class GCPnts_DeflectionType
 {
   GCPnts_Linear,
   GCPnts_Circular,

@@ -26,19 +26,19 @@ void Extrema_GlobOptFuncCQuadric::value(double ct, double& F)
   gp_Pnt aCP = myC->Value(ct);
   switch (mySType)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       ElSLib::Parameters(myPln, aCP, u, v);
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       ElSLib::Parameters(myCylinder, aCP, u, v);
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       ElSLib::Parameters(myCone, aCP, u, v);
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       ElSLib::Parameters(mySphere, aCP, u, v);
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       ElSLib::Parameters(myTorus, aCP, u, v);
       break;
     default:
@@ -46,14 +46,14 @@ void Extrema_GlobOptFuncCQuadric::value(double ct, double& F)
       return;
   }
   //
-  if (mySType != GeomAbs_Plane)
+  if (mySType != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     if (myUl > 2. * M_PI + Precision::PConfusion())
     {
       u += 2. * M_PI;
     }
   }
-  if (mySType == GeomAbs_Torus)
+  if (mySType == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     if (myVl > 2. * M_PI + Precision::PConfusion())
     {
@@ -161,19 +161,19 @@ void Extrema_GlobOptFuncCQuadric::LoadQuad(const Adaptor3d_Surface* S,
   mySType    = S->GetType();
   switch (mySType)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       myPln = myS->Plane();
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       myCylinder = myS->Cylinder();
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       myCone = myS->Cone();
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       mySphere = myS->Sphere();
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       myTorus = myS->Torus();
       break;
     default:
@@ -214,19 +214,19 @@ void Extrema_GlobOptFuncCQuadric::QuadricParameters(const math_Vector& theCT,
   gp_Pnt aCP     = myC->Value(theCT(1));
   switch (mySType)
   {
-    case GeomAbs_Plane:
+    case GeomAbs_SurfaceType::GeomAbs_Plane:
       ElSLib::Parameters(myPln, aCP, u, v);
       break;
-    case GeomAbs_Cylinder:
+    case GeomAbs_SurfaceType::GeomAbs_Cylinder:
       ElSLib::Parameters(myCylinder, aCP, u, v);
       break;
-    case GeomAbs_Cone:
+    case GeomAbs_SurfaceType::GeomAbs_Cone:
       ElSLib::Parameters(myCone, aCP, u, v);
       break;
-    case GeomAbs_Sphere:
+    case GeomAbs_SurfaceType::GeomAbs_Sphere:
       ElSLib::Parameters(mySphere, aCP, u, v);
       break;
-    case GeomAbs_Torus:
+    case GeomAbs_SurfaceType::GeomAbs_Torus:
       ElSLib::Parameters(myTorus, aCP, u, v);
       break;
     default:
@@ -235,14 +235,14 @@ void Extrema_GlobOptFuncCQuadric::QuadricParameters(const math_Vector& theCT,
       return;
   }
   //
-  if (mySType != GeomAbs_Plane)
+  if (mySType != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     if (myUl > 2. * M_PI + Precision::PConfusion())
     {
       u += 2. * M_PI;
     }
   }
-  if (mySType == GeomAbs_Torus)
+  if (mySType == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
     if (myVl > 2. * M_PI + Precision::PConfusion())
     {

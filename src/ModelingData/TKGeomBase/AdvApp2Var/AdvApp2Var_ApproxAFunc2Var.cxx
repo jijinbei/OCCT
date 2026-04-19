@@ -166,10 +166,10 @@ void AdvApp2Var_ApproxAFunc2Var::Init()
   int ifav, iu = 0, iv = 0, ndu, ndv;
   switch (myFavoriteIso)
   {
-    case GeomAbs_IsoU:
+    case GeomAbs_IsoType::GeomAbs_IsoU:
       ifav = 1;
       break;
-    case GeomAbs_IsoV:
+    case GeomAbs_IsoType::GeomAbs_IsoV:
       ifav = 2;
       break;
     default:
@@ -264,7 +264,7 @@ void AdvApp2Var_ApproxAFunc2Var::InitGrid(const int NbInt)
   Bag.Append(C3);
   Bag.Append(C4);
 
-  occ::handle<AdvApp2Var_Iso> V0 = new AdvApp2Var_Iso(GeomAbs_IsoV,
+  occ::handle<AdvApp2Var_Iso> V0 = new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoV,
                                                       myFirstParInV,
                                                       myFirstParInU,
                                                       myLastParInU,
@@ -273,7 +273,7 @@ void AdvApp2Var_ApproxAFunc2Var::InitGrid(const int NbInt)
                                                       1,
                                                       iu,
                                                       iv);
-  occ::handle<AdvApp2Var_Iso> V1 = new AdvApp2Var_Iso(GeomAbs_IsoV,
+  occ::handle<AdvApp2Var_Iso> V1 = new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoV,
                                                       myLastParInV,
                                                       myFirstParInU,
                                                       myLastParInU,
@@ -282,7 +282,7 @@ void AdvApp2Var_ApproxAFunc2Var::InitGrid(const int NbInt)
                                                       2,
                                                       iu,
                                                       iv);
-  occ::handle<AdvApp2Var_Iso> U0 = new AdvApp2Var_Iso(GeomAbs_IsoU,
+  occ::handle<AdvApp2Var_Iso> U0 = new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoU,
                                                       myFirstParInU,
                                                       myFirstParInU,
                                                       myLastParInU,
@@ -291,7 +291,7 @@ void AdvApp2Var_ApproxAFunc2Var::InitGrid(const int NbInt)
                                                       3,
                                                       iu,
                                                       iv);
-  occ::handle<AdvApp2Var_Iso> U1 = new AdvApp2Var_Iso(GeomAbs_IsoU,
+  occ::handle<AdvApp2Var_Iso> U1 = new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoU,
                                                       myLastParInU,
                                                       myFirstParInU,
                                                       myLastParInU,
@@ -462,7 +462,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
                                                 const AdvApp2Var_Criterion&         Crit)
 {
   double Udec, Vdec, CritValue, m1 = 0.;
-  bool   Umore, Vmore, CritAbs = (Crit.Type() == AdvApp2Var_Absolute);
+  bool   Umore, Vmore, CritAbs = (Crit.Type() == AdvApp2Var_CriterionType::AdvApp2Var_Absolute);
   int    NbPatch, NbU, NbV, NbInt, NumDec;
   int    FirstNA, decision = 0;
 
@@ -539,7 +539,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputePatches(const AdvApprox_Cutting&        
     }
     // is it necessary to cut ?
     decision     = myResult(FirstNA).CutSense(Crit, NumDec);
-    bool Regular = (Crit.Repartition() == AdvApp2Var_Regular);
+    bool Regular = (Crit.Repartition() == AdvApp2Var_CriterionRepartition::AdvApp2Var_Regular);
     //    bool Regular = true;
     if (Regular && decision > 0)
     {
@@ -632,7 +632,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
       // Approximation is not satisfactory
       NbU = myResult.NbPatchInU();
       NbV = myResult.NbPatchInV();
-      if (anIso->Type() == GeomAbs_IsoV)
+      if (anIso->Type() == GeomAbs_IsoType::GeomAbs_IsoV)
       {
         NbPatch = (NbU + 1) * NbV;
         more    = UChoice.Value(anIso->T0(), anIso->T1(), dec);
@@ -646,7 +646,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
       if (NbPatch <= myMaxPatches && more)
       {
         // It is possible to cut iso
-        if (anIso->Type() == GeomAbs_IsoV)
+        if (anIso->Type() == GeomAbs_IsoType::GeomAbs_IsoV)
         {
           myResult.UpdateInU(dec);
           myConstraints.UpdateInU(dec);
@@ -686,7 +686,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
                                                     const AdvApp2Var_Criterion&         Crit)
 {
   double          dec;
-  bool            more, CritRel = (Crit.Type() == AdvApp2Var_Relative);
+  bool            more, CritRel = (Crit.Type() == AdvApp2Var_CriterionType::AdvApp2Var_Relative);
   int             ind1, ind2, NbPatch, NbU, NbV;
   int             indN1, indN2;
   int             iu = myConditions.UOrder(), iv = myConditions.VOrder();
@@ -724,7 +724,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
       // Approximation is not satisfactory
       NbU = myResult.NbPatchInU();
       NbV = myResult.NbPatchInV();
-      if (anIso->Type() == GeomAbs_IsoV)
+      if (anIso->Type() == GeomAbs_IsoType::GeomAbs_IsoV)
       {
         NbPatch = (NbU + 1) * NbV;
         more    = UChoice.Value(anIso->T0(), anIso->T1(), dec);
@@ -741,7 +741,7 @@ void AdvApp2Var_ApproxAFunc2Var::ComputeConstraints(const AdvApprox_Cutting&    
       if (NbPatch <= myMaxPatches && more)
       {
         // It is possible to cut iso
-        if (anIso->Type() == GeomAbs_IsoV)
+        if (anIso->Type() == GeomAbs_IsoType::GeomAbs_IsoV)
         {
           myResult.UpdateInU(dec);
           myConstraints.UpdateInU(dec);

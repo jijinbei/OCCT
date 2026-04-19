@@ -232,8 +232,8 @@ Standard_EXPORT void FUN_unkeepFdoubleGBoundinterferences
       }
 
       bool isB2 = SSI2->GBound();
-      cond2     = (GT2 == GT1 && GT1 == TopOpeBRepDS_EDGE && G2 == G1 && ST2 == ST1
-               && ST1 == TopOpeBRepDS_FACE && S2 != S1 && isB1 && isB2);
+      cond2     = (GT2 == GT1 && GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE && G2 == G1 && ST2 == ST1
+               && ST1 == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE && S2 != S1 && isB1 && isB2);
 
       if (cond2)
       {
@@ -286,8 +286,8 @@ Standard_EXPORT void FUN_resolveFUNKNOWN
     TopAbs_ShapeEnum  tsb1, tsa1;
     int               isb1, isa1;
     FDS_Idata(I1, tsb1, isb1, tsa1, isa1, GT1, G1, ST1, S1);
-    bool idt  = (tsb1 == TopAbs_FACE && tsa1 == TopAbs_FACE && GT1 == TopOpeBRepDS_EDGE
-                && ST1 == TopOpeBRepDS_FACE);
+    bool idt  = (tsb1 == TopAbs_FACE && tsa1 == TopAbs_FACE && GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE
+                && ST1 == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE);
     bool idi  = (isb1 == S1 && isa1 == S1);
     bool etgf = idt && idi; // face tangent a une face en 1 edge
     if (!etgf)

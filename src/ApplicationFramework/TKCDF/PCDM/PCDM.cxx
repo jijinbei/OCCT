@@ -33,22 +33,22 @@ PCDM_TypeOfFileDriver PCDM::FileDriverType(const TCollection_AsciiString&   aFil
   if (FSD_CmpFile::IsGoodFileType(aFileName) == Storage_VSOk)
   {
     aBaseDriver = new FSD_CmpFile;
-    return PCDM_TOFD_CmpFile;
+    return PCDM_TypeOfFileDriver::PCDM_TOFD_CmpFile;
   }
   else if (FSD_File::IsGoodFileType(aFileName) == Storage_VSOk)
   {
     aBaseDriver = new FSD_File;
-    return PCDM_TOFD_File;
+    return PCDM_TypeOfFileDriver::PCDM_TOFD_File;
   }
   else if (FSD_BinaryFile::IsGoodFileType(aFileName) == Storage_VSOk)
   {
     aBaseDriver = new FSD_BinaryFile;
-    return PCDM_TOFD_File;
+    return PCDM_TypeOfFileDriver::PCDM_TOFD_File;
   }
   else
   {
     aBaseDriver = nullptr;
-    return PCDM_TOFD_Unknown;
+    return PCDM_TypeOfFileDriver::PCDM_TOFD_Unknown;
   }
 }
 
@@ -68,17 +68,17 @@ PCDM_TypeOfFileDriver PCDM::FileDriverType(Standard_IStream&                theI
   if (aReadMagicNumber == FSD_CmpFile::MagicNumber())
   {
     theBaseDriver = new FSD_CmpFile;
-    return PCDM_TOFD_CmpFile;
+    return PCDM_TypeOfFileDriver::PCDM_TOFD_CmpFile;
   }
   else if (aReadMagicNumber == FSD_File::MagicNumber())
   {
     theBaseDriver = new FSD_File;
-    return PCDM_TOFD_File;
+    return PCDM_TypeOfFileDriver::PCDM_TOFD_File;
   }
   else if (aReadMagicNumber == FSD_BinaryFile::MagicNumber())
   {
     theBaseDriver = new FSD_BinaryFile;
-    return PCDM_TOFD_File;
+    return PCDM_TypeOfFileDriver::PCDM_TOFD_File;
   }
   else if (aReadMagicNumber.Search("<?xml") != -1)
   {
@@ -89,9 +89,9 @@ PCDM_TypeOfFileDriver PCDM::FileDriverType(Standard_IStream&                theI
       theIStream.get(aChar);
     }
 
-    return PCDM_TOFD_XmlFile;
+    return PCDM_TypeOfFileDriver::PCDM_TOFD_XmlFile;
   }
 
   theBaseDriver = nullptr;
-  return PCDM_TOFD_Unknown;
+  return PCDM_TypeOfFileDriver::PCDM_TOFD_Unknown;
 }

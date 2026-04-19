@@ -129,10 +129,10 @@ void BRepClass3d_Intersector3d::Perform(const gp_Lin& L,
           face       = Face;
           if (Face.Orientation() == TopAbs_REVERSED)
           {
-            if (transition == IntCurveSurface_In)
-              transition = IntCurveSurface_Out;
+            if (transition == IntCurveSurface_TransitionOnCurve::IntCurveSurface_In)
+              transition = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out;
             else
-              transition = IntCurveSurface_In;
+              transition = IntCurveSurface_TransitionOnCurve::IntCurveSurface_In;
           }
         }
       } //-- classifier state is IN or ON

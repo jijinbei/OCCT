@@ -34,12 +34,12 @@ public:
   //! It calculates all the distances.
   Standard_EXPORT BRepExtrema_ExtPF(const TopoDS_Vertex&  TheVertex,
                                     const TopoDS_Face&    TheFace,
-                                    const Extrema_ExtFlag TheFlag = Extrema_ExtFlag_MINMAX,
-                                    const Extrema_ExtAlgo TheAlgo = Extrema_ExtAlgo_Grad);
+                                    const Extrema_ExtFlag TheFlag = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+                                    const Extrema_ExtAlgo TheAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
 
   Standard_EXPORT void Initialize(const TopoDS_Face&    TheFace,
-                                  const Extrema_ExtFlag TheFlag = Extrema_ExtFlag_MINMAX,
-                                  const Extrema_ExtAlgo TheAlgo = Extrema_ExtAlgo_Grad);
+                                  const Extrema_ExtFlag TheFlag = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+                                  const Extrema_ExtAlgo TheAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
 
   //! An exception is raised if the fields have not been initialized.
   //! Be careful: this method uses the Face only for classify not for the fields.

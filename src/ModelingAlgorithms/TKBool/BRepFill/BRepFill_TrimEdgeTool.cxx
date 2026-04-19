@@ -305,8 +305,8 @@ void BRepFill_TrimEdgeTool::IntersectWith(const TopoDS_Edge&            Edge1,
   double TolInit            = 1.e-9;
   int    nn                 = 7;
 
-  if ((AC1.GetType() != GeomAbs_Circle && AC1.GetType() != GeomAbs_Line)
-      || (AC2.GetType() != GeomAbs_Circle && AC2.GetType() != GeomAbs_Line))
+  if ((AC1.GetType() != GeomAbs_CurveType::GeomAbs_Circle && AC1.GetType() != GeomAbs_CurveType::GeomAbs_Line)
+      || (AC2.GetType() != GeomAbs_CurveType::GeomAbs_Circle && AC2.GetType() != GeomAbs_CurveType::GeomAbs_Line))
   {
 
     TolInit = 1.e-8;
@@ -317,7 +317,7 @@ void BRepFill_TrimEdgeTool::IntersectWith(const TopoDS_Edge&            Edge1,
   {
     // Check, may be there are no intersections at all
     //  for case myBis == Line
-    if (myBis.GetType() == GeomAbs_Line)
+    if (myBis.GetType() == GeomAbs_CurveType::GeomAbs_Line)
     {
       double dmax = TolInit;
       int    n    = 0;
@@ -525,7 +525,7 @@ void BRepFill_TrimEdgeTool::IntersectWith(const TopoDS_Edge&            Edge1,
   // Now we define: if there are more than one point of intersection
   // is it Ok ?
   double init_fpar = RealFirst(), init_lpar = RealLast();
-  if (NbPoints > 1 && theJoinType == GeomAbs_Intersection && InitShape1.ShapeType() != TopAbs_VERTEX
+  if (NbPoints > 1 && theJoinType == GeomAbs_JoinType::GeomAbs_Intersection && InitShape1.ShapeType() != TopAbs_VERTEX
       && InitShape2.ShapeType() != TopAbs_VERTEX)
   {
     // definition of initial first and last parameters:
@@ -544,7 +544,7 @@ void BRepFill_TrimEdgeTool::IntersectWith(const TopoDS_Edge&            Edge1,
         ToExtendLastPar = false;
     }
     BRepAdaptor_Curve IC1(InitEdge1);
-    if (IC1.GetType() == GeomAbs_Circle)
+    if (IC1.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       double Delta = 2 * M_PI - IC1.LastParameter() + IC1.FirstParameter();
       if (ToExtendFirstPar && ToExtendLastPar)
@@ -557,7 +557,7 @@ void BRepFill_TrimEdgeTool::IntersectWith(const TopoDS_Edge&            Edge1,
     }
   }
 
-  if (NbPoints > 1 && theJoinType == GeomAbs_Intersection)
+  if (NbPoints > 1 && theJoinType == GeomAbs_JoinType::GeomAbs_Intersection)
   {
     // Remove all vertices with non-minimal parameter
     // if they are out of initial range

@@ -568,14 +568,14 @@ static int MKEVOL(Draw_Interpretor& di, int narg, const char** a)
   Rake->SetContinuity(blend_cont, tapp_angle);
   if (narg == 4)
   {
-    ChFi3d_FilletShape FSh = ChFi3d_Rational;
+    ChFi3d_FilletShape FSh = ChFi3d_FilletShape::ChFi3d_Rational;
     if (!strcasecmp(a[3], "Q"))
     {
-      FSh = ChFi3d_QuasiAngular;
+      FSh = ChFi3d_FilletShape::ChFi3d_QuasiAngular;
     }
     else if (!strcasecmp(a[3], "P"))
     {
-      FSh = ChFi3d_Polynomial;
+      FSh = ChFi3d_FilletShape::ChFi3d_Polynomial;
     }
     Rake->SetFilletShape(FSh);
   }

@@ -138,8 +138,8 @@ public:
   Standard_EXPORT static double SIToLS(const double aData, const char* const aQuantity);
 
   //! Sets the local system units.
-  //! Example: SetLocalSystem(UnitsAPI_MDTV)
-  Standard_EXPORT static void SetLocalSystem(const UnitsAPI_SystemUnits aSystemUnit = UnitsAPI_SI);
+  //! Example: SetLocalSystem(UnitsAPI_SystemUnits::UnitsAPI_MDTV)
+  Standard_EXPORT static void SetLocalSystem(const UnitsAPI_SystemUnits aSystemUnit = UnitsAPI_SystemUnits::UnitsAPI_SI);
 
   //! Returns the current local system units.
   Standard_EXPORT static UnitsAPI_SystemUnits LocalSystem();

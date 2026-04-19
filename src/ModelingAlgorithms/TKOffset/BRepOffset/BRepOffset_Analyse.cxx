@@ -94,22 +94,22 @@ static void EdgeAnalyse(const TopoDS_Edge&                     E,
   BRepAdaptor_Surface aBAsurf2(F2, false);
   GeomAbs_SurfaceType aSurfType2 = aBAsurf2.GetType();
 
-  bool isTwoPlanes = (aSurfType1 == GeomAbs_Plane && aSurfType2 == GeomAbs_Plane);
+  bool isTwoPlanes = (aSurfType1 == GeomAbs_SurfaceType::GeomAbs_Plane && aSurfType2 == GeomAbs_SurfaceType::GeomAbs_Plane);
 
-  ChFiDS_TypeOfConcavity ConnectType = ChFiDS_Other;
+  ChFiDS_TypeOfConcavity ConnectType = ChFiDS_TypeOfConcavity::ChFiDS_Other;
 
   if (isTwoPlanes) // then use only strong condition
   {
     if (BRep_Tool::Continuity(E, F1, F2) > GeomAbs_C0)
-      ConnectType = ChFiDS_Tangential;
+      ConnectType = ChFiDS_TypeOfConcavity::ChFiDS_Tangential;
     else
       ConnectType = ChFi3d::DefineConnectType(E, F1, F2, SinTol, false);
   }
   else
   {
     bool isTwoSplines =
-      (aSurfType1 == GeomAbs_BSplineSurface || aSurfType1 == GeomAbs_BezierSurface)
-      && (aSurfType2 == GeomAbs_BSplineSurface || aSurfType2 == GeomAbs_BezierSurface);
+      (aSurfType1 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface || aSurfType1 == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
+      && (aSurfType2 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface || aSurfType2 == GeomAbs_SurfaceType::GeomAbs_BezierSurface);
     bool isMixedConcavity = false;
     if (isTwoSplines)
     {
@@ -121,7 +121,7 @@ static void EdgeAnalyse(const TopoDS_Edge&                     E,
     {
       if (ChFi3d::IsTangentFaces(E, F1, F2)) // weak condition
       {
-        ConnectType = ChFiDS_Tangential;
+        ConnectType = ChFiDS_TypeOfConcavity::ChFiDS_Tangential;
       }
       else
       {
@@ -130,7 +130,7 @@ static void EdgeAnalyse(const TopoDS_Edge&                     E,
     }
     else
     {
-      ConnectType = ChFiDS_Mixed;
+      ConnectType = ChFiDS_TypeOfConcavity::ChFiDS_Mixed;
     }
   }
 
@@ -323,7 +323,7 @@ void BRepOffset_Analyse::Perform(const TopoDS_Shape&          S,
 
         // For tangent faces add artificial perpendicular face
         // to close the gap between them (if they have different offset values)
-        if (myMapEdgeType(E).Last().Type() == ChFiDS_Tangential)
+        if (myMapEdgeType(E).Last().Type() == ChFiDS_TypeOfConcavity::ChFiDS_Tangential)
           aLETang.Append(E);
       }
       else if (L.Extent() == 1)
@@ -331,11 +331,11 @@ void BRepOffset_Analyse::Perform(const TopoDS_Shape&          S,
         double             U1, U2;
         const TopoDS_Face& F = TopoDS::Face(L.First());
         BRep_Tool::Range(E, F, U1, U2);
-        BRepOffset_Interval Inter(U1, U2, ChFiDS_Other);
+        BRepOffset_Interval Inter(U1, U2, ChFiDS_TypeOfConcavity::ChFiDS_Other);
 
         if (!BRepTools::IsReallyClosed(E, F))
         {
-          Inter.Type(ChFiDS_FreeBound);
+          Inter.Type(ChFiDS_TypeOfConcavity::ChFiDS_FreeBound);
         }
         myMapEdgeType(E).Append(Inter);
       }
@@ -459,7 +459,7 @@ void BRepOffset_Analyse::TreatTangentFaces(const NCollection_List<TopoDS_Shape>&
         const NCollection_List<BRepOffset_Interval>* pIntervals = myMapEdgeType.Seek(aEA);
         if (!pIntervals || pIntervals->IsEmpty())
           continue;
-        if (pIntervals->First().Type() == ChFiDS_Tangential)
+        if (pIntervals->First().Type() == ChFiDS_TypeOfConcavity::ChFiDS_Tangential)
           continue;
 
         const NCollection_List<TopoDS_Shape>& aLEA = Ancestors(aEA);

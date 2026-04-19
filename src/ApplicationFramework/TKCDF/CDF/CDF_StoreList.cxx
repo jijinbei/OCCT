@@ -90,7 +90,7 @@ PCDM_StoreStatus CDF_StoreList::Store(occ::handle<CDM_MetaData>&   aMetaData,
                                       TCollection_ExtendedString&  aStatusAssociatedText,
                                       const Message_ProgressRange& theRange)
 {
-  PCDM_StoreStatus                status = PCDM_SS_OK;
+  PCDM_StoreStatus                status = PCDM_StoreStatus::PCDM_SS_OK;
   occ::handle<CDF_MetaDataDriver> theMetaDataDriver =
     occ::down_cast<CDF_Application>((myMainDocument->Application()))->MetaDataDriver();
   for (; !myStack.IsEmpty(); myStack.RemoveFirst())
@@ -107,7 +107,7 @@ PCDM_StoreStatus CDF_StoreList::Store(occ::handle<CDM_MetaData>&   aMetaData,
         {
           aStatusAssociatedText = "driver failed; reason: ";
           aStatusAssociatedText += "document has no application, cannot save!";
-          status = PCDM_SS_Failure;
+          status = PCDM_StoreStatus::PCDM_SS_Failure;
         }
         else
         {
@@ -118,21 +118,21 @@ PCDM_StoreStatus CDF_StoreList::Store(occ::handle<CDM_MetaData>&   aMetaData,
             aStatusAssociatedText =
               "driver not found; reason: no storage driver does exist for this format: ";
             aStatusAssociatedText += theDocument->StorageFormat();
-            status = PCDM_SS_UnrecognizedFormat;
+            status = PCDM_StoreStatus::PCDM_SS_UnrecognizedFormat;
           }
           else
           {
             // Reset the store-status.
             // It has sense in multi-threaded access to the storage driver - this way we reset the
             // status for each call.
-            aDocumentStorageDriver->SetStoreStatus(PCDM_SS_OK);
+            aDocumentStorageDriver->SetStoreStatus(PCDM_StoreStatus::PCDM_SS_OK);
 
             if (!theMetaDataDriver->FindFolder(theDocument->RequestedFolder()))
             {
               aStatusAssociatedText = "driver not found; reason: ";
               aStatusAssociatedText += "could not find the active dbunit ";
               aStatusAssociatedText += theDocument->RequestedFolder();
-              status = PCDM_SS_UnrecognizedFormat;
+              status = PCDM_StoreStatus::PCDM_SS_UnrecognizedFormat;
             }
             else
             {
@@ -157,7 +157,7 @@ PCDM_StoreStatus CDF_StoreList::Store(occ::handle<CDM_MetaData>&   aMetaData,
         CAUGHT(anException,
                aStatusAssociatedText,
                TCollection_ExtendedString("driver failed; reason: "));
-        status = PCDM_SS_DriverFailure;
+        status = PCDM_StoreStatus::PCDM_SS_DriverFailure;
       }
     }
   }

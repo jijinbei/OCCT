@@ -18,7 +18,7 @@
 #define _BRepLib_ShapeModification_HeaderFile
 
 //! Modification type after a topologic operation.
-enum BRepLib_ShapeModification
+enum class BRepLib_ShapeModification
 {
   BRepLib_Preserved,
   BRepLib_Deleted,

@@ -52,7 +52,7 @@ inline Contap_IType Contap_Line::TypeContour() const
 
 inline int Contap_Line::NbPnts() const
 {
-  if (typL != Contap_Walking)
+  if (typL != Contap_IType::Contap_Walking)
   {
     throw Standard_DomainError();
   }
@@ -61,7 +61,7 @@ inline int Contap_Line::NbPnts() const
 
 inline const IntSurf_PntOn2S& Contap_Line::Point(const int Index) const
 {
-  if (typL != Contap_Walking)
+  if (typL != Contap_IType::Contap_Walking)
   {
     throw Standard_DomainError();
   }
@@ -70,7 +70,7 @@ inline const IntSurf_PntOn2S& Contap_Line::Point(const int Index) const
 
 inline gp_Lin Contap_Line::Line() const
 {
-  if (typL != Contap_Lin)
+  if (typL != Contap_IType::Contap_Lin)
   {
     throw Standard_DomainError();
   }
@@ -79,7 +79,7 @@ inline gp_Lin Contap_Line::Line() const
 
 inline gp_Circ Contap_Line::Circle() const
 {
-  if (typL != Contap_Circle)
+  if (typL != Contap_IType::Contap_Circle)
   {
     throw Standard_DomainError();
   }

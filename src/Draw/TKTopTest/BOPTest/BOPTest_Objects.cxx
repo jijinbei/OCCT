@@ -99,7 +99,7 @@ public:
     myRunParallel    = false;
     myNonDestructive = false;
     myFuzzyValue     = Precision::Confusion();
-    myGlue           = BOPAlgo_GlueOff;
+    myGlue           = BOPAlgo_GlueEnum::BOPAlgo_GlueOff;
     myDrawWarnShapes = false;
     myCheckInverted  = true;
     myUseOBB         = false;

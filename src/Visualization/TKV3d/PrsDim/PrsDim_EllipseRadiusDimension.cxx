@@ -158,7 +158,7 @@ void PrsDim_EllipseRadiusDimension::ComputeCylFaceGeometry(
 
     // Offset
 
-    if (surf1.GetType() == GeomAbs_OffsetSurface)
+    if (surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_OffsetSurface)
     {
       if (Offset < 0.0 && std::abs(Offset) > myEllipse.MinorRadius())
       {

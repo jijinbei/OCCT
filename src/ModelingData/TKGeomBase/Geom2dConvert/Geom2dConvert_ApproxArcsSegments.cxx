@@ -68,7 +68,7 @@ Geom2dConvert_ApproxArcsSegments::Geom2dConvert_ApproxArcsSegments(
 
   switch (myCurve.GetType())
   {
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       // Create a single line segment.
       const double aDist = myExt[0].Dist(myExt[1]);
       if (aDist > Precision::Confusion())
@@ -80,7 +80,7 @@ Geom2dConvert_ApproxArcsSegments::Geom2dConvert_ApproxArcsSegments(
       }
     }
     break;
-    case GeomAbs_Circle: {
+    case GeomAbs_CurveType::GeomAbs_Circle: {
       // Create a couple of arcs of equal size.
       const Geom2dConvert_PPoint aPP(.5 * (myExt[0].Parameter() + myExt[1].Parameter()), myCurve);
       occ::handle<Geom2d_Curve>  aCurve = makeCircle(myExt[0], aPP);

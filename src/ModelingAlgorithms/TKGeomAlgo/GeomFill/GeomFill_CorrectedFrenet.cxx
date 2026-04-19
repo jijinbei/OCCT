@@ -176,28 +176,28 @@ static bool FindPlane(const occ::handle<Adaptor3d_Curve>& theC, occ::handle<Geom
   switch (theC->GetType())
   {
 
-    case GeomAbs_Line: {
+    case GeomAbs_CurveType::GeomAbs_Line: {
       found = false;
     }
     break;
 
-    case GeomAbs_Circle:
+    case GeomAbs_CurveType::GeomAbs_Circle:
       theP = new Geom_Plane(gp_Ax3(theC->Circle().Position()));
       break;
 
-    case GeomAbs_Ellipse:
+    case GeomAbs_CurveType::GeomAbs_Ellipse:
       theP = new Geom_Plane(gp_Ax3(theC->Ellipse().Position()));
       break;
 
-    case GeomAbs_Hyperbola:
+    case GeomAbs_CurveType::GeomAbs_Hyperbola:
       theP = new Geom_Plane(gp_Ax3(theC->Hyperbola().Position()));
       break;
 
-    case GeomAbs_Parabola:
+    case GeomAbs_CurveType::GeomAbs_Parabola:
       theP = new Geom_Plane(gp_Ax3(theC->Parabola().Position()));
       break;
 
-    case GeomAbs_BezierCurve: {
+    case GeomAbs_CurveType::GeomAbs_BezierCurve: {
       occ::handle<Geom_BezierCurve> GC  = theC->Bezier();
       int                           nbp = GC->NbPoles();
       if (nbp < 2)
@@ -213,7 +213,7 @@ static bool FindPlane(const occ::handle<Adaptor3d_Curve>& theC, occ::handle<Geom
     }
     break;
 
-    case GeomAbs_BSplineCurve: {
+    case GeomAbs_CurveType::GeomAbs_BSplineCurve: {
       occ::handle<Geom_BSplineCurve> GC  = theC->BSpline();
       int                            nbp = GC->NbPoles();
       if (nbp < 2)
@@ -316,11 +316,11 @@ bool GeomFill_CorrectedFrenet::SetCurve(const occ::handle<Adaptor3d_Curve>& C)
     type = C->GetType();
     switch (type)
     {
-      case GeomAbs_Circle:
-      case GeomAbs_Ellipse:
-      case GeomAbs_Hyperbola:
-      case GeomAbs_Parabola:
-      case GeomAbs_Line: {
+      case GeomAbs_CurveType::GeomAbs_Circle:
+      case GeomAbs_CurveType::GeomAbs_Ellipse:
+      case GeomAbs_CurveType::GeomAbs_Hyperbola:
+      case GeomAbs_CurveType::GeomAbs_Parabola:
+      case GeomAbs_CurveType::GeomAbs_Line: {
         // No probleme isFrenet
         isFrenet = true;
         break;
@@ -911,7 +911,7 @@ void GeomFill_CorrectedFrenet::SetInterval(const double First, const double Last
 GeomFill_Trihedron GeomFill_CorrectedFrenet::EvaluateBestMode()
 {
   if (EvolAroundT.IsNull())
-    return GeomFill_IsFrenet; // Frenet
+    return GeomFill_Trihedron::GeomFill_IsFrenet; // Frenet
 
   const double MaxAngle   = 3. * M_PI / 4.;
   const double MaxTorsion = 100.;
@@ -931,7 +931,7 @@ GeomFill_Trihedron GeomFill_CorrectedFrenet::EvaluateBestMode()
     tmax           = Int(i + 1);
     double Torsion = ComputeTorsion(tmin, myTrimmed);
     if (std::abs(Torsion) > MaxTorsion)
-      return GeomFill_IsDiscreteTrihedron; // DiscreteTrihedron
+      return GeomFill_Trihedron::GeomFill_IsDiscreteTrihedron; // DiscreteTrihedron
 
     occ::handle<Law_Function> trimmedlaw =
       EvolAroundT->Trim(tmin, tmax, Precision::PConfusion() / 2);
@@ -948,7 +948,7 @@ GeomFill_Trihedron GeomFill_CorrectedFrenet::EvaluateBestMode()
         {
           double theAngle = PrevVec.Angle(aVec);
           if (std::abs(theAngle) > MaxAngle)
-            return GeomFill_IsDiscreteTrihedron; // DiscreteTrihedron
+            return GeomFill_Trihedron::GeomFill_IsDiscreteTrihedron; // DiscreteTrihedron
         }
         PrevVec = aVec;
       }
@@ -957,7 +957,7 @@ GeomFill_Trihedron GeomFill_CorrectedFrenet::EvaluateBestMode()
     }
   }
 
-  return GeomFill_IsCorrectedFrenet; // CorrectedFrenet
+  return GeomFill_Trihedron::GeomFill_IsCorrectedFrenet; // CorrectedFrenet
 }
 
 //=================================================================================================
@@ -979,7 +979,7 @@ void GeomFill_CorrectedFrenet::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, 
 
 bool GeomFill_CorrectedFrenet::IsConstant() const
 {
-  return (myCurve->GetType() == GeomAbs_Line);
+  return (myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line);
 }
 
 //=================================================================================================

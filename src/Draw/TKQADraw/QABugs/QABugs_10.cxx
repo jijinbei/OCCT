@@ -142,7 +142,7 @@ static int OCC426(Draw_Interpretor& di, int argc, const char** argv)
     edgemap;
   TopExp::MapShapesAndAncestors(aFuseUnif, TopAbs_EDGE, TopAbs_SOLID, edgemap);
   di << "No. of Edges: " << edgemap.Extent() << "\n";
-  ChFi3d_FilletShape       FShape = ChFi3d_Rational;
+  ChFi3d_FilletShape       FShape = ChFi3d_FilletShape::ChFi3d_Rational;
   BRepFilletAPI_MakeFillet blend(aFuseUnif, FShape);
   di << "Adding Edges ..... \n";
   for (int i = 1; i <= edgemap.Extent(); i++)
@@ -984,7 +984,7 @@ int performBlend(const TopoDS_Shape& aShape, double rad, TopoDS_Shape& bShape, D
     edgemap;
   TopExp::MapShapesAndAncestors(aShape, TopAbs_EDGE, TopAbs_SOLID, edgemap);
   di << "Blending All Edges: No. of Edges: " << edgemap.Extent() << "\n";
-  ChFi3d_FilletShape       FShape = ChFi3d_Rational;
+  ChFi3d_FilletShape       FShape = ChFi3d_FilletShape::ChFi3d_Rational;
   BRepFilletAPI_MakeFillet blend(aShape, FShape);
   for (int i = 1; i <= edgemap.Extent(); i++)
   {

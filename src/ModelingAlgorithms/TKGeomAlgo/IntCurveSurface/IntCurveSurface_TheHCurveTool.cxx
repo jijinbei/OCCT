@@ -39,11 +39,11 @@ int IntCurveSurface_TheHCurveTool::NbSamples(const occ::handle<Adaptor3d_Curve>&
   const double      nbsOther = 10.0;
   double            nbs      = nbsOther;
 
-  if (typC == GeomAbs_Line)
+  if (typC == GeomAbs_CurveType::GeomAbs_Line)
     nbs = 2;
-  else if (typC == GeomAbs_BezierCurve)
+  else if (typC == GeomAbs_CurveType::GeomAbs_BezierCurve)
     nbs = 3 + C->NbPoles();
-  else if (typC == GeomAbs_BSplineCurve)
+  else if (typC == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     nbs = C->NbKnots();
     nbs *= C->Degree();
@@ -71,14 +71,14 @@ occ::handle<NCollection_HArray1<double>> IntCurveSurface_TheHCurveTool::SamplePa
   const double                             nbsOther = 10.0;
   double                                   nbs      = nbsOther;
 
-  if (typC == GeomAbs_Line)
+  if (typC == GeomAbs_CurveType::GeomAbs_Line)
     nbs = 2;
-  else if (typC == GeomAbs_BezierCurve)
+  else if (typC == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     nbs = 3 + C->NbPoles();
   }
 
-  if (typC != GeomAbs_BSplineCurve)
+  if (typC != GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     if (nbs > 50)
       nbs = 50;

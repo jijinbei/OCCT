@@ -259,12 +259,12 @@ static bool IsPlanar(const TopoDS_Edge& E)
 //=======================================================================
 // function : Side
 // purpose  : determine the position of the profil correspondingly to plane XOZ.
-//           Return 1 : MAT_Left.
-//           Return 2 : MAT_Left and Planar.
-//           Return 3 : MAT_Left and Vertical.
-//           Return 4 : MAT_Right.
-//           Return 5 : MAT_Right and Planar.
-//           Return 6 : MAT_Right and Vertical.
+//           Return 1 : MAT_Side::MAT_Left.
+//           Return 2 : MAT_Side::MAT_Left and Planar.
+//           Return 3 : MAT_Side::MAT_Left and Vertical.
+//           Return 4 : MAT_Side::MAT_Right.
+//           Return 5 : MAT_Side::MAT_Right and Planar.
+//           Return 6 : MAT_Side::MAT_Right and Vertical.
 //=======================================================================
 
 static int Side(const TopoDS_Wire& Profil, const double Tol)
@@ -334,7 +334,7 @@ void BRepFill_Evolved::PrivatePerform(const TopoDS_Face&     Spine,
   myJoinType = Join;
   myMap.Clear();
 
-  if (myJoinType > GeomAbs_Arc)
+  if (myJoinType > GeomAbs_JoinType::GeomAbs_Arc)
   {
     throw Standard_NotImplemented();
   }
@@ -414,7 +414,7 @@ void BRepFill_Evolved::PrivatePerform(const TopoDS_Face&     Spine,
     // and links Topology -> base elements of the map.
     //-----------------------------------------------------
     BRepMAT2d_Explorer Exp(WorkSpine);
-    Locus.Compute(Exp, 1, MAT_Left);
+    Locus.Compute(Exp, 1, MAT_Side::MAT_Left);
     BRepMAT2d_LinkTopoBilo Link(Exp, Locus);
 
     for (WPIte.Initialize(WorkProf); WPIte.More(); WPIte.Next())
@@ -461,7 +461,7 @@ void BRepFill_Evolved::PrivatePerform(const TopoDS_Face&     Spine,
       //      B.Add(TopoDS::Wire(SpineExp.Current().Reversed()));
       Face = B.Face();
       BRepMAT2d_Explorer Exp(Face);
-      Locus.Compute(Exp, 1, MAT_Left);
+      Locus.Compute(Exp, 1, MAT_Side::MAT_Left);
       BRepMAT2d_LinkTopoBilo Link(Exp, Locus);
 
       for (WPIte.Initialize(WorkProf); WPIte.More(); WPIte.Next())
@@ -609,7 +609,7 @@ static bool ConcaveSide(const TopoDS_Shape& S, const TopoDS_Face& F)
     occ::handle<Geom2d_Curve> G2dOC;
 
     Geom2dAdaptor_Curve AC(G2d, f, l);
-    if (AC.GetType() == GeomAbs_Circle)
+    if (AC.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
     {
       bool Direct = AC.Circle().IsDirect();
       if (S.Orientation() == TopAbs_REVERSED)
@@ -2579,7 +2579,7 @@ void TrimFace(const TopoDS_Face&                  Face,
         else
         {
           MWire.Add(E);
-          if (MWire.Error() == BRepLib_WireDone)
+          if (MWire.Error() == BRepLib_WireError::BRepLib_WireDone)
           {
             // the connection is successful
             // it is removed from the sequence and one restarts from the beginning.

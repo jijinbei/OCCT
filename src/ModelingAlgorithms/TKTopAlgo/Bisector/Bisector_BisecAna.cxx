@@ -90,31 +90,31 @@ double Bisector_BisecAna::Distance(const gp_Pnt2d&                  apoint,
 
   GccInt_IType type = abisector->ArcType();
 
-  if (type == GccInt_Lin)
+  if (type == GccInt_IType::GccInt_Lin)
   {
     gpline     = abisector->Line();
     aparameter = ElCLib::Parameter(gpline, apoint);
     ElCLib::D1(aparameter, gpline, point, tangent);
   }
-  else if (type == GccInt_Cir)
+  else if (type == GccInt_IType::GccInt_Cir)
   {
     gpcircle   = abisector->Circle();
     aparameter = ElCLib::Parameter(gpcircle, apoint);
     ElCLib::D1(aparameter, gpcircle, point, tangent);
   }
-  else if (type == GccInt_Hpr)
+  else if (type == GccInt_IType::GccInt_Hpr)
   {
     gphyperbola = abisector->Hyperbola();
     aparameter  = ElCLib::Parameter(gphyperbola, apoint);
     ElCLib::D1(aparameter, gphyperbola, point, tangent);
   }
-  else if (type == GccInt_Par)
+  else if (type == GccInt_IType::GccInt_Par)
   {
     gpparabola = abisector->Parabola();
     aparameter = ElCLib::Parameter(gpparabola, apoint);
     ElCLib::D1(aparameter, gpparabola, point, tangent);
   }
-  else if (type == GccInt_Ell)
+  else if (type == GccInt_IType::GccInt_Ell)
   {
     gpellipse  = abisector->Ellipse();
     aparameter = ElCLib::Parameter(gpellipse, apoint);
@@ -514,7 +514,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
         {
           occ::handle<Geom2d_Curve> bisectorcurve;
           GccInt_IType              type = TheSol->ArcType();
-          if (type == GccInt_Lin)
+          if (type == GccInt_IType::GccInt_Lin)
           {
             gp_Lin2d gpline = TheSol->Line();
             bisectorcurve   = new Geom2d_Line(gpline);
@@ -585,7 +585,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
 
             thebisector = new Geom2d_TrimmedCurve(bisectorcurve, firstparameter, secondparameter);
           }
-          else if (type == GccInt_Cir)
+          else if (type == GccInt_IType::GccInt_Cir)
           {
             bisectorcurve = new Geom2d_Circle(TheSol->Circle());
             if (!thesense)
@@ -599,7 +599,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
                                                     firstparameter + 2.0 * M_PI,
                                                     thesense);
           }
-          else if (type == GccInt_Hpr)
+          else if (type == GccInt_IType::GccInt_Hpr)
           {
             bisectorcurve = new Geom2d_Hyperbola(TheSol->Hyperbola());
             if (!thesense)
@@ -609,7 +609,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
               thebisector =
                 new Geom2d_TrimmedCurve(bisectorcurve, firstparameter, Precision::Infinite());
           }
-          else if (type == GccInt_Ell)
+          else if (type == GccInt_IType::GccInt_Ell)
           {
             bisectorcurve = new Geom2d_Ellipse(TheSol->Ellipse());
             if (!thesense)
@@ -703,7 +703,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
         {
           GccInt_IType              type = TheSol->ArcType();
           occ::handle<Geom2d_Curve> bisectorcurve;
-          if (type == GccInt_Lin)
+          if (type == GccInt_IType::GccInt_Lin)
           {
             // -----------------------------------------------------------------
             // If the bisectrice is a line
@@ -746,7 +746,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
 
             thebisector = new Geom2d_TrimmedCurve(bisectorcurve, firstparameter, secondparameter);
           }
-          else if (type == GccInt_Par)
+          else if (type == GccInt_IType::GccInt_Par)
           {
             bisectorcurve                = new Geom2d_Parabola(TheSol->Parabola());
             gp_Pnt2d     apex            = bisectorcurve->Value(0.);
@@ -756,7 +756,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
             double       secondparameter = Precision::Infinite();
             if (!thesense)
             {
-              if (ajointype == GeomAbs_Intersection && TolPar < firstparameter
+              if (ajointype == GeomAbs_JoinType::GeomAbs_Intersection && TolPar < firstparameter
                   && ChordLen
                        >= circle1.Radius()) // first parameter is too far from peak of parabola
                 secondparameter = 0.;
@@ -765,7 +765,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
             }
             else
             {
-              if (ajointype == GeomAbs_Intersection && firstparameter < -TolPar
+              if (ajointype == GeomAbs_JoinType::GeomAbs_Intersection && firstparameter < -TolPar
                   && ChordLen
                        >= circle1.Radius()) // first parameter is too far from peak of parabola
                 secondparameter = 0.;
@@ -990,7 +990,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
         {
           GccInt_IType              aSolType = TheSol->ArcType();
           occ::handle<Geom2d_Curve> bisectorcurve;
-          if (aSolType == GccInt_Lin)
+          if (aSolType == GccInt_IType::GccInt_Lin)
           {
 
             // ----------------------------------------------------------------------------
@@ -1031,7 +1031,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
 
             thebisector = new Geom2d_TrimmedCurve(bisectorcurve, firstparameter, secondparameter);
           }
-          else if (aSolType == GccInt_Cir)
+          else if (aSolType == GccInt_IType::GccInt_Cir)
           {
             bisectorcurve = new Geom2d_Circle(TheSol->Circle());
             if (!thesense)
@@ -1045,7 +1045,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
                                                     firstparameter + 2.0 * M_PI,
                                                     thesense);
           }
-          else if (aSolType == GccInt_Hpr)
+          else if (aSolType == GccInt_IType::GccInt_Hpr)
           {
             bisectorcurve = new Geom2d_Hyperbola(TheSol->Hyperbola());
             if (!thesense)
@@ -1055,7 +1055,7 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
               thebisector =
                 new Geom2d_TrimmedCurve(bisectorcurve, firstparameter, Precision::Infinite());
           }
-          else if (aSolType == GccInt_Ell)
+          else if (aSolType == GccInt_IType::GccInt_Ell)
           {
             bisectorcurve = new Geom2d_Ellipse(TheSol->Ellipse());
             if (!thesense)
@@ -1090,11 +1090,11 @@ void Bisector_BisecAna::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
       GccInt_IType              type = solution->ArcType();
       occ::handle<Geom2d_Curve> bisectorcurve;
 
-      if (type == GccInt_Lin)
+      if (type == GccInt_IType::GccInt_Lin)
       {
         bisectorcurve = new Geom2d_Line(solution->Line());
       }
-      else if (type == GccInt_Par)
+      else if (type == GccInt_IType::GccInt_Par)
       {
         bisectorcurve = new Geom2d_Parabola(solution->Parabola());
       }
@@ -1647,7 +1647,7 @@ bool Degenerate(occ::handle<GccInt_Bisec>& aBisector, const double Tolerance)
 
   GccInt_IType type = aBisector->ArcType();
 
-  if (type == GccInt_Hpr)
+  if (type == GccInt_IType::GccInt_Hpr)
   {
     gphyperbola = aBisector->Hyperbola();
 
@@ -1669,7 +1669,7 @@ bool Degenerate(occ::handle<GccInt_Bisec>& aBisector, const double Tolerance)
       Degeneree   = true;
     }
   }
-  else if (type == GccInt_Par)
+  else if (type == GccInt_IType::GccInt_Par)
   {
     gpparabola = aBisector->Parabola();
 
@@ -1684,7 +1684,7 @@ bool Degenerate(occ::handle<GccInt_Bisec>& aBisector, const double Tolerance)
       Degeneree   = true;
     }
   }
-  else if (type == GccInt_Ell)
+  else if (type == GccInt_IType::GccInt_Ell)
   {
     gpellipse = aBisector->Ellipse();
 

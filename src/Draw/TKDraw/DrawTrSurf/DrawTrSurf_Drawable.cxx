@@ -76,7 +76,7 @@ void DrawTrSurf_Drawable::DrawCurve2dOn(Adaptor2d_Curve2d& C, Draw_Display& aDis
     aDisplay.MoveTo(aPoint2d);
     for (intrv = 1; intrv <= nbintv; intrv++)
     {
-      if (C.GetType() != GeomAbs_Line)
+      if (C.GetType() != GeomAbs_CurveType::GeomAbs_Line)
       {
         double t    = TI(intrv);
         double step = (TI(intrv + 1) - t) / myDiscret;
@@ -157,10 +157,10 @@ void DrawTrSurf_Drawable::DrawCurveOn(Adaptor3d_Curve& C, Draw_Display& aDisplay
 
       switch (CurvType)
       {
-        case GeomAbs_Line:
+        case GeomAbs_CurveType::GeomAbs_Line:
           break;
-        case GeomAbs_Circle:
-        case GeomAbs_Ellipse:
+        case GeomAbs_CurveType::GeomAbs_Circle:
+        case GeomAbs_CurveType::GeomAbs_Ellipse:
           for (j = 1; j < myDiscret; j++)
           {
             t += step;
@@ -168,12 +168,12 @@ void DrawTrSurf_Drawable::DrawCurveOn(Adaptor3d_Curve& C, Draw_Display& aDisplay
             aDisplay.DrawTo(P);
           }
           break;
-        case GeomAbs_Parabola:
-        case GeomAbs_Hyperbola:
-        case GeomAbs_BezierCurve:
-        case GeomAbs_BSplineCurve:
-        case GeomAbs_OffsetCurve:
-        case GeomAbs_OtherCurve:
+        case GeomAbs_CurveType::GeomAbs_Parabola:
+        case GeomAbs_CurveType::GeomAbs_Hyperbola:
+        case GeomAbs_CurveType::GeomAbs_BezierCurve:
+        case GeomAbs_CurveType::GeomAbs_BSplineCurve:
+        case GeomAbs_CurveType::GeomAbs_OffsetCurve:
+        case GeomAbs_CurveType::GeomAbs_OtherCurve:
           const int nIter = myDiscret / 2;
           for (j = 1; j < nIter; j++)
           {
@@ -204,10 +204,10 @@ void DrawTrSurf_Drawable::DrawIsoCurveOn(Adaptor3d_IsoCurve&   C,
                                          Draw_Display&         dis) const
 {
   C.Load(T, P, F, L);
-  if ((C.GetType() == GeomAbs_BezierCurve) || (C.GetType() == GeomAbs_BSplineCurve))
+  if ((C.GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve) || (C.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve))
   {
     GeomAdaptor_Curve GC;
-    if (C.GetType() == GeomAbs_BezierCurve)
+    if (C.GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
       GC.Load(C.Bezier(), F, L);
     else
       GC.Load(C.BSpline(), F, L);

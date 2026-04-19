@@ -19,7 +19,7 @@
 
 //! Errors that can occur at wire construction.
 //! no error
-enum BRepLib_WireError
+enum class BRepLib_WireError
 {
   BRepLib_WireDone,
   BRepLib_EmptyWire,

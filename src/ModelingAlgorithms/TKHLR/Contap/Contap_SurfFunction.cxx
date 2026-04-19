@@ -28,7 +28,7 @@
 
 Contap_SurfFunction::Contap_SurfFunction()
     : myMean(1.),
-      myType(Contap_ContourStd),
+      myType(Contap_TFunction::Contap_ContourStd),
       myDir(gp_Dir::D::Z),
       myAng(0.0),
       myCosAng(0.), // PI/2 - Angle de depouille
@@ -88,15 +88,15 @@ bool Contap_SurfFunction::Value(const math_Vector& X, math_Vector& F)
   Contap_SurfProps::Normale(mySurf, Usol, Vsol, solpt, norm);
   switch (myType)
   {
-    case Contap_ContourStd: {
+    case Contap_TFunction::Contap_ContourStd: {
       F(1) = valf = (norm.Dot(myDir)) / myMean;
     }
     break;
-    case Contap_ContourPrs: {
+    case Contap_TFunction::Contap_ContourPrs: {
       F(1) = valf = (norm.Dot(gp_Vec(myEye, solpt))) / myMean;
     }
     break;
-    case Contap_DraftStd: {
+    case Contap_TFunction::Contap_DraftStd: {
       F(1) = valf = (norm.Dot(myDir) - myCosAng * norm.Magnitude()) / myMean;
     }
     break;
@@ -120,20 +120,20 @@ bool Contap_SurfFunction::Derivatives(const math_Vector& X, math_Matrix& Grad)
 
   switch (myType)
   {
-    case Contap_ContourStd: {
+    case Contap_TFunction::Contap_ContourStd: {
       //      Grad(1,1) = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(myDir))/myMean;
       //      Grad(1,2) = ((d2uv.Crossed(d1v) + d1u.Crossed(d2v)).Dot(myDir))/myMean;
       Grad(1, 1) = (dnu.Dot(myDir)) / myMean;
       Grad(1, 2) = (dnv.Dot(myDir)) / myMean;
     }
     break;
-    case Contap_ContourPrs: {
+    case Contap_TFunction::Contap_ContourPrs: {
       gp_Vec Ep(myEye, solpt);
       Grad(1, 1) = (dnu.Dot(Ep)) / myMean;
       Grad(1, 2) = (dnv.Dot(Ep)) / myMean;
     }
     break;
-    case Contap_DraftStd: {
+    case Contap_TFunction::Contap_DraftStd: {
       //      gp_Vec norm(d1u.Crossed(d1v).Normalized());
       //      gp_Vec dnorm(d2u.Crossed(d1v) + d1u.Crossed(d2uv));
       //      Grad(1,1) = (dnorm.Dot(myDir)-myCosAng*dnorm.Dot(norm))/myMean;
@@ -144,7 +144,7 @@ bool Contap_SurfFunction::Derivatives(const math_Vector& X, math_Matrix& Grad)
       Grad(1, 2) = (dnv.Dot(myDir) - myCosAng * dnv.Dot(norm)) / myMean;
     }
     break;
-    case Contap_DraftPrs:
+    case Contap_TFunction::Contap_DraftPrs:
     default: {
     }
   }
@@ -169,7 +169,7 @@ bool Contap_SurfFunction::Values(const math_Vector& X, math_Vector& F, math_Matr
   switch (myType)
   {
 
-    case Contap_ContourStd: {
+    case Contap_TFunction::Contap_ContourStd: {
       F(1) = (norm.Dot(myDir)) / myMean;
       //      Grad(1,1) = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(myDir))/myMean;
       //      Grad(1,2) = ((d2uv.Crossed(d1v) + d1u.Crossed(d2v)).Dot(myDir))/myMean;
@@ -177,7 +177,7 @@ bool Contap_SurfFunction::Values(const math_Vector& X, math_Vector& F, math_Matr
       Grad(1, 2) = (dnv.Dot(myDir)) / myMean;
     }
     break;
-    case Contap_ContourPrs: {
+    case Contap_TFunction::Contap_ContourPrs: {
       gp_Vec Ep(myEye, solpt);
       F(1) = (norm.Dot(Ep)) / myMean;
       //      Grad(1,1) = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(Ep))/myMean;
@@ -186,7 +186,7 @@ bool Contap_SurfFunction::Values(const math_Vector& X, math_Vector& F, math_Matr
       Grad(1, 2) = (dnv.Dot(Ep)) / myMean;
     }
     break;
-    case Contap_DraftStd: {
+    case Contap_TFunction::Contap_DraftStd: {
       F(1) = (norm.Dot(myDir) - myCosAng * norm.Magnitude()) / myMean;
       norm.Normalize();
       /*
@@ -199,7 +199,7 @@ bool Contap_SurfFunction::Values(const math_Vector& X, math_Vector& F, math_Matr
       Grad(1, 2) = (dnv.Dot(myDir) - myCosAng * dnv.Dot(norm)) / myMean;
     }
     break;
-    case Contap_DraftPrs:
+    case Contap_TFunction::Contap_DraftPrs:
     default: {
     }
   }
@@ -225,14 +225,14 @@ bool Contap_SurfFunction::IsTangent()
 
       switch (myType)
       {
-        case Contap_ContourStd: {
+        case Contap_TFunction::Contap_ContourStd: {
           //	  Fpu = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(myDir))/myMean;
           //	  Fpv = ((d2uv.Crossed(d1v) + d1u.Crossed(d2v)).Dot(myDir))/myMean;
           Fpu = (dnu.Dot(myDir)) / myMean;
           Fpv = (dnv.Dot(myDir)) / myMean;
         }
         break;
-        case Contap_ContourPrs: {
+        case Contap_TFunction::Contap_ContourPrs: {
           gp_Vec Ep(myEye, solpt);
           //	  Fpu = ((d2u.Crossed(d1v) + d1u.Crossed(d2uv)).Dot(Ep))/myMean;
           //	  Fpv = ((d2uv.Crossed(d1v) + d1u.Crossed(d2v)).Dot(Ep))/myMean;
@@ -240,7 +240,7 @@ bool Contap_SurfFunction::IsTangent()
           Fpv = (dnv.Dot(Ep)) / myMean;
         }
         break;
-        case Contap_DraftStd: {
+        case Contap_TFunction::Contap_DraftStd: {
           /*
           gp_Vec norm(d1u.Crossed(d1v).Normalized());
           gp_Vec dnorm(d2u.Crossed(d1v) + d1u.Crossed(d2uv));
@@ -253,7 +253,7 @@ bool Contap_SurfFunction::IsTangent()
           Fpv = (dnv.Dot(myDir) - myCosAng * dnv.Dot(norm)) / myMean;
         }
         break;
-        case Contap_DraftPrs:
+        case Contap_TFunction::Contap_DraftPrs:
         default: {
         }
       }

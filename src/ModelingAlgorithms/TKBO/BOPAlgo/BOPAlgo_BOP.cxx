@@ -79,7 +79,7 @@ BOPAlgo_BOP::~BOPAlgo_BOP() = default;
 
 void BOPAlgo_BOP::Clear()
 {
-  myOperation = BOPAlgo_UNKNOWN;
+  myOperation = BOPAlgo_Operation::BOPAlgo_UNKNOWN;
   myDims[0]   = -1;
   myDims[1]   = -1;
 
@@ -108,8 +108,8 @@ void BOPAlgo_BOP::CheckData()
   bool                                     bFuse;
   NCollection_List<TopoDS_Shape>::Iterator aItLS;
   //
-  if (myOperation != BOPAlgo_COMMON && myOperation != BOPAlgo_FUSE && myOperation != BOPAlgo_CUT
-      && myOperation != BOPAlgo_CUT21)
+  if (myOperation != BOPAlgo_Operation::BOPAlgo_COMMON && myOperation != BOPAlgo_Operation::BOPAlgo_FUSE && myOperation != BOPAlgo_Operation::BOPAlgo_CUT
+      && myOperation != BOPAlgo_Operation::BOPAlgo_CUT21)
   {
     // non-licit operation
     AddError(new BOPAlgo_AlertBOPNotSet);
@@ -138,7 +138,7 @@ void BOPAlgo_BOP::CheckData()
     return;
   }
   //
-  bFuse = (myOperation == BOPAlgo_FUSE);
+  bFuse = (myOperation == BOPAlgo_Operation::BOPAlgo_FUSE);
   //
   // The rules for different types of operations are the following:
   // 1. FUSE:   All arguments and tools should have the same dimension;
@@ -185,9 +185,9 @@ void BOPAlgo_BOP::CheckData()
   //
   if (bHasValid[0] && bHasValid[1])
   {
-    if (((myOperation == BOPAlgo_FUSE) && (iDimMax[0] != iDimMax[1]))
-        || ((myOperation == BOPAlgo_CUT) && (iDimMax[0] > iDimMin[1]))
-        || ((myOperation == BOPAlgo_CUT21) && (iDimMin[0] < iDimMax[1])))
+    if (((myOperation == BOPAlgo_Operation::BOPAlgo_FUSE) && (iDimMax[0] != iDimMax[1]))
+        || ((myOperation == BOPAlgo_Operation::BOPAlgo_CUT) && (iDimMax[0] > iDimMin[1]))
+        || ((myOperation == BOPAlgo_Operation::BOPAlgo_CUT21) && (iDimMin[0] < iDimMax[1])))
     {
       // non-licit operation for the arguments
       AddError(new BOPAlgo_AlertBOPNotAllowed);
@@ -262,7 +262,7 @@ bool BOPAlgo_BOP::TreatEmptyShape()
   //
   switch (myOperation)
   {
-    case BOPAlgo_FUSE: {
+    case BOPAlgo_Operation::BOPAlgo_FUSE: {
       if (aLValidObjs.Extent() + aLValidTools.Extent() > 1)
         // The arguments must be split before adding into result
         return false;
@@ -271,7 +271,7 @@ bool BOPAlgo_BOP::TreatEmptyShape()
       pLResult = bHasValidObj ? &aLValidObjs : &aLValidTools;
       break;
     }
-    case BOPAlgo_CUT: {
+    case BOPAlgo_Operation::BOPAlgo_CUT: {
       if (aLValidObjs.Extent() > 1)
         // The objects must be split before adding into result
         return false;
@@ -280,7 +280,7 @@ bool BOPAlgo_BOP::TreatEmptyShape()
       pLResult = &aLValidObjs;
       break;
     }
-    case BOPAlgo_CUT21: {
+    case BOPAlgo_Operation::BOPAlgo_CUT21: {
       if (aLValidTools.Extent() > 1)
         // The tools must be split before adding into result
         return false;
@@ -289,7 +289,7 @@ bool BOPAlgo_BOP::TreatEmptyShape()
       pLResult = &aLValidTools;
       break;
     }
-    case BOPAlgo_COMMON:
+    case BOPAlgo_Operation::BOPAlgo_COMMON:
       // Common will always be empty
       break;
     default:
@@ -403,7 +403,7 @@ void BOPAlgo_BOP::fillPIConstants(const double theWhole, BOPAlgo_PISteps& theSte
 {
   BOPAlgo_Builder::fillPIConstants(theWhole, theSteps);
   theSteps.SetStep(PIOperation_BuildShape,
-                   (myOperation == BOPAlgo_FUSE ? 10. : 5.) * theWhole / 100.);
+                   (myOperation == BOPAlgo_Operation::BOPAlgo_FUSE ? 10. : 5.) * theWhole / 100.);
 }
 
 //=================================================================================================
@@ -580,7 +580,7 @@ void BOPAlgo_BOP::BuildRC(const Message_ProgressRange& theRange)
   aBB.MakeCompound(aC);
   //
   // A. Fuse
-  if (myOperation == BOPAlgo_FUSE)
+  if (myOperation == BOPAlgo_Operation::BOPAlgo_FUSE)
   {
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMFence;
     aType = TypeToExplore(myDims[0]);
@@ -696,8 +696,8 @@ void BOPAlgo_BOP::BuildRC(const Message_ProgressRange& theRange)
   int iDimMin, iDimMax;
   //
   iDimMin = std::min(myDims[0], myDims[1]);
-  bCommon = (myOperation == BOPAlgo_COMMON);
-  bCut21  = (myOperation == BOPAlgo_CUT21);
+  bCommon = (myOperation == BOPAlgo_Operation::BOPAlgo_COMMON);
+  bCut21  = (myOperation == BOPAlgo_Operation::BOPAlgo_CUT21);
   //
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& aMIt =
     bCut21 ? aMToolsIm : aMArgsIm;
@@ -886,7 +886,7 @@ void BOPAlgo_BOP::BuildShape(const Message_ProgressRange& theRange)
   // Build the result using splits of arguments.
   BuildRC(aPS.Next(2.));
   //
-  if ((myOperation == BOPAlgo_FUSE) && (myDims[0] == 3))
+  if ((myOperation == BOPAlgo_Operation::BOPAlgo_FUSE) && (myDims[0] == 3))
   {
     BuildSolid(aPS.Next(8.));
     return;

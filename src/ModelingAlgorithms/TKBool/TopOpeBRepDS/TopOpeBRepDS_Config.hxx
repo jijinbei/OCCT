@@ -17,7 +17,7 @@
 #ifndef _TopOpeBRepDS_Config_HeaderFile
 #define _TopOpeBRepDS_Config_HeaderFile
 
-enum TopOpeBRepDS_Config
+enum class TopOpeBRepDS_Config
 {
   TopOpeBRepDS_UNSHGEOMETRY,
   TopOpeBRepDS_SAMEORIENTED,

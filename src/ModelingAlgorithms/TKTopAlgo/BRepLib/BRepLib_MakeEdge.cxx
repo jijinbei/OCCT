@@ -176,7 +176,7 @@ static bool Project(const occ::handle<Geom2d_Curve>& C,
 //=================================================================================================
 
 BRepLib_MakeEdge::BRepLib_MakeEdge()
-    : myError(BRepLib_PointProjectionFailed)
+    : myError(BRepLib_EdgeError::BRepLib_PointProjectionFailed)
 {
 }
 
@@ -189,7 +189,7 @@ BRepLib_MakeEdge::BRepLib_MakeEdge(const TopoDS_Vertex& V1, const TopoDS_Vertex&
   double l  = P1.Distance(P2);
   if (l <= gp::Resolution())
   {
-    myError = BRepLib_LineThroughIdenticPoints;
+    myError = BRepLib_EdgeError::BRepLib_LineThroughIdenticPoints;
     return;
   }
   gp_Lin                 L(P1, gp_Vec(P1, P2));
@@ -204,7 +204,7 @@ BRepLib_MakeEdge::BRepLib_MakeEdge(const gp_Pnt& P1, const gp_Pnt& P2)
   double l = P1.Distance(P2);
   if (l <= gp::Resolution())
   {
-    myError = BRepLib_LineThroughIdenticPoints;
+    myError = BRepLib_EdgeError::BRepLib_LineThroughIdenticPoints;
     return;
   }
   gp_Lin                 L(P1, gp_Vec(P1, P2));
@@ -548,14 +548,14 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom_Curve>& C,
     p1 = C->FirstParameter();
   else if (!Project(C, V1, p1))
   {
-    myError = BRepLib_PointProjectionFailed;
+    myError = BRepLib_EdgeError::BRepLib_PointProjectionFailed;
     return;
   }
   if (V2.IsNull())
     p2 = C->LastParameter();
   else if (!Project(C, V2, p2))
   {
-    myError = BRepLib_PointProjectionFailed;
+    myError = BRepLib_EdgeError::BRepLib_PointProjectionFailed;
     return;
   }
 
@@ -640,14 +640,14 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom_Curve>& CC,
     // check range
     if ((cf - p1 > epsilon) || (p2 - cl > epsilon))
     {
-      myError = BRepLib_ParameterOutOfRange;
+      myError = BRepLib_EdgeError::BRepLib_ParameterOutOfRange;
       return;
     }
 
     // check ponctuallity
     if ((p2 - p1) <= gp::Resolution())
     {
-      myError = BRepLib_LineThroughIdenticPoints;
+      myError = BRepLib_EdgeError::BRepLib_LineThroughIdenticPoints;
       return;
     }
   }
@@ -686,12 +686,12 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom_Curve>& CC,
     {
       if (!V1.IsSame(V2))
       {
-        myError = BRepLib_DifferentPointsOnClosedCurve;
+        myError = BRepLib_EdgeError::BRepLib_DifferentPointsOnClosedCurve;
         return;
       }
       else if (P1.Distance(BRep_Tool::Pnt(V1)) > std::max(preci, BRep_Tool::Tolerance(V1)))
       {
-        myError = BRepLib_DifferentPointsOnClosedCurve;
+        myError = BRepLib_EdgeError::BRepLib_DifferentPointsOnClosedCurve;
         return;
       }
       else
@@ -710,7 +710,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom_Curve>& CC,
     {
       if (!V1.IsNull())
       {
-        myError = BRepLib_PointWithInfiniteParameter;
+        myError = BRepLib_EdgeError::BRepLib_PointWithInfiniteParameter;
         return;
       }
     }
@@ -722,7 +722,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom_Curve>& CC,
       }
       else if (P1.Distance(BRep_Tool::Pnt(V1)) > std::max(preci, BRep_Tool::Tolerance(V1)))
       {
-        myError = BRepLib_DifferentsPointAndParameter;
+        myError = BRepLib_EdgeError::BRepLib_DifferentsPointAndParameter;
         return;
       }
     }
@@ -731,7 +731,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom_Curve>& CC,
     {
       if (!V2.IsNull())
       {
-        myError = BRepLib_PointWithInfiniteParameter;
+        myError = BRepLib_EdgeError::BRepLib_PointWithInfiniteParameter;
         return;
       }
     }
@@ -743,7 +743,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom_Curve>& CC,
       }
       else if (P2.Distance(BRep_Tool::Pnt(V2)) > std::max(preci, BRep_Tool::Tolerance(V2)))
       {
-        myError = BRepLib_DifferentsPointAndParameter;
+        myError = BRepLib_EdgeError::BRepLib_DifferentsPointAndParameter;
         return;
       }
     }
@@ -768,7 +768,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom_Curve>& CC,
   B.Degenerated(E, degenerated);
   E.Closed(closed);
 
-  myError = BRepLib_EdgeDone;
+  myError = BRepLib_EdgeError::BRepLib_EdgeDone;
   Done();
 }
 
@@ -827,14 +827,14 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom2d_Curve>& C,
     p1 = C->FirstParameter();
   else if (!Project(C, S, V1, p1))
   {
-    myError = BRepLib_PointProjectionFailed;
+    myError = BRepLib_EdgeError::BRepLib_PointProjectionFailed;
     return;
   }
   if (V2.IsNull())
     p2 = C->LastParameter();
   else if (!Project(C, S, V2, p2))
   {
-    myError = BRepLib_PointProjectionFailed;
+    myError = BRepLib_EdgeError::BRepLib_PointProjectionFailed;
     return;
   }
 
@@ -923,7 +923,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom2d_Curve>& CC,
     // check range
     if ((cf - p1 > epsilon) || (p2 - cl > epsilon))
     {
-      myError = BRepLib_ParameterOutOfRange;
+      myError = BRepLib_EdgeError::BRepLib_ParameterOutOfRange;
       return;
     }
   }
@@ -968,12 +968,12 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom2d_Curve>& CC,
     {
       if (!V1.IsSame(V2))
       {
-        myError = BRepLib_DifferentPointsOnClosedCurve;
+        myError = BRepLib_EdgeError::BRepLib_DifferentPointsOnClosedCurve;
         return;
       }
       else if (P1.Distance(BRep_Tool::Pnt(V1)) > std::max(preci, BRep_Tool::Tolerance(V1)))
       {
-        myError = BRepLib_DifferentPointsOnClosedCurve;
+        myError = BRepLib_EdgeError::BRepLib_DifferentPointsOnClosedCurve;
         return;
       }
     }
@@ -986,7 +986,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom2d_Curve>& CC,
     {
       if (!V1.IsNull())
       {
-        myError = BRepLib_PointWithInfiniteParameter;
+        myError = BRepLib_EdgeError::BRepLib_PointWithInfiniteParameter;
         return;
       }
     }
@@ -998,7 +998,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom2d_Curve>& CC,
       }
       else if (P1.Distance(BRep_Tool::Pnt(V1)) > std::max(preci, BRep_Tool::Tolerance(V1)))
       {
-        myError = BRepLib_DifferentsPointAndParameter;
+        myError = BRepLib_EdgeError::BRepLib_DifferentsPointAndParameter;
         return;
       }
     }
@@ -1007,7 +1007,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom2d_Curve>& CC,
     {
       if (!V2.IsNull())
       {
-        myError = BRepLib_PointWithInfiniteParameter;
+        myError = BRepLib_EdgeError::BRepLib_PointWithInfiniteParameter;
         return;
       }
     }
@@ -1019,7 +1019,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom2d_Curve>& CC,
       }
       else if (P2.Distance(BRep_Tool::Pnt(V2)) > std::max(preci, BRep_Tool::Tolerance(V2)))
       {
-        myError = BRepLib_DifferentsPointAndParameter;
+        myError = BRepLib_EdgeError::BRepLib_DifferentsPointAndParameter;
         return;
       }
     }
@@ -1047,7 +1047,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom2d_Curve>& CC,
   if (reverse)
     E.Orientation(TopAbs_REVERSED);
 
-  myError = BRepLib_EdgeDone;
+  myError = BRepLib_EdgeError::BRepLib_EdgeDone;
   Done();
 }
 

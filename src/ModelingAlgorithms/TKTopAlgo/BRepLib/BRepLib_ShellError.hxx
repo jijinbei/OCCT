@@ -18,7 +18,7 @@
 #define _BRepLib_ShellError_HeaderFile
 
 //! Errors that can occur at shell construction.
-enum BRepLib_ShellError
+enum class BRepLib_ShellError
 {
   BRepLib_ShellDone,
   BRepLib_EmptyShell,

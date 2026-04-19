@@ -58,7 +58,7 @@ Convert_EllipseToBSplineCurve::Convert_EllipseToBSplineCurve(
   R = E.MajorRadius();
   r = E.MinorRadius();
 
-  if (Parameterisation != Convert_TgtThetaOver2 && Parameterisation != Convert_RationalC1)
+  if (Parameterisation != Convert_ParameterisationType::Convert_TgtThetaOver2 && Parameterisation != Convert_ParameterisationType::Convert_RationalC1)
   {
     // If BuildCosAndSin cannot manage the periodicity
     // => trim on 0,2*PI

@@ -196,7 +196,7 @@ private:
       theInfo[i].Point2d             = this->getRangeSplitter().Scale(aVertex.Coord(), false).XY();
       theInfo[i].Point               = this->getNodesMap()->Value(aVertex.Location3d()).XYZ();
       theInfo[i].isFrontierLink =
-        (this->getStructure()->GetLink(e[i]).Movability() == BRepMesh_Frontier);
+        (this->getStructure()->GetLink(e[i]).Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
     }
   }
 
@@ -204,7 +204,7 @@ private:
   // new point.
   void splitTriangleGeometry(const BRepMesh_Triangle& theTriangle)
   {
-    if (theTriangle.Movability() != BRepMesh_Deleted)
+    if (theTriangle.Movability() != BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
     {
       int aNodexIndices[3];
       this->getStructure()->ElementNodes(theTriangle, aNodexIndices);

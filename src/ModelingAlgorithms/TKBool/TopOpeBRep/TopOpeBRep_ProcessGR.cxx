@@ -81,8 +81,8 @@ TopAbs_State TopOpeBRep_FacesFiller::StBipVPonF(const TopOpeBRep_VPointInter& vp
   const TopoDS_Edge& EArc = TopoDS::Edge(Lrest.Arc());
   BRepAdaptor_Curve  BAC(EArc);
   GeomAbs_CurveType  CT = BAC.GetType();
-  isperiodic            = (CT == GeomAbs_Circle);
-  isperiodic            = isperiodic || (CT == GeomAbs_Ellipse);
+  isperiodic            = (CT == GeomAbs_CurveType::GeomAbs_Circle);
+  isperiodic            = isperiodic || (CT == GeomAbs_CurveType::GeomAbs_Ellipse);
 
   TopOpeBRep_VPointInter vpff = vpf;
   TopOpeBRep_VPointInter vpll = vpl;
@@ -237,7 +237,7 @@ bool TopOpeBRep_FacesFiller::LSameDomainERL(const TopOpeBRep_LineInter&         
                                             const NCollection_List<TopoDS_Shape>& ERL)
 {
   bool isone = false;
-  if (L.TypeLineCurve() == TopOpeBRep_WALKING)
+  if (L.TypeLineCurve() == TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING)
     return isone;
 
   double f, l;
