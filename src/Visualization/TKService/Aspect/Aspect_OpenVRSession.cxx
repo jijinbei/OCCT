@@ -387,11 +387,10 @@ Aspect_OpenVRSession::Aspect_OpenVRSession()
   }
   for (int aHand = 0; aHand < 2; ++aHand)
   {
-    NCollection_Array1<occ::handle<Aspect_XRAction>>& aGenericSet =
-      myRoleActions[static_cast<int>(
-        aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
-                   : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand)];
-    occ::handle<Aspect_XRActionSet> anActionSet =
+    NCollection_Array1<occ::handle<Aspect_XRAction>>& aGenericSet = myRoleActions[static_cast<int>(
+      aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
+                 : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand)];
+    occ::handle<Aspect_XRActionSet>                   anActionSet =
       new Aspect_XRActionSet(aHand == 0 ? "/actions/generic_left" : "/actions/generic_right");
     myActionSets.Add(anActionSet->Id(), anActionSet);
 
