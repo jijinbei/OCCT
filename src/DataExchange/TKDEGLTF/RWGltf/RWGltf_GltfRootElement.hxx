@@ -46,26 +46,25 @@ enum class RWGltf_GltfRootElement
 inline const char* RWGltf_GltfRootElementName(RWGltf_GltfRootElement theElem)
 {
   static const char* THE_ROOT_NAMES[static_cast<int>(
-    RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB)] = {
-    "asset",
-    "scenes",
-    "scene",
-    "nodes",
-    "meshes",
-    "accessors",
-    "bufferViews",
-    "buffers",
-    "animations",
-    "materials",
-    "programs",
-    "samplers",
-    "shaders",
-    "skins",
-    "techniques",
-    "textures",
-    "images",
-    "extensionsUsed",
-    "extensionsRequired"};
+    RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB)] = {"asset",
+                                                           "scenes",
+                                                           "scene",
+                                                           "nodes",
+                                                           "meshes",
+                                                           "accessors",
+                                                           "bufferViews",
+                                                           "buffers",
+                                                           "animations",
+                                                           "materials",
+                                                           "programs",
+                                                           "samplers",
+                                                           "shaders",
+                                                           "skins",
+                                                           "techniques",
+                                                           "textures",
+                                                           "images",
+                                                           "extensionsUsed",
+                                                           "extensionsRequired"};
   return THE_ROOT_NAMES[static_cast<int>(theElem)];
 }
 
