@@ -303,7 +303,7 @@ static int WriteGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   occ::handle<TDocStd_Document>    aDoc;
   occ::handle<TDocStd_Application> anApp = DDocStd::GetApplication();
   NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString> aFileInfo;
-  RWGltf_WriterTrsfFormat aTrsfFormat = RWGltf_WriterTrsfFormat_Compact;
+  RWGltf_WriterTrsfFormat aTrsfFormat     = RWGltf_WriterTrsfFormat_Compact;
   RWMesh_CoordinateSystem aSystemCoordSys = RWMesh_CoordinateSystem_Zup;
   bool                    toForceUVExport = false, toEmbedTexturesInGlb = true;
   bool                    toMergeFaces = false, toSplitIndices16 = false;
