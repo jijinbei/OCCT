@@ -28,7 +28,7 @@ VrmlConverter_Drawer::VrmlConverter_Drawer()
       myUnFreeBoundaryDraw(true),
       myWireDraw(true),
       myChordialDeviation(0.1),
-      myTypeOfDeflection(Aspect_TOD_RELATIVE),
+      myTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE),
       myMaximalParameterValue(500.),
       myDeviationCoefficient(0.001),
       myDrawHiddenLine(false)

@@ -1765,7 +1765,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
 {
 #if !defined(GL_ES_VERSION_2_0)
   bool isCoreProfile = false;
-  if (theCtx.GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGL && theCtx.IsGlGreaterEqual(3, 2))
+  if (theCtx.GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL && theCtx.IsGlGreaterEqual(3, 2))
   {
     isCoreProfile = (theIsCoreProfile);
 

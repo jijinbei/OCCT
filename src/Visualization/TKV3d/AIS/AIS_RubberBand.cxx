@@ -35,11 +35,11 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_RubberBand, AIS_InteractiveObject)
 AIS_RubberBand::AIS_RubberBand()
     : myIsPolygonClosed(true)
 {
-  myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_WHITE, Aspect_TOL_SOLID, 1.0));
+  myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_WHITE, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
   myDrawer->SetShadingAspect(new Prs3d_ShadingAspect());
   myDrawer->ShadingAspect()->SetMaterial(Graphic3d_NameOfMaterial_Plastified);
   myDrawer->ShadingAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
-  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_IS_EMPTY);
+  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_EMPTY);
   myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Blend);
   myDrawer->ShadingAspect()->SetTransparency(1.0);
   myDrawer->ShadingAspect()->SetColor(Quantity_NOC_WHITE);
@@ -60,7 +60,7 @@ AIS_RubberBand::AIS_RubberBand(const Quantity_Color&   theLineColor,
   myDrawer->SetShadingAspect(new Prs3d_ShadingAspect());
   myDrawer->ShadingAspect()->SetMaterial(Graphic3d_NameOfMaterial_Plastified);
   myDrawer->ShadingAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
-  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_IS_EMPTY);
+  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_EMPTY);
   myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Blend);
   myDrawer->ShadingAspect()->SetTransparency(1.0);
   myDrawer->ShadingAspect()->SetColor(Quantity_NOC_WHITE);
@@ -84,7 +84,7 @@ AIS_RubberBand::AIS_RubberBand(const Quantity_Color&   theLineColor,
   myDrawer->ShadingAspect()->SetMaterial(Graphic3d_NameOfMaterial_Plastified);
   myDrawer->ShadingAspect()->SetColor(theFillColor);
   myDrawer->ShadingAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
-  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_IS_SOLID);
+  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode_Blend);
   myDrawer->ShadingAspect()->SetTransparency(theTransparency);
 
@@ -210,8 +210,8 @@ double AIS_RubberBand::FillTransparency() const
 
 void AIS_RubberBand::SetFilling(const bool theIsFilling)
 {
-  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(theIsFilling ? Aspect_IS_SOLID
-                                                                     : Aspect_IS_EMPTY);
+  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(theIsFilling ? Aspect_InteriorStyle::Aspect_IS_SOLID
+                                                                     : Aspect_InteriorStyle::Aspect_IS_EMPTY);
 }
 
 //=================================================================================================
@@ -228,7 +228,7 @@ void AIS_RubberBand::SetFilling(const Quantity_Color theColor, const double theT
 bool AIS_RubberBand::IsFilling() const
 {
   Aspect_InteriorStyle aStyle = myDrawer->ShadingAspect()->Aspect()->InteriorStyle();
-  return aStyle != Aspect_IS_EMPTY;
+  return aStyle != Aspect_InteriorStyle::Aspect_IS_EMPTY;
 }
 
 //=================================================================================================

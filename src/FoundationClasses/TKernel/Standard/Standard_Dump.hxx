@@ -20,6 +20,16 @@
 #include <Standard_SStream.hxx>
 #include <TCollection_AsciiString.hxx>
 
+#include <type_traits>
+
+//! Stream a scoped enum (`enum class`) as its underlying integer type. Needed by
+//! OCCT_DUMP_FIELD_VALUE_NUMERICAL for fields whose type is a scoped enum.
+template <class E, std::enable_if_t<std::is_enum_v<E> && !std::is_convertible_v<E, int>, int> = 0>
+inline Standard_OStream& operator<<(Standard_OStream& theStream, E theValue)
+{
+  return theStream << static_cast<std::underlying_type_t<E>>(theValue);
+}
+
 //!@file
 //! The file contains interface to prepare dump output for OCCT objects. Format of the dump is JSON.
 //!

@@ -27,14 +27,14 @@ class Graphic3d_AspectFillArea3d : public Graphic3d_Aspects
 public:
   //! Creates a context table for fill area primitives defined with the following default values:
   //!
-  //! InteriorStyle : Aspect_IS_EMPTY
+  //! InteriorStyle : Aspect_InteriorStyle::Aspect_IS_EMPTY
   //! InteriorColor : Quantity_NOC_CYAN1
   //! EdgeColor     : Quantity_NOC_WHITE
-  //! EdgeLineType  : Aspect_TOL_SOLID
+  //! EdgeLineType  : Aspect_TypeOfLine::Aspect_TOL_SOLID
   //! EdgeWidth     : 1.0
   //! FrontMaterial : NOM_BRASS
   //! BackMaterial  : NOM_BRASS
-  //! HatchStyle    : Aspect_HS_SOLID
+  //! HatchStyle    : Aspect_HatchStyle::Aspect_HS_SOLID
   //!
   //! Display of back-facing filled polygons.
   //! No distinction between external and internal faces of FillAreas.

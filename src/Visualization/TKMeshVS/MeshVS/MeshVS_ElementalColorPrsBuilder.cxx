@@ -173,8 +173,8 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
   }
 
   // Now we are ready to draw faces with equal colors
-  Aspect_TypeOfLine anEdgeType  = Aspect_TOL_SOLID;
-  Aspect_TypeOfLine aLineType   = Aspect_TOL_SOLID;
+  Aspect_TypeOfLine anEdgeType  = Aspect_TypeOfLine::Aspect_TOL_SOLID;
+  Aspect_TypeOfLine aLineType   = Aspect_TypeOfLine::Aspect_TOL_SOLID;
   double            anEdgeWidth = 1.0, aLineWidth = 1.0;
   Quantity_Color    anInteriorColor;
   Quantity_Color    anEdgeColor, aLineColor;
@@ -191,11 +191,11 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
   aDrawer->GetBoolean(MeshVS_DA_SmoothShading, IsMeshSmoothShading);
   aDrawer->GetBoolean(MeshVS_DA_SupressBackFaces, toSupressBackFaces);
 
-  int anEdgeInt = Aspect_TOL_SOLID;
+  int anEdgeInt = static_cast<int>(Aspect_TypeOfLine::Aspect_TOL_SOLID);
   if (aDrawer->GetInteger(MeshVS_DA_EdgeType, anEdgeInt))
     anEdgeType = (Aspect_TypeOfLine)anEdgeInt;
 
-  int aLineInt = Aspect_TOL_SOLID;
+  int aLineInt = static_cast<int>(Aspect_TypeOfLine::Aspect_TOL_SOLID);
   if (aDrawer->GetInteger(MeshVS_DA_BeamType, aLineInt))
     aLineType = (Aspect_TypeOfLine)aLineInt;
 
@@ -249,7 +249,7 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
   if (!aColorsOfElements.IsEmpty())
   {
     occ::handle<Graphic3d_AspectFillArea3d> aGroupFillAspect =
-      new Graphic3d_AspectFillArea3d(Aspect_IS_SOLID,
+      new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
                                      anInteriorColor,
                                      anEdgeColor,
                                      anEdgeType,
@@ -353,7 +353,7 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
     // OCC20644 NOTE: aColIter.Key() color is then scaled by TelUpdateMaterial() in OpenGl_attri.c
     // using the material reflection coefficients. This affects the visual result.
     occ::handle<Graphic3d_AspectFillArea3d> aFillAspect =
-      new Graphic3d_AspectFillArea3d(Aspect_IS_SOLID,
+      new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
                                      aColIter.Key(),
                                      anEdgeColor,
                                      anEdgeType,
@@ -548,7 +548,7 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
   if (!aTwoColorsOfElements.IsEmpty())
   {
     occ::handle<Graphic3d_AspectFillArea3d> aGroupFillAspect2 =
-      new Graphic3d_AspectFillArea3d(Aspect_IS_SOLID,
+      new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
                                      anInteriorColor,
                                      anEdgeColor,
                                      anEdgeType,
@@ -604,7 +604,7 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
 
     // OCC20644 NOTE: aMyIntColor color is then scaled by TelUpdateMaterial() in OpenGl_attri.c
     // using the material reflection coefficients. This affects the visual result.
-    occ::handle<Graphic3d_AspectFillArea3d> anAsp = new Graphic3d_AspectFillArea3d(Aspect_IS_SOLID,
+    occ::handle<Graphic3d_AspectFillArea3d> anAsp = new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
                                                                                    aMyIntColor,
                                                                                    anEdgeColor,
                                                                                    anEdgeType,

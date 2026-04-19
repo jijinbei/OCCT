@@ -244,7 +244,7 @@ void AIS_Shape::computeHlrPresentation(const occ::handle<Graphic3d_Camera>&   th
   }
 
   const Aspect_TypeOfDeflection aPrevDef = aDefDrawer->TypeOfDeflection();
-  aDefDrawer->SetTypeOfDeflection(Aspect_TOD_RELATIVE);
+  aDefDrawer->SetTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE);
   if (theDrawer->IsAutoTriangulation())
   {
     StdPrs_ToolTriangulatedShape::ClearOnOwnDeflectionChange(theShape, theDrawer, true);
@@ -477,7 +477,7 @@ void AIS_Shape::UnsetColor()
     {
       const occ::handle<Graphic3d_AspectFillArea3d>& aSrcAspect =
         (HasMaterial() ? myDrawer : myDrawer->Link())->ShadingAspect()->Aspect();
-      mat = myCurrentFacingModel != Aspect_TOFM_BACK_SIDE ? aSrcAspect->FrontMaterial()
+      mat = myCurrentFacingModel != Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE ? aSrcAspect->FrontMaterial()
                                                           : aSrcAspect->BackMaterial();
     }
     if (HasMaterial())

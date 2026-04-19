@@ -147,27 +147,27 @@ bool ViewerTest::ParseLineType(const char* theArg, Aspect_TypeOfLine& theType, u
   aTypeStr.LowerCase();
   if (aTypeStr == "empty" || aTypeStr == "-1")
   {
-    theType    = Aspect_TOL_EMPTY;
+    theType    = Aspect_TypeOfLine::Aspect_TOL_EMPTY;
     thePattern = Graphic3d_Aspects::DefaultLinePatternForType(theType);
   }
   else if (aTypeStr == "solid" || aTypeStr == "0")
   {
-    theType    = Aspect_TOL_SOLID;
+    theType    = Aspect_TypeOfLine::Aspect_TOL_SOLID;
     thePattern = Graphic3d_Aspects::DefaultLinePatternForType(theType);
   }
   else if (aTypeStr == "dot" || aTypeStr == "2")
   {
-    theType    = Aspect_TOL_DOT;
+    theType    = Aspect_TypeOfLine::Aspect_TOL_DOT;
     thePattern = Graphic3d_Aspects::DefaultLinePatternForType(theType);
   }
   else if (aTypeStr == "dash" || aTypeStr == "1")
   {
-    theType    = Aspect_TOL_DASH;
+    theType    = Aspect_TypeOfLine::Aspect_TOL_DASH;
     thePattern = Graphic3d_Aspects::DefaultLinePatternForType(theType);
   }
   else if (aTypeStr == "dotdash" || aTypeStr == "3")
   {
-    theType    = Aspect_TOL_DOTDASH;
+    theType    = Aspect_TypeOfLine::Aspect_TOL_DOTDASH;
     thePattern = Graphic3d_Aspects::DefaultLinePatternForType(theType);
   }
   else
@@ -216,64 +216,64 @@ bool ViewerTest::ParseMarkerType(const char*                theArg,
   aTypeStr.LowerCase();
   if (aTypeStr == "empty")
   {
-    theType = Aspect_TOM_EMPTY;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_EMPTY;
   }
   else if (aTypeStr == "point" || aTypeStr == "dot" || aTypeStr == ".")
   {
-    theType = Aspect_TOM_POINT;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_POINT;
   }
   else if (aTypeStr == "plus" || aTypeStr == "+")
   {
-    theType = Aspect_TOM_PLUS;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_PLUS;
   }
   else if (aTypeStr == "star" || aTypeStr == "*")
   {
-    theType = Aspect_TOM_STAR;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_STAR;
   }
   else if (aTypeStr == "cross" || aTypeStr == "x")
   {
-    theType = Aspect_TOM_X;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_X;
   }
   else if (aTypeStr == "circle" || aTypeStr == "o")
   {
-    theType = Aspect_TOM_O;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_O;
   }
   else if (aTypeStr == "pointincircle")
   {
-    theType = Aspect_TOM_O_POINT;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_O_POINT;
   }
   else if (aTypeStr == "plusincircle")
   {
-    theType = Aspect_TOM_O_PLUS;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_O_PLUS;
   }
   else if (aTypeStr == "starincircle")
   {
-    theType = Aspect_TOM_O_STAR;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_O_STAR;
   }
   else if (aTypeStr == "crossincircle" || aTypeStr == "xcircle")
   {
-    theType = Aspect_TOM_O_X;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_O_X;
   }
   else if (aTypeStr == "ring1")
   {
-    theType = Aspect_TOM_RING1;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_RING1;
   }
   else if (aTypeStr == "ring2")
   {
-    theType = Aspect_TOM_RING2;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_RING2;
   }
   else if (aTypeStr == "ring" || aTypeStr == "ring3")
   {
-    theType = Aspect_TOM_RING3;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_RING3;
   }
   else if (aTypeStr == "ball")
   {
-    theType = Aspect_TOM_BALL;
+    theType = Aspect_TypeOfMarker::Aspect_TOM_BALL;
   }
   else if (aTypeStr.IsIntegerValue())
   {
     const int aTypeInt = aTypeStr.IntegerValue();
-    if (aTypeInt < -1 || aTypeInt >= Aspect_TOM_USERDEFINED)
+    if (aTypeInt < -1 || aTypeInt >= Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED)
     {
       return false;
     }
@@ -281,7 +281,7 @@ bool ViewerTest::ParseMarkerType(const char*                theArg,
   }
   else
   {
-    theType                                = Aspect_TOM_USERDEFINED;
+    theType                                = Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED;
     occ::handle<Image_AlienPixMap> anImage = new Image_AlienPixMap();
     if (!anImage->Load(theArg))
     {
@@ -1647,32 +1647,32 @@ static bool parseInteriorStyle(const TCollection_AsciiString& theArg,
   anArg.LowerCase();
   if (anArg == "empty")
   {
-    theStyle = Aspect_IS_EMPTY;
+    theStyle = Aspect_InteriorStyle::Aspect_IS_EMPTY;
   }
   else if (anArg == "hollow")
   {
-    theStyle = Aspect_IS_HOLLOW;
+    theStyle = Aspect_InteriorStyle::Aspect_IS_HOLLOW;
   }
   else if (anArg == "solid")
   {
-    theStyle = Aspect_IS_SOLID;
+    theStyle = Aspect_InteriorStyle::Aspect_IS_SOLID;
   }
   else if (anArg == "hatch")
   {
-    theStyle = Aspect_IS_HATCH;
+    theStyle = Aspect_InteriorStyle::Aspect_IS_HATCH;
   }
   else if (anArg == "hiddenline" || anArg == "hidden-line" || anArg == "hidden_line")
   {
-    theStyle = Aspect_IS_HIDDENLINE;
+    theStyle = Aspect_InteriorStyle::Aspect_IS_HIDDENLINE;
   }
   else if (anArg == "point")
   {
-    theStyle = Aspect_IS_POINT;
+    theStyle = Aspect_InteriorStyle::Aspect_IS_POINT;
   }
   else if (theArg.IsIntegerValue())
   {
     const int anIntStyle = theArg.IntegerValue();
-    if (anIntStyle < Aspect_IS_EMPTY || anIntStyle > Aspect_IS_POINT)
+    if (anIntStyle < Aspect_InteriorStyle::Aspect_IS_EMPTY || anIntStyle > Aspect_InteriorStyle::Aspect_IS_POINT)
     {
       return false;
     }
@@ -1793,7 +1793,7 @@ struct ViewerTest_AspectsChangeSet
         StippleLinePattern(0xFFFF),
         StippleLineFactor(1),
         ToSetTypeOfMarker(0),
-        TypeOfMarker(Aspect_TOM_PLUS),
+        TypeOfMarker(Aspect_TypeOfMarker::Aspect_TOM_PLUS),
         ToSetMarkerSize(0),
         MarkerSize(1.0),
         ToSetTransparency(0),
@@ -1820,7 +1820,7 @@ struct ViewerTest_AspectsChangeSet
         ToSetFaceBoundaryWidth(0),
         FaceBoundaryWidth(1.0f),
         ToSetTypeOfFaceBoundaryLine(0),
-        TypeOfFaceBoundaryLine(Aspect_TOL_SOLID),
+        TypeOfFaceBoundaryLine(Aspect_TypeOfLine::Aspect_TOL_SOLID),
         //
         ToSetMaxParamValue(0),
         MaxParamValue(500000),
@@ -1832,7 +1832,7 @@ struct ViewerTest_AspectsChangeSet
         ToSetShadingModel(0),
         ShadingModel(Graphic3d_TypeOfShadingModel_DEFAULT),
         ToSetInterior(0),
-        InteriorStyle(Aspect_IS_SOLID),
+        InteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID),
         ToSetDrawSilhouette(0),
         ToSetDrawEdges(0),
         ToSetQuadEdges(0),
@@ -1840,7 +1840,7 @@ struct ViewerTest_AspectsChangeSet
         ToSetEdgeWidth(0),
         EdgeWidth(1.0),
         ToSetTypeOfEdge(0),
-        TypeOfEdge(Aspect_TOL_SOLID)
+        TypeOfEdge(Aspect_TypeOfLine::Aspect_TOL_SOLID)
   {
   }
 
@@ -1941,7 +1941,7 @@ struct ViewerTest_AspectsChangeSet
         if (!theDrawer->HasOwnFreeBoundaryAspect())
         {
           occ::handle<Prs3d_LineAspect> aBoundaryAspect =
-            new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TOL_SOLID, 1.0);
+            new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0);
           *aBoundaryAspect->Aspect() = *theDrawer->FreeBoundaryAspect()->Aspect();
           theDrawer->SetFreeBoundaryAspect(aBoundaryAspect);
           toRecompute = true;
@@ -1952,7 +1952,7 @@ struct ViewerTest_AspectsChangeSet
     if (ToSetFreeBoundaryColor != 0)
     {
       occ::handle<Prs3d_LineAspect> aBoundaryAspect =
-        new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TOL_SOLID, 1.0);
+        new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0);
       *aBoundaryAspect->Aspect() = *theDrawer->FreeBoundaryAspect()->Aspect();
       aBoundaryAspect->SetColor(FreeBoundaryColor);
       theDrawer->SetFreeBoundaryAspect(aBoundaryAspect);
@@ -2073,7 +2073,7 @@ struct ViewerTest_AspectsChangeSet
       if (ToSetBackFaceColor != -1 || theDrawer->HasOwnShadingAspect())
       {
         toRecompute = theDrawer->SetupOwnShadingAspect(aDefDrawer) || toRecompute;
-        theDrawer->ShadingAspect()->SetColor(BackFaceColor, Aspect_TOFM_BACK_SIDE);
+        theDrawer->ShadingAspect()->SetColor(BackFaceColor, Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE);
       }
     }
     if (ToSetAlphaMode != 0)
@@ -2100,11 +2100,11 @@ struct ViewerTest_AspectsChangeSet
         occ::handle<Graphic3d_AspectFillArea3d> anAsp = theDrawer->ShadingAspect()->Aspect();
         if (ToSetHatch == -1)
         {
-          anAsp->SetInteriorStyle(Aspect_IS_SOLID);
+          anAsp->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
         }
         else
         {
-          anAsp->SetInteriorStyle(Aspect_IS_HATCH);
+          anAsp->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_HATCH);
           if (!PathToHatchPattern.IsEmpty())
           {
             occ::handle<Image_AlienPixMap> anImage = new Image_AlienPixMap();
@@ -2132,10 +2132,10 @@ struct ViewerTest_AspectsChangeSet
       {
         toRecompute = theDrawer->SetupOwnShadingAspect(aDefDrawer) || toRecompute;
         theDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(InteriorStyle);
-        if (InteriorStyle == Aspect_IS_HATCH
+        if (InteriorStyle == Aspect_InteriorStyle::Aspect_IS_HATCH
             && theDrawer->ShadingAspect()->Aspect()->HatchStyle().IsNull())
         {
-          theDrawer->ShadingAspect()->Aspect()->SetHatchStyle(Aspect_HS_VERTICAL);
+          theDrawer->ShadingAspect()->Aspect()->SetHatchStyle(Aspect_HatchStyle::Aspect_HS_VERTICAL);
         }
       }
     }
@@ -2180,7 +2180,7 @@ struct ViewerTest_AspectsChangeSet
         if (ToSetInterior == 0)
         {
           theDrawer->ShadingAspect()->Aspect()->SetDrawEdges(ToSetTypeOfEdge == 1
-                                                             && TypeOfEdge != Aspect_TOL_EMPTY);
+                                                             && TypeOfEdge != Aspect_TypeOfLine::Aspect_TOL_EMPTY);
         }
       }
     }
@@ -2380,7 +2380,7 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     aChangeSet->ToSetDrawEdges  = -1;
     aChangeSet->ToSetEdgeColor  = -1;
     aChangeSet->ToSetTypeOfEdge = -1;
-    aChangeSet->TypeOfEdge      = Aspect_TOL_SOLID;
+    aChangeSet->TypeOfEdge      = Aspect_TypeOfLine::Aspect_TOL_SOLID;
   }
   else if (aCmdName == "vshowfaceboundary")
   {
@@ -2670,7 +2670,7 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
         Message::SendFail() << "Error: wrong syntax at " << anArg;
         return 1;
       }
-      Aspect_TypeOfLine aLineType    = Aspect_TOL_EMPTY;
+      Aspect_TypeOfLine aLineType    = Aspect_TypeOfLine::Aspect_TOL_EMPTY;
       uint16_t          aLinePattern = 0xFFFF;
       if (!ViewerTest::ParseLineType(theArgVec[anArgIter], aLineType, aLinePattern))
       {
@@ -3014,9 +3014,9 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
       if (anArgHatch.Length() <= 2)
       {
         const int anIntStyle = Draw::Atoi(anArgHatch.ToCString());
-        if (anIntStyle < 0 || anIntStyle >= Aspect_HS_NB)
+        if (anIntStyle < 0 || anIntStyle >= Aspect_HatchStyle::Aspect_HS_NB)
         {
-          Message::SendFail() << "Error: hatch style is out of range [0, " << (Aspect_HS_NB - 1)
+          Message::SendFail() << "Error: hatch style is out of range [0, " << (Aspect_HatchStyle::Aspect_HS_NB - 1)
                               << "]!";
           return 1;
         }
@@ -3066,7 +3066,7 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     else if (anArg == "-unsetinterior")
     {
       aChangeSet->ToSetInterior = -1;
-      aChangeSet->InteriorStyle = Aspect_IS_SOLID;
+      aChangeSet->InteriorStyle = Aspect_InteriorStyle::Aspect_IS_SOLID;
     }
     else if (anArg == "-setdrawoutline" || anArg == "-setdrawsilhouette" || anArg == "-setoutline"
              || anArg == "-setsilhouette" || anArg == "-outline" || anArg == "-outlined"
@@ -3123,7 +3123,7 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
       aChangeSet->StippleLinePattern = 0xFFFF;
       aChangeSet->StippleLineFactor  = 1;
       aChangeSet->ToSetTypeOfMarker  = -1;
-      aChangeSet->TypeOfMarker       = Aspect_TOM_PLUS;
+      aChangeSet->TypeOfMarker       = Aspect_TypeOfMarker::Aspect_TOM_PLUS;
       aChangeSet->ToSetMarkerSize    = -1;
       aChangeSet->MarkerSize         = 1.0;
       aChangeSet->ToSetTransparency  = -1;
@@ -3154,7 +3154,7 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
       aChangeSet->ToSetFaceBoundaryWidth           = -1;
       aChangeSet->FaceBoundaryWidth                = 1.0f;
       aChangeSet->ToSetTypeOfFaceBoundaryLine      = -1;
-      aChangeSet->TypeOfFaceBoundaryLine           = Aspect_TOL_SOLID;
+      aChangeSet->TypeOfFaceBoundaryLine           = Aspect_TypeOfLine::Aspect_TOL_SOLID;
       //
       aChangeSet->ToSetHatch    = -1;
       aChangeSet->StdHatchStyle = -1;
@@ -3162,7 +3162,7 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
       aChangeSet->ToSetShadingModel   = -1;
       aChangeSet->ShadingModel        = Graphic3d_TypeOfShadingModel_DEFAULT;
       aChangeSet->ToSetInterior       = -1;
-      aChangeSet->InteriorStyle       = Aspect_IS_SOLID;
+      aChangeSet->InteriorStyle       = Aspect_InteriorStyle::Aspect_IS_SOLID;
       aChangeSet->ToSetDrawSilhouette = -1;
       aChangeSet->ToSetDrawEdges      = -1;
       aChangeSet->ToSetQuadEdges      = -1;
@@ -3171,7 +3171,7 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
       aChangeSet->ToSetEdgeWidth      = -1;
       aChangeSet->EdgeWidth           = 1.0;
       aChangeSet->ToSetTypeOfEdge     = -1;
-      aChangeSet->TypeOfEdge          = Aspect_TOL_SOLID;
+      aChangeSet->TypeOfEdge          = Aspect_TypeOfLine::Aspect_TOL_SOLID;
     }
     else if (anArg == "-dumpjson")
     {
@@ -4004,7 +4004,7 @@ int VBounding(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   if (anAction == BndAction_Show)
   {
     aStyle = new Prs3d_Drawer();
-    aStyle->SetMethod(Aspect_TOHM_BOUNDBOX);
+    aStyle->SetMethod(Aspect_TypeOfHighlightMethod::Aspect_TOHM_BOUNDBOX);
     aStyle->SetColor(Quantity_NOC_GRAY99);
   }
 

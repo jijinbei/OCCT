@@ -771,7 +771,7 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
 
   // setup depth test
   const bool hasDepthTest =
-    !myIs2d && theTextAspect.Aspect()->TextStyle() != Aspect_TOST_ANNOTATION;
+    !myIs2d && theTextAspect.Aspect()->TextStyle() != Aspect_TypeOfStyleText::Aspect_TOST_ANNOTATION;
   if (!hasDepthTest)
   {
     theCtx->core11fwd->glDisable(GL_DEPTH_TEST);
@@ -802,20 +802,20 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
   // extra drawings
   switch (theTextAspect.Aspect()->TextDisplayType())
   {
-    case Aspect_TODT_BLEND: {
-      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGL)
+    case Aspect_TypeOfDisplayText::Aspect_TODT_BLEND: {
+      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL)
       {
         theCtx->core11fwd->glEnable(GL_COLOR_LOGIC_OP);
         theCtx->core11fwd->glLogicOp(GL_XOR);
       }
       break;
     }
-    case Aspect_TODT_SUBTITLE: {
+    case Aspect_TypeOfDisplayText::Aspect_TODT_SUBTITLE: {
       BackPolygonOffsetSentry aPolygonOffsetTmp(hasDepthTest ? theCtx.get() : nullptr);
       drawRect(theCtx, theTextAspect, theColorSubs);
       break;
     }
-    case Aspect_TODT_DEKALE: {
+    case Aspect_TypeOfDisplayText::Aspect_TODT_DEKALE: {
       BackPolygonOffsetSentry aPolygonOffsetTmp(hasDepthTest ? theCtx.get() : nullptr);
       theCtx->SetColor4fv(theColorSubs);
       setupMatrix(theCtx, theTextAspect, NCollection_Vec3<float>(+1.0f, +1.0f, 0.0f));
@@ -828,15 +828,15 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
       drawText(theCtx, theTextAspect);
       break;
     }
-    case Aspect_TODT_SHADOW: {
+    case Aspect_TypeOfDisplayText::Aspect_TODT_SHADOW: {
       BackPolygonOffsetSentry aPolygonOffsetTmp(hasDepthTest ? theCtx.get() : nullptr);
       theCtx->SetColor4fv(theColorSubs);
       setupMatrix(theCtx, theTextAspect, NCollection_Vec3<float>(+1.0f, -1.0f, 0.0f));
       drawText(theCtx, theTextAspect);
       break;
     }
-    case Aspect_TODT_DIMENSION:
-    case Aspect_TODT_NORMAL: {
+    case Aspect_TypeOfDisplayText::Aspect_TODT_DIMENSION:
+    case Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL: {
       break;
     }
   }
@@ -858,7 +858,7 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
     OpenGl_Sampler::resetGlobalTextureParams(theCtx, *aTexture, aTexture->Sampler()->Parameters());
   }
 
-  if (theTextAspect.Aspect()->TextDisplayType() == Aspect_TODT_DIMENSION)
+  if (theTextAspect.Aspect()->TextDisplayType() == Aspect_TypeOfDisplayText::Aspect_TODT_DIMENSION)
   {
     if (theTextAspect.Aspect()->AlphaMode() == Graphic3d_AlphaMode_MaskBlend)
     {
@@ -893,7 +893,7 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
     theCtx->core11fwd->glDisable(GL_BLEND);
   }
   theCtx->core11fwd->glDisable(GL_STENCIL_TEST);
-  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGL)
+  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL)
   {
     theCtx->core11fwd->glDisable(GL_COLOR_LOGIC_OP);
   }

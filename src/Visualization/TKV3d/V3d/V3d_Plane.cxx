@@ -58,8 +58,8 @@ void V3d_Plane::Display(const occ::handle<V3d_View>& theView, const Quantity_Col
   aPlastic.SetColor(theColor);
   aPlastic.SetTransparency(0.5);
   anAsp->SetFrontMaterial(aPlastic);
-  anAsp->SetInteriorStyle(Aspect_IS_HATCH);
-  anAsp->SetHatchStyle(new Graphic3d_HatchStyle(Aspect_HS_GRID_DIAGONAL_WIDE));
+  anAsp->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_HATCH);
+  anAsp->SetHatchStyle(new Graphic3d_HatchStyle(Aspect_HatchStyle::Aspect_HS_GRID_DIAGONAL_WIDE));
   aGroup->SetGroupPrimitivesAspect(anAsp);
 
   const float aSize    = (float)(0.5 * aViewer->DefaultViewSize());

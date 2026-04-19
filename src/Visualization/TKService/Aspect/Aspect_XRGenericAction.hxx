@@ -15,7 +15,7 @@
 #define _Aspect_XRGenericAction_HeaderFile
 
 //! Generic XR action.
-enum Aspect_XRGenericAction
+enum class Aspect_XRGenericAction
 {
   Aspect_XRGenericAction_IsHeadsetOn,           //!< headset is on/off head
   Aspect_XRGenericAction_InputAppMenu,          //!< application menu button pressed/released
@@ -39,7 +39,8 @@ enum Aspect_XRGenericAction
 
 enum
 {
-  Aspect_XRGenericAction_NB = Aspect_XRGenericAction_OutputHaptic + 1
+  Aspect_XRGenericAction_NB =
+    static_cast<int>(Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic) + 1
 };
 
 #endif // _Aspect_XRGenericAction_HeaderFile

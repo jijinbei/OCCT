@@ -168,8 +168,8 @@ public:
   //! LastP2   : Pnt                  from gp;
   //! aColor   : NameOfColor          from Quantity = Quantity_NOC_PURPLE;
   //! aWidth   : Real                 from Standard = 2;
-  //! aProjTOL : TypeOfLine           from Aspect   = Aspect_TOL_DASH;
-  //! aCallTOL : TypeOfLine           from Aspect   = Aspect_TOL_DOT)
+  //! aProjTOL : TypeOfLine           from Aspect   = Aspect_TypeOfLine::Aspect_TOL_DASH;
+  //! aCallTOL : TypeOfLine           from Aspect   = Aspect_TypeOfLine::Aspect_TOL_DOT)
   bool AcceptDisplayMode(const int theMode) const override { return theMode == 0; }
 
   void SetAutomaticPosition(const bool theStatus) { myAutomaticPosition = theStatus; }
@@ -193,8 +193,8 @@ protected:
     const gp_Pnt&                          LastP,
     const Quantity_NameOfColor             aColor   = Quantity_NOC_PURPLE,
     const double                           aWidth   = 2,
-    const Aspect_TypeOfLine                aProjTOL = Aspect_TOL_DASH,
-    const Aspect_TypeOfLine                aCallTOL = Aspect_TOL_DOT) const;
+    const Aspect_TypeOfLine                aProjTOL = Aspect_TypeOfLine::Aspect_TOL_DASH,
+    const Aspect_TypeOfLine                aCallTOL = Aspect_TypeOfLine::Aspect_TOL_DOT) const;
 
   //! Calculates the presentation aPres of the vertex
   //! aVertex and the point it defines, ProjPoint.
@@ -206,8 +206,8 @@ protected:
     const gp_Pnt&                          ProjPoint,
     const Quantity_NameOfColor             aColor   = Quantity_NOC_PURPLE,
     const double                           aWidth   = 2,
-    const Aspect_TypeOfMarker              aProjTOM = Aspect_TOM_PLUS,
-    const Aspect_TypeOfLine                aCallTOL = Aspect_TOL_DOT) const;
+    const Aspect_TypeOfMarker              aProjTOM = Aspect_TypeOfMarker::Aspect_TOM_PLUS,
+    const Aspect_TypeOfLine                aCallTOL = Aspect_TypeOfLine::Aspect_TOL_DOT) const;
 
 protected:
   TopoDS_Shape               myFShape;

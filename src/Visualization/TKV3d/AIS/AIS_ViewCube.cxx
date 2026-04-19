@@ -194,7 +194,7 @@ void AIS_ViewCube::setDefaultAttributes()
   aMat.SetAmbientColor(Quantity_NOC_GRAY60);
 
   const occ::handle<Graphic3d_AspectFillArea3d>& aShading = myDrawer->ShadingAspect()->Aspect();
-  aShading->SetInteriorStyle(Aspect_IS_SOLID);
+  aShading->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   // this should be forced back-face culling regardless Closed flag
   aShading->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_BackCulled);
   aShading->SetInteriorColor(aMat.Color());

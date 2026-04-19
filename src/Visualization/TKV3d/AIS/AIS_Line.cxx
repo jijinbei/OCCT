@@ -125,7 +125,7 @@ void AIS_Line::SetColor(const Quantity_Color& aCol)
 
   if (!myDrawer->HasOwnLineAspect())
   {
-    replaceWithNewLineAspect(new Prs3d_LineAspect(aCol, Aspect_TOL_SOLID, WW));
+    replaceWithNewLineAspect(new Prs3d_LineAspect(aCol, Aspect_TypeOfLine::Aspect_TOL_SOLID, WW));
   }
   else
   {
@@ -170,7 +170,7 @@ void AIS_Line::SetWidth(const double aValue)
       CC = myDrawer->Color();
     else if (myDrawer->HasLink())
       AIS_GraphicTool::GetLineColor(myDrawer->Link(), AIS_TOA_Line, CC);
-    replaceWithNewLineAspect(new Prs3d_LineAspect(CC, Aspect_TOL_SOLID, aValue));
+    replaceWithNewLineAspect(new Prs3d_LineAspect(CC, Aspect_TypeOfLine::Aspect_TOL_SOLID, aValue));
   }
   else
   {

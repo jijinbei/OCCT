@@ -30,20 +30,20 @@ namespace
 static std::atomic<int> THE_MARKER_IMAGE_COUNTER(0);
 
 //! Names of built-in markers
-static const char* THE_MARKER_NAMES[Aspect_TOM_USERDEFINED] = {
-  ".",     // Aspect_TOM_POINT
-  "+",     // Aspect_TOM_PLUS
-  "*",     // Aspect_TOM_STAR
-  "x",     // Aspect_TOM_X
-  "o",     // Aspect_TOM_O
-  "o.",    // Aspect_TOM_O_POINT
-  "o+",    // Aspect_TOM_O_PLUS
-  "o*",    // Aspect_TOM_O_STAR
-  "ox",    // Aspect_TOM_O_X
-  "ring1", // Aspect_TOM_RING1
-  "ring2", // Aspect_TOM_RING2
-  "ring3", // Aspect_TOM_RING3
-  "ball"   // Aspect_TOM_BALL
+static const char* THE_MARKER_NAMES[static_cast<int>(Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED)] = {
+  ".",     // Aspect_TypeOfMarker::Aspect_TOM_POINT
+  "+",     // Aspect_TypeOfMarker::Aspect_TOM_PLUS
+  "*",     // Aspect_TypeOfMarker::Aspect_TOM_STAR
+  "x",     // Aspect_TypeOfMarker::Aspect_TOM_X
+  "o",     // Aspect_TypeOfMarker::Aspect_TOM_O
+  "o.",    // Aspect_TypeOfMarker::Aspect_TOM_O_POINT
+  "o+",    // Aspect_TypeOfMarker::Aspect_TOM_O_PLUS
+  "o*",    // Aspect_TypeOfMarker::Aspect_TOM_O_STAR
+  "ox",    // Aspect_TypeOfMarker::Aspect_TOM_O_X
+  "ring1", // Aspect_TypeOfMarker::Aspect_TOM_RING1
+  "ring2", // Aspect_TypeOfMarker::Aspect_TOM_RING2
+  "ring3", // Aspect_TypeOfMarker::Aspect_TOM_RING3
+  "ball"   // Aspect_TypeOfMarker::Aspect_TOM_BALL
 };
 
 //! Returns a parameters for the marker of the specified type and scale.
@@ -54,7 +54,7 @@ static void getMarkerBitMapParam(const Aspect_TypeOfMarker theMarkerType,
                                  int&                      theOffset,
                                  int&                      theNumOfBytes)
 {
-  const int    aType   = int(theMarkerType > Aspect_TOM_O ? Aspect_TOM_O : theMarkerType);
+  const int    aType   = int(theMarkerType > Aspect_TypeOfMarker::Aspect_TOM_O ? Aspect_TypeOfMarker::Aspect_TOM_O : theMarkerType);
   const double anIndex = (double)(TEL_NO_OF_SIZES - 1) * (theScale - (double)TEL_PM_START_SIZE)
                          / (double)(TEL_PM_END_SIZE - TEL_PM_START_SIZE);
   int anId = (int)(anIndex + 0.5);
@@ -75,8 +75,8 @@ static void getMarkerBitMapParam(const Aspect_TypeOfMarker theMarkerType,
 }
 
 //! Merge two image pixmap into one. Used for creating image for following markers:
-//! Aspect_TOM_O_POINT, Aspect_TOM_O_PLUS, Aspect_TOM_O_STAR, Aspect_TOM_O_X, Aspect_TOM_RING1,
-//! Aspect_TOM_RING2, Aspect_TOM_RING3
+//! Aspect_TypeOfMarker::Aspect_TOM_O_POINT, Aspect_TypeOfMarker::Aspect_TOM_O_PLUS, Aspect_TypeOfMarker::Aspect_TOM_O_STAR, Aspect_TypeOfMarker::Aspect_TOM_O_X, Aspect_TypeOfMarker::Aspect_TOM_RING1,
+//! Aspect_TypeOfMarker::Aspect_TOM_RING2, Aspect_TypeOfMarker::Aspect_TOM_RING3
 static occ::handle<Image_PixMap> mergeImages(const occ::handle<Image_PixMap>& theImage1,
                                              const occ::handle<Image_PixMap>& theImage2)
 {
@@ -398,7 +398,7 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
   const float                    theScale,
   const NCollection_Vec4<float>& theColor)
 {
-  if (theMarkerType == Aspect_TOM_USERDEFINED || theMarkerType == Aspect_TOM_EMPTY)
+  if (theMarkerType == Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED || theMarkerType == Aspect_TypeOfMarker::Aspect_TOM_EMPTY)
   {
     return occ::handle<Graphic3d_MarkerImage>();
   }
@@ -406,10 +406,10 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
   // predefined markers are defined with 0.5 step
   const int               aScaleInt = int(theScale * 10.0f + 0.5f);
   TCollection_AsciiString aKey      = TCollection_AsciiString("Graphic3d_MarkerImage_")
-                                 + THE_MARKER_NAMES[theMarkerType] + "_" + aScaleInt;
+                                 + THE_MARKER_NAMES[static_cast<int>(theMarkerType)] + "_" + aScaleInt;
   TCollection_AsciiString aKeyA = TCollection_AsciiString("Graphic3d_MarkerImageAlpha_")
-                                  + THE_MARKER_NAMES[theMarkerType] + "_" + aScaleInt;
-  if (theMarkerType == Aspect_TOM_BALL)
+                                  + THE_MARKER_NAMES[static_cast<int>(theMarkerType)] + "_" + aScaleInt;
+  if (theMarkerType == Aspect_TypeOfMarker::Aspect_TOM_BALL)
   {
     unsigned int aColor[3] = {(unsigned int)(255.0f * theColor.r()),
                               (unsigned int)(255.0f * theColor.g()),
@@ -421,15 +421,15 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
 
   switch (theMarkerType)
   {
-    case Aspect_TOM_O_POINT:
-    case Aspect_TOM_O_PLUS:
-    case Aspect_TOM_O_STAR:
-    case Aspect_TOM_O_X: {
+    case Aspect_TypeOfMarker::Aspect_TOM_O_POINT:
+    case Aspect_TypeOfMarker::Aspect_TOM_O_PLUS:
+    case Aspect_TypeOfMarker::Aspect_TOM_O_STAR:
+    case Aspect_TypeOfMarker::Aspect_TOM_O_X: {
       // For this type of markers we merge two base bitmaps into one
-      // For example Aspect_TOM_O_PLUS = Aspect_TOM_O + Aspect_TOM_PLUS
-      occ::handle<Graphic3d_MarkerImage> aMarkerImage1 = getTextureImage(Aspect_TOM_O, theScale);
+      // For example Aspect_TypeOfMarker::Aspect_TOM_O_PLUS = Aspect_TypeOfMarker::Aspect_TOM_O + Aspect_TypeOfMarker::Aspect_TOM_PLUS
+      occ::handle<Graphic3d_MarkerImage> aMarkerImage1 = getTextureImage(Aspect_TypeOfMarker::Aspect_TOM_O, theScale);
       occ::handle<Graphic3d_MarkerImage> aMarkerImage2;
-      if (theMarkerType == Aspect_TOM_O_POINT)
+      if (theMarkerType == Aspect_TypeOfMarker::Aspect_TOM_O_POINT)
       {
         // draw inner point as filled rectangle
         const int                                 aSize = theScale > 7 ? 7 : (int)(theScale + 0.5F);
@@ -439,7 +439,10 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
       else
       {
         aMarkerImage2 =
-          getTextureImage(Aspect_TypeOfMarker(theMarkerType - Aspect_TOM_O_POINT), theScale);
+          getTextureImage(static_cast<Aspect_TypeOfMarker>(
+                            static_cast<int>(theMarkerType)
+                            - static_cast<int>(Aspect_TypeOfMarker::Aspect_TOM_O_POINT)),
+                          theScale);
       }
       occ::handle<Image_PixMap> anImage =
         mergeImages(aMarkerImage1->GetImage(), aMarkerImage2->GetImage());
@@ -447,21 +450,21 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
         new Graphic3d_MarkerImage(aKey, aKey, anImage);
       return aNewMarkerImage;
     }
-    case Aspect_TOM_RING1:
-    case Aspect_TOM_RING2:
-    case Aspect_TOM_RING3: {
+    case Aspect_TypeOfMarker::Aspect_TOM_RING1:
+    case Aspect_TypeOfMarker::Aspect_TOM_RING2:
+    case Aspect_TypeOfMarker::Aspect_TOM_RING3: {
       const float aDelta = 0.1f;
       float       aScale = theScale;
       float       aLimit = 0.0f;
-      if (theMarkerType == Aspect_TOM_RING1)
+      if (theMarkerType == Aspect_TypeOfMarker::Aspect_TOM_RING1)
       {
         aLimit = aScale * 0.2f;
       }
-      else if (theMarkerType == Aspect_TOM_RING2)
+      else if (theMarkerType == Aspect_TypeOfMarker::Aspect_TOM_RING2)
       {
         aLimit = aScale * 0.5f;
       }
-      else if (theMarkerType == Aspect_TOM_RING3)
+      else if (theMarkerType == Aspect_TypeOfMarker::Aspect_TOM_RING3)
       {
         aLimit = aScale * 0.8f;
       }
@@ -469,16 +472,16 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
       occ::handle<Image_PixMap> anImage;
       for (; aScale > aLimit && aScale >= 1.0f; aScale -= aDelta)
       {
-        anImage = mergeImages(anImage, getTextureImage(Aspect_TOM_O, aScale)->GetImage());
+        anImage = mergeImages(anImage, getTextureImage(Aspect_TypeOfMarker::Aspect_TOM_O, aScale)->GetImage());
       }
       occ::handle<Graphic3d_MarkerImage> aNewMarkerImage =
         new Graphic3d_MarkerImage(aKey, aKey, anImage);
       return aNewMarkerImage;
     }
-    case Aspect_TOM_BALL: {
+    case Aspect_TypeOfMarker::Aspect_TOM_BALL: {
       int   aWidth = 0, aHeight = 0, anOffset = 0, aNbBytes = 0;
       float aScale = theScale;
-      getMarkerBitMapParam(Aspect_TOM_O, aScale, aWidth, aHeight, anOffset, aNbBytes);
+      getMarkerBitMapParam(Aspect_TypeOfMarker::Aspect_TOM_O, aScale, aWidth, aHeight, anOffset, aNbBytes);
 
       NCollection_Vec4<double> aColor(theColor);
 
@@ -502,7 +505,7 @@ occ::handle<Graphic3d_MarkerImage> Graphic3d_MarkerImage::StandardMarker(
         aColor32.g() = static_cast<uint8_t>(255.0 * aColor.g());
         aColor32.b() = static_cast<uint8_t>(255.0 * aColor.b());
 
-        const occ::handle<Graphic3d_MarkerImage> aMarker = getTextureImage(Aspect_TOM_O, aScale);
+        const occ::handle<Graphic3d_MarkerImage> aMarker = getTextureImage(Aspect_TypeOfMarker::Aspect_TOM_O, aScale);
         const occ::handle<Image_PixMap>&         aCircle = aMarker->GetImage();
 
         const size_t aDiffX = (anImage->SizeX() - aCircle->SizeX()) / 2;

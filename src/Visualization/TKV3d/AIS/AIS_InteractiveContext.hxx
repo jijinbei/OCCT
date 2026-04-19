@@ -201,7 +201,7 @@ public: //! @name highlighting management
   //! only a small set of properties derived from it's base class Graphic3d_PresentationAttributes
   //! will be actually used in most cases.
   //!
-  //! Default highlight style for all types is Aspect_TOHM_COLOR. Other defaults:
+  //! Default highlight style for all types is Aspect_TypeOfHighlightMethod::Aspect_TOHM_COLOR. Other defaults:
   //!  - Prs3d_TypeOfHighlight_Dynamic
   //!    * Color: Quantity_NOC_CYAN1;
   //!    * Layer: Graphic3d_ZLayerId_Top,
@@ -1026,7 +1026,7 @@ public: //! @name common object display attributes
   //! is applying both on the front and back face.
   Standard_EXPORT void SetCurrentFacingModel(
     const occ::handle<AIS_InteractiveObject>& aniobj,
-    const Aspect_TypeOfFacingModel            aModel = Aspect_TOFM_BOTH_SIDE);
+    const Aspect_TypeOfFacingModel            aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE);
 
   //! Returns true if a view of the Interactive Object has color.
   Standard_EXPORT bool HasColor(const occ::handle<AIS_InteractiveObject>& aniobj) const;
@@ -1182,7 +1182,7 @@ public: //! @name HLR (Hidden Line Removal) display attributes
   //! Initializes hidden line aspect in the default drawing tool, or Drawer.
   //! The default values are:
   //! Color: Quantity_NOC_YELLOW
-  //! Type of line: Aspect_TOL_DASH
+  //! Type of line: Aspect_TypeOfLine::Aspect_TOL_DASH
   //! Width: 1.
   const occ::handle<Prs3d_LineAspect>& HiddenLineAspect() const
   {

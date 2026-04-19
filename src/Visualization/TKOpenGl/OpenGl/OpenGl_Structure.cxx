@@ -87,7 +87,7 @@ void OpenGl_Structure::renderBoundingBox(const occ::handle<OpenGl_Workspace>& th
       NCollection_Vec3<float>(aMin.x(), aMin.y(), aMax.z())};
 
     aCtx->ShaderManager()->BindLineProgram(occ::handle<OpenGl_TextureSet>(),
-                                           Aspect_TOL_SOLID,
+                                           Aspect_TypeOfLine::Aspect_TOL_SOLID,
                                            Graphic3d_TypeOfShadingModel_Unlit,
                                            Graphic3d_AlphaMode_Opaque,
                                            false,
@@ -436,7 +436,7 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
   const occ::handle<OpenGl_Context>& aCtx = theWorkspace->GetGlContext();
 
   // Render named status
-  if (highlight && !myHighlightStyle.IsNull() && myHighlightStyle->Method() != Aspect_TOHM_BOUNDBOX)
+  if (highlight && !myHighlightStyle.IsNull() && myHighlightStyle->Method() != Aspect_TypeOfHighlightMethod::Aspect_TOHM_BOUNDBOX)
   {
     theWorkspace->SetHighlightStyle(myHighlightStyle);
   }
@@ -609,7 +609,7 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
 
   // Apply highlight box
   if (!isClipped && !myHighlightStyle.IsNull()
-      && myHighlightStyle->Method() == Aspect_TOHM_BOUNDBOX)
+      && myHighlightStyle->Method() == Aspect_TypeOfHighlightMethod::Aspect_TOHM_BOUNDBOX)
   {
     aCtx->ApplyModelViewMatrix();
     theWorkspace->SetHighlightStyle(myHighlightStyle);

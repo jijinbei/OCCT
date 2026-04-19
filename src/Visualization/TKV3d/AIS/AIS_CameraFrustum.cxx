@@ -38,7 +38,7 @@ const Quantity_Color THE_DEFAULT_COLOR        = Quantity_NOC_WHITE;
 AIS_CameraFrustum::AIS_CameraFrustum()
     : myPoints(0, Graphic3d_Camera::FrustumVerticesNB)
 {
-  myDrawer->SetLineAspect(new Prs3d_LineAspect(THE_DEFAULT_COLOR, Aspect_TOL_SOLID, 1.0));
+  myDrawer->SetLineAspect(new Prs3d_LineAspect(THE_DEFAULT_COLOR, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
 
   occ::handle<Prs3d_ShadingAspect> aShadingAspect = new Prs3d_ShadingAspect();
   aShadingAspect->SetMaterial(Graphic3d_NameOfMaterial_Plastified);

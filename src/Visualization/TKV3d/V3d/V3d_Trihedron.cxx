@@ -100,7 +100,7 @@ V3d_Trihedron::V3d_Trihedron()
 
     // mark texture map ON to actually disable environment map
     myArrowShadingAspects[anIt]->Aspect()->SetTextureMapOn();
-    myArrowShadingAspects[anIt]->Aspect()->SetInteriorStyle(Aspect_IS_SOLID);
+    myArrowShadingAspects[anIt]->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
     myArrowShadingAspects[anIt]->SetMaterial(aShadingMaterial);
 
     myTextAspects[anIt]->SetFont(Font_NOF_ASCII_MONO);
@@ -119,7 +119,7 @@ V3d_Trihedron::V3d_Trihedron()
   mySphereShadingAspect = new Prs3d_ShadingAspect();
   // mark texture map ON to actually disable environment map
   mySphereShadingAspect->Aspect()->SetTextureMapOn();
-  mySphereShadingAspect->Aspect()->SetInteriorStyle(Aspect_IS_SOLID);
+  mySphereShadingAspect->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   mySphereShadingAspect->SetMaterial(aShadingMaterial);
   mySphereShadingAspect->SetColor(Quantity_NOC_WHITE);
 }

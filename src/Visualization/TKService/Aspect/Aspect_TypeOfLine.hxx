@@ -17,7 +17,7 @@
 #define _Aspect_TypeOfLine_HeaderFile
 
 //! Definition of line types
-enum Aspect_TypeOfLine
+enum class Aspect_TypeOfLine
 {
   Aspect_TOL_EMPTY = -1, //!< hidden
   Aspect_TOL_SOLID = 0,  //!< continuous

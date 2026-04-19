@@ -36,7 +36,7 @@ IMPLEMENT_STANDARD_RTTIEXT(Aspect_Window, Standard_Transient)
 //-Destructors
 //-Constructors
 Aspect_Window::Aspect_Window()
-    : MyBackgroundFillMethod(Aspect_FM_NONE)
+    : MyBackgroundFillMethod(Aspect_FillMethod::Aspect_FM_NONE)
 {
 }
 
@@ -98,6 +98,6 @@ void Aspect_Window::DumpJson(Standard_OStream& theOStream, int theDepth) const
   OCCT_DUMP_FIELD_VALUES_DUMPED(theOStream, theDepth, &MyBackground)
   OCCT_DUMP_FIELD_VALUES_DUMPED(theOStream, theDepth, &MyGradientBackground)
 
-  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, MyBackgroundFillMethod)
+  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, static_cast<int>(MyBackgroundFillMethod))
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, MyIsVirtual)
 }

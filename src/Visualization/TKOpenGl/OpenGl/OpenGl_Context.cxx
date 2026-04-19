@@ -195,9 +195,9 @@ OpenGl_Context::OpenGl_Context(const occ::handle<OpenGl_Caps>& theCaps)
       myFuncs(new OpenGl_GlFunctions()),
       myGapi(
 #if defined(OCC_USE_GLES2)
-        Aspect_GraphicsLibrary_OpenGLES
+        Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
 #else
-        Aspect_GraphicsLibrary_OpenGL
+        Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL
 #endif
         ),
       mySupportedFormats(new Image_SupportedFormats()),
@@ -232,7 +232,7 @@ OpenGl_Context::OpenGl_Context(const occ::handle<OpenGl_Caps>& theCaps)
       myDepthPeelingFrontColorTexUnit(Graphic3d_TextureUnit_DepthPeelingFrontColor),
       myFrameStats(new OpenGl_FrameStats()),
       myActiveMockTextures(0),
-      myActiveHatchType(Aspect_HS_SOLID),
+      myActiveHatchType(static_cast<int>(Aspect_HatchStyle::Aspect_HS_SOLID)),
       myHatchIsEnabled(false),
       myPointSpriteOrig(GL_UPPER_LEFT),
       myRenderMode(GL_RENDER),
@@ -358,11 +358,11 @@ OpenGl_Context::~OpenGl_Context()
   {
     // reset callback
     void* aPtr = nullptr;
-    if (myGapi == Aspect_GraphicsLibrary_OpenGL)
+    if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL)
     {
       myFuncs->glGetPointerv(GL_DEBUG_CALLBACK_USER_PARAM, &aPtr);
     }
-    if (aPtr == this || myGapi != Aspect_GraphicsLibrary_OpenGL)
+    if (aPtr == this || myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL)
     {
       arbDbg->glDebugMessageCallback(nullptr, nullptr);
     }
@@ -438,7 +438,7 @@ static int stereoToMonoBuffer(const int theBuffer)
 
 void OpenGl_Context::SetReadBuffer(const int theReadBuffer)
 {
-  if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     return;
   }
@@ -455,7 +455,7 @@ void OpenGl_Context::SetReadBuffer(const int theReadBuffer)
 
 void OpenGl_Context::SetDrawBuffer(const int theDrawBuffer)
 {
-  if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     return;
   }
@@ -565,7 +565,7 @@ void OpenGl_Context::SetFaceCulling(Graphic3d_TypeOfBackfacingModel theMode)
 
 void OpenGl_Context::FetchState()
 {
-  if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     return;
   }
@@ -855,7 +855,7 @@ bool OpenGl_Context::CheckExtension(const char* theExtName) const
 
   // available since OpenGL 3.0
   // and the ONLY way to check extensions with OpenGL 3.1+ core profile
-  if (myGapi == Aspect_GraphicsLibrary_OpenGL && IsGlGreaterEqual(3, 0)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL && IsGlGreaterEqual(3, 0)
       && myFuncs->glGetStringi != nullptr)
   {
     GLint anExtNb = 0;
@@ -1200,7 +1200,7 @@ void OpenGl_Context::checkWrongVersion(int         theGlVerMajor,
     return;
   }
 
-  if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     switch (theGlVerMajor)
     {
@@ -1254,7 +1254,7 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
     {
       isLowered    = true;
       myGlVerMajor = caps->contextMajorVersionUpper;
-      if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+      if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         switch (myGlVerMajor)
         {
@@ -1330,13 +1330,13 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
 
   // workaround Adreno driver bug computing reversed normal using dFdx/dFdy
   bool toReverseDFdxSign =
-    myGapi == Aspect_GraphicsLibrary_OpenGLES && myVendor.Search("qualcomm") != -1;
+    myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES && myVendor.Search("qualcomm") != -1;
   myShaderManager->SetFlatShading(hasFlatShading != OpenGl_FeatureNotAvailable, toReverseDFdxSign);
-  myShaderManager->SetUseRedAlpha(myGapi != Aspect_GraphicsLibrary_OpenGLES
+  myShaderManager->SetUseRedAlpha(myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                                   && core11ffp == nullptr);
 #define checkGlslExtensionShort(theName)                                                           \
   myShaderManager->EnableGlslExtension(Graphic3d_GlslExtension_##theName, CheckExtension(#theName))
-  if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     checkGlslExtensionShort(GL_OES_standard_derivatives);
     checkGlslExtensionShort(GL_EXT_shader_texture_lod);
@@ -1353,7 +1353,7 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
     // setup default callback
     myIsGlDebugCtx = true;
     arbDbg->glDebugMessageCallback(debugCallbackWrap, this);
-    if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+    if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       core11fwd->glEnable(GL_DEBUG_OUTPUT);
     }
@@ -1411,7 +1411,7 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
 
   myClippingState.Init();
 
-  if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     if (IsGlGreaterEqual(3, 0))
     {
@@ -1444,7 +1444,7 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
     myHasMsaaTextures = false;
   }
 
-  if (myGapi != Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     if (core32 != nullptr && core11ffp == nullptr)
     {
@@ -1461,7 +1461,7 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
     core11fwd->glGetIntegerv(GL_MAX_CLIP_PLANES, &myMaxClipPlanes);
   }
 
-  if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     // check whether ray tracing mode is supported
     myHasRayTracing                         = IsGlGreaterEqual(3, 2);
@@ -1487,10 +1487,10 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
     // Detect if window buffer is considered by OpenGL as sRGB-ready
     // (linear RGB color written by shader is automatically converted into sRGB)
     // or not (offscreen FBO should be blit into window buffer with gamma correction).
-    const GLenum aDefWinBuffer = myGapi == Aspect_GraphicsLibrary_OpenGLES ? GL_BACK : GL_BACK_LEFT;
+    const GLenum aDefWinBuffer = myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES ? GL_BACK : GL_BACK_LEFT;
     GLint        aWinColorEncoding = 0; // GL_LINEAR
     bool         toSkipCheck       = false;
-    if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+    if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       toSkipCheck = !IsGlGreaterEqual(3, 0);
     }
@@ -1510,7 +1510,7 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
     // NVIDIA drivers, however, always return GL_LINEAR even for sRGB-ready pixel formats on Windows
     // platform, while AMD and Intel report GL_SRGB as expected. macOS drivers seems to be also
     // report GL_LINEAR even for [NSColorSpace sRGBColorSpace].
-    if (myGapi != Aspect_GraphicsLibrary_OpenGLES)
+    if (myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
 #ifdef __APPLE__
       myIsSRgbWindow = true;
@@ -1541,7 +1541,7 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
   mySupportedFormats->Add(Image_Format_RGBA);
   if (extBgra)
   {
-    if (myGapi != Aspect_GraphicsLibrary_OpenGLES)
+    if (myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       // no BGR on OpenGL ES - only BGRA as extension
       mySupportedFormats->Add(Image_Format_BGR);
@@ -1574,7 +1574,7 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
     }
     if (extBgra)
     {
-      if (myGapi != Aspect_GraphicsLibrary_OpenGLES)
+      if (myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         mySupportedFormats->Add(Image_Format_BGRF);
       }
@@ -1625,7 +1625,7 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
   myHasPBR = false;
   if (arbFBO != nullptr && myMaxTexCombined >= 4 && arbTexFloat)
   {
-    if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+    if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       myHasPBR = IsGlGreaterEqual(3, 0) || hasHighp;
       // || CheckExtension ("GL_EXT_shader_texture_lod") fallback is used when extension is
@@ -1837,7 +1837,7 @@ void OpenGl_Context::MemoryInfo(
 void OpenGl_Context::WindowBufferBits(NCollection_Vec4<int>& theColorBits,
                                       NCollection_Vec2<int>& theDepthStencilBits) const
 {
-  if (core11ffp != nullptr || myGapi == Aspect_GraphicsLibrary_OpenGLES)
+  if (core11ffp != nullptr || myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     // removed from core with no working alternative
     core11fwd->glGetIntegerv(GL_RED_BITS, &theColorBits.r());
@@ -2005,7 +2005,7 @@ void OpenGl_Context::DiagnosticInformation(
 
   if ((theFlags & Graphic3d_DiagnosticInfo_Extensions) != 0)
   {
-    if (myGapi != Aspect_GraphicsLibrary_OpenGLES && IsGlGreaterEqual(3, 0)
+    if (myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES && IsGlGreaterEqual(3, 0)
         && myFuncs->glGetStringi != nullptr)
     {
       TCollection_AsciiString anExtList;
@@ -2368,8 +2368,8 @@ void OpenGl_Context::SetShadingMaterial(
                                                 : ShortRealLast();
   if (anAspect->ToDrawEdges())
   {
-    if (anAspect->InteriorStyle() == Aspect_IS_EMPTY
-        || (anAspect->InteriorStyle() == Aspect_IS_SOLID
+    if (anAspect->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_EMPTY
+        || (anAspect->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_SOLID
             && anAspect->EdgeColorRGBA().Alpha() < 1.0f))
     {
       anAlphaCutoff = 0.285f;
@@ -2502,7 +2502,7 @@ void OpenGl_Context::SetLineStipple(const float theFactor, const uint16_t thePat
 
 void OpenGl_Context::SetLineWidth(const float theWidth)
 {
-  if (myGapi == Aspect_GraphicsLibrary_OpenGLES || core11ffp != nullptr)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES || core11ffp != nullptr)
   {
     // glLineWidth() is still defined within Core Profile, but has no effect with values != 1.0f
     core11fwd->glLineWidth(theWidth * myLineWidthScale);
@@ -2582,12 +2582,12 @@ void OpenGl_Context::SetPointSize(const float theSize)
     myActiveProgram->SetUniform(this,
                                 myActiveProgram->GetStateLocation(OpenGl_OCCT_POINT_SIZE),
                                 theSize);
-    // if (myGapi == Aspect_GraphicsLibrary_OpenGL)
+    // if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL)
     // core11fwd->glEnable (GL_VERTEX_PROGRAM_POINT_SIZE);
   }
   // else
 
-  if (myGapi != Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     core11fwd->glPointSize(theSize);
     if (core20fwd != nullptr)
@@ -2601,7 +2601,7 @@ void OpenGl_Context::SetPointSize(const float theSize)
 
 void OpenGl_Context::SetPointSpriteOrigin()
 {
-  if (myGapi == Aspect_GraphicsLibrary_OpenGLES || core15fwd == nullptr)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES || core15fwd == nullptr)
   {
     return;
   }
@@ -2671,7 +2671,7 @@ int OpenGl_Context::SetPolygonMode(const int theMode)
 
   const int anOldPolygonMode = myPolygonMode;
   myPolygonMode              = theMode;
-  if (myGapi != Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     core11fwd->glPolygonMode(GL_FRONT_AND_BACK, (GLenum)theMode);
   }
@@ -2692,7 +2692,7 @@ bool OpenGl_Context::SetPolygonHatchEnabled(const bool theIsEnabled)
   }
 
   const bool anOldIsEnabled = myHatchIsEnabled;
-  if (theIsEnabled && myActiveHatchType != Aspect_HS_SOLID)
+  if (theIsEnabled && myActiveHatchType != static_cast<int>(Aspect_HatchStyle::Aspect_HS_SOLID))
   {
     core11fwd->glEnable(GL_POLYGON_STIPPLE);
   }
@@ -2709,13 +2709,13 @@ bool OpenGl_Context::SetPolygonHatchEnabled(const bool theIsEnabled)
 
 int OpenGl_Context::SetPolygonHatchStyle(const occ::handle<Graphic3d_HatchStyle>& theStyle)
 {
-  const int aNewStyle = !theStyle.IsNull() ? theStyle->HatchType() : Aspect_HS_SOLID;
+  const int aNewStyle = !theStyle.IsNull() ? theStyle->HatchType() : static_cast<int>(Aspect_HatchStyle::Aspect_HS_SOLID);
   if (myActiveHatchType == aNewStyle || core11ffp == nullptr)
   {
     return myActiveHatchType;
   }
 
-  if (aNewStyle == Aspect_HS_SOLID)
+  if (aNewStyle == static_cast<int>(Aspect_HatchStyle::Aspect_HS_SOLID))
   {
     if (myHatchIsEnabled)
     {
@@ -2734,7 +2734,7 @@ int OpenGl_Context::SetPolygonHatchStyle(const occ::handle<Graphic3d_HatchStyle>
   const int anOldType = myActiveHatchType;
   myActiveHatchType   = aNewStyle;
   myHatchStyles->SetTypeOfHatch(this, theStyle);
-  if (myHatchIsEnabled && anOldType == Aspect_HS_SOLID)
+  if (myHatchIsEnabled && anOldType == static_cast<int>(Aspect_HatchStyle::Aspect_HS_SOLID))
   {
     core11fwd->glEnable(GL_POLYGON_STIPPLE);
   }
@@ -2759,7 +2759,7 @@ void OpenGl_Context::SetPolygonOffset(const Graphic3d_PolygonOffset& theOffset)
     }
   }
 
-  if (myGapi != Aspect_GraphicsLibrary_OpenGLES)
+  if (myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     const bool toLineOld = (myPolygonOffset.Mode & Aspect_POM_Line) == Aspect_POM_Line;
     const bool toLineNew = (theOffset.Mode & Aspect_POM_Line) == Aspect_POM_Line;

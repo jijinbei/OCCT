@@ -17,7 +17,7 @@
 #define _Aspect_TypeOfColorScaleOrientation_HeaderFile
 
 //! Defines the type of color scale orientation
-enum Aspect_TypeOfColorScaleOrientation
+enum class Aspect_TypeOfColorScaleOrientation
 {
   Aspect_TOCSO_NONE,
   Aspect_TOCSO_LEFT,

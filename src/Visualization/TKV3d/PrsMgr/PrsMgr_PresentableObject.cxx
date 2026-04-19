@@ -47,7 +47,7 @@ PrsMgr_PresentableObject::PrsMgr_PresentableObject(const PrsMgr_TypeOfPresentati
       myTypeOfPresentation3d(theType),
       myDisplayStatus(PrsMgr_DisplayStatus_None),
       //
-      myCurrentFacingModel(Aspect_TOFM_BOTH_SIDE),
+      myCurrentFacingModel(Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE),
       myOwnWidth(0.0f),
       hasOwnColor(false),
       hasOwnMaterial(false),

@@ -40,7 +40,7 @@ void DsgPrs_TangentPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   // Aspect
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
-  LA->LineAspect()->SetTypeOfLine(Aspect_TOL_SOLID);
+  LA->LineAspect()->SetTypeOfLine(Aspect_TypeOfLine::Aspect_TOL_SOLID);
   occ::handle<Prs3d_ArrowAspect> ARR1 = LA->ArrowAspect();
   occ::handle<Prs3d_ArrowAspect> ARR2 = LA->ArrowAspect();
   ARR1->SetLength(length / 5);

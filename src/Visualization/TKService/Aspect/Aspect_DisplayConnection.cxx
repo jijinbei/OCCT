@@ -116,7 +116,7 @@ void Aspect_DisplayConnection::Init(Aspect_XDisplay* theDisplay)
   else
   {
     myIsOwnDisplay = theDisplay == nullptr;
-    myAtoms.Bind(Aspect_XA_DELETE_WINDOW,
+    myAtoms.Bind(Aspect_XAtom::Aspect_XA_DELETE_WINDOW,
                  (uint64_t)XInternAtom((Display*)myDisplay, "WM_DELETE_WINDOW", False));
   }
 #else

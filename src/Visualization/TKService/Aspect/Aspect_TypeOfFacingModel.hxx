@@ -16,7 +16,7 @@
 #ifndef _Aspect_TypeOfFacingModel_HeaderFile
 #define _Aspect_TypeOfFacingModel_HeaderFile
 
-enum Aspect_TypeOfFacingModel
+enum class Aspect_TypeOfFacingModel
 {
   Aspect_TOFM_BOTH_SIDE,
   Aspect_TOFM_BACK_SIDE,

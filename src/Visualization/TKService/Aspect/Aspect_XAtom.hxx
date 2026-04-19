@@ -19,7 +19,7 @@
 //! Defines custom identifiers(atoms) for X window custom named properties
 //!
 //! Category: Instantiated classes
-enum Aspect_XAtom
+enum class Aspect_XAtom
 {
   Aspect_XA_DELETE_WINDOW
 };

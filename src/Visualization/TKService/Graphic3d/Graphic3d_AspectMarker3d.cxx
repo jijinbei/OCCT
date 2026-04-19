@@ -23,7 +23,7 @@ Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d()
 {
   myShadingModel = Graphic3d_TypeOfShadingModel_Unlit;
   myInteriorColor.SetRGB(Quantity_NOC_YELLOW);
-  myMarkerType  = Aspect_TOM_X;
+  myMarkerType  = Aspect_TypeOfMarker::Aspect_TOM_X;
   myMarkerScale = 1.0f;
 }
 
@@ -49,7 +49,7 @@ Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d(
 {
   myShadingModel = Graphic3d_TypeOfShadingModel_Unlit;
   myMarkerImage  = new Graphic3d_MarkerImage(theTextureBitMap, theWidth, theHeight);
-  myInteriorColor.SetRGB(theColor), myMarkerType = Aspect_TOM_USERDEFINED;
+  myInteriorColor.SetRGB(theColor), myMarkerType = Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED;
   myMarkerScale = 1.0f;
 }
 
@@ -60,7 +60,7 @@ Graphic3d_AspectMarker3d::Graphic3d_AspectMarker3d(const occ::handle<Image_PixMa
   myShadingModel = Graphic3d_TypeOfShadingModel_Unlit;
   myMarkerImage  = new Graphic3d_MarkerImage(theTextureImage);
   myInteriorColor.SetRGB(Quantity_NOC_YELLOW);
-  myMarkerType  = Aspect_TOM_USERDEFINED;
+  myMarkerType  = Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED;
   myMarkerScale = 1.0f;
 }
 

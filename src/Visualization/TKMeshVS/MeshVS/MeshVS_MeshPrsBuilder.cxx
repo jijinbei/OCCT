@@ -1111,7 +1111,7 @@ void MeshVS_MeshPrsBuilder::DrawArrays(
     {
       aLGroup->SetPrimitivesAspect(theFillAsp);
       aLGroup->SetPrimitivesAspect(
-        new Graphic3d_AspectLine3d(anEdgeColor, Aspect_TOL_SOLID, aWidth));
+        new Graphic3d_AspectLine3d(anEdgeColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, aWidth));
     }
     aLGroup->AddPrimitiveArray(theLines);
   }

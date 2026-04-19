@@ -1038,12 +1038,12 @@ bool OpenGl_View::addRaytracePolygonArray(OpenGl_TriangleSet&                   
 TCollection_AsciiString OpenGl_View::ShaderSource::Source(const occ::handle<OpenGl_Context>& theCtx,
                                                           const GLenum theType) const
 {
-  TCollection_AsciiString aVersion = theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+  TCollection_AsciiString aVersion = theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                                        ? "#version 320 es\n"
                                        : "#version 140\n";
 
   TCollection_AsciiString aPrecisionHeader;
-  if (theType == GL_FRAGMENT_SHADER && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+  if (theType == GL_FRAGMENT_SHADER && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     aPrecisionHeader = theCtx->hasHighp ? "precision highp float;\n"
                                           "precision highp int;\n"
@@ -1528,7 +1528,7 @@ bool OpenGl_View::initRaytraceResources(const int                          theSi
   {
     myAccumFrames = 0; // accumulation should be restarted
 
-    if (theGlContext->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+    if (theGlContext->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       if (!theGlContext->IsGlGreaterEqual(3, 2))
       {
@@ -2202,7 +2202,7 @@ void OpenGl_View::updatePerspCameraPT(const NCollection_Mat4<float>& theOrientat
 // =======================================================================
 bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlContext)
 {
-  if (theGlContext->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+  if (theGlContext->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     if (!theGlContext->IsGlGreaterEqual(3, 2))
     {

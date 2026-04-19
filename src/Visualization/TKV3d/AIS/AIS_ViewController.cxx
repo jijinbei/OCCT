@@ -67,8 +67,8 @@ AIS_ViewController::AIS_ViewController()
       myXRPrsDevices(0, 0),
       myXRLaserTeleColor(Quantity_NOC_GREEN),
       myXRLaserPickColor(Quantity_NOC_BLUE),
-      myXRLastTeleportHand(Aspect_XRTrackedDeviceRole_Other),
-      myXRLastPickingHand(Aspect_XRTrackedDeviceRole_Other),
+      myXRLastTeleportHand(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other),
+      myXRLastPickingHand(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other),
       myXRLastPickDepthLeft(Precision::Infinite()),
       myXRLastPickDepthRight(Precision::Infinite()),
       myXRTurnAngle(M_PI_4),
@@ -111,7 +111,7 @@ AIS_ViewController::AIS_ViewController()
   myAnchorPointPrs2->SetMutable(true);
 
   myRubberBand =
-    new AIS_RubberBand(Quantity_NOC_LIGHTBLUE, Aspect_TOL_SOLID, Quantity_NOC_LIGHTBLUE4, 0.5, 1.0);
+    new AIS_RubberBand(Quantity_NOC_LIGHTBLUE, Aspect_TypeOfLine::Aspect_TOL_SOLID, Quantity_NOC_LIGHTBLUE4, 0.5, 1.0);
   myRubberBand->SetZLayer(Graphic3d_ZLayerId_TopOSD);
   myRubberBand->SetTransformPersistence(
     new Graphic3d_TransformPers(Graphic3d_TMF_2d, Aspect_TOTP_LEFT_UPPER));
@@ -2504,12 +2504,12 @@ void AIS_ViewController::handleXRTurnPad(const occ::handle<AIS_InteractiveContex
   for (int aHand = 0; aHand < 2; ++aHand)
   {
     const Aspect_XRTrackedDeviceRole aRole =
-      aHand == 0 ? Aspect_XRTrackedDeviceRole_RightHand : Aspect_XRTrackedDeviceRole_LeftHand;
+      aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand;
     const occ::handle<Aspect_XRAction>& aPadClickAct =
-      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction_InputTrackPadClick);
+      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadClick);
     const occ::handle<Aspect_XRAction>& aPadPosAct =
       theView->View()->XRSession()->GenericAction(aRole,
-                                                  Aspect_XRGenericAction_InputTrackPadPosition);
+                                                  Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadPosition);
     if (aPadClickAct.IsNull() || aPadPosAct.IsNull())
     {
       continue;
@@ -2543,11 +2543,11 @@ void AIS_ViewController::handleXRTeleport(const occ::handle<AIS_InteractiveConte
 
   // teleport on forward trackpad unclicks
   const Aspect_XRTrackedDeviceRole aTeleOld = myXRLastTeleportHand;
-  myXRLastTeleportHand                      = Aspect_XRTrackedDeviceRole_Other;
+  myXRLastTeleportHand                      = Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other;
   for (int aHand = 0; aHand < 2; ++aHand)
   {
     const Aspect_XRTrackedDeviceRole aRole =
-      aHand == 0 ? Aspect_XRTrackedDeviceRole_RightHand : Aspect_XRTrackedDeviceRole_LeftHand;
+      aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand;
     const int aDeviceId = theView->View()->XRSession()->NamedTrackedDevice(aRole);
     if (aDeviceId == -1)
     {
@@ -2555,10 +2555,10 @@ void AIS_ViewController::handleXRTeleport(const occ::handle<AIS_InteractiveConte
     }
 
     const occ::handle<Aspect_XRAction>& aPadClickAct =
-      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction_InputTrackPadClick);
+      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadClick);
     const occ::handle<Aspect_XRAction>& aPadPosAct =
       theView->View()->XRSession()->GenericAction(aRole,
-                                                  Aspect_XRGenericAction_InputTrackPadPosition);
+                                                  Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadPosition);
     if (aPadClickAct.IsNull() || aPadPosAct.IsNull())
     {
       continue;
@@ -2581,7 +2581,7 @@ void AIS_ViewController::handleXRTeleport(const occ::handle<AIS_InteractiveConte
       }
 
       myXRLastTeleportHand = aRole;
-      double& aPickDepth   = aRole == Aspect_XRTrackedDeviceRole_LeftHand ? myXRLastPickDepthLeft
+      double& aPickDepth   = aRole == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand ? myXRLastPickDepthLeft
                                                                           : myXRLastPickDepthRight;
       aPickDepth           = Precision::Infinite();
       NCollection_Vec3<float> aPickNorm;
@@ -2602,7 +2602,7 @@ void AIS_ViewController::handleXRTeleport(const occ::handle<AIS_InteractiveConte
       }
       if (isClicked)
       {
-        myXRLastTeleportHand = Aspect_XRTrackedDeviceRole_Other;
+        myXRLastTeleportHand = Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other;
         if (!Precision::IsInfinite(aPickDepth))
         {
           const gp_Dir aTeleDir = -gp::DZ().Transformed(aHandBase);
@@ -2642,20 +2642,20 @@ void AIS_ViewController::handleXRTeleport(const occ::handle<AIS_InteractiveConte
 
   if (myXRLastTeleportHand != aTeleOld)
   {
-    if (aTeleOld != Aspect_XRTrackedDeviceRole_Other)
+    if (aTeleOld != Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other)
     {
       if (const occ::handle<Aspect_XRAction>& aHaptic =
             theView->View()->XRSession()->GenericAction(aTeleOld,
-                                                        Aspect_XRGenericAction_OutputHaptic))
+                                                        Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
       {
         theView->View()->XRSession()->AbortHapticVibrationAction(aHaptic);
       }
     }
-    if (myXRLastTeleportHand != Aspect_XRTrackedDeviceRole_Other)
+    if (myXRLastTeleportHand != Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other)
     {
       if (const occ::handle<Aspect_XRAction>& aHaptic =
             theView->View()->XRSession()->GenericAction(myXRLastTeleportHand,
-                                                        Aspect_XRGenericAction_OutputHaptic))
+                                                        Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
       {
         theView->View()->XRSession()->TriggerHapticVibrationAction(aHaptic, myXRTeleportHaptic);
       }
@@ -2675,15 +2675,15 @@ void AIS_ViewController::handleXRPicking(const occ::handle<AIS_InteractiveContex
 
   // handle selection on trigger clicks
   Aspect_XRTrackedDeviceRole aPickDevOld = myXRLastPickingHand;
-  myXRLastPickingHand                    = Aspect_XRTrackedDeviceRole_Other;
+  myXRLastPickingHand                    = Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other;
   for (int aHand = 0; aHand < 2; ++aHand)
   {
     const Aspect_XRTrackedDeviceRole aRole =
-      aHand == 0 ? Aspect_XRTrackedDeviceRole_RightHand : Aspect_XRTrackedDeviceRole_LeftHand;
+      aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand;
     const occ::handle<Aspect_XRAction>& aTrigClickAct =
-      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction_InputTriggerClick);
+      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction::Aspect_XRGenericAction_InputTriggerClick);
     const occ::handle<Aspect_XRAction>& aTrigPullAct =
-      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction_InputTriggerPull);
+      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction::Aspect_XRGenericAction_InputTriggerPull);
     if (aTrigClickAct.IsNull() || aTrigPullAct.IsNull())
     {
       continue;
@@ -2703,7 +2703,7 @@ void AIS_ViewController::handleXRPicking(const occ::handle<AIS_InteractiveContex
         OnSelectionChanged(theCtx, theView);
         if (const occ::handle<Aspect_XRAction>& aHaptic =
               theView->View()->XRSession()->GenericAction(myXRLastPickingHand,
-                                                          Aspect_XRGenericAction_OutputHaptic))
+                                                          Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
         {
           theView->View()->XRSession()->TriggerHapticVibrationAction(aHaptic, myXRSelectHaptic);
         }
@@ -3277,8 +3277,8 @@ int AIS_ViewController::handleXRMoveTo(const occ::handle<AIS_InteractiveContext>
 void AIS_ViewController::handleXRHighlight(const occ::handle<AIS_InteractiveContext>& theCtx,
                                            const occ::handle<V3d_View>&               theView)
 {
-  if (myXRLastPickingHand != Aspect_XRTrackedDeviceRole_LeftHand
-      && myXRLastPickingHand != Aspect_XRTrackedDeviceRole_RightHand)
+  if (myXRLastPickingHand != Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
+      && myXRLastPickingHand != Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand)
   {
     return;
   }
@@ -3301,13 +3301,13 @@ void AIS_ViewController::handleXRHighlight(const occ::handle<AIS_InteractiveCont
   {
     if (const occ::handle<Aspect_XRAction>& aHaptic =
           theView->View()->XRSession()->GenericAction(myXRLastPickingHand,
-                                                      Aspect_XRGenericAction_OutputHaptic))
+                                                      Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
     {
       theView->View()->XRSession()->TriggerHapticVibrationAction(aHaptic, myXRPickingHaptic);
     }
   }
 
-  double& aPickDepth = myXRLastPickingHand == Aspect_XRTrackedDeviceRole_LeftHand
+  double& aPickDepth = myXRLastPickingHand == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
                          ? myXRLastPickDepthLeft
                          : myXRLastPickDepthRight;
   aPickDepth         = Precision::Infinite();
@@ -3356,11 +3356,11 @@ void AIS_ViewController::handleXRPresentations(const occ::handle<AIS_Interactive
   }
 
   const int aHeadDevice =
-    theView->View()->XRSession()->NamedTrackedDevice(Aspect_XRTrackedDeviceRole_Head);
+    theView->View()->XRSession()->NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Head);
   const int aLeftDevice =
-    theView->View()->XRSession()->NamedTrackedDevice(Aspect_XRTrackedDeviceRole_LeftHand);
+    theView->View()->XRSession()->NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand);
   const int aRightDevice =
-    theView->View()->XRSession()->NamedTrackedDevice(Aspect_XRTrackedDeviceRole_RightHand);
+    theView->View()->XRSession()->NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand);
   for (int aDeviceIter = theView->View()->XRSession()->TrackedPoses().Lower();
        aDeviceIter <= theView->View()->XRSession()->TrackedPoses().Upper();
        ++aDeviceIter)
@@ -3383,14 +3383,14 @@ void AIS_ViewController::handleXRPresentations(const occ::handle<AIS_Interactive
       continue;
     }
 
-    Aspect_XRTrackedDeviceRole aRole = Aspect_XRTrackedDeviceRole_Other;
+    Aspect_XRTrackedDeviceRole aRole = Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other;
     if (aDeviceIter == aLeftDevice)
     {
-      aRole = Aspect_XRTrackedDeviceRole_LeftHand;
+      aRole = Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand;
     }
     else if (aDeviceIter == aRightDevice)
     {
-      aRole = Aspect_XRTrackedDeviceRole_RightHand;
+      aRole = Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand;
     }
 
     if (!aPosePrs.IsNull() && aPosePrs->UnitFactor() != (float)theView->View()->UnitFactor())
@@ -3439,7 +3439,7 @@ void AIS_ViewController::handleXRPresentations(const occ::handle<AIS_Interactive
     double aLaserLen = 0.0;
     if (isHand && aPosePrs->Role() == myXRLastPickingHand)
     {
-      aLaserLen = myXRLastPickingHand == Aspect_XRTrackedDeviceRole_LeftHand
+      aLaserLen = myXRLastPickingHand == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
                     ? myXRLastPickDepthLeft
                     : myXRLastPickDepthRight;
       if (Precision::IsInfinite(aLaserLen))
@@ -3458,7 +3458,7 @@ void AIS_ViewController::handleXRPresentations(const occ::handle<AIS_Interactive
     }
     else if (isHand && aPosePrs->Role() == myXRLastTeleportHand)
     {
-      aLaserLen = myXRLastTeleportHand == Aspect_XRTrackedDeviceRole_LeftHand
+      aLaserLen = myXRLastTeleportHand == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
                     ? myXRLastPickDepthLeft
                     : myXRLastPickDepthRight;
       if (Precision::IsInfinite(aLaserLen))

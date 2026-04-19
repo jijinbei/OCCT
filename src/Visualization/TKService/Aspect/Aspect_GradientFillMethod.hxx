@@ -17,7 +17,7 @@
 #define _Aspect_GradientFillMethod_HeaderFile
 
 //! Defines the fill methods to write gradient background in a window.
-enum Aspect_GradientFillMethod
+enum class Aspect_GradientFillMethod
 {
   Aspect_GradientFillMethod_None,       //!< fill method not specified
   Aspect_GradientFillMethod_Horizontal, //!< gradient directed from left (Color1) to right (Color2)

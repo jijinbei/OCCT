@@ -43,7 +43,7 @@ OpenGl_Aspects::OpenGl_Aspects()
     : myAspect(new Graphic3d_Aspects()),
       myShadingModel(Graphic3d_TypeOfShadingModel_Unlit)
 {
-  myAspect->SetInteriorStyle(Aspect_IS_SOLID);
+  myAspect->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   myAspect->SetInteriorColor(Quantity_NOC_WHITE);
   myAspect->SetEdgeColor(Quantity_NOC_WHITE);
   myAspect->SetFrontMaterial(THE_DEFAULT_MATERIAL);

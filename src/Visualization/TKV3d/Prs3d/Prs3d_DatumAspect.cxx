@@ -37,7 +37,7 @@ Prs3d_DatumAspect::Prs3d_DatumAspect()
   myAttributes[Prs3d_DatumAttribute_ShadingOriginRadiusPercent] = 0.015;
   myAttributes[Prs3d_DatumAttribute_ShadingNumberOfFacettes]    = 12.0;
 
-  myPointAspect = new Prs3d_PointAspect(Aspect_TOM_EMPTY, aDefaultColor, 1.0);
+  myPointAspect = new Prs3d_PointAspect(Aspect_TypeOfMarker::Aspect_TOM_EMPTY, aDefaultColor, 1.0);
   myArrowAspect = new Prs3d_ArrowAspect();
   for (int aPartIter = Prs3d_DatumParts_Origin; aPartIter <= Prs3d_DatumParts_XOZAxis; ++aPartIter)
   {
@@ -51,7 +51,7 @@ Prs3d_DatumAspect::Prs3d_DatumAspect()
 
     if (aPart != Prs3d_DatumParts_Origin) // origin point is used only in shading mode
     {
-      myLineAspects[aPart] = new Prs3d_LineAspect(aColor, Aspect_TOL_SOLID, 1.0);
+      myLineAspects[aPart] = new Prs3d_LineAspect(aColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0);
     }
 
     occ::handle<Prs3d_ShadingAspect> aShadingAspect = new Prs3d_ShadingAspect();

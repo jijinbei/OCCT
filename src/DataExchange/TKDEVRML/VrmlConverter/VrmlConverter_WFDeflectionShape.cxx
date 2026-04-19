@@ -40,7 +40,7 @@ void VrmlConverter_WFDeflectionShape::Add(Standard_OStream&                     
   StdPrs_ShapeTool Tool(aShape);
 
   double theRequestedDeflection;
-  if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE) // TOD_RELATIVE, TOD_ABSOLUTE
+  if (aDrawer->TypeOfDeflection() == Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE) // TOD_RELATIVE, TOD_ABSOLUTE
   {
     Bnd_Box box;
     BRepBndLib::AddClose(aShape, box);

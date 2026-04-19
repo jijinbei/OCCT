@@ -25,7 +25,7 @@
 //! TOST_ANNOTATION
 //! The text is always visible. The text is displayed
 //! over the other object according to the priority.
-enum Aspect_TypeOfStyleText
+enum class Aspect_TypeOfStyleText
 {
   Aspect_TOST_NORMAL,
   Aspect_TOST_ANNOTATION

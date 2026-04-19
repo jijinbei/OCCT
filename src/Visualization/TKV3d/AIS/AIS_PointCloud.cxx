@@ -161,13 +161,13 @@ void AIS_PointCloudOwner::Clear(const occ::handle<PrsMgr_PresentationManager>& t
 AIS_PointCloud::AIS_PointCloud()
 {
   myDrawer->SetupOwnShadingAspect();
-  myDrawer->ShadingAspect()->Aspect()->SetMarkerType(Aspect_TOM_POINT);
+  myDrawer->ShadingAspect()->Aspect()->SetMarkerType(Aspect_TypeOfMarker::Aspect_TOM_POINT);
 
   SetDisplayMode(AIS_PointCloud::DM_Points);
   SetHilightMode(AIS_PointCloud::DM_BndBox);
 
   myDynHilightDrawer->SetPointAspect(
-    new Prs3d_PointAspect(Aspect_TOM_PLUS, Quantity_NOC_CYAN1, 1.0));
+    new Prs3d_PointAspect(Aspect_TypeOfMarker::Aspect_TOM_PLUS, Quantity_NOC_CYAN1, 1.0));
 }
 
 //=================================================================================================

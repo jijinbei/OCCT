@@ -28,7 +28,7 @@ public:
   //! defined with the following default values:
   //!
   //! Color = Quantity_NOC_YELLOW;
-  //! Type  = Aspect_TOL_SOLID;
+  //! Type  = Aspect_TypeOfLine::Aspect_TOL_SOLID;
   //! Width = 1.0;
   Standard_EXPORT Graphic3d_AspectLine3d();
 

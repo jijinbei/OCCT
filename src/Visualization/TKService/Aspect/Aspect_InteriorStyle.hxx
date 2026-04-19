@@ -17,7 +17,7 @@
 #define _Aspect_InteriorStyle_HeaderFile
 
 //! Interior types for primitive faces.
-enum Aspect_InteriorStyle
+enum class Aspect_InteriorStyle
 {
   Aspect_IS_EMPTY = -1, //!< no interior
   Aspect_IS_SOLID = 0,  //!< normally filled surface interior

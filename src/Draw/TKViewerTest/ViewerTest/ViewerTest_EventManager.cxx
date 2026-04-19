@@ -770,7 +770,7 @@ void ViewerTest_EventManager::SetupWindowCallbacks(const occ::handle<Aspect_Wind
                ExposureMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask
                  | StructureNotifyMask | PointerMotionMask | Button1MotionMask | Button2MotionMask
                  | Button3MotionMask | FocusChangeMask);
-  Atom aDeleteWindowAtom = theWin->DisplayConnection()->GetAtom(Aspect_XA_DELETE_WINDOW);
+  Atom aDeleteWindowAtom = theWin->DisplayConnection()->GetAtom(Aspect_XAtom::Aspect_XA_DELETE_WINDOW);
   XSetWMProtocols(anXDisplay, anXWin, &aDeleteWindowAtom, 1);
 
   XSynchronize(anXDisplay, 0);

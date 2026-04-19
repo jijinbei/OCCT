@@ -17,7 +17,7 @@
 #define _Aspect_TypeOfMarker_HeaderFile
 
 //! Definition of types of markers
-enum Aspect_TypeOfMarker
+enum class Aspect_TypeOfMarker
 {
   Aspect_TOM_EMPTY = -1, //!< hidden
   Aspect_TOM_POINT = 0,  //!< point   .

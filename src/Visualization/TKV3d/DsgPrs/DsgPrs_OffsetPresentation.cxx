@@ -133,7 +133,7 @@ void DsgPrs_OffsetPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
     // ball 1 : 3eme groupe
     Quantity_Color                        aColor = LA->LineAspect()->Aspect()->Color();
     occ::handle<Graphic3d_AspectMarker3d> aMarkerAsp =
-      new Graphic3d_AspectMarker3d(Aspect_TOM_O, aColor, 1.0);
+      new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_O, aColor, 1.0);
     aPresentation->CurrentGroup()->SetPrimitivesAspect(aMarkerAsp);
     occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints = new Graphic3d_ArrayOfPoints(1);
     anArrayOfPoints->AddVertex(Proj2.X(), Proj2.Y(), Proj2.Z());
@@ -180,7 +180,7 @@ void DsgPrs_OffsetPresentation::AddAxes(const occ::handle<Prs3d_Presentation>& a
   double                             awidth = LA->LineAspect()->Aspect()->Width();
 
   occ::handle<Graphic3d_AspectLine3d> AxeAsp = new Graphic3d_AspectLine3d(acolor, atype, awidth);
-  AxeAsp->SetType(Aspect_TOL_DOTDASH);
+  AxeAsp->SetType(Aspect_TypeOfLine::Aspect_TOL_DOTDASH);
   aPresentation->NewGroup();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(AxeAsp);
 
@@ -193,7 +193,7 @@ void DsgPrs_OffsetPresentation::AddAxes(const occ::handle<Prs3d_Presentation>& a
   aPresentation->NewGroup();
 
   occ::handle<Graphic3d_AspectLine3d> Axe2Asp = new Graphic3d_AspectLine3d(acolor, atype, awidth);
-  Axe2Asp->SetType(Aspect_TOL_DOTDASH);
+  Axe2Asp->SetType(Aspect_TypeOfLine::Aspect_TOL_DOTDASH);
   Axe2Asp->SetWidth(4.);
   aPresentation->CurrentGroup()->SetPrimitivesAspect(Axe2Asp);
 
@@ -209,7 +209,7 @@ void DsgPrs_OffsetPresentation::AddAxes(const occ::handle<Prs3d_Presentation>& a
 
   aPresentation->NewGroup();
   occ::handle<Graphic3d_AspectMarker3d> MarkerAsp = new Graphic3d_AspectMarker3d();
-  MarkerAsp->SetType(Aspect_TOM_O);
+  MarkerAsp->SetType(Aspect_TypeOfMarker::Aspect_TOM_O);
   MarkerAsp->SetScale(4.);
   // MarkerAsp->SetColor(Quantity_Color(Quantity_NOC_RED));
   MarkerAsp->SetColor(acolor);
@@ -218,7 +218,7 @@ void DsgPrs_OffsetPresentation::AddAxes(const occ::handle<Prs3d_Presentation>& a
 
   aPresentation->NewGroup();
   occ::handle<Graphic3d_AspectMarker3d> Marker2Asp = new Graphic3d_AspectMarker3d();
-  Marker2Asp->SetType(Aspect_TOM_O);
+  Marker2Asp->SetType(Aspect_TypeOfMarker::Aspect_TOM_O);
   Marker2Asp->SetScale(2.);
   // Marker2Asp->SetColor(Quantity_Color(Quantity_NOC_GREEN));
   Marker2Asp->SetColor(acolor);

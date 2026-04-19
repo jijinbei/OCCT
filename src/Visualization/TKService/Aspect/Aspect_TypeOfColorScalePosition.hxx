@@ -17,7 +17,7 @@
 #define _Aspect_TypeOfColorScalePosition_HeaderFile
 
 //! Defines the type of position for color scale labels
-enum Aspect_TypeOfColorScalePosition
+enum class Aspect_TypeOfColorScalePosition
 {
   Aspect_TOCSP_NONE,
   Aspect_TOCSP_LEFT,

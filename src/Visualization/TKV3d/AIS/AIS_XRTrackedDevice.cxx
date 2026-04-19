@@ -63,7 +63,7 @@ AIS_XRTrackedDevice::AIS_XRTrackedDevice(const occ::handle<Graphic3d_ArrayOfTria
       myLaserColor(Quantity_NOC_BLUE),
       myLaserLength(0.0f),
       myUnitFactor(1.0f),
-      myRole(Aspect_XRTrackedDeviceRole_Other),
+      myRole(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other),
       myToShowAxes(false)
 {
   myDrawer->SetShadingAspect(new Prs3d_ShadingAspect());
@@ -82,7 +82,7 @@ AIS_XRTrackedDevice::AIS_XRTrackedDevice()
     : myLaserColor(Quantity_NOC_BLUE),
       myLaserLength(0.0f),
       myUnitFactor(1.0f),
-      myRole(Aspect_XRTrackedDeviceRole_Other),
+      myRole(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other),
       myToShowAxes(true)
 {
 }

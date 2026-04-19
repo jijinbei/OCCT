@@ -156,10 +156,10 @@ void VrmlAPI_Writer::SetDeflection(const double aDef)
   if (myDeflection > 0)
   {
     myDrawer->SetMaximalChordialDeviation(myDeflection);
-    myDrawer->SetTypeOfDeflection(Aspect_TOD_ABSOLUTE);
+    myDrawer->SetTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_ABSOLUTE);
   }
   else
-    myDrawer->SetTypeOfDeflection(Aspect_TOD_RELATIVE);
+    myDrawer->SetTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE);
 }
 
 void VrmlAPI_Writer::SetRepresentation(const VrmlAPI_RepresentationOfShape aRep)

@@ -38,7 +38,7 @@ public:
   //! Creates a context table for drawing primitives defined with the following default values:
   Standard_EXPORT Graphic3d_Aspects();
 
-  //! Return interior rendering style; Aspect_IS_SOLID by default.
+  //! Return interior rendering style; Aspect_InteriorStyle::Aspect_IS_SOLID by default.
   Aspect_InteriorStyle InteriorStyle() const { return myInteriorStyle; }
 
   //! Modifies the interior type used for rendering
@@ -238,7 +238,7 @@ public:
 
   //! @name parameters specific to Line primitive rendering
 public:
-  //! Return line type; Aspect_TOL_SOLID by default.
+  //! Return line type; Aspect_TypeOfLine::Aspect_TOL_SOLID by default.
   Aspect_TypeOfLine LineType() const { return myLineType; }
 
   //! Modifies the line type
@@ -251,7 +251,7 @@ public:
   //! Return custom stipple line pattern; 0xFFFF by default.
   uint16_t LinePattern() const { return myLinePattern; }
 
-  //! Modifies the stipple line pattern, and changes line type to Aspect_TOL_USERDEFINED for
+  //! Modifies the stipple line pattern, and changes line type to Aspect_TypeOfLine::Aspect_TOL_USERDEFINED for
   //! non-standard pattern.
   void SetLinePattern(uint16_t thePattern)
   {
@@ -292,17 +292,17 @@ public:
   {
     switch (theType)
     {
-      case Aspect_TOL_DASH:
+      case Aspect_TypeOfLine::Aspect_TOL_DASH:
         return 0xFFC0;
-      case Aspect_TOL_DOT:
+      case Aspect_TypeOfLine::Aspect_TOL_DOT:
         return 0xCCCC;
-      case Aspect_TOL_DOTDASH:
+      case Aspect_TypeOfLine::Aspect_TOL_DOTDASH:
         return 0xFF18;
-      case Aspect_TOL_EMPTY:
+      case Aspect_TypeOfLine::Aspect_TOL_EMPTY:
         return 0x0000;
-      case Aspect_TOL_SOLID:
+      case Aspect_TypeOfLine::Aspect_TOL_SOLID:
         return 0xFFFF;
-      case Aspect_TOL_USERDEFINED:
+      case Aspect_TypeOfLine::Aspect_TOL_USERDEFINED:
         return 0xFF24;
     }
     return 0xFFFF;
@@ -314,24 +314,24 @@ public:
     switch (thePattern)
     {
       case 0x0000:
-        return Aspect_TOL_EMPTY;
+        return Aspect_TypeOfLine::Aspect_TOL_EMPTY;
       case 0xFFC0:
-        return Aspect_TOL_DASH;
+        return Aspect_TypeOfLine::Aspect_TOL_DASH;
       case 0xCCCC:
-        return Aspect_TOL_DOT;
+        return Aspect_TypeOfLine::Aspect_TOL_DOT;
       case 0xFF18:
-        return Aspect_TOL_DOTDASH;
+        return Aspect_TypeOfLine::Aspect_TOL_DOTDASH;
       case 0xFFFF:
-        return Aspect_TOL_SOLID;
+        return Aspect_TypeOfLine::Aspect_TOL_SOLID;
       case 0xFF24:
-        return Aspect_TOL_USERDEFINED;
+        return Aspect_TypeOfLine::Aspect_TOL_USERDEFINED;
     }
-    return Aspect_TOL_USERDEFINED;
+    return Aspect_TypeOfLine::Aspect_TOL_USERDEFINED;
   }
 
   //! @name parameters specific to Point (Marker) primitive rendering
 public:
-  //! Return marker type; Aspect_TOM_POINT by default.
+  //! Return marker type; Aspect_TypeOfMarker::Aspect_TOM_POINT by default.
   Aspect_TypeOfMarker MarkerType() const { return myMarkerType; }
 
   //! Modifies the type of marker.
@@ -341,7 +341,7 @@ public:
   float MarkerScale() const { return myMarkerScale; }
 
   //! Modifies the scale factor.
-  //! Marker type Aspect_TOM_POINT is not affected by the marker size scale factor.
+  //! Marker type Aspect_TypeOfMarker::Aspect_TOM_POINT is not affected by the marker size scale factor.
   //! It is always the smallest displayable dot.
   //! Warning: Raises Standard_OutOfRange if the scale is a negative value.
   void SetMarkerScale(const float theScale)
@@ -367,12 +367,12 @@ public:
   //! generated).
   bool IsMarkerSprite() const
   {
-    if (myMarkerType == Aspect_TOM_POINT || myMarkerType == Aspect_TOM_EMPTY)
+    if (myMarkerType == Aspect_TypeOfMarker::Aspect_TOM_POINT || myMarkerType == Aspect_TypeOfMarker::Aspect_TOM_EMPTY)
     {
       return false;
     }
 
-    return myMarkerType != Aspect_TOM_USERDEFINED || !myMarkerImage.IsNull();
+    return myMarkerType != Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED || !myMarkerImage.IsNull();
   }
 
   //! @name parameters specific to text rendering
@@ -389,7 +389,7 @@ public:
   //! Turns usage of Aspect text
   void SetTextFontAspect(Font_FontAspect theFontAspect) { myTextFontAspect = theFontAspect; }
 
-  //! Returns display type; Aspect_TODT_NORMAL by default.
+  //! Returns display type; Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL by default.
   Aspect_TypeOfDisplayText TextDisplayType() const { return myTextDisplayType; }
 
   //! Sets display type.
@@ -413,7 +413,7 @@ public:
   //! Turns usage of text zoomable on/off
   void SetTextZoomable(bool theFlag) { myIsTextZoomable = theFlag; }
 
-  //! Returns the text style; Aspect_TOST_NORMAL by default.
+  //! Returns the text style; Aspect_TypeOfStyleText::Aspect_TOST_NORMAL by default.
   Aspect_TypeOfStyleText TextStyle() const { return myTextStyle; }
 
   //! Modifies the style of the text.
@@ -428,15 +428,15 @@ public:
   //! @name parameters specific to Mesh Edges (of triangulation primitive) rendering
 public:
   //! Returns true if mesh edges should be drawn (false by default).
-  bool ToDrawEdges() const { return myToDrawEdges && myLineType != Aspect_TOL_EMPTY; }
+  bool ToDrawEdges() const { return myToDrawEdges && myLineType != Aspect_TypeOfLine::Aspect_TOL_EMPTY; }
 
   //! Set if mesh edges should be drawn or not.
   void SetDrawEdges(bool theToDraw)
   {
     myToDrawEdges = theToDraw;
-    if (myLineType == Aspect_TOL_EMPTY)
+    if (myLineType == Aspect_TypeOfLine::Aspect_TOL_EMPTY)
     {
-      myLineType = Aspect_TOL_SOLID;
+      myLineType = Aspect_TypeOfLine::Aspect_TOL_SOLID;
     }
   }
 
@@ -502,7 +502,7 @@ public:
   //! @warning This method always creates a new handle for a given hatch style
   void SetHatchStyle(const Aspect_HatchStyle theStyle)
   {
-    if (theStyle == Aspect_HS_SOLID)
+    if (theStyle == Aspect_HatchStyle::Aspect_HS_SOLID)
     {
       myHatchStyle.Nullify();
       return;

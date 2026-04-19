@@ -22,7 +22,7 @@ Aspect_GradientBackground::Aspect_GradientBackground()
 
   SetColor(Black);
   MyColor2         = Black;
-  MyGradientMethod = Aspect_GradientFillMethod_None;
+  MyGradientMethod = Aspect_GradientFillMethod::Aspect_GradientFillMethod_None;
 }
 
 Aspect_GradientBackground::Aspect_GradientBackground(const Quantity_Color&           AColor1,
@@ -64,5 +64,5 @@ void Aspect_GradientBackground::DumpJson(Standard_OStream& theOStream, int theDe
   OCCT_DUMP_FIELD_VALUES_DUMPED(theOStream, theDepth, &aColor)
 
   OCCT_DUMP_FIELD_VALUES_DUMPED(theOStream, theDepth, &MyColor2)
-  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, MyGradientMethod)
+  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, static_cast<int>(MyGradientMethod))
 }

@@ -120,7 +120,7 @@ public:
   //! @sa HasProjectionFrustums().
   const Aspect_FrustumLRBT<double>& ProjectionFrustum(Aspect_Eye theEye) const
   {
-    return theEye == Aspect_Eye_Right ? myFrustumR : myFrustumL;
+    return theEye == Aspect_Eye::Aspect_Eye_Right ? myFrustumR : myFrustumL;
   }
 
   //! Return head orientation in right-handed system:
@@ -133,14 +133,14 @@ public:
   //! Return left hand orientation.
   gp_Trsf LeftHandPose() const
   {
-    const int aDevice = NamedTrackedDevice(Aspect_XRTrackedDeviceRole_LeftHand);
+    const int aDevice = NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand);
     return aDevice != -1 ? myTrackedPoses[aDevice].Orientation : gp_Trsf();
   }
 
   //! Return right hand orientation.
   gp_Trsf RightHandPose() const
   {
-    const int aDevice = NamedTrackedDevice(Aspect_XRTrackedDeviceRole_RightHand);
+    const int aDevice = NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand);
     return aDevice != -1 ? myTrackedPoses[aDevice].Orientation : gp_Trsf();
   }
 
@@ -179,18 +179,18 @@ public:
   }
 
   //! Fetch data for digital input action (like button).
-  //! @param[in] theAction  action of Aspect_XRActionType_InputDigital type
+  //! @param[in] theAction  action of Aspect_XRActionType::Aspect_XRActionType_InputDigital type
   virtual Aspect_XRDigitalActionData GetDigitalActionData(
     const occ::handle<Aspect_XRAction>& theAction) const = 0;
 
   //! Fetch data for digital input action (like axis).
-  //! @param[in] theAction  action of Aspect_XRActionType_InputAnalog type
+  //! @param[in] theAction  action of Aspect_XRActionType::Aspect_XRActionType_InputAnalog type
   virtual Aspect_XRAnalogActionData GetAnalogActionData(
     const occ::handle<Aspect_XRAction>& theAction) const = 0;
 
   //! Fetch data for pose input action (like fingertip position).
   //! The returned values will match the values returned by the last call to WaitPoses().
-  //! @param[in] theAction  action of Aspect_XRActionType_InputPose type
+  //! @param[in] theAction  action of Aspect_XRActionType::Aspect_XRActionType_InputPose type
   virtual Aspect_XRPoseActionData GetPoseActionDataForNextFrame(
     const occ::handle<Aspect_XRAction>& theAction) const = 0;
 
@@ -211,8 +211,9 @@ public:
   const occ::handle<Aspect_XRAction>& GenericAction(Aspect_XRTrackedDeviceRole theDevice,
                                                     Aspect_XRGenericAction     theAction) const
   {
-    const NCollection_Array1<occ::handle<Aspect_XRAction>>& anActions = myRoleActions[theDevice];
-    return anActions[theAction];
+    const NCollection_Array1<occ::handle<Aspect_XRAction>>& anActions =
+      myRoleActions[static_cast<int>(theDevice)];
+    return anActions[static_cast<int>(theAction)];
   }
 
 public:

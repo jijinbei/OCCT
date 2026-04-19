@@ -304,7 +304,7 @@ Aspect_TypeOfResize WNT_Window::DoResize()
 {
   if (IsVirtual())
   {
-    return Aspect_TOR_UNKNOWN;
+    return Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
   }
 
   WINDOWPLACEMENT aPlace = {};
@@ -312,7 +312,7 @@ Aspect_TypeOfResize WNT_Window::DoResize()
   GetWindowPlacement((HWND)myHWindow, &aPlace);
   if (aPlace.showCmd == SW_SHOWMINIMIZED)
   {
-    return Aspect_TOR_UNKNOWN;
+    return Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
   }
 
   int aMask = 0;
@@ -340,25 +340,25 @@ Aspect_TypeOfResize WNT_Window::DoResize()
   switch (aMask)
   {
     case 0:
-      return Aspect_TOR_NO_BORDER;
+      return Aspect_TypeOfResize::Aspect_TOR_NO_BORDER;
     case 1:
-      return Aspect_TOR_LEFT_BORDER;
+      return Aspect_TypeOfResize::Aspect_TOR_LEFT_BORDER;
     case 2:
-      return Aspect_TOR_RIGHT_BORDER;
+      return Aspect_TypeOfResize::Aspect_TOR_RIGHT_BORDER;
     case 4:
-      return Aspect_TOR_TOP_BORDER;
+      return Aspect_TypeOfResize::Aspect_TOR_TOP_BORDER;
     case 5:
-      return Aspect_TOR_LEFT_AND_TOP_BORDER;
+      return Aspect_TypeOfResize::Aspect_TOR_LEFT_AND_TOP_BORDER;
     case 6:
-      return Aspect_TOR_TOP_AND_RIGHT_BORDER;
+      return Aspect_TypeOfResize::Aspect_TOR_TOP_AND_RIGHT_BORDER;
     case 8:
-      return Aspect_TOR_BOTTOM_BORDER;
+      return Aspect_TypeOfResize::Aspect_TOR_BOTTOM_BORDER;
     case 9:
-      return Aspect_TOR_BOTTOM_AND_LEFT_BORDER;
+      return Aspect_TypeOfResize::Aspect_TOR_BOTTOM_AND_LEFT_BORDER;
     case 10:
-      return Aspect_TOR_RIGHT_AND_BOTTOM_BORDER;
+      return Aspect_TypeOfResize::Aspect_TOR_RIGHT_AND_BOTTOM_BORDER;
   }
-  return Aspect_TOR_UNKNOWN;
+  return Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
 }
 
 //=================================================================================================

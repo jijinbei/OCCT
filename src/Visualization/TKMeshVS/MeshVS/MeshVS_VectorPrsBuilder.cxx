@@ -291,7 +291,7 @@ void MeshVS_VectorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
 
   // Add primitive arrays to group
   occ::handle<Graphic3d_AspectLine3d> aLinAspect =
-    new Graphic3d_AspectLine3d(aColor, Aspect_TOL_SOLID, 1.5);
+    new Graphic3d_AspectLine3d(aColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.5);
 
   aVGroup->SetPrimitivesAspect(aLinAspect);
   aVGroup->AddPrimitiveArray(aLineArray);
@@ -299,7 +299,7 @@ void MeshVS_VectorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
   if (!myIsSimplePrs)
   {
     occ::handle<Graphic3d_AspectLine3d> anArrowLinAspect =
-      new Graphic3d_AspectLine3d(aColor, Aspect_TOL_SOLID, mySimpleWidthPrm);
+      new Graphic3d_AspectLine3d(aColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, mySimpleWidthPrm);
 
     aVGroup->SetPrimitivesAspect(anArrowLinAspect);
     aVGroup->AddPrimitiveArray(aTriangleArray);
@@ -307,7 +307,7 @@ void MeshVS_VectorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
   else
   {
     occ::handle<Graphic3d_AspectLine3d> anArrowLinAspect =
-      new Graphic3d_AspectLine3d(aColor, Aspect_TOL_SOLID, mySimpleWidthPrm * 1.5);
+      new Graphic3d_AspectLine3d(aColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, mySimpleWidthPrm * 1.5);
 
     aVGroup->SetPrimitivesAspect(anArrowLinAspect);
     aVGroup->AddPrimitiveArray(aArrowLineArray);

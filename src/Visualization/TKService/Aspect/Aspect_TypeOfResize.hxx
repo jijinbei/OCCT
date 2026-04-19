@@ -18,7 +18,7 @@
 
 //! Defines the type of Resize Window method applied
 //! by the user.
-enum Aspect_TypeOfResize
+enum class Aspect_TypeOfResize
 {
   Aspect_TOR_UNKNOWN,
   Aspect_TOR_NO_BORDER,

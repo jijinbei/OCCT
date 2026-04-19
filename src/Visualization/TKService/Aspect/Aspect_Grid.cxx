@@ -26,7 +26,7 @@ Aspect_Grid::Aspect_Grid(const double          theXOrigin,
       myColor(theColor),
       myTenthColor(theTenthColor),
       myIsActive(false),
-      myDrawMode(Aspect_GDM_Lines)
+      myDrawMode(Aspect_GridDrawMode::Aspect_GDM_Lines)
 {
 }
 
@@ -115,5 +115,5 @@ void Aspect_Grid::DumpJson(Standard_OStream& theOStream, int theDepth) const
   OCCT_DUMP_FIELD_VALUES_DUMPED(theOStream, theDepth, &myTenthColor)
 
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myIsActive)
-  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myDrawMode)
+  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, static_cast<int>(myDrawMode))
 }

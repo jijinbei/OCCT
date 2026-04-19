@@ -26,8 +26,8 @@ public:
   //! Creates a context table for text primitives defined with the following default values:
   //! Color            : Quantity_NOC_YELLOW
   //! Font             : Font_NOF_ASCII_MONO
-  //! The style        : Aspect_TOST_NORMAL
-  //! The display type : Aspect_TODT_NORMAL
+  //! The style        : Aspect_TypeOfStyleText::Aspect_TOST_NORMAL
+  //! The display type : Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL
   Standard_EXPORT Graphic3d_AspectText3d();
 
   //! Creates a context table for text primitives defined with the specified values.
@@ -42,8 +42,8 @@ public:
     const char*              theFont,
     double                   theExpansionFactor,
     double                   theSpace,
-    Aspect_TypeOfStyleText   theStyle       = Aspect_TOST_NORMAL,
-    Aspect_TypeOfDisplayText theDisplayType = Aspect_TODT_NORMAL);
+    Aspect_TypeOfStyleText   theStyle       = Aspect_TypeOfStyleText::Aspect_TOST_NORMAL,
+    Aspect_TypeOfDisplayText theDisplayType = Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL);
 
   //! Return the text color.
   const Quantity_Color& Color() const { return myInteriorColor.GetRGB(); }

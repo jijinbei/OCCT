@@ -116,7 +116,7 @@ bool StdPrs_ToolTriangulatedShape::IsClosed(const TopoDS_Shape& theShape)
 double StdPrs_ToolTriangulatedShape::GetDeflection(const TopoDS_Shape&              theShape,
                                                    const occ::handle<Prs3d_Drawer>& theDrawer)
 {
-  if (theDrawer->TypeOfDeflection() != Aspect_TOD_RELATIVE)
+  if (theDrawer->TypeOfDeflection() != Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE)
   {
     return theDrawer->MaximalChordialDeviation();
   }

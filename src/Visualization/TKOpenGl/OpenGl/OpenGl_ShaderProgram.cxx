@@ -234,7 +234,7 @@ bool OpenGl_ShaderProgram::Initialize(
   }
 
   // detect the minimum GLSL version required for defined Shader Objects
-  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     if (myHasTessShader)
     {
@@ -426,19 +426,19 @@ bool OpenGl_ShaderProgram::Initialize(
 
     if (theCtx->hasSampleVariables == OpenGl_FeatureInExtensions)
     {
-      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
           && theCtx->oesSampleVariables)
       {
         anExtensions += "#extension GL_OES_sample_variables : enable\n";
       }
-      else if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGL
+      else if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL
                && theCtx->arbSampleShading)
       {
         anExtensions += "#extension GL_ARB_sample_shading : enable\n";
       }
     }
 
-    if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+    if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
         && theCtx->hasGeometryStage == OpenGl_FeatureInExtensions)
     {
       anExtensions += "#extension GL_EXT_geometry_shader : enable\n"
@@ -447,7 +447,7 @@ bool OpenGl_ShaderProgram::Initialize(
 
     TCollection_AsciiString aPrecisionHeader;
     if (anIter.Value()->Type() == Graphic3d_TOS_FRAGMENT
-        && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+        && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       aPrecisionHeader = theCtx->hasHighp ? "precision highp float;\n"
                                             "precision highp int;\n"
@@ -1073,7 +1073,7 @@ bool OpenGl_ShaderProgram::SetUniform(const occ::handle<OpenGl_Context>&    theC
     return false;
   }
 
-  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     if (theCtx->core30 != nullptr)
     {
@@ -1115,7 +1115,7 @@ bool OpenGl_ShaderProgram::SetUniform(const occ::handle<OpenGl_Context>&    theC
     return false;
   }
 
-  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     if (theCtx->core30 != nullptr)
     {

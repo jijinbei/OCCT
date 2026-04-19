@@ -165,8 +165,8 @@ public: //! @name Light properties
   {
     myMarkerImages[theIsEnabled ? 1 : 0] = theImage;
     myMarkerTypes[theIsEnabled ? 1 : 0]  = !theImage.IsNull()
-                                             ? Aspect_TOM_USERDEFINED
-                                             : (theIsEnabled ? Aspect_TOM_O_POINT : Aspect_TOM_O_X);
+                                             ? Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED
+                                             : (theIsEnabled ? Aspect_TypeOfMarker::Aspect_TOM_O_POINT : Aspect_TypeOfMarker::Aspect_TOM_O_X);
   }
 
   //! Sets standard icon to light source.

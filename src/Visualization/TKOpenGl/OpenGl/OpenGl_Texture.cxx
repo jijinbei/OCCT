@@ -231,7 +231,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
   switch (theType)
   {
     case Graphic3d_TypeOfTexture_1D: {
-      aTarget = theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES ? GL_TEXTURE_1D
+      aTarget = theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES ? GL_TEXTURE_1D
                                                                              : GL_TEXTURE_2D;
       break;
     }
@@ -278,7 +278,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
 
   // ES 2.0 does not support sized formats and format conversions - them detected from data type
   const GLint anIntFormat =
-    (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES || theCtx->IsGlGreaterEqual(3, 0))
+    (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES || theCtx->IsGlGreaterEqual(3, 0))
       ? theFormat.InternalFormat()
       : theFormat.PixelFormat();
 
@@ -311,7 +311,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
     Release(theCtx.get());
     return false;
   }
-  else if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGL
+  else if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL
            && !theCtx->IsGlGreaterEqual(3, 0) && !theCtx->arbNPTW)
   {
     // Notice that formally general NPOT textures are required by OpenGL 2.0 specifications
@@ -375,7 +375,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
   switch (theType)
   {
     case Graphic3d_TypeOfTexture_1D: {
-      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         theCtx->PushMessage(
           GL_DEBUG_SOURCE_APPLICATION,
@@ -463,7 +463,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
         break;
       }
 
-      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGL)
+      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL)
       {
         // use proxy to check texture could be created or not
         theCtx->core11fwd->glTexImage2D(GL_PROXY_TEXTURE_2D,
@@ -542,7 +542,7 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
 
       Bind(theCtx);
       applyDefaultSamplerParams(theCtx);
-      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGL)
+      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL)
       {
         theCtx->Functions()->glTexImage3D(GL_PROXY_TEXTURE_3D,
                                           0,
@@ -635,7 +635,7 @@ bool OpenGl_Texture::GenerateMipmaps(const occ::handle<OpenGl_Context>& theCtx)
   myMaxMipLevel = computeUpperMipMapLevel(mySize.maxComp());
 
   const int aMaxSize = theCtx->MaxTextureSize();
-  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
       && !theCtx->IsGlGreaterEqual(3, 0))
   {
     // Mipmap NPOT textures are not supported by OpenGL ES 2.0.
@@ -678,7 +678,7 @@ bool OpenGl_Texture::GenerateMipmaps(const occ::handle<OpenGl_Context>& theCtx)
       mySampler->SetParameter(theCtx, myTarget, GL_TEXTURE_MAX_LEVEL, 0);
     }
 
-    if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+    if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
         && (mySizedFormat == GL_RGB8 || mySizedFormat == GL_SRGB8))
     {
       theCtx->PushMessage(
@@ -1012,7 +1012,7 @@ bool OpenGl_Texture::InitRectangle(const occ::handle<OpenGl_Context>& theCtx,
                                    const OpenGl_TextureFormat&        theFormat)
 {
   if (!theCtx->IsGlGreaterEqual(3, 0) || !Create(theCtx)
-      || theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      || theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     return false;
   }
@@ -1133,7 +1133,7 @@ bool OpenGl_Texture::Init3D(const occ::handle<OpenGl_Context>& theCtx,
   // setup the alignment
   OpenGl_UnpackAlignmentSentry::Reset(*theCtx);
 
-  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGL)
+  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL)
   {
     theCtx->Functions()->glTexImage3D(GL_PROXY_TEXTURE_3D,
                                       0,
@@ -1308,7 +1308,7 @@ bool OpenGl_Texture::InitCubeMap(const occ::handle<OpenGl_Context>&    theCtx,
     return false;
   }
 
-  if (theToGenMipmap && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+  if (theToGenMipmap && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
       && !theCtx->IsGlGreaterEqual(3, 0)
       && (aFormat.PixelFormat() == GL_SRGB_EXT || aFormat.PixelFormat() == GL_SRGB_ALPHA_EXT))
   {
@@ -1332,7 +1332,7 @@ bool OpenGl_Texture::InitCubeMap(const occ::handle<OpenGl_Context>&    theCtx,
 
   // ES 2.0 does not support sized formats and format conversions - them detected from data type
   const GLint anIntFormat =
-    (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES || theCtx->IsGlGreaterEqual(3, 0))
+    (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES || theCtx->IsGlGreaterEqual(3, 0))
       ? aFormat.InternalFormat()
       : aFormat.PixelFormat();
 
@@ -1619,7 +1619,7 @@ bool OpenGl_Texture::ImageDump(Image_PixMap&                      theImage,
   const OpenGl_TextureFormat aFormat = OpenGl_TextureFormat::FindSizedFormat(theCtx, mySizedFormat);
   if (theCtx.IsNull() || !IsValid()
       || theCtx->GraphicsLibrary()
-           == Aspect_GraphicsLibrary_OpenGLES // glGetTexImage() is unavailable in OpenGL ES
+           == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES // glGetTexImage() is unavailable in OpenGL ES
       || theLevel < 0 || !aFormat.IsValid() || aFormat.ImageFormat() == Image_Format_UNKNOWN
       || (myTarget == GL_TEXTURE_CUBE_MAP && (theCubeSide < 0 || theCubeSide > 5)))
   {

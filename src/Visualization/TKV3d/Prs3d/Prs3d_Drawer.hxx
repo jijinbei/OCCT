@@ -72,7 +72,7 @@ public:
   void UnsetOwnTypeOfDeflection()
   {
     myHasOwnTypeOfDeflection = false;
-    myTypeOfDeflection       = Aspect_TOD_RELATIVE;
+    myTypeOfDeflection       = Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE;
   }
 
   //! Defines the maximal chordial deviation when drawing any curve.
@@ -366,7 +366,7 @@ public:
   //! point aspect that overrides the one in the link.
   bool HasOwnPointAspect() const { return !myPointAspect.IsNull(); }
 
-  //! Sets own point aspect, which is a yellow Aspect_TOM_PLUS marker by default.
+  //! Sets own point aspect, which is a yellow Aspect_TypeOfMarker::Aspect_TOM_PLUS marker by default.
   //! Returns FALSE if the drawer already has its own attribute for point aspect.
   Standard_EXPORT bool SetupOwnPointAspect(
     const occ::handle<Prs3d_Drawer>& theDefaults = occ::handle<Prs3d_Drawer>());

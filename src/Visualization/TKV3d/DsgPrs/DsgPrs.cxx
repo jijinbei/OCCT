@@ -54,7 +54,7 @@ void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentati
 
   Quantity_Color                        aColor = LA->LineAspect()->Aspect()->Color();
   occ::handle<Graphic3d_AspectMarker3d> aMarkerAsp =
-    new Graphic3d_AspectMarker3d(Aspect_TOM_O, aColor, 1.0);
+    new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_O, aColor, 1.0);
   aGroup->SetGroupPrimitivesAspect(LA->LineAspect()->Aspect());
 
   switch (ArrowSide)

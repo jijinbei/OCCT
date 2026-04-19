@@ -94,7 +94,7 @@ void AIS_LightSourceOwner::HilightWithColor(const occ::handle<PrsMgr_Presentatio
     aPoints->AddVertex(aDetPnt);
     occ::handle<Graphic3d_Group>         aGroup = aPrs->NewGroup();
     const occ::handle<Prs3d_PointAspect> aPointAspect =
-      new Prs3d_PointAspect(Aspect_TOM_O_POINT, theStyle->Color(), 3.0f);
+      new Prs3d_PointAspect(Aspect_TypeOfMarker::Aspect_TOM_O_POINT, theStyle->Color(), 3.0f);
     aGroup->SetGroupPrimitivesAspect(aPointAspect->Aspect());
     aGroup->AddPrimitiveArray(aPoints);
 
@@ -167,8 +167,8 @@ bool AIS_LightSourceOwner::IsForcedHilight() const
 
 AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
     : myLightSource(theLight),
-      myCodirMarkerType(Aspect_TOM_X),
-      myOpposMarkerType(Aspect_TOM_O_POINT),
+      myCodirMarkerType(Aspect_TypeOfMarker::Aspect_TOM_X),
+      myOpposMarkerType(Aspect_TypeOfMarker::Aspect_TOM_O_POINT),
       mySize(50),
       myNbArrows(5),
       myNbSplitsQuadric(theLight->Type() == Graphic3d_TypeOfLightSource_Ambient ? 10 : 30),
@@ -181,14 +181,14 @@ AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
       myToDisplayRange(true),
       myToSwitchOnClick(true)
 {
-  myMarkerTypes[0] = Aspect_TOM_O_X;
-  myMarkerTypes[1] = Aspect_TOM_O_POINT;
+  myMarkerTypes[0] = Aspect_TypeOfMarker::Aspect_TOM_O_X;
+  myMarkerTypes[1] = Aspect_TypeOfMarker::Aspect_TOM_O_POINT;
 
   myInfiniteState = true;
 
   const Quantity_Color aColor = theLight->Color();
   myDrawer->SetPointAspect(new Prs3d_PointAspect(myMarkerTypes[1], aColor, 3.0f));
-  myDisabledMarkerAspect = new Graphic3d_AspectMarker3d(Aspect_TOM_EMPTY, aColor, 3.0f);
+  myDisabledMarkerAspect = new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_EMPTY, aColor, 3.0f);
 
   Graphic3d_MaterialAspect aMat(Graphic3d_NameOfMaterial_UserDefined);
   aMat.SetColor(aColor);
@@ -196,11 +196,11 @@ AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
   myDrawer->ArrowAspect()->SetColor(aColor);
   myDrawer->ArrowAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
   myDrawer->ArrowAspect()->Aspect()->ChangeFrontMaterial() = aMat;
-  myDrawer->ArrowAspect()->Aspect()->SetMarkerType(Aspect_TOM_EMPTY);
+  myDrawer->ArrowAspect()->Aspect()->SetMarkerType(Aspect_TypeOfMarker::Aspect_TOM_EMPTY);
   myDrawer->ArrowAspect()->Aspect()->SetMarkerScale(2.0f);
   myArrowLineAspectShadow = new Graphic3d_AspectLine3d(
     Quantity_NOC_BLACK,
-    Aspect_TOL_SOLID,
+    Aspect_TypeOfLine::Aspect_TOL_SOLID,
     theLight->Type() != Graphic3d_TypeOfLightSource_Ambient ? 3.0f : 1.0f);
 
   myDrawer->SetupOwnShadingAspect();
@@ -210,7 +210,7 @@ AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
   myDrawer->ShadingAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
 
   myDrawer->SetTextAspect(new Prs3d_TextAspect());
-  myDrawer->TextAspect()->Aspect()->SetDisplayType(Aspect_TODT_SHADOW);
+  myDrawer->TextAspect()->Aspect()->SetDisplayType(Aspect_TypeOfDisplayText::Aspect_TODT_SHADOW);
   myDrawer->TextAspect()->Aspect()->SetColorSubTitle(Quantity_NOC_BLACK);
   myDrawer->TextAspect()->SetHorizontalJustification(Graphic3d_HTA_LEFT);
   myDrawer->TextAspect()->SetVerticalJustification(Graphic3d_VTA_TOPFIRSTLINE);
@@ -302,7 +302,7 @@ void AIS_LightSource::updateLightAspects()
 
   myDisabledMarkerAspect->SetColor(aColor);
   myDisabledMarkerAspect->SetMarkerScale(myDrawer->PointAspect()->Aspect()->MarkerScale());
-  myDisabledMarkerAspect->SetMarkerType(myLightSource->IsEnabled() ? Aspect_TOM_EMPTY
+  myDisabledMarkerAspect->SetMarkerType(myLightSource->IsEnabled() ? Aspect_TypeOfMarker::Aspect_TOM_EMPTY
                                                                    : MarkerType(false));
   myDisabledMarkerAspect->SetMarkerImage(MarkerImage(false));
 
@@ -313,7 +313,7 @@ void AIS_LightSource::updateLightAspects()
   if (myLightSource->Type() == Graphic3d_TypeOfLightSource_Directional)
   {
     const double        anAngleTol = 2.0 * M_PI / 180.0;
-    Aspect_TypeOfMarker aDirMark   = Aspect_TOM_EMPTY;
+    Aspect_TypeOfMarker aDirMark   = Aspect_TypeOfMarker::Aspect_TOM_EMPTY;
     if (myLightSource->IsEnabled() && myLightSource->IsHeadlight()
         && myLightSource->Direction().IsParallel(gp::DZ(), anAngleTol))
     {

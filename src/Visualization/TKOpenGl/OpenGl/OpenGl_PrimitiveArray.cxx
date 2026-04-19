@@ -642,7 +642,7 @@ void OpenGl_PrimitiveArray::drawMarkers(const occ::handle<OpenGl_Workspace>& the
   const GLenum                       aDrawMode =
     !aCtx->ActiveProgram().IsNull() && aCtx->ActiveProgram()->HasTessellationStage() ? GL_PATCHES
                                                                                                            : myDrawMode;
-  if (anAspectMarker->Aspect()->MarkerType() == Aspect_TOM_POINT)
+  if (anAspectMarker->Aspect()->MarkerType() == Aspect_TypeOfMarker::Aspect_TOM_POINT)
   {
     aCtx->SetPointSize(anAspectMarker->MarkerSize());
     aCtx->core11fwd->glDrawArrays(aDrawMode,
@@ -739,7 +739,7 @@ OpenGl_PrimitiveArray::OpenGl_PrimitiveArray(const OpenGl_GraphicDriver*        
   {
     myUID                                   = theDriver->GetNextPrimitiveArrayUID();
     const occ::handle<OpenGl_Context>& aCtx = theDriver->GetSharedContext();
-    if (!aCtx.IsNull() && aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+    if (!aCtx.IsNull() && aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       processIndices(aCtx);
     }
@@ -885,20 +885,20 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
   int  toDrawInteriorEdges = 0; // 0 - no edges, 1 - glsl edges, 2 - polygonMode
   if (myIsFillType)
   {
-    toDrawArray = anAspectFace->Aspect()->InteriorStyle() != Aspect_IS_EMPTY;
+    toDrawArray = anAspectFace->Aspect()->InteriorStyle() != Aspect_InteriorStyle::Aspect_IS_EMPTY;
     if (anAspectFace->Aspect()->ToDrawEdges())
     {
       toDrawInteriorEdges = 1;
       toDrawArray         = true;
-      if (aCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES
-          && (anAspectFace->Aspect()->EdgeLineType() != Aspect_TOL_SOLID
+      if (aCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
+          && (anAspectFace->Aspect()->EdgeLineType() != Aspect_TypeOfLine::Aspect_TOL_SOLID
               || aCtx->hasGeometryStage == OpenGl_FeatureNotAvailable
               || aCtx->caps->usePolygonMode))
       {
         toDrawInteriorEdges = 2;
-        if (anAspectFace->Aspect()->InteriorStyle() == Aspect_IS_EMPTY)
+        if (anAspectFace->Aspect()->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_EMPTY)
         {
-          if (anAspectFace->Aspect()->EdgeLineType() != Aspect_TOL_SOLID)
+          if (anAspectFace->Aspect()->EdgeLineType() != Aspect_TypeOfLine::Aspect_TOL_SOLID)
           {
             toDrawArray = false;
           }
@@ -914,14 +914,14 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
   {
     if (myDrawMode == GL_POINTS)
     {
-      if (anAspectFace->Aspect()->MarkerType() == Aspect_TOM_EMPTY)
+      if (anAspectFace->Aspect()->MarkerType() == Aspect_TypeOfMarker::Aspect_TOM_EMPTY)
       {
         return;
       }
     }
     else
     {
-      if (anAspectFace->Aspect()->LineType() == Aspect_TOL_EMPTY)
+      if (anAspectFace->Aspect()->LineType() == Aspect_TypeOfLine::Aspect_TOL_EMPTY)
       {
         return;
       }
@@ -933,7 +933,7 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
   {
     // compatibility - keep data to draw markers using display lists
     bool toKeepData = myDrawMode == GL_POINTS && anAspectFace->IsDisplayListSprite(aCtx);
-    if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+    if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       processIndices(aCtx);
     }
@@ -992,7 +992,7 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
           aShadingModel,
           aCtx->ShaderManager()->MaterialState().HasAlphaCutoff() ? Graphic3d_AlphaMode_Mask
                                                                   : Graphic3d_AlphaMode_Opaque,
-          toDrawInteriorEdges == 1 ? anAspectFace->Aspect()->InteriorStyle() : Aspect_IS_SOLID,
+          toDrawInteriorEdges == 1 ? anAspectFace->Aspect()->InteriorStyle() : Aspect_InteriorStyle::Aspect_IS_SOLID,
           hasVertColor,
           toEnableEnvMap,
           toDrawInteriorEdges == 1,
@@ -1030,7 +1030,7 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
 
     const NCollection_Vec4<float>* aFaceColors =
       !myBounds.IsNull() && !toHilight
-          && anAspectFace->Aspect()->InteriorStyle() != Aspect_IS_HIDDENLINE
+          && anAspectFace->Aspect()->InteriorStyle() != Aspect_InteriorStyle::Aspect_IS_HIDDENLINE
         ? myBounds->Colors
         : nullptr;
     const NCollection_Vec4<float>& anInteriorColor = theWorkspace->InteriorColor();
@@ -1089,8 +1089,8 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
   // draw triangulation edges using Polygon Mode
   if (toDrawInteriorEdges == 2)
   {
-    if (anAspectFace->Aspect()->InteriorStyle() == Aspect_IS_HOLLOW
-        && anAspectFace->Aspect()->EdgeLineType() == Aspect_TOL_SOLID)
+    if (anAspectFace->Aspect()->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_HOLLOW
+        && anAspectFace->Aspect()->EdgeLineType() == Aspect_TypeOfLine::Aspect_TOL_SOLID)
     {
       aCtx->SetPolygonMode(GL_FILL);
     }
@@ -1224,7 +1224,7 @@ void OpenGl_PrimitiveArray::InitBuffers(const occ::handle<OpenGl_Context>&      
   myIndices = theIndices;
   myAttribs = theAttribs;
   myBounds  = theBounds;
-  if (!theContext.IsNull() && theContext->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+  if (!theContext.IsNull() && theContext->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     processIndices(theContext);
   }

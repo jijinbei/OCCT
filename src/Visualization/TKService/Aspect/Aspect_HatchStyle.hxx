@@ -17,7 +17,7 @@
 #define _Aspect_HatchStyle_HeaderFile
 
 //! Definition of all available hatch styles.
-enum Aspect_HatchStyle
+enum class Aspect_HatchStyle
 {
   Aspect_HS_SOLID              = 0,  // TEL_HS_SOLID (no hatching)
   Aspect_HS_HORIZONTAL         = 7,  // TEL_HS_HORIZONTAL

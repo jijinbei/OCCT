@@ -315,19 +315,19 @@ void SelectMgr::ComputeSensitivePrs(const occ::handle<Graphic3d_Structure>&     
 
     occ::handle<Graphic3d_Group> aSensPntGroup = thePrs->NewGroup();
     aSensPntGroup->SetPrimitivesAspect(
-      new Graphic3d_AspectMarker3d(Aspect_TOM_O_PLUS, Quantity_NOC_INDIANRED3, 2.0));
+      new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_O_PLUS, Quantity_NOC_INDIANRED3, 2.0));
     aSensPntGroup->AddPrimitiveArray(anArrayOfPoints);
   }
   if (!aSeqLines.IsEmpty())
   {
     Prs3d::AddPrimitivesGroup(thePrs,
-                              new Prs3d_LineAspect(Quantity_NOC_AQUAMARINE1, Aspect_TOL_DASH, 1.0),
+                              new Prs3d_LineAspect(Quantity_NOC_AQUAMARINE1, Aspect_TypeOfLine::Aspect_TOL_DASH, 1.0),
                               aSeqLines);
   }
   if (!aSeqFree.IsEmpty())
   {
     Prs3d::AddPrimitivesGroup(thePrs,
-                              new Prs3d_LineAspect(Quantity_NOC_GREEN, Aspect_TOL_SOLID, 2.0),
+                              new Prs3d_LineAspect(Quantity_NOC_GREEN, Aspect_TypeOfLine::Aspect_TOL_SOLID, 2.0),
                               aSeqFree);
   }
 }

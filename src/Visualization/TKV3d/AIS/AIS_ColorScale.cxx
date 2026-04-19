@@ -109,14 +109,14 @@ AIS_ColorScale::AIS_ColorScale()
       myColorHlsMax(0.0, 1.0, 1.0),
       myFormat("%.4g"),
       myNbIntervals(10),
-      myColorType(Aspect_TOCSD_AUTO),
-      myLabelType(Aspect_TOCSD_AUTO),
+      myColorType(Aspect_TypeOfColorScaleData::Aspect_TOCSD_AUTO),
+      myLabelType(Aspect_TypeOfColorScaleData::Aspect_TOCSD_AUTO),
       myIsLabelAtBorder(true),
       myIsReversed(false),
       myIsLogarithmic(false),
       myIsSmooth(false),
-      myLabelPos(Aspect_TOCSP_RIGHT),
-      myTitlePos(Aspect_TOCSP_LEFT),
+      myLabelPos(Aspect_TypeOfColorScalePosition::Aspect_TOCSP_RIGHT),
+      myTitlePos(Aspect_TypeOfColorScalePosition::Aspect_TOCSP_LEFT),
       myXPos(0),
       myYPos(0),
       myBreadth(0),
@@ -135,7 +135,7 @@ AIS_ColorScale::AIS_ColorScale()
 
 TCollection_ExtendedString AIS_ColorScale::GetLabel(const int theIndex) const
 {
-  if (myLabelType == Aspect_TOCSD_USER)
+  if (myLabelType == Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER)
   {
     if (theIndex >= NCollection_Sequence<TCollection_ExtendedString>::Lower()
         || theIndex <= myLabels.Upper())
@@ -159,7 +159,7 @@ TCollection_ExtendedString AIS_ColorScale::GetLabel(const int theIndex) const
 
 Quantity_Color AIS_ColorScale::GetIntervalColor(const int theIndex) const
 {
-  if (myColorType == Aspect_TOCSD_USER)
+  if (myColorType == Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER)
   {
     if (theIndex <= 0 || theIndex > myColors.Length())
     {
@@ -364,7 +364,7 @@ void AIS_ColorScale::SizeHint(int& theWidth, int& theHeight) const
   const int aTextHeight = TextHeight("");
   const int aColorWidth = 20;
   int       aTextWidth  = 0;
-  if (myLabelPos != Aspect_TOCSP_NONE)
+  if (myLabelPos != Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE)
   {
     for (int aLabIter = (myIsLabelAtBorder ? 0 : 1); aLabIter <= myNbIntervals; ++aLabIter)
     {
@@ -430,7 +430,7 @@ bool AIS_ColorScale::FindColor(const double theValue, Quantity_Color& theColor) 
     return false;
   }
 
-  if (myColorType == Aspect_TOCSD_USER)
+  if (myColorType == Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER)
   {
     const int anInterval = colorDiscreteInterval(theValue, myMin, myMax, myNbIntervals);
     if (anInterval < NCollection_Sequence<Quantity_Color>::Lower() || anInterval > myColors.Upper())
@@ -527,7 +527,7 @@ void AIS_ColorScale::Compute(const occ::handle<PrsMgr_PresentationManager>&,
   const int aBarHeight  = aBarTop - aBarBottom;
 
   NCollection_Sequence<TCollection_ExtendedString> aLabels;
-  if (myLabelType == Aspect_TOCSD_USER)
+  if (myLabelType == Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER)
   {
     aLabels = myLabels;
   }
@@ -547,9 +547,9 @@ void AIS_ColorScale::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     }
   }
 
-  const int aTextWidth    = myLabelPos != Aspect_TOCSP_NONE ? computeMaxLabelWidth(aLabels) : 0;
+  const int aTextWidth    = myLabelPos != Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE ? computeMaxLabelWidth(aLabels) : 0;
   int       aColorBreadth = std::max(5, std::min(20, myBreadth - aTextWidth - 3 * mySpacing));
-  if (myLabelPos == Aspect_TOCSP_CENTER || myLabelPos == Aspect_TOCSP_NONE)
+  if (myLabelPos == Aspect_TypeOfColorScalePosition::Aspect_TOCSP_CENTER || myLabelPos == Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE)
   {
     aColorBreadth += aTextWidth;
   }
@@ -593,7 +593,7 @@ void AIS_ColorScale::drawColorBar(const occ::handle<Prs3d_Presentation>& thePrs,
 
   // Draw colors
   const int anXLeft =
-    myLabelPos == Aspect_TOCSP_LEFT
+    myLabelPos == Aspect_TypeOfColorScalePosition::Aspect_TOCSP_LEFT
       ? myXPos + mySpacing + theMaxLabelWidth + (theMaxLabelWidth != 0 ? 1 : 0) * mySpacing
       : myXPos + mySpacing;
 
@@ -611,7 +611,7 @@ void AIS_ColorScale::drawColorBar(const occ::handle<Prs3d_Presentation>& thePrs,
   }
 
   occ::handle<Graphic3d_ArrayOfTriangles> aTriangles;
-  if (myIsSmooth && myColorType == Aspect_TOCSD_USER)
+  if (myIsSmooth && myColorType == Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER)
   {
     // Smooth custom intervals, so that the color in the center of interval is equal to specified
     // one (thus the halves of first and last intervals have solid color)
@@ -719,7 +719,7 @@ void AIS_ColorScale::drawLabels(const occ::handle<Graphic3d_Group>&             
                                 const int theMaxLabelWidth,
                                 const int theColorBreadth)
 {
-  if (myLabelPos == Aspect_TOCSP_NONE || theLabels.IsEmpty())
+  if (myLabelPos == Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE || theLabels.IsEmpty())
   {
     return;
   }
@@ -757,15 +757,15 @@ void AIS_ColorScale::drawLabels(const occ::handle<Graphic3d_Group>&             
   const int anAscent = 0;
   switch (myLabelPos)
   {
-    case Aspect_TOCSP_NONE:
-    case Aspect_TOCSP_LEFT: {
+    case Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE:
+    case Aspect_TypeOfColorScalePosition::Aspect_TOCSP_LEFT: {
       break;
     }
-    case Aspect_TOCSP_CENTER: {
+    case Aspect_TypeOfColorScalePosition::Aspect_TOCSP_CENTER: {
       anXLeft += (theColorBreadth - theMaxLabelWidth) / 2;
       break;
     }
-    case Aspect_TOCSP_RIGHT: {
+    case Aspect_TypeOfColorScalePosition::Aspect_TOCSP_RIGHT: {
       anXLeft += theColorBreadth + mySpacing;
       break;
     }
@@ -840,7 +840,7 @@ void AIS_ColorScale::drawFrame(const occ::handle<Prs3d_Presentation>& thePrs,
   aPrim->AddVertex(theX, theY, 0.0);
 
   occ::handle<Graphic3d_AspectLine3d> anAspect =
-    new Graphic3d_AspectLine3d(theColor, Aspect_TOL_SOLID, 1.0);
+    new Graphic3d_AspectLine3d(theColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0);
   occ::handle<Graphic3d_Group> aGroup = thePrs->NewGroup();
   aGroup->SetGroupPrimitivesAspect(anAspect);
   aGroup->AddPrimitiveArray(aPrim);

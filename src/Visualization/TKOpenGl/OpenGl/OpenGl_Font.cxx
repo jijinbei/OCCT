@@ -193,7 +193,7 @@ bool OpenGl_Font::renderGlyph(const occ::handle<OpenGl_Context>& theCtx, const c
   }
 
   aTexture->Bind(theCtx);
-  if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+  if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     theCtx->core11fwd->glPixelStorei(GL_UNPACK_LSB_FIRST, GL_FALSE);
   }

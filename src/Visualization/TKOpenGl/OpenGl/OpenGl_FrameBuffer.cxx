@@ -57,7 +57,7 @@ static bool hasDepthStencilAttach(const occ::handle<OpenGl_Context>& theCtx)
   //
   // available on desktop since OpenGL 3.0
   // or OpenGL 2.0 + GL_ARB_framebuffer_object (GL_EXT_framebuffer_object is unsupported by OCCT)
-  return theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES
+  return theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
          || theCtx->IsGlGreaterEqual(3, 0);
 #endif
 }
@@ -1065,7 +1065,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
   switch (theImage.Format())
   {
     case Image_Format_Gray: {
-      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
       }
@@ -1077,7 +1077,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       break;
     }
     case Image_Format_Gray16: {
-      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
       }
@@ -1089,7 +1089,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       break;
     }
     case Image_Format_GrayF: {
-      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
       }
@@ -1101,7 +1101,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       break;
     }
     case Image_Format_RGF: {
-      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
       }
@@ -1111,7 +1111,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       break;
     }
     case Image_Format_RGB: {
-      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         aFormat        = GL_RGBA;
         toConvRgba2Rgb = true;
@@ -1124,7 +1124,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       break;
     }
     case Image_Format_BGR: {
-      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         aFormat        = GL_RGBA;
         toConvRgba2Rgb = true;
@@ -1138,7 +1138,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
     }
     case Image_Format_BGRA:
     case Image_Format_BGR32: {
-      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         aFormat        = GL_RGBA;
         toSwapRgbaBgra = true;
@@ -1151,7 +1151,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       break;
     }
     case Image_Format_BGRF: {
-      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
       }
@@ -1161,7 +1161,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
       break;
     }
     case Image_Format_BGRAF: {
-      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theGlCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         return false;
       }
@@ -1202,7 +1202,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
   }
 
   GLint aReadBufferPrev = GL_BACK;
-  if (theGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES
+  if (theGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
       && (theBufferType == Graphic3d_BT_Depth || theBufferType == Graphic3d_BT_ShadowMap)
       && aFormat != GL_DEPTH_COMPONENT)
   {
@@ -1214,7 +1214,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
   {
     theFbo->BindBuffer(theGlCtx);
   }
-  else if (theGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+  else if (theGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     theGlCtx->core11fwd->glGetIntegerv(GL_READ_BUFFER, &aReadBufferPrev);
     GLint aDrawBufferPrev = GL_BACK;
@@ -1323,7 +1323,7 @@ bool OpenGl_FrameBuffer::BufferDump(const occ::handle<OpenGl_Context>&     theGl
   {
     theFbo->UnbindBuffer(theGlCtx);
   }
-  else if (theGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+  else if (theGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     theGlCtx->core11fwd->glReadBuffer(aReadBufferPrev);
   }

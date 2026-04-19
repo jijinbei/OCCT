@@ -505,7 +505,7 @@ bool OpenGl_View::BufferDump(Image_PixMap& theImage, const Graphic3d_BufferType&
                                    theBufferType);
   }
 
-  if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+  if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     return false;
   }
@@ -582,7 +582,7 @@ bool OpenGl_View::ShadowMapDump(Image_PixMap& theImage, const TCollection_AsciiS
         {
           aShadowFbo->BindBuffer(aGlCtx);
         }
-        else if (aGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+        else if (aGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
         {
           aGlCtx->core11fwd->glGetIntegerv(GL_READ_BUFFER, &aReadBufferPrev);
           GLint aDrawBufferPrev = GL_BACK;
@@ -612,7 +612,7 @@ bool OpenGl_View::ShadowMapDump(Image_PixMap& theImage, const TCollection_AsciiS
         {
           aShadowFbo->UnbindBuffer(aGlCtx);
         }
-        else if (aGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+        else if (aGlCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
         {
           aGlCtx->core11fwd->glReadBuffer(aReadBufferPrev);
         }
@@ -653,8 +653,8 @@ void OpenGl_View::SetGradientBackground(const Aspect_GradientBackground& theBack
     aColor1,
     aColor2,
     theBackground.BgGradientFillMethod());
-  if (theBackground.BgGradientFillMethod() >= Aspect_GradientFillMethod_Corner1
-      && theBackground.BgGradientFillMethod() <= Aspect_GradientFillMethod_Corner4)
+  if (theBackground.BgGradientFillMethod() >= Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner1
+      && theBackground.BgGradientFillMethod() <= Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner4)
   {
     if (const occ::handle<OpenGl_Context>& aCtx = myWorkspace->GetGlContext())
     {
@@ -708,7 +708,7 @@ void OpenGl_View::SetBackgroundImage(const occ::handle<Graphic3d_TextureMap>& th
 
   occ::handle<Graphic3d_AspectFillArea3d> anAspect    = new Graphic3d_AspectFillArea3d();
   occ::handle<Graphic3d_TextureSet>       aTextureSet = new Graphic3d_TextureSet(aNewMap);
-  anAspect->SetInteriorStyle(Aspect_IS_SOLID);
+  anAspect->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   anAspect->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_DoubleSided);
   anAspect->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
   anAspect->SetTextureSet(aTextureSet);
@@ -1098,17 +1098,17 @@ void OpenGl_View::drawBackground(const occ::handle<OpenGl_Workspace>& theWorkspa
   else if (myBackgroundType == Graphic3d_TOB_GRADIENT || myBackgroundType == Graphic3d_TOB_TEXTURE)
   {
     // Drawing background gradient if:
-    // - gradient fill type is not Aspect_GradientFillMethod_None and
-    // - either background texture is no specified or it is drawn in Aspect_FM_CENTERED mode
+    // - gradient fill type is not Aspect_GradientFillMethod::Aspect_GradientFillMethod_None and
+    // - either background texture is no specified or it is drawn in Aspect_FillMethod::Aspect_FM_CENTERED mode
     if (myBackgrounds[Graphic3d_TOB_GRADIENT]->IsDefined()
         && (!myTextureParams->Aspect()->ToMapTexture()
-            || myBackgrounds[Graphic3d_TOB_TEXTURE]->TextureFillMethod() == Aspect_FM_CENTERED
-            || myBackgrounds[Graphic3d_TOB_TEXTURE]->TextureFillMethod() == Aspect_FM_NONE))
+            || myBackgrounds[Graphic3d_TOB_TEXTURE]->TextureFillMethod() == Aspect_FillMethod::Aspect_FM_CENTERED
+            || myBackgrounds[Graphic3d_TOB_TEXTURE]->TextureFillMethod() == Aspect_FillMethod::Aspect_FM_NONE))
     {
       if (myBackgrounds[Graphic3d_TOB_GRADIENT]->GradientFillMethod()
-            >= Aspect_GradientFillMethod_Corner1
+            >= Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner1
           && myBackgrounds[Graphic3d_TOB_GRADIENT]->GradientFillMethod()
-               <= Aspect_GradientFillMethod_Corner4)
+               <= Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner4)
       {
         const OpenGl_Aspects* anOldAspectFace = theWorkspace->SetAspects(myColoredQuadParams);
 
@@ -1123,7 +1123,7 @@ void OpenGl_View::drawBackground(const occ::handle<OpenGl_Workspace>& theWorkspa
     }
 
     // Drawing background image if it is defined
-    // (texture is defined and fill type is not Aspect_FM_NONE)
+    // (texture is defined and fill type is not Aspect_FillMethod::Aspect_FM_NONE)
     if (myBackgrounds[Graphic3d_TOB_TEXTURE]->IsDefined()
         && myTextureParams->Aspect()->ToMapTexture())
     {
@@ -1402,10 +1402,10 @@ bool OpenGl_View::prepareFrameBuffers(Graphic3d_Camera::Projection& theProj)
           // expected that GL_RG16F has enough precision for this table, so that it can be used also
           // on desktop OpenGL.
           const bool hasHalfFloat =
-            aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+            aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
             && (aCtx->IsGlGreaterEqual(3, 0)
                 || aCtx->CheckExtension("GL_OES_texture_half_float_linear"));
-          if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+          if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
           {
             toConvertHalfFloat = !aCtx->IsGlGreaterEqual(3, 0) && hasHalfFloat;
           }
@@ -1462,7 +1462,7 @@ bool OpenGl_View::prepareFrameBuffers(Graphic3d_Camera::Projection& theProj)
 
           OpenGl_TextureFormat aTexFormat =
             OpenGl_TextureFormat::FindFormat(aCtx, aPixMap->Format(), false);
-          if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES && aTexFormat.IsValid()
+          if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES && aTexFormat.IsValid()
               && hasHalfFloat)
           {
             aTexFormat.SetInternalFormat(aCtx->arbTexRG ? GL_RG16F : GL_RGBA16F);
@@ -1860,11 +1860,11 @@ void OpenGl_View::Redraw()
       const Aspect_GraphicsLibrary aGraphicsLib = aCtx->GraphicsLibrary();
       myXRSession->SubmitEye((void*)(size_t)anXRFbo->ColorTexture()->TextureId(),
                              aGraphicsLib,
-                             Aspect_ColorSpace_sRGB,
-                             Aspect_Eye_Left);
+                             Aspect_ColorSpace::Aspect_ColorSpace_sRGB,
+                             Aspect_Eye::Aspect_Eye_Left);
     }
 
-    if (aCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+    if (aCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       aCtx->SetReadDrawBuffer(aStereoMode == Graphic3d_StereoMode_QuadBuffer ? GL_BACK_RIGHT
                                                                              : GL_BACK);
@@ -1899,8 +1899,8 @@ void OpenGl_View::Redraw()
       const Aspect_GraphicsLibrary aGraphicsLib = aCtx->GraphicsLibrary();
       myXRSession->SubmitEye((void*)(size_t)anXRFbo->ColorTexture()->TextureId(),
                              aGraphicsLib,
-                             Aspect_ColorSpace_sRGB,
-                             Aspect_Eye_Right);
+                             Aspect_ColorSpace::Aspect_ColorSpace_sRGB,
+                             Aspect_Eye::Aspect_Eye_Right);
       aCtx->core11fwd->glFinish();
 
       if (myRenderParams.ToMirrorComposer)
@@ -2226,7 +2226,7 @@ bool OpenGl_View::redrawImmediate(const Graphic3d_Camera::Projection theProjecti
   }
   else if (theDrawFbo == nullptr)
   {
-    if (aCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+    if (aCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       aCtx->core11fwd->glGetBooleanv(GL_DOUBLEBUFFER, &toCopyBackToFront);
     }
@@ -2816,7 +2816,7 @@ void OpenGl_View::bindDefaultFbo(OpenGl_FrameBuffer* theCustomFbo)
   }
   else
   {
-    if (aCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+    if (aCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       aCtx->SetReadDrawBuffer(GL_BACK);
     }
@@ -3002,7 +3002,7 @@ bool OpenGl_View::blitBuffers(OpenGl_FrameBuffer* theReadFbo,
     aCtx->core20fwd->glDepthFunc(GL_ALWAYS);
     aCtx->core20fwd->glDepthMask(GL_TRUE);
     aCtx->core20fwd->glEnable(GL_DEPTH_TEST);
-    if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES && !aCtx->IsGlGreaterEqual(3, 0)
+    if (aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES && !aCtx->IsGlGreaterEqual(3, 0)
         && !aCtx->extFragDepth)
     {
       aCtx->core20fwd->glDisable(GL_DEPTH_TEST);
@@ -3449,7 +3449,7 @@ void OpenGl_View::updateSkydomeBg(const occ::handle<OpenGl_Context>& theCtx)
   // init aspects if needed
   if (myCubeMapParams->TextureSet(theCtx).IsNull())
   {
-    myCubeMapParams->Aspect()->SetInteriorStyle(Aspect_IS_SOLID);
+    myCubeMapParams->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
     myCubeMapParams->Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_DoubleSided);
     myCubeMapParams->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
     myCubeMapParams->Aspect()->SetShaderProgram(theCtx->ShaderManager()->GetBgCubeMapProgram());
@@ -3518,7 +3518,7 @@ void OpenGl_View::updatePBREnvironment(const occ::handle<OpenGl_Context>& theCtx
     occ::handle<Graphic3d_AspectFillArea3d> anAspect = new Graphic3d_AspectFillArea3d();
     {
       occ::handle<Graphic3d_TextureSet> aTextureSet = new Graphic3d_TextureSet(myCubeMapIBL);
-      anAspect->SetInteriorStyle(Aspect_IS_SOLID);
+      anAspect->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
       anAspect->SetTextureSet(aTextureSet);
       anAspect->SetTextureMapOn(true);
     }

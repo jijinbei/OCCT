@@ -35,7 +35,7 @@ public:
   //! Creates a new predefined hatch style with the given id in Aspect_HatchStyle enum.
   //! GPU memory for the pattern will not be allocated.
   Graphic3d_HatchStyle(const Aspect_HatchStyle theType)
-      : myHatchType(theType)
+      : myHatchType(static_cast<int>(theType))
   {
   }
 

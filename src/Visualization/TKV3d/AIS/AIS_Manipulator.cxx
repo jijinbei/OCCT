@@ -144,17 +144,17 @@ void AIS_Manipulator::init()
   aShadingMaterial.SetMaterialType(Graphic3d_MATERIAL_ASPECT);
 
   myDrawer->SetShadingAspect(new Prs3d_ShadingAspect());
-  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_IS_SOLID);
+  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   myDrawer->ShadingAspect()->SetColor(Quantity_NOC_WHITE);
   myDrawer->ShadingAspect()->SetMaterial(aShadingMaterial);
 
   myHighlightAspect = new Prs3d_ShadingAspect();
-  myHighlightAspect->Aspect()->SetInteriorStyle(Aspect_IS_SOLID);
+  myHighlightAspect->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   myHighlightAspect->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
   myHighlightAspect->SetColor(Quantity_NOC_AZURE);
 
   myDraggerHighlight = new Prs3d_ShadingAspect();
-  myDraggerHighlight->Aspect()->SetInteriorStyle(Aspect_IS_SOLID);
+  myDraggerHighlight->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   myDraggerHighlight->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
   myDraggerHighlight->SetTransparency(0.5);
 
@@ -1139,7 +1139,7 @@ void AIS_Manipulator::DeactivateCurrentMode()
     {
       anAspect->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
     }
-    anAspect->Aspect()->SetInteriorStyle(Aspect_IS_SOLID);
+    anAspect->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
     anAspect->SetMaterial(myDrawer->ShadingAspect()->Material());
     if (myCurrentMode == AIS_MM_TranslationPlane)
       anAspect->SetTransparency(1.0);
@@ -1244,7 +1244,7 @@ void AIS_Manipulator::Compute(const occ::handle<PrsMgr_PresentationManager>& the
   {
     anAspect->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
   }
-  anAspect->Aspect()->SetInteriorStyle(Aspect_IS_SOLID);
+  anAspect->Aspect()->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   anAspect->SetMaterial(myDrawer->ShadingAspect()->Material());
   anAspect->SetTransparency(myDrawer->ShadingAspect()->Transparency());
 

@@ -154,24 +154,24 @@ public:
     theMaxColor.Values(myColorHlsMax[0], myColorHlsMax[1], myColorHlsMax[2], Quantity_TOC_HLS);
   }
 
-  //! Returns the type of labels, Aspect_TOCSD_AUTO by default.
-  //! Aspect_TOCSD_AUTO - labels as boundary values for intervals
-  //! Aspect_TOCSD_USER - user specified label is used
+  //! Returns the type of labels, Aspect_TypeOfColorScaleData::Aspect_TOCSD_AUTO by default.
+  //! Aspect_TypeOfColorScaleData::Aspect_TOCSD_AUTO - labels as boundary values for intervals
+  //! Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER - user specified label is used
   Aspect_TypeOfColorScaleData GetLabelType() const { return myLabelType; }
 
   //! Sets the type of labels.
-  //! Aspect_TOCSD_AUTO - labels as boundary values for intervals
-  //! Aspect_TOCSD_USER - user specified label is used
+  //! Aspect_TypeOfColorScaleData::Aspect_TOCSD_AUTO - labels as boundary values for intervals
+  //! Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER - user specified label is used
   void SetLabelType(const Aspect_TypeOfColorScaleData theType) { myLabelType = theType; }
 
-  //! Returns the type of colors, Aspect_TOCSD_AUTO by default.
-  //! Aspect_TOCSD_AUTO - value between Red and Blue
-  //! Aspect_TOCSD_USER - user specified color from color map
+  //! Returns the type of colors, Aspect_TypeOfColorScaleData::Aspect_TOCSD_AUTO by default.
+  //! Aspect_TypeOfColorScaleData::Aspect_TOCSD_AUTO - value between Red and Blue
+  //! Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER - user specified color from color map
   Aspect_TypeOfColorScaleData GetColorType() const { return myColorType; }
 
   //! Sets the type of colors.
-  //! Aspect_TOCSD_AUTO - value between Red and Blue
-  //! Aspect_TOCSD_USER - user specified color from color map
+  //! Aspect_TypeOfColorScaleData::Aspect_TOCSD_AUTO - value between Red and Blue
+  //! Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER - user specified color from color map
   void SetColorType(const Aspect_TypeOfColorScaleData theType) { myColorType = theType; }
 
   //! Returns the number of color scale intervals, 10 by default.
@@ -245,7 +245,7 @@ public:
   void SetUniformColors(double theLightness, double theHueFrom, double theHueTo)
   {
     SetColors(MakeUniformColors(myNbIntervals, theLightness, theHueFrom, theHueTo));
-    SetColorType(Aspect_TOCSD_USER);
+    SetColorType(Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER);
   }
 
   //! Generates sequence of colors of the same lightness value in CIE Lch
@@ -268,14 +268,14 @@ public:
                                                                                 double theHueFrom,
                                                                                 double theHueTo);
 
-  //! Returns the position of labels concerning color filled rectangles, Aspect_TOCSP_RIGHT by
+  //! Returns the position of labels concerning color filled rectangles, Aspect_TypeOfColorScalePosition::Aspect_TOCSP_RIGHT by
   //! default.
   Aspect_TypeOfColorScalePosition GetLabelPosition() const { return myLabelPos; }
 
   //! Sets the color scale labels position relative to color bar.
   void SetLabelPosition(const Aspect_TypeOfColorScalePosition thePos) { myLabelPos = thePos; }
 
-  //! Returns the position of color scale title, Aspect_TOCSP_LEFT by default.
+  //! Returns the position of color scale title, Aspect_TypeOfColorScalePosition::Aspect_TOCSP_LEFT by default.
   Aspect_TypeOfColorScalePosition GetTitlePosition() const { return myTitlePos; }
 
   //! Sets the color scale title position.

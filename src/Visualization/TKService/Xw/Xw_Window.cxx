@@ -245,7 +245,7 @@ Aspect_TypeOfResize Xw_Window::DoResize()
 {
   if (IsVirtual() || myXWindow == 0)
   {
-    return Aspect_TOR_UNKNOWN;
+    return Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
   }
 
 #if defined(HAVE_XLIB)
@@ -255,11 +255,11 @@ Aspect_TypeOfResize Xw_Window::DoResize()
   XGetWindowAttributes(myDisplay->GetDisplay(), (Window)myXWindow, &aWinAttr);
   if (aWinAttr.map_state == IsUnmapped)
   {
-    return Aspect_TOR_UNKNOWN;
+    return Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
   }
 
   int                 aMask = 0;
-  Aspect_TypeOfResize aMode = Aspect_TOR_UNKNOWN;
+  Aspect_TypeOfResize aMode = Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
 
   if (std::abs(aWinAttr.x - myXLeft) > 2)
     aMask |= 1;
@@ -272,31 +272,31 @@ Aspect_TypeOfResize Xw_Window::DoResize()
   switch (aMask)
   {
     case 0:
-      aMode = Aspect_TOR_NO_BORDER;
+      aMode = Aspect_TypeOfResize::Aspect_TOR_NO_BORDER;
       break;
     case 1:
-      aMode = Aspect_TOR_LEFT_BORDER;
+      aMode = Aspect_TypeOfResize::Aspect_TOR_LEFT_BORDER;
       break;
     case 2:
-      aMode = Aspect_TOR_RIGHT_BORDER;
+      aMode = Aspect_TypeOfResize::Aspect_TOR_RIGHT_BORDER;
       break;
     case 4:
-      aMode = Aspect_TOR_TOP_BORDER;
+      aMode = Aspect_TypeOfResize::Aspect_TOR_TOP_BORDER;
       break;
     case 5:
-      aMode = Aspect_TOR_LEFT_AND_TOP_BORDER;
+      aMode = Aspect_TypeOfResize::Aspect_TOR_LEFT_AND_TOP_BORDER;
       break;
     case 6:
-      aMode = Aspect_TOR_TOP_AND_RIGHT_BORDER;
+      aMode = Aspect_TypeOfResize::Aspect_TOR_TOP_AND_RIGHT_BORDER;
       break;
     case 8:
-      aMode = Aspect_TOR_BOTTOM_BORDER;
+      aMode = Aspect_TypeOfResize::Aspect_TOR_BOTTOM_BORDER;
       break;
     case 9:
-      aMode = Aspect_TOR_BOTTOM_AND_LEFT_BORDER;
+      aMode = Aspect_TypeOfResize::Aspect_TOR_BOTTOM_AND_LEFT_BORDER;
       break;
     case 10:
-      aMode = Aspect_TOR_RIGHT_AND_BOTTOM_BORDER;
+      aMode = Aspect_TypeOfResize::Aspect_TOR_RIGHT_AND_BOTTOM_BORDER;
       break;
     default:
       break;
@@ -308,7 +308,7 @@ Aspect_TypeOfResize Xw_Window::DoResize()
   myYBottom = aWinAttr.y + aWinAttr.height;
   return aMode;
 #else
-  return Aspect_TOR_UNKNOWN;
+  return Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
 #endif
 }
 
@@ -591,7 +591,7 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
   switch (theMsg.type)
   {
     case ClientMessage: {
-      if ((Atom)theMsg.xclient.data.l[0] == myDisplay->GetAtom(Aspect_XA_DELETE_WINDOW)
+      if ((Atom)theMsg.xclient.data.l[0] == myDisplay->GetAtom(Aspect_XAtom::Aspect_XA_DELETE_WINDOW)
           && theMsg.xclient.window == (Window)myXWindow)
       {
         theListener.ProcessClose();

@@ -475,7 +475,7 @@ public: //! @name simplified presentation properties API
   //! change the current facing model apply on polygons for SetColor(), SetTransparency(),
   //! SetMaterial() methods default facing model is Aspect_TOFM_TWO_SIDE. This mean that attributes
   //! is applying both on the front and back face.
-  void SetCurrentFacingModel(const Aspect_TypeOfFacingModel theModel = Aspect_TOFM_BOTH_SIDE)
+  void SetCurrentFacingModel(const Aspect_TypeOfFacingModel theModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
   {
     myCurrentFacingModel = theModel;
   }

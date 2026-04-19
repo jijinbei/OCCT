@@ -78,7 +78,7 @@ MeshVS_Mesh::MeshVS_Mesh(const bool theIsAllowOverlapped)
 
   myCurrentDrawer = new MeshVS_Drawer();
   myCurrentDrawer->SetColor(MeshVS_DA_InteriorColor, Quantity_NOC_BLUE4);
-  myCurrentDrawer->SetInteger(MeshVS_DA_InteriorStyle, Aspect_IS_SOLID);
+  myCurrentDrawer->SetInteger(MeshVS_DA_InteriorStyle, static_cast<int>(Aspect_InteriorStyle::Aspect_IS_SOLID));
   myCurrentDrawer->SetInteger(MeshVS_DA_MaxFaceNodes, 10);
   myCurrentDrawer->SetBoolean(MeshVS_DA_IsAllowOverlapped, theIsAllowOverlapped);
   myCurrentDrawer->SetBoolean(MeshVS_DA_Reflection, true);
@@ -87,42 +87,42 @@ MeshVS_Mesh::MeshVS_Mesh(const bool theIsAllowOverlapped)
   myCurrentDrawer->SetBoolean(MeshVS_DA_ComputeSelectionTime, false);
   myCurrentDrawer->SetBoolean(MeshVS_DA_DisplayNodes, true);
   myCurrentDrawer->SetDouble(MeshVS_DA_EdgeWidth, 1.0);
-  myCurrentDrawer->SetInteger(MeshVS_DA_EdgeType, Aspect_TOL_SOLID);
-  myCurrentDrawer->SetInteger(MeshVS_DA_MarkerType, Aspect_TOM_O);
+  myCurrentDrawer->SetInteger(MeshVS_DA_EdgeType, static_cast<int>(Aspect_TypeOfLine::Aspect_TOL_SOLID));
+  myCurrentDrawer->SetInteger(MeshVS_DA_MarkerType, static_cast<int>(Aspect_TypeOfMarker::Aspect_TOM_O));
   myCurrentDrawer->SetColor(MeshVS_DA_MarkerColor, Quantity_NOC_WHITE);
   myCurrentDrawer->SetDouble(MeshVS_DA_MarkerScale, 1.0);
-  myCurrentDrawer->SetInteger(MeshVS_DA_BeamType, Aspect_TOL_SOLID);
+  myCurrentDrawer->SetInteger(MeshVS_DA_BeamType, static_cast<int>(Aspect_TypeOfLine::Aspect_TOL_SOLID));
   myCurrentDrawer->SetDouble(MeshVS_DA_BeamWidth, 1.0);
   myCurrentDrawer->SetBoolean(MeshVS_DA_SmoothShading, false);
   myCurrentDrawer->SetBoolean(MeshVS_DA_SupressBackFaces, false);
 
   mySelectionDrawer = new MeshVS_Drawer();
   mySelectionDrawer->Assign(myCurrentDrawer);
-  mySelectionDrawer->SetInteger(MeshVS_DA_MarkerType, Aspect_TOM_STAR);
+  mySelectionDrawer->SetInteger(MeshVS_DA_MarkerType, static_cast<int>(Aspect_TypeOfMarker::Aspect_TOM_STAR));
   mySelectionDrawer->SetColor(MeshVS_DA_MarkerColor, Quantity_NOC_GRAY80);
   mySelectionDrawer->SetDouble(MeshVS_DA_MarkerScale, 2.0);
 
   mySelectionDrawer->SetColor(MeshVS_DA_BeamColor, Quantity_NOC_GRAY80);
-  mySelectionDrawer->SetInteger(MeshVS_DA_BeamType, Aspect_TOL_SOLID);
+  mySelectionDrawer->SetInteger(MeshVS_DA_BeamType, static_cast<int>(Aspect_TypeOfLine::Aspect_TOL_SOLID));
   mySelectionDrawer->SetDouble(MeshVS_DA_BeamWidth, 3.0);
 
   myHilightDrawer = new MeshVS_Drawer();
   myHilightDrawer->Assign(myCurrentDrawer);
   myHilightDrawer->SetDouble(MeshVS_DA_ShrinkCoeff, 0.7);
-  myHilightDrawer->SetInteger(MeshVS_DA_InteriorStyle, Aspect_IS_SOLID);
+  myHilightDrawer->SetInteger(MeshVS_DA_InteriorStyle, static_cast<int>(Aspect_InteriorStyle::Aspect_IS_SOLID));
   myHilightDrawer->SetColor(MeshVS_DA_InteriorColor, Quantity_NOC_YELLOW);
   myHilightDrawer->SetColor(MeshVS_DA_BackInteriorColor, Quantity_NOC_YELLOW);
   myHilightDrawer->SetColor(MeshVS_DA_EdgeColor, Quantity_NOC_GREEN);
-  myHilightDrawer->SetInteger(MeshVS_DA_EdgeType, Aspect_TOL_SOLID);
+  myHilightDrawer->SetInteger(MeshVS_DA_EdgeType, static_cast<int>(Aspect_TypeOfLine::Aspect_TOL_SOLID));
   myHilightDrawer->SetDouble(MeshVS_DA_EdgeWidth, 1.0);
   myHilightDrawer->SetMaterial(MeshVS_DA_FrontMaterial, Graphic3d_NameOfMaterial_Plastified);
   myHilightDrawer->SetMaterial(MeshVS_DA_BackMaterial, Graphic3d_NameOfMaterial_Plastified);
 
   myHilightDrawer->SetColor(MeshVS_DA_BeamColor, Quantity_NOC_GRAY80);
-  myHilightDrawer->SetInteger(MeshVS_DA_BeamType, Aspect_TOL_SOLID);
+  myHilightDrawer->SetInteger(MeshVS_DA_BeamType, static_cast<int>(Aspect_TypeOfLine::Aspect_TOL_SOLID));
   myHilightDrawer->SetDouble(MeshVS_DA_BeamWidth, 3.0);
 
-  myHilightDrawer->SetInteger(MeshVS_DA_MarkerType, Aspect_TOM_STAR);
+  myHilightDrawer->SetInteger(MeshVS_DA_MarkerType, static_cast<int>(Aspect_TypeOfMarker::Aspect_TOM_STAR));
   myHilightDrawer->SetColor(MeshVS_DA_MarkerColor, Quantity_NOC_GRAY80);
   myHilightDrawer->SetDouble(MeshVS_DA_MarkerScale, 2.0);
 }

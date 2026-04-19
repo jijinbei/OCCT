@@ -739,7 +739,7 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
     // Marker of localisation of the face
     Quantity_Color                        aColor = LA->LineAspect()->Aspect()->Color();
     occ::handle<Graphic3d_AspectMarker3d> aMarkerAsp =
-      new Graphic3d_AspectMarker3d(Aspect_TOM_O, aColor, 1.0);
+      new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_O, aColor, 1.0);
     aPresentation->CurrentGroup()->SetPrimitivesAspect(aMarkerAsp);
     occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints = new Graphic3d_ArrayOfPoints(1);
     anArrayOfPoints->AddVertex(AttachmentPoint1.X(), AttachmentPoint1.Y(), AttachmentPoint1.Z());
@@ -872,7 +872,7 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
 
     Quantity_Color                        aColor = LA->LineAspect()->Aspect()->Color();
     occ::handle<Graphic3d_AspectMarker3d> aMarkerAspAtt =
-      new Graphic3d_AspectMarker3d(Aspect_TOM_O, aColor, 1.0);
+      new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_O, aColor, 1.0);
     aPresentation->CurrentGroup()->SetPrimitivesAspect(aMarkerAspAtt);
     occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints1 = new Graphic3d_ArrayOfPoints(1);
     anArrayOfPoints1->AddVertex(AttachmentPoint1.X(), AttachmentPoint1.Y(), AttachmentPoint1.Z());

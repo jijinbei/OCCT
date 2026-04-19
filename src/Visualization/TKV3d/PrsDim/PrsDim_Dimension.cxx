@@ -358,7 +358,7 @@ void PrsDim_Dimension::DrawArrow(const occ::handle<Prs3d_Presentation>& thePrese
     aPolOffset.Factor                                     = 0.0f;
     aPolOffset.Units                                      = 0.0f;
     occ::handle<Graphic3d_AspectFillArea3d> aShadingStyle = new Graphic3d_AspectFillArea3d();
-    aShadingStyle->SetInteriorStyle(Aspect_IS_SOLID);
+    aShadingStyle->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
     aShadingStyle->SetColor(myDrawer->DimensionAspect()->ArrowAspect()->Aspect()->Color());
     aShadingStyle->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
     aShadingStyle->SetPolygonOffset(aPolOffset);
@@ -504,7 +504,7 @@ void PrsDim_Dimension::drawText(const occ::handle<Prs3d_Presentation>& thePresen
       // Setting color for text
       if (!myDrawer->HasOwnFreeBoundaryAspect())
       {
-        myDrawer->SetFreeBoundaryAspect(new Prs3d_LineAspect(aColor, Aspect_TOL_SOLID, 1.0));
+        myDrawer->SetFreeBoundaryAspect(new Prs3d_LineAspect(aColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
       }
       myDrawer->FreeBoundaryAspect()->Aspect()->SetColor(aColor);
 
@@ -527,7 +527,7 @@ void PrsDim_Dimension::drawText(const occ::handle<Prs3d_Presentation>& thePresen
   }
 
   // generate primitives for 2D text
-  myDrawer->DimensionAspect()->TextAspect()->Aspect()->SetDisplayType(Aspect_TODT_DIMENSION);
+  myDrawer->DimensionAspect()->TextAspect()->Aspect()->SetDisplayType(Aspect_TypeOfDisplayText::Aspect_TODT_DIMENSION);
 
   Prs3d_Text::Draw(aGroup, myDrawer->DimensionAspect()->TextAspect(), theText, theTextPos);
 

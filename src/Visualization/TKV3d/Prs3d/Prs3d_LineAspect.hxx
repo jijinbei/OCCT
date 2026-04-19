@@ -53,7 +53,7 @@ public:
 
   //! Sets the type of line defined at the time of construction.
   //! This could, for example, be solid, dotted or made up of dashes.
-  //! Default value: Aspect_TOL_SOLID
+  //! Default value: Aspect_TypeOfLine::Aspect_TOL_SOLID
   void SetTypeOfLine(const Aspect_TypeOfLine theType) { myAspect->SetType(theType); }
 
   //! Sets the line width defined at the time of construction.

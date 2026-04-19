@@ -38,6 +38,6 @@ void DsgPrs_SymbPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresen
   // 2eme groupe : marker
   occ::handle<Geom_CartesianPoint> theP = new Geom_CartesianPoint(OffsetPoint);
   occ::handle<Prs3d_PointAspect>   PA   = aDrawer->PointAspect();
-  PA->SetTypeOfMarker(Aspect_TOM_RING2);
+  PA->SetTypeOfMarker(Aspect_TypeOfMarker::Aspect_TOM_RING2);
   StdPrs_Point::Add(aPresentation, theP, aDrawer);
 }

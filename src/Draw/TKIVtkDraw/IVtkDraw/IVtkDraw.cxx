@@ -188,7 +188,7 @@ static occ::handle<Prs3d_Drawer> createDefaultDrawer()
 {
   occ::handle<Prs3d_Drawer> aGlobalDrawer = new Prs3d_Drawer();
   aGlobalDrawer->SetupOwnDefaults();
-  aGlobalDrawer->SetTypeOfDeflection(Aspect_TOD_RELATIVE);
+  aGlobalDrawer->SetTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE);
   aGlobalDrawer->SetDeviationCoefficient(0.0001);
   return aGlobalDrawer;
 }
@@ -519,7 +519,7 @@ static int VtkDefaults(Draw_Interpretor& theDi, int theArgsNb, const char** theA
   const occ::handle<Prs3d_Drawer>& aDefParams = GetDefaultDrawer();
   if (theArgsNb < 2)
   {
-    if (aDefParams->TypeOfDeflection() == Aspect_TOD_RELATIVE)
+    if (aDefParams->TypeOfDeflection() == Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE)
     {
       theDi << "DeflType:           relative\n"
             << "DeviationCoeff:     " << aDefParams->DeviationCoefficient() << "\n";
@@ -546,7 +546,7 @@ static int VtkDefaults(Draw_Interpretor& theDi, int theArgsNb, const char** theA
         theDi << "Syntax error at " << anArg;
         return 1;
       }
-      aDefParams->SetTypeOfDeflection(Aspect_TOD_ABSOLUTE);
+      aDefParams->SetTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_ABSOLUTE);
       aDefParams->SetMaximalChordialDeviation(Draw::Atof(theArgVec[anArgIter]));
     }
     else if (anArg == "-RELDEFL" || anArg == "-RELATIVEDEFLECTION" || anArg == "-DEVCOEFF"
@@ -557,7 +557,7 @@ static int VtkDefaults(Draw_Interpretor& theDi, int theArgsNb, const char** theA
         theDi << "Syntax error at " << anArg;
         return 1;
       }
-      aDefParams->SetTypeOfDeflection(Aspect_TOD_RELATIVE);
+      aDefParams->SetTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE);
       aDefParams->SetDeviationCoefficient(Draw::Atof(theArgVec[anArgIter]));
     }
     else if (anArg == "-ANGDEFL" || anArg == "-ANGULARDEFL" || anArg == "-ANGULARDEFLECTION")

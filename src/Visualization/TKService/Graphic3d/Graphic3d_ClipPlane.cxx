@@ -32,8 +32,8 @@ static occ::handle<Graphic3d_AspectFillArea3d> defaultAspect()
   occ::handle<Graphic3d_AspectFillArea3d> anAspect = new Graphic3d_AspectFillArea3d();
   anAspect->SetDistinguishOff();
   anAspect->SetFrontMaterial(aMaterial);
-  anAspect->SetHatchStyle(Aspect_HS_HORIZONTAL);
-  anAspect->SetInteriorStyle(Aspect_IS_SOLID);
+  anAspect->SetHatchStyle(Aspect_HatchStyle::Aspect_HS_HORIZONTAL);
+  anAspect->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   anAspect->SetInteriorColor(Quantity_NOC_GRAY20);
   anAspect->SetFaceCulling(Graphic3d_TypeOfBackfacingModel_DoubleSided);
   return anAspect;
@@ -228,7 +228,7 @@ void Graphic3d_ClipPlane::SetCappingCustomHatch(const occ::handle<Graphic3d_Hatc
 
 void Graphic3d_ClipPlane::SetCappingHatchOn()
 {
-  myAspect->SetInteriorStyle(Aspect_IS_HATCH);
+  myAspect->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_HATCH);
   ++myAspectMod;
 }
 
@@ -236,7 +236,7 @@ void Graphic3d_ClipPlane::SetCappingHatchOn()
 
 void Graphic3d_ClipPlane::SetCappingHatchOff()
 {
-  myAspect->SetInteriorStyle(Aspect_IS_SOLID);
+  myAspect->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   ++myAspectMod;
 }
 

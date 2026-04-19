@@ -67,7 +67,7 @@ V3d_RectangularGrid::V3d_RectangularGrid(const V3d_ViewerPointer& aViewer,
       myViewer(aViewer),
       myCurAreDefined(false),
       myToComputePrs(true),
-      myCurDrawMode(Aspect_GDM_Lines),
+      myCurDrawMode(Aspect_GridDrawMode::Aspect_GDM_Lines),
       myCurXo(0.0),
       myCurYo(0.0),
       myCurAngle(0.0),
@@ -196,16 +196,16 @@ void V3d_RectangularGrid::UpdateDisplay()
 
   switch (myDrawMode)
   {
-    case Aspect_GDM_Points:
+    case Aspect_GridDrawMode::Aspect_GDM_Points:
       DefinePoints();
-      myCurDrawMode = Aspect_GDM_Points;
+      myCurDrawMode = Aspect_GridDrawMode::Aspect_GDM_Points;
       break;
-    case Aspect_GDM_Lines:
+    case Aspect_GridDrawMode::Aspect_GDM_Lines:
       DefineLines();
-      myCurDrawMode = Aspect_GDM_Lines;
+      myCurDrawMode = Aspect_GridDrawMode::Aspect_GDM_Lines;
       break;
-    case Aspect_GDM_None:
-      myCurDrawMode = Aspect_GDM_None;
+    case Aspect_GridDrawMode::Aspect_GDM_None:
+      myCurDrawMode = Aspect_GridDrawMode::Aspect_GDM_None;
       break;
   }
   myCurAreDefined = true;
@@ -215,7 +215,7 @@ void V3d_RectangularGrid::DefineLines()
 {
   const double aXStep   = XStep();
   const double aYStep   = YStep();
-  const bool   toUpdate = !myCurAreDefined || myCurDrawMode != Aspect_GDM_Lines
+  const bool   toUpdate = !myCurAreDefined || myCurDrawMode != Aspect_GridDrawMode::Aspect_GDM_Lines
                         || aXStep != myCurXStep || aYStep != myCurYStep;
   if (!toUpdate && !myToComputePrs)
   {
@@ -262,7 +262,7 @@ void V3d_RectangularGrid::DefineLines()
   if (aSeqLines.Length())
   {
     occ::handle<Graphic3d_AspectLine3d> aLineAspect =
-      new Graphic3d_AspectLine3d(myColor, Aspect_TOL_SOLID, 1.0);
+      new Graphic3d_AspectLine3d(myColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0);
     myGroup->SetPrimitivesAspect(aLineAspect);
     const int                              nbv    = aSeqLines.Length();
     occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(nbv);
@@ -274,7 +274,7 @@ void V3d_RectangularGrid::DefineLines()
   if (aSeqTenth.Length())
   {
     occ::handle<Graphic3d_AspectLine3d> aLineAspect =
-      new Graphic3d_AspectLine3d(myTenthColor, Aspect_TOL_SOLID, 1.0);
+      new Graphic3d_AspectLine3d(myTenthColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0);
     myGroup->SetPrimitivesAspect(aLineAspect);
     const int                              nbv    = aSeqTenth.Length();
     occ::handle<Graphic3d_ArrayOfSegments> aPrims = new Graphic3d_ArrayOfSegments(nbv);
@@ -296,7 +296,7 @@ void V3d_RectangularGrid::DefinePoints()
 {
   const double aXStep   = XStep();
   const double aYStep   = YStep();
-  const bool   toUpdate = !myCurAreDefined || myCurDrawMode != Aspect_GDM_Points
+  const bool   toUpdate = !myCurAreDefined || myCurDrawMode != Aspect_GridDrawMode::Aspect_GDM_Points
                         || aXStep != myCurXStep || aYStep != myCurYStep;
   if (!toUpdate && !myToComputePrs)
   {
@@ -339,7 +339,7 @@ void V3d_RectangularGrid::DefinePoints()
     }
 
     occ::handle<Graphic3d_AspectMarker3d> aMarkerAspect =
-      new Graphic3d_AspectMarker3d(Aspect_TOM_POINT, myColor, 3.0);
+      new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_POINT, myColor, 3.0);
     myGroup->SetGroupPrimitivesAspect(aMarkerAspect);
     myGroup->AddPrimitiveArray(Vertical, false);
   }

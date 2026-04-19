@@ -63,7 +63,7 @@ Aspect_TypeOfResize Wasm_Window::DoResize()
 {
   if (IsVirtual())
   {
-    return Aspect_TOR_UNKNOWN;
+    return Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
   }
 
 #if defined(__EMSCRIPTEN__)
@@ -82,7 +82,7 @@ Aspect_TypeOfResize Wasm_Window::DoResize()
     }
   }
 #endif
-  return Aspect_TOR_UNKNOWN;
+  return Aspect_TypeOfResize::Aspect_TOR_UNKNOWN;
 }
 
 //=================================================================================================

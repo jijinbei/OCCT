@@ -145,8 +145,8 @@ void MeshVS_TextPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
   const char*              AFont            = Font_NOF_ASCII_MONO;
   double                   AExpansionFactor = 1.0;
   double                   ASpace           = 0.0;
-  Aspect_TypeOfStyleText   ATextStyle       = Aspect_TOST_ANNOTATION;
-  Aspect_TypeOfDisplayText ADisplayType     = Aspect_TODT_NORMAL;
+  Aspect_TypeOfStyleText   ATextStyle       = Aspect_TypeOfStyleText::Aspect_TOST_ANNOTATION;
+  Aspect_TypeOfDisplayText ADisplayType     = Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL;
   // Bold font is used by default for better text readability
   Font_FontAspect AFontAspectType = Font_FA_Bold;
 
@@ -158,11 +158,11 @@ void MeshVS_TextPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
   if (aDrawer->GetAsciiString(MeshVS_DA_TextFont, AFontString))
     AFont = AFontString.ToCString();
 
-  int AStyleInt = Aspect_TOST_ANNOTATION;
+  int AStyleInt = static_cast<int>(Aspect_TypeOfStyleText::Aspect_TOST_ANNOTATION);
   if (aDrawer->GetInteger(MeshVS_DA_TextStyle, AStyleInt))
     ATextStyle = (Aspect_TypeOfStyleText)AStyleInt;
 
-  int ADispInt = Aspect_TODT_NORMAL;
+  int ADispInt = static_cast<int>(Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL);
   if (aDrawer->GetInteger(MeshVS_DA_TextDisplayType, ADispInt))
     ADisplayType = (Aspect_TypeOfDisplayText)ADispInt;
 
@@ -252,7 +252,7 @@ void MeshVS_TextPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
       anArrayOfPoints->AddVertex(aPnt.x(), aPnt.y(), aPnt.z());
     }
     occ::handle<Graphic3d_AspectMarker3d> anAspectMarker3d =
-      new Graphic3d_AspectMarker3d(Aspect_TOM_POINT, Quantity_NOC_GRAY, 1.0);
+      new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_POINT, Quantity_NOC_GRAY, 1.0);
     aMarkerGroup->SetGroupPrimitivesAspect(anAspectMarker3d);
     aMarkerGroup->AddPrimitiveArray(anArrayOfPoints);
   }

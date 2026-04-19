@@ -21,7 +21,7 @@ IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_AspectFillArea3d, Graphic3d_Aspects)
 
 Graphic3d_AspectFillArea3d::Graphic3d_AspectFillArea3d()
 {
-  myInteriorStyle = Aspect_IS_EMPTY;
+  myInteriorStyle = Aspect_InteriorStyle::Aspect_IS_EMPTY;
 }
 
 //=================================================================================================

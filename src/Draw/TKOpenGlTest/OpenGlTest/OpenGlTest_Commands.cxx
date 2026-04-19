@@ -178,7 +178,7 @@ void VUserDrawObj::Render(const occ::handle<OpenGl_Workspace>& theWorkspace) con
   NCollection_Vec4<float> aColor = theWorkspace->InteriorColor();
 
   aCtx->ShaderManager()->BindLineProgram(occ::handle<OpenGl_TextureSet>(),
-                                         Aspect_TOL_SOLID,
+                                         Aspect_TypeOfLine::Aspect_TOL_SOLID,
                                          Graphic3d_TypeOfShadingModel_Unlit,
                                          Graphic3d_AlphaMode_Opaque,
                                          false,

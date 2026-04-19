@@ -210,7 +210,7 @@ Graphic3d_ShaderManager::Graphic3d_ShaderManager(Aspect_GraphicsLibrary theGapi)
       // desktop defines a dedicated API for point size, with gl_PointSize added later to GLSL
       myHasFlatShading(true),
       myToReverseDFdxSign(false),
-      mySetPointSize(myGapi == Aspect_GraphicsLibrary_OpenGLES),
+      mySetPointSize(myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES),
       myUseRedAlpha(false),
       myToEmulateDepthClamp(true),
       mySRgbState(true)
@@ -228,11 +228,11 @@ bool Graphic3d_ShaderManager::hasGlslBitwiseOps() const
 {
   switch (myGapi)
   {
-    case Aspect_GraphicsLibrary_OpenGL: {
+    case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL: {
       return IsGapiGreaterEqual(3, 0)
              || myGlslExtensions[Graphic3d_GlslExtension_GL_EXT_gpu_shader4];
     }
-    case Aspect_GraphicsLibrary_OpenGLES: {
+    case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES: {
       return IsGapiGreaterEqual(3, 0);
     }
   }
@@ -253,7 +253,7 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
     || (theBits & Graphic3d_ShaderFlags_HasTextures) == Graphic3d_ShaderFlags_TextureNormal;
   switch (myGapi)
   {
-    case Aspect_GraphicsLibrary_OpenGL: {
+    case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL: {
       if (IsGapiGreaterEqual(3, 2))
       {
         theProgram->SetHeader("#version 150");
@@ -290,7 +290,7 @@ int Graphic3d_ShaderManager::defaultGlslVersion(
       (void)toUseDerivates;
       break;
     }
-    case Aspect_GraphicsLibrary_OpenGLES: {
+    case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES: {
 #if defined(__EMSCRIPTEN__)
       if (IsGapiGreaterEqual(3, 0))
       {
@@ -382,7 +382,7 @@ void Graphic3d_ShaderManager::defaultOitGlslVersion(
 {
   switch (myGapi)
   {
-    case Aspect_GraphicsLibrary_OpenGL: {
+    case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL: {
       if (theMsaa)
       {
         if (IsGapiGreaterEqual(4, 0))
@@ -399,7 +399,7 @@ void Graphic3d_ShaderManager::defaultOitGlslVersion(
       }
       break;
     }
-    case Aspect_GraphicsLibrary_OpenGLES: {
+    case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES: {
       if (theMsaa)
       {
         if (IsGapiGreaterEqual(3, 2))
@@ -484,7 +484,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramFboBl
   TCollection_AsciiString aSrcFrag;
   if (theNbSamples > 1)
   {
-    if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+    if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       aUniforms.Append(Graphic3d_ShaderObject::ShaderVariable("highp sampler2DMS uColorSampler",
                                                               Graphic3d_TOS_FRAGMENT));
@@ -530,14 +530,14 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramFboBl
   occ::handle<Graphic3d_ShaderProgram> aProgramSrc = new Graphic3d_ShaderProgram();
   switch (myGapi)
   {
-    case Aspect_GraphicsLibrary_OpenGL: {
+    case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL: {
       if (IsGapiGreaterEqual(3, 2))
       {
         aProgramSrc->SetHeader("#version 150");
       }
       break;
     }
-    case Aspect_GraphicsLibrary_OpenGLES: {
+    case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES: {
       if (IsGapiGreaterEqual(3, 1))
       {
         // required for MSAA sampler
@@ -1960,11 +1960,11 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getPBREnvBakingPro
   // constant array definition requires OpenGL 2.1+ or OpenGL ES 3.0+
   switch (myGapi)
   {
-    case Aspect_GraphicsLibrary_OpenGL: {
+    case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL: {
       aProgramSrc->SetHeader("#version 120");
       break;
     }
-    case Aspect_GraphicsLibrary_OpenGLES: {
+    case Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES: {
       if (IsGapiGreaterEqual(3, 0))
       {
         aProgramSrc->SetHeader("#version 300 es");
@@ -2031,7 +2031,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getBgCubeMapProgra
   {
     // workaround Z clamping issues on some GPUs
     aDepthClamp = EOL "  gl_FragDepth = clamp (gl_FragDepth, 0.0, 1.0);";
-    if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+    if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       if (IsGapiGreaterEqual(3, 0))
       {
@@ -2089,11 +2089,11 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getBgSkydomeProgra
 
   TCollection_AsciiString aSrcFrag = Shaders_SkydomBackground_fs;
 
-  if (myGapi == Aspect_GraphicsLibrary_OpenGL)
+  if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGL)
   {
     aProgSrc->SetHeader("#version 130");
   }
-  else if (myGapi == Aspect_GraphicsLibrary_OpenGLES)
+  else if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     if (IsGapiGreaterEqual(3, 0))
     {

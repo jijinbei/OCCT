@@ -477,7 +477,7 @@ public:
   //! @return true if texture parameters GL_TEXTURE_BASE_LEVEL/GL_TEXTURE_MAX_LEVEL are supported.
   bool HasTextureBaseLevel() const
   {
-    return myGapi == Aspect_GraphicsLibrary_OpenGLES ? IsGlGreaterEqual(3, 0)
+    return myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES ? IsGlGreaterEqual(3, 0)
                                                      : IsGlGreaterEqual(1, 2);
   }
 

@@ -36,16 +36,16 @@ occ::handle<Graphic3d_AspectFillArea3d> MeshVS_Tool::CreateAspectFillArea3d(
   if (theDr.IsNull())
     return anAsp;
 
-  Aspect_InteriorStyle     anIntStyle = Aspect_IS_EMPTY;
+  Aspect_InteriorStyle     anIntStyle = Aspect_InteriorStyle::Aspect_IS_EMPTY;
   Quantity_Color           anIntColor = Quantity_NOC_CYAN1, anEdgeColor = Quantity_NOC_WHITE;
-  Aspect_TypeOfLine        anEdgeType  = Aspect_TOL_SOLID;
+  Aspect_TypeOfLine        anEdgeType  = Aspect_TypeOfLine::Aspect_TOL_SOLID;
   double                   anEdgeWidth = 1.0;
-  Aspect_HatchStyle        aHStyle     = Aspect_HS_HORIZONTAL;
+  Aspect_HatchStyle        aHStyle     = Aspect_HatchStyle::Aspect_HS_HORIZONTAL;
   Graphic3d_MaterialAspect aFrMat = Mat, aBackMat = Mat;
 
-  int anIntStyleI = (int)Aspect_IS_EMPTY;
-  int anEdgeTypeI = (int)Aspect_TOL_SOLID;
-  int aHStyleI    = (int)Aspect_HS_HORIZONTAL;
+  int anIntStyleI = (int)Aspect_InteriorStyle::Aspect_IS_EMPTY;
+  int anEdgeTypeI = (int)Aspect_TypeOfLine::Aspect_TOL_SOLID;
+  int aHStyleI    = (int)Aspect_HatchStyle::Aspect_HS_HORIZONTAL;
 
   if (!theDr->GetColor(MeshVS_DA_InteriorColor, anIntColor) && !UseDefaults)
     return anAsp;
@@ -127,9 +127,9 @@ occ::handle<Graphic3d_AspectLine3d> MeshVS_Tool::CreateAspectLine3d(
     return anAsp;
 
   Quantity_Color    aBeamColor = Quantity_NOC_YELLOW;
-  Aspect_TypeOfLine aBeamType  = Aspect_TOL_SOLID;
+  Aspect_TypeOfLine aBeamType  = Aspect_TypeOfLine::Aspect_TOL_SOLID;
   double            aBeamWidth = 1.0;
-  int               aBeamTypeI = (int)Aspect_TOL_SOLID;
+  int               aBeamTypeI = (int)Aspect_TypeOfLine::Aspect_TOL_SOLID;
 
   if (!theDr->GetColor(MeshVS_DA_BeamColor, aBeamColor) && !UseDefaults)
     return anAsp;
@@ -158,9 +158,9 @@ occ::handle<Graphic3d_AspectMarker3d> MeshVS_Tool::CreateAspectMarker3d(
     return anAsp;
 
   Quantity_Color      aMColor = Quantity_NOC_YELLOW;
-  Aspect_TypeOfMarker aMType  = Aspect_TOM_X;
+  Aspect_TypeOfMarker aMType  = Aspect_TypeOfMarker::Aspect_TOM_X;
   double              aMScale = 1.0;
-  int                 aMTypeI = (int)Aspect_TOM_X;
+  int                 aMTypeI = (int)Aspect_TypeOfMarker::Aspect_TOM_X;
 
   if (!theDr->GetColor(MeshVS_DA_MarkerColor, aMColor) && !UseDefaults)
     return anAsp;
@@ -191,12 +191,12 @@ occ::handle<Graphic3d_AspectText3d> MeshVS_Tool::CreateAspectText3d(
   Quantity_Color           aTColor     = Quantity_NOC_YELLOW;
   double                   anExpFactor = 1.0, aSpace = 0.0;
   const char*              aFont       = Font_NOF_ASCII_MONO;
-  Aspect_TypeOfStyleText   aStyle      = Aspect_TOST_NORMAL;
-  Aspect_TypeOfDisplayText aDispText   = Aspect_TODT_NORMAL;
+  Aspect_TypeOfStyleText   aStyle      = Aspect_TypeOfStyleText::Aspect_TOST_NORMAL;
+  Aspect_TypeOfDisplayText aDispText   = Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL;
   TCollection_AsciiString  aFontString = Font_NOF_ASCII_MONO;
   Font_FontAspect          aFontAspect = Font_FA_Regular;
-  int                      aStyleI     = (int)Aspect_TOST_NORMAL;
-  int                      aDispTextI  = (int)Aspect_TODT_NORMAL;
+  int                      aStyleI     = (int)Aspect_TypeOfStyleText::Aspect_TOST_NORMAL;
+  int                      aDispTextI  = (int)Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL;
   // Bold font is used by default for better text readability
   int aFontAspectI = (int)Font_FA_Bold;
 

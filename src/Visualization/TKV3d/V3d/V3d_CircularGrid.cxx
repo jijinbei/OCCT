@@ -69,7 +69,7 @@ V3d_CircularGrid::V3d_CircularGrid(const V3d_ViewerPointer& aViewer,
       myViewer(aViewer),
       myCurAreDefined(false),
       myToComputePrs(false),
-      myCurDrawMode(Aspect_GDM_Lines),
+      myCurDrawMode(Aspect_GridDrawMode::Aspect_GDM_Lines),
       myCurXo(0.0),
       myCurYo(0.0),
       myCurAngle(0.0),
@@ -194,16 +194,16 @@ void V3d_CircularGrid::UpdateDisplay()
 
   switch (myDrawMode)
   {
-    case Aspect_GDM_Points:
+    case Aspect_GridDrawMode::Aspect_GDM_Points:
       DefinePoints();
-      myCurDrawMode = Aspect_GDM_Points;
+      myCurDrawMode = Aspect_GridDrawMode::Aspect_GDM_Points;
       break;
-    case Aspect_GDM_Lines:
+    case Aspect_GridDrawMode::Aspect_GDM_Lines:
       DefineLines();
-      myCurDrawMode = Aspect_GDM_Lines;
+      myCurDrawMode = Aspect_GridDrawMode::Aspect_GDM_Lines;
       break;
-    case Aspect_GDM_None:
-      myCurDrawMode = Aspect_GDM_None;
+    case Aspect_GridDrawMode::Aspect_GDM_None:
+      myCurDrawMode = Aspect_GridDrawMode::Aspect_GDM_None;
       break;
   }
   myCurAreDefined = true;
@@ -213,7 +213,7 @@ void V3d_CircularGrid::DefineLines()
 {
   const double aStep     = RadiusStep();
   const double aDivision = DivisionNumber();
-  const bool   toUpdate  = !myCurAreDefined || myCurDrawMode != Aspect_GDM_Lines
+  const bool   toUpdate  = !myCurAreDefined || myCurDrawMode != Aspect_GridDrawMode::Aspect_GDM_Lines
                         || aDivision != myCurDivi || aStep != myCurStep;
   if (!toUpdate && !myToComputePrs)
   {
@@ -235,7 +235,7 @@ void V3d_CircularGrid::DefineLines()
   double alpha = M_PI / aDivision;
 
   myGroup->SetGroupPrimitivesAspect(
-    new Graphic3d_AspectLine3d(myTenthColor, Aspect_TOL_SOLID, 1.0));
+    new Graphic3d_AspectLine3d(myTenthColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
   occ::handle<Graphic3d_ArrayOfSegments> aPrims1 = new Graphic3d_ArrayOfSegments(2 * nbpnts);
   const gp_Pnt                           p0(0., 0., -myOffSet);
   for (int i = 1; i <= nbpnts; i++)
@@ -262,7 +262,7 @@ void V3d_CircularGrid::DefineLines()
   if (aSeqTenth.Length())
   {
     myGroup->SetGroupPrimitivesAspect(
-      new Graphic3d_AspectLine3d(myTenthColor, Aspect_TOL_SOLID, 1.0));
+      new Graphic3d_AspectLine3d(myTenthColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
     int                                     n, np;
     const int                               nbl = aSeqTenth.Length() / nbpnts;
     occ::handle<Graphic3d_ArrayOfPolylines> aPrims2 =
@@ -277,7 +277,7 @@ void V3d_CircularGrid::DefineLines()
   }
   if (aSeqLines.Length())
   {
-    myGroup->SetPrimitivesAspect(new Graphic3d_AspectLine3d(myColor, Aspect_TOL_SOLID, 1.0));
+    myGroup->SetPrimitivesAspect(new Graphic3d_AspectLine3d(myColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
     int                                     n, np;
     const int                               nbl = aSeqLines.Length() / nbpnts;
     occ::handle<Graphic3d_ArrayOfPolylines> aPrims3 =
@@ -303,7 +303,7 @@ void V3d_CircularGrid::DefinePoints()
 {
   const double aStep     = RadiusStep();
   const double aDivision = DivisionNumber();
-  const bool   toUpdate  = !myCurAreDefined || myCurDrawMode != Aspect_GDM_Points
+  const bool   toUpdate  = !myCurAreDefined || myCurDrawMode != Aspect_GridDrawMode::Aspect_GDM_Points
                         || aDivision != myCurDivi || aStep != myCurStep;
   if (!toUpdate && !myToComputePrs)
   {
@@ -320,7 +320,7 @@ void V3d_CircularGrid::DefinePoints()
 
   occ::handle<Graphic3d_AspectMarker3d> MarkerAttrib = new Graphic3d_AspectMarker3d();
   MarkerAttrib->SetColor(myColor);
-  MarkerAttrib->SetType(Aspect_TOM_POINT);
+  MarkerAttrib->SetType(Aspect_TypeOfMarker::Aspect_TOM_POINT);
   MarkerAttrib->SetScale(3.);
 
   const int nbpnts = int(2 * aDivision);

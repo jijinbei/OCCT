@@ -1059,7 +1059,7 @@ void OpenGl_ShaderManager::PushInteriorState(const occ::handle<OpenGl_ShaderProg
   if (const OpenGl_ShaderUniformLocation aLocWireframeColor =
         theProgram->GetStateLocation(OpenGl_OCCT_WIREFRAME_COLOR))
   {
-    if (theAspect->InteriorStyle() == Aspect_IS_HOLLOW)
+    if (theAspect->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_HOLLOW)
     {
       theProgram->SetUniform(myContext,
                              aLocWireframeColor,
@@ -1503,7 +1503,7 @@ bool OpenGl_ShaderManager::BindMarkerProgram(
   }
 
   int aBits =
-    getProgramBits(theTextures, theAlphaMode, Aspect_IS_SOLID, theHasVertColor, false, false);
+    getProgramBits(theTextures, theAlphaMode, Aspect_InteriorStyle::Aspect_IS_SOLID, theHasVertColor, false, false);
   if (!theTextures.IsNull() && theTextures->HasPointSprite())
   {
     aBits |= theTextures->Last()->IsAlpha() ? Graphic3d_ShaderFlags_PointSpriteA

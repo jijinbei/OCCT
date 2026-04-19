@@ -125,7 +125,7 @@ void AIS_Circle::SetColor(const Quantity_Color& aCol)
                 : myDrawer->HasLink()
                   ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TOA_Line)
                   : 1.;
-    replaceWithNewLineAspect(new Prs3d_LineAspect(aCol, Aspect_TOL_SOLID, WW));
+    replaceWithNewLineAspect(new Prs3d_LineAspect(aCol, Aspect_TypeOfLine::Aspect_TOL_SOLID, WW));
   }
   else
   {
@@ -147,7 +147,7 @@ void AIS_Circle::SetWidth(const double aValue)
       CC = myDrawer->Color();
     else if (myDrawer->HasLink())
       AIS_GraphicTool::GetLineColor(myDrawer->Link(), AIS_TOA_Line, CC);
-    replaceWithNewLineAspect(new Prs3d_LineAspect(CC, Aspect_TOL_SOLID, aValue));
+    replaceWithNewLineAspect(new Prs3d_LineAspect(CC, Aspect_TypeOfLine::Aspect_TOL_SOLID, aValue));
   }
   else
   {

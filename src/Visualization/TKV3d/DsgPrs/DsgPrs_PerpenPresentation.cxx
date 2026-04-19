@@ -37,7 +37,7 @@ void DsgPrs_PerpenPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
                                     const bool                             intOut2)
 {
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
-  LA->LineAspect()->SetTypeOfLine(Aspect_TOL_SOLID); // ou DOT ou DOTDASH
+  LA->LineAspect()->SetTypeOfLine(Aspect_TypeOfLine::Aspect_TOL_SOLID); // ou DOT ou DOTDASH
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
   // segments
@@ -68,7 +68,7 @@ void DsgPrs_PerpenPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   // points attache
   if (intOut1 || intOut2)
   {
-    LA->LineAspect()->SetTypeOfLine(Aspect_TOL_DOT); // ou DOT ou DOTDASH
+    LA->LineAspect()->SetTypeOfLine(Aspect_TypeOfLine::Aspect_TOL_DOT); // ou DOT ou DOTDASH
     aPresentation->NewGroup();
     aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 

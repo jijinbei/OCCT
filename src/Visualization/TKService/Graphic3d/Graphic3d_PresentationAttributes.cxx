@@ -27,7 +27,7 @@ void Graphic3d_PresentationAttributes::DumpJson(Standard_OStream& theOStream, in
 
   OCCT_DUMP_FIELD_VALUES_DUMPED(theOStream, theDepth, &myBasicColor)
 
-  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myHiMethod)
+  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, static_cast<int>(myHiMethod))
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myZLayer)
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myDispMode)
 }

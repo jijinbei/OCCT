@@ -48,7 +48,7 @@ public:
   void SetColor(const Quantity_Color& theColor) { myAspect->SetColor(theColor); }
 
   //! defines the type of representation to be used when drawing a point.
-  //! Default value: Aspect_TOM_PLUS
+  //! Default value: Aspect_TypeOfMarker::Aspect_TOM_PLUS
   void SetTypeOfMarker(const Aspect_TypeOfMarker theType) { myAspect->SetType(theType); }
 
   //! defines the size of the marker used when drawing a point.

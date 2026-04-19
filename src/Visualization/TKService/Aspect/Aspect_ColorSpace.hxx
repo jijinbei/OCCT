@@ -15,7 +15,7 @@
 #define _Aspect_ColorSpace_HeaderFile
 
 //! Texture color spaces accepted by XR composer.
-enum Aspect_ColorSpace
+enum class Aspect_ColorSpace
 {
   Aspect_ColorSpace_sRGB   = 0, //!< non-linear sRGB color space
   Aspect_ColorSpace_Linear = 1, //!< linear RGB color space

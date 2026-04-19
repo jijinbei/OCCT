@@ -15,7 +15,7 @@
 #define _Aspect_XRActionType_HeaderFile
 
 //! XR action type.
-enum Aspect_XRActionType
+enum class Aspect_XRActionType
 {
   Aspect_XRActionType_InputDigital,  //!< boolean input (like button)
   Aspect_XRActionType_InputAnalog,   //!< analog input (1/2/3 axes)

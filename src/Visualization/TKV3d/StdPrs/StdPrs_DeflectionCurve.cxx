@@ -42,7 +42,7 @@ static double GetDeflection(const Adaptor3d_Curve&           aCurve,
 {
   double TheDeflection;
 
-  if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE)
+  if (aDrawer->TypeOfDeflection() == Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE)
   {
     // On calcule la fleche en fonction des min max globaux de la piece:
     Bnd_Box Total;

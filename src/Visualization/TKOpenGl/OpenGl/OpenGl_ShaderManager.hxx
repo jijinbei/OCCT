@@ -105,7 +105,7 @@ public:
     return BindFaceProgram(theTextures,
                            theShadingModel,
                            theAlphaMode,
-                           Aspect_IS_SOLID,
+                           Aspect_InteriorStyle::Aspect_IS_SOLID,
                            theHasVertColor,
                            theEnableEnvMap,
                            false,
@@ -156,8 +156,8 @@ public:
     }
 
     int aBits =
-      getProgramBits(theTextures, theAlphaMode, Aspect_IS_SOLID, theHasVertColor, false, false);
-    if (theLineType != Aspect_TOL_SOLID)
+      getProgramBits(theTextures, theAlphaMode, Aspect_InteriorStyle::Aspect_IS_SOLID, theHasVertColor, false, false);
+    if (theLineType != Aspect_TypeOfLine::Aspect_TOL_SOLID)
     {
       aBits |= Graphic3d_ShaderFlags_StippleLine;
     }
@@ -186,7 +186,7 @@ public:
 
     const int aBits = getProgramBits(occ::handle<OpenGl_TextureSet>(),
                                      Graphic3d_AlphaMode_Opaque,
-                                     Aspect_IS_SOLID,
+                                     Aspect_InteriorStyle::Aspect_IS_SOLID,
                                      false,
                                      false,
                                      false);
@@ -609,7 +609,7 @@ protected:
     if (theEnableMeshEdges && myContext->hasGeometryStage != OpenGl_FeatureNotAvailable)
     {
       aBits |= Graphic3d_ShaderFlags_MeshEdges;
-      if (theInteriorStyle == Aspect_IS_HOLLOW)
+      if (theInteriorStyle == Aspect_InteriorStyle::Aspect_IS_HOLLOW)
       {
         aBits |= Graphic3d_ShaderFlags_AlphaTest;
       }
@@ -628,7 +628,7 @@ protected:
         aBits |= Graphic3d_ShaderFlags_TextureNormal;
       }
     }
-    if (theHasVertColor && theInteriorStyle != Aspect_IS_HIDDENLINE)
+    if (theHasVertColor && theInteriorStyle != Aspect_InteriorStyle::Aspect_IS_HIDDENLINE)
     {
       aBits |= Graphic3d_ShaderFlags_VertColor;
     }

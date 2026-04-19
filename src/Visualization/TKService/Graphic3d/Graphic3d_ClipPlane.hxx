@@ -53,7 +53,7 @@ public:
   //! - IsCapping (False),
   //! - Material (Graphic3d_NameOfMaterial_DEFAULT),
   //! - Texture (NULL),
-  //! - HatchStyle (Aspect_HS_HORIZONTAL),
+  //! - HatchStyle (Aspect_HatchStyle::Aspect_HS_HORIZONTAL),
   //! - IsHatchOn (False)
   Standard_EXPORT Graphic3d_ClipPlane();
 
@@ -215,7 +215,7 @@ public: // @name user-defined graphical attributes
   Standard_EXPORT void SetCappingHatchOff();
 
   //! @return True if hatching mask is turned on.
-  bool IsHatchOn() const { return myAspect->InteriorStyle() == Aspect_IS_HATCH; }
+  bool IsHatchOn() const { return myAspect->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_HATCH; }
 
   //! This ID is used for managing associated resources in graphical driver.
   //! The clip plane can be assigned within a range of IO which can be

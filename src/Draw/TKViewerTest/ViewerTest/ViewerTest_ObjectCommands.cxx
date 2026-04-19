@@ -2394,7 +2394,7 @@ static int VDrawText(Draw_Interpretor& theDI, int theArgsNb, const char** theArg
   aTextPrs->SetText(aText);
 
   occ::handle<Graphic3d_TransformPers> aTrsfPers;
-  Aspect_TypeOfDisplayText             aDisplayType = Aspect_TODT_NORMAL;
+  Aspect_TypeOfDisplayText             aDisplayType = Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL;
 
   bool   aHasPlane = false;
   gp_Dir aNormal;
@@ -2568,27 +2568,27 @@ static int VDrawText(Draw_Interpretor& theDI, int theArgsNb, const char** theArg
       aType.LowerCase();
       if (aType == "subtitle")
       {
-        aDisplayType = Aspect_TODT_SUBTITLE;
+        aDisplayType = Aspect_TypeOfDisplayText::Aspect_TODT_SUBTITLE;
       }
       else if (aType == "decal")
       {
-        aDisplayType = Aspect_TODT_DEKALE;
+        aDisplayType = Aspect_TypeOfDisplayText::Aspect_TODT_DEKALE;
       }
       else if (aType == "blend")
       {
-        aDisplayType = Aspect_TODT_BLEND;
+        aDisplayType = Aspect_TypeOfDisplayText::Aspect_TODT_BLEND;
       }
       else if (aType == "dimension")
       {
-        aDisplayType = Aspect_TODT_DIMENSION;
+        aDisplayType = Aspect_TypeOfDisplayText::Aspect_TODT_DIMENSION;
       }
       else if (aType == "normal")
       {
-        aDisplayType = Aspect_TODT_NORMAL;
+        aDisplayType = Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL;
       }
       else if (aType == "shadow")
       {
-        aDisplayType = Aspect_TODT_SHADOW;
+        aDisplayType = Aspect_TypeOfDisplayText::Aspect_TODT_SHADOW;
       }
       else
       {
@@ -3046,10 +3046,10 @@ static int VDrawSphere(Draw_Interpretor& /*di*/, int argc, const char** argv)
   aMat.SetAmbientColor(Quantity_Color(NCollection_Vec3<float>(0.04f)));
   aMat.SetSpecularColor(Quantity_Color(NCollection_Vec3<float>(0.50f)));
   occ::handle<Graphic3d_AspectFillArea3d> anAspect =
-    new Graphic3d_AspectFillArea3d(Aspect_IS_SOLID,
+    new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
                                    Quantity_NOC_WHITE,
                                    Quantity_NOC_YELLOW,
-                                   Aspect_TOL_SOLID,
+                                   Aspect_TypeOfLine::Aspect_TOL_SOLID,
                                    1.0,
                                    aMat,
                                    aMat);
@@ -3282,7 +3282,7 @@ static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     if (toShowHiddenEdges)
     {
       occ::handle<Prs3d_LineAspect> aLineAspect =
-        new Prs3d_LineAspect(Quantity_Color(Quantity_NOC_RED), Aspect_TOL_DASH, 1.0f);
+        new Prs3d_LineAspect(Quantity_Color(Quantity_NOC_RED), Aspect_TypeOfLine::Aspect_TOL_DASH, 1.0f);
       for (int aTypeIter = 0; aTypeIter < 6; ++aTypeIter)
       {
         if (!aHidden[aTypeIter].IsNull())
@@ -3858,7 +3858,7 @@ static int VDrawPArray(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<Graphic3d_AspectMarker3d> anAspPoints;
   if (aPrimType == Graphic3d_TOPA_POINTS)
   {
-    anAspPoints = new Graphic3d_AspectMarker3d(Aspect_TOM_POINT, Quantity_NOC_YELLOW, 1.0f);
+    anAspPoints = new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_POINT, Quantity_NOC_YELLOW, 1.0f);
   }
 
   // create primitives array object
@@ -5585,7 +5585,7 @@ static int VMarkersTest(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   occ::handle<Graphic3d_AspectMarker3d> anAspect;
   occ::handle<Image_AlienPixMap>        anImage;
   Quantity_Color                        aColor(Quantity_NOC_GREEN1);
-  if ((aMarkerType == Aspect_TOM_USERDEFINED || aMarkerType < 0) && !aFileName.IsEmpty())
+  if ((aMarkerType == Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED || aMarkerType < 0) && !aFileName.IsEmpty())
   {
     anImage = new Image_AlienPixMap();
     if (!anImage->Load(aFileName))
@@ -5606,7 +5606,7 @@ static int VMarkersTest(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   else
   {
     anAspect = new Graphic3d_AspectMarker3d(aMarkerType >= 0 ? (Aspect_TypeOfMarker)aMarkerType
-                                                             : Aspect_TOM_POINT,
+                                                             : Aspect_TypeOfMarker::Aspect_TOM_POINT,
                                             aColor,
                                             aScale);
   }

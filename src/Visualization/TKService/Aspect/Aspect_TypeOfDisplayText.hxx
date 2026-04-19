@@ -17,7 +17,7 @@
 #define _Aspect_TypeOfDisplayText_HeaderFile
 
 //! Define the display type of the text.
-enum Aspect_TypeOfDisplayText
+enum class Aspect_TypeOfDisplayText
 {
   Aspect_TODT_NORMAL,    //!< default display, text only
   Aspect_TODT_SUBTITLE,  //!< there is a subtitle under the text

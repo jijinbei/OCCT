@@ -420,7 +420,7 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
 
   //  Aspect_InteriorStyle  aStyle;
   //  int      aStyleInt;
-  Aspect_TypeOfLine anEdgeType  = Aspect_TOL_SOLID;
+  Aspect_TypeOfLine anEdgeType  = Aspect_TypeOfLine::Aspect_TOL_SOLID;
   double            anEdgeWidth = 1.0;
   Quantity_Color    anInteriorColor;
   Quantity_Color    anEdgeColor, aLineColor;
@@ -432,7 +432,7 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
   aDrawer->GetDouble(MeshVS_DA_EdgeWidth, anEdgeWidth);
   aDrawer->GetBoolean(MeshVS_DA_ShowEdges, aShowEdges);
 
-  int anEdgeInt = Aspect_TOL_SOLID;
+  int anEdgeInt = static_cast<int>(Aspect_TypeOfLine::Aspect_TOL_SOLID);
   if (aDrawer->GetInteger(MeshVS_DA_EdgeType, anEdgeInt))
     anEdgeType = (Aspect_TypeOfLine)anEdgeInt;
 
@@ -463,7 +463,7 @@ void MeshVS_NodalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& P
     //    if ( aDrawer->GetInteger ( MeshVS_DA_InteriorStyle, aStyleInt ) )
     //      aStyle = (Aspect_InteriorStyle)aStyleInt;
 
-    anAsp = new Graphic3d_AspectFillArea3d(Aspect_IS_SOLID,
+    anAsp = new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
                                            Quantity_NOC_WHITE,
                                            anEdgeColor,
                                            anEdgeType,

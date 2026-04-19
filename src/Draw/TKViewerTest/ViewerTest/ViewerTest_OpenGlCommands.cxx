@@ -966,7 +966,7 @@ static int VListColors(Draw_Interpretor& theDI, int theArgNb, const char** theAr
     ViewerTest::ViewerInit(aParams);
     aView = ViewerTest::CurrentView();
     aView->SetImmediateUpdate(false);
-    aView->SetBgGradientStyle(Aspect_GradientFillMethod_None, false);
+    aView->SetBgGradientStyle(Aspect_GradientFillMethod::Aspect_GradientFillMethod_None, false);
   }
 
   if (!aDumpFile.IsEmpty())

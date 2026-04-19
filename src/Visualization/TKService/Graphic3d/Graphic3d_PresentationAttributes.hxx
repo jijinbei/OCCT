@@ -31,7 +31,7 @@ public:
   //! Empty constructor.
   Graphic3d_PresentationAttributes()
       : myBasicColor(Quantity_NOC_WHITE),
-        myHiMethod(Aspect_TOHM_COLOR),
+        myHiMethod(Aspect_TypeOfHighlightMethod::Aspect_TOHM_COLOR),
         myZLayer(Graphic3d_ZLayerId_Default),
         myDispMode(0)
   {
@@ -41,7 +41,7 @@ public:
   //! Destructor.
   ~Graphic3d_PresentationAttributes() override = default;
 
-  //! Returns highlight method, Aspect_TOHM_COLOR by default.
+  //! Returns highlight method, Aspect_TypeOfHighlightMethod::Aspect_TOHM_COLOR by default.
   Aspect_TypeOfHighlightMethod Method() const { return myHiMethod; }
 
   //! Changes highlight method to the given one.

@@ -1369,7 +1369,7 @@ static int XShowFaceBoundary(Draw_Interpretor& di, int argc, const char** argv)
   double            aGreen    = 0.0;
   double            aBlue     = 0.0;
   double            aWidth    = 1.0;
-  Aspect_TypeOfLine aLineType = Aspect_TOL_SOLID;
+  Aspect_TypeOfLine aLineType = Aspect_TypeOfLine::Aspect_TOL_SOLID;
 
   // turn boundaries on/off
   bool isBoundaryDraw = (Draw::Atoi(argv[3]) == 1);

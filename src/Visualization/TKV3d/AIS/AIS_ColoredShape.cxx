@@ -606,7 +606,7 @@ void AIS_ColoredShape::addShapesWithCustomProps(
       // (if deflection type is relative).
       // In case of CustomDrawer it is taken from Link().
       Aspect_TypeOfDeflection aPrevType = aDrawer->TypeOfDeflection();
-      aDrawer->SetTypeOfDeflection(Aspect_TOD_ABSOLUTE);
+      aDrawer->SetTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_ABSOLUTE);
 
       // Draw each kind of subshapes and personal-colored shapes in a separate group
       // since it's necessary to set transparency/material for all subshapes

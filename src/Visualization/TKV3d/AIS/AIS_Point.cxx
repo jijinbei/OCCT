@@ -37,17 +37,17 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_Point, AIS_InteractiveObject)
 AIS_Point::AIS_Point(const occ::handle<Geom_Point>& aComponent)
     : myComponent(aComponent),
       myHasTOM(false),
-      myTOM(Aspect_TOM_PLUS)
+      myTOM(Aspect_TypeOfMarker::Aspect_TOM_PLUS)
 {
   myHilightDrawer = new Prs3d_Drawer();
   myHilightDrawer->SetDisplayMode(-99);
-  myHilightDrawer->SetPointAspect(new Prs3d_PointAspect(Aspect_TOM_PLUS, Quantity_NOC_GRAY80, 3.0));
+  myHilightDrawer->SetPointAspect(new Prs3d_PointAspect(Aspect_TypeOfMarker::Aspect_TOM_PLUS, Quantity_NOC_GRAY80, 3.0));
   myHilightDrawer->SetColor(Quantity_NOC_GRAY80);
   myHilightDrawer->SetZLayer(Graphic3d_ZLayerId_UNKNOWN);
   myDynHilightDrawer = new Prs3d_Drawer();
   myDynHilightDrawer->SetDisplayMode(-99);
   myDynHilightDrawer->SetPointAspect(
-    new Prs3d_PointAspect(Aspect_TOM_PLUS, Quantity_NOC_CYAN1, 3.0));
+    new Prs3d_PointAspect(Aspect_TypeOfMarker::Aspect_TOM_PLUS, Quantity_NOC_CYAN1, 3.0));
   myDynHilightDrawer->SetColor(Quantity_NOC_CYAN1);
   myDynHilightDrawer->SetZLayer(Graphic3d_ZLayerId_Top);
 }
@@ -179,7 +179,7 @@ void AIS_Point::UpdatePointValues()
   }
 
   Quantity_Color      aCol(Quantity_NOC_YELLOW);
-  Aspect_TypeOfMarker aTOM   = Aspect_TOM_PLUS;
+  Aspect_TypeOfMarker aTOM   = Aspect_TypeOfMarker::Aspect_TOM_PLUS;
   double              aScale = 1.0;
   if (myDrawer->HasLink())
   {

@@ -384,7 +384,7 @@ void Draw_Window::init(const NCollection_Vec2<int>& theXY, const NCollection_Vec
     // advise to the window manager to place it where I need
     XSetWMNormalHints(Draw_WindowDisplay, myWindow, &aWinHints);
 
-    Atom aDeleteWindowAtom = Draw_DisplayConnection->GetAtom(Aspect_XA_DELETE_WINDOW);
+    Atom aDeleteWindowAtom = Draw_DisplayConnection->GetAtom(Aspect_XAtom::Aspect_XA_DELETE_WINDOW);
     XSetWMProtocols(Draw_WindowDisplay, myWindow, &aDeleteWindowAtom, 1);
 
     if (Draw_VirtualWindows)
@@ -1125,7 +1125,7 @@ static void processXEvents(ClientData, int)
         {
           case ClientMessage: {
             if (anEvent.xclient.data.l[0]
-                == (int)Draw_DisplayConnection->GetAtom(Aspect_XA_DELETE_WINDOW))
+                == (int)Draw_DisplayConnection->GetAtom(Aspect_XAtom::Aspect_XA_DELETE_WINDOW))
             {
               aDrawWin->Hide(); // just hide the window
             }

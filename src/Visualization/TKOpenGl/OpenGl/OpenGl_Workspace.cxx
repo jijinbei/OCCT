@@ -123,7 +123,7 @@ OpenGl_Workspace::OpenGl_Workspace(OpenGl_View*                      theView,
       }
     }
 
-    if (myGlContext->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+    if (myGlContext->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       myGlContext->core11fwd->glHint(GL_LINE_SMOOTH_HINT, GL_FASTEST);
       myGlContext->core11fwd->glHint(GL_POLYGON_SMOOTH_HINT, GL_FASTEST);
@@ -157,7 +157,7 @@ bool OpenGl_Workspace::Activate()
   {
     if (myGlContext->caps->ffpEnable)
     {
-      Message::SendWarning(myGlContext->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES
+      Message::SendWarning(myGlContext->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                              ? "Warning: FFP is unsupported by OpenGL ES"
                              : "Warning: FFP is unsupported by OpenGL Core Profile");
       myGlContext->caps->ffpEnable = false;
@@ -255,7 +255,7 @@ const OpenGl_Aspects* OpenGl_Workspace::ApplyAspects(bool theToBindTextures)
       aCullFacesMode = Graphic3d_TypeOfBackfacingModel_DoubleSided;
       if (myToAllowFaceCulling)
       {
-        if (myAspectsSet->Aspect()->InteriorStyle() == Aspect_IS_HATCH
+        if (myAspectsSet->Aspect()->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_HATCH
             || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode_Blend
             || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode_Mask
             || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode_MaskBlend
@@ -289,17 +289,17 @@ const OpenGl_Aspects* OpenGl_Workspace::ApplyAspects(bool theToBindTextures)
   const Aspect_InteriorStyle anIntstyle = myAspectsSet->Aspect()->InteriorStyle();
   if (myAspectsApplied.IsNull() || myAspectsApplied->InteriorStyle() != anIntstyle)
   {
-    myGlContext->SetPolygonMode(anIntstyle == Aspect_IS_POINT ? GL_POINT : GL_FILL);
-    myGlContext->SetPolygonHatchEnabled(anIntstyle == Aspect_IS_HATCH);
+    myGlContext->SetPolygonMode(anIntstyle == Aspect_InteriorStyle::Aspect_IS_POINT ? GL_POINT : GL_FILL);
+    myGlContext->SetPolygonHatchEnabled(anIntstyle == Aspect_InteriorStyle::Aspect_IS_HATCH);
   }
 
-  if (anIntstyle == Aspect_IS_HATCH)
+  if (anIntstyle == Aspect_InteriorStyle::Aspect_IS_HATCH)
   {
     myGlContext->SetPolygonHatchStyle(myAspectsSet->Aspect()->HatchStyle());
   }
 
   // Case of hidden line
-  if (anIntstyle == Aspect_IS_HIDDENLINE)
+  if (anIntstyle == Aspect_InteriorStyle::Aspect_IS_HIDDENLINE)
   {
     // copy all values including line edge aspect
     *myAspectFaceHl.Aspect() = *myAspectsSet->Aspect();

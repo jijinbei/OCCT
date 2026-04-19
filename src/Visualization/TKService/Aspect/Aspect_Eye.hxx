@@ -15,7 +15,7 @@
 #define _Aspect_Eye_HeaderFile
 
 //! Camera eye index within stereoscopic pair.
-enum Aspect_Eye
+enum class Aspect_Eye
 {
   Aspect_Eye_Left,
   Aspect_Eye_Right

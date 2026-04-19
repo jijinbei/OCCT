@@ -49,7 +49,7 @@ V3d_Viewer::V3d_Viewer(const occ::handle<Graphic3d_GraphicDriver>& theDriver)
       myPrivilegedPlane(gp_Ax3(gp_Pnt(0., 0., 0), gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X))),
       myDisplayPlane(false),
       myDisplayPlaneLength(1000.0),
-      myGridType(Aspect_GT_Rectangular),
+      myGridType(Aspect_GridType::Aspect_GT_Rectangular),
       myGridEcho(true),
       myGridEchoLastVert(ShortRealLast(), ShortRealLast(), ShortRealLast())
 {
@@ -502,7 +502,7 @@ void V3d_Viewer::DisplayPrivilegedPlane(const bool theOnOff, const double theSiz
   occ::handle<Graphic3d_Group> aGroup = myPlaneStructure->NewGroup();
 
   occ::handle<Graphic3d_AspectLine3d> aLineAttrib =
-    new Graphic3d_AspectLine3d(Quantity_NOC_GRAY60, Aspect_TOL_SOLID, 1.0);
+    new Graphic3d_AspectLine3d(Quantity_NOC_GRAY60, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0);
   aGroup->SetGroupPrimitivesAspect(aLineAttrib);
 
   occ::handle<Graphic3d_AspectText3d> aTextAttrib = new Graphic3d_AspectText3d();
@@ -548,7 +548,7 @@ occ::handle<Aspect_Grid> V3d_Viewer::Grid(Aspect_GridType theGridType, bool theT
 {
   switch (theGridType)
   {
-    case Aspect_GT_Circular: {
+    case Aspect_GridType::Aspect_GT_Circular: {
       if (myCGrid.IsNull() && theToCreate)
       {
         myCGrid = new V3d_CircularGrid(this,
@@ -557,7 +557,7 @@ occ::handle<Aspect_Grid> V3d_Viewer::Grid(Aspect_GridType theGridType, bool theT
       }
       return occ::handle<Aspect_Grid>(myCGrid);
     }
-    case Aspect_GT_Rectangular: {
+    case Aspect_GridType::Aspect_GT_Rectangular: {
       if (myRGrid.IsNull() && theToCreate)
       {
         myRGrid = new V3d_RectangularGrid(this,
@@ -575,7 +575,7 @@ occ::handle<Aspect_Grid> V3d_Viewer::Grid(Aspect_GridType theGridType, bool theT
 Aspect_GridDrawMode V3d_Viewer::GridDrawMode()
 {
   occ::handle<Aspect_Grid> aGrid = Grid(false);
-  return !aGrid.IsNull() ? aGrid->DrawMode() : Aspect_GDM_Lines;
+  return !aGrid.IsNull() ? aGrid->DrawMode() : Aspect_GridDrawMode::Aspect_GDM_Lines;
 }
 
 //=================================================================================================
@@ -590,7 +590,7 @@ void V3d_Viewer::ActivateGrid(const Aspect_GridType theType, const Aspect_GridDr
   myGridType                     = theType;
   occ::handle<Aspect_Grid> aGrid = Grid(true);
   aGrid->SetDrawMode(theMode);
-  if (theMode != Aspect_GDM_None)
+  if (theMode != Aspect_GridDrawMode::Aspect_GDM_None)
   {
     aGrid->Display();
   }
@@ -616,7 +616,7 @@ void V3d_Viewer::DeactivateGrid()
   aGrid->Erase();
   aGrid->Deactivate();
 
-  myGridType = Aspect_GT_Rectangular;
+  myGridType = Aspect_GridType::Aspect_GT_Rectangular;
   for (NCollection_List<occ::handle<V3d_View>>::Iterator anActiveViewIter(myActiveViews);
        anActiveViewIter.More();
        anActiveViewIter.Next())
@@ -645,7 +645,7 @@ void V3d_Viewer::RectangularGridValues(double& theXOrigin,
                                        double& theYStep,
                                        double& theRotationAngle)
 {
-  Grid(Aspect_GT_Rectangular, true);
+  Grid(Aspect_GridType::Aspect_GT_Rectangular, true);
   theXOrigin       = myRGrid->XOrigin();
   theYOrigin       = myRGrid->YOrigin();
   theXStep         = myRGrid->XStep();
@@ -661,7 +661,7 @@ void V3d_Viewer::SetRectangularGridValues(const double theXOrigin,
                                           const double theYStep,
                                           const double theRotationAngle)
 {
-  Grid(Aspect_GT_Rectangular, true);
+  Grid(Aspect_GridType::Aspect_GT_Rectangular, true);
   myRGrid->SetGridValues(theXOrigin, theYOrigin, theXStep, theYStep, theRotationAngle);
   for (NCollection_List<occ::handle<V3d_View>>::Iterator anActiveViewIter(myActiveViews);
        anActiveViewIter.More();
@@ -679,7 +679,7 @@ void V3d_Viewer::CircularGridValues(double& theXOrigin,
                                     int&    theDivisionNumber,
                                     double& theRotationAngle)
 {
-  Grid(Aspect_GT_Circular, true);
+  Grid(Aspect_GridType::Aspect_GT_Circular, true);
   theXOrigin        = myCGrid->XOrigin();
   theYOrigin        = myCGrid->YOrigin();
   theRadiusStep     = myCGrid->RadiusStep();
@@ -695,7 +695,7 @@ void V3d_Viewer::SetCircularGridValues(const double theXOrigin,
                                        const int    theDivisionNumber,
                                        const double theRotationAngle)
 {
-  Grid(Aspect_GT_Circular, true);
+  Grid(Aspect_GridType::Aspect_GT_Circular, true);
   myCGrid->SetGridValues(theXOrigin,
                          theYOrigin,
                          theRadiusStep,
@@ -713,7 +713,7 @@ void V3d_Viewer::SetCircularGridValues(const double theXOrigin,
 
 void V3d_Viewer::RectangularGridGraphicValues(double& theXSize, double& theYSize, double& theOffSet)
 {
-  Grid(Aspect_GT_Rectangular, true);
+  Grid(Aspect_GridType::Aspect_GT_Rectangular, true);
   myRGrid->GraphicValues(theXSize, theYSize, theOffSet);
 }
 
@@ -723,7 +723,7 @@ void V3d_Viewer::SetRectangularGridGraphicValues(const double theXSize,
                                                  const double theYSize,
                                                  const double theOffSet)
 {
-  Grid(Aspect_GT_Rectangular, true);
+  Grid(Aspect_GridType::Aspect_GT_Rectangular, true);
   myRGrid->SetGraphicValues(theXSize, theYSize, theOffSet);
 }
 
@@ -731,7 +731,7 @@ void V3d_Viewer::SetRectangularGridGraphicValues(const double theXSize,
 
 void V3d_Viewer::CircularGridGraphicValues(double& theRadius, double& theOffSet)
 {
-  Grid(Aspect_GT_Circular, true);
+  Grid(Aspect_GridType::Aspect_GT_Circular, true);
   myCGrid->GraphicValues(theRadius, theOffSet);
 }
 
@@ -739,7 +739,7 @@ void V3d_Viewer::CircularGridGraphicValues(double& theRadius, double& theOffSet)
 
 void V3d_Viewer::SetCircularGridGraphicValues(const double theRadius, const double theOffSet)
 {
-  Grid(Aspect_GT_Circular, true);
+  Grid(Aspect_GridType::Aspect_GT_Circular, true);
   myCGrid->SetGraphicValues(theRadius, theOffSet);
 }
 
@@ -791,7 +791,7 @@ void V3d_Viewer::ShowGridEcho(const occ::handle<V3d_View>& theView,
     myGridEchoGroup     = myGridEchoStructure->NewGroup();
 
     myGridEchoAspect =
-      new Graphic3d_AspectMarker3d(Aspect_TOM_STAR, Quantity_Color(Quantity_NOC_GRAY90), 3.0);
+      new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_STAR, Quantity_Color(Quantity_NOC_GRAY90), 3.0);
     myGridEchoGroup->SetPrimitivesAspect(myGridEchoAspect);
   }
 

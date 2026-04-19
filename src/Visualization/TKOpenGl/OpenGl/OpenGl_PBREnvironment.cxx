@@ -491,7 +491,7 @@ bool OpenGl_PBREnvironment::processSpecIBLMap(const occ::handle<OpenGl_Context>&
                                           myIBLMaps[OpenGl_TypeOfIBLMap_Specular].SizedFormat());
   // ES 2.0 does not support sized formats and format conversions - them detected from data type
   const GLint anIntFormat =
-    (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES || theCtx->IsGlGreaterEqual(3, 0))
+    (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES || theCtx->IsGlGreaterEqual(3, 0))
       ? aTexFormat.InternalFormat()
       : aTexFormat.PixelFormat();
 

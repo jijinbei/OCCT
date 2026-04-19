@@ -250,8 +250,8 @@ public:
     const gp_Pnt&                          LastP,
     const Quantity_NameOfColor             aColor   = Quantity_NOC_PURPLE,
     const double                           aWidth   = 2,
-    const Aspect_TypeOfLine                aProjTOL = Aspect_TOL_DASH,
-    const Aspect_TypeOfLine                aCallTOL = Aspect_TOL_DOT);
+    const Aspect_TypeOfLine                aProjTOL = Aspect_TypeOfLine::Aspect_TOL_DASH,
+    const Aspect_TypeOfLine                aCallTOL = Aspect_TypeOfLine::Aspect_TOL_DOT);
 
   Standard_EXPORT static void ComputeProjVertexPresentation(
     const occ::handle<Prs3d_Presentation>& aPres,
@@ -260,8 +260,8 @@ public:
     const gp_Pnt&                          ProjPoint,
     const Quantity_NameOfColor             aColor   = Quantity_NOC_PURPLE,
     const double                           aWidth   = 2,
-    const Aspect_TypeOfMarker              aProjTOM = Aspect_TOM_PLUS,
-    const Aspect_TypeOfLine                aCallTOL = Aspect_TOL_DOT);
+    const Aspect_TypeOfMarker              aProjTOM = Aspect_TypeOfMarker::Aspect_TOM_PLUS,
+    const Aspect_TypeOfLine                aCallTOL = Aspect_TypeOfLine::Aspect_TOL_DOT);
 };
 
 #endif // _PrsDim_HeaderFile

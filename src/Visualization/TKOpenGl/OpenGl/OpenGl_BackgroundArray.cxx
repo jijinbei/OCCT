@@ -28,7 +28,7 @@
 OpenGl_BackgroundArray::OpenGl_BackgroundArray(const Graphic3d_TypeOfBackground theType)
     : OpenGl_PrimitiveArray(nullptr, Graphic3d_TOPA_TRIANGLES, nullptr, nullptr, nullptr),
       myType(theType),
-      myFillMethod(Aspect_FM_NONE),
+      myFillMethod(Aspect_FillMethod::Aspect_FM_NONE),
       myViewWidth(0),
       myViewHeight(0),
       myToUpdate(false)
@@ -38,7 +38,7 @@ OpenGl_BackgroundArray::OpenGl_BackgroundArray(const Graphic3d_TypeOfBackground 
 
   myGradientParams.color1 = NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 1.0f);
   myGradientParams.color2 = NCollection_Vec4<float>(0.0f, 0.0f, 0.0f, 1.0f);
-  myGradientParams.type   = Aspect_GradientFillMethod_None;
+  myGradientParams.type   = Aspect_GradientFillMethod::Aspect_GradientFillMethod_None;
 }
 
 //=================================================================================================
@@ -104,9 +104,9 @@ bool OpenGl_BackgroundArray::IsDefined() const
   switch (myType)
   {
     case Graphic3d_TOB_GRADIENT:
-      return myGradientParams.type != Aspect_GradientFillMethod_None;
+      return myGradientParams.type != Aspect_GradientFillMethod::Aspect_GradientFillMethod_None;
     case Graphic3d_TOB_TEXTURE:
-      return myFillMethod != Aspect_FM_NONE;
+      return myFillMethod != Aspect_FillMethod::Aspect_FM_NONE;
     case Graphic3d_TOB_CUBEMAP:
       return true;
     case Graphic3d_TOB_NONE:
@@ -213,21 +213,21 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
 
   switch (myGradientParams.type)
   {
-    case Aspect_GradientFillMethod_Horizontal: {
+    case Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal: {
       aCorners[0] = myGradientParams.color2.ChangeData();
       aCorners[1] = myGradientParams.color2.ChangeData();
       aCorners[2] = myGradientParams.color1.ChangeData();
       aCorners[3] = myGradientParams.color1.ChangeData();
       break;
     }
-    case Aspect_GradientFillMethod_Vertical: {
+    case Aspect_GradientFillMethod::Aspect_GradientFillMethod_Vertical: {
       aCorners[0] = myGradientParams.color2.ChangeData();
       aCorners[1] = myGradientParams.color1.ChangeData();
       aCorners[2] = myGradientParams.color1.ChangeData();
       aCorners[3] = myGradientParams.color2.ChangeData();
       break;
     }
-    case Aspect_GradientFillMethod_Diagonal1: {
+    case Aspect_GradientFillMethod::Aspect_GradientFillMethod_Diagonal1: {
       aCorners[0]     = myGradientParams.color2.ChangeData();
       aCorners[2]     = myGradientParams.color1.ChangeData();
       aDiagCorner1[0] = aDiagCorner2[0] = 0.5f * (aCorners[0][0] + aCorners[2][0]);
@@ -237,7 +237,7 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
       aCorners[3]                       = aDiagCorner2;
       break;
     }
-    case Aspect_GradientFillMethod_Diagonal2: {
+    case Aspect_GradientFillMethod::Aspect_GradientFillMethod_Diagonal2: {
       aCorners[1]     = myGradientParams.color1.ChangeData();
       aCorners[3]     = myGradientParams.color2.ChangeData();
       aDiagCorner1[0] = aDiagCorner2[0] = 0.5f * (aCorners[1][0] + aCorners[3][0]);
@@ -247,10 +247,10 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
       aCorners[2]                       = aDiagCorner2;
       break;
     }
-    case Aspect_GradientFillMethod_Corner1:
-    case Aspect_GradientFillMethod_Corner2:
-    case Aspect_GradientFillMethod_Corner3:
-    case Aspect_GradientFillMethod_Corner4: {
+    case Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner1:
+    case Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner2:
+    case Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner3:
+    case Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner4: {
       Graphic3d_Attribute aCornerAttribInfo[] = {{Graphic3d_TOA_POS, Graphic3d_TOD_VEC2},
                                                  {Graphic3d_TOA_UV, Graphic3d_TOD_VEC2}};
 
@@ -272,11 +272,13 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
         NCollection_Vec2<float>* anUvData = reinterpret_cast<NCollection_Vec2<float>*>(
           myAttribs->changeValue(anIt) + myAttribs->AttributeOffset(1));
         // cyclically move highlighted corner depending on myGradientParams.type
-        *anUvData = anUVs[(anIt + myGradientParams.type - Aspect_GradientFillMethod_Corner1) % 4];
+        *anUvData = anUVs[(anIt + static_cast<int>(myGradientParams.type)
+                           - static_cast<int>(Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner1))
+                          % 4];
       }
       return true;
     }
-    case Aspect_GradientFillMethod_Elliptical: {
+    case Aspect_GradientFillMethod::Aspect_GradientFillMethod_Elliptical: {
       // construction of a circle circumscribed about a view rectangle
       // using parametric equation (scaled by aspect ratio and centered)
       const int aSubdiv = 64;
@@ -326,7 +328,7 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
 
       return true;
     }
-    case Aspect_GradientFillMethod_None: {
+    case Aspect_GradientFillMethod::Aspect_GradientFillMethod_None: {
       break;
     }
   }
@@ -379,12 +381,12 @@ bool OpenGl_BackgroundArray::createTextureArray(
   GLfloat aTextureWidth  = (GLfloat)anAspectFace->TextureSet(aCtx)->First()->SizeX();
   GLfloat aTextureHeight = (GLfloat)anAspectFace->TextureSet(aCtx)->First()->SizeY();
 
-  if (myFillMethod == Aspect_FM_CENTERED)
+  if (myFillMethod == Aspect_FillMethod::Aspect_FM_CENTERED)
   {
     anOffsetX = 0.5f * aTextureWidth;
     anOffsetY = 0.5f * aTextureHeight;
   }
-  else if (myFillMethod == Aspect_FM_TILED)
+  else if (myFillMethod == Aspect_FillMethod::Aspect_FM_TILED)
   {
     aTexRangeX = (GLfloat)myViewWidth / aTextureWidth;
     aTexRangeY = (GLfloat)myViewHeight / aTextureHeight;

@@ -191,7 +191,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
   OpenGl_TextureFormat aFormat;
   aFormat.SetImageFormat(theFormat);
   const bool useRedRedAlpha =
-    theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES && theCtx->core11ffp == nullptr;
+    theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES && theCtx->core11ffp == nullptr;
   switch (theFormat)
   {
     case Image_Format_GrayF: {
@@ -203,7 +203,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       else
       {
-        aFormat.SetInternalFormat(theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+        aFormat.SetInternalFormat(theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                                     ? GL_LUMINANCE
                                     : GL_LUMINANCE8);
         aFormat.SetPixelFormat(GL_LUMINANCE);
@@ -221,7 +221,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       else
       {
         aFormat.SetInternalFormat(
-          theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES ? GL_ALPHA : GL_ALPHA8);
+          theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES ? GL_ALPHA : GL_ALPHA8);
         aFormat.SetPixelFormat(GL_ALPHA);
       }
       aFormat.SetDataType(GL_FLOAT);
@@ -264,7 +264,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       return aFormat;
     }
     case Image_Format_BGRF: {
-      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         return OpenGl_TextureFormat();
       }
@@ -281,7 +281,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetPixelFormat(GL_RED);
       aFormat.SetDataType(GL_HALF_FLOAT);
       if (theCtx->hasHalfFloatBuffer == OpenGl_FeatureInExtensions
-          && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+          && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         aFormat.SetDataType(GL_HALF_FLOAT_OES);
       }
@@ -293,7 +293,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetPixelFormat(GL_RG);
       aFormat.SetDataType(GL_HALF_FLOAT);
       if (theCtx->hasHalfFloatBuffer == OpenGl_FeatureInExtensions
-          && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+          && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         aFormat.SetDataType(GL_HALF_FLOAT_OES);
       }
@@ -305,7 +305,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetPixelFormat(GL_RGBA);
       aFormat.SetDataType(GL_HALF_FLOAT);
       if (theCtx->hasHalfFloatBuffer == OpenGl_FeatureInExtensions
-          && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+          && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         aFormat.SetDataType(GL_HALF_FLOAT_OES);
       }
@@ -318,7 +318,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
       if (theIsColorMap && theCtx->ToRenderSRGB())
       {
-        if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+        if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
             && !theCtx->IsGlGreaterEqual(3, 0))
         {
           aFormat.SetPixelFormat(GL_SRGB_ALPHA_EXT);
@@ -328,7 +328,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       return aFormat;
     }
     case Image_Format_BGRA: {
-      if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+      if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         if (!theCtx->IsGlGreaterEqual(1, 2) && !theCtx->extBgra)
         {
@@ -359,7 +359,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       return aFormat;
     }
     case Image_Format_RGB32: {
-      if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+      if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         // ask driver to convert data to RGB8 to save memory
         aFormat.SetNbComponents(3);
@@ -390,7 +390,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       return aFormat;
     }
     case Image_Format_BGR32: {
-      if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary_OpenGLES)
+      if (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         if (!theCtx->IsGlGreaterEqual(1, 2) && !theCtx->extBgra)
         {
@@ -427,7 +427,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
       if (theIsColorMap && theCtx->ToRenderSRGB())
       {
-        if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+        if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
             && !theCtx->IsGlGreaterEqual(3, 0))
         {
           aFormat.SetPixelFormat(GL_SRGB_EXT);
@@ -437,7 +437,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       return aFormat;
     }
     case Image_Format_BGR: {
-      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         return OpenGl_TextureFormat();
       }
@@ -465,7 +465,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
       else
       {
-        aFormat.SetInternalFormat(theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+        aFormat.SetInternalFormat(theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                                     ? GL_LUMINANCE
                                     : GL_LUMINANCE8);
         aFormat.SetPixelFormat(GL_LUMINANCE);
@@ -483,7 +483,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       else
       {
         aFormat.SetInternalFormat(
-          theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES ? GL_ALPHA : GL_ALPHA8);
+          theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES ? GL_ALPHA : GL_ALPHA8);
         aFormat.SetPixelFormat(GL_ALPHA);
       }
       aFormat.SetDataType(GL_UNSIGNED_BYTE);
@@ -496,7 +496,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindFormat(const occ::handle<OpenGl_C
       }
 
       aFormat.SetNbComponents(1);
-      if (useRedRedAlpha || theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+      if (useRedRedAlpha || theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
       {
         aFormat.SetInternalFormat(GL_R16);
         aFormat.SetPixelFormat(GL_RED);
@@ -557,7 +557,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       aFormat.SetImageFormat(Image_Format_RGBAF_half);
       if (theCtx->hasHalfFloatBuffer == OpenGl_FeatureInExtensions)
       {
-        aFormat.SetDataType(theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+        aFormat.SetDataType(theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                               ? GL_HALF_FLOAT_OES
                               : GL_FLOAT);
       }
@@ -571,7 +571,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       aFormat.SetImageFormat(Image_Format_GrayF_half);
       if (theCtx->hasHalfFloatBuffer == OpenGl_FeatureInExtensions)
       {
-        aFormat.SetDataType(theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+        aFormat.SetDataType(theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                               ? GL_HALF_FLOAT_OES
                               : GL_FLOAT);
       }
@@ -585,7 +585,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       aFormat.SetImageFormat(Image_Format_RGF_half);
       if (theCtx->hasHalfFloatBuffer == OpenGl_FeatureInExtensions)
       {
-        aFormat.SetDataType(theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+        aFormat.SetDataType(theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                               ? GL_HALF_FLOAT_OES
                               : GL_FLOAT);
       }
@@ -604,7 +604,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       {
         if (theCtx->ToRenderSRGB())
         {
-          if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+          if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
               && !theCtx->IsGlGreaterEqual(3, 0))
           {
             aFormat.SetPixelFormat(GL_SRGB_ALPHA_EXT);
@@ -630,7 +630,7 @@ OpenGl_TextureFormat OpenGl_TextureFormat::FindSizedFormat(
       {
         if (theCtx->ToRenderSRGB())
         {
-          if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES
+          if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
               && !theCtx->IsGlGreaterEqual(3, 0))
           {
             aFormat.SetPixelFormat(GL_SRGB_EXT);

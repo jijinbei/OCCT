@@ -21,9 +21,9 @@ IMPLEMENT_STANDARD_RTTIEXT(Prs3d_PlaneAspect, Prs3d_BasicAspect)
 //=================================================================================================
 
 Prs3d_PlaneAspect::Prs3d_PlaneAspect()
-    : myEdgesAspect(new Prs3d_LineAspect(Quantity_NOC_GREEN, Aspect_TOL_SOLID, 1.0)),
-      myIsoAspect(new Prs3d_LineAspect(Quantity_NOC_GRAY75, Aspect_TOL_SOLID, 0.5)),
-      myArrowAspect(new Prs3d_LineAspect(Quantity_NOC_PEACHPUFF, Aspect_TOL_SOLID, 1.0)),
+    : myEdgesAspect(new Prs3d_LineAspect(Quantity_NOC_GREEN, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0)),
+      myIsoAspect(new Prs3d_LineAspect(Quantity_NOC_GRAY75, Aspect_TypeOfLine::Aspect_TOL_SOLID, 0.5)),
+      myArrowAspect(new Prs3d_LineAspect(Quantity_NOC_PEACHPUFF, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0)),
       myArrowsLength(0.02),
       myArrowsSize(0.1),
       myArrowsAngle(M_PI / 8.0),

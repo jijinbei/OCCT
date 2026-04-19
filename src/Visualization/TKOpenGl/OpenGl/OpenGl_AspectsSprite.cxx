@@ -72,7 +72,7 @@ bool OpenGl_AspectsSprite::HasPointSprite(const occ::handle<OpenGl_Context>&    
 bool OpenGl_AspectsSprite::IsDisplayListSprite(const occ::handle<OpenGl_Context>&    theCtx,
                                                const occ::handle<Graphic3d_Aspects>& theAspects)
 {
-  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary_OpenGLES)
+  if (theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     return false;
   }
@@ -189,8 +189,8 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
     }
     return;
   }
-  if (theType == Aspect_TOM_POINT || theType == Aspect_TOM_EMPTY
-      || (theType == Aspect_TOM_USERDEFINED && theMarkerImage.IsNull()))
+  if (theType == Aspect_TypeOfMarker::Aspect_TOM_POINT || theType == Aspect_TypeOfMarker::Aspect_TOM_EMPTY
+      || (theType == Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED && theMarkerImage.IsNull()))
   {
     // nothing to do - just simple point
     return;
@@ -239,7 +239,7 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
   }
 
   occ::handle<Graphic3d_MarkerImage> aNewMarkerImage =
-    theType == Aspect_TOM_USERDEFINED && !theMarkerImage.IsNull()
+    theType == Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED && !theMarkerImage.IsNull()
       ? theMarkerImage
       : Graphic3d_MarkerImage::StandardMarker(theType, theScale, theColor);
   if (aNewMarkerImage.IsNull())
@@ -347,7 +347,7 @@ void OpenGl_AspectsSprite::spriteKeys(const occ::handle<Graphic3d_MarkerImage>& 
                                       TCollection_AsciiString&                  theKeyA)
 {
   // generate key for shared resource
-  if (theType == Aspect_TOM_USERDEFINED)
+  if (theType == Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED)
   {
     if (!theMarkerImage.IsNull())
     {
@@ -355,13 +355,14 @@ void OpenGl_AspectsSprite::spriteKeys(const occ::handle<Graphic3d_MarkerImage>& 
       theKeyA = theMarkerImage->GetImageAlphaId();
     }
   }
-  else if (theType != Aspect_TOM_POINT && theType != Aspect_TOM_EMPTY)
+  else if (theType != Aspect_TypeOfMarker::Aspect_TOM_POINT && theType != Aspect_TypeOfMarker::Aspect_TOM_EMPTY)
   {
     // predefined markers are defined with 0.5 step
     const int aScale = int(theScale * 10.0f + 0.5f);
-    theKey           = TCollection_AsciiString("OpenGl_AspectMarker") + theType + "_" + aScale;
+    theKey           = TCollection_AsciiString("OpenGl_AspectMarker") + static_cast<int>(theType)
+                       + "_" + aScale;
     theKeyA          = theKey + "A";
-    if (theType == Aspect_TOM_BALL)
+    if (theType == Aspect_TypeOfMarker::Aspect_TOM_BALL)
     {
       unsigned int aColor[3] = {(unsigned int)(255.0f * theColor.r()),
                                 (unsigned int)(255.0f * theColor.g()),

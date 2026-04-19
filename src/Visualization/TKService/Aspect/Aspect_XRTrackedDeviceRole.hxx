@@ -15,7 +15,7 @@
 #define _Aspect_XRTrackedDeviceRole_HeaderFile
 
 //! Predefined tracked devices.
-enum Aspect_XRTrackedDeviceRole
+enum class Aspect_XRTrackedDeviceRole
 {
   Aspect_XRTrackedDeviceRole_Head,      //!< head
   Aspect_XRTrackedDeviceRole_LeftHand,  //!< left hand
@@ -25,7 +25,8 @@ enum Aspect_XRTrackedDeviceRole
 
 enum
 {
-  Aspect_XRTrackedDeviceRole_NB = Aspect_XRTrackedDeviceRole_Other + 1
+  Aspect_XRTrackedDeviceRole_NB =
+    static_cast<int>(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other) + 1
 };
 
 #endif // _Aspect_XRTrackedDeviceRole_HeaderFile

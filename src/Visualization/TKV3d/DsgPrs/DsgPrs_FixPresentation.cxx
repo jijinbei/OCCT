@@ -92,7 +92,7 @@ void DsgPrs_FixPresentation::Add(const occ::handle<Prs3d_Presentation>& aPresent
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
   Quantity_Color                        aColor = LA->LineAspect()->Aspect()->Color();
   occ::handle<Graphic3d_AspectMarker3d> aMarkerAsp =
-    new Graphic3d_AspectMarker3d(Aspect_TOM_O, aColor, 1.0);
+    new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_O, aColor, 1.0);
   aPresentation->CurrentGroup()->SetPrimitivesAspect(aMarkerAsp);
   occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints = new Graphic3d_ArrayOfPoints(1);
   anArrayOfPoints->AddVertex(aPntAttach.X(), aPntAttach.Y(), aPntAttach.Z());

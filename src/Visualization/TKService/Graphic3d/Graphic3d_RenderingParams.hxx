@@ -184,7 +184,7 @@ public:
     StatsTextAspect->SetColor(Quantity_NOC_WHITE);
     StatsTextAspect->SetColorSubTitle(Quantity_NOC_BLACK);
     StatsTextAspect->SetFont(Font_NOF_ASCII_MONO);
-    StatsTextAspect->SetDisplayType(Aspect_TODT_SHADOW);
+    StatsTextAspect->SetDisplayType(Aspect_TypeOfDisplayText::Aspect_TODT_SHADOW);
     StatsTextAspect->SetTextZoomable(false);
     StatsTextAspect->SetTextFontAspect(Font_FA_Regular);
   }

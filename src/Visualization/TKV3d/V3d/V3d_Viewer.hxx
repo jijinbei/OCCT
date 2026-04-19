@@ -131,7 +131,7 @@ public:
   void SetDefaultBgGradientColors(
     const Quantity_Color&           theColor1,
     const Quantity_Color&           theColor2,
-    const Aspect_GradientFillMethod theFillStyle = Aspect_GradientFillMethod_Horizontal)
+    const Aspect_GradientFillMethod theFillStyle = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal)
   {
     myGradientBackground.SetColors(theColor1, theColor2, theFillStyle);
   }
@@ -365,7 +365,7 @@ public: //! @name grid management
   //! Show grid echo <aMarker> to the hit point.
   //! Warning: When the grid echo marker is not set,
   //! a default marker is build with the attributes:
-  //! marker type : Aspect_TOM_STAR
+  //! marker type : Aspect_TypeOfMarker::Aspect_TOM_STAR
   //! marker color : Quantity_NOC_GRAY90
   //! marker size : 3.0
   Standard_EXPORT void SetGridEcho(const occ::handle<Graphic3d_AspectMarker3d>& aMarker);

@@ -228,7 +228,7 @@ void PrsDim_Relation::SetColor(const Quantity_Color& aCol)
                                     : 1.;
   if (!myDrawer->HasOwnLineAspect())
   {
-    myDrawer->SetLineAspect(new Prs3d_LineAspect(aCol, Aspect_TOL_SOLID, WW));
+    myDrawer->SetLineAspect(new Prs3d_LineAspect(aCol, Aspect_TypeOfLine::Aspect_TOL_SOLID, WW));
   }
   if (!myDrawer->HasOwnDimensionAspect())
   {

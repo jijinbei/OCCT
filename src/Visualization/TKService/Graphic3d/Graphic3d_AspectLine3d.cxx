@@ -23,7 +23,7 @@ Graphic3d_AspectLine3d::Graphic3d_AspectLine3d()
 {
   myShadingModel = Graphic3d_TypeOfShadingModel_Unlit;
   myInteriorColor.SetRGB(Quantity_NOC_YELLOW);
-  myLineType  = Aspect_TOL_SOLID;
+  myLineType  = Aspect_TypeOfLine::Aspect_TOL_SOLID;
   myLineWidth = 1.0f;
 }
 

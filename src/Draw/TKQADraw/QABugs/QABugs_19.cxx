@@ -4003,7 +4003,7 @@ public:
 
     occ::handle<Graphic3d_AspectFillArea3d> aFillAspect =
       new Graphic3d_AspectFillArea3d(*myDrawer->ShadingAspect()->Aspect().get());
-    aFillAspect->SetInteriorStyle(Aspect_IS_POINT);
+    aFillAspect->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_POINT);
 
     // create separate group for frame elements
     occ::handle<Graphic3d_Group> aFrameGroup = thePresentation->NewGroup();

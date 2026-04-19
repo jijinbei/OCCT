@@ -190,24 +190,24 @@ public:
   Standard_EXPORT void SetBgGradientColors(
     const Quantity_Color&           theColor1,
     const Quantity_Color&           theColor2,
-    const Aspect_GradientFillMethod theFillStyle = Aspect_GradientFillMethod_Horizontal,
+    const Aspect_GradientFillMethod theFillStyle = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal,
     const bool                      theToUpdate  = false);
 
   //! Defines the gradient background fill method of the view.
   Standard_EXPORT void SetBgGradientStyle(
-    const Aspect_GradientFillMethod theMethod   = Aspect_GradientFillMethod_Horizontal,
+    const Aspect_GradientFillMethod theMethod   = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal,
     const bool                      theToUpdate = false);
 
   //! Defines the background texture of the view by supplying the texture image file name
   //! and fill method (centered by default).
   Standard_EXPORT void SetBackgroundImage(const char* const       theFileName,
-                                          const Aspect_FillMethod theFillStyle = Aspect_FM_CENTERED,
+                                          const Aspect_FillMethod theFillStyle = Aspect_FillMethod::Aspect_FM_CENTERED,
                                           const bool              theToUpdate  = false);
 
   //! Defines the background texture of the view by supplying the texture and fill method (centered
   //! by default)
   Standard_EXPORT void SetBackgroundImage(const occ::handle<Graphic3d_Texture2D>& theTexture,
-                                          const Aspect_FillMethod theFillStyle = Aspect_FM_CENTERED,
+                                          const Aspect_FillMethod theFillStyle = Aspect_FillMethod::Aspect_FM_CENTERED,
                                           const bool              theToUpdate  = false);
 
   //! Defines the textured background fill method of the view.

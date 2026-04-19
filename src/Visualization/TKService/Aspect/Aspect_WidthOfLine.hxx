@@ -23,7 +23,7 @@
 //! WOL_THICK           thick width of 0.7 MM
 //! WOL_VERYTHICK       very thick width of 1.5 MM
 //! WOL_USERDEFINED     defined by Users
-enum Aspect_WidthOfLine
+enum class Aspect_WidthOfLine
 {
   Aspect_WOL_THIN,
   Aspect_WOL_MEDIUM,

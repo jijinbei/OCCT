@@ -53,10 +53,10 @@ AIS_MediaPlayer::AIS_MediaPlayer()
   SetInfiniteState(true);
 
   Graphic3d_MaterialAspect aMat;
-  myFrameAspect = new Graphic3d_AspectFillArea3d(Aspect_IS_SOLID,
+  myFrameAspect = new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
                                                  Quantity_NOC_WHITE,
                                                  Quantity_NOC_BLACK,
-                                                 Aspect_TOL_SOLID,
+                                                 Aspect_TypeOfLine::Aspect_TOL_SOLID,
                                                  1.0f,
                                                  aMat,
                                                  aMat);

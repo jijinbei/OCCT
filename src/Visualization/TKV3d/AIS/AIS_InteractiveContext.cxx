@@ -57,22 +57,22 @@ using AIS_MapIteratorOfMapOfObjectOwners = NCollection_DataMap<
 static void initDefaultHilightAttributes(const occ::handle<Prs3d_Drawer>& theDrawer,
                                          const Quantity_Color&            theColor)
 {
-  theDrawer->SetMethod(Aspect_TOHM_COLOR);
+  theDrawer->SetMethod(Aspect_TypeOfHighlightMethod::Aspect_TOHM_COLOR);
   theDrawer->SetDisplayMode(0);
   theDrawer->SetColor(theColor);
 
   theDrawer->SetupOwnShadingAspect();
   theDrawer->SetupOwnPointAspect();
-  theDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
+  theDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
   *theDrawer->LineAspect()->Aspect() = *theDrawer->Link()->LineAspect()->Aspect();
-  theDrawer->SetWireAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
+  theDrawer->SetWireAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
   *theDrawer->WireAspect()->Aspect() = *theDrawer->Link()->WireAspect()->Aspect();
   theDrawer->SetPlaneAspect(new Prs3d_PlaneAspect());
   *theDrawer->PlaneAspect()->EdgesAspect() = *theDrawer->Link()->PlaneAspect()->EdgesAspect();
-  theDrawer->SetFreeBoundaryAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
+  theDrawer->SetFreeBoundaryAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
   *theDrawer->FreeBoundaryAspect()->Aspect() = *theDrawer->Link()->FreeBoundaryAspect()->Aspect();
   theDrawer->SetUnFreeBoundaryAspect(
-    new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TOL_SOLID, 1.0));
+    new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
   *theDrawer->UnFreeBoundaryAspect()->Aspect() =
     *theDrawer->Link()->UnFreeBoundaryAspect()->Aspect();
   theDrawer->SetDatumAspect(new Prs3d_DatumAspect());
@@ -100,7 +100,7 @@ static void initDefaultHilightAttributes(const occ::handle<Prs3d_Drawer>& theDra
   theDrawer->PlaneAspect()->EdgesAspect()->SetWidth(2.0);
   theDrawer->FreeBoundaryAspect()->SetWidth(2.0);
   theDrawer->UnFreeBoundaryAspect()->SetWidth(2.0);
-  theDrawer->PointAspect()->SetTypeOfMarker(Aspect_TOM_O_POINT);
+  theDrawer->PointAspect()->SetTypeOfMarker(Aspect_TypeOfMarker::Aspect_TOM_O_POINT);
   theDrawer->PointAspect()->SetScale(2.0);
 
   // the triangulation should be computed using main presentation attributes,
@@ -163,7 +163,7 @@ AIS_InteractiveContext::AIS_InteractiveContext(const occ::handle<V3d_Viewer>& Ma
   {
     const occ::handle<Prs3d_Drawer>& aStyle = myStyles[Prs3d_TypeOfHighlight_SubIntensity];
     aStyle->SetZLayer(Graphic3d_ZLayerId_UNKNOWN);
-    aStyle->SetMethod(Aspect_TOHM_COLOR);
+    aStyle->SetMethod(Aspect_TypeOfHighlightMethod::Aspect_TOHM_COLOR);
     aStyle->SetColor(Quantity_NOC_GRAY40);
   }
 
@@ -1970,7 +1970,7 @@ void AIS_InteractiveContext::InitAttributes()
   occ::handle<Prs3d_LineAspect> aLineAspect = myDefaultDrawer->HiddenLineAspect();
   aLineAspect->SetColor(Quantity_NOC_GRAY20);
   aLineAspect->SetWidth(1.0);
-  aLineAspect->SetTypeOfLine(Aspect_TOL_DASH);
+  aLineAspect->SetTypeOfLine(Aspect_TypeOfLine::Aspect_TOL_DASH);
 
   // tolerance to 2 pixels...
   SetPixelTolerance(2);

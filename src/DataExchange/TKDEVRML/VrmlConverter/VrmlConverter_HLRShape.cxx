@@ -40,7 +40,7 @@ void VrmlConverter_HLRShape::Add(Standard_OStream&                           anO
   BRepAdaptor_Curve TheCurve;
 
   double theRequestedDeflection;
-  if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE) // TOD_RELATIVE, TOD_ABSOLUTE
+  if (aDrawer->TypeOfDeflection() == Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE) // TOD_RELATIVE, TOD_ABSOLUTE
   {
     Bnd_Box box;
     BRepBndLib::AddClose(aShape, box);

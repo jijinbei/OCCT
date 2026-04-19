@@ -324,14 +324,14 @@ public: //! @name Style management API
   //! Return color of sides back material.
   const Quantity_Color& InnerColor() const
   {
-    return myDrawer->ShadingAspect()->Color(Aspect_TOFM_BACK_SIDE);
+    return myDrawer->ShadingAspect()->Color(Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE);
   }
 
   //! Set color of sides back material. Alias for:
   //! @code Attributes()->ShadingAspect()->Aspect()->ChangeBackMaterial().SetColor() @endcode
   void SetInnerColor(const Quantity_Color& theColor)
   {
-    myDrawer->ShadingAspect()->SetColor(theColor, Aspect_TOFM_BACK_SIDE);
+    myDrawer->ShadingAspect()->SetColor(theColor, Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE);
     SynchronizeAspects();
   }
 

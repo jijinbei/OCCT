@@ -61,7 +61,7 @@ public:
   void Unmap() const override { myIsMapped = false; }
 
   //! Resize window - do nothing.
-  Aspect_TypeOfResize DoResize() override { return Aspect_TOR_UNKNOWN; }
+  Aspect_TypeOfResize DoResize() override { return Aspect_TypeOfResize::Aspect_TOR_UNKNOWN; }
 
   //! Map window - do nothing.
   bool DoMapping() const override { return true; }

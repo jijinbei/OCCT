@@ -47,7 +47,7 @@ AIS_Axis::AIS_Axis(const occ::handle<Geom_Line>& aComponent)
       myTypeOfAxis(AIS_TOAX_Unknown),
       myIsXYZAxis(false)
 {
-  myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TOL_DOTDASH, 1.));
+  myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_DOTDASH, 1.));
   SetInfiniteState();
 
   gp_Dir thedir  = myComponent->Position().Direction();
@@ -94,7 +94,7 @@ AIS_Axis::AIS_Axis(const occ::handle<Geom_Axis1Placement>& anAxis)
       myTypeOfAxis(AIS_TOAX_Unknown),
       myIsXYZAxis(false)
 {
-  myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TOL_DOTDASH, 1.));
+  myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_DOTDASH, 1.));
   SetInfiniteState();
 
   gp_Dir thedir  = myComponent->Position().Direction();
@@ -124,7 +124,7 @@ AIS_Axis::AIS_Axis(const gp_Ax1& theAxis, const double theLength)
   aDatumAspect->SetDrawLabels(false);
   myDrawer->SetDatumAspect(aDatumAspect);
   occ::handle<Prs3d_LineAspect> aDefaultLineAspect =
-    new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TOL_SOLID, 1.0);
+    new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0);
   myDrawer->SetLineAspect(aDefaultLineAspect);
   myLineAspect = myDrawer->LineAspect();
 }

@@ -1055,8 +1055,8 @@ void Graphic3d_Camera::computeProjection(NCollection_Mat4<Elem_t>& theProjM,
       }
       else
       {
-        stereoEyeProj(theProjL, anLRBT, aZNear, aZFar, aIOD, aFocus, Aspect_Eye_Left);
-        stereoEyeProj(theProjR, anLRBT, aZNear, aZFar, aIOD, aFocus, Aspect_Eye_Right);
+        stereoEyeProj(theProjL, anLRBT, aZNear, aZFar, aIOD, aFocus, Aspect_Eye::Aspect_Eye_Left);
+        stereoEyeProj(theProjR, anLRBT, aZNear, aZFar, aIOD, aFocus, Aspect_Eye::Aspect_Eye_Right);
       }
 
       if (theToAddHeadToEye && !myIsCustomProjMatLR && aIOD != Elem_t(0.0))
@@ -1229,7 +1229,7 @@ void Graphic3d_Camera::stereoEyeProj(NCollection_Mat4<Elem_t>&         theOutMx,
                                      const Elem_t                      theZFocus,
                                      const Aspect_Eye                  theEyeIndex) const
 {
-  Elem_t aDx = theEyeIndex == Aspect_Eye_Left ? Elem_t(0.5) * theIOD : Elem_t(-0.5) * theIOD;
+  Elem_t aDx = theEyeIndex == Aspect_Eye::Aspect_Eye_Left ? Elem_t(0.5) * theIOD : Elem_t(-0.5) * theIOD;
   Elem_t aDXStereoShift = aDx * theNear / theZFocus;
 
   // construct eye projection matrix

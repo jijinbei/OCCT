@@ -1289,17 +1289,17 @@ void Graphic3d_CView::ProcessXRInput()
   if (myXRSession->HasProjectionFrustums())
   {
     // note that this definition does not include a small forward/backward offset from head to eye
-    myCamera->SetCustomStereoFrustums(myXRSession->ProjectionFrustum(Aspect_Eye_Left),
-                                      myXRSession->ProjectionFrustum(Aspect_Eye_Right));
+    myCamera->SetCustomStereoFrustums(myXRSession->ProjectionFrustum(Aspect_Eye::Aspect_Eye_Left),
+                                      myXRSession->ProjectionFrustum(Aspect_Eye::Aspect_Eye_Right));
   }
   else
   {
-    const NCollection_Mat4<double> aPoseL = myXRSession->HeadToEyeTransform(Aspect_Eye_Left);
-    const NCollection_Mat4<double> aPoseR = myXRSession->HeadToEyeTransform(Aspect_Eye_Right);
+    const NCollection_Mat4<double> aPoseL = myXRSession->HeadToEyeTransform(Aspect_Eye::Aspect_Eye_Left);
+    const NCollection_Mat4<double> aPoseR = myXRSession->HeadToEyeTransform(Aspect_Eye::Aspect_Eye_Right);
     const NCollection_Mat4<double> aProjL =
-      myXRSession->ProjectionMatrix(Aspect_Eye_Left, myCamera->ZNear(), myCamera->ZFar());
+      myXRSession->ProjectionMatrix(Aspect_Eye::Aspect_Eye_Left, myCamera->ZNear(), myCamera->ZFar());
     const NCollection_Mat4<double> aProjR =
-      myXRSession->ProjectionMatrix(Aspect_Eye_Right, myCamera->ZNear(), myCamera->ZFar());
+      myXRSession->ProjectionMatrix(Aspect_Eye::Aspect_Eye_Right, myCamera->ZNear(), myCamera->ZFar());
     myCamera->SetCustomStereoProjection(aProjL, aPoseL, aProjR, aPoseR);
   }
   myBaseXRCamera = myCamera;

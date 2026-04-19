@@ -230,7 +230,7 @@ static struct
 } ViewerTest_DefaultBackground = {Quantity_NOC_BLACK,
                                   Quantity_NOC_BLACK,
                                   Quantity_NOC_BLACK,
-                                  Aspect_GradientFillMethod_None};
+                                  Aspect_GradientFillMethod::Aspect_GradientFillMethod_None};
 
 //==============================================================================
 //  EVENT GLOBAL VARIABLES
@@ -2321,7 +2321,7 @@ int ViewerMainLoop(int theNbArgs, const char** theArgVec)
   {
     case ClientMessage: {
       if ((Atom)aReport.xclient.data.l[0]
-          == GetDisplayConnection()->GetAtom(Aspect_XA_DELETE_WINDOW))
+          == GetDisplayConnection()->GetAtom(Aspect_XAtom::Aspect_XA_DELETE_WINDOW))
       {
         // Close the window
         ViewerTest::RemoveView(FindViewIdByWindowHandle(aReport.xclient.window));
@@ -2682,19 +2682,19 @@ static bool parseImageMode(const TCollection_AsciiString& theName, Aspect_FillMe
   aName.LowerCase();
   if (aName == "none")
   {
-    theMode = Aspect_FM_NONE;
+    theMode = Aspect_FillMethod::Aspect_FM_NONE;
   }
   else if (aName == "centered")
   {
-    theMode = Aspect_FM_CENTERED;
+    theMode = Aspect_FillMethod::Aspect_FM_CENTERED;
   }
   else if (aName == "tiled")
   {
-    theMode = Aspect_FM_TILED;
+    theMode = Aspect_FillMethod::Aspect_FM_TILED;
   }
   else if (aName == "stretch")
   {
-    theMode = Aspect_FM_STRETCH;
+    theMode = Aspect_FillMethod::Aspect_FM_STRETCH;
   }
   else
   {
@@ -2711,43 +2711,43 @@ static bool parseGradientMode(const TCollection_AsciiString& theName,
   aName.LowerCase();
   if (aName == "none")
   {
-    theMode = Aspect_GradientFillMethod_None;
+    theMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_None;
   }
   else if (aName == "hor" || aName == "horizontal")
   {
-    theMode = Aspect_GradientFillMethod_Horizontal;
+    theMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal;
   }
   else if (aName == "ver" || aName == "vert" || aName == "vertical")
   {
-    theMode = Aspect_GradientFillMethod_Vertical;
+    theMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Vertical;
   }
   else if (aName == "diag" || aName == "diagonal" || aName == "diag1" || aName == "diagonal1")
   {
-    theMode = Aspect_GradientFillMethod_Diagonal1;
+    theMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Diagonal1;
   }
   else if (aName == "diag2" || aName == "diagonal2")
   {
-    theMode = Aspect_GradientFillMethod_Diagonal2;
+    theMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Diagonal2;
   }
   else if (aName == "corner1")
   {
-    theMode = Aspect_GradientFillMethod_Corner1;
+    theMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner1;
   }
   else if (aName == "corner2")
   {
-    theMode = Aspect_GradientFillMethod_Corner2;
+    theMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner2;
   }
   else if (aName == "corner3")
   {
-    theMode = Aspect_GradientFillMethod_Corner3;
+    theMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner3;
   }
   else if (aName == "corner4")
   {
-    theMode = Aspect_GradientFillMethod_Corner4;
+    theMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner4;
   }
   else if (aName == "ellip" || aName == "elliptical")
   {
-    theMode = Aspect_GradientFillMethod_Elliptical;
+    theMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Elliptical;
   }
   else
   {
@@ -2771,11 +2771,11 @@ static int VBackground(Draw_Interpretor& theDI, int theNbArgs, const char** theA
   int                           aNbColors = 0;
   Quantity_ColorRGBA            aColors[2];
 
-  Aspect_GradientFillMethod aGradientMode   = Aspect_GradientFillMethod_None;
+  Aspect_GradientFillMethod aGradientMode   = Aspect_GradientFillMethod::Aspect_GradientFillMethod_None;
   bool                      hasGradientMode = false;
 
   TCollection_AsciiString anImagePath;
-  Aspect_FillMethod       anImageMode  = Aspect_FM_CENTERED;
+  Aspect_FillMethod       anImageMode  = Aspect_FillMethod::Aspect_FM_CENTERED;
   bool                    hasImageMode = false;
 
   bool                     isSkydomeBg = false;
@@ -3008,14 +3008,14 @@ static int VBackground(Draw_Interpretor& theDI, int theNbArgs, const char** theA
     {
       ViewerTest_DefaultBackground.GradientColor1 = Quantity_Color();
       ViewerTest_DefaultBackground.GradientColor2 = Quantity_Color();
-      ViewerTest_DefaultBackground.FillMethod     = Aspect_GradientFillMethod_None;
+      ViewerTest_DefaultBackground.FillMethod     = Aspect_GradientFillMethod::Aspect_GradientFillMethod_None;
       ViewerTest_DefaultBackground.FlatColor      = aColors[0].GetRGB();
       ViewerTest_DefaultBackground.SetDefaultGradient();
       ViewerTest_DefaultBackground.SetDefaultColor();
     }
     else
     {
-      aView->SetBgGradientStyle(hasGradientMode ? aGradientMode : Aspect_GradientFillMethod_None);
+      aView->SetBgGradientStyle(hasGradientMode ? aGradientMode : Aspect_GradientFillMethod::Aspect_GradientFillMethod_None);
       aView->SetBackgroundColor(aColors[0].GetRGB());
       if (toUseIBL != -1)
       {
@@ -3033,9 +3033,9 @@ static int VBackground(Draw_Interpretor& theDI, int theNbArgs, const char** theA
       {
         ViewerTest_DefaultBackground.FillMethod = aGradientMode;
       }
-      else if (ViewerTest_DefaultBackground.FillMethod == Aspect_GradientFillMethod_None)
+      else if (ViewerTest_DefaultBackground.FillMethod == Aspect_GradientFillMethod::Aspect_GradientFillMethod_None)
       {
-        ViewerTest_DefaultBackground.FillMethod = Aspect_GradientFillMethod_Vertical;
+        ViewerTest_DefaultBackground.FillMethod = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Vertical;
       }
       ViewerTest_DefaultBackground.SetDefaultGradient();
     }
@@ -3044,9 +3044,9 @@ static int VBackground(Draw_Interpretor& theDI, int theNbArgs, const char** theA
       if (!hasGradientMode)
       {
         aGradientMode = aView->GradientBackground().BgGradientFillMethod();
-        if (aGradientMode == Aspect_GradientFillMethod_None)
+        if (aGradientMode == Aspect_GradientFillMethod::Aspect_GradientFillMethod_None)
         {
-          aGradientMode = Aspect_GradientFillMethod_Vertical;
+          aGradientMode = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Vertical;
         }
       }
       aView->SetBgGradientColors(aColors[0].GetRGB(), aColors[1].GetRGB(), aGradientMode);
@@ -3536,16 +3536,16 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
           << "Label position: ";
     switch (aColorScale->GetLabelPosition())
     {
-      case Aspect_TOCSP_NONE:
+      case Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE:
         theDI << "None\n";
         break;
-      case Aspect_TOCSP_LEFT:
+      case Aspect_TypeOfColorScalePosition::Aspect_TOCSP_LEFT:
         theDI << "Left\n";
         break;
-      case Aspect_TOCSP_RIGHT:
+      case Aspect_TypeOfColorScalePosition::Aspect_TOCSP_RIGHT:
         theDI << "Right\n";
         break;
-      case Aspect_TOCSP_CENTER:
+      case Aspect_TypeOfColorScalePosition::Aspect_TOCSP_CENTER:
         theDI << "Center\n";
         break;
     }
@@ -3623,22 +3623,22 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
 
       TCollection_AsciiString aTextPosArg(theArgVec[++anArgIter]);
       aTextPosArg.LowerCase();
-      Aspect_TypeOfColorScalePosition aLabPosition = Aspect_TOCSP_NONE;
+      Aspect_TypeOfColorScalePosition aLabPosition = Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE;
       if (aTextPosArg == "none")
       {
-        aLabPosition = Aspect_TOCSP_NONE;
+        aLabPosition = Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE;
       }
       else if (aTextPosArg == "left")
       {
-        aLabPosition = Aspect_TOCSP_LEFT;
+        aLabPosition = Aspect_TypeOfColorScalePosition::Aspect_TOCSP_LEFT;
       }
       else if (aTextPosArg == "right")
       {
-        aLabPosition = Aspect_TOCSP_RIGHT;
+        aLabPosition = Aspect_TypeOfColorScalePosition::Aspect_TOCSP_RIGHT;
       }
       else if (aTextPosArg == "center")
       {
-        aLabPosition = Aspect_TOCSP_CENTER;
+        aLabPosition = Aspect_TypeOfColorScalePosition::Aspect_TOCSP_CENTER;
       }
       else
       {
@@ -3763,7 +3763,7 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
     }
     else if (aFlag == "-color")
     {
-      if (aColorScale->GetColorType() != Aspect_TOCSD_USER)
+      if (aColorScale->GetColorType() != Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER)
       {
         Message::SendFail(
           "Syntax error: wrong color type. Call -colors before to set user-specified colors");
@@ -3798,12 +3798,12 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
         return 1;
       }
       aColorScale->SetIntervalColor(aColor, anIndex);
-      aColorScale->SetColorType(Aspect_TOCSD_USER);
+      aColorScale->SetColorType(Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER);
       anArgIter += aNbParsed;
     }
     else if (aFlag == "-label")
     {
-      if (aColorScale->GetColorType() != Aspect_TOCSD_USER)
+      if (aColorScale->GetColorType() != Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER)
       {
         Message::SendFail(
           "Syntax error: wrong label type. Call -labels before to set user-specified labels");
@@ -3825,7 +3825,7 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
 
       TCollection_ExtendedString aText(theArgVec[anArgIter + 2], true);
       aColorScale->SetLabel(aText, anIndex);
-      aColorScale->SetLabelType(Aspect_TOCSD_USER);
+      aColorScale->SetLabelType(Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER);
       anArgIter += 2;
     }
     else if (aFlag == "-labelat" || aFlag == "-labat" || aFlag == "-labelatborder"
@@ -3886,7 +3886,7 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
       }
 
       aColorScale->SetColors(aSeq);
-      aColorScale->SetColorType(Aspect_TOCSD_USER);
+      aColorScale->SetColorType(Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER);
     }
     else if (aFlag == "-uniform")
     {
@@ -3894,7 +3894,7 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
       const double aHueStart  = Draw::Atof(theArgVec[++anArgIter]);
       const double aHueEnd    = Draw::Atof(theArgVec[++anArgIter]);
       aColorScale->SetUniformColors(aLightness, aHueStart, aHueEnd);
-      aColorScale->SetColorType(Aspect_TOCSD_USER);
+      aColorScale->SetColorType(Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER);
     }
     else if (aFlag == "-labels" || aFlag == "-freelabels")
     {
@@ -3924,7 +3924,7 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
         aSeq.Append(TCollection_ExtendedString(theArgVec[++anArgIter], true));
       }
       aColorScale->SetLabels(aSeq);
-      aColorScale->SetLabelType(Aspect_TOCSD_USER);
+      aColorScale->SetLabelType(Aspect_TypeOfColorScaleData::Aspect_TOCSD_USER);
     }
     else if (aFlag == "-title")
     {
@@ -3941,22 +3941,22 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
         aSecondArg.LowerCase();
         Standard_DISABLE_DEPRECATION_WARNINGS if (aSecondArg == "none")
         {
-          aColorScale->SetTitlePosition(Aspect_TOCSP_NONE);
+          aColorScale->SetTitlePosition(Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE);
           isTwoArgs = true;
         }
         else if (aSecondArg == "left")
         {
-          aColorScale->SetTitlePosition(Aspect_TOCSP_LEFT);
+          aColorScale->SetTitlePosition(Aspect_TypeOfColorScalePosition::Aspect_TOCSP_LEFT);
           isTwoArgs = true;
         }
         else if (aSecondArg == "right")
         {
-          aColorScale->SetTitlePosition(Aspect_TOCSP_RIGHT);
+          aColorScale->SetTitlePosition(Aspect_TypeOfColorScalePosition::Aspect_TOCSP_RIGHT);
           isTwoArgs = true;
         }
         else if (aSecondArg == "center")
         {
-          aColorScale->SetTitlePosition(Aspect_TOCSP_CENTER);
+          aColorScale->SetTitlePosition(Aspect_TypeOfColorScalePosition::Aspect_TOCSP_CENTER);
           isTwoArgs = true;
         }
         Standard_ENABLE_DEPRECATION_WARNINGS
@@ -3978,9 +3978,9 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
       aColorScale->SetNumberOfIntervals(10);
       aColorScale->SetBreadth(0);
       aColorScale->SetHeight(0);
-      aColorScale->SetLabelPosition(Aspect_TOCSP_RIGHT);
-      aColorScale->SetColorType(Aspect_TOCSD_AUTO);
-      aColorScale->SetLabelType(Aspect_TOCSD_AUTO);
+      aColorScale->SetLabelPosition(Aspect_TypeOfColorScalePosition::Aspect_TOCSP_RIGHT);
+      aColorScale->SetColorType(Aspect_TypeOfColorScaleData::Aspect_TOCSD_AUTO);
+      aColorScale->SetLabelType(Aspect_TypeOfColorScaleData::Aspect_TOCSD_AUTO);
     }
     else if (aFlag == "-findcolor")
     {
@@ -4857,7 +4857,7 @@ public:
                                double            Y1,
                                double            X2,
                                double            Y2,
-                               Aspect_TypeOfLine theType   = Aspect_TOL_SOLID,
+                               Aspect_TypeOfLine theType   = Aspect_TypeOfLine::Aspect_TOL_SOLID,
                                double            theWidth  = 0.5,
                                double            theTransp = 1.0);
 
@@ -4955,7 +4955,7 @@ static int VLayerLine(Draw_Interpretor& di, int argc, const char** argv)
     aWidth = Draw::Atof(argv[5]);
 
   // select appropriate line type
-  Aspect_TypeOfLine aLineType = Aspect_TOL_SOLID;
+  Aspect_TypeOfLine aLineType = Aspect_TypeOfLine::Aspect_TOL_SOLID;
   if (argc > 6 && !ViewerTest::ParseLineType(argv[6], aLineType))
   {
     Message::SendFail() << "Syntax error: unknown line type '" << argv[6] << "'";
@@ -5019,11 +5019,11 @@ static int VGrid(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theArgV
       anArgNext.LowerCase();
       if (anArgNext == "r" || anArgNext == "rect" || anArgNext == "rectangular")
       {
-        aType = Aspect_GT_Rectangular;
+        aType = Aspect_GridType::Aspect_GT_Rectangular;
       }
       else if (anArgNext == "c" || anArgNext == "circ" || anArgNext == "circular")
       {
-        aType = Aspect_GT_Circular;
+        aType = Aspect_GridType::Aspect_GT_Circular;
       }
       else
       {
@@ -5037,11 +5037,11 @@ static int VGrid(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theArgV
       anArgNext.LowerCase();
       if (anArgNext == "l" || anArgNext == "line" || anArgNext == "lines")
       {
-        aMode = Aspect_GDM_Lines;
+        aMode = Aspect_GridDrawMode::Aspect_GDM_Lines;
       }
       else if (anArgNext == "p" || anArgNext == "point" || anArgNext == "points")
       {
-        aMode = Aspect_GDM_Points;
+        aMode = Aspect_GridDrawMode::Aspect_GDM_Points;
       }
       else
       {
@@ -5106,19 +5106,19 @@ static int VGrid(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theArgV
     }
     else if (anArg == "r" || anArg == "rect" || anArg == "rectangular")
     {
-      aType = Aspect_GT_Rectangular;
+      aType = Aspect_GridType::Aspect_GT_Rectangular;
     }
     else if (anArg == "c" || anArg == "circ" || anArg == "circular")
     {
-      aType = Aspect_GT_Circular;
+      aType = Aspect_GridType::Aspect_GT_Circular;
     }
     else if (anArg == "l" || anArg == "line" || anArg == "lines")
     {
-      aMode = Aspect_GDM_Lines;
+      aMode = Aspect_GridDrawMode::Aspect_GDM_Lines;
     }
     else if (anArg == "p" || anArg == "point" || anArg == "points")
     {
-      aMode = Aspect_GDM_Points;
+      aMode = Aspect_GridDrawMode::Aspect_GDM_Points;
     }
     else if (anArgIter + 1 >= theArgNb && anArg == "off")
     {
@@ -5132,7 +5132,7 @@ static int VGrid(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theArgV
     }
   }
 
-  if (aType == Aspect_GT_Rectangular)
+  if (aType == Aspect_GridType::Aspect_GT_Rectangular)
   {
     NCollection_Vec2<double> anOrigXY, aStepXY;
     double                   aRotAngle = 0.0;
@@ -5170,7 +5170,7 @@ static int VGrid(Draw_Interpretor& /*theDI*/, int theArgNb, const char** theArgV
       aViewer->SetRectangularGridGraphicValues(aSize.x(), aSize.y(), aSize.z());
     }
   }
-  else if (aType == Aspect_GT_Circular)
+  else if (aType == Aspect_GridType::Aspect_GT_Circular)
   {
     NCollection_Vec2<double> anOrigXY;
     double                   aRadiusStep;
@@ -6479,7 +6479,7 @@ static int VSelectByAxis(Draw_Interpretor& theDI, int theNbArgs, const char** th
 
     // Display axis start point
     occ::handle<AIS_Point> anAISStartPnt = new AIS_Point(new Geom_CartesianPoint(anAxisLocation));
-    anAISStartPnt->SetMarker(Aspect_TOM_O);
+    anAISStartPnt->SetMarker(Aspect_TypeOfMarker::Aspect_TOM_O);
     anAISStartPnt->SetColor(anAxisColor);
     ViewerTest::Display(TCollection_AsciiString(aName) + "_start", anAISStartPnt, false);
 
@@ -6510,7 +6510,7 @@ static int VSelectByAxis(Draw_Interpretor& theDI, int theNbArgs, const char** th
       // Display intersection points
       occ::handle<Geom_CartesianPoint> anIntersectPnt      = new Geom_CartesianPoint(aPoint);
       occ::handle<AIS_Point>           anAISIntersectPoint = new AIS_Point(anIntersectPnt);
-      anAISIntersectPoint->SetMarker(Aspect_TOM_PLUS);
+      anAISIntersectPoint->SetMarker(Aspect_TypeOfMarker::Aspect_TOM_PLUS);
       anAISIntersectPoint->SetColor(Quantity_NOC_RED);
       ViewerTest::Display(TCollection_AsciiString(aName) + "_intersect_" + anIndex,
                           anAISIntersectPoint,
@@ -9499,7 +9499,7 @@ static int VDefaults(Draw_Interpretor& theDi, int theArgsNb, const char** theArg
   occ::handle<Prs3d_Drawer> aDefParams = aCtx->DefaultDrawer();
   if (theArgsNb < 2)
   {
-    if (aDefParams->TypeOfDeflection() == Aspect_TOD_RELATIVE)
+    if (aDefParams->TypeOfDeflection() == Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE)
     {
       theDi << "DeflType:           relative\n"
             << "DeviationCoeff:     " << aDefParams->DeviationCoefficient() << "\n";
@@ -9526,7 +9526,7 @@ static int VDefaults(Draw_Interpretor& theDi, int theArgsNb, const char** theArg
         Message::SendFail() << "Syntax error at " << anArg;
         return 1;
       }
-      aDefParams->SetTypeOfDeflection(Aspect_TOD_ABSOLUTE);
+      aDefParams->SetTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_ABSOLUTE);
       aDefParams->SetMaximalChordialDeviation(Draw::Atof(theArgVec[anArgIter]));
     }
     else if (anArg == "-RELDEFL" || anArg == "-RELATIVEDEFLECTION" || anArg == "-DEVCOEFF"
@@ -9537,7 +9537,7 @@ static int VDefaults(Draw_Interpretor& theDi, int theArgsNb, const char** theArg
         Message::SendFail() << "Syntax error at " << anArg;
         return 1;
       }
-      aDefParams->SetTypeOfDeflection(Aspect_TOD_RELATIVE);
+      aDefParams->SetTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE);
       aDefParams->SetDeviationCoefficient(Draw::Atof(theArgVec[anArgIter]));
     }
     else if (anArg == "-ANGDEFL" || anArg == "-ANGULARDEFL" || anArg == "-ANGULARDEFLECTION")

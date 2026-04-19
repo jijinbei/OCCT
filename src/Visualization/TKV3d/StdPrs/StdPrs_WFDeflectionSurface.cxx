@@ -144,7 +144,7 @@ void StdPrs_WFDeflectionSurface::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   double                  TheDeflection;
   Aspect_TypeOfDeflection TOD = aDrawer->TypeOfDeflection();
-  if (TOD == Aspect_TOD_RELATIVE)
+  if (TOD == Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE)
   {
     // On calcule la fleche en fonction des min max globaux de la piece:
     Bnd_Box Total;

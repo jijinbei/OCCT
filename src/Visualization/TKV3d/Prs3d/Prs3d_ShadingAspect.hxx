@@ -42,29 +42,29 @@ public:
 
   //! Change the polygons interior color and material ambient color.
   Standard_EXPORT void SetColor(const Quantity_Color&          aColor,
-                                const Aspect_TypeOfFacingModel aModel = Aspect_TOFM_BOTH_SIDE);
+                                const Aspect_TypeOfFacingModel aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE);
 
   //! Change the polygons material aspect.
   Standard_EXPORT void SetMaterial(const Graphic3d_MaterialAspect& aMaterial,
-                                   const Aspect_TypeOfFacingModel  aModel = Aspect_TOFM_BOTH_SIDE);
+                                   const Aspect_TypeOfFacingModel  aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE);
 
   //! Change the polygons transparency value.
   //! Warning : aValue must be in the range 0,1. 0 is the default (NO transparent)
   Standard_EXPORT void SetTransparency(
     const double                   aValue,
-    const Aspect_TypeOfFacingModel aModel = Aspect_TOFM_BOTH_SIDE);
+    const Aspect_TypeOfFacingModel aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE);
 
   //! Returns the polygons color.
   Standard_EXPORT const Quantity_Color& Color(
-    const Aspect_TypeOfFacingModel aModel = Aspect_TOFM_FRONT_SIDE) const;
+    const Aspect_TypeOfFacingModel aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_FRONT_SIDE) const;
 
   //! Returns the polygons material aspect.
   Standard_EXPORT const Graphic3d_MaterialAspect& Material(
-    const Aspect_TypeOfFacingModel aModel = Aspect_TOFM_FRONT_SIDE) const;
+    const Aspect_TypeOfFacingModel aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_FRONT_SIDE) const;
 
   //! Returns the polygons transparency value.
   Standard_EXPORT double Transparency(
-    const Aspect_TypeOfFacingModel aModel = Aspect_TOFM_FRONT_SIDE) const;
+    const Aspect_TypeOfFacingModel aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_FRONT_SIDE) const;
 
   //! Returns the polygons aspect properties.
   const occ::handle<Graphic3d_AspectFillArea3d>& Aspect() const { return myAspect; }

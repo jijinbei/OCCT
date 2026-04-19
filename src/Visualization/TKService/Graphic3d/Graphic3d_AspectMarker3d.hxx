@@ -52,7 +52,7 @@ public:
   float Scale() const { return myMarkerScale; }
 
   //! Modifies the scale factor.
-  //! Marker type Aspect_TOM_POINT is not affected by the marker size scale factor.
+  //! Marker type Aspect_TypeOfMarker::Aspect_TOM_POINT is not affected by the marker size scale factor.
   //! It is always the smallest displayable dot.
   //! Warning: Raises Standard_OutOfRange if the scale is a negative value.
   void SetScale(const float theScale) { SetMarkerScale(theScale); }

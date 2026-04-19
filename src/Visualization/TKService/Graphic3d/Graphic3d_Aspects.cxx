@@ -22,19 +22,19 @@ Graphic3d_Aspects::Graphic3d_Aspects()
     : myInteriorColor(Quantity_NOC_CYAN1),
       myBackInteriorColor(Quantity_NOC_CYAN1),
       myEdgeColor(Quantity_NOC_WHITE),
-      myInteriorStyle(Aspect_IS_SOLID),
+      myInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID),
       myShadingModel(Graphic3d_TypeOfShadingModel_DEFAULT),
       myFaceCulling(Graphic3d_TypeOfBackfacingModel_Auto),
       myAlphaMode(Graphic3d_AlphaMode_BlendAuto),
       myAlphaCutoff(0.5f),
-      myLineType(Aspect_TOL_SOLID),
+      myLineType(Aspect_TypeOfLine::Aspect_TOL_SOLID),
       myLineWidth(1.0f),
       myLineFactor(1),
       myLinePattern(0xFFFF),
-      myMarkerType(Aspect_TOM_POINT),
+      myMarkerType(Aspect_TypeOfMarker::Aspect_TOM_POINT),
       myMarkerScale(1.0f),
-      myTextStyle(Aspect_TOST_NORMAL),
-      myTextDisplayType(Aspect_TODT_NORMAL),
+      myTextStyle(Aspect_TypeOfStyleText::Aspect_TOST_NORMAL),
+      myTextDisplayType(Aspect_TypeOfDisplayText::Aspect_TODT_NORMAL),
       myTextFontAspect(Font_FontAspect_Regular),
       myTextAngle(0.0f),
       myToSkipFirstEdge(false),
@@ -86,8 +86,8 @@ void Graphic3d_Aspects::DumpJson(Standard_OStream& theOStream, int theDepth) con
     OCCT_DUMP_FIELD_VALUE_STRING(theOStream, myTextFont->String())
   }
 
-  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myTextStyle)
-  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myTextDisplayType)
+  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, static_cast<int>(myTextStyle))
+  OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, static_cast<int>(myTextDisplayType))
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myTextFontAspect)
   OCCT_DUMP_FIELD_VALUE_NUMERICAL(theOStream, myTextAngle)
 }

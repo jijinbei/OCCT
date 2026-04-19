@@ -71,7 +71,7 @@ AIS_Trihedron::AIS_Trihedron(const occ::handle<Geom_Axis2Placement>& theComponen
   {
     mySelectionPriority[aPartIter] = 5; // planes: priority: 5
   }
-  myHiddenLineAspect = new Graphic3d_AspectLine3d(Quantity_NOC_WHITE, Aspect_TOL_EMPTY, 1.0f);
+  myHiddenLineAspect = new Graphic3d_AspectLine3d(Quantity_NOC_WHITE, Aspect_TypeOfLine::Aspect_TOL_EMPTY, 1.0f);
 
   // trihedron labels
   myLabels[Prs3d_DatumParts_XAxis] = "X";
