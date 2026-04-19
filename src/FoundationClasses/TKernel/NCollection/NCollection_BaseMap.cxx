@@ -18,6 +18,8 @@
 #include <NCollection_BaseMap.hxx>
 #include <NCollection_Primes.hxx>
 
+#include <vector>
+
 //=================================================================================================
 
 bool NCollection_BaseMap::BeginResize(const int               NbBuckets,
@@ -106,14 +108,12 @@ void NCollection_BaseMap::Statistics(Standard_OStream& S) const
     return;
 
   // compute statistics on 1
-  int*                   sizes = new int[mySize + 1];
+  std::vector<int>       sizes(mySize + 1, 0);
   int                    i, l, nb;
   NCollection_ListNode*  p;
   NCollection_ListNode** data;
 
   S << "\nStatistics for the first Key\n";
-  for (i = 0; i <= mySize; i++)
-    sizes[i] = 0;
   data = (NCollection_ListNode**)myData1;
   nb   = 0;
   for (i = 0; i <= myNbBuckets; i++)
@@ -143,8 +143,6 @@ void NCollection_BaseMap::Statistics(Standard_OStream& S) const
 
   double mean = ((double)l) / ((double)nb);
   S << "\n\nMean of length : " << mean << "\n";
-
-  delete[] sizes;
 }
 
 //=================================================================================================

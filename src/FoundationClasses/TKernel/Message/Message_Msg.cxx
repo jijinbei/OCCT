@@ -17,6 +17,8 @@
 #include <Message_MsgFile.hxx>
 #include <TCollection_AsciiString.hxx>
 
+#include <vector>
+
 typedef enum
 {
   Msg_IntegerType,
@@ -143,11 +145,10 @@ Message_Msg& Message_Msg::Arg(const char* const theString)
     return *this;
 
   // print string according to format
-  char* sStringBuffer = new char[std::max(static_cast<int>(strlen(theString) + 1), 1024)];
-  Sprintf(sStringBuffer, aFormat.ToCString(), theString);
-  TCollection_ExtendedString aStr(sStringBuffer, true);
-  delete[] sStringBuffer;
-  sStringBuffer = nullptr;
+  std::vector<char> sStringBuffer(
+    std::max(static_cast<int>(strlen(theString) + 1), 1024));
+  Sprintf(sStringBuffer.data(), aFormat.ToCString(), theString);
+  TCollection_ExtendedString aStr(sStringBuffer.data(), true);
 
   // replace the format placeholder by the actual string
   replaceText(aFirst, aFormat.Length(), aStr);

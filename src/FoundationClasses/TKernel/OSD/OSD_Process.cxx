@@ -31,6 +31,8 @@
 #include <TCollection_ExtendedString.hxx>
 #include <Quantity_Date.hxx>
 
+#include <vector>
+
 #ifdef _WIN32
   #include <OSD_WNT.hxx>
   #include <lmcons.h> // for UNLEN - maximum user name length GetUserName()
@@ -297,11 +299,10 @@ OSD_Path OSD_Process::CurrentDirectory()
   const DWORD aBuffLen = GetCurrentDirectoryW(0, NULL);
   if (aBuffLen > 0)
   {
-    wchar_t* aBuff = new wchar_t[aBuffLen + 1];
-    GetCurrentDirectoryW(aBuffLen, aBuff);
+    std::vector<wchar_t> aBuff(aBuffLen + 1);
+    GetCurrentDirectoryW(aBuffLen, aBuff.data());
     aBuff[aBuffLen] = L'\0';
-    const TCollection_AsciiString aPath(aBuff);
-    delete[] aBuff;
+    const TCollection_AsciiString aPath(aBuff.data());
 
     anCurrentDirectory = OSD_Path(aPath);
   }

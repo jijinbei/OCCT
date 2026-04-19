@@ -27,6 +27,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <mutex>
+#include <vector>
 
 #ifndef _WIN32
 
@@ -286,11 +287,10 @@ TCollection_AsciiString OSD_Environment::Value()
 
   NCollection_UtfString<char> aValue;
   aSize += 1; // NULL-terminator
-  wchar_t* aBuff = new wchar_t[aSize];
-  GetEnvironmentVariableW(aNameWide.ToCString(), aBuff, aSize);
+  std::vector<wchar_t> aBuff(aSize);
+  GetEnvironmentVariableW(aNameWide.ToCString(), aBuff.data(), aSize);
   aBuff[aSize - 1] = L'\0';
-  aValue.FromUnicode(aBuff);
-  delete[] aBuff;
+  aValue.FromUnicode(aBuff.data());
   Reset();
 
   myValue = aValue.ToCString();

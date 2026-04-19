@@ -17,6 +17,8 @@
 
 #include <gtest/gtest.h>
 
+#include <vector>
+
 TEST(TCollection_ExtendedStringTest, DefaultConstructor)
 {
   TCollection_ExtendedString aString;
@@ -274,14 +276,13 @@ TEST(TCollection_ExtendedStringTest, UTF8Conversion)
   EXPECT_GT(aBufferSize, 0);
 
   // Allocate buffer with +1 for null terminator (external usage pattern)
-  Standard_PCharacter aBuffer        = new char[aBufferSize + 1];
-  int                 anActualLength = aString.ToUTF8CString(aBuffer);
+  std::vector<char>   aBuffer(aBufferSize + 1);
+  Standard_PCharacter aPtr           = aBuffer.data();
+  int                 anActualLength = aString.ToUTF8CString(aPtr);
 
   EXPECT_EQ(aBufferSize, anActualLength);
   EXPECT_EQ('\0', aBuffer[anActualLength]);
-  EXPECT_STREQ("Hello World", aBuffer);
-
-  delete[] aBuffer;
+  EXPECT_STREQ("Hello World", aBuffer.data());
 }
 
 TEST(TCollection_ExtendedStringTest, UTF8ConversionUnicode)
@@ -293,13 +294,12 @@ TEST(TCollection_ExtendedStringTest, UTF8ConversionUnicode)
   int aBufferSize = aString.LengthOfCString();
   EXPECT_GT(aBufferSize, 5); // Should be more than 5 due to UTF-8 encoding
 
-  Standard_PCharacter aBuffer        = new char[aBufferSize + 1];
-  int                 anActualLength = aString.ToUTF8CString(aBuffer);
+  std::vector<char>   aBuffer(aBufferSize + 1);
+  Standard_PCharacter aPtr           = aBuffer.data();
+  int                 anActualLength = aString.ToUTF8CString(aPtr);
 
   EXPECT_EQ(aBufferSize, anActualLength);
   EXPECT_EQ('\0', aBuffer[anActualLength]);
-
-  delete[] aBuffer;
 }
 
 TEST(TCollection_ExtendedStringTest, WideCharConstructor)
@@ -385,12 +385,11 @@ TEST(TCollection_ExtendedStringTest, EmptyStringHandling)
   EXPECT_TRUE(anEmptyString.IsEmpty());
   EXPECT_EQ(0, anEmptyString.LengthOfCString());
 
-  Standard_PCharacter aBuffer = new char[1];
-  int                 aLength = anEmptyString.ToUTF8CString(aBuffer);
+  std::vector<char>   aBuffer(1);
+  Standard_PCharacter aPtr    = aBuffer.data();
+  int                 aLength = anEmptyString.ToUTF8CString(aPtr);
   EXPECT_EQ(0, aLength);
   EXPECT_EQ('\0', aBuffer[0]);
-
-  delete[] aBuffer;
 }
 
 TEST(TCollection_ExtendedStringTest, ConversionRoundTrip)
