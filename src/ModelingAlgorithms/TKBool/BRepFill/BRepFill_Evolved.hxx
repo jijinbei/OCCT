@@ -109,23 +109,24 @@ private:
 
   Standard_EXPORT void SetWork(const TopoDS_Face& Spine, const TopoDS_Wire& Profile);
 
-  Standard_EXPORT void ElementaryPerform(const TopoDS_Face&              Spine,
-                                         const TopoDS_Wire&              Profile,
-                                         const BRepMAT2d_BisectingLocus& Locus,
-                                         BRepMAT2d_LinkTopoBilo&         Link,
-                                         const GeomAbs_JoinType          Join = GeomAbs_JoinType::GeomAbs_Arc);
+  Standard_EXPORT void ElementaryPerform(
+    const TopoDS_Face&              Spine,
+    const TopoDS_Wire&              Profile,
+    const BRepMAT2d_BisectingLocus& Locus,
+    BRepMAT2d_LinkTopoBilo&         Link,
+    const GeomAbs_JoinType          Join = GeomAbs_JoinType::GeomAbs_Arc);
 
   Standard_EXPORT void PlanarPerform(const TopoDS_Face&              Spine,
                                      const TopoDS_Wire&              Profile,
                                      const BRepMAT2d_BisectingLocus& Locus,
                                      BRepMAT2d_LinkTopoBilo&         Link,
-                                     const GeomAbs_JoinType          Join = GeomAbs_JoinType::GeomAbs_Arc);
+                                     const GeomAbs_JoinType Join = GeomAbs_JoinType::GeomAbs_Arc);
 
   Standard_EXPORT void VerticalPerform(const TopoDS_Face&              Spine,
                                        const TopoDS_Wire&              Profile,
                                        const BRepMAT2d_BisectingLocus& Locus,
                                        BRepMAT2d_LinkTopoBilo&         Link,
-                                       const GeomAbs_JoinType          Join = GeomAbs_JoinType::GeomAbs_Arc);
+                                       const GeomAbs_JoinType Join = GeomAbs_JoinType::GeomAbs_Arc);
 
   Standard_EXPORT NCollection_DataMap<
     TopoDS_Shape,

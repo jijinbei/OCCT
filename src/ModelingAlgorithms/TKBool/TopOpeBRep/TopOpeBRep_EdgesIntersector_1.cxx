@@ -130,7 +130,8 @@ TopOpeBRepDS_Config TopOpeBRep_EdgesIntersector::EdgesConfig1() const
   {
     bool so;
     so = TopOpeBRepTool_ShapeTool::EdgesSameOriented(myEdge2, myEdge1);
-    c  = (so) ? TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED : TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
+    c  = (so) ? TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED
+              : TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
   }
   return c;
 }

@@ -840,7 +840,8 @@ bool GeomFill_Pipe::KPartT4()
 {
   bool Ok = false;
   // -------    Cas du Cylindre  --------------------------
-  if (myAdpPath->GetType() == GeomAbs_CurveType::GeomAbs_Line && myAdpFirstSect->GetType() == GeomAbs_CurveType::GeomAbs_Line
+  if (myAdpPath->GetType() == GeomAbs_CurveType::GeomAbs_Line
+      && myAdpFirstSect->GetType() == GeomAbs_CurveType::GeomAbs_Line
       && myAdpLastSect->GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     // try to generate a cylinder.
@@ -897,7 +898,8 @@ bool GeomFill_Pipe::KPartT4()
     myStatus     = GeomFill_PipeError::GeomFill_PipeOk;
   }
   // -----------    Cas du tore  ----------------------------------
-  else if (myAdpPath->GetType() == GeomAbs_CurveType::GeomAbs_Circle && myAdpFirstSect->GetType() == GeomAbs_CurveType::GeomAbs_Circle
+  else if (myAdpPath->GetType() == GeomAbs_CurveType::GeomAbs_Circle
+           && myAdpFirstSect->GetType() == GeomAbs_CurveType::GeomAbs_Circle
            && myAdpLastSect->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     // try to generate a toroidal surface.

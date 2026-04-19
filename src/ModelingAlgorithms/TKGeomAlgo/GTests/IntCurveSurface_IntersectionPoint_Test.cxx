@@ -22,7 +22,8 @@ TEST(IntCurveSurface_IntersectionPoint, DefaultConstructor_TransitionInitialized
 {
   IntCurveSurface_IntersectionPoint aPt;
 
-  // Transition must be deterministic (initialized to IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent).
+  // Transition must be deterministic (initialized to
+  // IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent).
   EXPECT_EQ(aPt.Transition(), IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent);
 
   // Scalar fields must be zero-initialized.
@@ -35,7 +36,11 @@ TEST(IntCurveSurface_IntersectionPoint, DefaultConstructor_TransitionInitialized
 TEST(IntCurveSurface_IntersectionPoint, ValueConstructor_AllFieldsSet)
 {
   gp_Pnt                            aP(1.0, 2.0, 3.0);
-  IntCurveSurface_IntersectionPoint aPt(aP, 0.5, 0.6, 0.7, IntCurveSurface_TransitionOnCurve::IntCurveSurface_In);
+  IntCurveSurface_IntersectionPoint aPt(aP,
+                                        0.5,
+                                        0.6,
+                                        0.7,
+                                        IntCurveSurface_TransitionOnCurve::IntCurveSurface_In);
 
   EXPECT_NEAR(aPt.Pnt().X(), 1.0, 1e-15);
   EXPECT_NEAR(aPt.Pnt().Y(), 2.0, 1e-15);

@@ -635,7 +635,8 @@ void IntImpParGen_Intersector::Perform(const ImpTool&         TheImpTool,
         //============== Detection du cas : L intersection est en bout
         //==============  sur les 2 domaines
 
-        if (Pos1 != IntRes2d_Position::IntRes2d_Middle && Pos2 != IntRes2d_Position::IntRes2d_Middle)
+        if (Pos1 != IntRes2d_Position::IntRes2d_Middle
+            && Pos2 != IntRes2d_Position::IntRes2d_Middle)
         {
           double m = 0.5 * (Pt2_on1.X() + Pt2_on2.X());
           Pt2_on1.SetX(m);

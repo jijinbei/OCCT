@@ -68,11 +68,13 @@ Graphic3d_Texture2D::Graphic3d_Texture2D(const TCollection_AsciiString& theFileN
 //=================================================================================================
 
 Graphic3d_Texture2D::Graphic3d_Texture2D(const Graphic3d_NameOfTexture2D theNOT)
-    : Graphic3d_TextureMap(NameOfTexture2d_to_FileName[static_cast<int>(theNOT)], Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D),
+    : Graphic3d_TextureMap(NameOfTexture2d_to_FileName[static_cast<int>(theNOT)],
+                           Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D),
       myName(theNOT)
 {
   myPath.SetTrek(Graphic3d_TextureRoot::TexturesFolder());
-  myTexId = TCollection_AsciiString("Graphic3d_Texture2D_") + NameOfTexture2d_to_FileName[static_cast<int>(theNOT)];
+  myTexId = TCollection_AsciiString("Graphic3d_Texture2D_")
+            + NameOfTexture2d_to_FileName[static_cast<int>(theNOT)];
 
   myHasMipmaps = true;
   myParams->SetModulate(true);
@@ -88,7 +90,8 @@ Graphic3d_Texture2D::Graphic3d_Texture2D(const Graphic3d_NameOfTexture2D theNOT,
       myName(theNOT)
 {
   myPath.SetTrek(Graphic3d_TextureRoot::TexturesFolder());
-  myTexId = TCollection_AsciiString("Graphic3d_Texture2D_") + NameOfTexture2d_to_FileName[static_cast<int>(theNOT)];
+  myTexId = TCollection_AsciiString("Graphic3d_Texture2D_")
+            + NameOfTexture2d_to_FileName[static_cast<int>(theNOT)];
 }
 
 //=================================================================================================

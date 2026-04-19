@@ -402,7 +402,8 @@ VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Read(VrmlData_InBuffer& theBuffer)
 //   // This loop searches for any opening bracket.
 //   // Such bracket increments the level counter. A closing bracket decrements
 //   // the counter. The loop terminates when the counter becomes zero.
-//   while ((aStatus = VrmlData_Scene::ReadLine(theBuffer)) == VrmlData_ErrorStatus::VrmlData_StatusOK)
+//   while ((aStatus = VrmlData_Scene::ReadLine(theBuffer)) ==
+//   VrmlData_ErrorStatus::VrmlData_StatusOK)
 //   {
 //     int aChar;
 //     while ((aChar = theBuffer.LinePtr[0]) != '\0') {

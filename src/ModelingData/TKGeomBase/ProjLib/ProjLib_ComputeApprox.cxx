@@ -1114,11 +1114,14 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
 
   bool SurfIsAnal = ProjLib::IsAnaSurf(S);
 
-  bool CurvIsAnal = (CType != GeomAbs_CurveType::GeomAbs_BSplineCurve) && (CType != GeomAbs_CurveType::GeomAbs_BezierCurve)
-                    && (CType != GeomAbs_CurveType::GeomAbs_OffsetCurve) && (CType != GeomAbs_CurveType::GeomAbs_OtherCurve);
+  bool CurvIsAnal = (CType != GeomAbs_CurveType::GeomAbs_BSplineCurve)
+                    && (CType != GeomAbs_CurveType::GeomAbs_BezierCurve)
+                    && (CType != GeomAbs_CurveType::GeomAbs_OffsetCurve)
+                    && (CType != GeomAbs_CurveType::GeomAbs_OtherCurve);
 
   bool simplecase = SurfIsAnal && CurvIsAnal;
-  if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve || CType == GeomAbs_CurveType::GeomAbs_BezierCurve)
+  if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve
+      || CType == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     int aNbKnots = 1;
     if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
@@ -1128,7 +1131,8 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
     simplecase = simplecase && C->Degree() <= 2 && aNbKnots <= 2;
   }
 
-  if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve && SType == GeomAbs_SurfaceType::GeomAbs_Plane)
+  if (CType == GeomAbs_CurveType::GeomAbs_BSplineCurve
+      && SType == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
 
     // get the poles and eventually the weights
@@ -1160,7 +1164,8 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
       myBSpline = new Geom2d_BSplineCurve(Poles, Knots, Mults, BS->Degree(), BS->IsPeriodic());
     }
   }
-  else if (CType == GeomAbs_CurveType::GeomAbs_BezierCurve && SType == GeomAbs_SurfaceType::GeomAbs_Plane)
+  else if (CType == GeomAbs_CurveType::GeomAbs_BezierCurve
+           && SType == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
 
     // get the poles and eventually the weights

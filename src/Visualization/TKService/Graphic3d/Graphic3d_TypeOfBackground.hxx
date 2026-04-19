@@ -28,8 +28,7 @@ enum Graphic3d_TypeOfBackground
 
 enum
 {
-  Graphic3d_TypeOfBackground_NB =
-    static_cast<int>(Graphic3d_TOB_CUBEMAP) + 1
+  Graphic3d_TypeOfBackground_NB = static_cast<int>(Graphic3d_TOB_CUBEMAP) + 1
 };
 
 #endif // _Graphic3d_TypeOfBackground_HeaderFile

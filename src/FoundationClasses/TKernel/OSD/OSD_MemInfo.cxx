@@ -88,7 +88,8 @@ void OSD_MemInfo::Update()
     MEMORYSTATUSEX aStatEx;
     aStatEx.dwLength = sizeof(aStatEx);
     GlobalMemoryStatusEx(&aStatEx);
-    myCounters[size_t(Counter::MemVirtual)] = size_t(aStatEx.ullTotalVirtual - aStatEx.ullAvailVirtual);
+    myCounters[size_t(Counter::MemVirtual)] =
+      size_t(aStatEx.ullTotalVirtual - aStatEx.ullAvailVirtual);
   }
     #else
   if (IsActive(Counter::MemVirtual))
@@ -100,8 +101,9 @@ void OSD_MemInfo::Update()
   }
     #endif
 
-  if (IsActive(Counter::MemPrivate) || IsActive(Counter::MemWorkingSet) || IsActive(Counter::MemWorkingSetPeak)
-      || IsActive(Counter::MemSwapUsage) || IsActive(Counter::MemSwapUsagePeak))
+  if (IsActive(Counter::MemPrivate) || IsActive(Counter::MemWorkingSet)
+      || IsActive(Counter::MemWorkingSetPeak) || IsActive(Counter::MemSwapUsage)
+      || IsActive(Counter::MemSwapUsagePeak))
   {
     // use Psapi library
     HANDLE aProcess = GetCurrentProcess();
@@ -141,7 +143,8 @@ void OSD_MemInfo::Update()
   }
 
   #elif defined(__EMSCRIPTEN__)
-  if (IsActive(Counter::MemHeapUsage) || IsActive(Counter::MemWorkingSet) || IsActive(Counter::MemWorkingSetPeak))
+  if (IsActive(Counter::MemHeapUsage) || IsActive(Counter::MemWorkingSet)
+      || IsActive(Counter::MemWorkingSetPeak))
   {
     // /proc/%d/status is not emulated - get more info from mallinfo()
     const struct mallinfo aMI = mallinfo();
@@ -184,8 +187,8 @@ void OSD_MemInfo::Update()
     #endif
   }
 
-  if (!IsActive(Counter::MemVirtual) && !IsActive(Counter::MemWorkingSet) && !IsActive(Counter::MemWorkingSetPeak)
-      && !IsActive(Counter::MemPrivate))
+  if (!IsActive(Counter::MemVirtual) && !IsActive(Counter::MemWorkingSet)
+      && !IsActive(Counter::MemWorkingSetPeak) && !IsActive(Counter::MemPrivate))
   {
     return;
   }
@@ -241,7 +244,8 @@ void OSD_MemInfo::Update()
   }
   aFile.close();
   #elif (defined(__APPLE__))
-  if (IsActive(Counter::MemVirtual) || IsActive(Counter::MemWorkingSet) || IsActive(Counter::MemHeapUsage))
+  if (IsActive(Counter::MemVirtual) || IsActive(Counter::MemWorkingSet)
+      || IsActive(Counter::MemHeapUsage))
   {
     struct task_basic_info aTaskInfo;
     mach_msg_type_number_t aTaskInfoCount = TASK_BASIC_INFO_COUNT;
@@ -270,38 +274,40 @@ TCollection_AsciiString OSD_MemInfo::ToString() const
   TCollection_AsciiString anInfo;
   if (hasValue(Counter::MemPrivate))
   {
-    anInfo +=
-      TCollection_AsciiString("  Private memory:     ") + int(ValueMiB(Counter::MemPrivate)) + " MiB\n";
+    anInfo += TCollection_AsciiString("  Private memory:     ") + int(ValueMiB(Counter::MemPrivate))
+              + " MiB\n";
   }
   if (hasValue(Counter::MemWorkingSet))
   {
-    anInfo +=
-      TCollection_AsciiString("  Working Set:        ") + int(ValueMiB(Counter::MemWorkingSet)) + " MiB";
+    anInfo += TCollection_AsciiString("  Working Set:        ")
+              + int(ValueMiB(Counter::MemWorkingSet)) + " MiB";
     if (hasValue(Counter::MemWorkingSetPeak))
     {
-      anInfo += TCollection_AsciiString(" (peak: ") + int(ValueMiB(Counter::MemWorkingSetPeak)) + " MiB)";
+      anInfo +=
+        TCollection_AsciiString(" (peak: ") + int(ValueMiB(Counter::MemWorkingSetPeak)) + " MiB)";
     }
     anInfo += "\n";
   }
   if (hasValue(Counter::MemSwapUsage))
   {
-    anInfo +=
-      TCollection_AsciiString("  Pagefile usage:     ") + int(ValueMiB(Counter::MemSwapUsage)) + " MiB";
+    anInfo += TCollection_AsciiString("  Pagefile usage:     ")
+              + int(ValueMiB(Counter::MemSwapUsage)) + " MiB";
     if (hasValue(Counter::MemSwapUsagePeak))
     {
-      anInfo += TCollection_AsciiString(" (peak: ") + int(ValueMiB(Counter::MemSwapUsagePeak)) + " MiB)";
+      anInfo +=
+        TCollection_AsciiString(" (peak: ") + int(ValueMiB(Counter::MemSwapUsagePeak)) + " MiB)";
     }
     anInfo += "\n";
   }
   if (hasValue(Counter::MemVirtual))
   {
-    anInfo +=
-      TCollection_AsciiString("  Virtual memory:     ") + int(ValueMiB(Counter::MemVirtual)) + " MiB\n";
+    anInfo += TCollection_AsciiString("  Virtual memory:     ") + int(ValueMiB(Counter::MemVirtual))
+              + " MiB\n";
   }
   if (hasValue(Counter::MemHeapUsage))
   {
-    anInfo +=
-      TCollection_AsciiString("  Heap memory:     ") + int(ValueMiB(Counter::MemHeapUsage)) + " MiB\n";
+    anInfo += TCollection_AsciiString("  Heap memory:     ") + int(ValueMiB(Counter::MemHeapUsage))
+              + " MiB\n";
   }
   return anInfo;
 }
@@ -325,8 +331,9 @@ size_t OSD_MemInfo::ValueMiB(const OSD_MemInfo::Counter theCounter) const
   {
     return size_t(-1);
   }
-  return (myCounters[size_t(theCounter)] == size_t(-1)) ? size_t(-1)
-                                                : (myCounters[size_t(theCounter)] / (1024 * 1024));
+  return (myCounters[size_t(theCounter)] == size_t(-1))
+           ? size_t(-1)
+           : (myCounters[size_t(theCounter)] / (1024 * 1024));
 }
 
 //=================================================================================================

@@ -66,12 +66,13 @@ Standard_EXPORT occ::handle<TopOpeBRepDS_Interference> MakeEPVInterference(
   }
   else if (GK == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
   {
-    I = TopOpeBRepDS_InterferenceTool::MakeEdgeVertexInterference(T,
-                                                                  SI,
-                                                                  GI,
-                                                                  B,
-                                                                  TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
-                                                                  P);
+    I = TopOpeBRepDS_InterferenceTool::MakeEdgeVertexInterference(
+      T,
+      SI,
+      GI,
+      B,
+      TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
+      P);
     I->GeometryType(GK);
   }
   return I;

@@ -729,7 +729,8 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
                                             D1.LastParameter(),
                                             TheCurveTool::EpsX(C1));
     }
-    else if (Pos1 != IntRes2d_Position::IntRes2d_Middle && Pos2 == IntRes2d_Position::IntRes2d_Middle)
+    else if (Pos1 != IntRes2d_Position::IntRes2d_Middle
+             && Pos2 == IntRes2d_Position::IntRes2d_Middle)
     {
       PolyVInf = TheProjPCur::FindParameter(C1,
                                             P1,
@@ -809,7 +810,8 @@ void IntCurve_IntPolyPolyGen::Perform(const TheCurve&        C1,
                                               D1.LastParameter(),
                                               TheCurveTool::EpsX(C1));
       }
-      else if (Pos1 != IntRes2d_Position::IntRes2d_Middle && Pos2 == IntRes2d_Position::IntRes2d_Middle)
+      else if (Pos1 != IntRes2d_Position::IntRes2d_Middle
+               && Pos2 == IntRes2d_Position::IntRes2d_Middle)
       {
         PolyVSup = TheProjPCur::FindParameter(C1,
                                               P1,
@@ -1427,7 +1429,8 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
                                               D1.LastParameter(),
                                               TheCurveTool::EpsX(C1));
       }
-      else if (Pos1 != IntRes2d_Position::IntRes2d_Middle && Pos2 == IntRes2d_Position::IntRes2d_Middle)
+      else if (Pos1 != IntRes2d_Position::IntRes2d_Middle
+               && Pos2 == IntRes2d_Position::IntRes2d_Middle)
       {
         PolyVInf = TheProjPCur::FindParameter(C2,
                                               P1,
@@ -1500,7 +1503,8 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
           Pos2 = IntRes2d_Position::IntRes2d_End;
         }
 
-        if (Pos1 == IntRes2d_Position::IntRes2d_Middle && Pos2 != IntRes2d_Position::IntRes2d_Middle)
+        if (Pos1 == IntRes2d_Position::IntRes2d_Middle
+            && Pos2 != IntRes2d_Position::IntRes2d_Middle)
         {
           PolyUSup = TheProjPCur::FindParameter(C1,
                                                 P2,
@@ -1508,7 +1512,8 @@ bool IntCurve_IntPolyPolyGen::findIntersect(const TheCurve&              C1,
                                                 D1.LastParameter(),
                                                 TheCurveTool::EpsX(C1));
         }
-        else if (Pos1 != IntRes2d_Position::IntRes2d_Middle && Pos2 == IntRes2d_Position::IntRes2d_Middle)
+        else if (Pos1 != IntRes2d_Position::IntRes2d_Middle
+                 && Pos2 == IntRes2d_Position::IntRes2d_Middle)
         {
           PolyVSup = TheProjPCur::FindParameter(C2,
                                                 P1,

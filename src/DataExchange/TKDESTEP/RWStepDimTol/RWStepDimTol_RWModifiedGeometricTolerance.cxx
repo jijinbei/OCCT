@@ -63,7 +63,8 @@ void RWStepDimTol_RWModifiedGeometricTolerance::ReadStep(
 
   // Own fields of ModifiedGeometricTolerance
 
-  StepDimTol_LimitCondition aModifier = StepDimTol_LimitCondition::StepDimTol_MaximumMaterialCondition;
+  StepDimTol_LimitCondition aModifier =
+    StepDimTol_LimitCondition::StepDimTol_MaximumMaterialCondition;
   if (data->ParamType(num, 5) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 5);

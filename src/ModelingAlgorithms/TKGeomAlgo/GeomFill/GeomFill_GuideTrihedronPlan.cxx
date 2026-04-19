@@ -486,7 +486,8 @@ void GeomFill_GuideTrihedronPlan::GetAverageLaw(gp_Vec& ATangent,
 
 bool GeomFill_GuideTrihedronPlan::IsConstant() const
 {
-  if ((myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line) && (myGuide->GetType() == GeomAbs_CurveType::GeomAbs_Line))
+  if ((myCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line)
+      && (myGuide->GetType() == GeomAbs_CurveType::GeomAbs_Line))
   {
     double Angle;
     Angle = myCurve->Line().Angle(myGuide->Line());

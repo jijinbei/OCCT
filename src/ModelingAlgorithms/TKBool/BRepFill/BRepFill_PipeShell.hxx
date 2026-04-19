@@ -96,9 +96,10 @@ public:
   //! If <KeepContact> equals BRepFill_TypeOfContact::BRepFill_ContactOnBorder: The auxiliary spine
   //! becomes a boundary of the swept surface and the width of section varies
   //! along the path.
-  Standard_EXPORT void Set(const TopoDS_Wire&           AuxiliarySpine,
-                           const bool                   CurvilinearEquivalence = true,
-                           const BRepFill_TypeOfContact KeepContact = BRepFill_TypeOfContact::BRepFill_NoContact);
+  Standard_EXPORT void Set(
+    const TopoDS_Wire&           AuxiliarySpine,
+    const bool                   CurvilinearEquivalence = true,
+    const BRepFill_TypeOfContact KeepContact = BRepFill_TypeOfContact::BRepFill_NoContact);
 
   //! Define the maximum V degree of resulting surface
   Standard_EXPORT void SetMaxDegree(const int NewMaxDegree);
@@ -173,9 +174,10 @@ public:
 
   //! Set the Transition Mode to manage discontinuities
   //! on the sweep.
-  Standard_EXPORT void SetTransition(const BRepFill_TransitionStyle Mode   = BRepFill_TransitionStyle::BRepFill_Modified,
-                                     const double                   Angmin = 1.0e-2,
-                                     const double                   Angmax = 6.0);
+  Standard_EXPORT void SetTransition(
+    const BRepFill_TransitionStyle Mode   = BRepFill_TransitionStyle::BRepFill_Modified,
+    const double                   Angmin = 1.0e-2,
+    const double                   Angmax = 6.0);
 
   //! Perform simulation of the sweep:
   //! Some Section are returned.

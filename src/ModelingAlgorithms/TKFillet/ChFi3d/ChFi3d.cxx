@@ -228,7 +228,9 @@ bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
       aCont(aC2d1, aC2d2, aPar, aSurf1, aSurf2, theOrder, 0.001, TolC0, 0.1, 0.1, 0.1);
     if (!aCont.IsDone())
     {
-      if (theOrder == GeomAbs_C2 && aCont.StatusError() == LocalAnalysis_StatusErrorType::LocalAnalysis_NullSecondDerivative)
+      if (theOrder == GeomAbs_C2
+          && aCont.StatusError()
+               == LocalAnalysis_StatusErrorType::LocalAnalysis_NullSecondDerivative)
         continue;
 
       nbNotDone++;

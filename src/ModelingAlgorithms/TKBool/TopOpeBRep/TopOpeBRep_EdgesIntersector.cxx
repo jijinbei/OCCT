@@ -186,7 +186,8 @@ void TopOpeBRep_EdgesIntersector::ForceTolerances(const double Tol1, const doubl
 static bool TransitionEqualAndExtremity(const IntRes2d_Transition& T1,
                                         const IntRes2d_Transition& T2)
 {
-  if (T1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Head || T1.PositionOnCurve() == IntRes2d_Position::IntRes2d_End)
+  if (T1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Head
+      || T1.PositionOnCurve() == IntRes2d_Position::IntRes2d_End)
   {
     if (T1.PositionOnCurve() == T2.PositionOnCurve())
     {
@@ -227,7 +228,8 @@ static bool IsTangentSegment(const IntRes2d_IntersectionPoint& P1,
   const IntRes2d_Transition& aTrans1 = P1.TransitionOfFirst();
   const IntRes2d_Transition& aTrans2 = P2.TransitionOfFirst();
 
-  if (aTrans1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch || aTrans2.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch)
+  if (aTrans1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch
+      || aTrans2.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Touch)
   {
     double aSqrDistPP = aP2d1.SquareDistance(aP2d2);
 
@@ -324,7 +326,8 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
   BRepAdaptor_Surface aSurface1(myFace1), aSurface2(myFace2);
   GeomAbs_SurfaceType aSurfaceType1 = aSurface1.GetType(), aSurfaceType2 = aSurface2.GetType();
 
-  if (aSurfaceType1 == GeomAbs_SurfaceType::GeomAbs_Sphere && aSurfaceType2 == GeomAbs_SurfaceType::GeomAbs_Sphere)
+  if (aSurfaceType1 == GeomAbs_SurfaceType::GeomAbs_Sphere
+      && aSurfaceType2 == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     PC1 = FC2D_MakeCurveOnSurface(myEdge1, myFace1, first, last, tolpc, true);
   }
@@ -440,7 +443,8 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
       double tolreached2d;
 
       // modified by NIZNHY-PKV Fri Nov  5 12:29:13 1999 from
-      if (aSurfaceType1 == GeomAbs_SurfaceType::GeomAbs_Sphere && aSurfaceType2 == GeomAbs_SurfaceType::GeomAbs_Sphere)
+      if (aSurfaceType1 == GeomAbs_SurfaceType::GeomAbs_Sphere
+          && aSurfaceType2 == GeomAbs_SurfaceType::GeomAbs_Sphere)
       {
         PC2on1 = FC2D_MakeCurveOnSurface(myEdge2, myFace1, first, last, tolpc, true);
       }

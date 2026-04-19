@@ -49,7 +49,10 @@ public:
                                           const double                      anArrowSize = 0.0);
 
   //! Indicates that we are concerned with a 3d length.
-  PrsDim_KindOfDimension KindOfDimension() const override { return PrsDim_KindOfDimension::PrsDim_KOD_LENGTH; }
+  PrsDim_KindOfDimension KindOfDimension() const override
+  {
+    return PrsDim_KindOfDimension::PrsDim_KOD_LENGTH;
+  }
 
   //! Returns true if the 3d chamfer dimension is movable.
   bool IsMovable() const override { return true; }

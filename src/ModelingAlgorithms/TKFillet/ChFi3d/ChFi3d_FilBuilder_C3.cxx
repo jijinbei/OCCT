@@ -575,7 +575,8 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
                 vv1,
                 vv2);
   }
-  else if (styp == GeomAbs_SurfaceType::GeomAbs_BezierSurface || styp == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+  else if (styp == GeomAbs_SurfaceType::GeomAbs_BezierSurface
+           || styp == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     gasurf.Load((DStr.Surface(CD[pivot]->SetOfSurfData()->Value(i[pivot][deb])->Surf())).Surface());
   }

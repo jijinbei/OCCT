@@ -263,7 +263,8 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
 #endif
     BRepAdaptor_Surface SA = BRepAdaptor_Surface(aTool.CurrentFace());
 
-    if ((SA.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane) && (CA.GetType() == GeomAbs_CurveType::GeomAbs_Line))
+    if ((SA.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
+        && (CA.GetType() == GeomAbs_CurveType::GeomAbs_Line))
     {
       U1                       = CA.FirstParameter();
       U2                       = CA.LastParameter();
@@ -318,13 +319,19 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     if (!isSeam)
     {
       occ::handle<StepGeom_SurfaceCurve> SurfaceCurve = new StepGeom_SurfaceCurve;
-      SurfaceCurve->Init(aName, Gpms, aGeom, StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrPcurveS1);
+      SurfaceCurve->Init(aName,
+                         Gpms,
+                         aGeom,
+                         StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrPcurveS1);
       Gpms = SurfaceCurve;
     }
     else
     {
       occ::handle<StepGeom_SeamCurve> SeamCurve = new StepGeom_SeamCurve;
-      SeamCurve->Init(aName, Gpms, aGeom, StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrPcurveS1);
+      SeamCurve->Init(aName,
+                      Gpms,
+                      aGeom,
+                      StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrPcurveS1);
       Gpms = SeamCurve;
     }
   }

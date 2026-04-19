@@ -184,8 +184,9 @@ static int BUC60774(Draw_Interpretor& theDi, int theArgNb, const char** theArgv)
   aPickStatus = anAISContext->SelectRectangle(NCollection_Vec2<int>(aXPixMin, aYPixMin),
                                               NCollection_Vec2<int>(aXPixMax, aYPixMax),
                                               aV3dView);
-  theDi << (aPickStatus == AIS_StatusOfPick::AIS_SOP_OneSelected ? "status = AIS_StatusOfPick::AIS_SOP_OneSelected : OK"
-                                               : "status = AIS_StatusOfPick::AIS_SOP_OneSelected : bugged - Faulty ");
+  theDi << (aPickStatus == AIS_StatusOfPick::AIS_SOP_OneSelected
+              ? "status = AIS_StatusOfPick::AIS_SOP_OneSelected : OK"
+              : "status = AIS_StatusOfPick::AIS_SOP_OneSelected : bugged - Faulty ");
   theDi << "\n";
 
   theDi.Eval("box w 20 20 20 20 20 20");
@@ -274,7 +275,8 @@ static int OCC218bug(Draw_Interpretor& di, int argc, const char** argv)
 
     // On verifie que l'AIS InteraciveObject est bien
     // un AIS_PlaneTrihedron
-    if (aShape->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum && aShape->Signature() == 4)
+    if (aShape->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
+        && aShape->Signature() == 4)
     {
       // On downcast aShape de AIS_InteractiveObject a AIS_PlaneTrihedron
       theAISPlaneTri = occ::down_cast<AIS_PlaneTrihedron>(aShape);

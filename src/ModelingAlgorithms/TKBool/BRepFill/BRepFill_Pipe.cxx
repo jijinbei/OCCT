@@ -161,7 +161,8 @@ BRepFill_Pipe::BRepFill_Pipe(const TopoDS_Wire&       Spine,
   mySegmax = 100;
 
   myMode = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet;
-  if (aMode == GeomFill_Trihedron::GeomFill_IsFrenet || aMode == GeomFill_Trihedron::GeomFill_IsCorrectedFrenet
+  if (aMode == GeomFill_Trihedron::GeomFill_IsFrenet
+      || aMode == GeomFill_Trihedron::GeomFill_IsCorrectedFrenet
       || aMode == GeomFill_Trihedron::GeomFill_IsDiscreteTrihedron)
     myMode = aMode;
 

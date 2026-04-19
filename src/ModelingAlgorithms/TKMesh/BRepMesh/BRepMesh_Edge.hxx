@@ -58,7 +58,8 @@ public:
   //! @return TRUE if equal, FALSE if not.
   bool IsEqual(const BRepMesh_Edge& theOther) const
   {
-    if (myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted || theOther.myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
+    if (myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted
+        || theOther.myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
       return false;
 
     return IsSameOrientation(theOther)

@@ -101,11 +101,13 @@ void AdjustCellsCounts(const occ::handle<Adaptor3d_Surface>& theFace,
   {
     theCellsCountU = theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
   }
-  else if (aType == GeomAbs_SurfaceType::GeomAbs_Cylinder || aType == GeomAbs_SurfaceType::GeomAbs_Cone)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_Cylinder
+           || aType == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
   }
-  else if (aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion || aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion
+           || aType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
   {
     occ::handle<Adaptor3d_Curve> aCurve = theFace->BasisCurve();
     if (aCurve->GetType() == GeomAbs_CurveType::GeomAbs_Line
@@ -123,7 +125,8 @@ void AdjustCellsCounts(const occ::handle<Adaptor3d_Surface>& theFace,
       theCellsCountV = (int)std::ceil(std::pow(2, std::log10(aSqNbVert)));
     }
   }
-  else if (aType == GeomAbs_SurfaceType::GeomAbs_BezierSurface || aType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+  else if (aType == GeomAbs_SurfaceType::GeomAbs_BezierSurface
+           || aType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     if (theFace->UDegree() < 2)
     {

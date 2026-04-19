@@ -1308,7 +1308,10 @@ static int getanasurf(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  GeomAbs_SurfaceType aTargets[] = {GeomAbs_SurfaceType::GeomAbs_Plane, GeomAbs_SurfaceType::GeomAbs_Cylinder, GeomAbs_SurfaceType::GeomAbs_Cone, GeomAbs_SurfaceType::GeomAbs_Sphere};
+  GeomAbs_SurfaceType aTargets[] = {GeomAbs_SurfaceType::GeomAbs_Plane,
+                                    GeomAbs_SurfaceType::GeomAbs_Cylinder,
+                                    GeomAbs_SurfaceType::GeomAbs_Cone,
+                                    GeomAbs_SurfaceType::GeomAbs_Sphere};
   int                 isurf      = 0;
   if (n > 3)
   {
@@ -1418,7 +1421,9 @@ int getanacurve(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  GeomAbs_CurveType aTargets[] = {GeomAbs_CurveType::GeomAbs_Line, GeomAbs_CurveType::GeomAbs_Circle, GeomAbs_CurveType::GeomAbs_Ellipse};
+  GeomAbs_CurveType aTargets[] = {GeomAbs_CurveType::GeomAbs_Line,
+                                  GeomAbs_CurveType::GeomAbs_Circle,
+                                  GeomAbs_CurveType::GeomAbs_Ellipse};
   int               icurv      = 0;
   if (n > 3)
   {

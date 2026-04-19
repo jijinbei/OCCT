@@ -253,7 +253,8 @@ bool SelectMgr_SelectionManager::IsActivated(
          aSelIter.More();
          aSelIter.Next())
     {
-      if (mySelector->Status(aSelIter.Value()) == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
+      if (mySelector->Status(aSelIter.Value())
+          == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
       {
         return true;
       }
@@ -266,7 +267,8 @@ bool SelectMgr_SelectionManager::IsActivated(
   {
     return false;
   }
-  return !aSelection.IsNull() && mySelector->Status(aSelection) == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated;
+  return !aSelection.IsNull()
+         && mySelector->Status(aSelection) == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated;
 }
 
 //=======================================================================
@@ -478,7 +480,8 @@ void SelectMgr_SelectionManager::Update(const occ::handle<SelectMgr_SelectableOb
        aSelIter.Next())
   {
     const occ::handle<SelectMgr_Selection>& aSelection = aSelIter.Value();
-    if (theIsForce || mySelector->Status(aSelection) == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
+    if (theIsForce
+        || mySelector->Status(aSelection) == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
     {
       switch (aSelection->UpdateStatus())
       {

@@ -667,18 +667,20 @@ void TopOpeBRep_FacesFiller::ProcessRLine()
     T2unk = T2.IsUnknown();
   } // processUNK && (T1unk || T2unk)
 
-  IFE = TopOpeBRepDS_InterferenceTool::MakeFaceEdgeInterference(T1,
-                                                                iF2,
-                                                                iErest,
-                                                                isedge1,
-                                                                TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
+  IFE = TopOpeBRepDS_InterferenceTool::MakeFaceEdgeInterference(
+    T1,
+    iF2,
+    iErest,
+    isedge1,
+    TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
   myHDS->StoreInterference(IFE, iF1);
 
-  IFE = TopOpeBRepDS_InterferenceTool::MakeFaceEdgeInterference(T2,
-                                                                iF1,
-                                                                iErest,
-                                                                isedge2,
-                                                                TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
+  IFE = TopOpeBRepDS_InterferenceTool::MakeFaceEdgeInterference(
+    T2,
+    iF1,
+    iErest,
+    isedge2,
+    TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
   myHDS->StoreInterference(IFE, iF2);
 
   // #################### Rline Processing ####################
@@ -1010,8 +1012,13 @@ void TopOpeBRep_FacesFiller::ProcessRLine()
         occ::handle<TopOpeBRepDS_Interference> EPIf;
         TopOpeBRepDS_Transition                T = transEdge;
         T.Index(iOOFace);
-        EPIf =
-          MakeEPVInterference(T, iOOFace, PVIndex, paredge, PVKind, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, SIisvertex);
+        EPIf = MakeEPVInterference(T,
+                                   iOOFace,
+                                   PVIndex,
+                                   paredge,
+                                   PVKind,
+                                   TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
+                                   SIisvertex);
         myHDS->StoreInterference(EPIf, edge);
       }
 
@@ -1151,12 +1158,13 @@ void TopOpeBRep_FacesFiller::FillLine()
       transLine = itCPIL.Value()->Transition().Complement();
 
     double parline = VPI.CurrentVP().ParameterOnLine();
-    CPI            = TopOpeBRepDS_InterferenceTool::MakeCurveInterference(transLine,
-                                                               TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE,
-                                                               0,
-                                                               PVKind,
-                                                               PVIndex,
-                                                               parline);
+    CPI =
+      TopOpeBRepDS_InterferenceTool::MakeCurveInterference(transLine,
+                                                           TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE,
+                                                           0,
+                                                           PVKind,
+                                                           PVIndex,
+                                                           parline);
     StoreCurveInterference(CPI);
 
   } //   loop on VPoints

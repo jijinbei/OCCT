@@ -95,12 +95,13 @@ Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
                                          const BRepAdaptor_Curve2d& BAC2D,
                                          double&                    param,
                                          double&                    dist);
-Standard_EXPORT bool FUN_tool_projPonS(const gp_Pnt&                    P,
-                                       const occ::handle<Geom_Surface>& S,
-                                       gp_Pnt2d&                        UV,
-                                       double&                          dist,
-                                       const Extrema_ExtFlag anExtFlag = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
-                                       const Extrema_ExtAlgo anExtAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
+Standard_EXPORT bool FUN_tool_projPonS(
+  const gp_Pnt&                    P,
+  const occ::handle<Geom_Surface>& S,
+  gp_Pnt2d&                        UV,
+  double&                          dist,
+  const Extrema_ExtFlag            anExtFlag = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+  const Extrema_ExtAlgo            anExtAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
 
 // ----------------------------------------------------------------------
 //  project point <P> on topologies (edge <E>,face <F>)
@@ -118,11 +119,12 @@ Standard_EXPORT bool FUN_tool_projPonboundedF(const gp_Pnt&      P,
                                               const TopoDS_Face& F,
                                               gp_Pnt2d&          UV,
                                               double&            dist);
-Standard_EXPORT bool FUN_tool_projPonF(const gp_Pnt&         P,
-                                       const TopoDS_Face&    F,
-                                       gp_Pnt2d&             UV,
-                                       double&               dist,
-                                       const Extrema_ExtFlag anExtFlag = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
-                                       const Extrema_ExtAlgo anExtAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
+Standard_EXPORT bool FUN_tool_projPonF(
+  const gp_Pnt&         P,
+  const TopoDS_Face&    F,
+  gp_Pnt2d&             UV,
+  double&               dist,
+  const Extrema_ExtFlag anExtFlag = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+  const Extrema_ExtAlgo anExtAlgo = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
 
 #endif

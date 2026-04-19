@@ -123,7 +123,8 @@ bool BRepMesh_DataStructureOfDelaun::SubstituteLink(const int            theInde
 void BRepMesh_DataStructureOfDelaun::RemoveLink(const int theIndex, const bool isForce)
 {
   BRepMesh_Edge& aLink = (BRepMesh_Edge&)GetLink(theIndex);
-  if (aLink.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted || (!isForce && aLink.Movability() != BRepMesh_DegreeOfFreedom::BRepMesh_Free)
+  if (aLink.Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted
+      || (!isForce && aLink.Movability() != BRepMesh_DegreeOfFreedom::BRepMesh_Free)
       || ElementsConnectedTo(theIndex).Extent() != 0)
   {
     return;

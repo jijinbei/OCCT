@@ -491,8 +491,9 @@ Standard_EXPORT void FUN_resolveEUNKNOWN
     TopAbs_ShapeEnum  tsb1, tsa1;
     int               isb1, isa1;
     FDS_Idata(I1, tsb1, isb1, tsa1, isa1, GT1, G1, ST1, S1);
-    bool idt  = (tsb1 == TopAbs_FACE && tsa1 == TopAbs_FACE && GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT
-                && ST1 == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE);
+    bool idt =
+      (tsb1 == TopAbs_FACE && tsa1 == TopAbs_FACE && GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT
+       && ST1 == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE);
     bool idi  = (isb1 == S1 && isa1 == S1);
     bool etgf = idt && idi; // edge tangent a une face en 1 point
     if (!etgf)

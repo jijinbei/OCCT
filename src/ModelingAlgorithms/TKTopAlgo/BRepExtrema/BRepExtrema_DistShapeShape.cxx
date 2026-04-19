@@ -191,8 +191,14 @@ struct VertexFunctor
         {
           if (aDist < Solution.Dist[theIndex] - Eps)
           {
-            const BRepExtrema_SolutionElem Sol1(aDist, aPoint1, BRepExtrema_SupportType::BRepExtrema_IsVertex, aVertex1);
-            const BRepExtrema_SolutionElem Sol2(aDist, aPoint2, BRepExtrema_SupportType::BRepExtrema_IsVertex, aVertex2);
+            const BRepExtrema_SolutionElem Sol1(aDist,
+                                                aPoint1,
+                                                BRepExtrema_SupportType::BRepExtrema_IsVertex,
+                                                aVertex1);
+            const BRepExtrema_SolutionElem Sol2(aDist,
+                                                aPoint2,
+                                                BRepExtrema_SupportType::BRepExtrema_IsVertex,
+                                                aVertex2);
 
             Solution.Shape1[theIndex].Clear();
             Solution.Shape2[theIndex].Clear();
@@ -203,8 +209,14 @@ struct VertexFunctor
           }
           else if (std::abs(aDist - Solution.Dist[theIndex]) < Eps)
           {
-            const BRepExtrema_SolutionElem Sol1(aDist, aPoint1, BRepExtrema_SupportType::BRepExtrema_IsVertex, aVertex1);
-            const BRepExtrema_SolutionElem Sol2(aDist, aPoint2, BRepExtrema_SupportType::BRepExtrema_IsVertex, aVertex2);
+            const BRepExtrema_SolutionElem Sol1(aDist,
+                                                aPoint1,
+                                                BRepExtrema_SupportType::BRepExtrema_IsVertex,
+                                                aVertex1);
+            const BRepExtrema_SolutionElem Sol2(aDist,
+                                                aPoint2,
+                                                BRepExtrema_SupportType::BRepExtrema_IsVertex,
+                                                aVertex2);
             Solution.Shape1[theIndex].Append(Sol1);
             Solution.Shape2[theIndex].Append(Sol2);
 
@@ -735,7 +747,10 @@ struct TreatmentFunctor
         InnerSol->store(true, std::memory_order_release);
         *DistRef = 0.;
         IsDone->store(true, std::memory_order_release);
-        BRepExtrema_SolutionElem aSolElem(0, aPnt, BRepExtrema_SupportType::BRepExtrema_IsVertex, aVertex);
+        BRepExtrema_SolutionElem aSolElem(0,
+                                          aPnt,
+                                          BRepExtrema_SupportType::BRepExtrema_IsVertex,
+                                          aVertex);
         SolutionsShape1->Append(aSolElem);
         SolutionsShape2->Append(aSolElem);
         break;

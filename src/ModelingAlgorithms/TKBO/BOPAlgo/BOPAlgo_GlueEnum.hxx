@@ -50,7 +50,8 @@
 //! Setting inappropriate option for the operation is likely to lead to incorrect result.
 //!
 //! There are following items in the enumeration:
-//! **BOPAlgo_GlueEnum::BOPAlgo_GlueOff** - default value for the algorithms, Gluing is switched off;
+//! **BOPAlgo_GlueEnum::BOPAlgo_GlueOff** - default value for the algorithms, Gluing is switched
+//! off;
 //! **BOPAlgo_GlueEnum::BOPAlgo_GlueShift** - Glue option for shapes with partial coincidence;
 //! **BOPAlgo_GlueEnum::BOPAlgo_GlueFull** - Glue option for shapes with full coincidence.
 //!

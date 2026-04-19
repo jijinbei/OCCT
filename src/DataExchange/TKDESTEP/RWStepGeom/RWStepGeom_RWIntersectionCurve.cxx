@@ -67,7 +67,8 @@ void RWStepGeom_RWIntersectionCurve::ReadStep(
 
   // --- inherited field : masterRepresentation ---
 
-  StepGeom_PreferredSurfaceCurveRepresentation aMasterRepresentation = StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d;
+  StepGeom_PreferredSurfaceCurveRepresentation aMasterRepresentation =
+    StepGeom_PreferredSurfaceCurveRepresentation::StepGeom_pscrCurve3d;
   if (data->ParamType(num, 4) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 4);

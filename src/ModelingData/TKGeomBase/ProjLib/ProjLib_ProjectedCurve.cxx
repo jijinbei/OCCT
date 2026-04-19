@@ -172,8 +172,10 @@ static void ExtendC2d(occ::handle<Geom2d_BSplineCurve>& aRes,
   gp_Vec2d                              aVBnd;
   gp_Dir2d                              aDBnd;
   occ::handle<Geom2d_TrimmedCurve>      aSegment;
-  Geom2dConvert_CompCurveToBSplineCurve aCompCurve(aRes, Convert_ParameterisationType::Convert_RationalC1);
-  constexpr double                      aTol = Precision::Confusion();
+  Geom2dConvert_CompCurveToBSplineCurve aCompCurve(
+    aRes,
+    Convert_ParameterisationType::Convert_RationalC1);
+  constexpr double aTol = Precision::Confusion();
 
   aRes->D1(theParam, aPBnd, aVBnd);
   aDBnd.SetXY(aVBnd.XY());
@@ -756,7 +758,8 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
     else
     {
       // set the type
-      if (SType == GeomAbs_SurfaceType::GeomAbs_Plane && CType == GeomAbs_CurveType::GeomAbs_BezierCurve)
+      if (SType == GeomAbs_SurfaceType::GeomAbs_Plane
+          && CType == GeomAbs_CurveType::GeomAbs_BezierCurve)
       {
         myResult.SetType(GeomAbs_CurveType::GeomAbs_BezierCurve);
         myResult.SetBezier(Comp.Bezier());
@@ -768,7 +771,8 @@ void ProjLib_ProjectedCurve::Perform(const occ::handle<Adaptor3d_Curve>& C)
       }
     }
     // set the periodicity flag
-    if (SType == GeomAbs_SurfaceType::GeomAbs_Plane && CType == GeomAbs_CurveType::GeomAbs_BSplineCurve && myCurve->IsPeriodic())
+    if (SType == GeomAbs_SurfaceType::GeomAbs_Plane
+        && CType == GeomAbs_CurveType::GeomAbs_BSplineCurve && myCurve->IsPeriodic())
     {
       myResult.SetPeriodic();
     }

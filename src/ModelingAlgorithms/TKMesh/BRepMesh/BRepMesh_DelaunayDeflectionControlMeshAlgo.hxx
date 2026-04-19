@@ -28,7 +28,8 @@ class BRepMesh_DelaunayDeflectionControlMeshAlgo
 {
 private:
   // Typedef for OCCT RTTI
-  using DelaunayInsertionBaseClass = BRepMesh_DelaunayNodeInsertionMeshAlgo<RangeSplitter, BaseAlgo>;
+  using DelaunayInsertionBaseClass =
+    BRepMesh_DelaunayNodeInsertionMeshAlgo<RangeSplitter, BaseAlgo>;
 
 public:
   //! Constructor.
@@ -195,8 +196,8 @@ private:
       const BRepMesh_Vertex& aVertex = this->getStructure()->GetNode(theNodesIndices[i]);
       theInfo[i].Point2d             = this->getRangeSplitter().Scale(aVertex.Coord(), false).XY();
       theInfo[i].Point               = this->getNodesMap()->Value(aVertex.Location3d()).XYZ();
-      theInfo[i].isFrontierLink =
-        (this->getStructure()->GetLink(e[i]).Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
+      theInfo[i].isFrontierLink      = (this->getStructure()->GetLink(e[i]).Movability()
+                                   == BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
     }
   }
 

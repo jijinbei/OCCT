@@ -665,7 +665,8 @@ bool BlendFunc_CSConstRad::GetSection(const double                Param,
 
 bool BlendFunc_CSConstRad::IsRational() const
 {
-  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational
+          || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================

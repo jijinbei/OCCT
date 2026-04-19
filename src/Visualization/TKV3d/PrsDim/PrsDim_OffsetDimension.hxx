@@ -38,7 +38,10 @@ public:
                                          const TCollection_ExtendedString& aText);
 
   //! Indicates that the dimension we are concerned with is an offset.
-  PrsDim_KindOfDimension KindOfDimension() const override { return PrsDim_KindOfDimension::PrsDim_KOD_OFFSET; }
+  PrsDim_KindOfDimension KindOfDimension() const override
+  {
+    return PrsDim_KindOfDimension::PrsDim_KOD_OFFSET;
+  }
 
   //! Returns true if the offset datum is movable.
   bool IsMovable() const override { return true; }

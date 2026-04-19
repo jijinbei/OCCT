@@ -44,7 +44,8 @@ public:
   //! as the ellipse E.
   Standard_EXPORT Convert_EllipseToBSplineCurve(
     const gp_Elips2d&                  E,
-    const Convert_ParameterisationType Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2);
+    const Convert_ParameterisationType Parameterisation =
+      Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   //! The ellipse E is limited between the parametric values U1, U2.
   //! The equivalent B-spline curve is oriented from U1 to U2 and has
@@ -55,7 +56,8 @@ public:
     const gp_Elips2d&                  E,
     const double                       U1,
     const double                       U2,
-    const Convert_ParameterisationType Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2);
+    const Convert_ParameterisationType Parameterisation =
+      Convert_ParameterisationType::Convert_TgtThetaOver2);
 };
 
 #endif // _Convert_EllipseToBSplineCurve_HeaderFile

@@ -371,7 +371,8 @@ static bool setTrihedronParams(int                               theArgsNb,
     bool                    isWireframe = true;
     if (aValue.IsEqual("sh") || aValue.IsEqual("shading"))
       isWireframe = false;
-    theTrihedron->SetDatumDisplayMode(isWireframe ? Prs3d_DatumMode::Prs3d_DM_WireFrame : Prs3d_DatumMode::Prs3d_DM_Shaded);
+    theTrihedron->SetDatumDisplayMode(isWireframe ? Prs3d_DatumMode::Prs3d_DM_WireFrame
+                                                  : Prs3d_DatumMode::Prs3d_DM_Shaded);
   }
 
   if (aMapOfArgs.Find("hidelabels", aValues))
@@ -1327,7 +1328,8 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     }
     // The first argument is an AIS_Axis
     // Creation of a plane orthogonal to the axis through a point
-    else if (aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum && aShapeA->Signature() == 2)
+    else if (aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
+             && aShapeA->Signature() == 2)
     {
       // The second argument should be an AIS_Point
       occ::handle<AIS_InteractiveObject> aShapeB;
@@ -1382,7 +1384,8 @@ static int VPlaneBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     }
     // The first argument is an AIS_Plane
     // Creation of a plane parallel to the plane passing through the point
-    else if (aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum && aShapeA->Signature() == 7)
+    else if (aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
+             && aShapeA->Signature() == 7)
     {
       // The second argument should be an AIS_Point
       occ::handle<AIS_InteractiveObject> aShapeB;
@@ -2137,7 +2140,8 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     GetMapOfAIS().Find2(argv[3], aShapeB);
 
     // Arguments: AIS_Point AIS_Point AIS_Point
-    if (!aShapeA.IsNull() && !aShapeB.IsNull() && aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
+    if (!aShapeA.IsNull() && !aShapeB.IsNull()
+        && aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
         && aShapeA->Signature() == 1)
     {
       occ::handle<AIS_InteractiveObject> aShapeC;
@@ -2200,7 +2204,8 @@ static int VCircleBuilder(Draw_Interpretor& /*di*/, int argc, const char** argv)
     }
 
     // Arguments: AIS_Plane AIS_Point Real
-    else if (aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum && aShapeA->Signature() == 7)
+    else if (aShapeA->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Datum
+             && aShapeA->Signature() == 7)
     {
       occ::handle<AIS_Plane> anAISPlane  = occ::down_cast<AIS_Plane>(aShapeA);
       occ::handle<AIS_Point> anAISPointB = occ::down_cast<AIS_Point>(aShapeB);
@@ -3282,7 +3287,9 @@ static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     if (toShowHiddenEdges)
     {
       occ::handle<Prs3d_LineAspect> aLineAspect =
-        new Prs3d_LineAspect(Quantity_Color(Quantity_NOC_RED), Aspect_TypeOfLine::Aspect_TOL_DASH, 1.0f);
+        new Prs3d_LineAspect(Quantity_Color(Quantity_NOC_RED),
+                             Aspect_TypeOfLine::Aspect_TOL_DASH,
+                             1.0f);
       for (int aTypeIter = 0; aTypeIter < 6; ++aTypeIter)
       {
         if (!aHidden[aTypeIter].IsNull())
@@ -3784,7 +3791,8 @@ static int VDrawPArray(Draw_Interpretor& di, int argc, const char** argv)
 
   bool hasVertex = false;
 
-  Graphic3d_TypeOfPrimitiveArray aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_UNDEFINED;
+  Graphic3d_TypeOfPrimitiveArray aPrimType =
+    Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_UNDEFINED;
   if (anArrayType == "points")
   {
     aPrimType = Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS;
@@ -3858,7 +3866,9 @@ static int VDrawPArray(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<Graphic3d_AspectMarker3d> anAspPoints;
   if (aPrimType == Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS)
   {
-    anAspPoints = new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_POINT, Quantity_NOC_YELLOW, 1.0f);
+    anAspPoints = new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_POINT,
+                                               Quantity_NOC_YELLOW,
+                                               1.0f);
   }
 
   // create primitives array object
@@ -4827,7 +4837,8 @@ static int VSetSelectionMode(Draw_Interpretor& /*di*/, int theNbArgs, const char
   NCollection_Sequence<TCollection_AsciiString> anObjNames;
   int                                           aSelectionMode = -1;
   bool                                          toTurnOn       = true;
-  AIS_SelectionModesConcurrency aSelModeConcurrency = AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal;
+  AIS_SelectionModesConcurrency                 aSelModeConcurrency =
+    AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal;
   for (int anArgIter = 1; anArgIter < theNbArgs; ++anArgIter)
   {
     TCollection_AsciiString anArgCase(theArgv[anArgIter]);
@@ -4844,7 +4855,8 @@ static int VSetSelectionMode(Draw_Interpretor& /*di*/, int theNbArgs, const char
     }
     else if (anArgCase == "-globalorlocal" || anArgCase == "-localorglobal")
     {
-      aSelModeConcurrency = AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal;
+      aSelModeConcurrency =
+        AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal;
     }
     else
     {
@@ -5585,7 +5597,8 @@ static int VMarkersTest(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   occ::handle<Graphic3d_AspectMarker3d> anAspect;
   occ::handle<Image_AlienPixMap>        anImage;
   Quantity_Color                        aColor(Quantity_NOC_GREEN1);
-  if ((aMarkerType == Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED || aMarkerType < 0) && !aFileName.IsEmpty())
+  if ((aMarkerType == Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED || aMarkerType < 0)
+      && !aFileName.IsEmpty())
   {
     anImage = new Image_AlienPixMap();
     if (!anImage->Load(aFileName))
@@ -5605,10 +5618,10 @@ static int VMarkersTest(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   }
   else
   {
-    anAspect = new Graphic3d_AspectMarker3d(aMarkerType >= 0 ? (Aspect_TypeOfMarker)aMarkerType
-                                                             : Aspect_TypeOfMarker::Aspect_TOM_POINT,
-                                            aColor,
-                                            aScale);
+    anAspect = new Graphic3d_AspectMarker3d(
+      aMarkerType >= 0 ? (Aspect_TypeOfMarker)aMarkerType : Aspect_TypeOfMarker::Aspect_TOM_POINT,
+      aColor,
+      aScale);
   }
 
   occ::handle<ViewerTest_MarkersArrayObject> aMarkersArray =
@@ -5645,9 +5658,11 @@ static int TextToBRep(Draw_Interpretor& /*theDI*/, int theArgNb, const char** th
   gp_Dir                  aDirection(gp_Dir::D::X);
   gp_Pnt                  aPenLoc;
 
-  Graphic3d_HorizontalTextAlignment aHJustification = Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT;
-  Graphic3d_VerticalTextAlignment   aVJustification = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
-  Font_StrictLevel                  aStrictLevel    = Font_StrictLevel::Font_StrictLevel_Any;
+  Graphic3d_HorizontalTextAlignment aHJustification =
+    Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT;
+  Graphic3d_VerticalTextAlignment aVJustification =
+    Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
+  Font_StrictLevel aStrictLevel = Font_StrictLevel::Font_StrictLevel_Any;
   for (; anArgIt < theArgNb; ++anArgIt)
   {
     TCollection_AsciiString aParam(theArgVec[anArgIt]);
@@ -6131,7 +6146,8 @@ static int VVertexMode(Draw_Interpretor& theDI, int theArgNum, const char** theA
   {
     Prs3d_VertexDrawMode aCurrMode = aContext->DefaultDrawer()->VertexDrawMode();
     theDI << "Default vertex draw mode: "
-          << (aCurrMode == Prs3d_VertexDrawMode::Prs3d_VDM_Isolated ? "'isolated'" : "'all'") << "\n";
+          << (aCurrMode == Prs3d_VertexDrawMode::Prs3d_VDM_Isolated ? "'isolated'" : "'all'")
+          << "\n";
     return 0;
   }
 
@@ -6149,9 +6165,10 @@ static int VVertexMode(Draw_Interpretor& theDI, int theArgNum, const char** theA
     }
 
     TCollection_AsciiString aModeStr(theArgs[2]);
-    Prs3d_VertexDrawMode    aNewMode = aModeStr == "isolated"
-                                         ? Prs3d_VertexDrawMode::Prs3d_VDM_Isolated
-                                         : (aModeStr == "all" ? Prs3d_VertexDrawMode::Prs3d_VDM_All : Prs3d_VertexDrawMode::Prs3d_VDM_Inherited);
+    Prs3d_VertexDrawMode    aNewMode =
+      aModeStr == "isolated" ? Prs3d_VertexDrawMode::Prs3d_VDM_Isolated
+                                : (aModeStr == "all" ? Prs3d_VertexDrawMode::Prs3d_VDM_All
+                                                     : Prs3d_VertexDrawMode::Prs3d_VDM_Inherited);
 
     bool                                                 aRedrawNeeded = false;
     NCollection_List<occ::handle<AIS_InteractiveObject>> anObjs;

@@ -109,15 +109,16 @@ public:
     AddLink(thePoint2, thePoint3, theEdges[1], aOri[1]);
     AddLink(thePoint3, thePoint1, theEdges[2], aOri[2]);
 
-    myStructure->AddElement(BRepMesh_Triangle(theEdges, aOri, BRepMesh_DegreeOfFreedom::BRepMesh_Free));
+    myStructure->AddElement(
+      BRepMesh_Triangle(theEdges, aOri, BRepMesh_DegreeOfFreedom::BRepMesh_Free));
   }
 
   //! Adds new link to mesh.
   //! Updates link index and link orientation parameters.
   void AddLink(const int theFirstNode, const int theLastNode, int& theLinkIndex, bool& theLinkOri)
   {
-    const int aLinkIt =
-      myStructure->AddLink(BRepMesh_Edge(theFirstNode, theLastNode, BRepMesh_DegreeOfFreedom::BRepMesh_Free));
+    const int aLinkIt = myStructure->AddLink(
+      BRepMesh_Edge(theFirstNode, theLastNode, BRepMesh_DegreeOfFreedom::BRepMesh_Free));
 
     theLinkIndex = std::abs(aLinkIt);
     theLinkOri   = (aLinkIt > 0);

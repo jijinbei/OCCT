@@ -213,7 +213,7 @@ void V3d_CircularGrid::DefineLines()
 {
   const double aStep     = RadiusStep();
   const double aDivision = DivisionNumber();
-  const bool   toUpdate  = !myCurAreDefined || myCurDrawMode != Aspect_GridDrawMode::Aspect_GDM_Lines
+  const bool   toUpdate = !myCurAreDefined || myCurDrawMode != Aspect_GridDrawMode::Aspect_GDM_Lines
                         || aDivision != myCurDivi || aStep != myCurStep;
   if (!toUpdate && !myToComputePrs)
   {
@@ -277,7 +277,8 @@ void V3d_CircularGrid::DefineLines()
   }
   if (aSeqLines.Length())
   {
-    myGroup->SetPrimitivesAspect(new Graphic3d_AspectLine3d(myColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
+    myGroup->SetPrimitivesAspect(
+      new Graphic3d_AspectLine3d(myColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
     int                                     n, np;
     const int                               nbl = aSeqLines.Length() / nbpnts;
     occ::handle<Graphic3d_ArrayOfPolylines> aPrims3 =
@@ -303,7 +304,7 @@ void V3d_CircularGrid::DefinePoints()
 {
   const double aStep     = RadiusStep();
   const double aDivision = DivisionNumber();
-  const bool   toUpdate  = !myCurAreDefined || myCurDrawMode != Aspect_GridDrawMode::Aspect_GDM_Points
+  const bool toUpdate = !myCurAreDefined || myCurDrawMode != Aspect_GridDrawMode::Aspect_GDM_Points
                         || aDivision != myCurDivi || aStep != myCurStep;
   if (!toUpdate && !myToComputePrs)
   {

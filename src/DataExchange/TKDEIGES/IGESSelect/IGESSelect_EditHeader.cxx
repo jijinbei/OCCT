@@ -153,16 +153,20 @@ IGESSelect_EditHeader::IGESSelect_EditHeader()
     new Interface_TypedValue("Integer Binary Bits", Interface_ParamType::Interface_ParamInteger);
   SetValue(8, intbits, "G7:IntBits");
   occ::handle<Interface_TypedValue> pow10s =
-    new Interface_TypedValue("Single Precision Magnitude", Interface_ParamType::Interface_ParamInteger);
+    new Interface_TypedValue("Single Precision Magnitude",
+                             Interface_ParamType::Interface_ParamInteger);
   SetValue(9, pow10s, "G8:SingleMag");
   occ::handle<Interface_TypedValue> dig10s =
-    new Interface_TypedValue("Single Precision Significance", Interface_ParamType::Interface_ParamInteger);
+    new Interface_TypedValue("Single Precision Significance",
+                             Interface_ParamType::Interface_ParamInteger);
   SetValue(10, dig10s, "G9:SingDigits");
   occ::handle<Interface_TypedValue> pow10d =
-    new Interface_TypedValue("Double Precision Magnitude", Interface_ParamType::Interface_ParamInteger);
+    new Interface_TypedValue("Double Precision Magnitude",
+                             Interface_ParamType::Interface_ParamInteger);
   SetValue(11, pow10d, "G10:DoubleMag");
   occ::handle<Interface_TypedValue> dig10d =
-    new Interface_TypedValue("Double Precision Significance", Interface_ParamType::Interface_ParamInteger);
+    new Interface_TypedValue("Double Precision Significance",
+                             Interface_ParamType::Interface_ParamInteger);
   SetValue(12, dig10d, "G11:DoubDigits");
 
   occ::handle<Interface_TypedValue> recname = new Interface_TypedValue("Receiver Product Id");
@@ -190,7 +194,8 @@ IGESSelect_EditHeader::IGESSelect_EditHeader()
   SetValue(17, unitval, "V15:UnitValue", IFSelect_EditDynamic);
 
   occ::handle<Interface_TypedValue> linwgr =
-    new Interface_TypedValue("Max Line Weight Gradation", Interface_ParamType::Interface_ParamInteger);
+    new Interface_TypedValue("Max Line Weight Gradation",
+                             Interface_ParamType::Interface_ParamInteger);
   SetValue(18, linwgr, "G16:LineWGrad", IFSelect_Optional);
   occ::handle<Interface_TypedValue> maxlw =
     new Interface_TypedValue("Width of Max Line Weight", Interface_ParamType::Interface_ParamReal);

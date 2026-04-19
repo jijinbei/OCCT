@@ -223,9 +223,10 @@ void PrsDim_Relation::SetColor(const Quantity_Color& aCol)
   myDrawer->SetColor(aCol);
   myDrawer->TextAspect()->SetColor(aCol);
 
-  double WW = HasWidth()            ? Width()
-              : myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Line)
-                                    : 1.;
+  double WW = HasWidth() ? Width()
+              : myDrawer->HasLink()
+                ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Line)
+                : 1.;
   if (!myDrawer->HasOwnLineAspect())
   {
     myDrawer->SetLineAspect(new Prs3d_LineAspect(aCol, Aspect_TypeOfLine::Aspect_TOL_SOLID, WW));

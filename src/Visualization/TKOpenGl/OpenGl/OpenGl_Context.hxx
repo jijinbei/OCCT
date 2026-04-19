@@ -160,8 +160,8 @@ class OpenGl_Context : public Standard_Transient
   friend struct OpenGl_GlFunctions;
 
 public:
-  using OpenGl_ResourcesMap = NCollection_Shared<
-    NCollection_DataMap<TCollection_AsciiString, occ::handle<OpenGl_Resource>>>;
+  using OpenGl_ResourcesMap =
+    NCollection_Shared<NCollection_DataMap<TCollection_AsciiString, occ::handle<OpenGl_Resource>>>;
 
   //! Function for getting power of to number larger or equal to input number.
   //! @param theNumber    number to 'power of two'
@@ -477,8 +477,9 @@ public:
   //! @return true if texture parameters GL_TEXTURE_BASE_LEVEL/GL_TEXTURE_MAX_LEVEL are supported.
   bool HasTextureBaseLevel() const
   {
-    return myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES ? IsGlGreaterEqual(3, 0)
-                                                     : IsGlGreaterEqual(1, 2);
+    return myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
+             ? IsGlGreaterEqual(3, 0)
+             : IsGlGreaterEqual(1, 2);
   }
 
   //! Return map of supported texture formats.
@@ -819,14 +820,16 @@ public: //! @name methods to alter or retrieve current state
   //! Return back face culling state.
   bool ToCullBackFaces() const
   {
-    return myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
+    return myFaceCulling
+           == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
   }
 
   //! Enable or disable back face culling (glCullFace() + glEnable(GL_CULL_FACE)).
   void SetCullBackFaces(bool theToEnable)
   {
-    SetFaceCulling(theToEnable ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled
-                               : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
+    SetFaceCulling(
+      theToEnable ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled
+                  : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
   }
 
   //! Fetch OpenGl context state. This class tracks value of several OpenGl

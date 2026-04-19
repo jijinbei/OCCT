@@ -253,7 +253,8 @@ static double GetDeflection(const Adaptor3d_Curve&                   aCurve,
 {
 
   double theRequestedDeflection;
-  if (aDrawer->TypeOfDeflection() == Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE) // TOD_RELATIVE, TOD_ABSOLUTE
+  if (aDrawer->TypeOfDeflection()
+      == Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE) // TOD_RELATIVE, TOD_ABSOLUTE
   {
     Bnd_Box box;
     BndLib_Add3dCurve::Add(aCurve, U1, U2, Precision::Confusion(), box);

@@ -380,7 +380,8 @@ bool TopOpeBRepDS_TKI::IsValidTI(const int TI) const
 
 bool TopOpeBRepDS_TKI::IsValidK(const TopOpeBRepDS_Kind K) const
 {
-  bool nok = (K < TopOpeBRepDS_Kind::TopOpeBRepDS_POINT || K > TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID);
+  bool nok =
+    (K < TopOpeBRepDS_Kind::TopOpeBRepDS_POINT || K > TopOpeBRepDS_Kind::TopOpeBRepDS_SOLID);
   return !nok;
 }
 

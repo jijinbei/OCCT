@@ -43,7 +43,8 @@ static bool IsLinear(const Adaptor3d_Curve& theC)
     return IsLinear(GeomAdaptor_Curve(theC.OffsetCurve()->BasisCurve()));
   }
 
-  if ((aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve) || (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve))
+  if ((aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve)
+      || (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve))
   {
     // Indeed, curves with C0-continuity and degree==1, may be
     // represented with set of points. It will be possible made
@@ -77,7 +78,8 @@ static bool IsPlanar(const Adaptor3d_Surface& theS)
     return IsLinear(*theS.BasisCurve());
   }
 
-  if ((aST == GeomAbs_SurfaceType::GeomAbs_BSplineSurface) || (aST == GeomAbs_SurfaceType::GeomAbs_BezierSurface))
+  if ((aST == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+      || (aST == GeomAbs_SurfaceType::GeomAbs_BezierSurface))
   {
     if ((theS.UDegree() != 1) || (theS.VDegree() != 1))
       return false;

@@ -275,14 +275,16 @@ void GeomInt_LineConstructor::Perform(const occ::handle<IntPatch_Line>& L)
       bCond = false;
       if (aST1 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
-        if (aST2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion || aST2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
+        if (aST2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion
+            || aST2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
         { //+zft
           bCond = !bCond;
         }
       }
       else if (aST2 == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
-        if (aST1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion || aST1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
+        if (aST1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion
+            || aST1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
         { //+zft
           bCond = !bCond;
         }

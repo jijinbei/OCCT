@@ -37,9 +37,8 @@ enum Graphic3d_DisplayPriority
 
 enum
 {
-  Graphic3d_DisplayPriority_NB =
-    static_cast<int>(Graphic3d_DisplayPriority_Topmost)
-    - static_cast<int>(Graphic3d_DisplayPriority_Bottom) + 1
+  Graphic3d_DisplayPriority_NB = static_cast<int>(Graphic3d_DisplayPriority_Topmost)
+                                 - static_cast<int>(Graphic3d_DisplayPriority_Bottom) + 1
 };
 
 #endif // _Graphic3d_DisplayPriority_HeaderFile

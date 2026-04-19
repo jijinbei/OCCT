@@ -44,11 +44,12 @@ class FilletSurf_InternalBuilder : public ChFi3d_FilBuilder
 public:
   DEFINE_STANDARD_ALLOC
 
-  Standard_EXPORT FilletSurf_InternalBuilder(const TopoDS_Shape&      S,
-                                             const ChFi3d_FilletShape FShape = ChFi3d_FilletShape::ChFi3d_Polynomial,
-                                             const double             Ta     = 1.0e-2,
-                                             const double             Tapp3d = 1.0e-4,
-                                             const double             Tapp2d = 1.0e-5);
+  Standard_EXPORT FilletSurf_InternalBuilder(
+    const TopoDS_Shape&      S,
+    const ChFi3d_FilletShape FShape = ChFi3d_FilletShape::ChFi3d_Polynomial,
+    const double             Ta     = 1.0e-2,
+    const double             Tapp3d = 1.0e-4,
+    const double             Tapp2d = 1.0e-5);
 
   //! Initializes the contour with a list of Edges
   //! 0 : no problem

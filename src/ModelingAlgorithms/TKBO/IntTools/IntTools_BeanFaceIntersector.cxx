@@ -295,7 +295,8 @@ void IntTools_BeanFaceIntersector::Perform()
   }
 
   // Fast computation of Line/Plane case
-  if (myCurve.GetType() == GeomAbs_CurveType::GeomAbs_Line && mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
+  if (myCurve.GetType() == GeomAbs_CurveType::GeomAbs_Line
+      && mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     ComputeLinePlane();
     return;
@@ -327,12 +328,12 @@ void IntTools_BeanFaceIntersector::Perform()
   bool bLocalize =
     (!Precision::IsInfinite(myUMinParameter) && !Precision::IsInfinite(myUMaxParameter)
      && !Precision::IsInfinite(myVMinParameter) && !Precision::IsInfinite(myVMaxParameter));
-  bLocalize =
-    bLocalize
-    && (mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_BezierSurface || mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_OtherSurface
-        || (mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface
-            && (mySurface.UDegree() > 2 || mySurface.VDegree() > 2)
-            && (mySurface.NbUKnots() > 2 && mySurface.NbVKnots() > 2)));
+  bLocalize = bLocalize
+              && (mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_BezierSurface
+                  || mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_OtherSurface
+                  || (mySurface.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface
+                      && (mySurface.UDegree() > 2 || mySurface.VDegree() > 2)
+                      && (mySurface.NbUKnots() > 2 && mySurface.NbVKnots() > 2)));
 
   bool isLocalized = bLocalize && ComputeLocalized();
 
@@ -683,7 +684,9 @@ void IntTools_BeanFaceIntersector::ComputeAroundExactIntersection()
 bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
 {
   GeomAbs_CurveType aCT = myCurve.GetType();
-  if (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve || aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCT == GeomAbs_CurveType::GeomAbs_OffsetCurve
+  if (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve
+      || aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve
+      || aCT == GeomAbs_CurveType::GeomAbs_OffsetCurve
       || aCT == GeomAbs_CurveType::GeomAbs_OtherCurve)
   {
     // not supported type

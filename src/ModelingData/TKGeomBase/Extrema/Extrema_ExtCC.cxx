@@ -378,7 +378,8 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
   const GeomAbs_CurveType aType1 = Extrema_CurveTool::GetType(*myC[0]);
   const GeomAbs_CurveType aType2 = Extrema_CurveTool::GetType(*myC[1]);
   if (((aType1 != GeomAbs_CurveType::GeomAbs_Line) && (aType1 != GeomAbs_CurveType::GeomAbs_Circle))
-      || ((aType2 != GeomAbs_CurveType::GeomAbs_Line) && (aType2 != GeomAbs_CurveType::GeomAbs_Circle)))
+      || ((aType2 != GeomAbs_CurveType::GeomAbs_Line)
+          && (aType2 != GeomAbs_CurveType::GeomAbs_Circle)))
   {
     mySqDist.Append(theSqDist);
     myDone       = true;

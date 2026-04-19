@@ -48,10 +48,10 @@ namespace
 using AIS_MapOfObjectOwners = NCollection_DataMap<
   occ::handle<SelectMgr_SelectableObject>,
   occ::handle<NCollection_Shared<NCollection_IndexedMap<occ::handle<SelectMgr_EntityOwner>>>>>;
-using AIS_MapIteratorOfMapOfObjectOwners = NCollection_DataMap<
-  occ::handle<SelectMgr_SelectableObject>,
-  occ::handle<NCollection_Shared<NCollection_IndexedMap<occ::handle<SelectMgr_EntityOwner>>>>>::
-  Iterator;
+using AIS_MapIteratorOfMapOfObjectOwners =
+  NCollection_DataMap<occ::handle<SelectMgr_SelectableObject>,
+                      occ::handle<NCollection_Shared<
+                        NCollection_IndexedMap<occ::handle<SelectMgr_EntityOwner>>>>>::Iterator;
 
 //! Initialize default highlighting attributes.
 static void initDefaultHilightAttributes(const occ::handle<Prs3d_Drawer>& theDrawer,
@@ -63,13 +63,16 @@ static void initDefaultHilightAttributes(const occ::handle<Prs3d_Drawer>& theDra
 
   theDrawer->SetupOwnShadingAspect();
   theDrawer->SetupOwnPointAspect();
-  theDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
+  theDrawer->SetLineAspect(
+    new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
   *theDrawer->LineAspect()->Aspect() = *theDrawer->Link()->LineAspect()->Aspect();
-  theDrawer->SetWireAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
+  theDrawer->SetWireAspect(
+    new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
   *theDrawer->WireAspect()->Aspect() = *theDrawer->Link()->WireAspect()->Aspect();
   theDrawer->SetPlaneAspect(new Prs3d_PlaneAspect());
   *theDrawer->PlaneAspect()->EdgesAspect() = *theDrawer->Link()->PlaneAspect()->EdgesAspect();
-  theDrawer->SetFreeBoundaryAspect(new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
+  theDrawer->SetFreeBoundaryAspect(
+    new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
   *theDrawer->FreeBoundaryAspect()->Aspect() = *theDrawer->Link()->FreeBoundaryAspect()->Aspect();
   theDrawer->SetUnFreeBoundaryAspect(
     new Prs3d_LineAspect(Quantity_NOC_BLACK, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
@@ -251,7 +254,10 @@ void AIS_InteractiveContext::DisplayedObjects(
   const int                                             theSign,
   NCollection_List<occ::handle<AIS_InteractiveObject>>& theListOfIO) const
 {
-  ObjectsByDisplayStatus(theKind, theSign, PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed, theListOfIO);
+  ObjectsByDisplayStatus(theKind,
+                         theSign,
+                         PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed,
+                         theListOfIO);
 }
 
 //=================================================================================================
@@ -269,7 +275,10 @@ void AIS_InteractiveContext::ErasedObjects(
   const int                                             theSign,
   NCollection_List<occ::handle<AIS_InteractiveObject>>& theListOfIO) const
 {
-  ObjectsByDisplayStatus(theKind, theSign, PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Erased, theListOfIO);
+  ObjectsByDisplayStatus(theKind,
+                         theSign,
+                         PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Erased,
+                         theListOfIO);
 }
 
 //=================================================================================================
@@ -303,7 +312,8 @@ void AIS_InteractiveContext::ObjectsByDisplayStatus(
        anObjIter.More();
        anObjIter.Next())
   {
-    if (theStatus != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None && anObjIter.Key()->DisplayStatus() != theStatus)
+    if (theStatus != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None
+        && anObjIter.Key()->DisplayStatus() != theStatus)
     {
       continue;
     }
@@ -370,7 +380,8 @@ void AIS_InteractiveContext::ObjectsForView(
        anObjIter.More();
        anObjIter.Next())
   {
-    if (theStatus != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None && anObjIter.Key()->DisplayStatus() != theStatus)
+    if (theStatus != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None
+        && anObjIter.Key()->DisplayStatus() != theStatus)
     {
       theListOfIO.Append(anObjIter.Key());
       continue;
@@ -443,7 +454,10 @@ void AIS_InteractiveContext::Display(const occ::handle<AIS_InteractiveObject>& t
   setContextToObject(theIObj);
   if (!myObjects.IsBound(theIObj))
   {
-    setObjectStatus(theIObj, PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed, theDispMode, theSelectionMode);
+    setObjectStatus(theIObj,
+                    PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed,
+                    theDispMode,
+                    theSelectionMode);
     theIObj->ViewAffinity()->SetVisible(true); // reset view affinity mask
     myMainVwr->StructureManager()->RegisterObject(theIObj, theIObj->ViewAffinity());
     myMainPM->Display(theIObj, theDispMode);
@@ -651,7 +665,8 @@ PrsMgr_DisplayStatus AIS_InteractiveContext::DisplayStatus(
     return PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None;
   }
   const occ::handle<AIS_GlobalStatus>* aStatus = myObjects.Seek(theIObj);
-  return aStatus != nullptr ? theIObj->DisplayStatus() : PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None;
+  return aStatus != nullptr ? theIObj->DisplayStatus()
+                            : PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None;
 }
 
 //=================================================================================================
@@ -846,7 +861,8 @@ bool AIS_InteractiveContext::IsDisplayed(const occ::handle<AIS_InteractiveObject
     return false;
 
   const occ::handle<AIS_GlobalStatus>* aStatus = myObjects.Seek(theObj);
-  return aStatus != nullptr && theObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed;
+  return aStatus != nullptr
+         && theObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed;
 }
 
 //=================================================================================================
@@ -860,7 +876,8 @@ bool AIS_InteractiveContext::IsDisplayed(const occ::handle<AIS_InteractiveObject
   }
 
   const occ::handle<AIS_GlobalStatus>* aStatus = myObjects.Seek(theIObj);
-  return aStatus != nullptr && theIObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed
+  return aStatus != nullptr
+         && theIObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed
          && (*aStatus)->DisplayMode() == theMode;
 }
 
@@ -944,7 +961,8 @@ void AIS_InteractiveContext::Redisplay(const AIS_KindOfInteractive theKOI,
 
     Redisplay(anObj, false);
     isRedisplayed =
-      anObjIter.Key()->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed || isRedisplayed;
+      anObjIter.Key()->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed
+      || isRedisplayed;
   }
 
   if (theToUpdateViewer && isRedisplayed)
@@ -972,7 +990,8 @@ void AIS_InteractiveContext::RecomputePrsOnly(const occ::handle<AIS_InteractiveO
   }
 
   const occ::handle<AIS_GlobalStatus>* aStatus = myObjects.Seek(theIObj);
-  if (aStatus != nullptr && theIObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed)
+  if (aStatus != nullptr
+      && theIObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed)
   {
     myMainVwr->Update();
   }
@@ -1003,7 +1022,8 @@ void AIS_InteractiveContext::RecomputeSelectionOnly(const occ::handle<AIS_Intera
   mgrSelector->RecomputeSelection(theIO);
 
   const occ::handle<AIS_GlobalStatus>* aStatus = myObjects.Seek(theIO);
-  if (aStatus == nullptr || theIO->DisplayStatus() != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed)
+  if (aStatus == nullptr
+      || theIO->DisplayStatus() != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed)
   {
     return;
   }
@@ -1030,7 +1050,8 @@ void AIS_InteractiveContext::Update(const occ::handle<AIS_InteractiveObject>& th
   if (theUpdateViewer)
   {
     const occ::handle<AIS_GlobalStatus>* aStatus = myObjects.Seek(theIObj);
-    if (aStatus != nullptr && theIObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed)
+    if (aStatus != nullptr
+        && theIObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed)
     {
       myMainVwr->Update();
     }
@@ -1838,7 +1859,8 @@ void AIS_InteractiveContext::ClearGlobal(const occ::handle<AIS_InteractiveObject
     }
   }
 
-  if (theToUpdateviewer && theIObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed)
+  if (theToUpdateviewer
+      && theIObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed)
   {
     myMainVwr->Update();
   }
@@ -1868,7 +1890,8 @@ void AIS_InteractiveContext::ClearGlobalPrs(const occ::handle<AIS_InteractiveObj
     myMainPM->Erase(theIObj, theMode);
   }
 
-  if (theIObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed && theToUpdateViewer)
+  if (theIObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed
+      && theToUpdateViewer)
   {
     myMainVwr->Update();
   }
@@ -2475,7 +2498,8 @@ void AIS_InteractiveContext::turnOnSubintensity(const occ::handle<AIS_Interactiv
          anObjsIter.Next())
     {
       const occ::handle<AIS_GlobalStatus>& aStatus = anObjsIter.Value();
-      if (theObject->DisplayStatus() != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed && theIsDisplayedOnly)
+      if (theObject->DisplayStatus() != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed
+          && theIsDisplayedOnly)
       {
         continue;
       }
@@ -2494,7 +2518,8 @@ void AIS_InteractiveContext::turnOnSubintensity(const occ::handle<AIS_Interactiv
       return;
     }
 
-    if (theObject->DisplayStatus() != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed && theIsDisplayedOnly)
+    if (theObject->DisplayStatus() != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed
+        && theIsDisplayedOnly)
     {
       return;
     }
@@ -2628,7 +2653,8 @@ AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>
     occ::handle<SelectMgr_EntityOwner> aNewPickedOwner = MainSelector()->Picked(aNewDetected);
     if (aNewPickedOwner == myLastPicked && !aNewPickedOwner->IsForcedHilight())
     {
-      return myLastPicked->IsSelected() ? AIS_StatusOfDetection::AIS_SOD_Selected : AIS_StatusOfDetection::AIS_SOD_OnlyOneDetected;
+      return myLastPicked->IsSelected() ? AIS_StatusOfDetection::AIS_SOD_Selected
+                                        : AIS_StatusOfDetection::AIS_SOD_OnlyOneDetected;
     }
 
     // Previously detected object is unhilighted if it is not selected or hilighted
@@ -2664,7 +2690,8 @@ AIS_StatusOfDetection AIS_InteractiveContext::moveTo(const occ::handle<V3d_View>
         toUpdateViewer = true;
       }
 
-      aStatus = myLastPicked->IsSelected() ? AIS_StatusOfDetection::AIS_SOD_Selected : AIS_StatusOfDetection::AIS_SOD_OnlyOneDetected;
+      aStatus = myLastPicked->IsSelected() ? AIS_StatusOfDetection::AIS_SOD_Selected
+                                           : AIS_StatusOfDetection::AIS_SOD_OnlyOneDetected;
     }
   }
   else
@@ -2810,8 +2837,8 @@ AIS_StatusOfPick AIS_InteractiveContext::SelectDetected(const AIS_SelectionSchem
 {
   // For all selection schemes, allowing to select an object,
   // HandleMouseClick is available
-  if (theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_Remove && theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_Clear
-      && !myLastPicked.IsNull())
+  if (theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_Remove
+      && theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_Clear && !myLastPicked.IsNull())
   {
     NCollection_Vec2<int> aMousePos(-1, -1);
     gp_Pnt2d              aMouseRealPos = MainSelector()->GetManager().GetMousePosition();
@@ -2917,7 +2944,8 @@ AIS_StatusOfPick AIS_InteractiveContext::ShiftSelect(
   const occ::handle<V3d_View>&        theView,
   const bool                          theToUpdateViewer)
 {
-  AIS_StatusOfPick aStatus = SelectPolygon(thePolyline, theView, AIS_SelectionScheme::AIS_SelectionScheme_XOR);
+  AIS_StatusOfPick aStatus =
+    SelectPolygon(thePolyline, theView, AIS_SelectionScheme::AIS_SelectionScheme_XOR);
   if (theToUpdateViewer)
   {
     UpdateCurrentViewer();
@@ -2971,7 +2999,8 @@ AIS_StatusOfPick AIS_InteractiveContext::Select(
       else
       {
         // already selected owner
-        if (!anOwner->IsAutoHilight() && theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_XOR
+        if (!anOwner->IsAutoHilight()
+            && theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_XOR
             && theSelScheme != AIS_SelectionScheme::AIS_SelectionScheme_Add)
         {
           // hack to perform AIS_InteractiveObject::ClearSelected() before highlighting
@@ -3329,8 +3358,9 @@ void AIS_InteractiveContext::AddOrRemoveSelected(const occ::handle<SelectMgr_Ent
     return;
   }
 
-  AIS_SelectionScheme aSelScheme =
-    theOwner->IsSelected() ? AIS_SelectionScheme::AIS_SelectionScheme_Remove : AIS_SelectionScheme::AIS_SelectionScheme_Add;
+  AIS_SelectionScheme                      aSelScheme = theOwner->IsSelected()
+                                                          ? AIS_SelectionScheme::AIS_SelectionScheme_Remove
+                                                          : AIS_SelectionScheme::AIS_SelectionScheme_Add;
   const occ::handle<AIS_InteractiveObject> anObj =
     occ::down_cast<AIS_InteractiveObject>(theOwner->Selectable());
   mySelection->Select(theOwner, myFilters, aSelScheme, isDetected(anObj));
@@ -3396,7 +3426,10 @@ bool AIS_InteractiveContext::SetSelectedState(const occ::handle<SelectMgr_Entity
     const occ::handle<AIS_InteractiveObject> anObj =
       occ::down_cast<AIS_InteractiveObject>(theEntity->Selectable());
     const AIS_SelectStatus aSelStatus =
-      mySelection->Select(theEntity, myFilters, AIS_SelectionScheme::AIS_SelectionScheme_Remove, isDetected(anObj));
+      mySelection->Select(theEntity,
+                          myFilters,
+                          AIS_SelectionScheme::AIS_SelectionScheme_Remove,
+                          isDetected(anObj));
     theEntity->SetSelected(false);
     return aSelStatus == AIS_SelectStatus::AIS_SS_Removed;
   }
@@ -3664,9 +3697,13 @@ void AIS_InteractiveContext::SetSelectionModeActive(
     return;
   }
 
-  if (!theIsActive || (theMode == -1 && theActiveFilter == AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single))
+  if (!theIsActive
+      || (theMode == -1
+          && theActiveFilter
+               == AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single))
   {
-    if (theObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed || theIsForce)
+    if (theObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed
+        || theIsForce)
     {
       if (theMode == -1)
       {
@@ -3964,7 +4001,8 @@ void AIS_InteractiveContext::SetPolygonOffsets(const occ::handle<AIS_Interactive
 
   const occ::handle<AIS_GlobalStatus>* aStatus =
     theToUpdateViewer ? myObjects.Seek(theObj) : nullptr;
-  if (aStatus != nullptr && theObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed)
+  if (aStatus != nullptr
+      && theObj->DisplayStatus() == PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Displayed)
   {
     myMainVwr->Update();
   }

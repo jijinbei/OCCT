@@ -301,7 +301,10 @@ static TopoDS_Edge MakeOffsetEdge(const TopoDS_Edge&         theEdge,
 
 static TopOpeBRepDS_BuildTool mkbuildtool()
 {
-  TopOpeBRepTool_GeomTool GT2(TopOpeBRepTool_OutCurveType::TopOpeBRepTool_BSPLINE1, true, false, false);
+  TopOpeBRepTool_GeomTool GT2(TopOpeBRepTool_OutCurveType::TopOpeBRepTool_BSPLINE1,
+                              true,
+                              false,
+                              false);
   TopOpeBRepDS_BuildTool  BT(GT2);
   BT.OverWrite(false);
   BT.Translate(false);

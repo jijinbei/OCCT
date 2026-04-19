@@ -161,7 +161,8 @@ public: // @name user-defined graphical attributes
   //! Return color for rendering capping surface.
   Quantity_Color CappingColor() const
   {
-    return myAspect->FrontMaterial().MaterialType() == Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT
+    return myAspect->FrontMaterial().MaterialType()
+               == Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT
              ? myAspect->FrontMaterial().Color()
              : myAspect->InteriorColor();
   }
@@ -215,7 +216,10 @@ public: // @name user-defined graphical attributes
   Standard_EXPORT void SetCappingHatchOff();
 
   //! @return True if hatching mask is turned on.
-  bool IsHatchOn() const { return myAspect->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_HATCH; }
+  bool IsHatchOn() const
+  {
+    return myAspect->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_HATCH;
+  }
 
   //! This ID is used for managing associated resources in graphical driver.
   //! The clip plane can be assigned within a range of IO which can be
@@ -344,7 +348,8 @@ public:
   {
     const double aVal = myEquation.Dot(thePoint);
     return aVal < 0.0 ? Graphic3d_ClipState::Graphic3d_ClipState_Out
-                      : (aVal == 0.0 ? Graphic3d_ClipState::Graphic3d_ClipState_On : Graphic3d_ClipState::Graphic3d_ClipState_In);
+                      : (aVal == 0.0 ? Graphic3d_ClipState::Graphic3d_ClipState_On
+                                     : Graphic3d_ClipState::Graphic3d_ClipState_In);
   }
 
   //! Check if the given bounding box is fully outside / fully inside the half-space.
@@ -354,7 +359,8 @@ public:
     {
       return Graphic3d_ClipState::Graphic3d_ClipState_Out;
     }
-    return IsBoxFullInHalfspace(theBox) ? Graphic3d_ClipState::Graphic3d_ClipState_In : Graphic3d_ClipState::Graphic3d_ClipState_On;
+    return IsBoxFullInHalfspace(theBox) ? Graphic3d_ClipState::Graphic3d_ClipState_In
+                                        : Graphic3d_ClipState::Graphic3d_ClipState_On;
   }
 
   //! Check if the given point is outside of the half-space (e.g. should be discarded by clipping

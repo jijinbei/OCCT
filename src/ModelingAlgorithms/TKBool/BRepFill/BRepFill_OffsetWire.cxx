@@ -2521,7 +2521,8 @@ static void CheckBadEdges(const TopoDS_Face&              Spine,
         Geom2dAdaptor_Curve AC(G2d, f, l);
         GeomAbs_CurveType   aCType = AC.GetType();
 
-        if (aCType != GeomAbs_CurveType::GeomAbs_Line && aCType != GeomAbs_CurveType::GeomAbs_Circle)
+        if (aCType != GeomAbs_CurveType::GeomAbs_Line
+            && aCType != GeomAbs_CurveType::GeomAbs_Circle)
         {
 
           bool reverse = false;

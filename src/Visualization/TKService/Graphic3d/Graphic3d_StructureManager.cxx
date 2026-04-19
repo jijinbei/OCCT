@@ -170,7 +170,9 @@ void Graphic3d_StructureManager::RecomputeStructures()
        anIter.More();
        anIter.Next())
   {
-    anIter.Key()->Network(anIter.Key().get(), Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT, aStructNetwork);
+    anIter.Key()->Network(anIter.Key().get(),
+                          Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT,
+                          aStructNetwork);
   }
 
   RecomputeStructures(aStructNetwork);

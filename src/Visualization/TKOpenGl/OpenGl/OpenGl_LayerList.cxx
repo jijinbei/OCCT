@@ -522,7 +522,8 @@ void OpenGl_LayerList::UpdateCulling(const occ::handle<OpenGl_Workspace>& theWor
                                      const bool                           theToDrawImmediate)
 {
   const occ::handle<OpenGl_FrameStats>& aStats = theWorkspace->GetGlContext()->FrameStats();
-  OSD_Timer& aTimer = aStats->ActiveDataFrame().ChangeTimer(Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_CpuCulling);
+  OSD_Timer&                            aTimer = aStats->ActiveDataFrame().ChangeTimer(
+    Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_CpuCulling);
   aTimer.Start();
 
   const int                    aViewId   = theWorkspace->View()->Identification();
@@ -543,7 +544,8 @@ void OpenGl_LayerList::UpdateCulling(const occ::handle<OpenGl_Workspace>& theWor
   }
 
   aTimer.Stop();
-  aStats->ActiveDataFrame()[Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_CpuCulling] = aTimer.UserTimeCPU();
+  aStats->ActiveDataFrame()[Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_CpuCulling] =
+    aTimer.UserTimeCPU();
 }
 
 //=================================================================================================
@@ -921,7 +923,8 @@ void OpenGl_LayerList::renderTransparent(const occ::handle<OpenGl_Workspace>& th
   OpenGl_View*                             aView      = theWorkspace->View();
 
   Graphic3d_RenderTransparentMethod anOitMode =
-    aView != nullptr ? aView->RenderingParams().TransparencyMethod : Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
+    aView != nullptr ? aView->RenderingParams().TransparencyMethod
+                     : Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
 
   const int aPrevFilter =
     theWorkspace->RenderFilter()

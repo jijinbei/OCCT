@@ -913,7 +913,8 @@ static int buildsweep(Draw_Interpretor& di, int n, const char** a)
   int          cur = 2;
   if (n > cur)
   {
-    BRepBuilderAPI_TransitionMode Transition = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed;
+    BRepBuilderAPI_TransitionMode Transition =
+      BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed;
 
     // Reading Transition
     if (!strcmp(a[cur], "-C"))
@@ -1017,7 +1018,8 @@ static int simulsweep(Draw_Interpretor& di, int n, const char** a)
 
   if (n > 3)
   {
-    BRepBuilderAPI_TransitionMode Transition = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed;
+    BRepBuilderAPI_TransitionMode Transition =
+      BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed;
     // Lecture Transition
     if (!strcmp(a[3], "-C"))
     {

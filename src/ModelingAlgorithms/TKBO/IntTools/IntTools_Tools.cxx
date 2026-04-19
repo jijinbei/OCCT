@@ -212,7 +212,8 @@ int IntTools_Tools::SplitCurve(const IntTools_Curve& IC, NCollection_Sequence<In
   aMid = 0.5 * (aF + aL);
   GeomAdaptor_Curve aGAC(aC3D);
   GeomAbs_CurveType aCT = aGAC.GetType();
-  if (aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCT == GeomAbs_CurveType::GeomAbs_BezierCurve)
+  if (aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve
+      || aCT == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     // aMid=0.5*aMid;
     aMid = IntTools_Tools::IntermediatePoint(aF, aL);

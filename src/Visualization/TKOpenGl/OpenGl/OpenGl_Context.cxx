@@ -542,7 +542,8 @@ void OpenGl_Context::SetFaceCulling(Graphic3d_TypeOfBackfacingModel theMode)
 
   if (theMode == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled)
   {
-    if (myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled)
+    if (myFaceCulling
+        == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled)
     {
       core11fwd->glCullFace(GL_BACK);
     }
@@ -802,8 +803,8 @@ bool OpenGl_Context::SetSwapInterval(const int theInterval)
 #elif defined(HAVE_XLIB)
   if (theInterval == -1 && myFuncs->glXSwapIntervalEXT != nullptr)
   {
-    using glXSwapIntervalEXT_t_x = int (
-      *)(Display* theDisplay, GLXDrawable theDrawable, int theInterval);
+    using glXSwapIntervalEXT_t_x =
+      int (*)(Display* theDisplay, GLXDrawable theDrawable, int theInterval);
     glXSwapIntervalEXT_t_x aFuncPtr = (glXSwapIntervalEXT_t_x)myFuncs->glXSwapIntervalEXT;
     aFuncPtr((Display*)myDisplay, (GLXDrawable)myWindow, theInterval);
     return true;
@@ -1329,8 +1330,8 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
   myShaderManager->SetEmulateDepthClamp(!arbDepthClamp);
 
   // workaround Adreno driver bug computing reversed normal using dFdx/dFdy
-  bool toReverseDFdxSign =
-    myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES && myVendor.Search("qualcomm") != -1;
+  bool toReverseDFdxSign = myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
+                           && myVendor.Search("qualcomm") != -1;
   myShaderManager->SetFlatShading(hasFlatShading != OpenGl_FeatureNotAvailable, toReverseDFdxSign);
   myShaderManager->SetUseRedAlpha(myGapi != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                                   && core11ffp == nullptr);
@@ -1488,9 +1489,10 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
     // Detect if window buffer is considered by OpenGL as sRGB-ready
     // (linear RGB color written by shader is automatically converted into sRGB)
     // or not (offscreen FBO should be blit into window buffer with gamma correction).
-    const GLenum aDefWinBuffer = myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES ? GL_BACK : GL_BACK_LEFT;
-    GLint        aWinColorEncoding = 0; // GL_LINEAR
-    bool         toSkipCheck       = false;
+    const GLenum aDefWinBuffer =
+      myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES ? GL_BACK : GL_BACK_LEFT;
+    GLint aWinColorEncoding = 0; // GL_LINEAR
+    bool  toSkipCheck       = false;
     if (myGapi == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       toSkipCheck = !IsGlGreaterEqual(3, 0);
@@ -2362,11 +2364,12 @@ void OpenGl_Context::SetShadingMaterial(
 
   // do not update material properties in case of zero reflection mode,
   // because GL lighting will be disabled by OpenGl_PrimitiveArray::DrawArray() anyway.
-  const OpenGl_MaterialState& aMatState     = myShaderManager->MaterialState();
-  float                       anAlphaCutoff = (anAspect->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask
-                         || anAspect->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend)
-                                                ? anAspect->AlphaCutoff()
-                                                : ShortRealLast();
+  const OpenGl_MaterialState& aMatState = myShaderManager->MaterialState();
+  float                       anAlphaCutoff =
+    (anAspect->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask
+     || anAspect->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend)
+                            ? anAspect->AlphaCutoff()
+                            : ShortRealLast();
   if (anAspect->ToDrawEdges())
   {
     if (anAspect->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_EMPTY
@@ -2426,7 +2429,8 @@ bool OpenGl_Context::CheckIsTransparent(
   {
     return theAlphaFront < 1.0f || theAlphaBack < 1.0f;
   }
-  // Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask and Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend are not considered transparent here
+  // Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask and
+  // Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend are not considered transparent here
   return anAspect->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend;
 }
 
@@ -2710,7 +2714,8 @@ bool OpenGl_Context::SetPolygonHatchEnabled(const bool theIsEnabled)
 
 int OpenGl_Context::SetPolygonHatchStyle(const occ::handle<Graphic3d_HatchStyle>& theStyle)
 {
-  const int aNewStyle = !theStyle.IsNull() ? theStyle->HatchType() : static_cast<int>(Aspect_HatchStyle::Aspect_HS_SOLID);
+  const int aNewStyle = !theStyle.IsNull() ? theStyle->HatchType()
+                                           : static_cast<int>(Aspect_HatchStyle::Aspect_HS_SOLID);
   if (myActiveHatchType == aNewStyle || core11ffp == nullptr)
   {
     return myActiveHatchType;

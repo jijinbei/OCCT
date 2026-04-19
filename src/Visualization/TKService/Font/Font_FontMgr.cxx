@@ -970,16 +970,22 @@ occ::handle<Font_SystemFont> Font_FontMgr::FindFallbackFont(Font_UnicodeSubset t
   switch (theSubset)
   {
     case Font_UnicodeSubset_Western:
-      aFont = FindFont(Font_NOF_SANS_SERIF, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
+      aFont = FindFont(Font_NOF_SANS_SERIF,
+                       Font_StrictLevel::Font_StrictLevel_Aliases,
+                       aFontAspect,
+                       false);
       break;
     case Font_UnicodeSubset_Korean:
-      aFont = FindFont(Font_NOF_KOREAN, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
+      aFont =
+        FindFont(Font_NOF_KOREAN, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
       break;
     case Font_UnicodeSubset_CJK:
-      aFont = FindFont(Font_NOF_CJK, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
+      aFont =
+        FindFont(Font_NOF_CJK, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
       break;
     case Font_UnicodeSubset_Arabic:
-      aFont = FindFont(Font_NOF_ARABIC, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
+      aFont =
+        FindFont(Font_NOF_ARABIC, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
       break;
   }
   if (aFont.IsNull())

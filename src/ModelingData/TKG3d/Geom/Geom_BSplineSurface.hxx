@@ -1305,19 +1305,19 @@ private:
   NCollection_Array1<int>                    myUMults;
   NCollection_Array1<int>                    myVMults;
   occ::handle<GeomEval_RepSurfaceDesc::Base> myEvalRep;
-  int                                        myUDeg          = 0;
-  int                                        myVDeg          = 0;
-  bool                                       myUPeriodic     = false;
-  bool                                       myVPeriodic     = false;
-  bool                                       myURational     = false;
-  bool                                       myVRational     = false;
-  GeomAbs_BSplKnotDistribution               myUKnotSet      = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
-  GeomAbs_BSplKnotDistribution               myVKnotSet      = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
-  GeomAbs_Shape                              myUSmooth       = GeomAbs_C0;
-  GeomAbs_Shape                              myVSmooth       = GeomAbs_C0;
-  double                                     myUMaxDerivInv  = 0.0;
-  double                                     myVMaxDerivInv  = 0.0;
-  bool                                       myMaxDerivInvOk = false;
+  int                                        myUDeg      = 0;
+  int                                        myVDeg      = 0;
+  bool                                       myUPeriodic = false;
+  bool                                       myVPeriodic = false;
+  bool                                       myURational = false;
+  bool                                       myVRational = false;
+  GeomAbs_BSplKnotDistribution myUKnotSet      = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
+  GeomAbs_BSplKnotDistribution myVKnotSet      = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
+  GeomAbs_Shape                myUSmooth       = GeomAbs_C0;
+  GeomAbs_Shape                myVSmooth       = GeomAbs_C0;
+  double                       myUMaxDerivInv  = 0.0;
+  double                       myVMaxDerivInv  = 0.0;
+  bool                         myMaxDerivInvOk = false;
 };
 
 #endif // _Geom_BSplineSurface_HeaderFile

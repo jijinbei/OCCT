@@ -53,11 +53,12 @@ public:
 
   Standard_EXPORT BRepFill_Pipe();
 
-  Standard_EXPORT BRepFill_Pipe(const TopoDS_Wire&       Spine,
-                                const TopoDS_Shape&      Profile,
-                                const GeomFill_Trihedron aMode         = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet,
-                                const bool               ForceApproxC1 = false,
-                                const bool               GeneratePartCase = false);
+  Standard_EXPORT BRepFill_Pipe(
+    const TopoDS_Wire&       Spine,
+    const TopoDS_Shape&      Profile,
+    const GeomFill_Trihedron aMode            = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet,
+    const bool               ForceApproxC1    = false,
+    const bool               GeneratePartCase = false);
 
   Standard_EXPORT void Perform(const TopoDS_Wire&  Spine,
                                const TopoDS_Shape& Profile,

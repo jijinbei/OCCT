@@ -111,7 +111,8 @@ VrmlData_ErrorStatus VrmlData_Node::Write(const char*) const
 VrmlData_ErrorStatus VrmlData_Node::WriteClosing() const
 {
   VrmlData_ErrorStatus aResult = Scene().Status();
-  if (aResult == VrmlData_ErrorStatus::VrmlData_StatusOK || aResult == VrmlData_ErrorStatus::VrmlData_NotImplemented)
+  if (aResult == VrmlData_ErrorStatus::VrmlData_StatusOK
+      || aResult == VrmlData_ErrorStatus::VrmlData_NotImplemented)
     aResult = Scene().WriteLine("}", nullptr, -GlobalIndent());
   return aResult;
 }

@@ -131,9 +131,9 @@ void TopOpeBRepBuild_Builder::GFillFacesWESK(const NCollection_List<TopoDS_Shape
     //  Modified by Sergey KHROMOV - Sat Apr 27 14:40:36 2002 End
     TopAbs_Orientation  oS   = BDS.Shape(iS).Orientation();
     TopOpeBRepDS_Config conf = BDS.SameDomainOri(S);
-    bool                b1   = (conf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED && (oS == oref));
-    bool                b2   = (conf == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED && (oS != oref));
-    bool                b    = b1 || b2;
+    bool b1 = (conf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED && (oS == oref));
+    bool b2 = (conf == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED && (oS != oref));
+    bool b  = b1 || b2;
     //  Modified by Sergey KHROMOV - Sat Apr 27 14:40:01 2002 Begin
     //     if (b) {
     //       rev = true;
@@ -211,9 +211,9 @@ void TopOpeBRepBuild_Builder::GFillFacesWESK(const NCollection_List<TopoDS_Shape
     //  Modified by Sergey KHROMOV - Sat Apr 27 14:38:30 2002 End
     TopAbs_Orientation  oS   = BDS.Shape(iS).Orientation();
     TopOpeBRepDS_Config conf = BDS.SameDomainOri(S);
-    bool                b1   = (conf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED && (oS == oref));
-    bool                b2   = (conf == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED && (oS != oref));
-    bool                b    = b1 || b2;
+    bool b1 = (conf == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED && (oS == oref));
+    bool b2 = (conf == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED && (oS != oref));
+    bool b  = b1 || b2;
     //  Modified by Sergey KHROMOV - Sat Apr 27 14:39:04 2002 Begin
     //     if (b) {
     //       rev = true;

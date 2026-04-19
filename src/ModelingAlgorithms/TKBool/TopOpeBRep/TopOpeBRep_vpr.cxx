@@ -389,7 +389,8 @@ Standard_EXPORT void FUN_VPIndex(
   // v has already been stored in the DS
 
   if (PVIndex == 0)
-    PVKind = (SIisvertex || OOisvertex) ? TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX : TopOpeBRepDS_Kind::TopOpeBRepDS_POINT;
+    PVKind = (SIisvertex || OOisvertex) ? TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX
+                                        : TopOpeBRepDS_Kind::TopOpeBRepDS_POINT;
 
   if (hasOOedge && !Gfound)
   {
@@ -744,7 +745,8 @@ static void FUN_processCPI(TopOpeBRep_FacesFiller&        FF,
     if (Gfound)
       GKCPV = PVKind;
     else
-      GKCPV = (SIisvertex || OOisvertex) ? TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX : TopOpeBRepDS_Kind::TopOpeBRepDS_POINT;
+      GKCPV = (SIisvertex || OOisvertex) ? TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX
+                                         : TopOpeBRepDS_Kind::TopOpeBRepDS_POINT;
 
     CPI = ::MakeCPVInterference(ttransLine, 0, PVIndex, parline, GKCPV);
     FF.StoreCurveInterference(CPI);
@@ -1188,8 +1190,13 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
       occ::handle<TopOpeBRepDS_Interference> EPIf;
       {
         T.Index(iOOFace);
-        EPIf =
-          MakeEPVInterference(T, iOOFace, PVIndex, paredge, PVKind, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, SIisvertex);
+        EPIf = MakeEPVInterference(T,
+                                   iOOFace,
+                                   PVIndex,
+                                   paredge,
+                                   PVKind,
+                                   TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
+                                   SIisvertex);
       }
       myHDS->StoreInterference(EPIf, edge);
       if (on2edges || hasONedge)
@@ -1394,13 +1401,14 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
         {
           TopOpeBRepDS_Transition OOT = tOOedge;
           OOT.Index(iSIFace);
-          occ::handle<TopOpeBRepDS_Interference> OOEPIf = MakeEPVInterference(OOT,
-                                                                              iSIFace,
-                                                                              PVIndex,
-                                                                              OOparedge,
-                                                                              PVKind,
-                                                                              TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
-                                                                              OOisvertex);
+          occ::handle<TopOpeBRepDS_Interference> OOEPIf =
+            MakeEPVInterference(OOT,
+                                iSIFace,
+                                PVIndex,
+                                OOparedge,
+                                PVKind,
+                                TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
+                                OOisvertex);
           myHDS->StoreInterference(OOEPIf, OOedge);
         }
         // xpu : 09-03-98
@@ -1506,8 +1514,13 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
     {
       TopOpeBRepDS_Transition T = transEdge;
       T.Index(iOOFace);
-      EPIf =
-        MakeEPVInterference(T, iOOFace, PVIndex, paredge, PVKind, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, SIisvertex);
+      EPIf = MakeEPVInterference(T,
+                                 iOOFace,
+                                 PVIndex,
+                                 paredge,
+                                 PVKind,
+                                 TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
+                                 SIisvertex);
     }
     myHDS->StoreInterference(EPIf, edge);
   } // addEPI

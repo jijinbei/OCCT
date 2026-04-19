@@ -341,19 +341,23 @@ static int ParseDimensionParams(
 
         if (aParamValue == "left")
         {
-          theAspect->SetTextHorizontalPosition(Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Left);
+          theAspect->SetTextHorizontalPosition(
+            Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Left);
         }
         else if (aParamValue == "right")
         {
-          theAspect->SetTextHorizontalPosition(Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Right);
+          theAspect->SetTextHorizontalPosition(
+            Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Right);
         }
         else if (aParamValue == "hcenter")
         {
-          theAspect->SetTextHorizontalPosition(Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Center);
+          theAspect->SetTextHorizontalPosition(
+            Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Center);
         }
         else if (aParamValue == "hfit")
         {
-          theAspect->SetTextHorizontalPosition(Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Fit);
+          theAspect->SetTextHorizontalPosition(
+            Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Fit);
         }
         else if (aParamValue == "above")
         {
@@ -365,7 +369,8 @@ static int ParseDimensionParams(
         }
         else if (aParamValue == "vcenter")
         {
-          theAspect->SetTextVerticalPosition(Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center);
+          theAspect->SetTextVerticalPosition(
+            Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center);
         }
         else
         {
@@ -649,8 +654,9 @@ static void SetAngleDimensionParams(
 
   if (theStringParams.IsBound("showarrow"))
   {
-    PrsDim_TypeOfAngleArrowVisibility anArrowType    = PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both;
-    TCollection_AsciiString           anArrowTypeStr = theStringParams.Find("showarrow");
+    PrsDim_TypeOfAngleArrowVisibility anArrowType =
+      PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both;
+    TCollection_AsciiString anArrowTypeStr = theStringParams.Find("showarrow");
     if (anArrowTypeStr.IsEqual("both"))
     {
       anArrowType = PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both;
@@ -1825,9 +1831,10 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
         aPickedObj = TheAISContext()->SelectedInteractive();
       }
 
-      isPicked = (!aPickedObj.IsNull()
-                  && (aPickedObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Dimension
-                      || aPickedObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Relation));
+      isPicked =
+        (!aPickedObj.IsNull()
+         && (aPickedObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Dimension
+             || aPickedObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Relation));
       if (isPicked)
       {
         break;

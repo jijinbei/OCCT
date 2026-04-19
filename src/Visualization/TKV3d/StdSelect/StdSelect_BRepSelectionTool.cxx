@@ -869,9 +869,11 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
       case GeomAbs_CurveType::GeomAbs_Circle: {
         if (2.0 * M_PI - std::abs(wl - wf) <= Precision::Confusion())
         {
-          if (BS.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder || BS.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus
+          if (BS.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
+              || BS.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus
               || BS.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
-              || BS.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface) // beuurkk pour l'instant...
+              || BS.GetType()
+                   == GeomAbs_SurfaceType::GeomAbs_BSplineSurface) // beuurkk pour l'instant...
           {
             double ff = wf, ll = wl;
             double dw = (std::max(wf, wl) - std::min(wf, wl))

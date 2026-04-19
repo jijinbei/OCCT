@@ -1154,7 +1154,8 @@ void ComputeInternalPointsOnRstr(Contap_Line&         Line,
 
     if (tgt.Magnitude() > gp::Resolution())
     {
-      if (TypeFunc == Contap_TFunction::Contap_ContourPrs || TypeFunc == Contap_TFunction::Contap_DraftPrs)
+      if (TypeFunc == Contap_TFunction::Contap_ContourPrs
+          || TypeFunc == Contap_TFunction::Contap_DraftPrs)
       {
         vecregard.SetXYZ(pcour.XYZ() - SFunc.Eye().XYZ());
       }
@@ -1186,7 +1187,8 @@ void ComputeInternalPointsOnRstr(Contap_Line&         Line,
 
     if (tgt.Magnitude() > gp::Resolution())
     {
-      if (TypeFunc == Contap_TFunction::Contap_ContourPrs || TypeFunc == Contap_TFunction::Contap_DraftPrs)
+      if (TypeFunc == Contap_TFunction::Contap_ContourPrs
+          || TypeFunc == Contap_TFunction::Contap_DraftPrs)
       {
         vecregard.SetXYZ(pcour.XYZ() - SFunc.Eye().XYZ());
       }
@@ -1217,7 +1219,8 @@ void ComputeInternalPointsOnRstr(Contap_Line&         Line,
 
           if (tgt.Magnitude() > gp::Resolution())
           {
-            if (TypeFunc == Contap_TFunction::Contap_ContourPrs || TypeFunc == Contap_TFunction::Contap_DraftPrs)
+            if (TypeFunc == Contap_TFunction::Contap_ContourPrs
+                || TypeFunc == Contap_TFunction::Contap_DraftPrs)
             {
               vecregard.SetXYZ(pcour.XYZ() - SFunc.Eye().XYZ());
             }
@@ -1329,7 +1332,8 @@ void ComputeInternalPoints(Contap_Line&         Line,
     if (!SFunc.IsTangent())
     {
       tgt = SFunc.Direction3d();
-      if (TypeFunc == Contap_TFunction::Contap_ContourPrs || TypeFunc == Contap_TFunction::Contap_DraftPrs)
+      if (TypeFunc == Contap_TFunction::Contap_ContourPrs
+          || TypeFunc == Contap_TFunction::Contap_DraftPrs)
       {
         vecregard.SetXYZ(Line.Point(indexinf).Value().XYZ() - SFunc.Eye().XYZ());
       }
@@ -1360,7 +1364,8 @@ void ComputeInternalPoints(Contap_Line&         Line,
     {
       tgt = SFunc.Direction3d();
 
-      if (TypeFunc == Contap_TFunction::Contap_ContourPrs || TypeFunc == Contap_TFunction::Contap_DraftPrs)
+      if (TypeFunc == Contap_TFunction::Contap_ContourPrs
+          || TypeFunc == Contap_TFunction::Contap_DraftPrs)
       {
         vecregard.SetXYZ(Line.Point(indexsup).Value().XYZ() - SFunc.Eye().XYZ());
       }
@@ -1408,7 +1413,8 @@ void ComputeInternalPoints(Contap_Line&         Line,
               if (!SFunc.IsTangent())
               {
                 tgt = SFunc.Direction3d();
-                if (TypeFunc == Contap_TFunction::Contap_ContourPrs || TypeFunc == Contap_TFunction::Contap_DraftPrs)
+                if (TypeFunc == Contap_TFunction::Contap_ContourPrs
+                    || TypeFunc == Contap_TFunction::Contap_DraftPrs)
                 {
                   vecregard.SetXYZ(SFunc.Point().XYZ() - SFunc.Eye().XYZ());
                 }
@@ -1694,9 +1700,9 @@ void Contap_Contour::Perform(const occ::handle<Adaptor3d_TopolTool>& Domain)
     Nblines = iwalk.NbLines();
     for (j = 1; j <= Nblines; j++)
     {
-      IntSurf_TypeTrans                                 TypeTransOnS = IntSurf_TypeTrans::IntSurf_Undecided;
-      const occ::handle<Contap_TheIWLineOfTheIWalking>& iwline       = iwalk.Value(j);
-      Nbpts                                                          = iwline->NbPoints();
+      IntSurf_TypeTrans TypeTransOnS = IntSurf_TypeTrans::IntSurf_Undecided;
+      const occ::handle<Contap_TheIWLineOfTheIWalking>& iwline = iwalk.Value(j);
+      Nbpts                                                    = iwline->NbPoints();
       theline.SetLineOn2S(iwline->Line());
 
       // jag 941018 On calcule une seule fois la transition

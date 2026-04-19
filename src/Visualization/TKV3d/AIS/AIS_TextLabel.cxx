@@ -389,7 +389,8 @@ bool AIS_TextLabel::calculateLabelParams(const gp_Pnt& thePosition,
   {
     theCenterOfLabel.ChangeCoord() += myOrientation3D.XDirection().XYZ() * theWidth * 0.5;
   }
-  else if (anAsp->HorizontalJustification() == Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT)
+  else if (anAsp->HorizontalJustification()
+           == Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT)
   {
     theCenterOfLabel.ChangeCoord() -= myOrientation3D.XDirection().XYZ() * theWidth * 0.5;
   }

@@ -1239,7 +1239,8 @@ const gp_Vec2d& BlendFunc_EvolRad::Tangent2dOnS2() const
 
 bool BlendFunc_EvolRad::IsRational() const
 {
-  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational
+          || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================

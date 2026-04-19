@@ -58,13 +58,15 @@ HatchGen_PointOnElement::HatchGen_PointOnElement(const IntRes2d_IntersectionPoin
     case IntRes2d_TypeTrans::IntRes2d_In: {
       myBefore = TopAbs_OUT;
       myAfter  = TopAbs_IN;
-      myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_IntersectionType::HatchGen_TRUE : HatchGen_IntersectionType::HatchGen_TOUCH;
+      myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_IntersectionType::HatchGen_TRUE
+                                              : HatchGen_IntersectionType::HatchGen_TOUCH;
       break;
     }
     case IntRes2d_TypeTrans::IntRes2d_Out: {
       myBefore = TopAbs_IN;
       myAfter  = TopAbs_OUT;
-      myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_IntersectionType::HatchGen_TRUE : HatchGen_IntersectionType::HatchGen_TOUCH;
+      myType   = (myPosit == TopAbs_INTERNAL) ? HatchGen_IntersectionType::HatchGen_TRUE
+                                              : HatchGen_IntersectionType::HatchGen_TOUCH;
       break;
     }
       //  Modified by Sergey KHROMOV - Fri Jan  5 12:07:34 2001 Begin

@@ -212,7 +212,10 @@ private:
       if (myClassifier->Perform(aPnt2d) != TopAbs_IN)
         return;
 
-      this->registerNode(BRep_Tool::Pnt(theVertex), aPnt2d, BRepMesh_DegreeOfFreedom::BRepMesh_Fixed, false);
+      this->registerNode(BRep_Tool::Pnt(theVertex),
+                         aPnt2d,
+                         BRepMesh_DegreeOfFreedom::BRepMesh_Fixed,
+                         false);
     }
     catch (Standard_Failure const&)
     {

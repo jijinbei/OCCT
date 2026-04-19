@@ -206,7 +206,8 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
   double U0 = p2d.X(), V0 = p2d.Y();
 
   GeomAbs_SurfaceType Type = theData.mySurf->GetType();
-  if ((Type != GeomAbs_SurfaceType::GeomAbs_BSplineSurface) && (Type != GeomAbs_SurfaceType::GeomAbs_BezierSurface)
+  if ((Type != GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+      && (Type != GeomAbs_SurfaceType::GeomAbs_BezierSurface)
       && (Type != GeomAbs_SurfaceType::GeomAbs_OffsetSurface))
   {
     // Analytical cases.
@@ -382,7 +383,11 @@ static gp_Pnt2d Function_Value(const double theU, const aFuncStruct& theData)
   }
 
   // Perform whole param space search.
-  Extrema_ExtPS ext(p, SurfLittle, theData.myTolU, theData.myTolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
+  Extrema_ExtPS ext(p,
+                    SurfLittle,
+                    theData.myTolU,
+                    theData.myTolV,
+                    Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   if (ext.IsDone() && ext.NbExt() >= 1)
   {
     Dist2Min      = ext.SquareDistance(1);
@@ -942,7 +947,8 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
   Vinf                     = Surf->FirstVParameter();
   Vsup                     = Surf->LastVParameter();
   GeomAbs_SurfaceType Type = Surf->GetType();
-  if ((Type != GeomAbs_SurfaceType::GeomAbs_BSplineSurface) && (Type != GeomAbs_SurfaceType::GeomAbs_BezierSurface)
+  if ((Type != GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+      && (Type != GeomAbs_SurfaceType::GeomAbs_BezierSurface)
       && (Type != GeomAbs_SurfaceType::GeomAbs_OffsetSurface))
   {
     double S, T;
@@ -1222,7 +1228,11 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
               for (j = tPp + 1; j <= NbOfPnts; ++j)
               {
                 pntproj = Pts(j);
-                Extrema_ExtPS aTPS(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
+                Extrema_ExtPS aTPS(pntproj,
+                                   *Surf,
+                                   TolU,
+                                   TolV,
+                                   Extrema_ExtFlag::Extrema_ExtFlag_MIN);
                 Dist2Min = RealLast();
                 if (aTPS.IsDone() && aTPS.NbExt() >= 1)
                 {
@@ -1328,7 +1338,11 @@ occ::handle<Adaptor2d_Curve2d> ProjLib_ComputeApproxOnPolarSurface::BuildInitial
             }
             else
             {
-              Extrema_ExtPS aGlobalExtr(pntproj, *Surf, TolU, TolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
+              Extrema_ExtPS aGlobalExtr(pntproj,
+                                        *Surf,
+                                        TolU,
+                                        TolV,
+                                        Extrema_ExtFlag::Extrema_ExtFlag_MIN);
               if (aGlobalExtr.IsDone())
               {
                 double LocalMinSqDist = RealLast();

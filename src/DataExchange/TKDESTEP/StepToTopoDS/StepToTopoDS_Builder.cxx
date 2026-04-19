@@ -543,7 +543,8 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_EdgeBasedWireframeMo
       myResult = C;
   }
 
-  myError = (myResult.IsNull() ? StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone : StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther);
+  myError = (myResult.IsNull() ? StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone
+                               : StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther);
   done    = !myResult.IsNull();
 
   occ::handle<StepData_StepModel> aStepModel = occ::down_cast<StepData_StepModel>(TP->Model());
@@ -620,7 +621,8 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FaceBasedSurfaceMode
       myResult = C;
   }
 
-  myError = (myResult.IsNull() ? StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone : StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther);
+  myError = (myResult.IsNull() ? StepToTopoDS_BuilderError::StepToTopoDS_BuilderDone
+                               : StepToTopoDS_BuilderError::StepToTopoDS_BuilderOther);
   done    = !myResult.IsNull();
 
   occ::handle<StepData_StepModel> aStepModel = occ::down_cast<StepData_StepModel>(TP->Model());

@@ -31,13 +31,17 @@ AdvApp2VarIsoGrid makeUFrontier()
   AdvApp2VarIsoGrid aUFrontier;
 
   AdvApp2VarIsoStrip aUStrip1;
-  aUStrip1.Append(new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoV, 30.0, 0.0, 1.0, 0.0, 1.0, 0, 0, 0));
-  aUStrip1.Append(new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoV, 40.0, 0.0, 1.0, 0.0, 1.0, 0, 0, 0));
+  aUStrip1.Append(
+    new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoV, 30.0, 0.0, 1.0, 0.0, 1.0, 0, 0, 0));
+  aUStrip1.Append(
+    new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoV, 40.0, 0.0, 1.0, 0.0, 1.0, 0, 0, 0));
   aUFrontier.Append(aUStrip1);
 
   AdvApp2VarIsoStrip aUStrip2;
-  aUStrip2.Append(new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoV, 30.0, 1.0, 2.0, 0.0, 1.0, 0, 0, 0));
-  aUStrip2.Append(new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoV, 40.0, 1.0, 2.0, 0.0, 1.0, 0, 0, 0));
+  aUStrip2.Append(
+    new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoV, 30.0, 1.0, 2.0, 0.0, 1.0, 0, 0, 0));
+  aUStrip2.Append(
+    new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoV, 40.0, 1.0, 2.0, 0.0, 1.0, 0, 0, 0));
   aUFrontier.Append(aUStrip2);
 
   return aUFrontier;
@@ -48,13 +52,17 @@ AdvApp2VarIsoGrid makeVFrontier()
   AdvApp2VarIsoGrid aVFrontier;
 
   AdvApp2VarIsoStrip aVStrip1;
-  aVStrip1.Append(new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoU, 10.0, 0.0, 1.0, 0.0, 1.0, 0, 0, 0));
-  aVStrip1.Append(new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoU, 20.0, 0.0, 1.0, 0.0, 1.0, 0, 0, 0));
+  aVStrip1.Append(
+    new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoU, 10.0, 0.0, 1.0, 0.0, 1.0, 0, 0, 0));
+  aVStrip1.Append(
+    new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoU, 20.0, 0.0, 1.0, 0.0, 1.0, 0, 0, 0));
   aVFrontier.Append(aVStrip1);
 
   AdvApp2VarIsoStrip aVStrip2;
-  aVStrip2.Append(new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoU, 10.0, 0.0, 1.0, 1.0, 2.0, 0, 0, 0));
-  aVStrip2.Append(new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoU, 20.0, 0.0, 1.0, 1.0, 2.0, 0, 0, 0));
+  aVStrip2.Append(
+    new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoU, 10.0, 0.0, 1.0, 1.0, 2.0, 0, 0, 0));
+  aVStrip2.Append(
+    new AdvApp2Var_Iso(GeomAbs_IsoType::GeomAbs_IsoU, 20.0, 0.0, 1.0, 1.0, 2.0, 0, 0, 0));
   aVFrontier.Append(aVStrip2);
 
   return aVFrontier;

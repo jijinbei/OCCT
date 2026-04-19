@@ -165,7 +165,8 @@ VrmlConverter_Projector::VrmlConverter_Projector(const NCollection_Array1<TopoDS
     myPointLight.SetLocation(VSource);
   }
 
-  if (Light == VrmlConverter_TypeOfLight::VrmlConverter_SpotLight || Camera != VrmlConverter_TypeOfCamera::VrmlConverter_NoCamera)
+  if (Light == VrmlConverter_TypeOfLight::VrmlConverter_SpotLight
+      || Camera != VrmlConverter_TypeOfCamera::VrmlConverter_NoCamera)
   {
 
     /*

@@ -108,11 +108,12 @@ public:
   //! the surface
   //!
   //! raise If Domain are infinite or Profile not set.
-  Standard_EXPORT void Build(const occ::handle<GeomFill_SectionLaw>& Section,
-                             const GeomFill_ApproxStyle              Methode    = GeomFill_ApproxStyle::GeomFill_Location,
-                             const GeomAbs_Shape                     Continuity = GeomAbs_C2,
-                             const int                               Degmax     = 10,
-                             const int                               Segmax     = 30);
+  Standard_EXPORT void Build(
+    const occ::handle<GeomFill_SectionLaw>& Section,
+    const GeomFill_ApproxStyle              Methode    = GeomFill_ApproxStyle::GeomFill_Location,
+    const GeomAbs_Shape                     Continuity = GeomAbs_C2,
+    const int                               Degmax     = 10,
+    const int                               Segmax     = 30);
 
   //! Tells if the Surface is Built.
   Standard_EXPORT bool IsDone() const;

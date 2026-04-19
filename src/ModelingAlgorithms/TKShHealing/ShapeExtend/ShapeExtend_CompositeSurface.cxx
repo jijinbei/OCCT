@@ -590,7 +590,8 @@ void ShapeExtend_CompositeSurface::ComputeJointValues(const ShapeExtend_Parametr
   }
   else
   {
-    double stepu = 1., stepv = 1.; // suppose param == ShapeExtend_Parametrisation::ShapeExtend_Uniform
+    double stepu = 1.,
+           stepv = 1.; // suppose param == ShapeExtend_Parametrisation::ShapeExtend_Uniform
     if (param == ShapeExtend_Parametrisation::ShapeExtend_Unitary)
     {
       stepu /= NbU;

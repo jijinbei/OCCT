@@ -22,8 +22,8 @@ class Graphic3d_ArrayOfTriangles : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfTriangles, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of triangles (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES), a triangle can be filled as:
-  //! 1) Creating a set of triangles defined with his vertexes, i.e:
+  //! Creates an array of triangles (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES), a
+  //! triangle can be filled as: 1) Creating a set of triangles defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfTriangles (6);
   //!   myArray->AddVertex (x1, y1, z1);

@@ -108,7 +108,9 @@ void BOPAlgo_BOP::CheckData()
   bool                                     bFuse;
   NCollection_List<TopoDS_Shape>::Iterator aItLS;
   //
-  if (myOperation != BOPAlgo_Operation::BOPAlgo_COMMON && myOperation != BOPAlgo_Operation::BOPAlgo_FUSE && myOperation != BOPAlgo_Operation::BOPAlgo_CUT
+  if (myOperation != BOPAlgo_Operation::BOPAlgo_COMMON
+      && myOperation != BOPAlgo_Operation::BOPAlgo_FUSE
+      && myOperation != BOPAlgo_Operation::BOPAlgo_CUT
       && myOperation != BOPAlgo_Operation::BOPAlgo_CUT21)
   {
     // non-licit operation

@@ -223,7 +223,8 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(
       if (pbfin == 0)
         pbfin = 1;
     }
-    else if (pt == Interface_ParamType::Interface_ParamInteger || pt == Interface_ParamType::Interface_ParamVoid)
+    else if (pt == Interface_ParamType::Interface_ParamInteger
+             || pt == Interface_ParamType::Interface_ParamVoid)
       break;
     else
       pbfin = -1;

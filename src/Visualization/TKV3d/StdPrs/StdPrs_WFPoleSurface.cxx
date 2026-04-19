@@ -61,7 +61,8 @@ void StdPrs_WFPoleSurface::Add(const occ::handle<Prs3d_Presentation>& aPresentat
 {
 
   GeomAbs_SurfaceType SType = aSurface.GetType();
-  if (SType == GeomAbs_SurfaceType::GeomAbs_BezierSurface || SType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+  if (SType == GeomAbs_SurfaceType::GeomAbs_BezierSurface
+      || SType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
     if (SType == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
     {

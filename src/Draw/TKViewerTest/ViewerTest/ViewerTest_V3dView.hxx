@@ -22,9 +22,10 @@ class ViewerTest_V3dView : public V3d_View
   DEFINE_STANDARD_RTTIEXT(ViewerTest_V3dView, V3d_View)
 public:
   //! Initializes the view.
-  Standard_EXPORT ViewerTest_V3dView(const occ::handle<V3d_Viewer>& theViewer,
-                                     const V3d_TypeOfView           theType     = V3d_TypeOfView::V3d_ORTHOGRAPHIC,
-                                     bool                           theIs2dMode = false);
+  Standard_EXPORT ViewerTest_V3dView(
+    const occ::handle<V3d_Viewer>& theViewer,
+    const V3d_TypeOfView           theType     = V3d_TypeOfView::V3d_ORTHOGRAPHIC,
+    bool                           theIs2dMode = false);
 
   //! Initializes the view by copying.
   Standard_EXPORT ViewerTest_V3dView(const occ::handle<V3d_Viewer>& theViewer,

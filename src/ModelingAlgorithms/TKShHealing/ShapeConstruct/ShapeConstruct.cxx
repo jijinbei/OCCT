@@ -86,7 +86,8 @@ occ::handle<Geom_BSplineCurve> ShapeConstruct::ConvertCurveToBSpline(
       if (approx.HasResult())
         aBSpline = approx.Curve();
       else
-        aBSpline = GeomConvert::CurveToBSplineCurve(C3D, Convert_ParameterisationType::Convert_QuasiAngular);
+        aBSpline =
+          GeomConvert::CurveToBSplineCurve(C3D, Convert_ParameterisationType::Convert_QuasiAngular);
     }
     catch (Standard_Failure const& anException)
     {
@@ -96,7 +97,8 @@ occ::handle<Geom_BSplineCurve> ShapeConstruct::ConvertCurveToBSpline(
       std::cout << std::endl;
 #endif
       (void)anException;
-      aBSpline = GeomConvert::CurveToBSplineCurve(C3D, Convert_ParameterisationType::Convert_QuasiAngular);
+      aBSpline =
+        GeomConvert::CurveToBSplineCurve(C3D, Convert_ParameterisationType::Convert_QuasiAngular);
     }
   }
   return aBSpline;
@@ -123,11 +125,14 @@ occ::handle<Geom2d_BSplineCurve> ShapeConstruct::ConvertCurveToBSpline(
     if (approx.HasResult())
       aBSpline2d = approx.Curve();
     else
-      aBSpline2d = Geom2dConvert::CurveToBSplineCurve(tcurve, Convert_ParameterisationType::Convert_QuasiAngular);
+      aBSpline2d =
+        Geom2dConvert::CurveToBSplineCurve(tcurve,
+                                           Convert_ParameterisationType::Convert_QuasiAngular);
   }
   else if (!C2D->IsKind(STANDARD_TYPE(Geom2d_BSplineCurve)))
   {
-    aBSpline2d = Geom2dConvert::CurveToBSplineCurve(C2D, Convert_ParameterisationType::Convert_QuasiAngular);
+    aBSpline2d =
+      Geom2dConvert::CurveToBSplineCurve(C2D, Convert_ParameterisationType::Convert_QuasiAngular);
   }
   else
     aBSpline2d = occ::down_cast<Geom2d_BSplineCurve>(C2D);

@@ -549,7 +549,8 @@ void BOPAlgo_Builder::BuildSplitFaces(const Message_ProgressRange& theRange)
 
 //=================================================================================================
 
-using BOPAlgo_IndexedDataMapOfSetListOfShape = NCollection_IndexedDataMap<BOPTools_Set, NCollection_List<TopoDS_Shape>>;
+using BOPAlgo_IndexedDataMapOfSetListOfShape =
+  NCollection_IndexedDataMap<BOPTools_Set, NCollection_List<TopoDS_Shape>>;
 
 static void AddEdgeSet(const TopoDS_Shape&                           theS,
                        BOPAlgo_IndexedDataMapOfSetListOfShape&       theMap,
@@ -636,7 +637,8 @@ void BOPAlgo_Builder::FillSameDomainFaces(const Message_ProgressRange& theRange)
     {
       // At this stage, context should contain adaptor for all intersected faces,
       // so getting a type of the underlying surface should be done at no cost.
-      if (myContext->SurfaceAdaptor(TopoDS::Face(aF)).GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
+      if (myContext->SurfaceAdaptor(TopoDS::Face(aF)).GetType()
+          == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         // Check bounding box of the face - it should not be open in any side
         const Bnd_Box& aBox = aSI.Box();

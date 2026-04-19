@@ -41,12 +41,14 @@ public:
   }
 
   //! Change the polygons interior color and material ambient color.
-  Standard_EXPORT void SetColor(const Quantity_Color&          aColor,
-                                const Aspect_TypeOfFacingModel aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE);
+  Standard_EXPORT void SetColor(
+    const Quantity_Color&          aColor,
+    const Aspect_TypeOfFacingModel aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE);
 
   //! Change the polygons material aspect.
-  Standard_EXPORT void SetMaterial(const Graphic3d_MaterialAspect& aMaterial,
-                                   const Aspect_TypeOfFacingModel  aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE);
+  Standard_EXPORT void SetMaterial(
+    const Graphic3d_MaterialAspect& aMaterial,
+    const Aspect_TypeOfFacingModel  aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE);
 
   //! Change the polygons transparency value.
   //! Warning : aValue must be in the range 0,1. 0 is the default (NO transparent)

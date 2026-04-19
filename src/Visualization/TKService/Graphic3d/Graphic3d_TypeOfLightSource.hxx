@@ -41,8 +41,7 @@ enum
 {
   //! Auxiliary value defining the overall number of values in enumeration
   //! Graphic3d_TypeOfLightSource
-  Graphic3d_TypeOfLightSource_NB =
-    static_cast<int>(Graphic3d_TypeOfLightSource_Spot) + 1
+  Graphic3d_TypeOfLightSource_NB = static_cast<int>(Graphic3d_TypeOfLightSource_Spot) + 1
 };
 
 #endif // _Graphic3d_TypeOfLightSource_HeaderFile

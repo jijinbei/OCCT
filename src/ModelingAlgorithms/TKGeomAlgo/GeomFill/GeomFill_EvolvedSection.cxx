@@ -41,7 +41,8 @@ GeomFill_EvolvedSection::GeomFill_EvolvedSection(const occ::handle<Geom_Curve>& 
   myCurve   = occ::down_cast<Geom_BSplineCurve>(C);
   if (myCurve.IsNull())
   {
-    myCurve = GeomConvert::CurveToBSplineCurve(C, Convert_ParameterisationType::Convert_QuasiAngular);
+    myCurve =
+      GeomConvert::CurveToBSplineCurve(C, Convert_ParameterisationType::Convert_QuasiAngular);
     if (myCurve->IsPeriodic())
     {
       int M = myCurve->Degree() / 2 + 1;

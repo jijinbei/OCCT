@@ -411,7 +411,8 @@ void IntAna_QuadQuadGeo::Perform(const gp_Pln& P1,
   if (aMVD <= TolAng)
   {
     // normalles are collinear - planes are same or parallel
-    typeres = (std::abs(dist1) <= Tol && std::abs(dist2) <= Tol) ? IntAna_ResultType::IntAna_Same : IntAna_ResultType::IntAna_Empty;
+    typeres = (std::abs(dist1) <= Tol && std::abs(dist2) <= Tol) ? IntAna_ResultType::IntAna_Same
+                                                                 : IntAna_ResultType::IntAna_Empty;
   }
   else
   {

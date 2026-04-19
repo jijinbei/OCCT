@@ -124,7 +124,8 @@ void IGESAppli_ToolDrilledHole::OwnCheck(const occ::handle<IGESAppli_DrilledHole
                                          occ::handle<Interface_Check>& ach) const
 {
   if (ent->SubordinateStatus() != 0)
-    if (ent->DefLevel() != IGESData_DefList::IGESData_DefOne && ent->DefLevel() != IGESData_DefList::IGESData_DefSeveral)
+    if (ent->DefLevel() != IGESData_DefList::IGESData_DefOne
+        && ent->DefLevel() != IGESData_DefList::IGESData_DefSeveral)
       ach->AddFail("Level type : Not value/reference");
   if (ent->NbPropertyValues() != 5)
     ach->AddFail("Number of Property Values != 5");

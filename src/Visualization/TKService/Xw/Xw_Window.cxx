@@ -591,7 +591,8 @@ bool Xw_Window::ProcessMessage(Aspect_WindowInputListener& theListener,
   switch (theMsg.type)
   {
     case ClientMessage: {
-      if ((Atom)theMsg.xclient.data.l[0] == myDisplay->GetAtom(Aspect_XAtom::Aspect_XA_DELETE_WINDOW)
+      if ((Atom)theMsg.xclient.data.l[0]
+            == myDisplay->GetAtom(Aspect_XAtom::Aspect_XA_DELETE_WINDOW)
           && theMsg.xclient.window == (Window)myXWindow)
       {
         theListener.ProcessClose();

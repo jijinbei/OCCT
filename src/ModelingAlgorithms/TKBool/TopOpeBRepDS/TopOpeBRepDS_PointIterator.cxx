@@ -34,7 +34,8 @@ bool TopOpeBRepDS_PointIterator::MatchInterference(
   const occ::handle<TopOpeBRepDS_Interference>& I) const
 {
   TopOpeBRepDS_Kind GT = I->GeometryType();
-  bool              r  = (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT) || (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
+  bool              r =
+    (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT) || (GT == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
   return r;
 }
 

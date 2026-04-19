@@ -796,12 +796,13 @@ void IntWalk_PWalking::Perform(const NCollection_Array1<double>& ParDep,
 
   AddAPoint(previousPoint);
   //
-  IntWalk_StatusDeflection aStatus = IntWalk_StatusDeflection::IntWalk_OK, aPrevStatus = IntWalk_StatusDeflection::IntWalk_OK;
-  bool                     NoTestDeflection = false;
-  double                   SvParam[4], f;
-  int                      LevelOfEmptyInmyIntersectionOn2S = 0;
-  int                      LevelOfPointConfondu             = 0;
-  int                      LevelOfIterWithoutAppend         = -1;
+  IntWalk_StatusDeflection aStatus     = IntWalk_StatusDeflection::IntWalk_OK,
+                           aPrevStatus = IntWalk_StatusDeflection::IntWalk_OK;
+  bool   NoTestDeflection              = false;
+  double SvParam[4], f;
+  int    LevelOfEmptyInmyIntersectionOn2S = 0;
+  int    LevelOfPointConfondu             = 0;
+  int    LevelOfIterWithoutAppend         = -1;
   //
 
   const double aTol[4] = {Epsilon(UM1 - Um1),
@@ -939,7 +940,8 @@ void IntWalk_PWalking::Perform(const NCollection_Array1<double>& ParDep,
         anAbsParamDist[2] = std::abs(Param(3) - dP3 - aNewPnt[2]);
         anAbsParamDist[3] = std::abs(Param(4) - dP4 - aNewPnt[3]);
         if (anAbsParamDist[0] < ResoU1 && anAbsParamDist[1] < ResoV1 && anAbsParamDist[2] < ResoU2
-            && anAbsParamDist[3] < ResoV2 && aStatus != IntWalk_StatusDeflection::IntWalk_PasTropGrand)
+            && anAbsParamDist[3] < ResoV2
+            && aStatus != IntWalk_StatusDeflection::IntWalk_PasTropGrand)
         {
           isBadPoint = true;
           aBestIso   = IntImp_ConstIsoparametric((aBestIso + 1) % 4);
@@ -1151,7 +1153,8 @@ void IntWalk_PWalking::Perform(const NCollection_Array1<double>& ParDep,
                 if (aDelta > Epsilon(pasInit[i]))
                 {
                   pasInit[i] -= aDelta;
-                  if ((aPrevStatus != IntWalk_StatusDeflection::IntWalk_StepTooSmall) && (line->NbPoints() != aPrevNbPoints))
+                  if ((aPrevStatus != IntWalk_StatusDeflection::IntWalk_StepTooSmall)
+                      && (line->NbPoints() != aPrevNbPoints))
                   {
                     LevelOfIterWithoutAppend = 0;
                   }
@@ -1228,7 +1231,8 @@ void IntWalk_PWalking::Perform(const NCollection_Array1<double>& ParDep,
               // StepTooSmall --> Increase step --> PasTropGrand...)
               // nullify LevelOfIterWithoutAppend only if the condition
               // is satisfied:
-              if ((aPrevStatus != IntWalk_StatusDeflection::IntWalk_PasTropGrand) && (line->NbPoints() != aPrevNbPoints))
+              if ((aPrevStatus != IntWalk_StatusDeflection::IntWalk_PasTropGrand)
+                  && (line->NbPoints() != aPrevNbPoints))
               {
                 LevelOfIterWithoutAppend = 0;
               }
@@ -1349,7 +1353,8 @@ void IntWalk_PWalking::Perform(const NCollection_Array1<double>& ParDep,
                   pasSav[2] = pasuv[2];
                   pasSav[3] = pasuv[3];
 
-                  if ((aPrevStatus == IntWalk_StatusDeflection::IntWalk_PasTropGrand) && (LevelOfIterWithoutAppend > 0))
+                  if ((aPrevStatus == IntWalk_StatusDeflection::IntWalk_PasTropGrand)
+                      && (LevelOfIterWithoutAppend > 0))
                   {
                     pasInit[0] = pasuv[0];
                     pasInit[1] = pasuv[1];
@@ -1713,7 +1718,8 @@ void IntWalk_PWalking::Perform(const NCollection_Array1<double>& ParDep,
                 }
               } //$$$ end framing on border (!close)
             } // 004 fin TestArret return Arrive = True
-          } // 006case IntWalk_StatusDeflection::IntWalk_ArretSurPoint:  end Processing Status = OK  or ArretSurPoint
+          } // 006case IntWalk_StatusDeflection::IntWalk_ArretSurPoint:  end Processing Status = OK
+            // or ArretSurPoint
         } // 007  switch(aStatus)
       } // 008 end processing point  (TEST DEFLECTION)
     } // 009 end processing line (else if myIntersectionOn2S.IsDone())
@@ -2112,7 +2118,8 @@ bool IntWalk_PWalking::ExtendLineInCommonZone(const IntImp_ConstIsoparametric th
 
   if (!bExtendLine)
   {
-    //    if(aStatus == IntWalk_StatusDeflection::IntWalk_OK || aStatus == IntWalk_StatusDeflection::IntWalk_ArretSurPoint) {
+    //    if(aStatus == IntWalk_StatusDeflection::IntWalk_OK || aStatus ==
+    //    IntWalk_StatusDeflection::IntWalk_ArretSurPoint) {
     if (aStatus == IntWalk_StatusDeflection::IntWalk_OK)
     {
       bExtendLine = true;

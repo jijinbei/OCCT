@@ -523,7 +523,8 @@ double GetLocalStep(const occ::handle<Adaptor3d_Surface>& theSurf, const double 
   {
     GeomAbs_SurfaceType aSType = theSurf->GetType();
 
-    if (aSType == GeomAbs_SurfaceType::GeomAbs_BezierSurface || aSType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+    if (aSType == GeomAbs_SurfaceType::GeomAbs_BezierSurface
+        || aSType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
     {
       double       aMinRes = Precision::Infinite();
       int          aMaxDeg = 0;
@@ -897,7 +898,9 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
           thelin->Value(1).ParametersOnS2(AnU2, AnV2);
         }
 
-        if (typQuad == GeomAbs_SurfaceType::GeomAbs_Cylinder || typQuad == GeomAbs_SurfaceType::GeomAbs_Cone || typQuad == GeomAbs_SurfaceType::GeomAbs_Sphere)
+        if (typQuad == GeomAbs_SurfaceType::GeomAbs_Cylinder
+            || typQuad == GeomAbs_SurfaceType::GeomAbs_Cone
+            || typQuad == GeomAbs_SurfaceType::GeomAbs_Sphere)
         {
           arecadr = true;
         }
@@ -1826,9 +1829,10 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
   if (slin.Length() == 0)
     return;
 
-  bool isDecomposeRequired =
-    (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Cone) || (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Sphere)
-    || (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Cylinder) || (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Torus);
+  bool isDecomposeRequired = (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Cone)
+                             || (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Sphere)
+                             || (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Cylinder)
+                             || (Quad.TypeQuadric() == GeomAbs_SurfaceType::GeomAbs_Torus);
 
   if (!isDecomposeRequired)
     return;

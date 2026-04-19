@@ -983,7 +983,8 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
           IntRes2d_IntersectionPoint IP;
           IntRes2d_Transition        Tr1, Tr2;
           SelectIntPnt(Inter, IP, Tr1, Tr2);
-          if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
+          if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle
+              && Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
           {
             double        param1 = IP.ParamOnFirst();
             double        param2 = IP.ParamOnSecond();
@@ -1098,7 +1099,8 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                 continue;
             }
           }
-          if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
+          if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle
+              && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
           {
             // find needed vertex from edge2 and split edge1 using it
             double param1 = IP.ParamOnFirst();
@@ -1117,7 +1119,8 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               break;
             }
           }
-          if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
+          if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle
+              && Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
           {
             // find needed vertex from edge1 and split edge2 using it
             double param2 = IP.ParamOnSecond();
@@ -1136,7 +1139,8 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               continue;
             }
           }
-          if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
+          if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle
+              && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
           {
             // union vertexes
             if (UnionVertexes(sewd, edge1, edge2, num2, boxes, B2))

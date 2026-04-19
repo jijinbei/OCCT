@@ -1607,7 +1607,8 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
       TopOpeBRepDS_Kind GT1, ST1;
       int               G1, S1;
       FDS_data(ssi, GT1, G1, ST1, S1);
-      bool cond = (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE && ST1 == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE);
+      bool cond = (GT1 == TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE
+                   && ST1 == TopOpeBRepDS_Kind::TopOpeBRepDS_FACE);
       cond      = cond && (G1 == ie3);
       // NYI cond = cond && e(S1 est une face connexe a iFOR par ie3)
       if (cond)

@@ -607,7 +607,8 @@ int BOPTools_AlgoTools3D::PointNearEdge(const TopoDS_Edge&                   aE,
   //
   aS = BRep_Tool::Surface(aF);
   aGAS.Load(aS);
-  if (aGAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder || aGAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
+  if (aGAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
+      || aGAS.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     dT2D = 10. * dT2D;
   }

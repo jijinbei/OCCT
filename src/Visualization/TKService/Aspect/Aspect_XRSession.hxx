@@ -133,14 +133,16 @@ public:
   //! Return left hand orientation.
   gp_Trsf LeftHandPose() const
   {
-    const int aDevice = NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand);
+    const int aDevice =
+      NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand);
     return aDevice != -1 ? myTrackedPoses[aDevice].Orientation : gp_Trsf();
   }
 
   //! Return right hand orientation.
   gp_Trsf RightHandPose() const
   {
-    const int aDevice = NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand);
+    const int aDevice =
+      NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand);
     return aDevice != -1 ? myTrackedPoses[aDevice].Orientation : gp_Trsf();
   }
 

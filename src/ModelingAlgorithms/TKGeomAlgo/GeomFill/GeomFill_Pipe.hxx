@@ -100,9 +100,10 @@ public:
   //! Option can be - GeomFill_Trihedron::GeomFill_IsCorrectedFrenet
   //! - GeomFill_Trihedron::GeomFill_IsFrenet
   //! - GeomFill_IsConstant
-  Standard_EXPORT GeomFill_Pipe(const occ::handle<Geom_Curve>& Path,
-                                const occ::handle<Geom_Curve>& FirstSect,
-                                const GeomFill_Trihedron       Option = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet);
+  Standard_EXPORT GeomFill_Pipe(
+    const occ::handle<Geom_Curve>& Path,
+    const occ::handle<Geom_Curve>& FirstSect,
+    const GeomFill_Trihedron       Option = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet);
 
   //! Create a pipe with a constant section
   //! (<FirstSection>) and a path defined by <Path> and <Support>
@@ -188,9 +189,10 @@ public:
 
   Standard_EXPORT void Init(const occ::handle<Geom_Curve>& Path, const double Radius);
 
-  Standard_EXPORT void Init(const occ::handle<Geom_Curve>& Path,
-                            const occ::handle<Geom_Curve>& FirstSect,
-                            const GeomFill_Trihedron       Option = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet);
+  Standard_EXPORT void Init(
+    const occ::handle<Geom_Curve>& Path,
+    const occ::handle<Geom_Curve>& FirstSect,
+    const GeomFill_Trihedron       Option = GeomFill_Trihedron::GeomFill_IsCorrectedFrenet);
 
   Standard_EXPORT void Init(const occ::handle<Geom2d_Curve>& Path,
                             const occ::handle<Geom_Surface>& Support,

@@ -21,7 +21,8 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Graphic3d_HatchStyle, Standard_Transient)
 
-static const unsigned int myPredefinedPatterns[static_cast<int>(Aspect_HatchStyle::Aspect_HS_NB)][32] = {
+static const unsigned int myPredefinedPatterns[static_cast<int>(
+  Aspect_HatchStyle::Aspect_HS_NB)][32] = {
   // Aspect_HatchStyle::Aspect_HS_SOLID
   {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
@@ -90,7 +91,8 @@ static const unsigned int myPredefinedPatterns[static_cast<int>(Aspect_HatchStyl
 
 namespace
 {
-static std::atomic<int> THE_HATCH_STYLE_COUNTER(static_cast<int>(Aspect_HatchStyle::Aspect_HS_NB) - 1);
+static std::atomic<int> THE_HATCH_STYLE_COUNTER(static_cast<int>(Aspect_HatchStyle::Aspect_HS_NB)
+                                                - 1);
 }
 
 //=================================================================================================
@@ -115,11 +117,10 @@ Graphic3d_HatchStyle::Graphic3d_HatchStyle(const occ::handle<Image_PixMap>& theP
 
 const uint8_t* Graphic3d_HatchStyle::Pattern() const
 {
-  return !myPattern.IsNull()
-           ? myPattern->Data()
-           : (myHatchType < static_cast<int>(Aspect_HatchStyle::Aspect_HS_NB)
-                ? (const uint8_t*)myPredefinedPatterns[myHatchType]
-                : nullptr);
+  return !myPattern.IsNull() ? myPattern->Data()
+                             : (myHatchType < static_cast<int>(Aspect_HatchStyle::Aspect_HS_NB)
+                                  ? (const uint8_t*)myPredefinedPatterns[myHatchType]
+                                  : nullptr);
 }
 
 //=================================================================================================

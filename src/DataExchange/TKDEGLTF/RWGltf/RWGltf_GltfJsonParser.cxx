@@ -691,7 +691,8 @@ bool RWGltf_GltfJsonParser::gltfParseRoots()
 {
   // find glTF root elements for smooth navigation
   RWGltf_JsonValue aNames[RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB];
-  for (int aRootNameIter = 0; aRootNameIter < RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB; ++aRootNameIter)
+  for (int aRootNameIter = 0; aRootNameIter < RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB;
+       ++aRootNameIter)
   {
     aNames[aRootNameIter] =
       rapidjson::StringRef(RWGltf_GltfRootElementName((RWGltf_GltfRootElement)aRootNameIter));
@@ -699,7 +700,8 @@ bool RWGltf_GltfJsonParser::gltfParseRoots()
 
   for (ConstMemberIterator aRootIter = MemberBegin(); aRootIter != MemberEnd(); ++aRootIter)
   {
-    for (int aRootNameIter = 0; aRootNameIter < RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB; ++aRootNameIter)
+    for (int aRootNameIter = 0; aRootNameIter < RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB;
+         ++aRootNameIter)
     {
       if (myGltfRoots[aRootNameIter].IsNull() && aNames[aRootNameIter] == aRootIter->name)
       {
@@ -712,9 +714,12 @@ bool RWGltf_GltfJsonParser::gltfParseRoots()
     }
   }
 
-  for (int aRootNameIter = 0; aRootNameIter < RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB_MANDATORY; ++aRootNameIter)
+  for (int aRootNameIter = 0;
+       aRootNameIter < RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB_MANDATORY;
+       ++aRootNameIter)
   {
-    if (myGltfRoots[aRootNameIter].IsNull() && aRootNameIter != RWGltf_GltfRootElement::RWGltf_GltfRootElement_Scene)
+    if (myGltfRoots[aRootNameIter].IsNull()
+        && aRootNameIter != RWGltf_GltfRootElement::RWGltf_GltfRootElement_Scene)
     {
       reportGltfError("Member '" + RWGltf_GltfRootElementName((RWGltf_GltfRootElement)aRootNameIter)
                       + "' is not found.");
@@ -728,7 +733,8 @@ bool RWGltf_GltfJsonParser::gltfParseRoots()
 
 void RWGltf_GltfJsonParser::gltfParseAsset()
 {
-  const RWGltf_JsonValue* anAsset = myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Asset].Root();
+  const RWGltf_JsonValue* anAsset =
+    myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Asset].Root();
   if (anAsset == nullptr)
   {
     return;
@@ -792,7 +798,8 @@ void RWGltf_GltfJsonParser::gltfParseAsset()
 
 void RWGltf_GltfJsonParser::gltfParseMaterials()
 {
-  const RWGltf_JsonValue* aMatList = myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Materials].Root();
+  const RWGltf_JsonValue* aMatList =
+    myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Materials].Root();
   if (aMatList == nullptr)
   {
     return;
@@ -934,8 +941,10 @@ void RWGltf_GltfJsonParser::gltfBindMaterial(
     aMat->SetAlphaMode(anAlphaMode, theMatPbr->AlphaCutOff);
     // consider "doubleSided" material flag as indication of automatically culled material
     // as glTF doesn't define closed/open flag and culling will be practically disabled
-    aMat->SetFaceCulling(theMatPbr->IsDoubleSided ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
-                                                  : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
+    aMat->SetFaceCulling(
+      theMatPbr->IsDoubleSided
+        ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
+        : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
 
     if (!theMatPbr->Name.IsEmpty())
     {
@@ -1164,7 +1173,8 @@ bool RWGltf_GltfJsonParser::gltfParseCommonMaterial(occ::handle<RWGltf_MaterialC
 bool RWGltf_GltfJsonParser::gltfParseTexture(occ::handle<Image_Texture>& theTexture,
                                              const RWGltf_JsonValue*     theTextureId)
 {
-  if (theTextureId == nullptr || myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Textures].IsNull()
+  if (theTextureId == nullptr
+      || myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Textures].IsNull()
       || myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Images].IsNull())
   {
     return false;
@@ -1230,7 +1240,8 @@ bool RWGltf_GltfJsonParser::gltfParseTexture(occ::handle<Image_Texture>& theText
         return false;
       }
       const RWGltf_JsonValue* aBufferView =
-        myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_BufferViews].FindChild(*aBufferViewName);
+        myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_BufferViews].FindChild(
+          *aBufferViewName);
       if (aBufferView == nullptr || !aBufferView->IsObject())
       {
         reportGltfWarning("Invalid texture node '" + aTextureId
@@ -1256,7 +1267,8 @@ bool RWGltf_GltfJsonParser::gltfParseTexture(occ::handle<Image_Texture>& theText
     }
 
     const RWGltf_JsonValue* aBufferView =
-      myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_BufferViews].FindChild(*aBufferViewName);
+      myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_BufferViews].FindChild(
+        *aBufferViewName);
     if (aBufferView == nullptr || !aBufferView->IsObject())
     {
       reportGltfWarning("Invalid texture node '" + aTextureId + "' points to invalid buffer view '"
@@ -1456,7 +1468,8 @@ bool RWGltf_GltfJsonParser::gltfParseTextureInBufferView(
 
 bool RWGltf_GltfJsonParser::gltfParseScene(const Message_ProgressRange& theProgress)
 {
-  const RWGltf_JsonValue* aScenes = myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Scenes].Root();
+  const RWGltf_JsonValue* aScenes =
+    myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Scenes].Root();
   if (myToLoadAllScenes && !myIsGltf1 && aScenes->IsArray() && aScenes->Size() > 1)
   {
     Message_ProgressScope aPS(theProgress, "Parsing scenes", aScenes->Size());
@@ -1507,8 +1520,10 @@ bool RWGltf_GltfJsonParser::gltfParseScene(const Message_ProgressRange& theProgr
   const RWGltf_JsonValue* aSceneNodes = findObjectMember(*aDefScene, "nodes");
   if (aSceneNodes == nullptr || !aSceneNodes->IsArray())
   {
-    reportGltfError("Empty scene '"
-                    + getKeyString(*myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Scene].Root()) + "'.");
+    reportGltfError(
+      "Empty scene '"
+      + getKeyString(*myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Scene].Root())
+      + "'.");
     return false;
   }
 
@@ -1676,7 +1691,8 @@ bool RWGltf_GltfJsonParser::gltfParseSceneNode(TopoDS_Shape&                  th
   if (aMesh_2 != nullptr)
   {
     // glTF 2.0
-    const RWGltf_JsonValue* aMesh = myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Meshes].FindChild(*aMesh_2);
+    const RWGltf_JsonValue* aMesh =
+      myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Meshes].FindChild(*aMesh_2);
     if (aMesh == nullptr)
     {
       theNodeShape = aNodeShape;
@@ -1805,13 +1821,15 @@ bool RWGltf_GltfJsonParser::gltfParsePrimArray(TopoDS_Shape&                  th
     {
       aMode = (RWGltf_GltfPrimitiveMode)aModeVal->GetInt();
     }
-    if (aMode < RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Points || aMode > RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_TriangleFan)
+    if (aMode < RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Points
+        || aMode > RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_TriangleFan)
     {
       reportGltfError("Primitive array within Mesh '" + theMeshId + "' has unknown mode.");
       return false;
     }
   }
-  if (aMode != RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Triangles && aMode != RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Lines
+  if (aMode != RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Triangles
+      && aMode != RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Lines
       && aMode != RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Points)
   {
     Message::SendWarning(TCollection_AsciiString() + "Primitive array within Mesh '" + theMeshId
@@ -1904,7 +1922,8 @@ bool RWGltf_GltfJsonParser::gltfParsePrimArray(TopoDS_Shape&                  th
     }
 
     const RWGltf_JsonValue* anAccessor =
-      myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors].FindChild(anAttribIter->value);
+      myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors].FindChild(
+        anAttribIter->value);
     if (anAccessor == nullptr || !anAccessor->IsObject())
     {
       reportGltfError("Primitive array attribute accessor key '" + anAttribId
@@ -2170,7 +2189,8 @@ bool RWGltf_GltfJsonParser::gltfParseAccessor(
   }
   else if (theType == RWGltf_GltfArrayType::RWGltf_GltfArrayType_Indices)
   {
-    if (theMeshData->PrimitiveMode() == RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Triangles)
+    if (theMeshData->PrimitiveMode()
+        == RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Triangles)
     {
       theMeshData->SetNbDeferredTriangles((int)(aStruct.Count / 3));
     }
@@ -2182,7 +2202,8 @@ bool RWGltf_GltfJsonParser::gltfParseAccessor(
   }
 
   const RWGltf_JsonValue* aBufferView =
-    myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_BufferViews].FindChild(*aBufferViewName);
+    myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_BufferViews].FindChild(
+      *aBufferViewName);
   if (aBufferView == nullptr || !aBufferView->IsObject())
   {
     reportGltfError("Accessor '" + theName + "' refers to non-existing bufferView.");
@@ -2228,7 +2249,8 @@ bool RWGltf_GltfJsonParser::gltfParseBufferView(
   {
     aBuffView.Target = (RWGltf_GltfBufferViewTarget)aTarget->GetInt();
     if (aBuffView.Target != RWGltf_GltfBufferViewTarget::RWGltf_GltfBufferViewTarget_ARRAY_BUFFER
-        && aBuffView.Target != RWGltf_GltfBufferViewTarget::RWGltf_GltfBufferViewTarget_ELEMENT_ARRAY_BUFFER)
+        && aBuffView.Target
+             != RWGltf_GltfBufferViewTarget::RWGltf_GltfBufferViewTarget_ELEMENT_ARRAY_BUFFER)
     {
       reportGltfError("BufferView '" + theName + "' defines invalid target.");
       return false;

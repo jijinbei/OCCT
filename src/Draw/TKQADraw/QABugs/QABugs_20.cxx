@@ -4159,9 +4159,7 @@ static int OCC33657_4(Draw_Interpretor& theDI, int theArgC, const char** theArgV
 
     // Writing.
     STEPControl_Writer aWriter;
-    aWriter.Transfer(aSourceShape,
-                     STEPControl_AsIs,
-                     DESTEP_Parameters{});
+    aWriter.Transfer(aSourceShape, STEPControl_AsIs, DESTEP_Parameters{});
     std::stringstream aStream;
     aWriter.WriteStream(aStream);
 

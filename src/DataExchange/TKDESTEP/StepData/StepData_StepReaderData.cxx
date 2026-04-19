@@ -1404,7 +1404,8 @@ bool StepData_StepReaderData::ReadReal(const int                     num,
   if (nump > 0 && nump <= NbParams(num))
   {
     const Interface_FileParameter& FP = Param(num, nump);
-    if (FP.ParamType() == Interface_ParamType::Interface_ParamReal || FP.ParamType() == Interface_ParamType::Interface_ParamInteger)
+    if (FP.ParamType() == Interface_ParamType::Interface_ParamReal
+        || FP.ParamType() == Interface_ParamType::Interface_ParamInteger)
       val = Interface_FileReaderData::Fastof(FP.CValue());
     else
       errmess = "Parameter n0.%d (%s) not a Real";
@@ -1556,7 +1557,8 @@ bool StepData_StepReaderData::ReadInteger(const int                     num,
       val     = static_cast<int>(std::round(Interface_FileReaderData::Fastof(FP.CValue())));
       errmess = "Parameter n0.%d (%s) was rounded";
     }
-    if (FP.ParamType() != Interface_ParamType::Interface_ParamInteger && FP.ParamType() != Interface_ParamType::Interface_ParamReal)
+    if (FP.ParamType() != Interface_ParamType::Interface_ParamInteger
+        && FP.ParamType() != Interface_ParamType::Interface_ParamReal)
       errmess = "Parameter n0.%d (%s) not an Integer";
   }
   else

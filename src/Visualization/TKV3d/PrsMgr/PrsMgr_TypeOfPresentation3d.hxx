@@ -29,7 +29,9 @@ enum class PrsMgr_TypeOfPresentation3d
   PrsMgr_TOP_ProjectorDependent
 };
 
-Standard_DEPRECATED("PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent should be used instead")
-const PrsMgr_TypeOfPresentation3d PrsMgr_TOP_ProjectorDependant = PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent;
+Standard_DEPRECATED(
+  "PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent should be used instead")
+const PrsMgr_TypeOfPresentation3d PrsMgr_TOP_ProjectorDependant =
+  PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent;
 
 #endif // _PrsMgr_TypeOfPresentation3d_HeaderFile

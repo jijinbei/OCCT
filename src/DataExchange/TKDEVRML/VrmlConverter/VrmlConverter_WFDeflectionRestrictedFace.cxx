@@ -36,7 +36,8 @@ static double GetDeflection(const occ::handle<BRepAdaptor_Surface>&  aFace,
 {
 
   double theRequestedDeflection;
-  if (aDrawer->TypeOfDeflection() == Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE) // TOD_RELATIVE, TOD_ABSOLUTE
+  if (aDrawer->TypeOfDeflection()
+      == Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE) // TOD_RELATIVE, TOD_ABSOLUTE
   {
     Bnd_Box box;
     BndLib_AddSurface::Add(*aFace, Precision::Confusion(), box);

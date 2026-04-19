@@ -147,7 +147,8 @@ void AIS_Selection::SelectOwners(
 {
   (void)theToAllowSelOverlap;
 
-  if (theSelScheme == AIS_SelectionScheme::AIS_SelectionScheme_ReplaceExtra && thePickedOwners.Size() == myresult.Size())
+  if (theSelScheme == AIS_SelectionScheme::AIS_SelectionScheme_ReplaceExtra
+      && thePickedOwners.Size() == myresult.Size())
   {
     // If picked owners is equivalent to the selected then just clear selected.
     bool isTheSame = true;

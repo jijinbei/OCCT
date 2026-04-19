@@ -463,8 +463,9 @@ void PrsDim_AngleDimension::DrawArcWithText(const occ::handle<Prs3d_Presentation
 
   occ::handle<Prs3d_DimensionAspect> aDimensionAspect = myDrawer->DimensionAspect();
 
-  bool isLineBreak =
-    aDimensionAspect->TextVerticalPosition() == Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center && aDimensionAspect->IsText3d();
+  bool isLineBreak = aDimensionAspect->TextVerticalPosition()
+                       == Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center
+                     && aDimensionAspect->IsText3d();
 
   if (isLineBreak)
   {
@@ -658,7 +659,8 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
   switch (aHPosition)
   {
     case LabelPosition_HCenter: {
-      bool isLineBreak = aDimensionAspect->TextVerticalPosition() == Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center
+      bool isLineBreak = aDimensionAspect->TextVerticalPosition()
+                           == Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center
                          && aDimensionAspect->IsText3d();
 
       if (isLineBreak)
@@ -689,10 +691,14 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
       if (theMode == ComputeMode_All || theMode == ComputeMode_Line)
       {
         DrawArc(thePresentation,
-                (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
+                (isArrowsExternal
+                 || !isArrowVisible(
+                   PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
                   ? aFirstAttach
                   : aFirstArrowEnd,
-                (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
+                (isArrowsExternal
+                 || !isArrowVisible(
+                   PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
                   ? aSecondAttach
                   : aSecondArrowEnd,
                 myCenterPoint,
@@ -705,7 +711,9 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     case LabelPosition_Left: {
       DrawExtension(thePresentation,
                     anExtensionSize,
-                    (isArrowsExternal && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
+                    (isArrowsExternal
+                     && isArrowVisible(
+                       PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
                       ? aFirstArrowEnd
                       : aFirstAttach,
                     aFirstExtensionDir,
@@ -719,7 +727,9 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     case LabelPosition_Right: {
       DrawExtension(thePresentation,
                     anExtensionSize,
-                    (isArrowsExternal && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
+                    (isArrowsExternal
+                     && isArrowVisible(
+                       PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
                       ? aSecondArrowEnd
                       : aSecondAttach,
                     aSecondExtensionDir,
@@ -738,10 +748,14 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     thePresentation->NewGroup();
 
     DrawArc(thePresentation,
-            (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
+            (isArrowsExternal
+             || !isArrowVisible(
+               PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
               ? aFirstAttach
               : aFirstArrowEnd,
-            (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
+            (isArrowsExternal
+             || !isArrowVisible(
+               PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
               ? aSecondAttach
               : aSecondArrowEnd,
             myCenterPoint,
@@ -764,7 +778,9 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
   {
     thePresentation->NewGroup();
 
-    if (aHPosition != LabelPosition_Left && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
+    if (aHPosition != LabelPosition_Left
+        && isArrowVisible(
+          PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
     {
       DrawExtension(thePresentation,
                     aDimensionAspect->ArrowTailSize(),
@@ -777,7 +793,8 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     }
 
     if (aHPosition != LabelPosition_Right
-        && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
+        && isArrowVisible(
+          PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
     {
       DrawExtension(thePresentation,
                     aDimensionAspect->ArrowTailSize(),
@@ -840,7 +857,8 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
   BRepAdaptor_Curve aMakeFirstLine(aFirstEdge);
   BRepAdaptor_Curve aMakeSecondLine(aSecondEdge);
 
-  if (aMakeFirstLine.GetType() != GeomAbs_CurveType::GeomAbs_Line || aMakeSecondLine.GetType() != GeomAbs_CurveType::GeomAbs_Line)
+  if (aMakeFirstLine.GetType() != GeomAbs_CurveType::GeomAbs_Line
+      || aMakeSecondLine.GetType() != GeomAbs_CurveType::GeomAbs_Line)
   {
     return false;
   }
@@ -970,7 +988,8 @@ bool PrsDim_AngleDimension::InitTwoFacesAngle()
                            aSecondSurfType,
                            aSecondOffset);
 
-  if (aFirstSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane && aSecondSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane)
+  if (aFirstSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane
+      && aSecondSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane)
   {
     // Planar faces angle
     occ::handle<Geom_Plane> aFirstPlane  = occ::down_cast<Geom_Plane>(aFirstBasisSurf);
@@ -1019,7 +1038,8 @@ bool PrsDim_AngleDimension::InitTwoFacesAngle(const gp_Pnt& thePointOnFirstFace)
                            aSecondOffset);
 
   myFirstPoint = thePointOnFirstFace;
-  if (aFirstSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane && aSecondSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane)
+  if (aFirstSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane
+      && aSecondSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane)
   {
     // Planar faces angle
     occ::handle<Geom_Plane> aFirstPlane  = occ::down_cast<Geom_Plane>(aFirstBasisSurf);
@@ -1171,13 +1191,18 @@ bool PrsDim_AngleDimension::isArrowVisible(
   switch (theArrowType)
   {
     case PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both:
-      return myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both;
+      return myArrowsVisibility
+             == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both;
     case PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First:
-      return myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both
-             || myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First;
+      return myArrowsVisibility
+               == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both
+             || myArrowsVisibility
+                  == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First;
     case PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second:
-      return myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both
-             || myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second;
+      return myArrowsVisibility
+               == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both
+             || myArrowsVisibility
+                  == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second;
     case PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_None:
       return false;
   }

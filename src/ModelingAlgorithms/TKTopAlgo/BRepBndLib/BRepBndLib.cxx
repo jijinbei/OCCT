@@ -429,7 +429,8 @@ void BRepBndLib::AddOptimal(const TopoDS_Shape& S,
 bool CanUseEdges(const Adaptor3d_Surface& BS)
 {
   GeomAbs_SurfaceType aST = BS.GetType();
-  if (aST == GeomAbs_SurfaceType::GeomAbs_Plane || aST == GeomAbs_SurfaceType::GeomAbs_Cylinder || aST == GeomAbs_SurfaceType::GeomAbs_Cone
+  if (aST == GeomAbs_SurfaceType::GeomAbs_Plane || aST == GeomAbs_SurfaceType::GeomAbs_Cylinder
+      || aST == GeomAbs_SurfaceType::GeomAbs_Cone
       || aST == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
   {
     return true;

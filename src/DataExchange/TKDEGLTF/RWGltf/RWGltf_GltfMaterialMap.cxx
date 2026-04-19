@@ -117,7 +117,8 @@ void RWGltf_GltfMaterialMap::addImage(RWGltf_GltfOStreamWriter*         theWrite
 
   if (!theIsStarted)
   {
-    theWriter->Key(RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Images));
+    theWriter->Key(
+      RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Images));
     theWriter->StartArray();
     theIsStarted = true;
   }
@@ -227,7 +228,8 @@ void RWGltf_GltfMaterialMap::FlushGlbImages(RWGltf_GltfOStreamWriter* theWriter)
 
     if (!isStarted)
     {
-      theWriter->Key(RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Images));
+      theWriter->Key(
+        RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Images));
       theWriter->StartArray();
       isStarted = true;
     }
@@ -273,7 +275,8 @@ void RWGltf_GltfMaterialMap::AddMaterial(RWGltf_GltfOStreamWriter* theWriter,
 
   if (!theIsStarted)
   {
-    theWriter->Key(RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Materials));
+    theWriter->Key(
+      RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Materials));
     theWriter->StartArray();
     theIsStarted = true;
   }
@@ -324,7 +327,8 @@ void RWGltf_GltfMaterialMap::addTexture(RWGltf_GltfOStreamWriter*         theWri
 
   if (!theIsStarted)
   {
-    theWriter->Key(RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Textures));
+    theWriter->Key(
+      RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Textures));
     theWriter->StartArray();
     theIsStarted = true;
   }
@@ -453,11 +457,14 @@ void RWGltf_GltfMaterialMap::DefineMaterial(const XCAFPrs_Style& theStyle,
     // Solids with singleSided material and Shells with doubleSided material,
     // as both may share the same material having "auto" flag
     if (theStyle.Material().IsNull()
-        || theStyle.Material()->FaceCulling() == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
-        || theStyle.Material()->FaceCulling() == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided
         || theStyle.Material()->FaceCulling()
-             == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled) // front culling flag cannot be
-                                                             // exported to glTF
+             == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
+        || theStyle.Material()->FaceCulling()
+             == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided
+        || theStyle.Material()->FaceCulling()
+             == Graphic3d_TypeOfBackfacingModel::
+               Graphic3d_TypeOfBackfacingModel_FrontCulled) // front culling flag cannot be
+                                                            // exported to glTF
     {
       myWriter->Key("doubleSided");
       myWriter->Bool(true);

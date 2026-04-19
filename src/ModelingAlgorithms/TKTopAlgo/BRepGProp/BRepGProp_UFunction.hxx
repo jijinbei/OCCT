@@ -37,8 +37,9 @@ class gp_XYZ;
 //! -  GProp_ValueType::GProp_CenterMassX, GProp_ValueType::GProp_CenterMassY,
 //! GProp_ValueType::GProp_CenterMassZ - X, Y and Z coordinates of center
 //! of mass computation.
-//! -  GProp_ValueType::GProp_InertiaXX, GProp_ValueType::GProp_InertiaYY, GProp_ValueType::GProp_InertiaZZ,
-//! GProp_ValueType::GProp_InertiaXY, GProp_ValueType::GProp_InertiaXZ, GProp_ValueType::GProp_InertiaYZ
+//! -  GProp_ValueType::GProp_InertiaXX, GProp_ValueType::GProp_InertiaYY,
+//! GProp_ValueType::GProp_InertiaZZ, GProp_ValueType::GProp_InertiaXY,
+//! GProp_ValueType::GProp_InertiaXZ, GProp_ValueType::GProp_InertiaYZ
 //! - moments of inertia computation.
 //!
 //! If the flag IsByPoint is set to true, the value is
@@ -97,9 +98,9 @@ private:
   //! Private method. Computes the value of inertia. The type of
   //! a value returned is defined by the value type. If it is
   //! other then GProp_ValueType::GProp_InertiaXX, GProp_ValueType::GProp_InertiaYY,
-  //! GProp_ValueType::GProp_InertiaZZ, GProp_ValueType::GProp_InertiaXY, GProp_ValueType::GProp_InertiaXZ or
-  //! GProp_ValueType::GProp_InertiaYZ, the method returns false. Returns
-  //! true in case of successful computation of a value
+  //! GProp_ValueType::GProp_InertiaZZ, GProp_ValueType::GProp_InertiaXY,
+  //! GProp_ValueType::GProp_InertiaXZ or GProp_ValueType::GProp_InertiaYZ, the method returns
+  //! false. Returns true in case of successful computation of a value
   Standard_EXPORT bool InertiaValue(const double X, double& F);
 
   BRepGProp_Face  mySurface;

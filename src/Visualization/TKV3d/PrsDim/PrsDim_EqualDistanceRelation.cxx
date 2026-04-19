@@ -106,22 +106,23 @@ void PrsDim_EqualDistanceRelation::Compute(const occ::handle<PrsMgr_Presentation
                                                         mySymbolPrs);
 
   else if (myFShape.ShapeType() == TopAbs_VERTEX && mySShape.ShapeType() == TopAbs_VERTEX)
-    PrsDim_EqualDistanceRelation::ComputeTwoVerticesLength(aPresentation,
-                                                           myDrawer,
-                                                           myArrowSize,
-                                                           TopoDS::Vertex(myFShape),
-                                                           TopoDS::Vertex(mySShape),
-                                                           myPlane,
-                                                           myAutomaticPosition,
-                                                           myIsSetBndBox,
-                                                           myBndBox,
-                                                           PrsDim_TypeOfDist::PrsDim_TypeOfDist_Unknown,
-                                                           Position12,
-                                                           myAttachPoint1,
-                                                           myAttachPoint2,
-                                                           myPoint1,
-                                                           myPoint2,
-                                                           mySymbolPrs);
+    PrsDim_EqualDistanceRelation::ComputeTwoVerticesLength(
+      aPresentation,
+      myDrawer,
+      myArrowSize,
+      TopoDS::Vertex(myFShape),
+      TopoDS::Vertex(mySShape),
+      myPlane,
+      myAutomaticPosition,
+      myIsSetBndBox,
+      myBndBox,
+      PrsDim_TypeOfDist::PrsDim_TypeOfDist_Unknown,
+      Position12,
+      myAttachPoint1,
+      myAttachPoint2,
+      myPoint1,
+      myPoint2,
+      mySymbolPrs);
   else
     PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(aPresentation,
                                                                 myDrawer,
@@ -157,22 +158,23 @@ void PrsDim_EqualDistanceRelation::Compute(const occ::handle<PrsMgr_Presentation
                                                         mySymbolPrs);
 
   else if (myShape3.ShapeType() == TopAbs_VERTEX && myShape4.ShapeType() == TopAbs_VERTEX)
-    PrsDim_EqualDistanceRelation::ComputeTwoVerticesLength(aPresentation,
-                                                           myDrawer,
-                                                           myArrowSize,
-                                                           TopoDS::Vertex(myShape3),
-                                                           TopoDS::Vertex(myShape4),
-                                                           myPlane,
-                                                           myAutomaticPosition,
-                                                           myIsSetBndBox,
-                                                           myBndBox,
-                                                           PrsDim_TypeOfDist::PrsDim_TypeOfDist_Unknown,
-                                                           Position34,
-                                                           myAttachPoint3,
-                                                           myAttachPoint4,
-                                                           myPoint3,
-                                                           myPoint4,
-                                                           mySymbolPrs);
+    PrsDim_EqualDistanceRelation::ComputeTwoVerticesLength(
+      aPresentation,
+      myDrawer,
+      myArrowSize,
+      TopoDS::Vertex(myShape3),
+      TopoDS::Vertex(myShape4),
+      myPlane,
+      myAutomaticPosition,
+      myIsSetBndBox,
+      myBndBox,
+      PrsDim_TypeOfDist::PrsDim_TypeOfDist_Unknown,
+      Position34,
+      myAttachPoint3,
+      myAttachPoint4,
+      myPoint3,
+      myPoint4,
+      mySymbolPrs);
 
   else
     PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(aPresentation,
@@ -400,7 +402,8 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
 
   aPresentation->SetInfiniteState(isInfinite1 || isInfinite2);
 
-  if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Line && cu2.GetType() == GeomAbs_CurveType::GeomAbs_Line)
+  if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Line
+      && cu2.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     occ::handle<Geom_Line> geom_lin1(occ::down_cast<Geom_Line>(geom1));
     occ::handle<Geom_Line> geom_lin2(occ::down_cast<Geom_Line>(geom2));
@@ -509,7 +512,8 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
                                                   FirstExtreme,
                                                   SecondExtreme);
   }
-  if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Circle && cu2.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
+  if (cu1.GetType() == GeomAbs_CurveType::GeomAbs_Circle
+      && cu2.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     // Get first and last points of circles
     occ::handle<Geom_Circle> aCir1(occ::down_cast<Geom_Circle>(geom1));

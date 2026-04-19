@@ -266,7 +266,10 @@ public:
 
   //! @return true if some part of manipulator is selected (transformation mode is active, and
   //! owning object can be transformed).
-  bool HasActiveMode() const { return IsAttached() && myCurrentMode != AIS_ManipulatorMode::AIS_MM_None; }
+  bool HasActiveMode() const
+  {
+    return IsAttached() && myCurrentMode != AIS_ManipulatorMode::AIS_MM_None;
+  }
 
   bool HasActiveTransformation() { return myHasStartedTransformation; }
 

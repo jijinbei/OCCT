@@ -68,9 +68,10 @@ Standard_EXPORT bool FUN_HDS_FACESINTERFER(const TopoDS_Shape&                  
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator itL1(L1);
   for (; itL1.More(); itL1.Next())
   {
-    const occ::handle<TopOpeBRepDS_Interference>& I = itL1.Value();
-    TopOpeBRepDS_Kind GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-    int               G, S                          = 0;
+    const occ::handle<TopOpeBRepDS_Interference>& I  = itL1.Value();
+    TopOpeBRepDS_Kind                             GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                      ST                             = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+    int G, S = 0;
     FUN_HDS_data(I, GT, G, ST, S);
     // interference face1/edge/face2
     bool fef = true;

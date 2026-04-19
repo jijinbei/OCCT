@@ -81,7 +81,8 @@ MyAisObject::MyAisObject()
 
   myDrawer->SetupOwnShadingAspect();
   myDrawer->ShadingAspect()->SetMaterial(Graphic3d_NameOfMaterial_Silver);
-  myDrawer->SetWireAspect(new Prs3d_LineAspect(Quantity_NOC_GREEN, Aspect_TypeOfLine::Aspect_TOL_SOLID, 2.0));
+  myDrawer->SetWireAspect(
+    new Prs3d_LineAspect(Quantity_NOC_GREEN, Aspect_TypeOfLine::Aspect_TOL_SOLID, 2.0));
 }
 
 void MyAisObject::Compute(const occ::handle<PrsMgr_PresentationManager>& thePrsMgr,

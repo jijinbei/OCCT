@@ -544,13 +544,19 @@ void OSD_FileNode::Move(const OSD_Path& NewPath)
       if (!MoveFileExW(fNameW.ToWideString(),
                        fNameDstW.ToWideString(),
                        MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED))
-        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
+        _osd_wnt_set_error(myError,
+                           OSD_WhoAmI::OSD_WFileNode,
+                           fNameW.ToWideString(),
+                           fNameDstW.ToWideString());
       break;
 
     case FLAG_DIRECTORY:
 
       if (!MoveDirectory(fNameW.ToWideString(), fNameDstW.ToWideString()))
-        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
+        _osd_wnt_set_error(myError,
+                           OSD_WhoAmI::OSD_WFileNode,
+                           fNameW.ToWideString(),
+                           fNameDstW.ToWideString());
       break;
 
     default:
@@ -584,13 +590,19 @@ void OSD_FileNode::Copy(const OSD_Path& ToPath)
   #else
       if (CopyFile2(fNameW.ToWideString(), fNameDstW.ToWideString(), FALSE) != S_OK)
   #endif
-        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
+        _osd_wnt_set_error(myError,
+                           OSD_WhoAmI::OSD_WFileNode,
+                           fNameW.ToWideString(),
+                           fNameDstW.ToWideString());
       break;
 
     case FLAG_DIRECTORY:
 
       if (!CopyDirectory(fNameW.ToWideString(), fNameDstW.ToWideString()))
-        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
+        _osd_wnt_set_error(myError,
+                           OSD_WhoAmI::OSD_WFileNode,
+                           fNameW.ToWideString(),
+                           fNameDstW.ToWideString());
 
       break;
 
@@ -752,7 +764,8 @@ Quantity_Date OSD_FileNode::CreationMoment()
   if (_get_file_time(fNameW.ToWideString(), &stCreationSystemMoment, FALSE))
   {
     SYSTEMTIME* aSysTime = &stCreationMoment;
-    BOOL aFlag = SystemTimeToTzSpecificLocalTime(nullptr, &stCreationSystemMoment, &stCreationMoment);
+    BOOL        aFlag =
+      SystemTimeToTzSpecificLocalTime(nullptr, &stCreationSystemMoment, &stCreationMoment);
     if (aFlag == 0) // AGV: test for success (e.g., unsupported on Win95/98)
       aSysTime = &stCreationSystemMoment;
     retVal.SetValues(aSysTime->wMonth,

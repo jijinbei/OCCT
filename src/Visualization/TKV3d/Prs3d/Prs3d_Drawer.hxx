@@ -366,8 +366,8 @@ public:
   //! point aspect that overrides the one in the link.
   bool HasOwnPointAspect() const { return !myPointAspect.IsNull(); }
 
-  //! Sets own point aspect, which is a yellow Aspect_TypeOfMarker::Aspect_TOM_PLUS marker by default.
-  //! Returns FALSE if the drawer already has its own attribute for point aspect.
+  //! Sets own point aspect, which is a yellow Aspect_TypeOfMarker::Aspect_TOM_PLUS marker by
+  //! default. Returns FALSE if the drawer already has its own attribute for point aspect.
   Standard_EXPORT bool SetupOwnPointAspect(
     const occ::handle<Prs3d_Drawer>& theDefaults = occ::handle<Prs3d_Drawer>());
 
@@ -556,10 +556,13 @@ public:
   //! Returns the current mode of visualization of vertices of a TopoDS_Shape instance.
   Standard_EXPORT Prs3d_VertexDrawMode VertexDrawMode() const;
 
-  //! Returns true if the vertex draw mode is not equal to <b>Prs3d_VertexDrawMode::Prs3d_VDM_Inherited</b>.
-  //! This means that individual vertex draw mode value (i.e. not inherited from the global
-  //! drawer) is used for a specific interactive object.
-  bool HasOwnVertexDrawMode() const { return (myVertexDrawMode != Prs3d_VertexDrawMode::Prs3d_VDM_Inherited); }
+  //! Returns true if the vertex draw mode is not equal to
+  //! <b>Prs3d_VertexDrawMode::Prs3d_VDM_Inherited</b>. This means that individual vertex draw mode
+  //! value (i.e. not inherited from the global drawer) is used for a specific interactive object.
+  bool HasOwnVertexDrawMode() const
+  {
+    return (myVertexDrawMode != Prs3d_VertexDrawMode::Prs3d_VDM_Inherited);
+  }
 
   //! Returns own settings for the appearance of datums, settings from linked Drawer or NULL if
   //! neither was set.

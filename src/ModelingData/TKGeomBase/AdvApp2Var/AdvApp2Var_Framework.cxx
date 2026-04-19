@@ -142,7 +142,7 @@ void AdvApp2Var_Framework::ChangeIso(const int                          IndexIso
 {
   NCollection_Sequence<occ::handle<AdvApp2Var_Iso>>& aStrip =
     theIso->Type() == GeomAbs_IsoType::GeomAbs_IsoV ? myUConstraints.ChangeValue(IndexStrip)
-                                   : myVConstraints.ChangeValue(IndexStrip);
+                                                    : myVConstraints.ChangeValue(IndexStrip);
   aStrip.SetValue(IndexIso, theIso);
 }
 

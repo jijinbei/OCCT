@@ -915,7 +915,8 @@ bool ShapeFix_Face::FixAddNaturalBound()
   // Fix possible case on sphere when gap contains degenerated edge
   // and thus has a common part with natural boundary
   // Such hole should be merged with boundary
-  if (mySurf->Adaptor3d()->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere && ws.Length() == nb + 1)
+  if (mySurf->Adaptor3d()->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere
+      && ws.Length() == nb + 1)
   {
     occ::handle<ShapeExtend_WireData> bnd = new ShapeExtend_WireData(TopoDS::Wire(ws.Last()));
     // code to become separate method FixTouchingWires()

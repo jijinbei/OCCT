@@ -118,7 +118,8 @@ public:
   void operator()(const int theFaceIndex) const
   {
     const IMeshData::IFaceHandle& aDFace = myModel->GetFace(theFaceIndex);
-    if (aDFace->GetSurface()->GetType() != GeomAbs_SurfaceType::GeomAbs_Cone || aDFace->IsSet(IMeshData_Failure))
+    if (aDFace->GetSurface()->GetType() != GeomAbs_SurfaceType::GeomAbs_Cone
+        || aDFace->IsSet(IMeshData_Failure))
     {
       return;
     }

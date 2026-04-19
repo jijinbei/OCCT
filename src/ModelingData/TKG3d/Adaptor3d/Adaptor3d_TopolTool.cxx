@@ -1080,9 +1080,9 @@ void Adaptor3d_TopolTool::SamplePnts(const double theDefl, const int theNUmin, c
   //   case GeomAbs_SurfaceType::GeomAbs_Sphere:
   //   case GeomAbs_SurfaceType::GeomAbs_Torus:
   //   case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
-  //   case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:    { nbsv = std::max(15,theNVmin); nbsu=Max(15,theNUmin); }
-  //   break; default:                            { nbsu = std::max(10,theNUmin);
-  //   nbsv=Max(10,theNVmin); } break;
+  //   case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:    { nbsv = std::max(15,theNVmin);
+  //   nbsu=Max(15,theNUmin); } break; default:                            { nbsu =
+  //   std::max(10,theNUmin); nbsv=Max(10,theNVmin); } break;
   //   }
 
   //   if(nbsu<6) nbsu=6;

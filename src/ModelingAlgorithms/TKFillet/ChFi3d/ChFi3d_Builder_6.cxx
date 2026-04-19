@@ -1608,7 +1608,8 @@ bool ChFi3d_Builder::ComputeData(occ::handle<ChFiDS_SurfData>&           Data,
 {
   // Get offset guide if exists
   occ::handle<ChFiDS_ElSpine> OffsetHGuide;
-  if (!Spine.IsNull() && Spine->Mode() == ChFiDS_ChamfMode::ChFiDS_ConstThroatWithPenetrationChamfer)
+  if (!Spine.IsNull()
+      && Spine->Mode() == ChFiDS_ChamfMode::ChFiDS_ConstThroatWithPenetrationChamfer)
   {
     NCollection_List<occ::handle<ChFiDS_ElSpine>>& ll        = Spine->ChangeElSpines();
     NCollection_List<occ::handle<ChFiDS_ElSpine>>& ll_offset = Spine->ChangeOffsetElSpines();

@@ -24,8 +24,9 @@ class Graphic3d_ArrayOfQuadrangles : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfQuadrangles, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of quadrangles (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES), a quadrangle can be filled as:
-  //! 1) Creating a set of quadrangles defined with his vertexes, i.e:
+  //! Creates an array of quadrangles (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLES),
+  //! a quadrangle can be filled as: 1) Creating a set of quadrangles defined with his vertexes,
+  //! i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfQuadrangles (8);
   //!   myArray->AddVertex (x1, y1, z1);

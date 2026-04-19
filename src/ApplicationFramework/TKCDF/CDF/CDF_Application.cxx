@@ -154,8 +154,9 @@ PCDM_ReaderStatus CDF_Application::CanRetrieve(const TCollection_ExtendedString&
 
     if (!theAppendMode && theMetaData->IsRetrieved())
     {
-      return theMetaData->Document()->IsModified() ? PCDM_ReaderStatus::PCDM_RS_AlreadyRetrievedAndModified
-                                                   : PCDM_ReaderStatus::PCDM_RS_AlreadyRetrieved;
+      return theMetaData->Document()->IsModified()
+               ? PCDM_ReaderStatus::PCDM_RS_AlreadyRetrievedAndModified
+               : PCDM_ReaderStatus::PCDM_RS_AlreadyRetrieved;
     }
     else if (theAppendMode && !theMetaData->IsRetrieved())
     {

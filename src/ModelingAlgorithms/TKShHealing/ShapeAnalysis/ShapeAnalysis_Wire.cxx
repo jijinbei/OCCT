@@ -1173,7 +1173,8 @@ bool ShapeAnalysis_Wire::CheckSelfIntersectingEdge(
     const IntRes2d_IntersectionPoint& IP  = Inter.Point(i);
     const IntRes2d_Transition&        Tr1 = IP.TransitionOfFirst();
     const IntRes2d_Transition&        Tr2 = IP.TransitionOfSecond();
-    if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
+    if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle
+        && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
       continue;
     gp_Pnt pint   = GetPointOnEdge(edge, mySurf, AC, IP.ParamOnFirst());
     double dist21 = pnt1.SquareDistance(pint);
@@ -1314,13 +1315,15 @@ bool ShapeAnalysis_Wire::CheckIntersectingEdges(
       IP  = Seg.FirstPoint();
       Tr1 = IP.TransitionOfFirst();
       Tr2 = IP.TransitionOfSecond();
-      if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle || Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
+      if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle
+          || Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
         IP = Seg.LastPoint();
     }
     Tr1 = IP.TransitionOfFirst();
     Tr2 = IP.TransitionOfSecond();
 
-    if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
+    if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle
+        && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
       continue;
     double param1, param2;
     param1 = (num == 1 ? IP.ParamOnSecond() : IP.ParamOnFirst());
@@ -1461,12 +1464,14 @@ bool ShapeAnalysis_Wire::CheckIntersectingEdges(
       IP  = Seg.FirstPoint();
       Tr1 = IP.TransitionOfFirst();
       Tr2 = IP.TransitionOfSecond();
-      if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle || Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
+      if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle
+          || Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
         IP = Seg.LastPoint();
     }
     Tr1 = IP.TransitionOfFirst();
     Tr2 = IP.TransitionOfSecond();
-    if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
+    if (Tr1.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle
+        && Tr2.PositionOnCurve() != IntRes2d_Position::IntRes2d_Middle)
       continue;
     double param1 = IP.ParamOnFirst();
     double param2 = IP.ParamOnSecond();

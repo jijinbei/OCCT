@@ -898,7 +898,9 @@ bool StepAP209_Construct::CreateFeaStructure(const occ::handle<StepBasic_Product
   // create SiUnitAndThermodynamicTemperatureUnit
   occ::handle<StepBasic_SiUnitAndThermodynamicTemperatureUnit> SUTTU =
     new StepBasic_SiUnitAndThermodynamicTemperatureUnit;
-  SUTTU->Init(false, StepBasic_SiPrefix::StepBasic_spExa, StepBasic_SiUnitName::StepBasic_sunDegreeCelsius);
+  SUTTU->Init(false,
+              StepBasic_SiPrefix::StepBasic_spExa,
+              StepBasic_SiUnitName::StepBasic_sunDegreeCelsius);
   smodel->AddWithRefs(SUTTU);
   smodel->SetIdentLabel(SUTTU, smodel->Number(SUTTU));
   NewHANU->SetValue(OldHANU->Length() + 3, SUTTU);

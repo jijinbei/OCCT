@@ -23,7 +23,8 @@
 TEST(Convert_CircleToBSplineCurveTest, FullCircle_TgtThetaOver2)
 {
   const gp_Circ2d                    aCirc(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0)), 5.0);
-  const Convert_CircleToBSplineCurve aConv(aCirc, Convert_ParameterisationType::Convert_TgtThetaOver2);
+  const Convert_CircleToBSplineCurve aConv(aCirc,
+                                           Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   EXPECT_EQ(aConv.Degree(), 2);
   EXPECT_TRUE(aConv.IsPeriodic());
@@ -73,7 +74,10 @@ TEST(Convert_CircleToBSplineCurveTest, Arc_TgtThetaOver2)
   const gp_Circ2d                    aCirc(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0)), 1.0);
   const double                       aU1 = M_PI / 6.0;
   const double                       aU2 = 5.0 * M_PI / 3.0;
-  const Convert_CircleToBSplineCurve aConv(aCirc, aU1, aU2, Convert_ParameterisationType::Convert_TgtThetaOver2);
+  const Convert_CircleToBSplineCurve aConv(aCirc,
+                                           aU1,
+                                           aU2,
+                                           Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   EXPECT_FALSE(aConv.IsPeriodic());
   EXPECT_EQ(aConv.Degree(), 2);
@@ -117,7 +121,10 @@ TEST(Convert_CircleToBSplineCurveTest, Arc_QuasiAngular)
   const gp_Circ2d                    aCirc(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0)), 2.0);
   const double                       aU1 = 0.0;
   const double                       aU2 = M_PI;
-  const Convert_CircleToBSplineCurve aConv(aCirc, aU1, aU2, Convert_ParameterisationType::Convert_QuasiAngular);
+  const Convert_CircleToBSplineCurve aConv(aCirc,
+                                           aU1,
+                                           aU2,
+                                           Convert_ParameterisationType::Convert_QuasiAngular);
 
   EXPECT_FALSE(aConv.IsPeriodic());
   EXPECT_EQ(aConv.Degree(), 6);
@@ -143,7 +150,10 @@ TEST(Convert_CircleToBSplineCurveTest, Arc_Polynomial)
   const gp_Circ2d                    aCirc(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0)), 1.0);
   const double                       aU1 = 0.0;
   const double                       aU2 = M_PI * 0.5;
-  const Convert_CircleToBSplineCurve aConv(aCirc, aU1, aU2, Convert_ParameterisationType::Convert_Polynomial);
+  const Convert_CircleToBSplineCurve aConv(aCirc,
+                                           aU1,
+                                           aU2,
+                                           Convert_ParameterisationType::Convert_Polynomial);
 
   EXPECT_FALSE(aConv.IsPeriodic());
   EXPECT_EQ(aConv.Degree(), 7);
@@ -153,7 +163,8 @@ TEST(Convert_CircleToBSplineCurveTest, Arc_Polynomial)
 TEST(Convert_CircleToBSplineCurveTest, WeightsArePositive)
 {
   const gp_Circ2d                    aCirc(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0)), 1.0);
-  const Convert_CircleToBSplineCurve aConv(aCirc, Convert_ParameterisationType::Convert_TgtThetaOver2);
+  const Convert_CircleToBSplineCurve aConv(aCirc,
+                                           Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   const NCollection_Array1<double>& aWeights = aConv.Weights();
   for (int i = 1; i <= aConv.NbPoles(); ++i)

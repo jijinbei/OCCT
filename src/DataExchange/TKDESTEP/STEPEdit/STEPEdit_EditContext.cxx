@@ -42,7 +42,8 @@ STEPEdit_EditContext::STEPEdit_EditContext()
   SetValue(5, ac_name, "AC_Name");
 
   //  occ::handle<Interface_TypedValue> prpc_val = new Interface_TypedValue("Product Related Product
-  //  Category",Interface_ParamType::Interface_ParamIdent); SetValue(6,ac_val,"PRPC",IFSelect_EditRead);
+  //  Category",Interface_ParamType::Interface_ParamIdent);
+  //  SetValue(6,ac_val,"PRPC",IFSelect_EditRead);
 
   //  occ::handle<Interface_TypedValue> prpc_name = new Interface_TypedValue("PRPC_Name");
   //  SetValue(7,prpc_name,"PRPC_Name");

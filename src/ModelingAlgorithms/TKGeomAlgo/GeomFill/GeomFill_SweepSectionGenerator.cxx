@@ -144,7 +144,9 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   else
   {
     // JAG
-    myFirstSect = GeomConvert::CurveToBSplineCurve(FirstSect, Convert_ParameterisationType::Convert_QuasiAngular);
+    myFirstSect =
+      GeomConvert::CurveToBSplineCurve(FirstSect,
+                                       Convert_ParameterisationType::Convert_QuasiAngular);
   }
   if (myFirstSect->IsPeriodic())
     myFirstSect->SetNotPeriodic();
@@ -185,7 +187,9 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   }
   else
   {
-    myFirstSect = GeomConvert::CurveToBSplineCurve(FirstSect, Convert_ParameterisationType::Convert_QuasiAngular);
+    myFirstSect =
+      GeomConvert::CurveToBSplineCurve(FirstSect,
+                                       Convert_ParameterisationType::Convert_QuasiAngular);
   }
   if (LastSect->IsKind(STANDARD_TYPE(Geom_BSplineCurve)))
   {
@@ -193,7 +197,9 @@ void GeomFill_SweepSectionGenerator::Init(const occ::handle<Geom_Curve>& Path,
   }
   else
   {
-    myLastSect = GeomConvert::CurveToBSplineCurve(LastSect, Convert_ParameterisationType::Convert_QuasiAngular);
+    myLastSect =
+      GeomConvert::CurveToBSplineCurve(LastSect,
+                                       Convert_ParameterisationType::Convert_QuasiAngular);
   }
 
   if (myFirstSect->IsPeriodic())
@@ -302,7 +308,8 @@ void GeomFill_SweepSectionGenerator::Perform(const bool Polynomial)
     occ::handle<Geom_TrimmedCurve> Circ =
       new Geom_TrimmedCurve(new Geom_Circle(CircleAxis, myRadius), 0., 2. * M_PI);
 
-    myFirstSect = GeomConvert::CurveToBSplineCurve(Circ, Convert_ParameterisationType::Convert_QuasiAngular);
+    myFirstSect =
+      GeomConvert::CurveToBSplineCurve(Circ, Convert_ParameterisationType::Convert_QuasiAngular);
   }
 
   if (myType <= 3 && myType >= 1)
@@ -628,7 +635,8 @@ void GeomFill_SweepSectionGenerator::Section(const int                   P,
       if (myPolynomial)
         BS = GeomConvert::CurveToBSplineCurve(CT, Convert_ParameterisationType::Convert_Polynomial);
       else
-        BS = GeomConvert::CurveToBSplineCurve(CT, Convert_ParameterisationType::Convert_QuasiAngular);
+        BS =
+          GeomConvert::CurveToBSplineCurve(CT, Convert_ParameterisationType::Convert_QuasiAngular);
 
       Poles   = BS->Poles();
       Weigths = BS->WeightsArray();

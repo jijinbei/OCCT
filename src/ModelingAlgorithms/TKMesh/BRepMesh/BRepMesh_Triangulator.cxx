@@ -201,7 +201,9 @@ bool BRepMesh_Triangulator::prepareMeshStructure()
       for (int nn = 1; nn <= aW.Length(); ++nn, ++aNumNode)
       {
         const gp_Pnt2d        aP2d = ProjLib::Project(myPlane, gp_Pnt(myXYZs(aW(nn))));
-        const BRepMesh_Vertex aVertex(aP2d.XY(), aNumNode, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
+        const BRepMesh_Vertex aVertex(aP2d.XY(),
+                                      aNumNode,
+                                      BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
         const int             nnn = myMeshStructure->AddNode(aVertex);
         myIndices->SetValue(aNumNode, nnn);
         myTmpMap.Bind(aNumNode + 1, aW(nn) + 1);

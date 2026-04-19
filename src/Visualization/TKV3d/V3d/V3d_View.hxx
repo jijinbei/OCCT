@@ -57,7 +57,7 @@ class V3d_View : public Standard_Transient
 public:
   //! Initializes the view.
   Standard_EXPORT V3d_View(const occ::handle<V3d_Viewer>& theViewer,
-                           const V3d_TypeOfView           theType = V3d_TypeOfView::V3d_ORTHOGRAPHIC);
+                           const V3d_TypeOfView theType = V3d_TypeOfView::V3d_ORTHOGRAPHIC);
 
   //! Initializes the view by copying.
   Standard_EXPORT V3d_View(const occ::handle<V3d_Viewer>& theViewer,
@@ -190,25 +190,29 @@ public:
   Standard_EXPORT void SetBgGradientColors(
     const Quantity_Color&           theColor1,
     const Quantity_Color&           theColor2,
-    const Aspect_GradientFillMethod theFillStyle = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal,
-    const bool                      theToUpdate  = false);
+    const Aspect_GradientFillMethod theFillStyle =
+      Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal,
+    const bool theToUpdate = false);
 
   //! Defines the gradient background fill method of the view.
   Standard_EXPORT void SetBgGradientStyle(
-    const Aspect_GradientFillMethod theMethod   = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal,
-    const bool                      theToUpdate = false);
+    const Aspect_GradientFillMethod theMethod =
+      Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal,
+    const bool theToUpdate = false);
 
   //! Defines the background texture of the view by supplying the texture image file name
   //! and fill method (centered by default).
-  Standard_EXPORT void SetBackgroundImage(const char* const       theFileName,
-                                          const Aspect_FillMethod theFillStyle = Aspect_FillMethod::Aspect_FM_CENTERED,
-                                          const bool              theToUpdate  = false);
+  Standard_EXPORT void SetBackgroundImage(
+    const char* const       theFileName,
+    const Aspect_FillMethod theFillStyle = Aspect_FillMethod::Aspect_FM_CENTERED,
+    const bool              theToUpdate  = false);
 
   //! Defines the background texture of the view by supplying the texture and fill method (centered
   //! by default)
-  Standard_EXPORT void SetBackgroundImage(const occ::handle<Graphic3d_Texture2D>& theTexture,
-                                          const Aspect_FillMethod theFillStyle = Aspect_FillMethod::Aspect_FM_CENTERED,
-                                          const bool              theToUpdate  = false);
+  Standard_EXPORT void SetBackgroundImage(
+    const occ::handle<Graphic3d_Texture2D>& theTexture,
+    const Aspect_FillMethod                 theFillStyle = Aspect_FillMethod::Aspect_FM_CENTERED,
+    const bool                              theToUpdate  = false);
 
   //! Defines the textured background fill method of the view.
   Standard_EXPORT void SetBgImageStyle(const Aspect_FillMethod theFillStyle,
@@ -920,8 +924,9 @@ public:
   //! .bmp, .jpg)
   //! @param theBufferType buffer to dump
   //! @return FALSE when the dump has failed
-  Standard_EXPORT bool Dump(const char* const           theFile,
-                            const Graphic3d_BufferType& theBufferType = Graphic3d_BufferType::Graphic3d_BT_RGB);
+  Standard_EXPORT bool Dump(
+    const char* const           theFile,
+    const Graphic3d_BufferType& theBufferType = Graphic3d_BufferType::Graphic3d_BT_RGB);
 
   //! Dumps the full contents of the view to a pixmap with specified parameters.
   //! Internally this method calls Redraw() with an offscreen render buffer of requested target size
@@ -943,7 +948,7 @@ public:
   bool ToPixMap(Image_PixMap&               theImage,
                 const int                   theWidth,
                 const int                   theHeight,
-                const Graphic3d_BufferType& theBufferType     = Graphic3d_BufferType::Graphic3d_BT_RGB,
+                const Graphic3d_BufferType& theBufferType = Graphic3d_BufferType::Graphic3d_BT_RGB,
                 const bool                  theToAdjustAspect = true,
                 const Graphic3d_ZLayerId    theTargetZLayerId = Graphic3d_ZLayerId_BotOSD,
                 const int                   theIsSingleLayer  = false,
@@ -964,10 +969,12 @@ public:
 
   //! Manages display of the back faces
   Standard_EXPORT void SetBackFacingModel(
-    const Graphic3d_TypeOfBackfacingModel theModel = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto);
+    const Graphic3d_TypeOfBackfacingModel theModel =
+      Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto);
 
-  //! Returns current state of the back faces display; Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto by
-  //! default, which means that backface culling is defined by each presentation.
+  //! Returns current state of the back faces display;
+  //! Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto by default, which means
+  //! that backface culling is defined by each presentation.
   Standard_EXPORT Graphic3d_TypeOfBackfacingModel BackFacingModel() const;
 
   //! Adds clip plane to the view. The composition of clip planes truncates the

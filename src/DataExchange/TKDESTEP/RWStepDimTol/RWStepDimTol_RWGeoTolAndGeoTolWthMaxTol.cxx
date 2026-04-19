@@ -69,7 +69,8 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol::ReadStep(
     int num2   = sub;
     for (int i0 = 1; i0 <= nb0; i0++)
     {
-      StepDimTol_GeometricToleranceModifier anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement;
+      StepDimTol_GeometricToleranceModifier anIt0 =
+        StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement;
       if (data->ParamType(num2, i0) == Interface_ParamType::Interface_ParamEnum)
       {
         const char* text = data->ParamCValue(num2, i0);
@@ -120,7 +121,8 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthMaxTol::ReadStep(
   data->ComplexType(num0, aTypes);
   const char*                       aFirst = aTypes.First().ToCString();
   const char*                       aLast  = aTypes.Last().ToCString();
-  StepDimTol_GeometricToleranceType aType  = StepDimTol_GeometricToleranceType::StepDimTol_GTTPositionTolerance;
+  StepDimTol_GeometricToleranceType aType =
+    StepDimTol_GeometricToleranceType::StepDimTol_GTTPositionTolerance;
   if (strcmp(aFirst, "ANGULARITY_TOLERANCE") == 0)
     aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTAngularityTolerance;
   else if (strcmp(aFirst, "CIRCULAR_RUNOUT_TOLERANCE") == 0)

@@ -40,8 +40,8 @@ bool OSD_Error::Failed() const
     return (true);
 }
 
-void OSD_Error::SetValue(const int              errcode,
-                         const OSD_WhoAmI       from,
+void OSD_Error::SetValue(const int                      errcode,
+                         const OSD_WhoAmI               from,
                          const TCollection_AsciiString& message)
 {
   myErrno   = errcode;

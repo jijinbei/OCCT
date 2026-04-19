@@ -114,7 +114,7 @@ public:
 
   //! Returns TRUE if <theDependentName> is valid for this SysType.
   Standard_EXPORT static bool IsValid(const TCollection_AsciiString& theDependentName,
-                                      const OSD_SysType              theSysType = OSD_SysType::OSD_Default);
+                                      const OSD_SysType theSysType = OSD_SysType::OSD_Default);
 
   //! This removes the last directory name in <aTrek>
   //! and returns result.

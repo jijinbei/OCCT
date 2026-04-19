@@ -23,7 +23,8 @@
 TEST(Convert_EllipseToBSplineCurveTest, FullEllipse_TgtThetaOver2)
 {
   const gp_Elips2d anElips(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0)), 5.0, 3.0);
-  const Convert_EllipseToBSplineCurve aConv(anElips, Convert_ParameterisationType::Convert_TgtThetaOver2);
+  const Convert_EllipseToBSplineCurve aConv(anElips,
+                                            Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   EXPECT_TRUE(aConv.IsPeriodic());
   EXPECT_EQ(aConv.Degree(), 2);
@@ -58,7 +59,10 @@ TEST(Convert_EllipseToBSplineCurveTest, Arc_TgtThetaOver2)
   const gp_Elips2d anElips(gp_Ax2d(gp_Pnt2d(1.0, 1.0), gp_Dir2d(1.0, 0.0)), 4.0, 2.0);
   const double     aU1 = M_PI / 4.0;
   const double     aU2 = 3.0 * M_PI / 2.0;
-  const Convert_EllipseToBSplineCurve aConv(anElips, aU1, aU2, Convert_ParameterisationType::Convert_TgtThetaOver2);
+  const Convert_EllipseToBSplineCurve aConv(anElips,
+                                            aU1,
+                                            aU2,
+                                            Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   EXPECT_FALSE(aConv.IsPeriodic());
   EXPECT_GT(aConv.NbPoles(), 0);
@@ -105,7 +109,8 @@ TEST(Convert_EllipseToBSplineCurveTest, Arc_TgtThetaOver2)
 TEST(Convert_EllipseToBSplineCurveTest, FullEllipse_RationalC1)
 {
   const gp_Elips2d anElips(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0)), 3.0, 1.0);
-  const Convert_EllipseToBSplineCurve aConv(anElips, Convert_ParameterisationType::Convert_RationalC1);
+  const Convert_EllipseToBSplineCurve aConv(anElips,
+                                            Convert_ParameterisationType::Convert_RationalC1);
 
   EXPECT_TRUE(aConv.IsPeriodic());
   EXPECT_GT(aConv.NbPoles(), 0);
@@ -129,7 +134,8 @@ TEST(Convert_EllipseToBSplineCurveTest, FullEllipse_RationalC1)
 TEST(Convert_EllipseToBSplineCurveTest, WeightsArePositive)
 {
   const gp_Elips2d anElips(gp_Ax2d(gp_Pnt2d(0.0, 0.0), gp_Dir2d(1.0, 0.0)), 5.0, 3.0);
-  const Convert_EllipseToBSplineCurve aConv(anElips, Convert_ParameterisationType::Convert_TgtThetaOver2);
+  const Convert_EllipseToBSplineCurve aConv(anElips,
+                                            Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   const NCollection_Array1<double>& aWeights = aConv.Weights();
   for (int i = 1; i <= aConv.NbPoles(); ++i)

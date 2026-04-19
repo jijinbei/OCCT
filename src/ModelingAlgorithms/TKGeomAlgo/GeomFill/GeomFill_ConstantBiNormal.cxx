@@ -277,7 +277,8 @@ bool GeomFill_ConstantBiNormal::IsOnlyBy3dCurve() const
       TheAxe = myCurve->Parabola().Axis();
       break;
     }
-    case GeomAbs_CurveType::GeomAbs_Line: { // La normale du plan de la courbe est il perpendiculaire a la BiNormale ?
+    case GeomAbs_CurveType::GeomAbs_Line: { // La normale du plan de la courbe est il
+                                            // perpendiculaire a la BiNormale ?
       gp_Vec V;
       V.SetXYZ(myCurve->Line().Direction().XYZ());
       return V.IsNormal(BN, Precision::Angular());

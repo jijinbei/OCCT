@@ -437,7 +437,8 @@ occ::handle<SelectMgr_SelectionImageFiller> SelectMgr_SelectionImageFiller::Crea
       return new NormalizedDepthFiller(thePixMap,
                                        theSelector,
                                        theType
-                                         == StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepthInverted);
+                                         == StdSelect_TypeOfSelectionImage::
+                                           StdSelect_TypeOfSelectionImage_NormalizedDepthInverted);
     }
     case StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_UnnormalizedDepth: {
       return new UnnormalizedDepthFiller(thePixMap, theSelector);

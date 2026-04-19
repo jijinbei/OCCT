@@ -573,8 +573,8 @@ void BRepFeat_Form::GlobalPerform()
     }
 
     LocOpe_Operation ope = theGlue.OpeType();
-    if (ope == LocOpe_Operation::LocOpe_INVALID || (myFuse && ope != LocOpe_Operation::LocOpe_FUSE) || (!myFuse && ope != LocOpe_Operation::LocOpe_CUT)
-        || (!Collage))
+    if (ope == LocOpe_Operation::LocOpe_INVALID || (myFuse && ope != LocOpe_Operation::LocOpe_FUSE)
+        || (!myFuse && ope != LocOpe_Operation::LocOpe_CUT) || (!Collage))
     {
       theOpe    = 2;
       ChangeOpe = true;
@@ -692,7 +692,8 @@ void BRepFeat_Form::GlobalPerform()
     {
       myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
     }
-    else if (myPerfSelection == BRepFeat_PerfSelection::BRepFeat_SelectionFU && !FromInShape && !UntilInShape)
+    else if (myPerfSelection == BRepFeat_PerfSelection::BRepFeat_SelectionFU && !FromInShape
+             && !UntilInShape)
     {
       myPerfSelection = BRepFeat_PerfSelection::BRepFeat_NoSelection;
     }

@@ -94,7 +94,8 @@ Standard_OStream& Vrml_Texture2::Print(Standard_OStream& anOStream) const
     anOStream << '"' << myFilename << '"' << "\n";
   }
 
-  if (myImage->Width() != 0 || myImage->Height() != 0 || myImage->Number() != Vrml_SFImageNumber::Vrml_NULL)
+  if (myImage->Width() != 0 || myImage->Height() != 0
+      || myImage->Number() != Vrml_SFImageNumber::Vrml_NULL)
   {
     anOStream << "    image\t";
     anOStream << myImage->Width() << " " << myImage->Height() << " ";

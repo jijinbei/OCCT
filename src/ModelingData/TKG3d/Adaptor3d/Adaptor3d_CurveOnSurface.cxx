@@ -936,7 +936,8 @@ void Adaptor3d_CurveOnSurface::Load(const occ::handle<Adaptor2d_Curve2d>& C)
     SType = mySurface->BasisSurface()->GetType();
   }
 
-  if (SType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface || SType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion
+  if (SType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface
+      || SType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion
       || SType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
   {
     EvalFirstLastSurf();

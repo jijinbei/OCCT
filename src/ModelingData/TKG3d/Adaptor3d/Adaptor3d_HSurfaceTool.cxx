@@ -128,7 +128,8 @@ bool Adaptor3d_HSurfaceTool::IsSurfG1(const occ::handle<Adaptor3d_Surface>& theS
     aS = aS->BasisSurface();
   }
 
-  if (aS->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution || aS->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
+  if (aS->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution
+      || aS->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
   {
     aC = aS->BasisCurve();
   }

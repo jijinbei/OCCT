@@ -341,7 +341,11 @@ void GeomFill_LocationGuide::SetRotation(const double PrecAngle, double& LastAng
           SOS = true;
           math_Vector RR(1, 3);
           Result.Root(RR);
-          PInt.SetValues(P, RR(2), RR(3), RR(1), IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out);
+          PInt.SetValues(P,
+                         RR(2),
+                         RR(3),
+                         RR(1),
+                         IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out);
           theU = PInt.U();
           theV = PInt.V();
         }

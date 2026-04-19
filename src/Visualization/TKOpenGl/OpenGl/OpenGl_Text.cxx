@@ -573,7 +573,10 @@ occ::handle<OpenGl_Font> OpenGl_Text::FindFont(const occ::handle<OpenGl_Context>
     aParams.Resolution  = theResolution;
     aParams.FontHinting = theFontHinting;
     if (occ::handle<Font_FTFont> aFontFt =
-          Font_FTFont::FindAndCreate(aFontName, anAspect, aParams, Font_StrictLevel::Font_StrictLevel_Any))
+          Font_FTFont::FindAndCreate(aFontName,
+                                     anAspect,
+                                     aParams,
+                                     Font_StrictLevel::Font_StrictLevel_Any))
     {
       aFont = new OpenGl_Font(aFontFt, theKey);
       if (!aFont->Init(theCtx))
@@ -771,7 +774,8 @@ void OpenGl_Text::render(const occ::handle<OpenGl_Context>& theCtx,
 
   // setup depth test
   const bool hasDepthTest =
-    !myIs2d && theTextAspect.Aspect()->TextStyle() != Aspect_TypeOfStyleText::Aspect_TOST_ANNOTATION;
+    !myIs2d
+    && theTextAspect.Aspect()->TextStyle() != Aspect_TypeOfStyleText::Aspect_TOST_ANNOTATION;
   if (!hasDepthTest)
   {
     theCtx->core11fwd->glDisable(GL_DEPTH_TEST);

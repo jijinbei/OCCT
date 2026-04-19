@@ -22,10 +22,9 @@
 //! not, as explained below:
 //! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_EdgeDone No error occurred; The edge is
 //! correctly built.
-//! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_PointProjectionFailed No parameters were given but
-//! the projection of the 3D points on the curve failed. This
-//! happens when the point distance to the curve is greater than
-//! the precision value.
+//! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_PointProjectionFailed No parameters were given
+//! but the projection of the 3D points on the curve failed. This happens when the point distance to
+//! the curve is greater than the precision value.
 //! -      BRepBuilderAPI_EdgeError::BRepBuilderAPI_ParameterOutOfRange
 //! The given parameters are not in the parametric range
 //! C->FirstParameter(), C->LastParameter()

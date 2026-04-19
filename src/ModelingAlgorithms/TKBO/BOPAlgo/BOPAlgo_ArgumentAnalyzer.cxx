@@ -311,7 +311,8 @@ void BOPAlgo_ArgumentAnalyzer::TestTypes()
       return;
     }
     //
-    if (myOperation != BOPAlgo_Operation::BOPAlgo_UNKNOWN && myOperation != BOPAlgo_Operation::BOPAlgo_COMMON)
+    if (myOperation != BOPAlgo_Operation::BOPAlgo_UNKNOWN
+        && myOperation != BOPAlgo_Operation::BOPAlgo_COMMON)
     {
       int iDimMin[2], iDimMax[2];
       BOPTools_AlgoTools::Dimensions(myShape1, iDimMin[0], iDimMax[0]);
@@ -548,7 +549,8 @@ void BOPAlgo_ArgumentAnalyzer::TestSmallEdge()
 
 void BOPAlgo_ArgumentAnalyzer::TestRebuildFace()
 {
-  if ((myOperation == BOPAlgo_Operation::BOPAlgo_SECTION) || (myOperation == BOPAlgo_Operation::BOPAlgo_UNKNOWN))
+  if ((myOperation == BOPAlgo_Operation::BOPAlgo_SECTION)
+      || (myOperation == BOPAlgo_Operation::BOPAlgo_UNKNOWN))
     return;
   int i = 0;
 

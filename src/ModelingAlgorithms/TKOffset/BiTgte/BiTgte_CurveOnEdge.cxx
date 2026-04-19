@@ -89,7 +89,8 @@ void BiTgte_CurveOnEdge::Init(const TopoDS_Edge& EonF, const TopoDS_Edge& Edge)
   GeomAdaptor_Curve ConF(myConF);
 
   myType = GeomAbs_CurveType::GeomAbs_OtherCurve;
-  if (Curv.GetType() == GeomAbs_CurveType::GeomAbs_Line && ConF.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
+  if (Curv.GetType() == GeomAbs_CurveType::GeomAbs_Line
+      && ConF.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
   {
     gp_Ax1 a1 = Curv.Line().Position();
     gp_Ax1 a2 = ConF.Circle().Axis();

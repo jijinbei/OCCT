@@ -91,7 +91,8 @@ void RWStepDimTol_RWGeoTolAndGeoTolWthDatRefAndUneqDisGeoTol::ReadStep(
   data->ComplexType(num0, aTypes);
   const char*                       aFirst = aTypes.First().ToCString();
   const char*                       aLast  = aTypes.Value(3).ToCString();
-  StepDimTol_GeometricToleranceType aType  = StepDimTol_GeometricToleranceType::StepDimTol_GTTPositionTolerance;
+  StepDimTol_GeometricToleranceType aType =
+    StepDimTol_GeometricToleranceType::StepDimTol_GTTPositionTolerance;
   if (strcmp(aFirst, "ANGULARITY_TOLERANCE") == 0)
     aType = StepDimTol_GeometricToleranceType::StepDimTol_GTTAngularityTolerance;
   else if (strcmp(aFirst, "CIRCULAR_RUNOUT_TOLERANCE") == 0)

@@ -1353,7 +1353,8 @@ void BRepOffset_Tool::Inter3D(const TopoDS_Face&              F1,
   // Check if the faces are planar and not trimmed - in this case
   // the IntTools_FaceFace intersection algorithm will be used directly.
   BRepAdaptor_Surface aBAS1(F1, false), aBAS2(F2, false);
-  if (aBAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane && aBAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
+  if (aBAS1.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane
+      && aBAS2.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     aBAS1.Initialize(F1, true);
     if (IsInf(aBAS1.LastUParameter()) && IsInf(aBAS1.LastVParameter()))
@@ -1932,8 +1933,9 @@ static void ExtentEdge(const TopoDS_Face& F,
   NE                           = TopoDS::Edge(aLocalEdge);
   //  NE = TopoDS::Edge(E.EmptyCopied());
 
-  if (Type == GeomAbs_CurveType::GeomAbs_Line || Type == GeomAbs_CurveType::GeomAbs_Circle || Type == GeomAbs_CurveType::GeomAbs_Ellipse
-      || Type == GeomAbs_CurveType::GeomAbs_Hyperbola || Type == GeomAbs_CurveType::GeomAbs_Parabola)
+  if (Type == GeomAbs_CurveType::GeomAbs_Line || Type == GeomAbs_CurveType::GeomAbs_Circle
+      || Type == GeomAbs_CurveType::GeomAbs_Ellipse || Type == GeomAbs_CurveType::GeomAbs_Hyperbola
+      || Type == GeomAbs_CurveType::GeomAbs_Parabola)
   {
     return;
   }
@@ -4133,7 +4135,8 @@ bool BRepOffset_Tool::CheckPlanesNormals(const TopoDS_Face& theFace1,
                                          const double       theTolAng)
 {
   BRepAdaptor_Surface aBAS1(theFace1, false), aBAS2(theFace2, false);
-  if (aBAS1.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane || aBAS2.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
+  if (aBAS1.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane
+      || aBAS2.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     return false;
   }

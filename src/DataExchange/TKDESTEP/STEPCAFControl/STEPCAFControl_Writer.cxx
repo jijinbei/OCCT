@@ -4046,12 +4046,16 @@ void STEPCAFControl_Writer::writeGeomTolerance(
     }
     if (anObject->GetMaterialRequirementModifier() == XCAFDimTolObjects_GeomToleranceMatReqModif_L)
     {
-      aModifArray->SetValue(aModifNb, StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement);
+      aModifArray->SetValue(
+        aModifNb,
+        StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement);
     }
     else if (anObject->GetMaterialRequirementModifier()
              == XCAFDimTolObjects_GeomToleranceMatReqModif_M)
     {
-      aModifArray->SetValue(aModifNb, StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement);
+      aModifArray->SetValue(
+        aModifNb,
+        StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement);
     }
     // Modifier with value
     if (anObject->GetMaxValueModifier() != 0)
@@ -5058,7 +5062,9 @@ bool STEPCAFControl_Writer::writeMaterials(const occ::handle<XSControl_WorkSessi
           aDUE1->Init(aSMU, 3.0);
           // length
           occ::handle<StepBasic_SiUnitAndLengthUnit> aSLU = new StepBasic_SiUnitAndLengthUnit;
-          aSLU->Init(true, StepBasic_SiPrefix::StepBasic_spCenti, StepBasic_SiUnitName::StepBasic_sunMetre);
+          aSLU->Init(true,
+                     StepBasic_SiPrefix::StepBasic_spCenti,
+                     StepBasic_SiUnitName::StepBasic_sunMetre);
           occ::handle<StepBasic_DerivedUnitElement> aDUE2 = new StepBasic_DerivedUnitElement;
           aDUE2->Init(aSLU, 2.0);
           // other

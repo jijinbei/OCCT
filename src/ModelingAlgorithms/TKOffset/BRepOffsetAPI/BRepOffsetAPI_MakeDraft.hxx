@@ -59,10 +59,10 @@ public:
   //! AngleMax sets the maximum value within which a
   //! RightCorner transition can be performed.
   //! AngleMin and AngleMax are expressed in radians.
-  Standard_EXPORT void SetOptions(
-    const BRepBuilderAPI_TransitionMode Style    = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RightCorner,
-    const double                        AngleMin = 0.01,
-    const double                        AngleMax = 3.0);
+  Standard_EXPORT void SetOptions(const BRepBuilderAPI_TransitionMode Style =
+                                    BRepBuilderAPI_TransitionMode::BRepBuilderAPI_RightCorner,
+                                  const double AngleMin = 0.01,
+                                  const double AngleMax = 3.0);
 
   //! Sets the direction of the draft for this object.
   //! If IsInternal is true, the draft is internal to the argument

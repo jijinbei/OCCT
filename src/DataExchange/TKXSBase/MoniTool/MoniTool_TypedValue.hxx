@@ -59,9 +59,10 @@ public:
   //!
   //! init gives an initial value. If it is not given, the
   //! TypedValue begins as "not set", its value is empty
-  Standard_EXPORT MoniTool_TypedValue(const char* const        name,
-                                      const MoniTool_ValueType type = MoniTool_ValueType::MoniTool_ValueText,
-                                      const char* const        init = "");
+  Standard_EXPORT MoniTool_TypedValue(
+    const char* const        name,
+    const MoniTool_ValueType type = MoniTool_ValueType::MoniTool_ValueText,
+    const char* const        init = "");
 
   //! Creates a TypedValue from another one, by duplication
   Standard_EXPORT MoniTool_TypedValue(const occ::handle<MoniTool_TypedValue>& other);

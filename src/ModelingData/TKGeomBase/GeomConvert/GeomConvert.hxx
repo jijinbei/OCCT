@@ -249,27 +249,28 @@ public:
   //! Standard_DomainError:
   //! -   if the curve C is infinite, or
   //! -   if C is a (complete) circle or ellipse, and Parameterisation is equal to
-  //! Convert_ParameterisationType::Convert_TgtThetaOver2_1 or Convert_ParameterisationType::Convert_TgtThetaOver2_2.
-  //! Standard_ConstructionError:
+  //! Convert_ParameterisationType::Convert_TgtThetaOver2_1 or
+  //! Convert_ParameterisationType::Convert_TgtThetaOver2_2. Standard_ConstructionError:
   //! -   if C is a (complete) circle or ellipse, and if Parameterisation is not equal to
-  //! Convert_ParameterisationType::Convert_TgtThetaOver2, Convert_ParameterisationType::Convert_RationalC1,
+  //! Convert_ParameterisationType::Convert_TgtThetaOver2,
+  //! Convert_ParameterisationType::Convert_RationalC1,
   //! Convert_ParameterisationType::Convert_QuasiAngular (the curve is converted
   //! in these three cases) or to Convert_ParameterisationType::Convert_TgtThetaOver2_1 or
-  //! Convert_ParameterisationType::Convert_TgtThetaOver2_2 (another exception is raised in these two cases).
+  //! Convert_ParameterisationType::Convert_TgtThetaOver2_2 (another exception is raised in these
+  //! two cases).
   //! -   if C is a trimmed circle or ellipse, if Parameterisation is equal to
-  //! Convert_ParameterisationType::Convert_TgtThetaOver2_1 and if U2 - U1 > 0.9999 * Pi, where U1 and U2 are
-  //! respectively the first and the last parameters of the
-  //! trimmed curve (this method of parameterization
-  //! cannot be used to convert a half-circle or a half-ellipse, for example), or
+  //! Convert_ParameterisationType::Convert_TgtThetaOver2_1 and if U2 - U1 > 0.9999 * Pi, where U1
+  //! and U2 are respectively the first and the last parameters of the trimmed curve (this method of
+  //! parameterization cannot be used to convert a half-circle or a half-ellipse, for example), or
   //! -   if C is a trimmed circle or ellipse, if
-  //! Parameterisation is equal to Convert_ParameterisationType::Convert_TgtThetaOver2_2 and U2 - U1 >
-  //! 1.9999 * Pi where U1 and U2 are
-  //! respectively the first and the last parameters of the
+  //! Parameterisation is equal to Convert_ParameterisationType::Convert_TgtThetaOver2_2 and U2 - U1
+  //! > 1.9999 * Pi where U1 and U2 are respectively the first and the last parameters of the
   //! trimmed curve (this method of parameterization
   //! cannot be used to convert a quasi-complete circle or ellipse).
   Standard_EXPORT static occ::handle<Geom_BSplineCurve> CurveToBSplineCurve(
     const occ::handle<Geom_Curve>&     C,
-    const Convert_ParameterisationType Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2);
+    const Convert_ParameterisationType Parameterisation =
+      Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   //! This algorithm converts a non infinite surface from Geom
   //! into a B-spline surface.

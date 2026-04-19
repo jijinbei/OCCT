@@ -427,8 +427,10 @@ BRepTopAdaptor_FClass2d::BRepTopAdaptor_FClass2d(const TopoDS_Face& aFace, const
     if (anIsBadWire)
       TabOrien(1) = -1;
 
-    if (surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cone || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
-        || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Torus || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere
+    if (surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
+        || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
+        || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Torus
+        || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere
         || surf->GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
 
     {

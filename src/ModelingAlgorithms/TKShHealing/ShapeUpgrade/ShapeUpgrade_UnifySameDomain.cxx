@@ -126,7 +126,9 @@ static bool IsLinear(const BRepAdaptor_Curve& theBAcurve, gp_Dir& theDir)
     return true;
   }
 
-  if ((aType == GeomAbs_CurveType::GeomAbs_BezierCurve || aType == GeomAbs_CurveType::GeomAbs_BSplineCurve) && theBAcurve.NbPoles() == 2)
+  if ((aType == GeomAbs_CurveType::GeomAbs_BezierCurve
+       || aType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
+      && theBAcurve.NbPoles() == 2)
   {
     gp_Pnt aFirstPnt = theBAcurve.Value(theBAcurve.FirstParameter());
     gp_Pnt aLastPnt  = theBAcurve.Value(theBAcurve.LastParameter());
@@ -1714,7 +1716,7 @@ void ShapeUpgrade_UnifySameDomain::UnionPCurves(const NCollection_Sequence<TopoD
     NCollection_Sequence<double>                    aFirstsSeq;
     NCollection_Sequence<double>                    aLastsSeq;
     NCollection_Sequence<bool>                      aForwardsSeq;
-    GeomAbs_CurveType                               aCurrentType = GeomAbs_CurveType::GeomAbs_OtherCurve;
+    GeomAbs_CurveType aCurrentType = GeomAbs_CurveType::GeomAbs_OtherCurve;
 
     double aFirst, aLast;
     for (int i = 1; i <= theChain.Length(); i++)
@@ -1747,7 +1749,8 @@ void ShapeUpgrade_UnifySameDomain::UnionPCurves(const NCollection_Sequence<TopoD
       GeomAbs_CurveType   aType = anAdaptor.GetType();
 
       occ::handle<Geom2d_Line> aLine;
-      if (aType == GeomAbs_CurveType::GeomAbs_BSplineCurve || aType == GeomAbs_CurveType::GeomAbs_BezierCurve)
+      if (aType == GeomAbs_CurveType::GeomAbs_BSplineCurve
+          || aType == GeomAbs_CurveType::GeomAbs_BezierCurve)
         TryMakeLine(aPCurve, aFirst, aLast, aLine);
       if (!aLine.IsNull())
       {
@@ -2408,8 +2411,10 @@ static bool IsMergingPossible(
 
   gp_Dir aDir1, aDir2;
   if (!(IsLinear(ade1, aDir1) && IsLinear(ade2, aDir2))
-      && ((t1 != GeomAbs_CurveType::GeomAbs_BezierCurve && t1 != GeomAbs_CurveType::GeomAbs_BSplineCurve)
-          || (t2 != GeomAbs_CurveType::GeomAbs_BezierCurve && t2 != GeomAbs_CurveType::GeomAbs_BSplineCurve))
+      && ((t1 != GeomAbs_CurveType::GeomAbs_BezierCurve
+           && t1 != GeomAbs_CurveType::GeomAbs_BSplineCurve)
+          || (t2 != GeomAbs_CurveType::GeomAbs_BezierCurve
+              && t2 != GeomAbs_CurveType::GeomAbs_BSplineCurve))
       && t1 != t2)
     return false;
 

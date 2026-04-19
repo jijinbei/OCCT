@@ -21,7 +21,8 @@
 //! The following values are accessible:
 //! - PCDM_ReaderStatus::PCDM_RS_OK: the document was successfully read;
 //! - PCDM_ReaderStatus::PCDM_RS_NoDriver: driver is not found for the defined file format;
-//! - PCDM_ReaderStatus::PCDM_RS_UnknownFileDriver: check of the file failed (file doesn't exist, for example);
+//! - PCDM_ReaderStatus::PCDM_RS_UnknownFileDriver: check of the file failed (file doesn't exist,
+//! for example);
 //! - PCDM_ReaderStatus::PCDM_RS_OpenError: attempt to open the file failed;
 //! - PCDM_ReaderStatus::PCDM_RS_NoVersion: document version of the file is out of scope;
 //! - PCDM_ReaderStatus::PCDM_RS_NoSchema: NOT USED;
@@ -30,18 +31,24 @@
 //! - PCDM_ReaderStatus::PCDM_RS_WrongStreamMode: file is not open for reading (a mistaken mode);
 //! - PCDM_ReaderStatus::PCDM_RS_FormatFailure: mistake in document data structure;
 //! - PCDM_ReaderStatus::PCDM_RS_TypeFailure: data type is unknown;
-//! - PCDM_ReaderStatus::PCDM_RS_TypeNotFoundInSchema: data type is not found in schema (STD file format);
-//! - PCDM_ReaderStatus::PCDM_RS_UnrecognizedFileFormat: document data structure is wrong (binary file format);
-//! - PCDM_ReaderStatus::PCDM_RS_MakeFailure: conversion of data from persistent to transient attributes failed (XML
+//! - PCDM_ReaderStatus::PCDM_RS_TypeNotFoundInSchema: data type is not found in schema (STD file
+//! format);
+//! - PCDM_ReaderStatus::PCDM_RS_UnrecognizedFileFormat: document data structure is wrong (binary
 //! file format);
-//! - PCDM_ReaderStatus::PCDM_RS_PermissionDenied: file can't be opened because permission is denied;
-//! - PCDM_ReaderStatus::PCDM_RS_DriverFailure: something went wrong (a general mistake of reading of a document);
-//! - PCDM_ReaderStatus::PCDM_RS_AlreadyRetrievedAndModified: document is already retrieved and modified in current
-//! session;
-//! - PCDM_ReaderStatus::PCDM_RS_AlreadyRetrieved: document is already in current session (already retrieved);
+//! - PCDM_ReaderStatus::PCDM_RS_MakeFailure: conversion of data from persistent to transient
+//! attributes failed (XML file format);
+//! - PCDM_ReaderStatus::PCDM_RS_PermissionDenied: file can't be opened because permission is
+//! denied;
+//! - PCDM_ReaderStatus::PCDM_RS_DriverFailure: something went wrong (a general mistake of reading
+//! of a document);
+//! - PCDM_ReaderStatus::PCDM_RS_AlreadyRetrievedAndModified: document is already retrieved and
+//! modified in current session;
+//! - PCDM_ReaderStatus::PCDM_RS_AlreadyRetrieved: document is already in current session (already
+//! retrieved);
 //! - PCDM_ReaderStatus::PCDM_RS_UnknownDocument: file doesn't exist on disk;
 //! - PCDM_ReaderStatus::PCDM_RS_WrongResource: wrong resource file (.RetrievalPlugin);
-//! - PCDM_ReaderStatus::PCDM_RS_ReaderException: no shape section in the document file (binary file format);
+//! - PCDM_ReaderStatus::PCDM_RS_ReaderException: no shape section in the document file (binary file
+//! format);
 //! - PCDM_ReaderStatus::PCDM_RS_NoModel: NOT USED;
 //! - PCDM_ReaderStatus::PCDM_RS_UserBreak: user stopped reading of the document;
 enum class PCDM_ReaderStatus

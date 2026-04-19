@@ -36,10 +36,14 @@ class Geom_Axis2Placement;
 //! Color of origin and any axis, color of arrows and labels may be changed.
 //! Visual presentation might be shown in two, shaded and wireframe modes, wireframe by default).
 //! There are 4 modes of selection:
-//! - AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_EntireObject to select trihedron,  priority = 1
-//! - AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_Origin       to select its origin, priority = 5
-//! - AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_Axes         to select its axis,   priority = 3
-//! - AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_MainPlanes   to select its planes, priority = 2
+//! - AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_EntireObject to select trihedron,
+//! priority = 1
+//! - AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_Origin       to select its origin,
+//! priority = 5
+//! - AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_Axes         to select its axis,
+//! priority = 3
+//! - AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_MainPlanes   to select its planes,
+//! priority = 2
 //!
 //! Warning!
 //! For the presentation of trihedron, the default unit of length is the millimetre,
@@ -165,7 +169,10 @@ public:
   int Signature() const override { return 3; }
 
   //! Indicates that the type of Interactive Object is datum.
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Datum; }
+  AIS_KindOfInteractive Type() const override
+  {
+    return AIS_KindOfInteractive::AIS_KindOfInteractive_Datum;
+  }
 
   //! Removes the settings for color.
   Standard_EXPORT void UnsetColor() override;

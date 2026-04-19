@@ -40,9 +40,9 @@
 
 #include <algorithm>
 
-using Pnt = gp_Pnt;
-using Vec = gp_Vec;
-using Array1OfReal = NCollection_Array1<double>;
+using Pnt             = gp_Pnt;
+using Vec             = gp_Vec;
+using Array1OfReal    = NCollection_Array1<double>;
 using Array1OfInteger = NCollection_Array1<int>;
 
 //=======================================================================
@@ -596,7 +596,8 @@ BSplCLib_MultDistribution BSplCLib::MultForm(const Array1OfInteger& Mults,
   BSplCLib_MultDistribution aForm      = BSplCLib_MultDistribution::BSplCLib_Constant;
   int                       aMult      = Mults(aFirst + 1);
 
-  for (int i = aFirst + 1; i <= aLast && aForm != BSplCLib_MultDistribution::BSplCLib_NonConstant; i++)
+  for (int i = aFirst + 1; i <= aLast && aForm != BSplCLib_MultDistribution::BSplCLib_NonConstant;
+       i++)
   {
     if (i == aFirst + 1)
     {

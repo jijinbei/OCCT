@@ -40,7 +40,8 @@ Graphic3d_Texture1D::Graphic3d_Texture1D(const Graphic3d_NameOfTexture1D theNOT,
       myName(theNOT)
 {
   myPath.SetTrek(Graphic3d_TextureRoot::TexturesFolder());
-  myTexId = TCollection_AsciiString("Graphic3d_Texture1D_") + NameOfTexture1d_to_FileName[static_cast<int>(theNOT)];
+  myTexId = TCollection_AsciiString("Graphic3d_Texture1D_")
+            + NameOfTexture1d_to_FileName[static_cast<int>(theNOT)];
 }
 
 //=================================================================================================

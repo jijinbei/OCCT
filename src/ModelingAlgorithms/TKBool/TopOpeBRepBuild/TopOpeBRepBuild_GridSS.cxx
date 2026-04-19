@@ -1067,12 +1067,14 @@ void TopOpeBRepBuild_Builder::GMergeFaceSFS(const TopoDS_Shape&           FOR,
     if (makecomsam)
     {
       gF = TopOpeBRepBuild_GTool::GComUnsh(TopAbs_FACE, TopAbs_FACE);
-      gF.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED, TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
+      gF.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED,
+                      TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
     }
     else if (makecomdif)
     {
       gF = TopOpeBRepBuild_GTool::GComUnsh(TopAbs_FACE, TopAbs_FACE);
-      gF.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED, TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
+      gF.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED,
+                      TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
     }
 
     GMergeFaces(*PtrLF1, *PtrLF2, gF);

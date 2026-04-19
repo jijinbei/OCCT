@@ -820,7 +820,8 @@ bool BRepSweep_Rotation::IsInvariant(const TopoDS_Shape& aGenS) const
   if (aGenS.ShapeType() == TopAbs_EDGE)
   {
     BRepAdaptor_Curve aC(TopoDS::Edge(aGenS));
-    if (aC.GetType() == GeomAbs_CurveType::GeomAbs_Line || aC.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve
+    if (aC.GetType() == GeomAbs_CurveType::GeomAbs_Line
+        || aC.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve
         || aC.GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
     {
       TopoDS_Vertex V1, V2;
@@ -833,7 +834,8 @@ bool BRepSweep_Rotation::IsInvariant(const TopoDS_Shape& aGenS) const
         double aTol = std::max(BRep_Tool::Tolerance(V1), BRep_Tool::Tolerance(V2));
         gp_Lin Lin(myAxe.Location(), myAxe.Direction());
         const NCollection_Array1<gp_Pnt>& aPoles =
-          (aC.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve ? aC.BSpline()->Poles() : aC.Bezier()->Poles());
+          (aC.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve ? aC.BSpline()->Poles()
+                                                                   : aC.Bezier()->Poles());
 
         for (int i = aPoles.Lower(); i <= aPoles.Upper(); i++)
         {

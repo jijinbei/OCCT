@@ -41,7 +41,10 @@ public:
   int Signature() const override { return 5; }
 
   //! Returns the type Datum.
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Datum; }
+  AIS_KindOfInteractive Type() const override
+  {
+    return AIS_KindOfInteractive::AIS_KindOfInteractive_Datum;
+  }
 
   //! Constructs an infinite line.
   const occ::handle<Geom_Line>& Line() const { return myComponent; }

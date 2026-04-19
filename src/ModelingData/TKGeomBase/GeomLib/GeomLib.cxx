@@ -1265,7 +1265,8 @@ void GeomLib::ExtendCurveToPoint(occ::handle<Geom_BoundedCurve>& Curve,
   gp_Vec      d1, d2, d3;
   gp_Pnt      p0;
   // Convert the input (preserving the parameterization if possible)
-  GeomConvert_CompCurveToBSplineCurve Concat(Curve, Convert_ParameterisationType::Convert_QuasiAngular);
+  GeomConvert_CompCurveToBSplineCurve Concat(Curve,
+                                             Convert_ParameterisationType::Convert_QuasiAngular);
 
   // Construction constraints
   NCollection_Array1<gp_XYZ> Cont(1, size);
@@ -2567,7 +2568,8 @@ int GeomLib::NormEstim(const occ::handle<Geom_Surface>& theSurf,
   }
 
   // quasysingular
-  if (aStatus == CSLib_NormalStatus::CSLib_D1NuIsNull || aStatus == CSLib_NormalStatus::CSLib_D1NvIsNull
+  if (aStatus == CSLib_NormalStatus::CSLib_D1NuIsNull
+      || aStatus == CSLib_NormalStatus::CSLib_D1NvIsNull
       || aStatus == CSLib_NormalStatus::CSLib_D1NuIsParallelD1Nv)
   {
     theNorm.SetXYZ(aNormal.XYZ());
@@ -2691,7 +2693,8 @@ void GeomLib::IsClosed(const occ::handle<Geom_Surface>& S,
         v2 = std::copysign(1., v2);
       }
       //
-      if (aSType == GeomAbs_SurfaceType::GeomAbs_OffsetSurface || aSType == GeomAbs_SurfaceType::GeomAbs_OtherSurface)
+      if (aSType == GeomAbs_SurfaceType::GeomAbs_OffsetSurface
+          || aSType == GeomAbs_SurfaceType::GeomAbs_OtherSurface)
       {
         if (Precision::IsInfinite(u1))
         {

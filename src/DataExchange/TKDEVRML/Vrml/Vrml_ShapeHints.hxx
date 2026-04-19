@@ -52,10 +52,11 @@ class Vrml_ShapeHints
 public:
   DEFINE_STANDARD_ALLOC
 
-  Standard_EXPORT Vrml_ShapeHints(const Vrml_VertexOrdering aVertexOrdering = Vrml_VertexOrdering::Vrml_UNKNOWN_ORDERING,
-                                  const Vrml_ShapeType      aShapeType = Vrml_ShapeType::Vrml_UNKNOWN_SHAPE_TYPE,
-                                  const Vrml_FaceType       aFaceType  = Vrml_FaceType::Vrml_CONVEX,
-                                  const double              aAngle     = 0.5);
+  Standard_EXPORT Vrml_ShapeHints(
+    const Vrml_VertexOrdering aVertexOrdering = Vrml_VertexOrdering::Vrml_UNKNOWN_ORDERING,
+    const Vrml_ShapeType      aShapeType      = Vrml_ShapeType::Vrml_UNKNOWN_SHAPE_TYPE,
+    const Vrml_FaceType       aFaceType       = Vrml_FaceType::Vrml_CONVEX,
+    const double              aAngle          = 0.5);
 
   Standard_EXPORT void SetVertexOrdering(const Vrml_VertexOrdering aVertexOrdering);
 

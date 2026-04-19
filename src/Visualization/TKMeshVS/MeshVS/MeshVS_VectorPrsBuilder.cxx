@@ -307,7 +307,9 @@ void MeshVS_VectorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
   else
   {
     occ::handle<Graphic3d_AspectLine3d> anArrowLinAspect =
-      new Graphic3d_AspectLine3d(aColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, mySimpleWidthPrm * 1.5);
+      new Graphic3d_AspectLine3d(aColor,
+                                 Aspect_TypeOfLine::Aspect_TOL_SOLID,
+                                 mySimpleWidthPrm * 1.5);
 
     aVGroup->SetPrimitivesAspect(anArrowLinAspect);
     aVGroup->AddPrimitiveArray(aArrowLineArray);

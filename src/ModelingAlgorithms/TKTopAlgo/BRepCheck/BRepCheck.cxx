@@ -37,7 +37,8 @@ void BRepCheck::Add(NCollection_List<BRepCheck_Status>& lst, const BRepCheck_Sta
   NCollection_List<BRepCheck_Status>::Iterator it(lst);
   while (it.More())
   {
-    if (it.Value() == BRepCheck_Status::BRepCheck_NoError && stat != BRepCheck_Status::BRepCheck_NoError)
+    if (it.Value() == BRepCheck_Status::BRepCheck_NoError
+        && stat != BRepCheck_Status::BRepCheck_NoError)
     {
       lst.Remove(it);
     }

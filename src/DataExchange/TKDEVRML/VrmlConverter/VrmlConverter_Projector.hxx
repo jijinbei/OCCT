@@ -52,8 +52,8 @@ public:
     const double                            XUp,
     const double                            YUp,
     const double                            ZUp,
-    const VrmlConverter_TypeOfCamera        Camera = VrmlConverter_TypeOfCamera::VrmlConverter_NoCamera,
-    const VrmlConverter_TypeOfLight         Light  = VrmlConverter_TypeOfLight::VrmlConverter_NoLight);
+    const VrmlConverter_TypeOfCamera Camera = VrmlConverter_TypeOfCamera::VrmlConverter_NoCamera,
+    const VrmlConverter_TypeOfLight  Light  = VrmlConverter_TypeOfLight::VrmlConverter_NoLight);
 
   Standard_EXPORT void SetCamera(const VrmlConverter_TypeOfCamera aCamera);
 

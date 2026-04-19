@@ -308,7 +308,8 @@ bool TopOpeBRep_FacesIntersector::SameDomain() const
 
   bool sd = myIntersector.TangentFaces();
 
-  // bool plpl = (mySurfaceType1 == GeomAbs_SurfaceType::GeomAbs_Plane) && (mySurfaceType2 == GeomAbs_SurfaceType::GeomAbs_Plane);
+  // bool plpl = (mySurfaceType1 == GeomAbs_SurfaceType::GeomAbs_Plane) && (mySurfaceType2 ==
+  // GeomAbs_SurfaceType::GeomAbs_Plane);
 
   //  if (!plpl) return false;
   return sd;
@@ -921,7 +922,8 @@ static occ::handle<IntPatch_RLine> BuildRLine(
 
       if (buildrline)
       {
-        IntSurf_TypeTrans trans1 = IntSurf_TypeTrans::IntSurf_Undecided, trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
+        IntSurf_TypeTrans trans1 = IntSurf_TypeTrans::IntSurf_Undecided,
+                          trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
 
         occ::handle<IntSurf_LineOn2S> aLineOn2S = new IntSurf_LineOn2S();
 
@@ -1600,9 +1602,11 @@ static occ::handle<IntPatch_WLine> GetMergedWLineOnRestriction(
     const occ::handle<IntPatch_WLine>& aWLine =
       *((occ::handle<IntPatch_WLine>*)&(theSlin.Value(i)));
 
-    if (aWLine->TransitionOnS1() != IntSurf_TypeTrans::IntSurf_Undecided && aWLine->TransitionOnS1() != IntSurf_TypeTrans::IntSurf_Touch)
+    if (aWLine->TransitionOnS1() != IntSurf_TypeTrans::IntSurf_Undecided
+        && aWLine->TransitionOnS1() != IntSurf_TypeTrans::IntSurf_Touch)
       trans1 = aWLine->TransitionOnS1();
-    if (aWLine->TransitionOnS2() != IntSurf_TypeTrans::IntSurf_Undecided && aWLine->TransitionOnS2() != IntSurf_TypeTrans::IntSurf_Touch)
+    if (aWLine->TransitionOnS2() != IntSurf_TypeTrans::IntSurf_Undecided
+        && aWLine->TransitionOnS2() != IntSurf_TypeTrans::IntSurf_Touch)
       trans2 = aWLine->TransitionOnS2();
   }
 

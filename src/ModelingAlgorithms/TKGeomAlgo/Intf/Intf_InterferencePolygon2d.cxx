@@ -341,24 +341,42 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       nbpi++;
       parO[nbpi] = 0.;
       parT[nbpi] = 0.;
-      thePi.Append(
-        Intf_SectionPoint(BegO, Intf_PIType::Intf_VERTEX, iObje1, 0., Intf_PIType::Intf_VERTEX, iObje2, 0., sinTeta));
+      thePi.Append(Intf_SectionPoint(BegO,
+                                     Intf_PIType::Intf_VERTEX,
+                                     iObje1,
+                                     0.,
+                                     Intf_PIType::Intf_VERTEX,
+                                     iObje2,
+                                     0.,
+                                     sinTeta));
     }
     if (dbOeT <= Tolerance)
     {
       nbpi++;
       parO[nbpi] = 0.;
       parT[nbpi] = 1.;
-      thePi.Append(
-        Intf_SectionPoint(BegO, Intf_PIType::Intf_VERTEX, iObje1, 0., Intf_PIType::Intf_VERTEX, iObje2 + 1, 0., sinTeta));
+      thePi.Append(Intf_SectionPoint(BegO,
+                                     Intf_PIType::Intf_VERTEX,
+                                     iObje1,
+                                     0.,
+                                     Intf_PIType::Intf_VERTEX,
+                                     iObje2 + 1,
+                                     0.,
+                                     sinTeta));
     }
     if (dbObT > Tolerance && dbOeT > Tolerance && dbObT + dbOeT <= (lgT + Tolerance))
     {
       nbpi++;
       parO[nbpi] = 0.;
       parT[nbpi] = dbObT / lgT;
-      thePi.Append(
-        Intf_SectionPoint(BegO, Intf_PIType::Intf_VERTEX, iObje1, 0., Intf_PIType::Intf_EDGE, iObje2, parT[nbpi], sinTeta));
+      thePi.Append(Intf_SectionPoint(BegO,
+                                     Intf_PIType::Intf_VERTEX,
+                                     iObje1,
+                                     0.,
+                                     Intf_PIType::Intf_EDGE,
+                                     iObje2,
+                                     parT[nbpi],
+                                     sinTeta));
     }
   }
 
@@ -373,16 +391,28 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       nbpi++;
       parO[nbpi] = 1.;
       parT[nbpi] = 0.;
-      thePi.Append(
-        Intf_SectionPoint(EndO, Intf_PIType::Intf_VERTEX, iObje1 + 1, 0., Intf_PIType::Intf_VERTEX, iObje2, 0., sinTeta));
+      thePi.Append(Intf_SectionPoint(EndO,
+                                     Intf_PIType::Intf_VERTEX,
+                                     iObje1 + 1,
+                                     0.,
+                                     Intf_PIType::Intf_VERTEX,
+                                     iObje2,
+                                     0.,
+                                     sinTeta));
     }
     if (deOeT <= Tolerance)
     {
       nbpi++;
       parO[nbpi] = 1.;
       parT[nbpi] = 1.;
-      thePi.Append(
-        Intf_SectionPoint(EndO, Intf_PIType::Intf_VERTEX, iObje1 + 1, 0., Intf_PIType::Intf_VERTEX, iObje2 + 1, 0., sinTeta));
+      thePi.Append(Intf_SectionPoint(EndO,
+                                     Intf_PIType::Intf_VERTEX,
+                                     iObje1 + 1,
+                                     0.,
+                                     Intf_PIType::Intf_VERTEX,
+                                     iObje2 + 1,
+                                     0.,
+                                     sinTeta));
     }
     if (deObT > Tolerance && deOeT > Tolerance && deObT + deOeT <= (lgT + Tolerance))
     {
@@ -409,8 +439,14 @@ void Intf_InterferencePolygon2d::Intersect(const int       iObje1,
       nbpi++;
       parO[nbpi] = dbObT / lgO;
       parT[nbpi] = 0.;
-      thePi.Append(
-        Intf_SectionPoint(BegT, Intf_PIType::Intf_EDGE, iObje1, parO[nbpi], Intf_PIType::Intf_VERTEX, iObje2, 0., sinTeta));
+      thePi.Append(Intf_SectionPoint(BegT,
+                                     Intf_PIType::Intf_EDGE,
+                                     iObje1,
+                                     parO[nbpi],
+                                     Intf_PIType::Intf_VERTEX,
+                                     iObje2,
+                                     0.,
+                                     sinTeta));
     }
   }
 

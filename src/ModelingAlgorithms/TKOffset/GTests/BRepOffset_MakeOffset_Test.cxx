@@ -159,7 +159,8 @@ TEST(BRepOffset_MakeOffsetTest, ThickSolid_CircleToRectangleLoft)
   aThickMaker.Build();
 
   // The operation should succeed - this is valid geometry
-  // Regression: commit 44be1230391 causes this to fail with BRepOffset_Error::BRepOffset_MixedConnectivity
+  // Regression: commit 44be1230391 causes this to fail with
+  // BRepOffset_Error::BRepOffset_MixedConnectivity
   EXPECT_TRUE(aThickMaker.IsDone())
     << "ThickSolid operation failed. This may be a regression from commit 44be1230391 "
     << "where CheckMixedContinuity incorrectly flags valid loft geometry as having "

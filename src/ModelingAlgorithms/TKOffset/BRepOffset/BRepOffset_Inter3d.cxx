@@ -637,7 +637,8 @@ void BRepOffset_Inter3d::ConnexIntByInt(
       }
       //
       ChFiDS_TypeOfConcavity OT = L.First().Type();
-      if (OT != ChFiDS_TypeOfConcavity::ChFiDS_Convex && OT != ChFiDS_TypeOfConcavity::ChFiDS_Concave)
+      if (OT != ChFiDS_TypeOfConcavity::ChFiDS_Convex
+          && OT != ChFiDS_TypeOfConcavity::ChFiDS_Concave)
       {
         continue;
       }

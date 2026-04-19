@@ -160,7 +160,10 @@ void BREP_mergePDS(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
       {
         if (ivp1 != 0)
         {
-          std::cout << TopOpeBRepDS::SPrint(TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE, ic, "# BREP_mergePDS ", " : ");
+          std::cout << TopOpeBRepDS::SPrint(TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE,
+                                            ic,
+                                            "# BREP_mergePDS ",
+                                            " : ");
           std::cout << TopOpeBRepDS::SPrint(GK, GI, "", " = ");
           TCollection_AsciiString str(BDS.HasShape(v1) ? "old" : "new ");
           std::cout << TopOpeBRepDS::SPrint(k1, iv1, str);
@@ -169,7 +172,10 @@ void BREP_mergePDS(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS)
         }
         if (ivp2 != 0)
         {
-          std::cout << TopOpeBRepDS::SPrint(TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE, ic, "# BREP_mergePDS ", " : ");
+          std::cout << TopOpeBRepDS::SPrint(TopOpeBRepDS_Kind::TopOpeBRepDS_CURVE,
+                                            ic,
+                                            "# BREP_mergePDS ",
+                                            " : ");
           std::cout << TopOpeBRepDS::SPrint(GK, GI, "", " = ");
           TCollection_AsciiString str(BDS.HasShape(v2) ? "old" : "new ");
           std::cout << TopOpeBRepDS::SPrint(k2, iv2, str);

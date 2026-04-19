@@ -129,8 +129,9 @@ void BRepClass3d_SClassifier::PerformInfinitePoint(BRepClass3d_SolidExplorer& aS
     {
       TopoDS_Face aF = *iFace;
 
-      TopAbs_State                      aState      = TopAbs_OUT;
-      IntCurveSurface_TransitionOnCurve aTransition = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent;
+      TopAbs_State                      aState = TopAbs_OUT;
+      IntCurveSurface_TransitionOnCurve aTransition =
+        IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent;
 
       aParam = 0.1 + 0.8 * aRandomGenerator.NextReal(); // random number in range [0.1, 0.9]
       bFound = BRepClass3d_SolidExplorer::FindAPointInTheFace(aF, aPoint, aU, aV, aParam);
@@ -327,8 +328,9 @@ void BRepClass3d_SClassifier::Perform(BRepClass3d_SolidExplorer& SolidExplorer,
           continue;
         }
 
-        IntCurveSurface_TransitionOnCurve tran = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent;
-        int                               Tst  = GetTransi(f1, f2, EE, param, L, tran);
+        IntCurveSurface_TransitionOnCurve tran =
+          IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent;
+        int Tst = GetTransi(f1, f2, EE, param, L, tran);
         if (Tst == 1 && std::abs(Lpar) < std::abs(parmin))
         {
           parmin = Lpar;
@@ -672,7 +674,9 @@ static void Trans(const double parmin, IntCurveSurface_TransitionOnCurve& tran, 
 {
   // if parmin is negative we should reverse transition
   if (parmin < 0)
-    tran = (tran == IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out ? IntCurveSurface_TransitionOnCurve::IntCurveSurface_In : IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out);
+    tran = (tran == IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out
+              ? IntCurveSurface_TransitionOnCurve::IntCurveSurface_In
+              : IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out);
 
   if (tran == IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out)
     //-- The line is going from inside the solid to outside

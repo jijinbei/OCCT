@@ -96,7 +96,8 @@ static int OCC281bug(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<V3d_Viewer> aViewer = ViewerTest::GetViewerFromContext();
   occ::handle<V3d_View>   aView   = ViewerTest::CurrentView();
 
-  aViewer->ActivateGrid(Aspect_GridType::Aspect_GT_Rectangular, Aspect_GridDrawMode::Aspect_GDM_Lines);
+  aViewer->ActivateGrid(Aspect_GridType::Aspect_GT_Rectangular,
+                        Aspect_GridDrawMode::Aspect_GDM_Lines);
   occ::handle<Graphic3d_AspectMarker3d> GridAsp =
     new Graphic3d_AspectMarker3d(AspectTypeOfMarker, Quantity_NOC_BLUE1, 10.);
   aViewer->SetGridEcho(GridAsp);

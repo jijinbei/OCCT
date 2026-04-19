@@ -498,7 +498,8 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   }
 
   if (!aProgram.IsNull()
-      && ViewerTest::CurrentView()->RenderingParams().TransparencyMethod == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT)
+      && ViewerTest::CurrentView()->RenderingParams().TransparencyMethod
+           == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT)
   {
     aProgram->SetNbFragmentOutputs(2);
     aProgram->SetOitOutput(Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT);
@@ -786,7 +787,9 @@ static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** th
       *aHtmlFile << "<tr>\n";
       *aHtmlFile << "<td>" << aMat.StringName() << "</td>\n";
       *aHtmlFile << "<td>"
-                 << (aMat.MaterialType() == Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_PHYSIC ? "PHYSIC" : "ASPECT")
+                 << (aMat.MaterialType() == Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_PHYSIC
+                       ? "PHYSIC"
+                       : "ASPECT")
                  << "</td>\n";
       *aHtmlFile << "<td>" << aMat.Transparency() << "</td>\n";
       *aHtmlFile << "<td>" << formatSvgColoredRect(aMat.PBRMaterial().Color().GetRGB())

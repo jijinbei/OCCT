@@ -49,10 +49,11 @@ public:
 
   Standard_EXPORT BRepOffset_Offset();
 
-  Standard_EXPORT BRepOffset_Offset(const TopoDS_Face&     Face,
-                                    const double           Offset,
-                                    const bool             OffsetOutside = true,
-                                    const GeomAbs_JoinType JoinType      = GeomAbs_JoinType::GeomAbs_Arc);
+  Standard_EXPORT BRepOffset_Offset(
+    const TopoDS_Face&     Face,
+    const double           Offset,
+    const bool             OffsetOutside = true,
+    const GeomAbs_JoinType JoinType      = GeomAbs_JoinType::GeomAbs_Arc);
 
   //! This method will be called when you want to share
   //! the edges soon generated from an other face.

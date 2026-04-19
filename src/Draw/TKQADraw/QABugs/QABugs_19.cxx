@@ -170,7 +170,9 @@ static bool OCC23774Test(const TopoDS_Face&  grossPlateFace,
                          const TopoDS_Shape& originalWire,
                          Draw_Interpretor&   di)
 {
-  BRepExtrema_DistShapeShape distShapeShape(grossPlateFace, originalWire, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
+  BRepExtrema_DistShapeShape distShapeShape(grossPlateFace,
+                                            originalWire,
+                                            Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   if (!distShapeShape.IsDone())
   {
     di << "Distance ShapeShape is Not Done\n";
@@ -960,7 +962,8 @@ static int OCC23951(Draw_Interpretor& di, int argc, const char** argv)
   TDataStd_Name::Set(lab1, "Box1");
 
   Quantity_Color yellow(Quantity_NOC_YELLOW);
-  XCAFDoc_DocumentTool::ColorTool(aDoc->Main())->SetColor(lab1, yellow, XCAFDoc_ColorType::XCAFDoc_ColorGen);
+  XCAFDoc_DocumentTool::ColorTool(aDoc->Main())
+    ->SetColor(lab1, yellow, XCAFDoc_ColorType::XCAFDoc_ColorGen);
   XCAFDoc_DocumentTool::ColorTool(aDoc->Main())->SetVisibility(lab1, false);
 
   STEPControl_StepModelType mode = STEPControl_AsIs;
@@ -1011,7 +1014,9 @@ static int OCC23950(Draw_Interpretor& di, int argc, const char** argv)
   XCAFDoc_DocumentTool::ShapeTool(aDoc->Main())->UpdateAssemblies();
 
   Quantity_Color yellow(Quantity_NOC_YELLOW);
-  XCAFDoc_DocumentTool::ColorTool(labelA0)->SetColor(component01, yellow, XCAFDoc_ColorType::XCAFDoc_ColorGen);
+  XCAFDoc_DocumentTool::ColorTool(labelA0)->SetColor(component01,
+                                                     yellow,
+                                                     XCAFDoc_ColorType::XCAFDoc_ColorGen);
   XCAFDoc_DocumentTool::ColorTool(labelA0)->SetVisibility(component01, false);
 
   STEPControl_StepModelType mode = STEPControl_AsIs;
@@ -1676,7 +1681,8 @@ static int OCC25340(Draw_Interpretor& /*theDI*/, int /*theArgNb*/, const char** 
     std::cerr << "Error: No opened viewer!\n";
     return 1;
   }
-  occ::handle<AIS_TypeFilter> aFilter = new AIS_TypeFilter(AIS_KindOfInteractive::AIS_KindOfInteractive_Shape);
+  occ::handle<AIS_TypeFilter> aFilter =
+    new AIS_TypeFilter(AIS_KindOfInteractive::AIS_KindOfInteractive_Shape);
   aCtx->AddFilter(aFilter);
   return 0;
 }

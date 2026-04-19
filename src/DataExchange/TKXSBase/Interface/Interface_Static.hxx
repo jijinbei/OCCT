@@ -66,10 +66,11 @@ public:
   //!
   //! init gives an initial value. If it is not given, the Static
   //! begin as "not set", its value is empty
-  Standard_EXPORT Interface_Static(const char* const         family,
-                                   const char* const         name,
-                                   const Interface_ParamType type = Interface_ParamType::Interface_ParamText,
-                                   const char* const         init = "");
+  Standard_EXPORT Interface_Static(
+    const char* const         family,
+    const char* const         name,
+    const Interface_ParamType type = Interface_ParamType::Interface_ParamText,
+    const char* const         init = "");
 
   //! Creates a new Static with same definition as another one
   //! (value is copied, except for Entity : it remains null)

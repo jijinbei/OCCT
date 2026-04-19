@@ -788,7 +788,8 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
       IndexLastVertex += AppendSameVertexG(glig, GLine, i, 0, TabIndex);
       if (i != j)
       {
-        if ((typl == IntPatch_IType::IntPatch_Circle || typl == IntPatch_IType::IntPatch_Ellipse) && i > j)
+        if ((typl == IntPatch_IType::IntPatch_Circle || typl == IntPatch_IType::IntPatch_Ellipse)
+            && i > j)
         {
           IntPatch_Point Vtx = GLine->Vertex(j);
           Vtx.SetParameter(GLine->Vertex(j).ParameterOnLine() + M_PI + M_PI);
@@ -1050,9 +1051,9 @@ static void TestWLineToRLine(const NCollection_Sequence<occ::handle<IntPatch_Lin
 
   bool isRLine = false;
 
-  using PiParOnS = void (IntSurf_PntOn2S::*)(double&, double&) const;
-  using PQuery = bool (IntPatch_Point::*)() const;
-  using PArcOnS = const occ::handle<Adaptor2d_Curve2d>& (IntPatch_Point::*)() const;
+  using PiParOnS  = void (IntSurf_PntOn2S::*)(double&, double&) const;
+  using PQuery    = bool (IntPatch_Point::*)() const;
+  using PArcOnS   = const occ::handle<Adaptor2d_Curve2d>& (IntPatch_Point::*)() const;
   using PParOnArc = double (IntPatch_Point::*)() const;
 
   // cycle for both surfaces
@@ -1202,8 +1203,9 @@ static void TestWLineToRLine(const NCollection_Sequence<occ::handle<IntPatch_Lin
         }
 
         //-- codage de la WLine en RLine
-        occ::handle<IntPatch_RLine> rlig =
-          new IntPatch_RLine(true, IntSurf_Situation::IntSurf_Unknown, IntSurf_Situation::IntSurf_Unknown);
+        occ::handle<IntPatch_RLine> rlig = new IntPatch_RLine(true,
+                                                              IntSurf_Situation::IntSurf_Unknown,
+                                                              IntSurf_Situation::IntSurf_Unknown);
         if (onFirst)
           rlig->SetArcOnS1(arc);
         else

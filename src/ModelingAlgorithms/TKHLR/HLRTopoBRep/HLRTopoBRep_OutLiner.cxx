@@ -184,7 +184,8 @@ void HLRTopoBRep_OutLiner::ProcessFace(
           if ((V1.IsSame(aV1) && V2.IsSame(aV2)) || (V1.IsSame(aV2) && V2.IsSame(aV1)))
           {
             BRepAdaptor_Curve aC(aE);
-            if ((C.GetType() == GeomAbs_CurveType::GeomAbs_Line) && (aC.GetType() == GeomAbs_CurveType::GeomAbs_Line))
+            if ((C.GetType() == GeomAbs_CurveType::GeomAbs_Line)
+                && (aC.GetType() == GeomAbs_CurveType::GeomAbs_Line))
             {
               SameEdge = true;
               break;

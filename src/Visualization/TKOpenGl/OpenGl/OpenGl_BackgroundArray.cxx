@@ -26,7 +26,11 @@
 //=================================================================================================
 
 OpenGl_BackgroundArray::OpenGl_BackgroundArray(const Graphic3d_TypeOfBackground theType)
-    : OpenGl_PrimitiveArray(nullptr, Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES, nullptr, nullptr, nullptr),
+    : OpenGl_PrimitiveArray(nullptr,
+                            Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLES,
+                            nullptr,
+                            nullptr,
+                            nullptr),
       myType(theType),
       myFillMethod(Aspect_FillMethod::Aspect_FM_NONE),
       myViewWidth(0),
@@ -272,9 +276,10 @@ bool OpenGl_BackgroundArray::createGradientArray(const occ::handle<OpenGl_Contex
         NCollection_Vec2<float>* anUvData = reinterpret_cast<NCollection_Vec2<float>*>(
           myAttribs->changeValue(anIt) + myAttribs->AttributeOffset(1));
         // cyclically move highlighted corner depending on myGradientParams.type
-        *anUvData = anUVs[(anIt + static_cast<int>(myGradientParams.type)
-                           - static_cast<int>(Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner1))
-                          % 4];
+        *anUvData =
+          anUVs[(anIt + static_cast<int>(myGradientParams.type)
+                 - static_cast<int>(Aspect_GradientFillMethod::Aspect_GradientFillMethod_Corner1))
+                % 4];
       }
       return true;
     }

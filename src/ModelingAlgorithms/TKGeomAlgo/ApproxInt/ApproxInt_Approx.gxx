@@ -238,10 +238,14 @@ void ApproxInt_Approx::Perform(const ThePSurface&           Surf1,
   const GeomAbs_SurfaceType typeS1 = ThePSurfaceTool::GetType(Surf1);
   const GeomAbs_SurfaceType typeS2 = ThePSurfaceTool::GetType(Surf2);
 
-  const bool isQuadric =
-    ((typeS1 == GeomAbs_SurfaceType::GeomAbs_Plane) || (typeS1 == GeomAbs_SurfaceType::GeomAbs_Cylinder) || (typeS1 == GeomAbs_SurfaceType::GeomAbs_Sphere)
-     || (typeS1 == GeomAbs_SurfaceType::GeomAbs_Cone) || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Plane) || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
-     || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Sphere) || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Cone));
+  const bool isQuadric = ((typeS1 == GeomAbs_SurfaceType::GeomAbs_Plane)
+                          || (typeS1 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
+                          || (typeS1 == GeomAbs_SurfaceType::GeomAbs_Sphere)
+                          || (typeS1 == GeomAbs_SurfaceType::GeomAbs_Cone)
+                          || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Plane)
+                          || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
+                          || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Sphere)
+                          || (typeS2 == GeomAbs_SurfaceType::GeomAbs_Cone));
 
   if (isQuadric)
   {

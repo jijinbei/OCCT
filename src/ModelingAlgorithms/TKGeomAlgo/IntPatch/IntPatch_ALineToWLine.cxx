@@ -876,7 +876,8 @@ void IntPatch_ALineToWLine::MakeWLine(
 
       const double dotcross = tgvalid.DotCross(aNQ2, aNQ1);
 
-      IntSurf_TypeTrans trans1 = IntSurf_TypeTrans::IntSurf_Undecided, trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
+      IntSurf_TypeTrans trans1 = IntSurf_TypeTrans::IntSurf_Undecided,
+                        trans2 = IntSurf_TypeTrans::IntSurf_Undecided;
 
       if (dotcross > myTolTransition)
       {

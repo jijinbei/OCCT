@@ -139,7 +139,8 @@ public:
 
   //! Sets the local system units.
   //! Example: SetLocalSystem(UnitsAPI_SystemUnits::UnitsAPI_MDTV)
-  Standard_EXPORT static void SetLocalSystem(const UnitsAPI_SystemUnits aSystemUnit = UnitsAPI_SystemUnits::UnitsAPI_SI);
+  Standard_EXPORT static void SetLocalSystem(
+    const UnitsAPI_SystemUnits aSystemUnit = UnitsAPI_SystemUnits::UnitsAPI_SI);
 
   //! Returns the current local system units.
   Standard_EXPORT static UnitsAPI_SystemUnits LocalSystem();

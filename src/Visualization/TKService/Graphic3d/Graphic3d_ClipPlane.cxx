@@ -35,7 +35,8 @@ static occ::handle<Graphic3d_AspectFillArea3d> defaultAspect()
   anAspect->SetHatchStyle(Aspect_HatchStyle::Aspect_HS_HORIZONTAL);
   anAspect->SetInteriorStyle(Aspect_InteriorStyle::Aspect_IS_SOLID);
   anAspect->SetInteriorColor(Quantity_NOC_GRAY20);
-  anAspect->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
+  anAspect->SetFaceCulling(
+    Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
   return anAspect;
 }
 } // namespace
@@ -175,7 +176,8 @@ void Graphic3d_ClipPlane::SetCappingColor(const Quantity_Color& theColor)
 void Graphic3d_ClipPlane::SetCappingMaterial(const Graphic3d_MaterialAspect& theMat)
 {
   myAspect->SetFrontMaterial(theMat);
-  if (myAspect->FrontMaterial().MaterialType() != Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT)
+  if (myAspect->FrontMaterial().MaterialType()
+      != Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT)
   {
     myAspect->SetInteriorColor(theMat.Color());
   }

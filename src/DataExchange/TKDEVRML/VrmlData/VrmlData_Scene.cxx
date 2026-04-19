@@ -126,7 +126,8 @@ Standard_OStream& operator<<(Standard_OStream& theOutput, const VrmlData_Scene& 
     if (!aNode.IsNull())
     {
       const VrmlData_ErrorStatus aStatus = aScene.WriteNode(nullptr, aNode);
-      if (aStatus != VrmlData_ErrorStatus::VrmlData_StatusOK && aStatus != VrmlData_ErrorStatus::VrmlData_NotImplemented)
+      if (aStatus != VrmlData_ErrorStatus::VrmlData_StatusOK
+          && aStatus != VrmlData_ErrorStatus::VrmlData_NotImplemented)
         break;
     }
   }
@@ -144,7 +145,8 @@ Standard_OStream& operator<<(Standard_OStream& theOutput, const VrmlData_Scene& 
     if (!aNode.IsNull())
     {
       const VrmlData_ErrorStatus aStatus = aScene.WriteNode(nullptr, aNode);
-      if (aStatus != VrmlData_ErrorStatus::VrmlData_StatusOK && aStatus != VrmlData_ErrorStatus::VrmlData_NotImplemented)
+      if (aStatus != VrmlData_ErrorStatus::VrmlData_StatusOK
+          && aStatus != VrmlData_ErrorStatus::VrmlData_NotImplemented)
         break;
     }
   }
@@ -552,7 +554,8 @@ VrmlData_ErrorStatus VrmlData_Scene::createNode(VrmlData_InBuffer&              
             // This loop searches for any opening bracket '['.
             // Such bracket increments the level counter. A closing bracket decrements
             // the counter. The loop terminates when the counter becomes negative.
-            while (aLevelCounter >= 0 && (aStatus = ReadLine(theBuffer)) == VrmlData_ErrorStatus::VrmlData_StatusOK)
+            while (aLevelCounter >= 0
+                   && (aStatus = ReadLine(theBuffer)) == VrmlData_ErrorStatus::VrmlData_StatusOK)
             {
               int aChar;
               while ((aChar = theBuffer.LinePtr[0]) != '\0')

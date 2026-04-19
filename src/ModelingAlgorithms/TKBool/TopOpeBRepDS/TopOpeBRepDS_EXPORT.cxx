@@ -278,8 +278,9 @@ Standard_EXPORT bool FDS_aresamdom(const TopOpeBRepDS_DataStructure& BDS,
     GeomAbs_SurfaceType       st1 = gs1.GetType();
     occ::handle<Geom_Surface> su2 = TopOpeBRepTool_ShapeTool::BASISSURFACE(TopoDS::Face(F2));
     GeomAdaptor_Surface       gs2(su2);
-    GeomAbs_SurfaceType       st2  = gs2.GetType();
-    bool                      plpl = (st1 == GeomAbs_SurfaceType::GeomAbs_Plane) && (st2 == GeomAbs_SurfaceType::GeomAbs_Plane);
+    GeomAbs_SurfaceType       st2 = gs2.GetType();
+    bool                      plpl =
+      (st1 == GeomAbs_SurfaceType::GeomAbs_Plane) && (st2 == GeomAbs_SurfaceType::GeomAbs_Plane);
     if (plpl)
     {
       // NYI a arranger
@@ -368,8 +369,9 @@ Standard_EXPORT bool FDS_SIisGIofIofSBAofTofI(const TopOpeBRepDS_DataStructure& 
 
   TopAbs_ShapeEnum  SB1 = TopAbs_SHAPE, SA1 = TopAbs_SHAPE;
   int               IB1 = 0, IA1 = 0;
-  TopOpeBRepDS_Kind GT1 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST1 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-  int               G1 = 0, S1 = 0;
+  TopOpeBRepDS_Kind GT1 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                    ST1 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+  int G1 = 0, S1 = 0;
   FDS_Idata(I, SB1, IB1, SA1, IA1, GT1, G1, ST1, S1);
 
   if (SB1 == TopAbs_FACE)
@@ -382,8 +384,9 @@ Standard_EXPORT bool FDS_SIisGIofIofSBAofTofI(const TopOpeBRepDS_DataStructure& 
       const occ::handle<TopOpeBRepDS_Interference>& IB  = it.Value();
       TopAbs_ShapeEnum                              SBB = TopAbs_SHAPE, SAB = TopAbs_SHAPE;
       int                                           IBB = 0, IAB = 0;
-      TopOpeBRepDS_Kind GTB = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, STB = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int               GB = 0, SB = 0;
+      TopOpeBRepDS_Kind                             GTB = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                        STB                             = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int GB = 0, SB = 0;
       FDS_Idata(IB, SBB, IBB, SAB, IAB, GTB, GB, STB, SB);
       if (GTB == TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE && GB == SI)
       {
@@ -403,8 +406,9 @@ Standard_EXPORT bool FDS_SIisGIofIofSBAofTofI(const TopOpeBRepDS_DataStructure& 
       const occ::handle<TopOpeBRepDS_Interference>& IA  = it.Value();
       TopAbs_ShapeEnum                              SBA = TopAbs_SHAPE, SAA = TopAbs_SHAPE;
       int                                           IBA = 0, IAA = 0;
-      TopOpeBRepDS_Kind GTA = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, STA = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int               GA = 0, SA = 0;
+      TopOpeBRepDS_Kind                             GTA = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                        STA                             = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int GA = 0, SA = 0;
       FDS_Idata(IA, SBA, IBA, SAA, IAA, GTA, GA, STA, SA);
       if (GTA == TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE && GA == SI)
       {
@@ -507,7 +511,8 @@ Standard_EXPORT bool FDS_Config3d(const TopoDS_Shape&  E1,
   gp_Dir DE2(VE2);
   double dot = DE1.Dot(DE2);
   same       = (dot > 0);
-  c          = (same) ? TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED : TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
+  c          = (same) ? TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED
+                      : TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
   return true;
 }
 
@@ -530,7 +535,8 @@ Standard_EXPORT bool FDS_HasSameDomain2d(const TopOpeBRepDS_DataStructure& BDS,
   {
     const TopoDS_Shape& esd = it.Value();
     TopOpeBRepDS_Config c   = BDS.SameDomainOri(esd);
-    bool                ok  = (c == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED || c == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
+    bool                ok  = (c == TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED
+               || c == TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
     if (ok)
     {
       hsd2d = true;
@@ -716,8 +722,9 @@ Standard_EXPORT void FUN_ds_PURGEforE9(const occ::handle<TopOpeBRepDS_HDataStruc
       const occ::handle<TopOpeBRepDS_Interference>& I  = it.Value();
       TopAbs_ShapeEnum                              SB = TopAbs_SHAPE, SA = TopAbs_SHAPE;
       int                                           IB = 0, IA = 0;
-      TopOpeBRepDS_Kind GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int               G = 0, S = 0;
+      TopOpeBRepDS_Kind                             GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                        ST                             = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int G = 0, S = 0;
       FDS_Idata(I, SB, IB, SA, IA, GT, G, ST, S);
       bool FhasGE = FDS_SIisGIofIofSBAofTofI(BDS, IE, I);
       // clang-format off
@@ -789,8 +796,8 @@ Standard_EXPORT void FUN_ds_completeforSE1(const occ::handle<TopOpeBRepDS_HDataS
     {
 
       // ISE = (INTERNAL(FACE),G,EDGE) :
-      TopOpeBRepDS_Kind                                               K   = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int                                                             G   = 0;
+      TopOpeBRepDS_Kind K = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int               G = 0;
       const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.Value(K, G);
       NCollection_List<occ::handle<TopOpeBRepDS_Interference>>        loicopy;
       FDS_assign(loi, loicopy);
@@ -828,9 +835,10 @@ Standard_EXPORT void FUN_ds_completeforSE1(const occ::handle<TopOpeBRepDS_HDataS
       it.Initialize(lI3);
       for (; it.More(); it.Next())
       {
-        const occ::handle<TopOpeBRepDS_Interference>& I = it.Value();
-        TopOpeBRepDS_Kind GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-        int               G1 = 0, S = 0;
+        const occ::handle<TopOpeBRepDS_Interference>& I  = it.Value();
+        TopOpeBRepDS_Kind                             GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                          ST                             = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+        int G1 = 0, S = 0;
         FDS_data(I, GT, G1, ST, S);
         TopAbs_ShapeEnum tsb, tsa;
         int              isb, isa;
@@ -1144,8 +1152,9 @@ static bool FUN_ds_completeforSE3(
   // Tr
   //---
   const occ::handle<TopOpeBRepDS_Interference>& I3 = l3d.First();
-  TopOpeBRepDS_Kind K3 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST3 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-  int               G3 = 0, S3 = 0;
+  TopOpeBRepDS_Kind                             K3 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                    ST3                            = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+  int G3 = 0, S3 = 0;
   FDS_data(I3, K3, G3, ST3, S3);
   TopAbs_ShapeEnum tsb3 = TopAbs_SHAPE, tsa3 = TopAbs_SHAPE;
   int              isb3 = 0, isa3 = 0;
@@ -1220,8 +1229,8 @@ Standard_EXPORT void FUN_ds_completeforSE3(const occ::handle<TopOpeBRepDS_HDataS
     for (tki.Init(); tki.More(); tki.Next())
     {
 
-      TopOpeBRepDS_Kind                                               K    = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int                                                             G    = 0;
+      TopOpeBRepDS_Kind K = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int               G = 0;
       const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi  = tki.Value(K, G);
       double                                                          parE = 0.0;
       int                                                             IES = 0, ITRASHA = 0;
@@ -1243,8 +1252,9 @@ Standard_EXPORT void FUN_ds_completeforSE3(const occ::handle<TopOpeBRepDS_HDataS
       occ::handle<TopOpeBRepDS_Interference> TrFE, TrFF;
       //--------------
       hasnewLI = true;
-      TrFE     = MakeEPVInterference(Tr, ISE, G, parE, K, TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE, false);
-      TrFF     = MakeEPVInterference(Tr, ITRASHA, G, parE, K, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, false);
+      TrFE = MakeEPVInterference(Tr, ISE, G, parE, K, TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE, false);
+      TrFF =
+        MakeEPVInterference(Tr, ITRASHA, G, parE, K, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, false);
       newLI.Append(TrFF);
       newLI.Append(TrFE);
       newLI.Append(loicopy);
@@ -1567,8 +1577,9 @@ static int FUN_EisSE2(const TopOpeBRepDS_DataStructure& BDS,
   const TopAbs_Orientation       O  = T.Orientation(TopAbs_IN);
   TopAbs_ShapeEnum               SB = TopAbs_SHAPE, SA = TopAbs_SHAPE;
   int                            IB = 0, IA = 0;
-  TopOpeBRepDS_Kind              GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-  int                            G = 0, S = 0;
+  TopOpeBRepDS_Kind              GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                    ST              = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+  int G = 0, S = 0;
   FDS_Idata(I, SB, IB, SA, IA, GT, G, ST, S);
   if (GT != TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
     return NONE;
@@ -1732,9 +1743,10 @@ Standard_EXPORT int FUN_ds_hasI2d(
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator itE(LIE);
   for (; itE.More(); itE.Next())
   {
-    const occ::handle<TopOpeBRepDS_Interference>& IE = itE.Value();
-    TopOpeBRepDS_Kind GTE = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, STE = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-    int               GE = 0, SE = 0;
+    const occ::handle<TopOpeBRepDS_Interference>& IE  = itE.Value();
+    TopOpeBRepDS_Kind                             GTE = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                      STE                             = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+    int GE = 0, SE = 0;
     FDS_data(IE, GTE, GE, STE, SE);
     TopAbs_ShapeEnum tsb = TopAbs_SHAPE, tsa = TopAbs_SHAPE;
     int              isb = 0, isa = 0;
@@ -1744,9 +1756,10 @@ Standard_EXPORT int FUN_ds_hasI2d(
     bool                                                               is3d = false;
     for (; itF.More(); itF.Next())
     {
-      const occ::handle<TopOpeBRepDS_Interference>& IF = itF.Value();
-      TopOpeBRepDS_Kind GTF = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, STF = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int               GF = 0, SF = 0;
+      const occ::handle<TopOpeBRepDS_Interference>& IF  = itF.Value();
+      TopOpeBRepDS_Kind                             GTF = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                        STF                             = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int GF = 0, SF = 0;
       FDS_data(IF, GTF, GF, STF, SF);
       if (GE != GF)
         continue;
@@ -1786,8 +1799,8 @@ Standard_EXPORT void FUN_ds_completeforSE4(const occ::handle<TopOpeBRepDS_HDataS
     tki.FillOnGeometry(LI);
     for (tki.Init(); tki.More(); tki.Next())
     {
-      TopOpeBRepDS_Kind                                               K   = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int                                                             G   = 0;
+      TopOpeBRepDS_Kind K = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int               G = 0;
       const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.Value(K, G);
       if (K != TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
         continue;
@@ -1801,9 +1814,10 @@ Standard_EXPORT void FUN_ds_completeforSE4(const occ::handle<TopOpeBRepDS_HDataS
       if (n2 < 1)
         continue;
 
-      const occ::handle<TopOpeBRepDS_Interference>& I = l2.First();
-      TopOpeBRepDS_Kind GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int               S = 0;
+      const occ::handle<TopOpeBRepDS_Interference>& I  = l2.First();
+      TopOpeBRepDS_Kind                             GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                        ST                             = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int S                                            = 0;
       FDS_data(I, GT, G, ST, S);
       TopAbs_ShapeEnum tsb = TopAbs_SHAPE, tsa = TopAbs_SHAPE;
       int              isb = 0, isa = 0;
@@ -1819,9 +1833,10 @@ Standard_EXPORT void FUN_ds_completeforSE4(const occ::handle<TopOpeBRepDS_HDataS
       for (NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it(l2); it.More();
            it.Next())
       {
-        const occ::handle<TopOpeBRepDS_Interference>& I2 = it.Value();
-        TopOpeBRepDS_Kind GT2 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST2 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-        int               G2 = 0, S2 = 0;
+        const occ::handle<TopOpeBRepDS_Interference>& I2  = it.Value();
+        TopOpeBRepDS_Kind                             GT2 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                          ST2                             = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+        int G2 = 0, S2 = 0;
         FDS_data(I2, GT2, G2, ST2, S2);
         TopAbs_ShapeEnum tsb2 = TopAbs_SHAPE, tsa2 = TopAbs_SHAPE;
         int              isb2 = 0, isa2 = 0;
@@ -1889,8 +1904,8 @@ Standard_EXPORT void FUN_ds_completeforSE5(const occ::handle<TopOpeBRepDS_HDataS
     tki.FillOnGeometry(LI);
     for (tki.Init(); tki.More(); tki.Next())
     {
-      TopOpeBRepDS_Kind                                               K   = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int                                                             G   = 0;
+      TopOpeBRepDS_Kind K = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int               G = 0;
       const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.Value(K, G);
       if (K != TopOpeBRepDS_Kind::TopOpeBRepDS_POINT)
       {
@@ -2312,8 +2327,8 @@ Standard_EXPORT void FUN_ds_completeforE7(const occ::handle<TopOpeBRepDS_HDataSt
     LII.Clear();
     for (tki.Init(); tki.More(); tki.Next())
     {
-      TopOpeBRepDS_Kind                                               K   = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int                                                             G   = 0;
+      TopOpeBRepDS_Kind K = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int               G = 0;
       const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.Value(K, G);
       FDS_copy(loi, LII);
     }
@@ -2403,8 +2418,8 @@ Standard_EXPORT void FUN_ds_completeforSE8(const occ::handle<TopOpeBRepDS_HDataS
     LII.Clear();
     for (tki.Init(); tki.More(); tki.Next())
     {
-      TopOpeBRepDS_Kind                                         KK  = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int                                                       GG  = 0;
+      TopOpeBRepDS_Kind KK = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int               GG = 0;
       NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.ChangeValue(KK, GG);
       LII.Append(loi);
     }
@@ -2481,7 +2496,13 @@ Standard_EXPORT void FUN_ds_completeforSE9(const occ::handle<TopOpeBRepDS_HDataS
 
         double                                 par = BRep_Tool::Parameter(vG, SE);
         occ::handle<TopOpeBRepDS_Interference> newI =
-          MakeEPVInterference(newT, iEsd, G, par, TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX, TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE, true);
+          MakeEPVInterference(newT,
+                              iEsd,
+                              G,
+                              par,
+                              TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
+                              TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE,
+                              true);
         HDS->StoreInterference(newI, SE);
       }
     } // ite(EsdSE)
@@ -2517,8 +2538,8 @@ Standard_EXPORT void FUN_ds_PointToVertex(const occ::handle<TopOpeBRepDS_HDataSt
     tki.FillOnGeometry(LI);
     for (tki.Init(); tki.More(); tki.Next())
     {
-      TopOpeBRepDS_Kind                                               K   = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int                                                             G   = 0;
+      TopOpeBRepDS_Kind K = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int               G = 0;
       const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.Value(K, G);
       if (K == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX)
         continue;
@@ -2528,9 +2549,10 @@ Standard_EXPORT void FUN_ds_PointToVertex(const occ::handle<TopOpeBRepDS_HDataSt
       for (NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it(loi); it.More();
            it.Next())
       {
-        const occ::handle<TopOpeBRepDS_Interference>& I = it.Value();
-        TopOpeBRepDS_Kind GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-        int               G1 = 0, S = 0;
+        const occ::handle<TopOpeBRepDS_Interference>& I  = it.Value();
+        TopOpeBRepDS_Kind                             GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                          ST                             = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+        int G1 = 0, S = 0;
         FDS_data(I, GT, G1, ST, S);
         if (ST != TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE)
           continue;
@@ -2585,9 +2607,9 @@ Standard_EXPORT void FUN_ds_PointToVertex(const occ::handle<TopOpeBRepDS_HDataSt
     tki.FillOnGeometry(LI);
     for (tki.Init(); tki.More(); tki.Next())
     {
-      TopOpeBRepDS_Kind                                               K   = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int                                                             G   = 0;
-      const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.Value(K, G);
+      TopOpeBRepDS_Kind K = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int               G = 0;
+      const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi      = tki.Value(K, G);
       bool                                                            Gisbound = iPiV.IsBound(G);
       if (!Gisbound)
       {
@@ -2610,8 +2632,9 @@ Standard_EXPORT void FUN_ds_PointToVertex(const occ::handle<TopOpeBRepDS_HDataSt
           continue;
 
         double            par = CPI->Parameter();
-        TopOpeBRepDS_Kind GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-        int               G1 = 0, S = 0;
+        TopOpeBRepDS_Kind GT  = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                          ST  = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+        int G1 = 0, S = 0;
         FDS_data(I, GT, G1, ST, S);
         const TopOpeBRepDS_Transition& T     = I->Transition();
         double                         parvG = 0.0;
@@ -2649,8 +2672,9 @@ static bool FUN_redusamshaonE(const TopOpeBRepDS_DataStructure&             BDS,
   newI.Nullify();
   TopAbs_ShapeEnum  SB = TopAbs_SHAPE, SA = TopAbs_SHAPE;
   int               IB = 0, IA = 0;
-  TopOpeBRepDS_Kind GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-  int               G = 0, S = 0;
+  TopOpeBRepDS_Kind GT = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                    ST = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+  int G = 0, S = 0;
   FDS_Idata(I, SB, IB, SA, IA, GT, G, ST, S);
   const TopoDS_Edge& E    = TopoDS::Edge(BDS.Shape(EIX));
   double             parE = FDS_Parameter(I);
@@ -2716,8 +2740,8 @@ Standard_EXPORT void FUN_ds_redusamsha(const occ::handle<TopOpeBRepDS_HDataStruc
     tki.FillOnGeometry(LI);
     for (tki.Init(); tki.More(); tki.Next())
     {
-      TopOpeBRepDS_Kind                                               K   = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int                                                             G   = 0;
+      TopOpeBRepDS_Kind K = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int               G = 0;
       const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.Value(K, G);
       NCollection_List<occ::handle<TopOpeBRepDS_Interference>>        loicopy;
       FDS_copy(loi, loicopy); // loi -> l1+l2
@@ -2736,8 +2760,8 @@ Standard_EXPORT void FUN_ds_redusamsha(const occ::handle<TopOpeBRepDS_HDataStruc
       tkis.FillOnSupport(l2);
       for (tkis.Init(); tkis.More(); tkis.Next())
       {
-        TopOpeBRepDS_Kind                                         k   = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-        int                                                       s   = 0;
+        TopOpeBRepDS_Kind k = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+        int               s = 0;
         NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& li  = tkis.ChangeValue(k, s);
         int                                                       nli = li.Extent();
         if (nli < 2)
@@ -2757,8 +2781,9 @@ Standard_EXPORT void FUN_ds_redusamsha(const occ::handle<TopOpeBRepDS_HDataStruc
           }
           TopAbs_ShapeEnum  SB1 = TopAbs_SHAPE, SA1 = TopAbs_SHAPE;
           int               IB1 = 0, IA1 = 0;
-          TopOpeBRepDS_Kind GT1 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST1 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-          int               G1 = 0, S1 = 0;
+          TopOpeBRepDS_Kind GT1 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                            ST1 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+          int G1 = 0, S1 = 0;
           FDS_Idata(I1, SB1, IB1, SA1, IA1, GT1, G1, ST1, S1);
           if (IB1 != IA1)
           {
@@ -2776,8 +2801,9 @@ Standard_EXPORT void FUN_ds_redusamsha(const occ::handle<TopOpeBRepDS_HDataStruc
             TopAbs_Orientation                            O2  = T2.Orientation(TopAbs_IN);
             TopAbs_ShapeEnum                              SB2 = TopAbs_SHAPE, SA2 = TopAbs_SHAPE;
             int                                           IB2 = 0, IA2 = 0;
-            TopOpeBRepDS_Kind GT2 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN, ST2 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-            int               G2 = 0, S2 = 0;
+            TopOpeBRepDS_Kind GT2 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN,
+                              ST2 = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+            int G2 = 0, S2 = 0;
             FDS_Idata(I2, SB2, IB2, SA2, IA2, GT2, G2, ST2, S2);
             if (IB2 != IA2)
             {
@@ -2832,8 +2858,8 @@ Standard_EXPORT void FUN_ds_redusamsha(const occ::handle<TopOpeBRepDS_HDataStruc
       newloi.Clear();
       for (tkis.Init(); tkis.More(); tkis.Next())
       {
-        TopOpeBRepDS_Kind                                         k  = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-        int                                                       g  = 0;
+        TopOpeBRepDS_Kind k = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+        int               g = 0;
         NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& li = tkis.ChangeValue(k, g);
         newloi.Append(li);
       }
@@ -2846,8 +2872,8 @@ Standard_EXPORT void FUN_ds_redusamsha(const occ::handle<TopOpeBRepDS_HDataStruc
     newLI.Clear();
     for (tki.Init(); tki.More(); tki.Next())
     {
-      TopOpeBRepDS_Kind                                         KK  = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
-      int                                                       GG  = 0;
+      TopOpeBRepDS_Kind KK = TopOpeBRepDS_Kind::TopOpeBRepDS_UNKNOWN;
+      int               GG = 0;
       NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& loi = tki.ChangeValue(KK, GG);
       newLI.Append(loi);
     }
@@ -3020,7 +3046,8 @@ Standard_EXPORT bool FDS_LOIinfsup(
     TopOpeBRepDS_Kind K;
     int               G;
     tki.Value(K, G);
-    bool PV = (K == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT) || (K == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
+    bool PV =
+      (K == TopOpeBRepDS_Kind::TopOpeBRepDS_POINT) || (K == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
     if (!PV)
       continue;
     bool mk  = (K == KDS);
@@ -3434,8 +3461,8 @@ Standard_EXPORT void FUN_ds_complete1dForSESDM(const occ::handle<TopOpeBRepDS_HD
         aT.Index(iEsd);
         int                 iV       = BDS.AddShape(aV, rkEsd);
         bool                isGBound = false;
-        TopOpeBRepDS_Config aConfig =
-          (isSO ? TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED : TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
+        TopOpeBRepDS_Config aConfig  = (isSO ? TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED
+                                             : TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
         occ::handle<TopOpeBRepDS_Interference> aI =
           TopOpeBRepDS_InterferenceTool::MakeEdgeVertexInterference(aT,
                                                                     iEsd,

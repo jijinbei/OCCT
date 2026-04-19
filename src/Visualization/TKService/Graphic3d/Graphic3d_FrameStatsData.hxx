@@ -48,13 +48,19 @@ public:
   double ImmediateFrameRateCpu() const { return myFpsCpuImmediate; }
 
   //! Get counter value.
-  size_t CounterValue(Graphic3d_FrameStatsCounter theIndex) const { return myCounters[static_cast<int>(theIndex)]; }
+  size_t CounterValue(Graphic3d_FrameStatsCounter theIndex) const
+  {
+    return myCounters[static_cast<int>(theIndex)];
+  }
 
   //! Get counter value.
   size_t operator[](Graphic3d_FrameStatsCounter theIndex) const { return CounterValue(theIndex); }
 
   //! Get timer value.
-  double TimerValue(Graphic3d_FrameStatsTimer theIndex) const { return myTimers[static_cast<int>(theIndex)]; }
+  double TimerValue(Graphic3d_FrameStatsTimer theIndex) const
+  {
+    return myTimers[static_cast<int>(theIndex)];
+  }
 
   //! Get timer value.
   double operator[](Graphic3d_FrameStatsTimer theIndex) const { return TimerValue(theIndex); }
@@ -129,13 +135,19 @@ public:
   }
 
   //! Get counter value.
-  size_t& ChangeCounterValue(Graphic3d_FrameStatsCounter theIndex) { return myCounters[static_cast<int>(theIndex)]; }
+  size_t& ChangeCounterValue(Graphic3d_FrameStatsCounter theIndex)
+  {
+    return myCounters[static_cast<int>(theIndex)];
+  }
 
   //! Modify counter value.
   size_t& operator[](Graphic3d_FrameStatsCounter theIndex) { return ChangeCounterValue(theIndex); }
 
   //! Modify timer value.
-  double& ChangeTimerValue(Graphic3d_FrameStatsTimer theIndex) { return myTimers[static_cast<int>(theIndex)]; }
+  double& ChangeTimerValue(Graphic3d_FrameStatsTimer theIndex)
+  {
+    return myTimers[static_cast<int>(theIndex)];
+  }
 
   //! Modify timer value.
   double& operator[](Graphic3d_FrameStatsTimer theIndex) { return ChangeTimerValue(theIndex); }

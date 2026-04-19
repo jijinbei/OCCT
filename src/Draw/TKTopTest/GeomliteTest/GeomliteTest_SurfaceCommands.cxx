@@ -483,7 +483,8 @@ static int converting(Draw_Interpretor&, int n, const char** a)
   if (n < 3)
     return 1;
 
-  Convert_ParameterisationType Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2;
+  Convert_ParameterisationType Parameterisation =
+    Convert_ParameterisationType::Convert_TgtThetaOver2;
   if (strcmp(a[n - 1], "qa") == 0)
   {
     Parameterisation = Convert_ParameterisationType::Convert_QuasiAngular;

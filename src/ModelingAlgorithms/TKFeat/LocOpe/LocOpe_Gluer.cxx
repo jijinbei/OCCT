@@ -160,7 +160,8 @@ void LocOpe_Gluer::Perform()
   {
     return;
   }
-  if (mySb.IsNull() || mySn.IsNull() || myMapEF.IsEmpty() || myOpe == LocOpe_Operation::LocOpe_INVALID)
+  if (mySb.IsNull() || mySn.IsNull() || myMapEF.IsEmpty()
+      || myOpe == LocOpe_Operation::LocOpe_INVALID)
   {
     throw Standard_ConstructionError();
   }

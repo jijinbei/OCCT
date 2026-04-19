@@ -204,7 +204,8 @@ void DrawTrSurf_Drawable::DrawIsoCurveOn(Adaptor3d_IsoCurve&   C,
                                          Draw_Display&         dis) const
 {
   C.Load(T, P, F, L);
-  if ((C.GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve) || (C.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve))
+  if ((C.GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)
+      || (C.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve))
   {
     GeomAdaptor_Curve GC;
     if (C.GetType() == GeomAbs_CurveType::GeomAbs_BezierCurve)

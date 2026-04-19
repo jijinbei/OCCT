@@ -28,9 +28,9 @@ int BRepMesh_ExtrusionRangeSplitter::getUndefinedIntervalNb(
   int                                aIntervalsNb = aCurve->NbIntervals(theContinuity);
   if (aIntervalsNb == 1)
   {
-    const GeomAbs_CurveType aCurveType = aCurve->GetType();
-    const bool              isBSplineCurve =
-      aCurveType == GeomAbs_CurveType::GeomAbs_BezierCurve || aCurveType == GeomAbs_CurveType::GeomAbs_BSplineCurve;
+    const GeomAbs_CurveType aCurveType     = aCurve->GetType();
+    const bool              isBSplineCurve = aCurveType == GeomAbs_CurveType::GeomAbs_BezierCurve
+                                || aCurveType == GeomAbs_CurveType::GeomAbs_BSplineCurve;
 
     if (isBSplineCurve)
     {

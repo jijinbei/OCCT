@@ -522,7 +522,8 @@ protected:
   // clang-format on
 
 #ifdef HAVE_RAPIDJSON
-  GltfElementMap myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB]; //!< glTF format root elements
+  GltfElementMap
+    myGltfRoots[RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB]; //!< glTF format root elements
 #endif
 };
 

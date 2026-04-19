@@ -117,7 +117,8 @@ void IGESData_FreeFormatEntity::AddEntities(
     AddLiteral(Interface_ParamType::Interface_ParamInteger, new TCollection_HAsciiString("0"));
     return;
   }
-  AddLiteral(Interface_ParamType::Interface_ParamInteger, new TCollection_HAsciiString(ents->Length()));
+  AddLiteral(Interface_ParamType::Interface_ParamInteger,
+             new TCollection_HAsciiString(ents->Length()));
   int iup = ents->Upper();
   for (int i = ents->Lower(); i <= iup; i++)
   {

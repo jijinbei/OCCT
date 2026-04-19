@@ -80,7 +80,9 @@ void SelectMgr_TriangularFrustumSet::Build()
 
   for (int aPtIdx = aPtsLower; aPtIdx <= aPtsUpper; ++aPtIdx)
   {
-    BRepMesh_Vertex aVertex(mySelPolyline.Points->Value(aPtIdx).XY(), aPtIdx, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
+    BRepMesh_Vertex aVertex(mySelPolyline.Points->Value(aPtIdx).XY(),
+                            aPtIdx,
+                            BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
     anIndexes.Append(aMeshStructure->AddNode(aVertex));
     const gp_Pnt aNearPnt =
       myBuilder->ProjectPntOnViewPlane(aVertex.Coord().X(), aVertex.Coord().Y(), 0.0);
@@ -105,7 +107,9 @@ void SelectMgr_TriangularFrustumSet::Build()
   {
     int           aPtIdx     = isClockwiseOrdered ? aIdx : (aIdx + 1) % anIndexes.Length();
     int           aNextPtIdx = isClockwiseOrdered ? (aIdx + 1) % anIndexes.Length() : aIdx;
-    BRepMesh_Edge anEdge(anIndexes.Value(aPtIdx), anIndexes.Value(aNextPtIdx), BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
+    BRepMesh_Edge anEdge(anIndexes.Value(aPtIdx),
+                         anIndexes.Value(aNextPtIdx),
+                         BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
     aMeshStructure->AddLink(anEdge);
   }
 

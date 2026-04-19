@@ -175,8 +175,8 @@ void BRepFeat_RibSlot::LFPerform()
     }
 
     LocOpe_Operation ope = theGlue.OpeType();
-    if (ope == LocOpe_Operation::LocOpe_INVALID || (myFuse && ope != LocOpe_Operation::LocOpe_FUSE) || (!myFuse && ope != LocOpe_Operation::LocOpe_CUT)
-        || (!Collage))
+    if (ope == LocOpe_Operation::LocOpe_INVALID || (myFuse && ope != LocOpe_Operation::LocOpe_FUSE)
+        || (!myFuse && ope != LocOpe_Operation::LocOpe_CUT) || (!Collage))
     {
       theOpe = 2;
 #ifdef OCCT_DEBUG

@@ -610,7 +610,8 @@ bool FindOtherErrors(const TopoDS_Shape&       theShape,
           {
             if (!aResult->StatusOnShape().IsEmpty())
             {
-              bOtherFound = (aResult->StatusOnShape().First() != BRepCheck_Status::BRepCheck_NoError);
+              bOtherFound =
+                (aResult->StatusOnShape().First() != BRepCheck_Status::BRepCheck_NoError);
             }
           }
         }

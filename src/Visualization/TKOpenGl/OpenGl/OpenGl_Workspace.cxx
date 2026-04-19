@@ -135,11 +135,13 @@ OpenGl_Workspace::OpenGl_Workspace(OpenGl_View*                      theView,
     }
   }
 
-  myNoneCulling.Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
+  myNoneCulling.Aspect()->SetFaceCulling(
+    Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
   myNoneCulling.Aspect()->SetDrawEdges(false);
   myNoneCulling.Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque);
 
-  myFrontCulling.Aspect()->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
+  myFrontCulling.Aspect()->SetFaceCulling(
+    Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
   myFrontCulling.Aspect()->SetDrawEdges(false);
   myFrontCulling.Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque);
 }
@@ -157,7 +159,8 @@ bool OpenGl_Workspace::Activate()
   {
     if (myGlContext->caps->ffpEnable)
     {
-      Message::SendWarning(myGlContext->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
+      Message::SendWarning(myGlContext->GraphicsLibrary()
+                               != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
                              ? "Warning: FFP is unsupported by OpenGL ES"
                              : "Warning: FFP is unsupported by OpenGL Core Profile");
       myGlContext->caps->ffpEnable = false;
@@ -258,16 +261,20 @@ const OpenGl_Aspects* OpenGl_Workspace::ApplyAspects(bool theToBindTextures)
         if (myAspectsSet->Aspect()->InteriorStyle() == Aspect_InteriorStyle::Aspect_IS_HATCH
             || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Blend
             || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask
-            || myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend
-            || (myAspectsSet->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto
+            || myAspectsSet->Aspect()->AlphaMode()
+                 == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend
+            || (myAspectsSet->Aspect()->AlphaMode()
+                  == Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto
                 && myAspectsSet->Aspect()->FrontMaterial().Transparency() != 0.0f))
         {
           // disable culling in case of translucent shading aspect
-          aCullFacesMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
+          aCullFacesMode =
+            Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
         }
         else
         {
-          aCullFacesMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
+          aCullFacesMode =
+            Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
         }
       }
     }
@@ -289,7 +296,8 @@ const OpenGl_Aspects* OpenGl_Workspace::ApplyAspects(bool theToBindTextures)
   const Aspect_InteriorStyle anIntstyle = myAspectsSet->Aspect()->InteriorStyle();
   if (myAspectsApplied.IsNull() || myAspectsApplied->InteriorStyle() != anIntstyle)
   {
-    myGlContext->SetPolygonMode(anIntstyle == Aspect_InteriorStyle::Aspect_IS_POINT ? GL_POINT : GL_FILL);
+    myGlContext->SetPolygonMode(anIntstyle == Aspect_InteriorStyle::Aspect_IS_POINT ? GL_POINT
+                                                                                    : GL_FILL);
     myGlContext->SetPolygonHatchEnabled(anIntstyle == Aspect_InteriorStyle::Aspect_IS_HATCH);
   }
 

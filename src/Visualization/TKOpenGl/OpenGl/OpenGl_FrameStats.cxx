@@ -57,13 +57,17 @@ bool OpenGl_FrameStats::IsFrameUpdated(occ::handle<OpenGl_FrameStats>& thePrev) 
                        - thePrev->myCountersTmp.ImmediateFrameRateCpu())
                 <= 0.001
            && aFrame[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayers]
-                == thePrev->myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayers]
+                == thePrev->myCountersTmp
+                     [Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayers]
            && aFrame[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayersNotCulled]
-                == thePrev->myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayersNotCulled]
+                == thePrev->myCountersTmp
+                     [Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayersNotCulled]
            && aFrame[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbStructs]
-                == thePrev->myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbStructs]
+                == thePrev->myCountersTmp
+                     [Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbStructs]
            && aFrame[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbStructsNotCulled]
-                == thePrev->myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbStructsNotCulled])
+                == thePrev->myCountersTmp
+                     [Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbStructsNotCulled])
   {
     return false;
   }
@@ -99,7 +103,8 @@ void OpenGl_FrameStats::updateStatistics(const occ::handle<Graphic3d_CView>& the
                               || (aBits & Graphic3d_RenderingParams::PerfCounters_Layers) != 0
                               || toCountGroups;
 
-  myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayers] = aView->LayerList().Layers().Size();
+  myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLayers] =
+    aView->LayerList().Layers().Size();
   if (toCountStructs || (aBits & Graphic3d_RenderingParams::PerfCounters_Layers) != 0)
   {
     const int aViewId = aView->Identification();
@@ -109,7 +114,8 @@ void OpenGl_FrameStats::updateStatistics(const occ::handle<Graphic3d_CView>& the
          aLayerIter.Next())
     {
       const occ::handle<OpenGl_Layer>& aLayer = aLayerIter.Value();
-      myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbStructs] += aLayer->NbStructures();
+      myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbStructs] +=
+        aLayer->NbStructures();
       if (theIsImmediateOnly && !aLayer->LayerSettings().IsImmediate())
       {
         continue;
@@ -148,12 +154,14 @@ void OpenGl_FrameStats::updateStatistics(const occ::handle<Graphic3d_CView>& the
          aResIter.More();
          aResIter.Next())
     {
-      myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_EstimatedBytesTextures] +=
+      myCountersTmp
+        [Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_EstimatedBytesTextures] +=
         aResIter.Value()->EstimatedDataSize();
     }
 
     {
-      size_t& aMemFbos = myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_EstimatedBytesFbos];
+      size_t& aMemFbos =
+        myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_EstimatedBytesFbos];
       // main FBOs
       aMemFbos += estimatedDataSize(aView->myMainSceneFbos[0]);
       aMemFbos += estimatedDataSize(aView->myMainSceneFbos[1]);
@@ -188,7 +196,8 @@ void OpenGl_FrameStats::updateStatistics(const occ::handle<Graphic3d_CView>& the
     }
     {
       // Ray Tracing geometry
-      size_t& aMemGeom = myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_EstimatedBytesGeom];
+      size_t& aMemGeom =
+        myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_EstimatedBytesGeom];
       aMemGeom += estimatedDataSize(aView->mySceneNodeInfoTexture);
       aMemGeom += estimatedDataSize(aView->mySceneMinPointTexture);
       aMemGeom += estimatedDataSize(aView->mySceneMaxPointTexture);
@@ -237,7 +246,8 @@ void OpenGl_FrameStats::updateStructures(
         continue;
       }
 
-      myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbGroupsNotCulled] += aStruct->Groups().Size();
+      myCountersTmp[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbGroupsNotCulled] +=
+        aStruct->Groups().Size();
       if (!theToCountElems)
       {
         continue;

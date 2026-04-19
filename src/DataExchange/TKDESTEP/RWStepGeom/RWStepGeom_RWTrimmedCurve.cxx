@@ -95,7 +95,8 @@ void RWStepGeom_RWTrimmedCurve::ReadStep(const occ::handle<StepData_StepReaderDa
 
   // --- own field : masterRepresentation ---
 
-  StepGeom_TrimmingPreference aMasterRepresentation = StepGeom_TrimmingPreference::StepGeom_tpCartesian;
+  StepGeom_TrimmingPreference aMasterRepresentation =
+    StepGeom_TrimmingPreference::StepGeom_tpCartesian;
   if (data->ParamType(num, 6) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 6);

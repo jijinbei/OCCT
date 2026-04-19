@@ -268,14 +268,15 @@ public:
                                                                                 double theHueFrom,
                                                                                 double theHueTo);
 
-  //! Returns the position of labels concerning color filled rectangles, Aspect_TypeOfColorScalePosition::Aspect_TOCSP_RIGHT by
-  //! default.
+  //! Returns the position of labels concerning color filled rectangles,
+  //! Aspect_TypeOfColorScalePosition::Aspect_TOCSP_RIGHT by default.
   Aspect_TypeOfColorScalePosition GetLabelPosition() const { return myLabelPos; }
 
   //! Sets the color scale labels position relative to color bar.
   void SetLabelPosition(const Aspect_TypeOfColorScalePosition thePos) { myLabelPos = thePos; }
 
-  //! Returns the position of color scale title, Aspect_TypeOfColorScalePosition::Aspect_TOCSP_LEFT by default.
+  //! Returns the position of color scale title, Aspect_TypeOfColorScalePosition::Aspect_TOCSP_LEFT
+  //! by default.
   Aspect_TypeOfColorScalePosition GetTitlePosition() const { return myTitlePos; }
 
   //! Sets the color scale title position.

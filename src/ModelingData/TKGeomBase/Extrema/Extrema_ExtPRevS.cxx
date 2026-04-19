@@ -366,7 +366,8 @@ void Extrema_ExtPRevS::Perform(const gp_Pnt& P)
         // 			   true, anExt.IsMin(i))) continue;
         double newV = myvsup;
 
-        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
+        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
+            || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
         {
           newV = ElCLib::InPeriod(V, myvinf, myvinf + 2. * M_PI);
 
@@ -398,7 +399,8 @@ void Extrema_ExtPRevS::Perform(const gp_Pnt& P)
 
         double newV = myvinf;
 
-        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
+        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
+            || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
         {
           newV = ElCLib::InPeriod(V, myvsup - 2. * M_PI, myvsup);
 
@@ -455,7 +457,8 @@ void Extrema_ExtPRevS::Perform(const gp_Pnt& P)
 
         double newV = myvsup;
 
-        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
+        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
+            || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
         {
           newV = ElCLib::InPeriod(V, myvinf, myvinf + 2. * M_PI);
 
@@ -484,7 +487,8 @@ void Extrema_ExtPRevS::Perform(const gp_Pnt& P)
         // 			  false, anExt.IsMin(i))) continue;
         double newV = myvinf;
 
-        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle) || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
+        if ((anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Circle)
+            || (anACurve->GetType() == GeomAbs_CurveType::GeomAbs_Ellipse))
         {
           newV = ElCLib::InPeriod(V, myvsup - 2. * M_PI, myvsup);
 

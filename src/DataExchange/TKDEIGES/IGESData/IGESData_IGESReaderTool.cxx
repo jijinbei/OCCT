@@ -149,7 +149,8 @@ bool IGESData_IGESReaderTool::AnalyseRecord(const int                           
     return false;
   }
   const Interface_FileParameter& FP = thelist->Value(n0par);
-  if ((FP.ParamType() != Interface_ParamType::Interface_ParamInteger) || (atoi(FP.CValue()) != ent->TypeNumber()))
+  if ((FP.ParamType() != Interface_ParamType::Interface_ParamInteger)
+      || (atoi(FP.CValue()) != ent->TypeNumber()))
   {
     // Sending of message : DE : Incorrect type
     Message_Msg Msg28("XSTEP_28");

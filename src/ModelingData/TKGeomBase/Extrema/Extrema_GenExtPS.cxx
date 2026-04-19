@@ -493,7 +493,8 @@ const Extrema_POnSurfParams& Extrema_GenExtPS::ComputeEdgeParameters(
       int anIndices[2];
 
       theParam0.GetIndices(anIndices[0], anIndices[1]);
-      myGridParam.SetElementType(IsUEdge ? Extrema_ElementType::Extrema_UIsoEdge : Extrema_ElementType::Extrema_VIsoEdge);
+      myGridParam.SetElementType(IsUEdge ? Extrema_ElementType::Extrema_UIsoEdge
+                                         : Extrema_ElementType::Extrema_VIsoEdge);
       myGridParam.SetSqrDistance(thePoint.SquareDistance(myGridParam.Value()));
       myGridParam.SetIndices(anIndices[0], anIndices[1]);
       return myGridParam;
@@ -594,7 +595,8 @@ void Extrema_GenExtPS::BuildGrid(const gp_Pnt& thePoint)
   }
 
   // For search of minimum compute distances to mesh.
-  if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MIN || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
+  if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MIN
+      || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
   {
     // This is the tolerance of difference of squared values.
     // No need to set it too small.
@@ -775,27 +777,31 @@ static void CorrectNbSamples(const Adaptor3d_Surface& theS,
   double aLenU1  = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoU, theV1, theV2, nbp, theU1);
   if (aLenU1 <= aMinLen)
   {
-    double aL = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoU, theV1, theV2, nbp, .7 * theU1 + 0.3 * theU2);
-    aLenU1    = std::max(aL, aLenU1);
+    double aL =
+      LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoU, theV1, theV2, nbp, .7 * theU1 + 0.3 * theU2);
+    aLenU1 = std::max(aL, aLenU1);
   }
   double aLenU2 = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoU, theV1, theV2, nbp, theU2);
   if (aLenU2 <= aMinLen)
   {
-    double aL = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoU, theV1, theV2, nbp, .3 * theU1 + 0.7 * theU2);
-    aLenU2    = std::max(aL, aLenU2);
+    double aL =
+      LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoU, theV1, theV2, nbp, .3 * theU1 + 0.7 * theU2);
+    aLenU2 = std::max(aL, aLenU2);
   }
   nbp           = std::min(23, theNbV);
   double aLenV1 = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoV, theU1, theU2, nbp, theV1);
   if (aLenV1 <= aMinLen)
   {
-    double aL = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoV, theU1, theU2, nbp, .7 * theV1 + 0.3 * theV2);
-    aLenV1    = std::max(aL, aLenV1);
+    double aL =
+      LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoV, theU1, theU2, nbp, .7 * theV1 + 0.3 * theV2);
+    aLenV1 = std::max(aL, aLenV1);
   }
   double aLenV2 = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoV, theU1, theU2, nbp, theV2);
   if (aLenV2 <= aMinLen)
   {
-    double aL = LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoV, theU1, theU2, nbp, .3 * theV1 + 0.7 * theV2);
-    aLenV2    = std::max(aL, aLenV2);
+    double aL =
+      LengthOfIso(theS, GeomAbs_IsoType::GeomAbs_IsoV, theU1, theU2, nbp, .3 * theV1 + 0.7 * theV2);
+    aLenV2 = std::max(aL, aLenV2);
   }
   //
   double aStepV1 = aLenU1 / theNbV;
@@ -931,7 +937,8 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
     BuildGrid(P);
     int NoU, NoV;
 
-    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MIN || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
+    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MIN
+        || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
     {
       Extrema_ElementType anElemType;
       int                 iU;
@@ -976,7 +983,8 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
             {
               // This is a middle element.
               if (anElemType == Extrema_ElementType::Extrema_UIsoEdge
-                  || (anElemType == Extrema_ElementType::Extrema_Node && (iU == 1 || iU == myusample)))
+                  || (anElemType == Extrema_ElementType::Extrema_Node
+                      && (iU == 1 || iU == myusample)))
               {
                 // Check the down face.
                 const Extrema_POnSurfParams& aDownParam = myFacePntParams.Value(NoU, NoV - 1);
@@ -988,7 +996,8 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
                 }
               }
               else if (anElemType == Extrema_ElementType::Extrema_VIsoEdge
-                       || (anElemType == Extrema_ElementType::Extrema_Node && (iV == 1 || iV == myvsample)))
+                       || (anElemType == Extrema_ElementType::Extrema_Node
+                           && (iV == 1 || iV == myvsample)))
               {
                 // Check the right face.
                 const Extrema_POnSurfParams& aRightParam = myFacePntParams.Value(NoU - 1, NoV);
@@ -1034,7 +1043,8 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
       }
     }
 
-    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MAX || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
+    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MAX
+        || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
     {
       double Dist;
 
@@ -1069,7 +1079,8 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
   else
   {
     BuildTree();
-    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MIN || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
+    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MIN
+        || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
     {
       Bnd_Sphere                  aSol = mySphereArray->Value(0);
       Bnd_SphereUBTreeSelectorMin aSelector(mySphereArray, aSol);
@@ -1086,7 +1097,8 @@ void Extrema_GenExtPS::Perform(const gp_Pnt& P)
       aParams.SetIndices(aSph.U(), aSph.V());
       FindSolution(P, aParams);
     }
-    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MAX || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
+    if (myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MAX
+        || myFlag == Extrema_ExtFlag::Extrema_ExtFlag_MINMAX)
     {
       Bnd_Sphere                  aSol = mySphereArray->Value(0);
       Bnd_SphereUBTreeSelectorMax aSelector(mySphereArray, aSol);

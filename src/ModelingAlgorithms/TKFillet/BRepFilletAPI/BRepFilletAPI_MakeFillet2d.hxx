@@ -108,9 +108,9 @@ public:
   //! -   if one of the two edges connected to V is a fillet or chamfer, or
   //! -   if a curve other than a straight line or an arc of a
   //! circle is used as E, E1 or E2.
-  //! Do not use the returned fillet if the status of the construction is not ChFi2d_ConstructionError::ChFi2d_IsDone.
-  //! Exceptions
-  //! Standard_NegativeValue if Radius is less than or equal to zero.
+  //! Do not use the returned fillet if the status of the construction is not
+  //! ChFi2d_ConstructionError::ChFi2d_IsDone. Exceptions Standard_NegativeValue if Radius is less
+  //! than or equal to zero.
   Standard_EXPORT TopoDS_Edge AddFillet(const TopoDS_Vertex& V, const double Radius);
 
   //! Assigns the radius Radius to the fillet Fillet already
@@ -171,7 +171,8 @@ public:
   //! The status of the construction, as given by the Status function, can
   //! be one of the following:
   //! -          ChFi2d_ConstructionError::ChFi2d_IsDone if the chamfer is built,
-  //! -  ChFi2d_ConstructionError::ChFi2d_ParametersError if D1, D2, D or Ang is less than or equal to zero,
+  //! -  ChFi2d_ConstructionError::ChFi2d_ParametersError if D1, D2, D or Ang is less than or equal
+  //! to zero,
   //! -          ChFi2d_ConstructionError::ChFi2d_ConnexionError if:
   //! - the edge E, E1 or E2 does not belong to the initial face, or
   //! -  the edges E1 and E2 are not adjacent, or
@@ -215,7 +216,8 @@ public:
   //! The status of the construction, as given by the Status
   //! function, can be one of the following:
   //! -   ChFi2d_ConstructionError::ChFi2d_IsDone if the chamfer is built,
-  //! -   ChFi2d_ConstructionError::ChFi2d_ParametersError if D1, D2, D or Ang is less than or equal to zero,
+  //! -   ChFi2d_ConstructionError::ChFi2d_ParametersError if D1, D2, D or Ang is less than or equal
+  //! to zero,
   //! -   ChFi2d_ConstructionError::ChFi2d_ConnexionError if:
   //! -   the edge E, E1, E2 or Chamfer does not belong
   //! to the existing face, or

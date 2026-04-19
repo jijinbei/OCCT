@@ -153,8 +153,9 @@ void OpenGl_FrameStatsPrs::updateChart(const occ::handle<OpenGl_Workspace>& theW
          ++aFrameIter)
     {
       const Graphic3d_FrameStatsData& aFrame = aStats->DataFrames().Value(aFrameIter);
-      aMaxDuration =
-        std::max(aMaxDuration, aFrame.TimerValue(Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_ElapsedFrame));
+      aMaxDuration                           = std::max(
+        aMaxDuration,
+        aFrame.TimerValue(Graphic3d_FrameStatsTimer::Graphic3d_FrameStatsTimer_ElapsedFrame));
     }
     aMaxDuration = std::ceil(aMaxDuration * 1000.0 * 0.1) * 0.001 * 10.0; // round number
                                                                           // clang-format off
@@ -342,9 +343,10 @@ void OpenGl_FrameStatsPrs::updateChart(const occ::handle<OpenGl_Workspace>& theW
                                           formatTimeMs(aMaxDuration * 0.5),
                                           formatTimeMs(aMaxDuration)};
 
-    const float aLabX = aParams.HorizontalAlignment() == Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT
-                          ? float(anOffset.x())
-                          : float(anOffset.x() + aCharSize.x());
+    const float aLabX =
+      aParams.HorizontalAlignment() == Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_RIGHT
+        ? float(anOffset.x())
+        : float(anOffset.x() + aCharSize.x());
 
     myChartLabels[0].Text()->SetText(aLabels[isTopDown ? 0 : 2].ToCString());
     myChartLabels[0].Text()->SetPosition(gp_Pnt(aLabX, float(anOffset.y()), 0.0f));

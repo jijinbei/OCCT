@@ -27,11 +27,14 @@ void LocalAnalysis::Dump(const LocalAnalysis_SurfaceContinuity& surfconti, Stand
     o << "Problem in the computation " << std::endl;
     if (surfconti.StatusError() == LocalAnalysis_StatusErrorType::LocalAnalysis_NullFirstDerivative)
       o << "one of the first derivatives is null" << std::endl;
-    else if (surfconti.StatusError() == LocalAnalysis_StatusErrorType::LocalAnalysis_NullSecondDerivative)
+    else if (surfconti.StatusError()
+             == LocalAnalysis_StatusErrorType::LocalAnalysis_NullSecondDerivative)
       o << "one of the  second derivatives is null" << std::endl;
-    else if (surfconti.StatusError() == LocalAnalysis_StatusErrorType::LocalAnalysis_NormalNotDefined)
+    else if (surfconti.StatusError()
+             == LocalAnalysis_StatusErrorType::LocalAnalysis_NormalNotDefined)
       o << "one (or both) normal is undefined" << std::endl;
-    else if (surfconti.StatusError() == LocalAnalysis_StatusErrorType::LocalAnalysis_CurvatureNotDefined)
+    else if (surfconti.StatusError()
+             == LocalAnalysis_StatusErrorType::LocalAnalysis_CurvatureNotDefined)
       o << "one of the mean curvatures is undefined" << std::endl;
   }
   else
@@ -138,11 +141,14 @@ void LocalAnalysis::Dump(const LocalAnalysis_CurveContinuity& curvconti, Standar
     o << "Problem in the computation " << std::endl;
     if (curvconti.StatusError() == LocalAnalysis_StatusErrorType::LocalAnalysis_NullFirstDerivative)
       o << "one (or both) first derivative is null" << std::endl;
-    else if (curvconti.StatusError() == LocalAnalysis_StatusErrorType::LocalAnalysis_NullSecondDerivative)
+    else if (curvconti.StatusError()
+             == LocalAnalysis_StatusErrorType::LocalAnalysis_NullSecondDerivative)
       o << "one (or both) second derivative is null" << std::endl;
-    else if (curvconti.StatusError() == LocalAnalysis_StatusErrorType::LocalAnalysis_TangentNotDefined)
+    else if (curvconti.StatusError()
+             == LocalAnalysis_StatusErrorType::LocalAnalysis_TangentNotDefined)
       o << "one (or both) tangent is undefined " << std::endl;
-    else if (curvconti.StatusError() == LocalAnalysis_StatusErrorType::LocalAnalysis_NormalNotDefined)
+    else if (curvconti.StatusError()
+             == LocalAnalysis_StatusErrorType::LocalAnalysis_NormalNotDefined)
       o << "one (or both) normal is undefined" << std::endl;
   }
   else

@@ -121,7 +121,7 @@ public: //! @name object display management
     const int                                 theDispMode,
     const int                                 theSelectionMode,
     const bool                                theToUpdateViewer,
-    const PrsMgr_DisplayStatus                theDispStatus = PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None);
+    const PrsMgr_DisplayStatus theDispStatus = PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None);
 
   //! Allows you to load the Interactive Object with a given selection mode,
   //! and/or with the desired decomposition option, whether the object is visualized or not.
@@ -201,7 +201,8 @@ public: //! @name highlighting management
   //! only a small set of properties derived from it's base class Graphic3d_PresentationAttributes
   //! will be actually used in most cases.
   //!
-  //! Default highlight style for all types is Aspect_TypeOfHighlightMethod::Aspect_TOHM_COLOR. Other defaults:
+  //! Default highlight style for all types is Aspect_TypeOfHighlightMethod::Aspect_TOHM_COLOR.
+  //! Other defaults:
   //!  - Prs3d_TypeOfHighlight_Dynamic
   //!    * Color: Quantity_NOC_CYAN1;
   //!    * Layer: Graphic3d_ZLayerId_Top,
@@ -527,11 +528,11 @@ public: //! @name Selection management
   //! @param[in] theSelScheme  selection scheme
   //! @return picking status
   //! @sa StdSelect_ViewerSelector3d::AllowOverlapDetection()
-  Standard_EXPORT AIS_StatusOfPick
-    SelectRectangle(const NCollection_Vec2<int>& thePntMin,
-                    const NCollection_Vec2<int>& thePntMax,
-                    const occ::handle<V3d_View>& theView,
-                    const AIS_SelectionScheme    theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
+  Standard_EXPORT AIS_StatusOfPick SelectRectangle(
+    const NCollection_Vec2<int>& thePntMin,
+    const NCollection_Vec2<int>& thePntMax,
+    const occ::handle<V3d_View>& theView,
+    const AIS_SelectionScheme    theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Select everything found in the polygon defined by bounding polyline.
   //! Viewer should be explicitly redrawn after selection.
@@ -539,10 +540,10 @@ public: //! @name Selection management
   //! @param[in] theView       active view where polyline is defined
   //! @param[in] theSelScheme  selection scheme
   //! @return picking status
-  Standard_EXPORT AIS_StatusOfPick
-    SelectPolygon(const NCollection_Array1<gp_Pnt2d>& thePolyline,
-                  const occ::handle<V3d_View>&        theView,
-                  const AIS_SelectionScheme           theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
+  Standard_EXPORT AIS_StatusOfPick SelectPolygon(
+    const NCollection_Array1<gp_Pnt2d>& thePolyline,
+    const occ::handle<V3d_View>&        theView,
+    const AIS_SelectionScheme theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Selects the topmost object picked by the point in the view,
   //! Viewer should be explicitly redrawn after selection.
@@ -550,10 +551,10 @@ public: //! @name Selection management
   //! @param[in] theView  active view where point is defined
   //! @param[in] theSelScheme  selection scheme
   //! @return picking status
-  Standard_EXPORT AIS_StatusOfPick
-    SelectPoint(const NCollection_Vec2<int>& thePnt,
-                const occ::handle<V3d_View>& theView,
-                const AIS_SelectionScheme    theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
+  Standard_EXPORT AIS_StatusOfPick SelectPoint(
+    const NCollection_Vec2<int>& thePnt,
+    const occ::handle<V3d_View>& theView,
+    const AIS_SelectionScheme    theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Select and hilights the previous detected via AIS_InteractiveContext::MoveTo() method;
   //! unhilights the previous picked.
@@ -567,8 +568,8 @@ public: //! @name Selection management
   //! selected owners (overrides defaults)
   //! For all selection schemes, allowing to select an object,
   //! HandleMouseClick is available
-  Standard_EXPORT AIS_StatusOfPick
-    SelectDetected(const AIS_SelectionScheme theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
+  Standard_EXPORT AIS_StatusOfPick SelectDetected(
+    const AIS_SelectionScheme theSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Returns bounding box of selected objects.
   Standard_EXPORT Bnd_Box BoundingBoxOfSelection(const occ::handle<V3d_View>& theView) const;
@@ -770,26 +771,28 @@ public: //! @name management of active Selection Modes
   //! @param theMode        selection mode to activate/deactivate;
   //!                       deactivation of -1 selection mode will effectively deactivate all
   //!                       selection modes; activation of -1 selection mode with
-  //!                       AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single will deactivate all selection
-  //!                       modes, and will has no effect otherwise
+  //!                       AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single will
+  //!                       deactivate all selection modes, and will has no effect otherwise
   //! @param theToActivate  activation/deactivation flag
   //! @param theConcurrency specifies how to handle already activated selection modes;
-  //!                       default value (AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple) means active
-  //!                       selection modes should be left as is,
-  //!                       AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single can be used if only one selection
-  //!                       mode is expected to be active and
-  //!                       AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal can be used if either
-  //!                       AIS_InteractiveObject::GlobalSelectionMode() or any combination of Local
-  //!                       selection modes is acceptable; this value is considered only if
-  //!                       theToActivate set to TRUE
+  //!                       default value
+  //!                       (AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple)
+  //!                       means active selection modes should be left as is,
+  //!                       AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single can
+  //!                       be used if only one selection mode is expected to be active and
+  //!                       AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal
+  //!                       can be used if either AIS_InteractiveObject::GlobalSelectionMode() or
+  //!                       any combination of Local selection modes is acceptable; this value is
+  //!                       considered only if theToActivate set to TRUE
   //! @param theIsForce     when set to TRUE, the display status will be ignored while activating
   //! selection mode
   Standard_EXPORT void SetSelectionModeActive(
     const occ::handle<AIS_InteractiveObject>& theObj,
     const int                                 theMode,
     const bool                                theToActivate,
-    const AIS_SelectionModesConcurrency theConcurrency = AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple,
-    const bool                          theIsForce     = false);
+    const AIS_SelectionModesConcurrency       theConcurrency =
+      AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple,
+    const bool theIsForce = false);
 
   //! Activates the selection mode aMode whose index is given, for the given interactive entity
   //! anIobj.
@@ -797,11 +800,12 @@ public: //! @name management of active Selection Modes
                 const int                                 theMode    = 0,
                 const bool                                theIsForce = false)
   {
-    SetSelectionModeActive(theObj,
-                           theMode,
-                           true,
-                           AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal,
-                           theIsForce);
+    SetSelectionModeActive(
+      theObj,
+      theMode,
+      true,
+      AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_GlobalOrLocal,
+      theIsForce);
   }
 
   //! Activates the given selection mode for the all displayed objects.
@@ -810,7 +814,10 @@ public: //! @name management of active Selection Modes
   //! Deactivates all the activated selection modes of an object.
   void Deactivate(const occ::handle<AIS_InteractiveObject>& theObj)
   {
-    SetSelectionModeActive(theObj, -1, false, AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single);
+    SetSelectionModeActive(theObj,
+                           -1,
+                           false,
+                           AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single);
   }
 
   //! Deactivates all the activated selection modes of the interactive object anIobj with a given
@@ -871,24 +878,26 @@ public: //! @name Selection Filters management
   //! Remove all filters from context.
   void RemoveFilters() { myFilters->Clear(); }
 
-  //! Return picking strategy; SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_FirstAcceptable by default.
+  //! Return picking strategy; SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_FirstAcceptable
+  //! by default.
   //! @sa MoveTo(), Filters()
   SelectMgr_PickingStrategy PickingStrategy() const { return myPickingStrategy; }
 
   //! Setup picking strategy - which entities detected by picking line will be accepted, considering
-  //! Selection Filters. By default (SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_FirstAcceptable), Selection Filters
+  //! Selection Filters. By default
+  //! (SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_FirstAcceptable), Selection Filters
   //! reduce the list of entities so that the context accepts topmost in remaining.
   //!
   //! This means that entities behind non-selectable (by filters) parts can be picked by user.
   //! If this behavior is undesirable, and user wants that non-selectable (by filters) parts
-  //! should remain an obstacle for picking, SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_OnlyTopmost can be set
-  //! instead.
+  //! should remain an obstacle for picking,
+  //! SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_OnlyTopmost can be set instead.
   //!
   //! Notice, that since Selection Manager operates only objects registered in it,
-  //! SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_OnlyTopmost will NOT prevent picking entities behind
-  //! visible by unregistered in Selection Manager presentations (e.g. deactivated).
-  //! Hence, SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_OnlyTopmost changes behavior only with Selection Filters
-  //! enabled.
+  //! SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_OnlyTopmost will NOT prevent picking
+  //! entities behind visible by unregistered in Selection Manager presentations (e.g. deactivated).
+  //! Hence, SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_OnlyTopmost changes behavior only
+  //! with Selection Filters enabled.
   void SetPickingStrategy(const SelectMgr_PickingStrategy theStrategy)
   {
     myPickingStrategy = theStrategy;
@@ -966,12 +975,12 @@ public: //! @name common properties
 
   //! fills <aListOfIO> with objects of a particular Type and Signature with no consideration of
   //! display status. by Default, <WhichSignature> = -1 means control only on <WhichKind>. if
-  //! <WhichKind> = AIS_KindOfInteractive::AIS_KindOfInteractive_None and <WhichSignature> = -1, all the objects are put
-  //! into the list.
+  //! <WhichKind> = AIS_KindOfInteractive::AIS_KindOfInteractive_None and <WhichSignature> = -1, all
+  //! the objects are put into the list.
   Standard_EXPORT void ObjectsInside(
     NCollection_List<occ::handle<AIS_InteractiveObject>>& aListOfIO,
-    const AIS_KindOfInteractive                           WhichKind = AIS_KindOfInteractive::AIS_KindOfInteractive_None,
-    const int                                             WhichSignature = -1) const;
+    const AIS_KindOfInteractive WhichKind      = AIS_KindOfInteractive::AIS_KindOfInteractive_None,
+    const int                   WhichSignature = -1) const;
 
   //! Create iterator through all objects registered in context.
   NCollection_DataMap<occ::handle<AIS_InteractiveObject>, occ::handle<AIS_GlobalStatus>>::Iterator
@@ -1026,7 +1035,7 @@ public: //! @name common object display attributes
   //! is applying both on the front and back face.
   Standard_EXPORT void SetCurrentFacingModel(
     const occ::handle<AIS_InteractiveObject>& aniobj,
-    const Aspect_TypeOfFacingModel            aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE);
+    const Aspect_TypeOfFacingModel aModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE);
 
   //! Returns true if a view of the Interactive Object has color.
   Standard_EXPORT bool HasColor(const occ::handle<AIS_InteractiveObject>& aniobj) const;
@@ -1206,7 +1215,8 @@ public: //! @name HLR (Hidden Line Removal) display attributes
 
 public: //! @name iso-line display attributes
   //! Sets the number of U and V isoparameters displayed.
-  Standard_EXPORT void SetIsoNumber(const int NbIsos, const AIS_TypeOfIso WhichIsos = AIS_TypeOfIso::AIS_TOI_Both);
+  Standard_EXPORT void SetIsoNumber(const int           NbIsos,
+                                    const AIS_TypeOfIso WhichIsos = AIS_TypeOfIso::AIS_TOI_Both);
 
   //! Returns the number of U and V isoparameters displayed.
   Standard_EXPORT int IsoNumber(const AIS_TypeOfIso WhichIsos = AIS_TypeOfIso::AIS_TOI_Both);
@@ -1239,12 +1249,13 @@ public: //! @name iso-line display attributes
 public:
   Standard_DEPRECATED("Deprecated method Display() with obsolete argument "
                       "theToAllowDecomposition")
-  void Display(const occ::handle<AIS_InteractiveObject>& theIObj,
-               const int                                 theDispMode,
-               const int                                 theSelectionMode,
-               const bool                                theToUpdateViewer,
-               const bool                                theToAllowDecomposition,
-               const PrsMgr_DisplayStatus                theDispStatus = PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None)
+  void Display(
+    const occ::handle<AIS_InteractiveObject>& theIObj,
+    const int                                 theDispMode,
+    const int                                 theSelectionMode,
+    const bool                                theToUpdateViewer,
+    const bool                                theToAllowDecomposition,
+    const PrsMgr_DisplayStatus theDispStatus = PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None)
   {
     (void)theToAllowDecomposition;
     Display(theIObj, theDispMode, theSelectionMode, theToUpdateViewer, theDispStatus);
@@ -1300,13 +1311,15 @@ public:
   //! Adds the last detected to the list of previous picked.
   //! If the last detected was already declared as picked, removes it from the Picked List.
   //! @sa MoveTo().
-  Standard_DEPRECATED("This method is deprecated - SelectDetected() taking AIS_SelectionScheme::AIS_SelectionScheme_XOR "
+  Standard_DEPRECATED("This method is deprecated - SelectDetected() taking "
+                      "AIS_SelectionScheme::AIS_SelectionScheme_XOR "
                       "should be called instead")
   Standard_EXPORT AIS_StatusOfPick ShiftSelect(const bool theToUpdateViewer);
 
   //! Adds the last detected to the list of previous picked.
   //! If the last detected was already declared as picked, removes it from the Picked List.
-  Standard_DEPRECATED("This method is deprecated - SelectPolygon() taking AIS_SelectionScheme::AIS_SelectionScheme_XOR "
+  Standard_DEPRECATED("This method is deprecated - SelectPolygon() taking "
+                      "AIS_SelectionScheme::AIS_SelectionScheme_XOR "
                       "should be called instead")
   Standard_EXPORT AIS_StatusOfPick ShiftSelect(const NCollection_Array1<gp_Pnt2d>& thePolyline,
                                                const occ::handle<V3d_View>&        theView,

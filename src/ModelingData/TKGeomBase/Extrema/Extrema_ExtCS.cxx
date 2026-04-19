@@ -198,10 +198,17 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
 
           if (clast - cfirst <= Precision::Confusion())
           {
-            double aCPar = (cfirst + clast) / 2.;
-            gp_Pnt aPm   = C.Value(aCPar);
-            Extrema_ExtPS
-              anExtPS(aPm, *myS, ufirst, ulast, vfirst, vlast, mytolS, mytolS, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
+            double        aCPar = (cfirst + clast) / 2.;
+            gp_Pnt        aPm   = C.Value(aCPar);
+            Extrema_ExtPS anExtPS(aPm,
+                                  *myS,
+                                  ufirst,
+                                  ulast,
+                                  vfirst,
+                                  vlast,
+                                  mytolS,
+                                  mytolS,
+                                  Extrema_ExtFlag::Extrema_ExtFlag_MIN);
             myDone = anExtPS.IsDone();
             if (myDone)
             {
@@ -274,7 +281,8 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
     }
       [[fallthrough]];
     case GeomAbs_CurveType::GeomAbs_Hyperbola: {
-      if (myCtype == GeomAbs_CurveType::GeomAbs_Hyperbola && myStype == GeomAbs_SurfaceType::GeomAbs_Plane)
+      if (myCtype == GeomAbs_CurveType::GeomAbs_Hyperbola
+          && myStype == GeomAbs_SurfaceType::GeomAbs_Plane)
       {
         //  Modified by skv - Thu Jul  7 12:29:34 2005 OCC9134 End
         myExtElCS.Perform(C.Hyperbola(), myS->Plane());
@@ -405,7 +413,8 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
   }
   else
   {
-    if ((myCtype == GeomAbs_CurveType::GeomAbs_Circle && NbT < 13) || (myCtype == GeomAbs_CurveType::GeomAbs_BSplineCurve && NbT < 13))
+    if ((myCtype == GeomAbs_CurveType::GeomAbs_Circle && NbT < 13)
+        || (myCtype == GeomAbs_CurveType::GeomAbs_BSplineCurve && NbT < 13))
     {
       NbT = 13;
     }

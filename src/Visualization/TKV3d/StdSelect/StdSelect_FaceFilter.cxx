@@ -80,8 +80,10 @@ bool StdSelect_FaceFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) co
     }
     case StdSelect_TypeOfFace::StdSelect_Revol: {
       BRepAdaptor_Surface surf(TopoDS::Face(anobj));
-      return (surf.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder || surf.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
-              || surf.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus || surf.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere
+      return (surf.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
+              || surf.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
+              || surf.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus
+              || surf.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere
               || surf.GetType() == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution);
     }
     case StdSelect_TypeOfFace::StdSelect_Cone: // waiting for the free cdl, it is used for Cone

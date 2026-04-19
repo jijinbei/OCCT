@@ -69,10 +69,11 @@ public:
   //! @param theFontAspect  the font style
   //! @param theSize        the face size in model units
   //! @param theStrictLevel search strict level for using aliases and fallback
-  Standard_EXPORT StdPrs_BRepFont(const NCollection_String& theFontName,
-                                  const Font_FontAspect     theFontAspect,
-                                  const double              theSize,
-                                  const Font_StrictLevel    theStrictLevel = Font_StrictLevel::Font_StrictLevel_Any);
+  Standard_EXPORT StdPrs_BRepFont(
+    const NCollection_String& theFontName,
+    const Font_FontAspect     theFontAspect,
+    const double              theSize,
+    const Font_StrictLevel    theStrictLevel = Font_StrictLevel::Font_StrictLevel_Any);
 
   //! Release currently loaded font.
   Standard_EXPORT virtual void Release();
@@ -96,10 +97,11 @@ public:
   //! @param theSize       the face size in model units
   //! @param theStrictLevel search strict level for using aliases and fallback
   //! @return true on success
-  Standard_EXPORT bool FindAndInit(const TCollection_AsciiString& theFontName,
-                                   const Font_FontAspect          theFontAspect,
-                                   const double                   theSize,
-                                   const Font_StrictLevel theStrictLevel = Font_StrictLevel::Font_StrictLevel_Any);
+  Standard_EXPORT bool FindAndInit(
+    const TCollection_AsciiString& theFontName,
+    const Font_FontAspect          theFontAspect,
+    const double                   theSize,
+    const Font_StrictLevel         theStrictLevel = Font_StrictLevel::Font_StrictLevel_Any);
 
   //! Return wrapper over FreeType font.
   const occ::handle<Font_FTFont>& FTFont() const { return myFTFont; }
@@ -175,7 +177,10 @@ public:
             const Font_FontAspect     theFontAspect,
             const double              theSize)
   {
-    return FindAndInit(theFontName.ToCString(), theFontAspect, theSize, Font_StrictLevel::Font_StrictLevel_Any);
+    return FindAndInit(theFontName.ToCString(),
+                       theFontAspect,
+                       theSize,
+                       Font_StrictLevel::Font_StrictLevel_Any);
   }
 
 protected:

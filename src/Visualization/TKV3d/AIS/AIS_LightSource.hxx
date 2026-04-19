@@ -164,9 +164,10 @@ public: //! @name Light properties
   void SetMarkerImage(const occ::handle<Graphic3d_MarkerImage>& theImage, bool theIsEnabled)
   {
     myMarkerImages[theIsEnabled ? 1 : 0] = theImage;
-    myMarkerTypes[theIsEnabled ? 1 : 0]  = !theImage.IsNull()
-                                             ? Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED
-                                             : (theIsEnabled ? Aspect_TypeOfMarker::Aspect_TOM_O_POINT : Aspect_TypeOfMarker::Aspect_TOM_O_X);
+    myMarkerTypes[theIsEnabled ? 1 : 0] =
+      !theImage.IsNull() ? Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED
+                         : (theIsEnabled ? Aspect_TypeOfMarker::Aspect_TOM_O_POINT
+                                         : Aspect_TypeOfMarker::Aspect_TOM_O_X);
   }
 
   //! Sets standard icon to light source.
@@ -188,7 +189,10 @@ public: //! @name Light properties
   void SetNbSplitsArrow(int theNbSplits) { myNbSplitsArrow = theNbSplits; }
 
   //! Returns kind of the object.
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_LightSource; }
+  AIS_KindOfInteractive Type() const override
+  {
+    return AIS_KindOfInteractive::AIS_KindOfInteractive_LightSource;
+  }
 
 protected:
   //! Return true if specified display mode is supported: 0 for main presentation and 1 for

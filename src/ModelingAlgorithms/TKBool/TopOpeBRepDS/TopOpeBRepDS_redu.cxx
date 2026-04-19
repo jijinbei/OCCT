@@ -74,7 +74,8 @@ Standard_EXPORT bool FUN_ds_redu2d1d(
   TopAbs_Orientation            O2  = T2d.Orientation(TopAbs_IN);
   newT2d.Index(IB2);
   newT2d.Set(O2);
-  bool ok2 = (IB2 == IA2) && (SB2 == TopAbs_FACE) && (GT2 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
+  bool ok2 =
+    (IB2 == IA2) && (SB2 == TopAbs_FACE) && (GT2 == TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX);
   if (!ok2)
     return false;
 

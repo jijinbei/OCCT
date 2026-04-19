@@ -123,8 +123,8 @@ public:
   //! Set alpha mode.
   Standard_EXPORT void SetAlphaMode(Graphic3d_AlphaMode theMode, float theCutOff = 0.5f);
 
-  //! Returns if the material is double or single sided; Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto by
-  //! default.
+  //! Returns if the material is double or single sided;
+  //! Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto by default.
   Graphic3d_TypeOfBackfacingModel FaceCulling() const { return myFaceCulling; }
 
   //! Specifies whether the material is double or single sided.
@@ -133,15 +133,17 @@ public:
   Standard_DEPRECATED("Deprecated method, FaceCulling() should be used instead")
   bool IsDoubleSided() const
   {
-    return myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
+    return myFaceCulling
+           == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
   }
 
   Standard_DEPRECATED("Deprecated method, SetFaceCulling() should be used "
                       "instead")
   void SetDoubleSided(bool theIsDoubleSided)
   {
-    SetFaceCulling(theIsDoubleSided ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided
-                                    : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto);
+    SetFaceCulling(theIsDoubleSided
+                     ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided
+                     : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto);
   }
 
   //! Return material name / tag (transient data, not stored in the document).

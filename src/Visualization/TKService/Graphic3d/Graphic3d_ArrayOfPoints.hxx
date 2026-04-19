@@ -27,7 +27,11 @@ public:
   //! @param theMaxVertexs maximum number of points
   //! @param theArrayFlags array flags
   Graphic3d_ArrayOfPoints(int theMaxVertexs, Graphic3d_ArrayFlags theArrayFlags)
-      : Graphic3d_ArrayOfPrimitives(Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS, theMaxVertexs, 0, 0, theArrayFlags)
+      : Graphic3d_ArrayOfPrimitives(Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POINTS,
+                                    theMaxVertexs,
+                                    0,
+                                    0,
+                                    theArrayFlags)
   {
   }
 

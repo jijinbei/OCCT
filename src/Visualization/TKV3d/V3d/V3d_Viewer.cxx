@@ -790,8 +790,9 @@ void V3d_Viewer::ShowGridEcho(const occ::handle<V3d_View>& theView,
     myGridEchoStructure = new Graphic3d_Structure(StructureManager());
     myGridEchoGroup     = myGridEchoStructure->NewGroup();
 
-    myGridEchoAspect =
-      new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_STAR, Quantity_Color(Quantity_NOC_GRAY90), 3.0);
+    myGridEchoAspect = new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_STAR,
+                                                    Quantity_Color(Quantity_NOC_GRAY90),
+                                                    3.0);
     myGridEchoGroup->SetPrimitivesAspect(myGridEchoAspect);
   }
 

@@ -446,7 +446,8 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
     }
     case Aspect_VKey_P: // Type of HLR
     {
-      myCtx->DefaultDrawer()->SetTypeOfHLR(myCtx->DefaultDrawer()->TypeOfHLR() == Prs3d_TypeOfHLR::Prs3d_TOH_Algo
+      myCtx->DefaultDrawer()->SetTypeOfHLR(myCtx->DefaultDrawer()->TypeOfHLR()
+                                               == Prs3d_TypeOfHLR::Prs3d_TOH_Algo
                                              ? Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo
                                              : Prs3d_TypeOfHLR::Prs3d_TOH_Algo);
       if (myCtx->NbSelected() == 0)
@@ -459,8 +460,9 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
         {
           if (occ::handle<AIS_Shape> aShape = occ::down_cast<AIS_Shape>(anIter.Value()))
           {
-            aShape->SetTypeOfHLR(aShape->TypeOfHLR() == Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo ? Prs3d_TypeOfHLR::Prs3d_TOH_Algo
-                                                                           : Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo);
+            aShape->SetTypeOfHLR(aShape->TypeOfHLR() == Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo
+                                   ? Prs3d_TypeOfHLR::Prs3d_TOH_Algo
+                                   : Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo);
             myCtx->Redisplay(aShape, false);
           }
         }
@@ -472,8 +474,9 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
           if (occ::handle<AIS_Shape> aShape =
                 occ::down_cast<AIS_Shape>(myCtx->SelectedInteractive()))
           {
-            aShape->SetTypeOfHLR(aShape->TypeOfHLR() == Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo ? Prs3d_TypeOfHLR::Prs3d_TOH_Algo
-                                                                           : Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo);
+            aShape->SetTypeOfHLR(aShape->TypeOfHLR() == Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo
+                                   ? Prs3d_TypeOfHLR::Prs3d_TOH_Algo
+                                   : Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo);
             myCtx->Redisplay(aShape, false);
           }
         }
@@ -770,7 +773,8 @@ void ViewerTest_EventManager::SetupWindowCallbacks(const occ::handle<Aspect_Wind
                ExposureMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask
                  | StructureNotifyMask | PointerMotionMask | Button1MotionMask | Button2MotionMask
                  | Button3MotionMask | FocusChangeMask);
-  Atom aDeleteWindowAtom = theWin->DisplayConnection()->GetAtom(Aspect_XAtom::Aspect_XA_DELETE_WINDOW);
+  Atom aDeleteWindowAtom =
+    theWin->DisplayConnection()->GetAtom(Aspect_XAtom::Aspect_XA_DELETE_WINDOW);
   XSetWMProtocols(anXDisplay, anXWin, &aDeleteWindowAtom, 1);
 
   XSynchronize(anXDisplay, 0);

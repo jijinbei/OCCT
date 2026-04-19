@@ -86,15 +86,16 @@ public:
   //! (theProfile) along the spine (theSpine).
   //! theSpine can be shape only of type wire or face.
   //! See description to this class for detailed information.
-  Standard_EXPORT BRepOffsetAPI_MakeEvolved(const TopoDS_Shape&    theSpine,
-                                            const TopoDS_Wire&     theProfile,
-                                            const GeomAbs_JoinType theJoinType      = GeomAbs_JoinType::GeomAbs_Arc,
-                                            const bool             theIsAxeProf     = true,
-                                            const bool             theIsSolid       = false,
-                                            const bool             theIsProfOnSpine = false,
-                                            const double           theTol           = 0.0000001,
-                                            const bool             theIsVolume      = false,
-                                            const bool             theRunInParallel = false);
+  Standard_EXPORT BRepOffsetAPI_MakeEvolved(
+    const TopoDS_Shape&    theSpine,
+    const TopoDS_Wire&     theProfile,
+    const GeomAbs_JoinType theJoinType      = GeomAbs_JoinType::GeomAbs_Arc,
+    const bool             theIsAxeProf     = true,
+    const bool             theIsSolid       = false,
+    const bool             theIsProfOnSpine = false,
+    const double           theTol           = 0.0000001,
+    const bool             theIsVolume      = false,
+    const bool             theRunInParallel = false);
 
   Standard_EXPORT const BRepFill_Evolved& Evolved() const;
 

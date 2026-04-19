@@ -133,7 +133,8 @@ occ::handle<Image_PixMap> Graphic3d_CubeMapSeparate::Value(
   Graphic3d_CubeMapOrder anOrder = Graphic3d_CubeMapOrder::Default();
   if (!myIsTopDown)
   {
-    anOrder.Swap(Graphic3d_CubeMapSide::Graphic3d_CMS_POS_Y, Graphic3d_CubeMapSide::Graphic3d_CMS_NEG_Y);
+    anOrder.Swap(Graphic3d_CubeMapSide::Graphic3d_CMS_POS_Y,
+                 Graphic3d_CubeMapSide::Graphic3d_CMS_NEG_Y);
   }
 
   if (!myImages[anOrder[myCurrentSide]].IsNull())

@@ -63,7 +63,8 @@ void wireframeFromShape(const occ::handle<Prs3d_Presentation>& thePrs,
     return;
   }
 
-  const bool aDrawAllVerticesFlag = (theDrawer->VertexDrawMode() == Prs3d_VertexDrawMode::Prs3d_VDM_All);
+  const bool aDrawAllVerticesFlag =
+    (theDrawer->VertexDrawMode() == Prs3d_VertexDrawMode::Prs3d_VDM_All);
   if (!aDrawAllVerticesFlag && theShape.ShapeType() != TopAbs_COMPOUND)
   {
     return;

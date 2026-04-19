@@ -1016,7 +1016,8 @@ bool IntPatch_InterferencePolyhedron::TangentZoneValue(Intf_TangentZone&        
         }
       }
     }
-    if (tTP[0] != Intf_PIType::Intf_EXTERNAL && tTP[1] != Intf_PIType::Intf_EXTERNAL && tTP[2] != Intf_PIType::Intf_EXTERNAL)
+    if (tTP[0] != Intf_PIType::Intf_EXTERNAL && tTP[1] != Intf_PIType::Intf_EXTERNAL
+        && tTP[2] != Intf_PIType::Intf_EXTERNAL)
       finished = true;
   }
   else

@@ -38,26 +38,30 @@ inline const occ::handle<BRepBlend_Line>& BRepBlend_RstRstLineBuilder::Line() co
 
 inline bool BRepBlend_RstRstLineBuilder::Decroch1Start() const
 {
-  return decrochdeb == Blend_DecrochStatus::Blend_DecrochRst1 || decrochdeb == Blend_DecrochStatus::Blend_DecrochBoth;
+  return decrochdeb == Blend_DecrochStatus::Blend_DecrochRst1
+         || decrochdeb == Blend_DecrochStatus::Blend_DecrochBoth;
 }
 
 //=================================================================================================
 
 inline bool BRepBlend_RstRstLineBuilder::Decroch1End() const
 {
-  return decrochfin == Blend_DecrochStatus::Blend_DecrochRst1 || decrochfin == Blend_DecrochStatus::Blend_DecrochBoth;
+  return decrochfin == Blend_DecrochStatus::Blend_DecrochRst1
+         || decrochfin == Blend_DecrochStatus::Blend_DecrochBoth;
 }
 
 //=================================================================================================
 
 inline bool BRepBlend_RstRstLineBuilder::Decroch2Start() const
 {
-  return decrochdeb == Blend_DecrochStatus::Blend_DecrochRst2 || decrochdeb == Blend_DecrochStatus::Blend_DecrochBoth;
+  return decrochdeb == Blend_DecrochStatus::Blend_DecrochRst2
+         || decrochdeb == Blend_DecrochStatus::Blend_DecrochBoth;
 }
 
 //=================================================================================================
 
 inline bool BRepBlend_RstRstLineBuilder::Decroch2End() const
 {
-  return decrochfin == Blend_DecrochStatus::Blend_DecrochRst2 || decrochfin == Blend_DecrochStatus::Blend_DecrochBoth;
+  return decrochfin == Blend_DecrochStatus::Blend_DecrochRst2
+         || decrochfin == Blend_DecrochStatus::Blend_DecrochBoth;
 }

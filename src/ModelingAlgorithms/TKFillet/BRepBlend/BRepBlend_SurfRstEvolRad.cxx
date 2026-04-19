@@ -716,7 +716,8 @@ void BRepBlend_SurfRstEvolRad::Section(const double Param,
 
 bool BRepBlend_SurfRstEvolRad::IsRational() const
 {
-  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational
+          || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================

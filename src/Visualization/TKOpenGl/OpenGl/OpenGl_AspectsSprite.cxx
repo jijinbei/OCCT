@@ -189,7 +189,8 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
     }
     return;
   }
-  if (theType == Aspect_TypeOfMarker::Aspect_TOM_POINT || theType == Aspect_TypeOfMarker::Aspect_TOM_EMPTY
+  if (theType == Aspect_TypeOfMarker::Aspect_TOM_POINT
+      || theType == Aspect_TypeOfMarker::Aspect_TOM_EMPTY
       || (theType == Aspect_TypeOfMarker::Aspect_TOM_USERDEFINED && theMarkerImage.IsNull()))
   {
     // nothing to do - just simple point
@@ -264,7 +265,10 @@ void OpenGl_AspectsSprite::build(const occ::handle<OpenGl_Context>&        theCt
                                                  ? aNewMarkerImage->GetImageAlpha()
                                                  : occ::handle<Image_PixMap>())
       {
-        aSpriteA->Init(theCtx, *anImageA, Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D, true);
+        aSpriteA->Init(theCtx,
+                       *anImageA,
+                       Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D,
+                       true);
       }
     }
   }
@@ -355,13 +359,14 @@ void OpenGl_AspectsSprite::spriteKeys(const occ::handle<Graphic3d_MarkerImage>& 
       theKeyA = theMarkerImage->GetImageAlphaId();
     }
   }
-  else if (theType != Aspect_TypeOfMarker::Aspect_TOM_POINT && theType != Aspect_TypeOfMarker::Aspect_TOM_EMPTY)
+  else if (theType != Aspect_TypeOfMarker::Aspect_TOM_POINT
+           && theType != Aspect_TypeOfMarker::Aspect_TOM_EMPTY)
   {
     // predefined markers are defined with 0.5 step
     const int aScale = int(theScale * 10.0f + 0.5f);
-    theKey           = TCollection_AsciiString("OpenGl_AspectMarker") + static_cast<int>(theType)
-                       + "_" + aScale;
-    theKeyA          = theKey + "A";
+    theKey =
+      TCollection_AsciiString("OpenGl_AspectMarker") + static_cast<int>(theType) + "_" + aScale;
+    theKeyA = theKey + "A";
     if (theType == Aspect_TypeOfMarker::Aspect_TOM_BALL)
     {
       unsigned int aColor[3] = {(unsigned int)(255.0f * theColor.r()),

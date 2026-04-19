@@ -46,7 +46,8 @@ public:
   //! as the circle C.
   Standard_EXPORT Convert_CircleToBSplineCurve(
     const gp_Circ2d&                   C,
-    const Convert_ParameterisationType Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2);
+    const Convert_ParameterisationType Parameterisation =
+      Convert_ParameterisationType::Convert_TgtThetaOver2);
 
   //! The circle C is limited between the parametric values U1, U2
   //! in radians. U1 and U2 [0.0, 2*Pi] .
@@ -58,7 +59,8 @@ public:
     const gp_Circ2d&                   C,
     const double                       U1,
     const double                       U2,
-    const Convert_ParameterisationType Parameterisation = Convert_ParameterisationType::Convert_TgtThetaOver2);
+    const Convert_ParameterisationType Parameterisation =
+      Convert_ParameterisationType::Convert_TgtThetaOver2);
 };
 
 #endif // _Convert_CircleToBSplineCurve_HeaderFile

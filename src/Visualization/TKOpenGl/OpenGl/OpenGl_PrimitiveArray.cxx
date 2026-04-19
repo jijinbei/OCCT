@@ -739,7 +739,8 @@ OpenGl_PrimitiveArray::OpenGl_PrimitiveArray(const OpenGl_GraphicDriver*        
   {
     myUID                                   = theDriver->GetNextPrimitiveArrayUID();
     const occ::handle<OpenGl_Context>& aCtx = theDriver->GetSharedContext();
-    if (!aCtx.IsNull() && aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
+    if (!aCtx.IsNull()
+        && aCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
     {
       processIndices(aCtx);
     }
@@ -821,44 +822,54 @@ void OpenGl_PrimitiveArray::UpdateDrawStats(Graphic3d_FrameStatsDataTmp& theStat
   switch (myDrawMode)
   {
     case GL_POINTS: {
-      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbPointsNotCulled] += aNbIndices;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbPointsNotCulled] +=
+        aNbIndices;
       break;
     }
     case GL_LINES: {
-      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices / 2;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] +=
+        aNbIndices / 2;
       break;
     }
     case GL_LINE_STRIP: {
-      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices - aNbBounds;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] +=
+        aNbIndices - aNbBounds;
       break;
     }
     case GL_LINES_ADJACENCY: {
-      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices / 4;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] +=
+        aNbIndices / 4;
       break;
     }
     case GL_LINE_STRIP_ADJACENCY: {
-      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] += aNbIndices - 4 * aNbBounds;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbLinesNotCulled] +=
+        aNbIndices - 4 * aNbBounds;
       break;
     }
     case GL_TRIANGLES: {
-      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 3;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] +=
+        aNbIndices / 3;
       break;
     }
     case GL_TRIANGLE_STRIP:
     case GL_TRIANGLE_FAN: {
-      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices - 2 * aNbBounds;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] +=
+        aNbIndices - 2 * aNbBounds;
       break;
     }
     case GL_TRIANGLES_ADJACENCY: {
-      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 6;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] +=
+        aNbIndices / 6;
       break;
     }
     case GL_TRIANGLE_STRIP_ADJACENCY: {
-      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices - 4 * aNbBounds;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] +=
+        aNbIndices - 4 * aNbBounds;
       break;
     }
     case GL_QUADS: {
-      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] += aNbIndices / 2;
+      theStats[Graphic3d_FrameStatsCounter::Graphic3d_FrameStatsCounter_NbTrianglesNotCulled] +=
+        aNbIndices / 2;
       break;
     }
     case GL_QUAD_STRIP: {
@@ -990,9 +1001,11 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
         aCtx->ShaderManager()->BindFaceProgram(
           aTextureSet,
           aShadingModel,
-          aCtx->ShaderManager()->MaterialState().HasAlphaCutoff() ? Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask
-                                                                  : Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque,
-          toDrawInteriorEdges == 1 ? anAspectFace->Aspect()->InteriorStyle() : Aspect_InteriorStyle::Aspect_IS_SOLID,
+          aCtx->ShaderManager()->MaterialState().HasAlphaCutoff()
+            ? Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask
+            : Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque,
+          toDrawInteriorEdges == 1 ? anAspectFace->Aspect()->InteriorStyle()
+                                   : Aspect_InteriorStyle::Aspect_IS_SOLID,
           hasVertColor,
           toEnableEnvMap,
           toDrawInteriorEdges == 1,
@@ -1021,7 +1034,8 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
     }
     aCtx->SetSampleAlphaToCoverage(aCtx->ShaderManager()->MaterialState().HasAlphaCutoff());
 
-    const bool isForcedBlend = anAspectFace->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend;
+    const bool isForcedBlend =
+      anAspectFace->Aspect()->AlphaMode() == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend;
     if (isForcedBlend)
     {
       aCtx->core11fwd->glEnable(GL_BLEND);
@@ -1075,9 +1089,11 @@ void OpenGl_PrimitiveArray::Render(const occ::handle<OpenGl_Workspace>& theWorks
                                    anOrthoScale);
       aCtx->SetColor4fv(anAspectFace->Aspect()->EdgeColorRGBA());
 
-      aCtx->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled);
+      aCtx->SetFaceCulling(
+        Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled);
       drawArray(theWorkspace, nullptr, false);
-      aCtx->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
+      aCtx->SetFaceCulling(
+        Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
     }
 
     if (isForcedBlend)
@@ -1224,7 +1240,8 @@ void OpenGl_PrimitiveArray::InitBuffers(const occ::handle<OpenGl_Context>&      
   myIndices = theIndices;
   myAttribs = theAttribs;
   myBounds  = theBounds;
-  if (!theContext.IsNull() && theContext->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
+  if (!theContext.IsNull()
+      && theContext->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     processIndices(theContext);
   }

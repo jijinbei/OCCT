@@ -38,7 +38,8 @@ void StdPrs_PoleCurve::Add(const occ::handle<Prs3d_Presentation>& aPresentation,
   aPresentation->CurrentGroup()->SetPrimitivesAspect(aDrawer->LineAspect()->Aspect());
 
   GeomAbs_CurveType CType = aCurve.GetType();
-  if (CType == GeomAbs_CurveType::GeomAbs_BezierCurve || CType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
+  if (CType == GeomAbs_CurveType::GeomAbs_BezierCurve
+      || CType == GeomAbs_CurveType::GeomAbs_BSplineCurve)
   {
     int i, Nb;
     if (CType == GeomAbs_CurveType::GeomAbs_BezierCurve)

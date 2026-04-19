@@ -311,7 +311,9 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
   {
     aRes = 2. * (aTolE1 + aTolE2);
     //
-    if (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve || aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCT == GeomAbs_CurveType::GeomAbs_OffsetCurve
+    if (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve
+        || aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve
+        || aCT == GeomAbs_CurveType::GeomAbs_OffsetCurve
         || aCT == GeomAbs_CurveType::GeomAbs_OtherCurve)
     {
 
@@ -386,7 +388,9 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
   {
     aRes = aTolF;
 
-    if (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve || aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCT == GeomAbs_CurveType::GeomAbs_OffsetCurve
+    if (aCT == GeomAbs_CurveType::GeomAbs_BezierCurve
+        || aCT == GeomAbs_CurveType::GeomAbs_BSplineCurve
+        || aCT == GeomAbs_CurveType::GeomAbs_OffsetCurve
         || aCT == GeomAbs_CurveType::GeomAbs_OtherCurve)
     {
 

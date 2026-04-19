@@ -30,8 +30,10 @@
 namespace
 {
 static float                             THE_LABEL_HEIGHT = 16;
-static Graphic3d_HorizontalTextAlignment THE_LABEL_HALIGH = Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT;
-static Graphic3d_VerticalTextAlignment   THE_LABEL_VALIGH = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
+static Graphic3d_HorizontalTextAlignment THE_LABEL_HALIGH =
+  Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT;
+static Graphic3d_VerticalTextAlignment THE_LABEL_VALIGH =
+  Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
 } // namespace
 
 //=================================================================================================

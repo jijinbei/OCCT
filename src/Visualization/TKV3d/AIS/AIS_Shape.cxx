@@ -454,7 +454,9 @@ void AIS_Shape::UnsetColor()
     aColor = Quantity_NOC_BLACK;
     if (myDrawer->HasLink())
     {
-      AIS_GraphicTool::GetLineColor(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_FaceBoundary, aColor);
+      AIS_GraphicTool::GetLineColor(myDrawer->Link(),
+                                    AIS_TypeOfAttribute::AIS_TOA_FaceBoundary,
+                                    aColor);
     }
     myDrawer->FaceBoundaryAspect()->SetColor(aColor);
   }
@@ -477,8 +479,9 @@ void AIS_Shape::UnsetColor()
     {
       const occ::handle<Graphic3d_AspectFillArea3d>& aSrcAspect =
         (HasMaterial() ? myDrawer : myDrawer->Link())->ShadingAspect()->Aspect();
-      mat = myCurrentFacingModel != Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE ? aSrcAspect->FrontMaterial()
-                                                          : aSrcAspect->BackMaterial();
+      mat = myCurrentFacingModel != Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE
+              ? aSrcAspect->FrontMaterial()
+              : aSrcAspect->BackMaterial();
     }
     if (HasMaterial())
     {
@@ -575,18 +578,29 @@ void AIS_Shape::UnsetWidth()
   else
   {
     myDrawer->LineAspect()->SetWidth(
-      myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Line) : 1.);
+      myDrawer->HasLink()
+        ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Line)
+        : 1.);
     myDrawer->WireAspect()->SetWidth(
-      myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Wire) : 1.);
+      myDrawer->HasLink()
+        ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Wire)
+        : 1.);
     myDrawer->FreeBoundaryAspect()->SetWidth(
-      myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Free) : 1.);
+      myDrawer->HasLink()
+        ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Free)
+        : 1.);
     myDrawer->UnFreeBoundaryAspect()->SetWidth(
-      myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_UnFree) : 1.);
+      myDrawer->HasLink()
+        ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_UnFree)
+        : 1.);
     myDrawer->SeenLineAspect()->SetWidth(
-      myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Seen) : 1.);
+      myDrawer->HasLink()
+        ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_Seen)
+        : 1.);
     myDrawer->FaceBoundaryAspect()->SetWidth(
-      myDrawer->HasLink() ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_FaceBoundary)
-                          : 1.);
+      myDrawer->HasLink()
+        ? AIS_GraphicTool::GetLineWidth(myDrawer->Link(), AIS_TypeOfAttribute::AIS_TOA_FaceBoundary)
+        : 1.);
     SynchronizeAspects();
   }
   recomputeComputed();

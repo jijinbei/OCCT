@@ -573,7 +573,8 @@ bool TopOpeBRepTool_TOOL::TggeomE(const double par, const BRepAdaptor_Curve& BC,
   // #endif
   //                          BC.GetType();
   // #ifdef OCCT_DEBUG
-  //   bool apoles = (ct == GeomAbs_CurveType::GeomAbs_BezierCurve)||(ct == GeomAbs_CurveType::GeomAbs_BSplineCurve);
+  //   bool apoles = (ct == GeomAbs_CurveType::GeomAbs_BezierCurve)||(ct ==
+  //   GeomAbs_CurveType::GeomAbs_BSplineCurve);
   // #endif
 
   double f = BC.FirstParameter(), l = BC.LastParameter();

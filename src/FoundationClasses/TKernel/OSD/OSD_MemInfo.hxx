@@ -120,8 +120,9 @@ protected:
   }
 
 private:
-  size_t myCounters[static_cast<size_t>(Counter::MemCounter_NB)];       //!< Counters' values, in bytes
-  bool   myActiveCounters[static_cast<size_t>(Counter::MemCounter_NB)]; //!< container of active state for a counter
+  size_t myCounters[static_cast<size_t>(Counter::MemCounter_NB)]; //!< Counters' values, in bytes
+  bool   myActiveCounters[static_cast<size_t>(
+    Counter::MemCounter_NB)]; //!< container of active state for a counter
 };
 
 #endif // _OSD_MemInfo_H__

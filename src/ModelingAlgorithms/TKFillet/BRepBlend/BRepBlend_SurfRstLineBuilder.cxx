@@ -1582,8 +1582,9 @@ Blend_Status BRepBlend_SurfRstLineBuilder::TestArret(Blend_SurfRstFunction& Func
   gp_Vec            tgs, tgrst;
   gp_Vec2d          tg2ds, tg2drst;
   Blend_Status      StateS, StateRst;
-  IntSurf_TypeTrans tras = IntSurf_TypeTrans::IntSurf_Undecided, trarst = IntSurf_TypeTrans::IntSurf_Undecided;
-  Blend_Point       curpoint;
+  IntSurf_TypeTrans tras   = IntSurf_TypeTrans::IntSurf_Undecided,
+                    trarst = IntSurf_TypeTrans::IntSurf_Undecided;
+  Blend_Point curpoint;
 
   if (Func.IsSolution(sol, tolpoint3d))
   {

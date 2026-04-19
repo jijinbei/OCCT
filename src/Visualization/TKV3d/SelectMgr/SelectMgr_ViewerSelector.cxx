@@ -130,9 +130,11 @@ void SelectMgr_ViewerSelector::updatePoint3d(SelectMgr_SortCriterion&       theC
     }
   }
 
-  const double aSensFactor = myDepthTolType == SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor
-                               ? theEntity->SensitivityFactor()
-                               : myDepthTolerance;
+  const double aSensFactor =
+    myDepthTolType
+        == SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor
+      ? theEntity->SensitivityFactor()
+      : myDepthTolerance;
   switch (myDepthTolType)
   {
     case SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_Uniform: {
@@ -165,7 +167,8 @@ void SelectMgr_ViewerSelector::updatePoint3d(SelectMgr_SortCriterion&       theC
 
 SelectMgr_ViewerSelector::SelectMgr_ViewerSelector()
     : myDepthTolerance(0.0),
-      myDepthTolType(SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor),
+      myDepthTolType(
+        SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor),
       myToPreferClosest(true),
       myCameraScale(1.0),
       myToPrebuildBVH(false),
@@ -507,8 +510,9 @@ void SelectMgr_ViewerSelector::traverseObject(
       }
 
       Graphic3d_ClipState aState = aPlane->ProbeBox(aBBox);
-      if (aState == Graphic3d_ClipState::Graphic3d_ClipState_Out) // do not process only whole trees, next check on the
-                                             // tree node
+      if (aState
+          == Graphic3d_ClipState::Graphic3d_ClipState_Out) // do not process only whole trees, next
+                                                           // check on the tree node
       {
         return;
       }
@@ -972,7 +976,8 @@ bool SelectMgr_ViewerSelector::IsActive(
     return false;
 
   const occ::handle<SelectMgr_Selection>& aSel = theSelectableObject->Selection(theMode);
-  return !aSel.IsNull() && aSel->GetSelectionState() == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated;
+  return !aSel.IsNull()
+         && aSel->GetSelectionState() == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated;
 }
 
 //=================================================================================================
@@ -985,7 +990,8 @@ bool SelectMgr_ViewerSelector::IsInside(
     return false;
 
   const occ::handle<SelectMgr_Selection>& aSel = theSelectableObject->Selection(theMode);
-  return !aSel.IsNull() && aSel->GetSelectionState() != SelectMgr_StateOfSelection::SelectMgr_SOS_Unknown;
+  return !aSel.IsNull()
+         && aSel->GetSelectionState() != SelectMgr_StateOfSelection::SelectMgr_SOS_Unknown;
 }
 
 //=================================================================================================
@@ -1012,10 +1018,12 @@ TCollection_AsciiString SelectMgr_ViewerSelector::Status(
   {
     if (aSelIter.Value()->GetSelectionState() != SelectMgr_StateOfSelection::SelectMgr_SOS_Unknown)
     {
-      aStatus =
-        aStatus + "Mode " + TCollection_AsciiString(aSelIter.Value()->Mode()) + " present - "
-        + (aSelIter.Value()->GetSelectionState() == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated ? " Active \n\t"
-                                                                            : " Inactive \n\t");
+      aStatus = aStatus + "Mode " + TCollection_AsciiString(aSelIter.Value()->Mode())
+                + " present - "
+                + (aSelIter.Value()->GetSelectionState()
+                       == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated
+                     ? " Active \n\t"
+                     : " Inactive \n\t");
     }
   }
 
@@ -1361,7 +1369,8 @@ void SelectMgr_ViewerSelector::DisplaySensitive(const occ::handle<V3d_View>& the
          aSelIter.More();
          aSelIter.Next())
     {
-      if (aSelIter.Value()->GetSelectionState() == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
+      if (aSelIter.Value()->GetSelectionState()
+          == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
       {
         SelectMgr::ComputeSensitivePrs(aStruct,
                                        aSelIter.Value(),

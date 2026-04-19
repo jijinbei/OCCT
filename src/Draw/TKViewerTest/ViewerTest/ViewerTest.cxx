@@ -728,8 +728,8 @@ static int visos(Draw_Interpretor& di, int argc, const char** argv)
 
   if (argc <= 1)
   {
-    di << "Current number of isos : " << TheAISContext()->IsoNumber(AIS_TypeOfIso::AIS_TOI_IsoU) << " "
-       << TheAISContext()->IsoNumber(AIS_TypeOfIso::AIS_TOI_IsoV) << "\n";
+    di << "Current number of isos : " << TheAISContext()->IsoNumber(AIS_TypeOfIso::AIS_TOI_IsoU)
+       << " " << TheAISContext()->IsoNumber(AIS_TypeOfIso::AIS_TOI_IsoV) << "\n";
     di << "IsoOnPlane mode is " << (TheAISContext()->IsoOnPlane() ? "ON" : "OFF") << "\n";
     di << "IsoOnTriangulation mode is " << (TheAISContext()->IsoOnTriangulation() ? "ON" : "OFF")
        << "\n";
@@ -1672,7 +1672,8 @@ static bool parseInteriorStyle(const TCollection_AsciiString& theArg,
   else if (theArg.IsIntegerValue())
   {
     const int anIntStyle = theArg.IntegerValue();
-    if (anIntStyle < Aspect_InteriorStyle::Aspect_IS_EMPTY || anIntStyle > Aspect_InteriorStyle::Aspect_IS_POINT)
+    if (anIntStyle < Aspect_InteriorStyle::Aspect_IS_EMPTY
+        || anIntStyle > Aspect_InteriorStyle::Aspect_IS_POINT)
     {
       return false;
     }
@@ -2073,7 +2074,8 @@ struct ViewerTest_AspectsChangeSet
       if (ToSetBackFaceColor != -1 || theDrawer->HasOwnShadingAspect())
       {
         toRecompute = theDrawer->SetupOwnShadingAspect(aDefDrawer) || toRecompute;
-        theDrawer->ShadingAspect()->SetColor(BackFaceColor, Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE);
+        theDrawer->ShadingAspect()->SetColor(BackFaceColor,
+                                             Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE);
       }
     }
     if (ToSetAlphaMode != 0)
@@ -2135,7 +2137,8 @@ struct ViewerTest_AspectsChangeSet
         if (InteriorStyle == Aspect_InteriorStyle::Aspect_IS_HATCH
             && theDrawer->ShadingAspect()->Aspect()->HatchStyle().IsNull())
         {
-          theDrawer->ShadingAspect()->Aspect()->SetHatchStyle(Aspect_HatchStyle::Aspect_HS_VERTICAL);
+          theDrawer->ShadingAspect()->Aspect()->SetHatchStyle(
+            Aspect_HatchStyle::Aspect_HS_VERTICAL);
         }
       }
     }
@@ -2179,8 +2182,8 @@ struct ViewerTest_AspectsChangeSet
         theDrawer->ShadingAspect()->Aspect()->SetEdgeLineType(TypeOfEdge);
         if (ToSetInterior == 0)
         {
-          theDrawer->ShadingAspect()->Aspect()->SetDrawEdges(ToSetTypeOfEdge == 1
-                                                             && TypeOfEdge != Aspect_TypeOfLine::Aspect_TOL_EMPTY);
+          theDrawer->ShadingAspect()->Aspect()->SetDrawEdges(
+            ToSetTypeOfEdge == 1 && TypeOfEdge != Aspect_TypeOfLine::Aspect_TOL_EMPTY);
         }
       }
     }
@@ -2561,19 +2564,23 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
         aParam.LowerCase();
         if (aParam == "auto")
         {
-          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
+          aChangeSet->FaceCulling =
+            Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
         }
         else if (aParam == "backculled" || aParam == "backcull" || aParam == "back")
         {
-          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
+          aChangeSet->FaceCulling =
+            Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled;
         }
         else if (aParam == "frontculled" || aParam == "frontcull" || aParam == "front")
         {
-          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled;
+          aChangeSet->FaceCulling =
+            Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled;
         }
         else if (aParam == "doublesided" || aParam == "off")
         {
-          aChangeSet->FaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
+          aChangeSet->FaceCulling =
+            Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
         }
         else
         {
@@ -3016,8 +3023,8 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
         const int anIntStyle = Draw::Atoi(anArgHatch.ToCString());
         if (anIntStyle < 0 || anIntStyle >= Aspect_HatchStyle::Aspect_HS_NB)
         {
-          Message::SendFail() << "Error: hatch style is out of range [0, " << (Aspect_HatchStyle::Aspect_HS_NB - 1)
-                              << "]!";
+          Message::SendFail() << "Error: hatch style is out of range [0, "
+                              << (Aspect_HatchStyle::Aspect_HS_NB - 1) << "]!";
           return 1;
         }
         aChangeSet->StdHatchStyle = anIntStyle;
@@ -3132,9 +3139,10 @@ static int VAspects(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
       aChangeSet->AlphaMode          = Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto;
       aChangeSet->AlphaCutoff        = 0.5f;
       aChangeSet->ToSetFaceCulling   = -1;
-      aChangeSet->FaceCulling        = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
-      aChangeSet->ToSetColor         = -1;
-      aChangeSet->Color              = DEFAULT_COLOR;
+      aChangeSet->FaceCulling =
+        Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
+      aChangeSet->ToSetColor = -1;
+      aChangeSet->Color      = DEFAULT_COLOR;
       // aChangeSet->ToSetBackFaceColor = -1; // should be reset by ToSetColor
       // aChangeSet->BackFaceColor = DEFAULT_COLOR;
       aChangeSet->ToSetMaterial              = -1;
@@ -4089,12 +4097,13 @@ int VTexture(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
 
   int  toModulate = -1, toSetSRgb = -1;
   bool toSetFilter = false, toSetAniso = false, toSetTrsfAngle = false, toSetTrsfTrans = false,
-       toSetTrsfScale                              = false;
-  float                              aTrsfRotAngle = 0.0f;
-  NCollection_Vec2<float>            aTrsfTrans(0.0f, 0.0f);
-  NCollection_Vec2<float>            aTrsfScale(1.0f, 1.0f);
-  Graphic3d_TypeOfTextureFilter      aFilter       = Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST;
-  Graphic3d_LevelOfTextureAnisotropy anAnisoFilter = Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_OFF;
+       toSetTrsfScale                         = false;
+  float                         aTrsfRotAngle = 0.0f;
+  NCollection_Vec2<float>       aTrsfTrans(0.0f, 0.0f);
+  NCollection_Vec2<float>       aTrsfScale(1.0f, 1.0f);
+  Graphic3d_TypeOfTextureFilter aFilter = Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST;
+  Graphic3d_LevelOfTextureAnisotropy anAnisoFilter =
+    Graphic3d_LevelOfTextureAnisotropy::Graphic3d_LOTA_OFF;
 
   occ::handle<AIS_InteractiveObject>                    aTexturedIO;
   occ::handle<AIS_Shape>                                aTexturedShape;
@@ -4505,7 +4514,8 @@ int VTexture(Draw_Interpretor& theDi, int theArgsNb, const char** theArgVec)
             aTextureOld->Path().SystemName(aFilePathOld);
             aTextureNew->Path().SystemName(aFilePathNew);
             if (aTex2dNew->Name() == aTex2dOld->Name() && aFilePathOld == aFilePathNew
-                && (!aFilePathNew.IsEmpty() || aTex2dNew->Name() != Graphic3d_NameOfTexture2D::Graphic3d_NOT_2D_UNKNOWN))
+                && (!aFilePathNew.IsEmpty()
+                    || aTex2dNew->Name() != Graphic3d_NameOfTexture2D::Graphic3d_NOT_2D_UNKNOWN))
             {
               --aNbChanged;
               aTextureNew = aTex2dOld;
@@ -5378,7 +5388,8 @@ static void objInfo(const NCollection_Map<occ::handle<AIS_InteractiveObject>>& t
     }
   }
   // AIS_Shape
-  else if (theObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Shape && theObj->Signature() == 0)
+  else if (theObj->Type() == AIS_KindOfInteractive::AIS_KindOfInteractive_Shape
+           && theObj->Signature() == 0)
   {
     theDI << " AIS_Shape";
   }
@@ -5743,7 +5754,11 @@ bool ViewerTest::PickShapes(const TopAbs_ShapeEnum                          theS
   {
     if (occ::handle<AIS_Shape> aShapePrs = occ::down_cast<AIS_Shape>(anObjIter.Value()))
     {
-      aCtx->SetSelectionModeActive(aShapePrs, aSelMode, true, AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single);
+      aCtx->SetSelectionModeActive(
+        aShapePrs,
+        aSelMode,
+        true,
+        AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single);
     }
   }
 
@@ -5798,10 +5813,11 @@ bool ViewerTest::PickShapes(const TopAbs_ShapeEnum                          theS
     {
       if (occ::handle<AIS_Shape> aShapePrs = occ::down_cast<AIS_Shape>(anObjIter.Value()))
       {
-        aCtx->SetSelectionModeActive(aShapePrs,
-                                     aSelMode,
-                                     true,
-                                     AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single);
+        aCtx->SetSelectionModeActive(
+          aShapePrs,
+          aSelMode,
+          true,
+          AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single);
       }
     }
   }

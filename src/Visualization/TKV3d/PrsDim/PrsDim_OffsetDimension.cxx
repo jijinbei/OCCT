@@ -94,10 +94,12 @@ void PrsDim_OffsetDimension::Compute(const occ::handle<PrsMgr_PresentationManage
   BRepAdaptor_Surface surf1(TopoDS::Face(myFShape));
   BRepAdaptor_Surface surf2(TopoDS::Face(mySShape));
 
-  if (surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder || surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
+  if (surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
+      || surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
       || surf1.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
   {
-    if (surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder || surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
+    if (surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
+        || surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Cone
         || surf2.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
     {
       ComputeTwoAxesOffset(aprs, aInvertTrsf);

@@ -1085,7 +1085,8 @@ static int OneShapeIsHalfSpace(const TopoDS_Shape& S1, const TopoDS_Shape& S2)
       BRepAdaptor_Surface FSurf(testFace);
       bool                SolidIsSphereOrTorus = false;
 
-      if (FSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere || FSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
+      if (FSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere
+          || FSurf.GetType() == GeomAbs_SurfaceType::GeomAbs_Torus)
       {
         double minU = FSurf.FirstUParameter();
         double maxU = FSurf.LastUParameter();

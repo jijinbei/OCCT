@@ -56,14 +56,15 @@ public:
   //! TolU et TolV are used to determine the conditions
   //! to stop the iterations; at the iteration number n:
   //! (Un - Un-1) < TolU and (Vn - Vn-1) < TolV .
-  Standard_EXPORT Extrema_GenExtPS(const gp_Pnt&            P,
-                                   const Adaptor3d_Surface& S,
-                                   const int                NbU,
-                                   const int                NbV,
-                                   const double             TolU,
-                                   const double             TolV,
-                                   const Extrema_ExtFlag    F = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
-                                   const Extrema_ExtAlgo    A = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
+  Standard_EXPORT Extrema_GenExtPS(
+    const gp_Pnt&            P,
+    const Adaptor3d_Surface& S,
+    const int                NbU,
+    const int                NbV,
+    const double             TolU,
+    const double             TolV,
+    const Extrema_ExtFlag    F = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+    const Extrema_ExtAlgo    A = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
 
   //! It calculates all the distances.
   //! The function F(u,v)=distance(P,S(u,v)) has an
@@ -77,18 +78,19 @@ public:
   //! TolU et TolV are used to determine the conditions
   //! to stop the iterations; at the iteration number n:
   //! (Un - Un-1) < TolU and (Vn - Vn-1) < TolV .
-  Standard_EXPORT Extrema_GenExtPS(const gp_Pnt&            P,
-                                   const Adaptor3d_Surface& S,
-                                   const int                NbU,
-                                   const int                NbV,
-                                   const double             Umin,
-                                   const double             Usup,
-                                   const double             Vmin,
-                                   const double             Vsup,
-                                   const double             TolU,
-                                   const double             TolV,
-                                   const Extrema_ExtFlag    F = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
-                                   const Extrema_ExtAlgo    A = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
+  Standard_EXPORT Extrema_GenExtPS(
+    const gp_Pnt&            P,
+    const Adaptor3d_Surface& S,
+    const int                NbU,
+    const int                NbV,
+    const double             Umin,
+    const double             Usup,
+    const double             Vmin,
+    const double             Vsup,
+    const double             TolU,
+    const double             TolV,
+    const Extrema_ExtFlag    F = Extrema_ExtFlag::Extrema_ExtFlag_MINMAX,
+    const Extrema_ExtAlgo    A = Extrema_ExtAlgo::Extrema_ExtAlgo_Grad);
 
   Standard_EXPORT void Initialize(const Adaptor3d_Surface& S,
                                   const int                NbU,

@@ -183,7 +183,8 @@ public:
                     {
                       const BRepCheck_Status ste = itl.Value();
                       if (ste == BRepCheck_Status::BRepCheck_NoCurveOnSurface
-                          || ste == BRepCheck_Status::BRepCheck_InvalidCurveOnSurface || ste == BRepCheck_Status::BRepCheck_InvalidRange
+                          || ste == BRepCheck_Status::BRepCheck_InvalidCurveOnSurface
+                          || ste == BRepCheck_Status::BRepCheck_InvalidRange
                           || ste == BRepCheck_Status::BRepCheck_InvalidCurveOnClosedSurface)
                       {
                         performwire = false;

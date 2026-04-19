@@ -113,8 +113,10 @@ int IntTools::PrepareArgs(BRepAdaptor_Curve&          C,
     {
       continue;
     }
-    if (aCurveType == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCurveType == GeomAbs_CurveType::GeomAbs_BezierCurve
-        || aCurveType == GeomAbs_CurveType::GeomAbs_OffsetCurve || aCurveType == GeomAbs_CurveType::GeomAbs_Ellipse
+    if (aCurveType == GeomAbs_CurveType::GeomAbs_BSplineCurve
+        || aCurveType == GeomAbs_CurveType::GeomAbs_BezierCurve
+        || aCurveType == GeomAbs_CurveType::GeomAbs_OffsetCurve
+        || aCurveType == GeomAbs_CurveType::GeomAbs_Ellipse
         || aCurveType == GeomAbs_CurveType::GeomAbs_OtherCurve)
     { // modified by NIZNHY-PKV Fri Sep 24 09:52:42 2004ft
       continue;

@@ -790,7 +790,8 @@ bool IntTools_Context::IsVertexOnLine(const TopoDS_Vertex&  aV,
   //
   GeomAdaptor_Curve aGAC(aC3D);
   GeomAbs_CurveType aType = aGAC.GetType();
-  if (aType == GeomAbs_CurveType::GeomAbs_BSplineCurve || aType == GeomAbs_CurveType::GeomAbs_BezierCurve)
+  if (aType == GeomAbs_CurveType::GeomAbs_BSplineCurve
+      || aType == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     aTolSum = 2. * aTolSum;
     if (aTolSum < 1.e-5)

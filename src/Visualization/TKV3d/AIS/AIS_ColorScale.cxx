@@ -127,7 +127,8 @@ AIS_ColorScale::AIS_ColorScale()
   SetDisplayMode(0);
   myDrawer->SetupOwnShadingAspect();
   myDrawer->ShadingAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
-  myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque);
+  myDrawer->ShadingAspect()->Aspect()->SetAlphaMode(
+    Graphic3d_AlphaMode::Graphic3d_AlphaMode_Opaque);
   myDrawer->ShadingAspect()->Aspect()->SetInteriorColor(Quantity_NOC_WHITE);
 }
 
@@ -547,9 +548,12 @@ void AIS_ColorScale::Compute(const occ::handle<PrsMgr_PresentationManager>&,
     }
   }
 
-  const int aTextWidth    = myLabelPos != Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE ? computeMaxLabelWidth(aLabels) : 0;
+  const int aTextWidth    = myLabelPos != Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE
+                              ? computeMaxLabelWidth(aLabels)
+                              : 0;
   int       aColorBreadth = std::max(5, std::min(20, myBreadth - aTextWidth - 3 * mySpacing));
-  if (myLabelPos == Aspect_TypeOfColorScalePosition::Aspect_TOCSP_CENTER || myLabelPos == Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE)
+  if (myLabelPos == Aspect_TypeOfColorScalePosition::Aspect_TOCSP_CENTER
+      || myLabelPos == Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE)
   {
     aColorBreadth += aTextWidth;
   }

@@ -235,7 +235,8 @@ bool BRepMesh_CurveTessellator::Value(const int theIndex,
   // it is necessary to re-project point.
   const Adaptor3d_CurveOnSurface&       aCurve   = myCurve.CurveOnSurface();
   const occ::handle<Adaptor3d_Surface>& aSurface = aCurve.GetSurface();
-  if (aSurface->GetType() != GeomAbs_SurfaceType::GeomAbs_BSplineSurface && aSurface->GetType() != GeomAbs_SurfaceType::GeomAbs_BezierSurface
+  if (aSurface->GetType() != GeomAbs_SurfaceType::GeomAbs_BSplineSurface
+      && aSurface->GetType() != GeomAbs_SurfaceType::GeomAbs_BezierSurface
       && aSurface->GetType() != GeomAbs_SurfaceType::GeomAbs_OtherSurface)
   {
     return true;

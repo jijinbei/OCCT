@@ -1334,7 +1334,8 @@ static int VHLR(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   bool toRecompute = false;
-  if (aTypeOfHLR != Prs3d_TypeOfHLR::Prs3d_TOH_NotSet && aTypeOfHLR != aCtx->DefaultDrawer()->TypeOfHLR())
+  if (aTypeOfHLR != Prs3d_TypeOfHLR::Prs3d_TOH_NotSet
+      && aTypeOfHLR != aCtx->DefaultDrawer()->TypeOfHLR())
   {
     toRecompute = true;
     aCtx->DefaultDrawer()->SetTypeOfHLR(aTypeOfHLR);
@@ -1405,7 +1406,8 @@ static int VHLRType(Draw_Interpretor&, int argc, const char** argv)
       continue;
     }
     // old syntax
-    else if (aTypeOfHLR == Prs3d_TypeOfHLR::Prs3d_TOH_NotSet && parseHlrAlgoType(argv[anArgIter], aTypeOfHLR))
+    else if (aTypeOfHLR == Prs3d_TypeOfHLR::Prs3d_TOH_NotSet
+             && parseHlrAlgoType(argv[anArgIter], aTypeOfHLR))
     {
       continue;
     }
@@ -2771,8 +2773,9 @@ static int VBackground(Draw_Interpretor& theDI, int theNbArgs, const char** theA
   int                           aNbColors = 0;
   Quantity_ColorRGBA            aColors[2];
 
-  Aspect_GradientFillMethod aGradientMode   = Aspect_GradientFillMethod::Aspect_GradientFillMethod_None;
-  bool                      hasGradientMode = false;
+  Aspect_GradientFillMethod aGradientMode =
+    Aspect_GradientFillMethod::Aspect_GradientFillMethod_None;
+  bool hasGradientMode = false;
 
   TCollection_AsciiString anImagePath;
   Aspect_FillMethod       anImageMode  = Aspect_FillMethod::Aspect_FM_CENTERED;
@@ -3008,14 +3011,17 @@ static int VBackground(Draw_Interpretor& theDI, int theNbArgs, const char** theA
     {
       ViewerTest_DefaultBackground.GradientColor1 = Quantity_Color();
       ViewerTest_DefaultBackground.GradientColor2 = Quantity_Color();
-      ViewerTest_DefaultBackground.FillMethod     = Aspect_GradientFillMethod::Aspect_GradientFillMethod_None;
-      ViewerTest_DefaultBackground.FlatColor      = aColors[0].GetRGB();
+      ViewerTest_DefaultBackground.FillMethod =
+        Aspect_GradientFillMethod::Aspect_GradientFillMethod_None;
+      ViewerTest_DefaultBackground.FlatColor = aColors[0].GetRGB();
       ViewerTest_DefaultBackground.SetDefaultGradient();
       ViewerTest_DefaultBackground.SetDefaultColor();
     }
     else
     {
-      aView->SetBgGradientStyle(hasGradientMode ? aGradientMode : Aspect_GradientFillMethod::Aspect_GradientFillMethod_None);
+      aView->SetBgGradientStyle(hasGradientMode
+                                  ? aGradientMode
+                                  : Aspect_GradientFillMethod::Aspect_GradientFillMethod_None);
       aView->SetBackgroundColor(aColors[0].GetRGB());
       if (toUseIBL != -1)
       {
@@ -3033,9 +3039,11 @@ static int VBackground(Draw_Interpretor& theDI, int theNbArgs, const char** theA
       {
         ViewerTest_DefaultBackground.FillMethod = aGradientMode;
       }
-      else if (ViewerTest_DefaultBackground.FillMethod == Aspect_GradientFillMethod::Aspect_GradientFillMethod_None)
+      else if (ViewerTest_DefaultBackground.FillMethod
+               == Aspect_GradientFillMethod::Aspect_GradientFillMethod_None)
       {
-        ViewerTest_DefaultBackground.FillMethod = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Vertical;
+        ViewerTest_DefaultBackground.FillMethod =
+          Aspect_GradientFillMethod::Aspect_GradientFillMethod_Vertical;
       }
       ViewerTest_DefaultBackground.SetDefaultGradient();
     }
@@ -3623,7 +3631,8 @@ static int VColorScale(Draw_Interpretor& theDI, int theArgNb, const char** theAr
 
       TCollection_AsciiString aTextPosArg(theArgVec[++anArgIter]);
       aTextPosArg.LowerCase();
-      Aspect_TypeOfColorScalePosition aLabPosition = Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE;
+      Aspect_TypeOfColorScalePosition aLabPosition =
+        Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE;
       if (aTextPosArg == "none")
       {
         aLabPosition = Aspect_TypeOfColorScalePosition::Aspect_TOCSP_NONE;
@@ -5784,7 +5793,8 @@ public:
     }
     {
       occ::handle<Prs3d_TextAspect> aTextAspect = new Prs3d_TextAspect();
-      aTextAspect->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER);
+      aTextAspect->SetHorizontalJustification(
+        Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER);
       aTextAspect->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_CENTER);
       myDrawer->SetTextAspect(aTextAspect);
     }
@@ -6117,7 +6127,7 @@ static int VSelect(Draw_Interpretor&, int theNbArgs, const char** theArgVec)
 
   NCollection_Sequence<NCollection_Vec2<int>> aPnts;
   bool                                        toAllowOverlap = false;
-  AIS_SelectionScheme                         aSelScheme     = AIS_SelectionScheme::AIS_SelectionScheme_Replace;
+  AIS_SelectionScheme aSelScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace;
   for (int anArgIter = 1; anArgIter < theNbArgs; ++anArgIter)
   {
     TCollection_AsciiString anArg(theArgVec[anArgIter]);
@@ -8043,7 +8053,8 @@ static int VTextureEnv(Draw_Interpretor& /*theDI*/, int theArgNb, const char** t
       TCollection_AsciiString aTextureOpt(theArgVec[2]);
       isOk = (!aTextureOpt.IsIntegerValue()
               || (aTextureOpt.IntegerValue() >= 0
-                  && aTextureOpt.IntegerValue() < Graphic3d_NameOfTextureEnv::Graphic3d_NOT_ENV_UNKNOWN));
+                  && aTextureOpt.IntegerValue()
+                       < Graphic3d_NameOfTextureEnv::Graphic3d_NOT_ENV_UNKNOWN));
 
       if (isOk && theArgNb == 11)
       {
@@ -8084,16 +8095,17 @@ static int VTextureEnv(Draw_Interpretor& /*theDI*/, int theArgNb, const char** t
     {
       TCollection_AsciiString aRepeatOpt(theArgVec[3]), aModulateOpt(theArgVec[4]),
         aFilterOpt(theArgVec[5]);
-      aTexEnv->SetTextureParameters(aRepeatOpt.IsEqual("repeat"),
-                                    aModulateOpt.IsEqual("modulate"),
-                                    aFilterOpt.IsEqual("nearest")    ? Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST
-                                    : aFilterOpt.IsEqual("bilinear") ? Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR
-                                                                     : Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_TRILINEAR,
-                                    (float)Draw::Atof(theArgVec[6]),
-                                    (float)Draw::Atof(theArgVec[7]),
-                                    (float)Draw::Atof(theArgVec[8]),
-                                    (float)Draw::Atof(theArgVec[9]),
-                                    (float)Draw::Atof(theArgVec[10]));
+      aTexEnv->SetTextureParameters(
+        aRepeatOpt.IsEqual("repeat"),
+        aModulateOpt.IsEqual("modulate"),
+        aFilterOpt.IsEqual("nearest")    ? Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST
+        : aFilterOpt.IsEqual("bilinear") ? Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_BILINEAR
+                                         : Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_TRILINEAR,
+        (float)Draw::Atof(theArgVec[6]),
+        (float)Draw::Atof(theArgVec[7]),
+        (float)Draw::Atof(theArgVec[8]),
+        (float)Draw::Atof(theArgVec[9]),
+        (float)Draw::Atof(theArgVec[10]));
     }
     aView->SetTextureEnv(aTexEnv);
   }
@@ -10483,7 +10495,8 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
   {
     if (theArgNb == 1)
     {
-      theDI << (aParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING ? "on" : "off") << " ";
+      theDI << (aParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING ? "on" : "off")
+            << " ";
       return 0;
     }
     else if (theArgNb == 2)
@@ -10715,7 +10728,9 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
     {
       if (toPrint)
       {
-        theDI << (aParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING ? "true" : "false") << " ";
+        theDI << (aParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING ? "true"
+                                                                                     : "false")
+              << " ";
         continue;
       }
 
@@ -10724,13 +10739,16 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
       {
         ++anArgIter;
       }
-      aParams.Method = isRayTrace ? Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING : Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION;
+      aParams.Method = isRayTrace ? Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING
+                                  : Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION;
     }
     else if (aFlag == "-rast" || aFlag == "-raster" || aFlag == "-rasterization")
     {
       if (toPrint)
       {
-        theDI << (aParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION ? "true" : "false") << " ";
+        theDI << (aParams.Method == Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION ? "true"
+                                                                                        : "false")
+              << " ";
         continue;
       }
 
@@ -10739,7 +10757,8 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
       {
         ++anArgIter;
       }
-      aParams.Method = isRaster ? Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION : Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING;
+      aParams.Method = isRaster ? Graphic3d_RenderingMode::Graphic3d_RM_RASTERIZATION
+                                : Graphic3d_RenderingMode::Graphic3d_RM_RAYTRACING;
     }
     else if (aFlag == "-msaa")
     {
@@ -10792,12 +10811,14 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
     {
       if (toPrint)
       {
-        if (aParams.TransparencyMethod == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT)
+        if (aParams.TransparencyMethod
+            == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT)
         {
           theDI << "on, depth weight factor: " << TCollection_AsciiString(aParams.OitDepthFactor)
                 << " ";
         }
-        else if (aParams.TransparencyMethod == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT)
+        else if (aParams.TransparencyMethod
+                 == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT)
         {
           theDI << "on, depth peeling layers: "
                 << TCollection_AsciiString(aParams.NbOitDepthPeelingLayers) << " ";
@@ -10819,7 +10840,8 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
       aParam.LowerCase();
       if (aParam == "peeling" || aParam == "peel")
       {
-        aParams.TransparencyMethod = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT;
+        aParams.TransparencyMethod =
+          Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT;
         if (anArgIter + 1 < theArgNb
             && TCollection_AsciiString(theArgVec[anArgIter + 1]).IsIntegerValue())
         {
@@ -10870,7 +10892,8 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
       }
       else if (aParam == "off")
       {
-        aParams.TransparencyMethod = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
+        aParams.TransparencyMethod =
+          Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
       }
       else
       {
@@ -11635,11 +11658,13 @@ static int VRenderParams(Draw_Interpretor& theDI, int theArgNb, const char** the
 
       if (aMode == "disabled")
       {
-        aView->ChangeRenderingParams().ToneMappingMethod = Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Disabled;
+        aView->ChangeRenderingParams().ToneMappingMethod =
+          Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Disabled;
       }
       else if (aMode == "filmic")
       {
-        aView->ChangeRenderingParams().ToneMappingMethod = Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Filmic;
+        aView->ChangeRenderingParams().ToneMappingMethod =
+          Graphic3d_ToneMappingMethod::Graphic3d_ToneMappingMethod_Filmic;
       }
       else
       {
@@ -12675,8 +12700,9 @@ static int VSelectionProperties(Draw_Interpretor& theDi, int theArgsNb, const ch
         return 1;
       }
 
-      SelectMgr_PickingStrategy aStrategy = SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_FirstAcceptable;
-      TCollection_AsciiString   aVal(theArgVec[anArgIter]);
+      SelectMgr_PickingStrategy aStrategy =
+        SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_FirstAcceptable;
+      TCollection_AsciiString aVal(theArgVec[anArgIter]);
       aVal.LowerCase();
       if (aVal == "first" || aVal == "firstaccepted" || aVal == "firstacceptable")
       {
@@ -12718,8 +12744,9 @@ static int VSelectionProperties(Draw_Interpretor& theDi, int theArgsNb, const ch
           Message::SendFail() << "Syntax error: wrong number of arguments";
           return 1;
         }
-        aCtx->MainSelector()->SetDepthTolerance(SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_Uniform,
-                                                Draw::Atof(theArgVec[++anArgIter]));
+        aCtx->MainSelector()->SetDepthTolerance(
+          SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_Uniform,
+          Draw::Atof(theArgVec[++anArgIter]));
       }
       else if (aTolType == "uniformpx")
       {
@@ -12728,13 +12755,15 @@ static int VSelectionProperties(Draw_Interpretor& theDi, int theArgsNb, const ch
           Message::SendFail() << "Syntax error: wrong number of arguments";
           return 1;
         }
-        aCtx->MainSelector()->SetDepthTolerance(SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_UniformPixels,
-                                                Draw::Atof(theArgVec[++anArgIter]));
+        aCtx->MainSelector()->SetDepthTolerance(
+          SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_UniformPixels,
+          Draw::Atof(theArgVec[++anArgIter]));
       }
       else if (aTolType == "sensfactor")
       {
-        aCtx->MainSelector()->SetDepthTolerance(SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor,
-                                                0.0);
+        aCtx->MainSelector()->SetDepthTolerance(
+          SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor,
+          0.0);
       }
       else
       {
@@ -12908,10 +12937,11 @@ static int VDumpSelectionImage(Draw_Interpretor& /*theDi*/, int theArgsNb, const
   }
 
   TCollection_AsciiString        aFile;
-  StdSelect_TypeOfSelectionImage aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepth;
-  occ::handle<Graphic3d_Camera>  aCustomCam;
-  Image_Format                   anImgFormat  = Image_Format_BGR;
-  int                            aPickedIndex = 1;
+  StdSelect_TypeOfSelectionImage aType =
+    StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepth;
+  occ::handle<Graphic3d_Camera> aCustomCam;
+  Image_Format                  anImgFormat  = Image_Format_BGR;
+  int                           aPickedIndex = 1;
   for (int anArgIter = 1; anArgIter < theArgsNb; ++anArgIter)
   {
     TCollection_AsciiString aParam(theArgVec[anArgIter]);
@@ -12928,23 +12958,25 @@ static int VDumpSelectionImage(Draw_Interpretor& /*theDi*/, int theArgsNb, const
       aValue.LowerCase();
       if (aValue == "depth" || aValue == "normdepth" || aValue == "normalizeddepth")
       {
-        aType       = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepth;
+        aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepth;
         anImgFormat = Image_Format_GrayF;
       }
       else if (aValue == "depthinverted" || aValue == "normdepthinverted"
                || aValue == "normalizeddepthinverted" || aValue == "inverted")
       {
-        aType       = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepthInverted;
+        aType =
+          StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepthInverted;
         anImgFormat = Image_Format_GrayF;
       }
       else if (aValue == "unnormdepth" || aValue == "unnormalizeddepth")
       {
-        aType       = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_UnnormalizedDepth;
+        aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_UnnormalizedDepth;
         anImgFormat = Image_Format_GrayF;
       }
       else if (aValue == "objectcolor" || aValue == "object" || aValue == "color")
       {
-        aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredDetectedObject;
+        aType =
+          StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredDetectedObject;
       }
       else if (aValue == "entitycolor" || aValue == "entity")
       {

@@ -24,8 +24,8 @@ class Graphic3d_ArrayOfPolygons : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfPolygons, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of polygons (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYGONS), a polygon can be filled as:
-  //! 1) Creating a single polygon defined with his vertexes, i.e:
+  //! Creates an array of polygons (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYGONS), a
+  //! polygon can be filled as: 1) Creating a single polygon defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfPolygons (7);
   //!   myArray->AddVertex (x1, y1, z1);

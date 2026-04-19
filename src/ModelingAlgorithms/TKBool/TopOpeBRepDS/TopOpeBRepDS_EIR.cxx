@@ -312,13 +312,14 @@ static void FUN_ReducerEdge3d(const int                                         
       {
         occ::handle<TopOpeBRepDS_EdgeVertexInterference> EVI(
           occ::down_cast<TopOpeBRepDS_EdgeVertexInterference>(I1));
-        newI = new TopOpeBRepDS_EdgeVertexInterference(T,
-                                                       TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
-                                                       IB1,
-                                                       G1,
-                                                       EVI->GBound(),
-                                                       TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
-                                                       EVI->Parameter());
+        newI =
+          new TopOpeBRepDS_EdgeVertexInterference(T,
+                                                  TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
+                                                  IB1,
+                                                  G1,
+                                                  EVI->GBound(),
+                                                  TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
+                                                  EVI->Parameter());
       }
       if (iscpi)
       {
@@ -442,8 +443,8 @@ static void FUN_ReducerSDEdge(const int                                         
         occ::handle<TopOpeBRepDS_EdgeVertexInterference> EVI(
           occ::down_cast<TopOpeBRepDS_EdgeVertexInterference>(I1));
         TopOpeBRepDS_Config cEIX = BDS.SameDomainOri(SIX), c1 = BDS.SameDomainOri(IB1);
-        TopOpeBRepDS_Config Conf =
-          (cEIX == c1) ? TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED : TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
+        TopOpeBRepDS_Config Conf = (cEIX == c1) ? TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED
+                                                : TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED;
         occ::handle<TopOpeBRepDS_Interference> newI =
           new TopOpeBRepDS_EdgeVertexInterference(T,
                                                   TopOpeBRepDS_Kind::TopOpeBRepDS_EDGE,

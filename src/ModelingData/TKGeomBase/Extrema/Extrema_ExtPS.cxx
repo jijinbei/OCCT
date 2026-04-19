@@ -214,7 +214,8 @@ void Extrema_ExtPS::Initialize(const Adaptor3d_Surface& theS,
   mytolv = theTolV;
   mytype = myS->GetType();
 
-  bool isB = (myS->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface || myS->GetType() == GeomAbs_SurfaceType::GeomAbs_BezierSurface);
+  bool isB = (myS->GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface
+              || myS->GetType() == GeomAbs_SurfaceType::GeomAbs_BezierSurface);
 
   int nbU = (isB) ? 44 : 32;
   int nbV = (isB) ? 44 : 32;

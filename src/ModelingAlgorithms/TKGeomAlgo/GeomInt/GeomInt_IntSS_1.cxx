@@ -372,9 +372,12 @@ void GeomInt_IntSS::MakeCurve(const int                               Index,
         {
           GeomAbs_SurfaceType typS1 = myHS1->GetType();
           GeomAbs_SurfaceType typS2 = myHS2->GetType();
-          if (typS1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion || typS1 == GeomAbs_SurfaceType::GeomAbs_OffsetSurface
-              || typS1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution || typS2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion
-              || typS2 == GeomAbs_SurfaceType::GeomAbs_OffsetSurface || typS2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
+          if (typS1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion
+              || typS1 == GeomAbs_SurfaceType::GeomAbs_OffsetSurface
+              || typS1 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution
+              || typS2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion
+              || typS2 == GeomAbs_SurfaceType::GeomAbs_OffsetSurface
+              || typS2 == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
           {
             sline.Append(newc);
             slineS1.Append(H1);
@@ -416,7 +419,8 @@ void GeomInt_IntSS::MakeCurve(const int                               Index,
           }
         }
       } // end of for (i=1; i<=myLConstruct.NbParts(); i++)
-    } // case IntPatch_IType::IntPatch_Lin:  case IntPatch_IType::IntPatch_Parabola:  case IntPatch_IType::IntPatch_Hyperbola:
+    } // case IntPatch_IType::IntPatch_Lin:  case IntPatch_IType::IntPatch_Parabola:  case
+      // IntPatch_IType::IntPatch_Hyperbola:
     break;
 
       // ########################################
@@ -713,8 +717,10 @@ void GeomInt_IntSS::MakeCurve(const int                               Index,
             //
             if (myHS1 != myHS2)
             {
-              if ((typs1 == GeomAbs_SurfaceType::GeomAbs_BezierSurface || typs1 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
-                  && (typs2 == GeomAbs_SurfaceType::GeomAbs_BezierSurface || typs2 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface))
+              if ((typs1 == GeomAbs_SurfaceType::GeomAbs_BezierSurface
+                   || typs1 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+                  && (typs2 == GeomAbs_SurfaceType::GeomAbs_BezierSurface
+                      || typs2 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface))
               {
 
                 theapp3d.SetParameters(myTolApprox, tol2d, 4, 8, 0, 30, true, aParType);
@@ -746,14 +752,17 @@ void GeomInt_IntSS::MakeCurve(const int                               Index,
 
           else
           {
-            if (myApprox1 || myApprox2 || (typs1 == GeomAbs_SurfaceType::GeomAbs_Plane || typs2 == GeomAbs_SurfaceType::GeomAbs_Plane))
+            if (myApprox1 || myApprox2
+                || (typs1 == GeomAbs_SurfaceType::GeomAbs_Plane
+                    || typs2 == GeomAbs_SurfaceType::GeomAbs_Plane))
             {
               if (theapp3d.TolReached2d() > myTolReached2d || myTolReached2d == 0.)
               {
                 myTolReached2d = theapp3d.TolReached2d();
               }
             }
-            if (typs1 == GeomAbs_SurfaceType::GeomAbs_Plane || typs2 == GeomAbs_SurfaceType::GeomAbs_Plane)
+            if (typs1 == GeomAbs_SurfaceType::GeomAbs_Plane
+                || typs2 == GeomAbs_SurfaceType::GeomAbs_Plane)
             {
               myTolReached3d = myTolReached2d;
             }
@@ -906,7 +915,8 @@ void GeomInt_IntSS::MakeCurve(const int                               Index,
               } // else if(typs2 == GeomAbs_SurfaceType::GeomAbs_Plane)
               //
               else
-              { // typs1!=GeomAbs_SurfaceType::GeomAbs_Plane && typs2!=GeomAbs_SurfaceType::GeomAbs_Plane
+              { // typs1!=GeomAbs_SurfaceType::GeomAbs_Plane &&
+                // typs2!=GeomAbs_SurfaceType::GeomAbs_Plane
                 const AppParCurves_MultiBSpCurve& mbspc = theapp3d.Value(j);
                 nbpoles                                 = mbspc.NbPoles();
                 NCollection_Array1<gp_Pnt> tpoles(1, nbpoles);
@@ -978,7 +988,8 @@ void GeomInt_IntSS::MakeCurve(const int                               Index,
                 {
                   slineS2.Append(H1);
                 }
-              } // else { // typs1!=GeomAbs_SurfaceType::GeomAbs_Plane && typs2!=GeomAbs_SurfaceType::GeomAbs_Plane
+              } // else { // typs1!=GeomAbs_SurfaceType::GeomAbs_Plane &&
+                // typs2!=GeomAbs_SurfaceType::GeomAbs_Plane
             } // for (j=1; j<=aNbMultiCurves; j++
           }
         }

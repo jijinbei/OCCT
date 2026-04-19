@@ -39,7 +39,8 @@ void RWStepDimTol_RWDatumReferenceModifierWithValue::ReadStep(
 
   // own fields of DatumReferenceModifierWithValue
 
-  StepDimTol_DatumReferenceModifierType aModifierType = StepDimTol_DatumReferenceModifierType::StepDimTol_CircularOrCylindrical;
+  StepDimTol_DatumReferenceModifierType aModifierType =
+    StepDimTol_DatumReferenceModifierType::StepDimTol_CircularOrCylindrical;
   if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);

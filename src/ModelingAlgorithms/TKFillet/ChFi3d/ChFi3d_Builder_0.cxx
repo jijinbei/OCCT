@@ -559,7 +559,8 @@ GeomAbs_Shape ChFi3d_evalconti(const TopoDS_Edge& /*E*/,
   F.Orientation(TopAbs_FORWARD);
   BRepAdaptor_Surface S(F, false);
   GeomAbs_SurfaceType typ = S.GetType();
-  if (typ != GeomAbs_SurfaceType::GeomAbs_Cone && typ != GeomAbs_SurfaceType::GeomAbs_Sphere && typ != GeomAbs_SurfaceType::GeomAbs_Torus)
+  if (typ != GeomAbs_SurfaceType::GeomAbs_Cone && typ != GeomAbs_SurfaceType::GeomAbs_Sphere
+      && typ != GeomAbs_SurfaceType::GeomAbs_Torus)
     return cont;
   return GeomAbs_CN;
 }
@@ -601,7 +602,8 @@ bool ChFi3d_KParticular(const occ::handle<ChFiDS_Spine>& Spine,
   aST1                           = aS1.GetType();
   aST2                           = aS2.GetType();
   //
-  if (aST2 != GeomAbs_SurfaceType::GeomAbs_Plane && aST2 != GeomAbs_SurfaceType::GeomAbs_Cylinder && aST2 != GeomAbs_SurfaceType::GeomAbs_Cone)
+  if (aST2 != GeomAbs_SurfaceType::GeomAbs_Plane && aST2 != GeomAbs_SurfaceType::GeomAbs_Cylinder
+      && aST2 != GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     return !bRet;
   }
@@ -1415,7 +1417,8 @@ void ChFi3d_ProjectPCurv(const occ::handle<Adaptor3d_Curve>&   HCg,
                          const double                          tol,
                          double&                               tolreached)
 {
-  if (HSg->GetType() != GeomAbs_SurfaceType::GeomAbs_BezierSurface && HSg->GetType() != GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+  if (HSg->GetType() != GeomAbs_SurfaceType::GeomAbs_BezierSurface
+      && HSg->GetType() != GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
   {
 
     ProjLib_ProjectedCurve Projc(HSg, HCg, tol);
@@ -3510,8 +3513,10 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
   double Udeb = 0., Ufin = 0.;
   double tolr1, tolr2;
   tolr1 = tolr2 = tolreached = tol3d;
-  if ((S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder && S2->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
-      || (S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane && S2->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder))
+  if ((S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder
+       && S2->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
+      || (S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane
+          && S2->GetType() == GeomAbs_SurfaceType::GeomAbs_Cylinder))
   {
     gp_Pln      pl;
     gp_Cylinder cyl;
@@ -3621,7 +3626,8 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
       return true;
     }
   }
-  else if (S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane && S2->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
+  else if (S1->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane
+           && S2->GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
   {
     IntAna_QuadQuadGeo LInt(S1->Plane(), S2->Plane(), Precision::Angular(), tol3d);
     if (LInt.IsDone())
@@ -4690,7 +4696,8 @@ Standard_EXPORT void ChFi3d_PerformElSpine(occ::handle<ChFiDS_ElSpine>& HES,
   }
   //
   //  Concatenation des aretes suivantes
-  GeomConvert_CompCurveToBSplineCurve Concat(TC, Convert_ParameterisationType::Convert_QuasiAngular);
+  GeomConvert_CompCurveToBSplineCurve Concat(TC,
+                                             Convert_ParameterisationType::Convert_QuasiAngular);
   //
   Eold = E;
   for (IEdge = IF + 1; IEdge <= IL; ++IEdge)

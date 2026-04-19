@@ -90,18 +90,19 @@ public:
   //! Degmax     : The maximum degree in v required on the surface
   //! Segmax     : The maximum number of span in v required on
   //! the surface.
-  Standard_EXPORT void Build(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& ReversedEdges,
-                             NCollection_DataMap<TopoDS_Shape,
-                                                 occ::handle<NCollection_HArray2<TopoDS_Shape>>,
-                                                 TopTools_ShapeMapHasher>&           Tapes,
-                             NCollection_DataMap<TopoDS_Shape,
-                                                 occ::handle<NCollection_HArray2<TopoDS_Shape>>,
-                                                 TopTools_ShapeMapHasher>&           Rails,
-                             const BRepFill_TransitionStyle Transition = BRepFill_TransitionStyle::BRepFill_Modified,
-                             const GeomAbs_Shape            Continuity = GeomAbs_C2,
-                             const GeomFill_ApproxStyle     Approx     = GeomFill_ApproxStyle::GeomFill_Location,
-                             const int                      Degmax     = 11,
-                             const int                      Segmax     = 30);
+  Standard_EXPORT void Build(
+    NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& ReversedEdges,
+    NCollection_DataMap<TopoDS_Shape,
+                        occ::handle<NCollection_HArray2<TopoDS_Shape>>,
+                        TopTools_ShapeMapHasher>&           Tapes,
+    NCollection_DataMap<TopoDS_Shape,
+                        occ::handle<NCollection_HArray2<TopoDS_Shape>>,
+                        TopTools_ShapeMapHasher>&           Rails,
+    const BRepFill_TransitionStyle Transition = BRepFill_TransitionStyle::BRepFill_Modified,
+    const GeomAbs_Shape            Continuity = GeomAbs_C2,
+    const GeomFill_ApproxStyle     Approx     = GeomFill_ApproxStyle::GeomFill_Location,
+    const int                      Degmax     = 11,
+    const int                      Segmax     = 30);
 
   //! Say if the Shape is Build.
   Standard_EXPORT bool IsDone() const;

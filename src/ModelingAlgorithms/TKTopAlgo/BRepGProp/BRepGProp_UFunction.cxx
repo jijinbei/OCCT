@@ -52,14 +52,18 @@ bool BRepGProp_UFunction::Value(const double X, double& F)
   }
 
   // Center of mass computation
-  if (myValueType == GProp_ValueType::GProp_CenterMassX || myValueType == GProp_ValueType::GProp_CenterMassY
+  if (myValueType == GProp_ValueType::GProp_CenterMassX
+      || myValueType == GProp_ValueType::GProp_CenterMassY
       || myValueType == GProp_ValueType::GProp_CenterMassZ)
     return CenterMassValue(X, F);
 
   // Inertia computation
-  if (myValueType == GProp_ValueType::GProp_InertiaXX || myValueType == GProp_ValueType::GProp_InertiaYY
-      || myValueType == GProp_ValueType::GProp_InertiaZZ || myValueType == GProp_ValueType::GProp_InertiaXY
-      || myValueType == GProp_ValueType::GProp_InertiaXZ || myValueType == GProp_ValueType::GProp_InertiaYZ)
+  if (myValueType == GProp_ValueType::GProp_InertiaXX
+      || myValueType == GProp_ValueType::GProp_InertiaYY
+      || myValueType == GProp_ValueType::GProp_InertiaZZ
+      || myValueType == GProp_ValueType::GProp_InertiaXY
+      || myValueType == GProp_ValueType::GProp_InertiaXZ
+      || myValueType == GProp_ValueType::GProp_InertiaYZ)
     return InertiaValue(X, F);
 
   return false;
@@ -187,7 +191,8 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
         return false;
     }
 
-    if (myValueType == GProp_ValueType::GProp_InertiaXX || myValueType == GProp_ValueType::GProp_InertiaYY
+    if (myValueType == GProp_ValueType::GProp_InertiaXX
+        || myValueType == GProp_ValueType::GProp_InertiaYY
         || myValueType == GProp_ValueType::GProp_InertiaZZ)
       F *= aParam1 * aParam1 + aParam2 * aParam2;
     else
@@ -205,7 +210,8 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
   double aCoeff2;
 
   // Inertia computation for XX, YY and ZZ.
-  if (myValueType == GProp_ValueType::GProp_InertiaXX || myValueType == GProp_ValueType::GProp_InertiaYY
+  if (myValueType == GProp_ValueType::GProp_InertiaXX
+      || myValueType == GProp_ValueType::GProp_InertiaYY
       || myValueType == GProp_ValueType::GProp_InertiaZZ)
   {
 
@@ -242,7 +248,8 @@ bool BRepGProp_UFunction::InertiaValue(const double X, double& F)
   }
 
   // Inertia computation for XY, YZ and XZ.
-  if (myValueType == GProp_ValueType::GProp_InertiaXY || myValueType == GProp_ValueType::GProp_InertiaYZ
+  if (myValueType == GProp_ValueType::GProp_InertiaXY
+      || myValueType == GProp_ValueType::GProp_InertiaYZ
       || myValueType == GProp_ValueType::GProp_InertiaXZ)
   {
 

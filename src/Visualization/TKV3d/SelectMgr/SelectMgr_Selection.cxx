@@ -67,7 +67,8 @@ void SelectMgr_Selection::Add(const occ::handle<Select3D_SensitiveEntity>& theSe
 
   occ::handle<SelectMgr_SensitiveEntity> anEntity = new SelectMgr_SensitiveEntity(theSensitive);
   myEntities.Append(anEntity);
-  if (mySelectionState == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated && !anEntity->IsActiveForSelection())
+  if (mySelectionState == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated
+      && !anEntity->IsActiveForSelection())
   {
     anEntity->SetActiveForSelection();
   }

@@ -47,10 +47,11 @@ Standard_EXPORT bool FUN_Parameters(const gp_Pnt& Pnt, const TopoDS_Shape& F, do
 {
   BRepAdaptor_Surface Surf(TopoDS::Face(F));
   // Get 2d coord of the projection of <Pnt> on surface of <F>.
-  double        uvtol = Surf.Tolerance();
-  double        fu = Surf.FirstUParameter(), lu = Surf.LastUParameter();
-  double        fv = Surf.FirstVParameter(), lv = Surf.LastVParameter();
-  Extrema_ExtPS extps(Pnt, Surf, fu, lu, fv, lv, uvtol, uvtol, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
+  double uvtol = Surf.Tolerance();
+  double fu = Surf.FirstUParameter(), lu = Surf.LastUParameter();
+  double fv = Surf.FirstVParameter(), lv = Surf.LastVParameter();
+  Extrema_ExtPS
+    extps(Pnt, Surf, fu, lu, fv, lv, uvtol, uvtol, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
   if (!extps.IsDone())
   {
     return false;

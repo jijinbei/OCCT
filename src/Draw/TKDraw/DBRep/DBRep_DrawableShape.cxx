@@ -425,7 +425,8 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
 
       GeomAbs_SurfaceType SurfType = S.GetType();
 
-// If the type of the surface is GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion or GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution
+// If the type of the surface is GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion or
+// GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution
 #ifdef OCCT_DEBUG
       GeomAbs_CurveType CurvType;
 #else
@@ -514,7 +515,8 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
               }
               break;
               //---GeomAbs_SurfaceType::GeomAbs_Sphere   GeomAbs_SurfaceType::GeomAbs_Torus--------
-              // GeomAbs_SurfaceType::GeomAbs_BezierSurface GeomAbs_SurfaceType::GeomAbs_BezierSurface
+              // GeomAbs_SurfaceType::GeomAbs_BezierSurface
+              // GeomAbs_SurfaceType::GeomAbs_BezierSurface
             case GeomAbs_SurfaceType::GeomAbs_Sphere:
             case GeomAbs_SurfaceType::GeomAbs_Torus:
             case GeomAbs_SurfaceType::GeomAbs_OffsetSurface:
@@ -559,8 +561,10 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
               //-------------GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution-
             case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion:
             case GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution:
-              if ((T == GeomAbs_IsoType::GeomAbs_IsoV && SurfType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
-                  || (T == GeomAbs_IsoType::GeomAbs_IsoU && SurfType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion))
+              if ((T == GeomAbs_IsoType::GeomAbs_IsoV
+                   && SurfType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution)
+                  || (T == GeomAbs_IsoType::GeomAbs_IsoU
+                      && SurfType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion))
               {
                 if (SurfType == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
                   break;

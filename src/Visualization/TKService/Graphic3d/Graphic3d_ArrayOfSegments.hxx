@@ -22,8 +22,8 @@ class Graphic3d_ArrayOfSegments : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfSegments, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of segments (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS), a segment can be filled as:
-  //! 1) Creating a set of segments defined with his vertexes, i.e:
+  //! Creates an array of segments (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_SEGMENTS), a
+  //! segment can be filled as: 1) Creating a set of segments defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfSegments (4);
   //!   myArray->AddVertex (x1, y1, z1);

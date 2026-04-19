@@ -71,7 +71,8 @@ void AIS_ConnectedInteractive::connect(const occ::handle<AIS_InteractiveObject>&
   if (!myReference.IsNull())
   {
     if (myReference->HasInteractiveContext()
-        && myReference->GetContext()->DisplayStatus(myReference) != PrsMgr_DisplayStatus::AIS_DS_None)
+        && myReference->GetContext()->DisplayStatus(myReference)
+             != PrsMgr_DisplayStatus::AIS_DS_None)
     {
       myReference.Nullify();
       throw Standard_ProgramError("AIS_ConnectedInteractive::Connect() - connected object should "
@@ -233,7 +234,7 @@ void AIS_ConnectedInteractive::computeSubShapeSelection(
   const occ::handle<SelectMgr_Selection>& theSelection,
   const int                               theMode)
 {
-  using SensitiveList = NCollection_List<occ::handle<Select3D_SensitiveEntity>>;
+  using SensitiveList      = NCollection_List<occ::handle<Select3D_SensitiveEntity>>;
   using Shapes2EntitiesMap = NCollection_DataMap<TopoDS_Shape, SensitiveList>;
 
   if (!myReference->HasSelection(theMode))

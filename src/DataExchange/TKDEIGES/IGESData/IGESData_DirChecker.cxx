@@ -248,7 +248,8 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
       Message_Msg Msg60("XSTEP_60");
       ach->SendFail(Msg60);
     }
-    else if (thelinefont == IGESData_DefType::IGESData_DefValue && df != IGESData_DefType::IGESData_DefValue)
+    else if (thelinefont == IGESData_DefType::IGESData_DefValue
+             && df != IGESData_DefType::IGESData_DefValue)
     {
       Message_Msg Msg60("XSTEP_60");
       ach->SendWarning(Msg60);
@@ -271,7 +272,8 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
       //      Message_Msg Msg69 ("XSTEP_69");
       ach->SendFail(Msg69);
     }
-    else if (thecolor == IGESData_DefType::IGESData_DefValue && df != IGESData_DefType::IGESData_DefValue)
+    else if (thecolor == IGESData_DefType::IGESData_DefValue
+             && df != IGESData_DefType::IGESData_DefValue)
     {
       //      Message_Msg Msg69 ("XSTEP_69");
       ach->SendWarning(Msg69);
@@ -389,12 +391,14 @@ bool IGESData_DirChecker::Correct(const occ::handle<IGESData_IGESEntity>& ent) c
   if (thegraphier != -1 && thelineweig != IGESData_DefType::IGESData_DefVoid)
     linew = ent->LineWeightNumber();
 
-  if (thegraphier == -1 || (ent->RankLineFont() != 0 && thelinefont == IGESData_DefType::IGESData_DefVoid))
+  if (thegraphier == -1
+      || (ent->RankLineFont() != 0 && thelinefont == IGESData_DefType::IGESData_DefVoid))
   {
     ent->InitLineFont(nulfont);
     done = true;
   }
-  if (thegraphier == -1 || (ent->RankColor() != 0 && thecolor == IGESData_DefType::IGESData_DefVoid))
+  if (thegraphier == -1
+      || (ent->RankColor() != 0 && thecolor == IGESData_DefType::IGESData_DefVoid))
   {
     ent->InitColor(nulcolor);
     done = true;

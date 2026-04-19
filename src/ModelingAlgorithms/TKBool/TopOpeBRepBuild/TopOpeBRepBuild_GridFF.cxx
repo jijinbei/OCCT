@@ -746,7 +746,8 @@ void TopOpeBRepBuild_Builder::GFillEdgeWES(const TopoDS_Shape&                  
   GMergeEdgeWES(EOR, GME, WES);
 
   TopOpeBRepBuild_GTopo GSE = G1;
-  GSE.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY, TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
+  GSE.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY,
+                   TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
   GSplitEdgeWES(EOR, LSclass, GSE, WES);
 
 } // GFillEdgeWES
@@ -1328,7 +1329,8 @@ void TopOpeBRepBuild_Builder::GSplitEdge(const TopoDS_Shape&                   E
   // NYI dans le cas ou l'appel a SplitEdge est utilise pour construire les parties
   // NYI (TopAbs_ON,SOLID) (i.e par la construction des parties (TopAbs_IN,FACE)).
   TopOpeBRepDS_Config c1 = G1.Config1(), c2 = G1.Config2();
-  bool                UUFACE = (c1 == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY && c2 == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
+  bool                UUFACE = (c1 == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY
+                 && c2 == TopOpeBRepDS_Config::TopOpeBRepDS_UNSHGEOMETRY);
 
   bool ONSOLID = false;
   if (!LSclass.IsEmpty())

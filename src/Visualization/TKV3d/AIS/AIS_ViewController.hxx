@@ -146,12 +146,12 @@ public: //! @name global parameters
   //! Set if rotation point should be displayed in 3D Viewer.
   void SetShowRotateCenter(bool theToShow) { myToShowRotateCenter = theToShow; }
 
-  //! Return TRUE if camera up orientation within AIS_NavigationMode::AIS_NavigationMode_Orbit rotation mode should be
-  //! forced Z up; FALSE by default.
+  //! Return TRUE if camera up orientation within AIS_NavigationMode::AIS_NavigationMode_Orbit
+  //! rotation mode should be forced Z up; FALSE by default.
   bool ToLockOrbitZUp() const { return myToLockOrbitZUp; }
 
-  //! Set if camera up orientation within AIS_NavigationMode::AIS_NavigationMode_Orbit rotation mode should be forced Z
-  //! up.
+  //! Set if camera up orientation within AIS_NavigationMode::AIS_NavigationMode_Orbit rotation mode
+  //! should be forced Z up.
   void SetLockOrbitZUp(bool theToForceUp) { myToLockOrbitZUp = theToForceUp; }
 
   //! Return TRUE if z-rotation via two-touches gesture is enabled; FALSE by default.
@@ -329,7 +329,7 @@ public: //! @name mouse input
   //! @param theScheme selection scheme
   Standard_EXPORT virtual void SelectInViewer(
     const NCollection_Sequence<NCollection_Vec2<int>>& thePnts,
-    const AIS_SelectionScheme                          theScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
+    const AIS_SelectionScheme theScheme = AIS_SelectionScheme::AIS_SelectionScheme_Replace);
 
   //! Update rectangle selection tool.
   //! This method is expected to be called from UI thread.

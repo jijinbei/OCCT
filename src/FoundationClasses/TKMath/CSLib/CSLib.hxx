@@ -56,7 +56,8 @@ public:
   //! @param[in]  theD1V    First derivative in V direction
   //! @param[in]  theSinTol Sine tolerance for parallelism check
   //! @param[out] theStatus Result status indicating success or failure reason
-  //! @param[out] theNormal Computed normal direction (valid only if theStatus == CSLib_DerivativeStatus::CSLib_Done)
+  //! @param[out] theNormal Computed normal direction (valid only if theStatus ==
+  //! CSLib_DerivativeStatus::CSLib_Done)
   Standard_EXPORT static void Normal(const gp_Vec&           theD1U,
                                      const gp_Vec&           theD1V,
                                      double                  theSinTol,
@@ -98,8 +99,10 @@ public:
   //! @param[in]  theD1U    First derivative in U direction
   //! @param[in]  theD1V    First derivative in V direction
   //! @param[in]  theMagTol Magnitude tolerance for singularity detection
-  //! @param[out] theStatus Result status (CSLib_NormalStatus::CSLib_Defined or CSLib_NormalStatus::CSLib_Singular)
-  //! @param[out] theNormal Computed normal direction (valid only if theStatus == CSLib_NormalStatus::CSLib_Defined)
+  //! @param[out] theStatus Result status (CSLib_NormalStatus::CSLib_Defined or
+  //! CSLib_NormalStatus::CSLib_Singular)
+  //! @param[out] theNormal Computed normal direction (valid only if theStatus ==
+  //! CSLib_NormalStatus::CSLib_Defined)
   Standard_EXPORT static void Normal(const gp_Vec&       theD1U,
                                      const gp_Vec&       theD1V,
                                      double              theMagTol,

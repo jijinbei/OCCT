@@ -273,7 +273,8 @@ void EstLimForInfExtr(const gp_Lin&      Line,
       const IntAna2d_IntPoint& anIntPnt = anInter.Point(1);
       umin = umax = anIntPnt.ParamOnSecond();
     }
-    else if (aCurvTyp == GeomAbs_CurveType::GeomAbs_Parabola || aCurvTyp == GeomAbs_CurveType::GeomAbs_Hyperbola)
+    else if (aCurvTyp == GeomAbs_CurveType::GeomAbs_Parabola
+             || aCurvTyp == GeomAbs_CurveType::GeomAbs_Hyperbola)
     {
       IntAna2d_Conic           aCon(Line2d);
       IntAna2d_AnaIntersection anInter;
@@ -1054,7 +1055,8 @@ bool ComputeAppendPoint(const CurveType&                   theCurve,
 
   GeomAbs_CurveType aCType = CurveTool::GetType(theCurve);
 
-  if (CurveTool::IsPeriodic(theCurve) || aCType == GeomAbs_CurveType::GeomAbs_Circle || aCType == GeomAbs_CurveType::GeomAbs_Ellipse)
+  if (CurveTool::IsPeriodic(theCurve) || aCType == GeomAbs_CurveType::GeomAbs_Circle
+      || aCType == GeomAbs_CurveType::GeomAbs_Ellipse)
   {
     w = ElCLib::InPeriod(w, W0, W0 + CurveTool::Period(theCurve));
   }
@@ -1063,7 +1065,8 @@ bool ComputeAppendPoint(const CurveType&                   theCurve,
     return false;
 
   GeomAbs_SurfaceType aSType = SurfaceTool::GetType(theSurface);
-  if (SurfaceTool::IsUPeriodic(theSurface) || aSType == GeomAbs_SurfaceType::GeomAbs_Cylinder || aSType == GeomAbs_SurfaceType::GeomAbs_Cone
+  if (SurfaceTool::IsUPeriodic(theSurface) || aSType == GeomAbs_SurfaceType::GeomAbs_Cylinder
+      || aSType == GeomAbs_SurfaceType::GeomAbs_Cone
       || aSType == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     u = ElCLib::InPeriod(u, U0, U0 + SurfaceTool::UPeriod(theSurface));

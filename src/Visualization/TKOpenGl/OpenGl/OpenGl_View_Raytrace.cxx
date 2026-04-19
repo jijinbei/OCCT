@@ -1038,12 +1038,14 @@ bool OpenGl_View::addRaytracePolygonArray(OpenGl_TriangleSet&                   
 TCollection_AsciiString OpenGl_View::ShaderSource::Source(const occ::handle<OpenGl_Context>& theCtx,
                                                           const GLenum theType) const
 {
-  TCollection_AsciiString aVersion = theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
-                                       ? "#version 320 es\n"
-                                       : "#version 140\n";
+  TCollection_AsciiString aVersion =
+    theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
+      ? "#version 320 es\n"
+      : "#version 140\n";
 
   TCollection_AsciiString aPrecisionHeader;
-  if (theType == GL_FRAGMENT_SHADER && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
+  if (theType == GL_FRAGMENT_SHADER
+      && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES)
   {
     aPrecisionHeader = theCtx->hasHighp ? "precision highp float;\n"
                                           "precision highp int;\n"

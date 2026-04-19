@@ -23,7 +23,8 @@ IMPLEMENT_STANDARD_RTTIEXT(Prs3d_DimensionAspect, Prs3d_BasicAspect)
 //=================================================================================================
 
 Prs3d_DimensionAspect::Prs3d_DimensionAspect()
-    : myLineAspect(new Prs3d_LineAspect(Quantity_NOC_LAWNGREEN, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0)),
+    : myLineAspect(
+        new Prs3d_LineAspect(Quantity_NOC_LAWNGREEN, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0)),
       myTextAspect(new Prs3d_TextAspect()),
       myArrowAspect(new Prs3d_ArrowAspect()),
       myValueStringFormat("%g"),

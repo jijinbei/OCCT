@@ -24,8 +24,9 @@ class Graphic3d_ArrayOfQuadrangleStrips : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfQuadrangleStrips, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of quadrangle strips (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLESTRIPS), a polygon can be
-  //! filled as: 1) Creating a single strip defined with his vertexes, i.e:
+  //! Creates an array of quadrangle strips
+  //! (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLESTRIPS), a polygon can be filled as:
+  //! 1) Creating a single strip defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfQuadrangleStrips (7);
   //!   myArray->AddVertex (x1, y1, z1);
@@ -60,7 +61,8 @@ public:
   {
   }
 
-  //! Creates an array of quadrangle strips (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLESTRIPS).
+  //! Creates an array of quadrangle strips
+  //! (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_QUADRANGLESTRIPS).
   //! @param theMaxVertexs defines the maximum allowed vertex number in the array
   //! @param theMaxStrips  defines the maximum allowed strip  number in the array
   Graphic3d_ArrayOfQuadrangleStrips(int  theMaxVertexs,

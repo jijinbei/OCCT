@@ -1325,7 +1325,8 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
           break;
         }
 
-        if (GAC2d.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve && GAC2d.Continuity() == GeomAbs_C0)
+        if (GAC2d.GetType() == GeomAbs_CurveType::GeomAbs_BSplineCurve
+            && GAC2d.Continuity() == GeomAbs_C0)
         {
           double UResol                            = GAS.UResolution(theTolerance);
           double VResol                            = GAS.VResolution(theTolerance);
@@ -2939,7 +2940,8 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
 
   const GeomAbs_SurfaceType aType = aBAS.GetType();
   // treat analytical surfaces first
-  if (aType == GeomAbs_SurfaceType::GeomAbs_Plane || aType == GeomAbs_SurfaceType::GeomAbs_Sphere || aType == GeomAbs_SurfaceType::GeomAbs_Cylinder
+  if (aType == GeomAbs_SurfaceType::GeomAbs_Plane || aType == GeomAbs_SurfaceType::GeomAbs_Sphere
+      || aType == GeomAbs_SurfaceType::GeomAbs_Cylinder
       || aType == GeomAbs_SurfaceType::GeomAbs_Torus || aType == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
     // Get basis transformed basis surface

@@ -568,7 +568,8 @@ occ::handle<Geom2d_TrimmedCurve> AdjustCurveEnd(const occ::handle<Geom2d_Bounded
   {
     // Convert to BSpline and adjust first pole
     occ::handle<Geom2d_BSplineCurve> BCurve =
-      Geom2dConvert::CurveToBSplineCurve(theC2d, Convert_ParameterisationType::Convert_QuasiAngular);
+      Geom2dConvert::CurveToBSplineCurve(theC2d,
+                                         Convert_ParameterisationType::Convert_QuasiAngular);
     if (isFirst)
     {
       BCurve->SetPole(1, theP);

@@ -139,8 +139,10 @@ IntCurvesFace_Intersector::IntCurvesFace_Intersector(const TopoDS_Face& Face,
   myTopolTool = new BRepTopAdaptor_TopolTool(Hsurface);
 
   GeomAbs_SurfaceType SurfaceType = Adaptor3d_HSurfaceTool::GetType(Hsurface);
-  if ((SurfaceType != GeomAbs_SurfaceType::GeomAbs_Plane) && (SurfaceType != GeomAbs_SurfaceType::GeomAbs_Cylinder)
-      && (SurfaceType != GeomAbs_SurfaceType::GeomAbs_Cone) && (SurfaceType != GeomAbs_SurfaceType::GeomAbs_Sphere)
+  if ((SurfaceType != GeomAbs_SurfaceType::GeomAbs_Plane)
+      && (SurfaceType != GeomAbs_SurfaceType::GeomAbs_Cylinder)
+      && (SurfaceType != GeomAbs_SurfaceType::GeomAbs_Cone)
+      && (SurfaceType != GeomAbs_SurfaceType::GeomAbs_Sphere)
       && (SurfaceType != GeomAbs_SurfaceType::GeomAbs_Torus))
   {
     int    nbsu, nbsv;
@@ -289,7 +291,8 @@ void IntCurvesFace_Intersector::InternalCall(const IntCurveSurface_HInter& HICS,
           int anIntState = (currentstate == TopAbs_IN) ? 0 : 1;
           //  Modified by skv - Wed Sep  3 16:14:11 2003 OCC578 End
 
-          if (transition != IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent && face.Orientation() == TopAbs_REVERSED)
+          if (transition != IntCurveSurface_TransitionOnCurve::IntCurveSurface_Tangent
+              && face.Orientation() == TopAbs_REVERSED)
           {
             if (transition == IntCurveSurface_TransitionOnCurve::IntCurveSurface_In)
               transition = IntCurveSurface_TransitionOnCurve::IntCurveSurface_Out;

@@ -712,7 +712,8 @@ BRepCheck_Status BRepCheck_Wire::Orientation(const TopoDS_Face& F, const bool Up
   }
   NCollection_List<BRepCheck_Status>& aStatusList = *aHList;
 
-  if (theOstat != BRepCheck_Status::BRepCheck_NotClosed && theOstat != BRepCheck_Status::BRepCheck_NoError)
+  if (theOstat != BRepCheck_Status::BRepCheck_NotClosed
+      && theOstat != BRepCheck_Status::BRepCheck_NoError)
   {
     if (Update)
     {
@@ -991,7 +992,8 @@ BRepCheck_Status BRepCheck_Wire::Orientation(const TopoDS_Face& F, const bool Up
 
       //       if (Index==1 && myCstat!=BRepCheck_Status::BRepCheck_NotClosed &&
       //       !VF.IsNull() && !F.IsNull()) {
-      if (Index == 1 && myCstat != BRepCheck_Status::BRepCheck_NotClosed && isCheckClose && !F.IsNull())
+      if (Index == 1 && myCstat != BRepCheck_Status::BRepCheck_NotClosed && isCheckClose
+          && !F.IsNull())
       {
         ledge.Clear();
         //    ind = myMapVE.FindIndex(VF);
@@ -1151,7 +1153,8 @@ BRepCheck_Status BRepCheck_Wire::SelfIntersect(const TopoDS_Face& F,
         const IntRes2d_IntersectionPoint& IP  = Inter.Point(p);
         const IntRes2d_Transition&        Tr1 = IP.TransitionOfFirst();
         const IntRes2d_Transition&        Tr2 = IP.TransitionOfSecond();
-        if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle || Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
+        if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle
+            || Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
         {
           //-- Checking of points with true tolerances (ie Tol in 3d)
           //-- If the point of intersection is within the tolerance of a vertex
@@ -1240,7 +1243,9 @@ BRepCheck_Status BRepCheck_Wire::SelfIntersect(const TopoDS_Face& F,
         {
           delete[] tabDom;
 #ifdef OCCT_DEBUG
-          std::cout << "BRepCheck_Status::BRepCheck_NoCurveOnSurface or BRepCheck_Status::BRepCheck_InvalidRange" << std::endl;
+          std::cout << "BRepCheck_Status::BRepCheck_NoCurveOnSurface or "
+                       "BRepCheck_Status::BRepCheck_InvalidRange"
+                    << std::endl;
           std::cout.flush();
 #endif
           if (tabCur(j).IsNull())
@@ -1309,7 +1314,8 @@ BRepCheck_Status BRepCheck_Wire::SelfIntersect(const TopoDS_Face& F,
           IP_ParamOnSecond                     = IP.ParamOnSecond();
           Tr1                                  = IP.TransitionOfFirst();
           Tr2                                  = IP.TransitionOfSecond();
-          if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle || Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
+          if (Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle
+              || Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
           {
             //-- Checking of points with true tolerances (ie Tol in 3d)
             //-- If the point of intersection is within the tolerance of a vertex
@@ -1544,8 +1550,8 @@ BRepCheck_Status BRepCheck_Wire::SelfIntersect(const TopoDS_Face& F,
               delete[] tabDom;
               return (BRepCheck_Status::BRepCheck_SelfIntersectingWire);
             } //-- localok == False
-          } // end of if(Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle || Tr2.PositionOnCurve() ==
-            // IntRes2d_Position::IntRes2d_Middle)
+          } // end of if(Tr1.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle ||
+            // Tr2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
         } // end of for (int p=1; p <= nbp; p++)
         ////
         //// **** Segments of intersection **** ////
@@ -1573,13 +1579,15 @@ BRepCheck_Status BRepCheck_Wire::SelfIntersect(const TopoDS_Face& F,
               aPCR1            = Tr1.PositionOnCurve();
               aPCR2            = Tr2.PositionOnCurve();
               //
-              if (aPCR1 != IntRes2d_Position::IntRes2d_Middle && aPCR2 != IntRes2d_Position::IntRes2d_Middle)
+              if (aPCR1 != IntRes2d_Position::IntRes2d_Middle
+                  && aPCR2 != IntRes2d_Position::IntRes2d_Middle)
               {
                 GeomAbs_CurveType aCT1, aCT2;
                 // ZZ
                 aCT1 = C1.GetType();
                 aCT2 = C2.GetType();
-                if (aCT1 == GeomAbs_CurveType::GeomAbs_Line && aCT2 == GeomAbs_CurveType::GeomAbs_Line)
+                if (aCT1 == GeomAbs_CurveType::GeomAbs_Line
+                    && aCT2 == GeomAbs_CurveType::GeomAbs_Line)
                 {
                   // check for the two lines coincidence
                   double   aPAR_T, aT11, aT12, aT21, aT22, aT1m, aT2m;
@@ -1620,7 +1628,8 @@ BRepCheck_Status BRepCheck_Wire::SelfIntersect(const TopoDS_Face& F,
                       }
                     } // if (aT2m>aT21 && aT2m<aT22) {
                   } // if (aD2<aTol2) {
-                } // if (aCT1==GeomAbs_CurveType::GeomAbs_Line && aCT2==GeomAbs_CurveType::GeomAbs_Line) {
+                } // if (aCT1==GeomAbs_CurveType::GeomAbs_Line &&
+                  // aCT2==GeomAbs_CurveType::GeomAbs_Line) {
                 // ZZ
                 localok = true;
                 break;

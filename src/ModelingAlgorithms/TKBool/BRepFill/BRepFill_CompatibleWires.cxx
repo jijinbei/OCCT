@@ -960,7 +960,7 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
   for (i = 1; i <= NbSects; i++)
   {
     occ::handle<BRepCheck_Wire> Checker = new BRepCheck_Wire(TopoDS::Wire(myWork(i)));
-    allClosed                           = (allClosed && (Checker->Closed() == BRepCheck_Status::BRepCheck_NoError));
+    allClosed = (allClosed && (Checker->Closed() == BRepCheck_Status::BRepCheck_NoError));
     // allClosed = (allClosed && myWork(i).Closed());
   }
   if (!allClosed)
@@ -1302,7 +1302,8 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
     } // end of for(; itW.More(); itW.Next())
     if (Esol.IsNull())
     {
-      myStatus = BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_ProfilesInconsistent;
+      myStatus =
+        BRepFill_ThruSectionErrorStatus::BRepFill_ThruSectionErrorStatus_ProfilesInconsistent;
       return;
     }
     MW.Add(Esol);

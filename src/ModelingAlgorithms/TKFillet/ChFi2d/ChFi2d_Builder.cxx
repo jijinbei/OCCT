@@ -253,8 +253,10 @@ TopoDS_Edge ChFi2d_Builder::AddFillet(const TopoDS_Vertex& V, const double Radiu
   } //  if (!IsLineOrCircle ...
 
   ComputeFillet(V, adjEdge1, adjEdge2, Radius, adjEdge1Mod, adjEdge2Mod, fillet);
-  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone || status == ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
-      || status == ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated || status == ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
+  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone
+      || status == ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
+      || status == ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated
+      || status == ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
   {
     BuildNewWire(adjEdge1, adjEdge2, adjEdge1Mod, fillet, adjEdge2Mod);
     basisEdge1 = BasisEdge(adjEdge1);
@@ -516,7 +518,8 @@ void ChFi2d_Builder::BuildNewWire(const TopoDS_Edge& OldE1,
     {
       if (theEdge == OldE1)
       {
-        if (status != ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
+        if (status != ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
+            && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
         {
           B.Add(newWire, E1);
         }
@@ -528,7 +531,8 @@ void ChFi2d_Builder::BuildNewWire(const TopoDS_Edge& OldE1,
       } // if (theEdge == ...
       else
       {
-        if (status != ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
+        if (status != ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated
+            && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
         {
           B.Add(newWire, E2);
         }
@@ -644,7 +648,8 @@ void ChFi2d_Builder::UpDateHistory(const TopoDS_Edge& E1,
   }
 
   history.UnBind(E1);
-  if (status != ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
+  if (status != ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
+      && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
   {
     if (!E1.IsSame(TrimE1))
     {
@@ -652,7 +657,8 @@ void ChFi2d_Builder::UpDateHistory(const TopoDS_Edge& E1,
     }
   }
   history.UnBind(E2);
-  if (status != ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
+  if (status != ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated
+      && status != ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
   {
     if (!E2.IsSame(TrimE2))
     {

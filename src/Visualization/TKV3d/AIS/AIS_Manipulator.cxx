@@ -1006,9 +1006,12 @@ void AIS_Manipulator::Transform(const gp_Trsf& theTrsf)
     }
   }
 
-  if ((myCurrentMode == AIS_ManipulatorMode::AIS_MM_Translation && myBehaviorOnTransform.FollowTranslation)
-      || (myCurrentMode == AIS_ManipulatorMode::AIS_MM_Rotation && myBehaviorOnTransform.FollowRotation)
-      || (myCurrentMode == AIS_ManipulatorMode::AIS_MM_TranslationPlane && myBehaviorOnTransform.FollowDragging))
+  if ((myCurrentMode == AIS_ManipulatorMode::AIS_MM_Translation
+       && myBehaviorOnTransform.FollowTranslation)
+      || (myCurrentMode == AIS_ManipulatorMode::AIS_MM_Rotation
+          && myBehaviorOnTransform.FollowRotation)
+      || (myCurrentMode == AIS_ManipulatorMode::AIS_MM_TranslationPlane
+          && myBehaviorOnTransform.FollowDragging))
   {
     gp_Pnt aPos  = myStartPosition.Location().Transformed(theTrsf);
     gp_Dir aVDir = myStartPosition.Direction().Transformed(theTrsf);
@@ -1317,7 +1320,8 @@ void AIS_Manipulator::HilightSelected(
     return;
   }
 
-  if (anOwner->Mode() == AIS_ManipulatorMode::AIS_MM_TranslationPlane && mySkinMode == ManipulatorSkin_Shaded)
+  if (anOwner->Mode() == AIS_ManipulatorMode::AIS_MM_TranslationPlane
+      && mySkinMode == ManipulatorSkin_Shaded)
   {
     myDraggerHighlight->SetColor(myAxes[anOwner->Index()].Color());
     aGroup->SetGroupPrimitivesAspect(myDraggerHighlight->Aspect());
@@ -1351,7 +1355,8 @@ void AIS_Manipulator::HilightOwnerWithColor(const occ::handle<PrsMgr_Presentatio
 
   aPresentation->CStructure()->ViewAffinity = myViewAffinity;
 
-  if (anOwner->Mode() == AIS_ManipulatorMode::AIS_MM_TranslationPlane && mySkinMode == ManipulatorSkin_Shaded)
+  if (anOwner->Mode() == AIS_ManipulatorMode::AIS_MM_TranslationPlane
+      && mySkinMode == ManipulatorSkin_Shaded)
   {
     occ::handle<Prs3d_Drawer> aStyle = new Prs3d_Drawer();
     aStyle->SetColor(myAxes[anOwner->Index()].Color());
@@ -1439,7 +1444,7 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
           continue;
         }
         const Axis& anAxis = myAxes[anIt];
-        anOwner            = new AIS_ManipulatorOwner(this, anIt, AIS_ManipulatorMode::AIS_MM_Translation, 9);
+        anOwner = new AIS_ManipulatorOwner(this, anIt, AIS_ManipulatorMode::AIS_MM_Translation, 9);
 
         if (mySkinMode == ManipulatorSkin_Shaded)
         {
@@ -1472,7 +1477,7 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
           continue;
         }
         const Axis& anAxis = myAxes[anIt];
-        anOwner            = new AIS_ManipulatorOwner(this, anIt, AIS_ManipulatorMode::AIS_MM_Rotation, 9);
+        anOwner = new AIS_ManipulatorOwner(this, anIt, AIS_ManipulatorMode::AIS_MM_Rotation, 9);
 
         if (mySkinMode == ManipulatorSkin_Shaded)
         {
@@ -1533,7 +1538,8 @@ void AIS_Manipulator::ComputeSelection(const occ::handle<SelectMgr_Selection>& t
         {
           continue;
         }
-        anOwner = new AIS_ManipulatorOwner(this, anIt, AIS_ManipulatorMode::AIS_MM_TranslationPlane, 9);
+        anOwner =
+          new AIS_ManipulatorOwner(this, anIt, AIS_ManipulatorMode::AIS_MM_TranslationPlane, 9);
 
         if (mySkinMode == ManipulatorSkin_Shaded)
         {

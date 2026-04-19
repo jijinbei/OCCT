@@ -100,8 +100,9 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
 
   // Own fields of ActuatedKinematicPair
 
-  StepKinematics_ActuatedDirection aTX   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
-  bool                             hasTX = true;
+  StepKinematics_ActuatedDirection aTX =
+    StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
+  bool hasTX = true;
   if (theData->IsParamDefined(theNum, 7))
   {
     if (theData->ParamType(theNum, 7) == Interface_ParamType::Interface_ParamEnum)
@@ -126,8 +127,9 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
     hasTX = false;
   }
 
-  StepKinematics_ActuatedDirection aTY   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
-  bool                             hasTY = true;
+  StepKinematics_ActuatedDirection aTY =
+    StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
+  bool hasTY = true;
   if (theData->IsParamDefined(theNum, 8))
   {
     if (theData->ParamType(theNum, 8) == Interface_ParamType::Interface_ParamEnum)
@@ -152,8 +154,9 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
     hasTY = false;
   }
 
-  StepKinematics_ActuatedDirection aTZ   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
-  bool                             hasTZ = true;
+  StepKinematics_ActuatedDirection aTZ =
+    StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
+  bool hasTZ = true;
   if (theData->IsParamDefined(theNum, 9))
   {
     if (theData->ParamType(theNum, 9) == Interface_ParamType::Interface_ParamEnum)
@@ -178,8 +181,9 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
     hasTZ = false;
   }
 
-  StepKinematics_ActuatedDirection aRX   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
-  bool                             hasRX = true;
+  StepKinematics_ActuatedDirection aRX =
+    StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
+  bool hasRX = true;
   if (theData->IsParamDefined(theNum, 10))
   {
     if (theData->ParamType(theNum, 10) == Interface_ParamType::Interface_ParamEnum)
@@ -204,8 +208,9 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
     hasRX = false;
   }
 
-  StepKinematics_ActuatedDirection aRY   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
-  bool                             hasRY = true;
+  StepKinematics_ActuatedDirection aRY =
+    StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
+  bool hasRY = true;
   if (theData->IsParamDefined(theNum, 11))
   {
     if (theData->ParamType(theNum, 11) == Interface_ParamType::Interface_ParamEnum)
@@ -230,8 +235,9 @@ void RWStepKinematics_RWActuatedKinematicPair::ReadStep(
     hasRY = false;
   }
 
-  StepKinematics_ActuatedDirection aRZ   = StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
-  bool                             hasRZ = true;
+  StepKinematics_ActuatedDirection aRZ =
+    StepKinematics_ActuatedDirection::StepKinematics_adNotActuated;
+  bool hasRZ = true;
   if (theData->IsParamDefined(theNum, 12))
   {
     if (theData->ParamType(theNum, 12) == Interface_ParamType::Interface_ParamEnum)

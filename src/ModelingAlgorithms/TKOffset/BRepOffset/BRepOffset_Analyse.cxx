@@ -94,7 +94,8 @@ static void EdgeAnalyse(const TopoDS_Edge&                     E,
   BRepAdaptor_Surface aBAsurf2(F2, false);
   GeomAbs_SurfaceType aSurfType2 = aBAsurf2.GetType();
 
-  bool isTwoPlanes = (aSurfType1 == GeomAbs_SurfaceType::GeomAbs_Plane && aSurfType2 == GeomAbs_SurfaceType::GeomAbs_Plane);
+  bool isTwoPlanes = (aSurfType1 == GeomAbs_SurfaceType::GeomAbs_Plane
+                      && aSurfType2 == GeomAbs_SurfaceType::GeomAbs_Plane);
 
   ChFiDS_TypeOfConcavity ConnectType = ChFiDS_TypeOfConcavity::ChFiDS_Other;
 
@@ -107,9 +108,10 @@ static void EdgeAnalyse(const TopoDS_Edge&                     E,
   }
   else
   {
-    bool isTwoSplines =
-      (aSurfType1 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface || aSurfType1 == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
-      && (aSurfType2 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface || aSurfType2 == GeomAbs_SurfaceType::GeomAbs_BezierSurface);
+    bool isTwoSplines = (aSurfType1 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface
+                         || aSurfType1 == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
+                        && (aSurfType2 == GeomAbs_SurfaceType::GeomAbs_BSplineSurface
+                            || aSurfType2 == GeomAbs_SurfaceType::GeomAbs_BezierSurface);
     bool isMixedConcavity = false;
     if (isTwoSplines)
     {

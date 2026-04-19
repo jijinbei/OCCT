@@ -36,9 +36,10 @@ class Vrml_Cylinder
 public:
   DEFINE_STANDARD_ALLOC
 
-  Standard_EXPORT Vrml_Cylinder(const Vrml_CylinderParts aParts  = Vrml_CylinderParts::Vrml_CylinderALL,
-                                const double             aRadius = 1,
-                                const double             aHeight = 2);
+  Standard_EXPORT Vrml_Cylinder(
+    const Vrml_CylinderParts aParts  = Vrml_CylinderParts::Vrml_CylinderALL,
+    const double             aRadius = 1,
+    const double             aHeight = 2);
 
   Standard_EXPORT void SetParts(const Vrml_CylinderParts aParts);
 

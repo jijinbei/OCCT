@@ -28,7 +28,7 @@ Prs3d_ShadingAspect::Prs3d_ShadingAspect()
 {
   const Graphic3d_MaterialAspect aMat(Graphic3d_NameOfMaterial_Brass);
   const Quantity_Color           aColor = aMat.AmbientColor();
-  myAspect                              = new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
+  myAspect = new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
                                             aColor,
                                             aColor,
                                             Aspect_TypeOfLine::Aspect_TOL_SOLID,
@@ -47,13 +47,15 @@ void Prs3d_ShadingAspect::SetColor(const Quantity_Color&          theColor,
     myAspect->SetDistinguishOn();
   }
 
-  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_FRONT_SIDE || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
+  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_FRONT_SIDE
+      || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
   {
     myAspect->ChangeFrontMaterial().SetColor(theColor);
     myAspect->SetInteriorColor(theColor);
   }
 
-  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
+  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE
+      || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
   {
     myAspect->ChangeBackMaterial().SetColor(theColor);
     myAspect->SetBackInteriorColor(theColor);
@@ -69,11 +71,13 @@ const Quantity_Color& Prs3d_ShadingAspect::Color(const Aspect_TypeOfFacingModel 
     default:
     case Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE:
     case Aspect_TypeOfFacingModel::Aspect_TOFM_FRONT_SIDE:
-      return myAspect->FrontMaterial().MaterialType() == Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT
+      return myAspect->FrontMaterial().MaterialType()
+                 == Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT
                ? myAspect->InteriorColor()
                : myAspect->FrontMaterial().Color();
     case Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE:
-      return myAspect->BackMaterial().MaterialType() == Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT
+      return myAspect->BackMaterial().MaterialType()
+                 == Graphic3d_TypeOfMaterial::Graphic3d_MATERIAL_ASPECT
                ? myAspect->BackInteriorColor()
                : myAspect->BackMaterial().Color();
   }
@@ -88,12 +92,14 @@ void Prs3d_ShadingAspect::SetMaterial(const Graphic3d_MaterialAspect& theMateria
   {
     myAspect->SetDistinguishOn();
   }
-  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_FRONT_SIDE || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
+  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_FRONT_SIDE
+      || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
   {
     myAspect->SetFrontMaterial(theMaterial);
   }
 
-  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
+  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE
+      || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
   {
     myAspect->SetBackMaterial(theMaterial);
   }
@@ -125,14 +131,16 @@ void Prs3d_ShadingAspect::SetTransparency(const double                   theValu
     myAspect->SetDistinguishOn();
   }
 
-  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_FRONT_SIDE || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
+  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_FRONT_SIDE
+      || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
   {
     myAspect->ChangeFrontMaterial().SetTransparency(float(theValue));
     myAspect->SetInteriorColor(
       Quantity_ColorRGBA(myAspect->InteriorColor(), 1.0f - float(theValue)));
   }
 
-  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
+  if (theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BACK_SIDE
+      || theModel == Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
   {
     myAspect->ChangeBackMaterial().SetTransparency(float(theValue));
     myAspect->SetBackInteriorColor(

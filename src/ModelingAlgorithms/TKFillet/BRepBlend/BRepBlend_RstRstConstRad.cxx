@@ -577,7 +577,8 @@ void BRepBlend_RstRstConstRad::Section(const double Param,
 
 bool BRepBlend_RstRstConstRad::IsRational() const
 {
-  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational
+          || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================

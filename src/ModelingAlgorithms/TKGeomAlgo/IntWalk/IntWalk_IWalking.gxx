@@ -1446,7 +1446,8 @@ void IntWalk_IWalking::ComputeOpenLine(const NCollection_Sequence<double>& Umult
   occ::handle<IntWalk_TheIWLine> CurrentLine; // line under construction
   bool                           Tgtend = false;
 
-  IntWalk_StatusDeflection aStatus = IntWalk_StatusDeflection::IntWalk_OK, StatusPrecedent = IntWalk_StatusDeflection::IntWalk_OK;
+  IntWalk_StatusDeflection aStatus         = IntWalk_StatusDeflection::IntWalk_OK,
+                           StatusPrecedent = IntWalk_StatusDeflection::IntWalk_OK;
 
   int NbDivision = 0;
   // number of divisions of step for each section
@@ -2671,7 +2672,8 @@ IntWalk_StatusDeflection IntWalk_IWalking::TestDeflection(
   const double Norme = Corde.SquareMagnitude();
 
   if ((Norme <= 4.0 * Precision::SquareConfusion())
-      && ((Duv <= Precision::SquarePConfusion()) || (StatusPrecedent != IntWalk_StatusDeflection::IntWalk_OK)))
+      && ((Duv <= Precision::SquarePConfusion())
+          || (StatusPrecedent != IntWalk_StatusDeflection::IntWalk_OK)))
   { // the square is already taken in the constructor
     aStatus = IntWalk_StatusDeflection::IntWalk_PointConfondu;
     if (StatusPrecedent == IntWalk_StatusDeflection::IntWalk_PasTropGrand)
@@ -2726,7 +2728,7 @@ IntWalk_StatusDeflection IntWalk_IWalking::TestDeflection(
 
   if (Cosi < 0 && aStatus == IntWalk_StatusDeflection::IntWalk_PointConfondu)
     return IntWalk_StatusDeflection::IntWalk_ArretSurPointPrecedent; // leave as step back
-                                           // with confused point
+                                                                     // with confused point
 
   if (sp.IsTangent())
     return IntWalk_StatusDeflection::IntWalk_ArretSurPoint;

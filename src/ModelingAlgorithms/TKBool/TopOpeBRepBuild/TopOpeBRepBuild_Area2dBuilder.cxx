@@ -78,7 +78,8 @@ void TopOpeBRepBuild_Area2dBuilder::InitAreaBuilder(TopOpeBRepBuild_LoopSet&    
         NCollection_List<occ::handle<TopOpeBRepBuild_Loop>>& aArea = AreaIter.ChangeValue();
         if (aArea.IsEmpty())
           continue;
-        state = CompareLoopWithListOfLoop(LC, L, aArea, TopOpeBRepBuild_LoopEnum::TopOpeBRepBuild_BLOCK);
+        state =
+          CompareLoopWithListOfLoop(LC, L, aArea, TopOpeBRepBuild_LoopEnum::TopOpeBRepBuild_BLOCK);
         if (state == TopAbs_UNKNOWN)
           Atomize(state, TopAbs_IN);
         Loopinside = (state == TopAbs_IN);
@@ -117,7 +118,10 @@ void TopOpeBRepBuild_Area2dBuilder::InitAreaBuilder(TopOpeBRepBuild_LoopSet&    
         NCollection_List<occ::handle<TopOpeBRepBuild_Loop>>& aArea = AreaIter.ChangeValue();
         if (aArea.IsEmpty())
           continue;
-        state = CompareLoopWithListOfLoop(LC, L, aArea, TopOpeBRepBuild_LoopEnum::TopOpeBRepBuild_ANYLOOP);
+        state = CompareLoopWithListOfLoop(LC,
+                                          L,
+                                          aArea,
+                                          TopOpeBRepBuild_LoopEnum::TopOpeBRepBuild_ANYLOOP);
         if (state == TopAbs_UNKNOWN)
           Atomize(state, TopAbs_IN);
         Loopinside = (state == TopAbs_IN);

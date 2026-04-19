@@ -317,8 +317,9 @@ occ::handle<Draw_Drawable3D> DDataStd_DrawDriver::DrawableConstraint(
     if (!A->GetValue().IsNull())
     {
       double val = A->GetValue()->Get();
-      Standard_DISABLE_DEPRECATION_WARNINGS if (A->GetValue()->GetDimension() == TDataStd_RealEnum::TDataStd_ANGULAR)
-        val = (180. * val) / M_PI;
+      Standard_DISABLE_DEPRECATION_WARNINGS if (A->GetValue()->GetDimension()
+                                                == TDataStd_RealEnum::TDataStd_ANGULAR) val =
+        (180. * val) / M_PI;
       Standard_ENABLE_DEPRECATION_WARNINGS D->SetValue(val);
     }
     // unverified constraints are red (default is white)

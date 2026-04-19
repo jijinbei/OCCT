@@ -112,7 +112,8 @@ void IGESAppli_ToolReferenceDesignator::OwnCheck(
 {
   if (ent->SubordinateStatus() != 0)
     // the level is ignored if this property is subordinate
-    if (ent->DefLevel() != IGESData_DefList::IGESData_DefOne && ent->DefLevel() != IGESData_DefList::IGESData_DefSeveral)
+    if (ent->DefLevel() != IGESData_DefList::IGESData_DefOne
+        && ent->DefLevel() != IGESData_DefList::IGESData_DefSeveral)
       ach->AddFail("Level type: Not value/reference");
   if (ent->NbPropertyValues() != 1)
     ach->AddFail("Number of Property Values != 1");

@@ -44,7 +44,10 @@ public:
   int Signature() const override { return 6; }
 
   //! Indicates that the type of Interactive Object is a datum.
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Datum; }
+  AIS_KindOfInteractive Type() const override
+  {
+    return AIS_KindOfInteractive::AIS_KindOfInteractive_Datum;
+  }
 
   //! Returns the circle component defined in SetCircle.
   const occ::handle<Geom_Circle>& Circle() const { return myComponent; }

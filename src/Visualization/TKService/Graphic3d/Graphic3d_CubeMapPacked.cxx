@@ -99,7 +99,8 @@ occ::handle<Image_PixMap> Graphic3d_CubeMapPacked::Value(
       if (!myIsTopDown)
       {
         myPixMap->SetTopDown(true);
-        anOrder.Swap(Graphic3d_CubeMapSide::Graphic3d_CMS_POS_Y, Graphic3d_CubeMapSide::Graphic3d_CMS_NEG_Y);
+        anOrder.Swap(Graphic3d_CubeMapSide::Graphic3d_CMS_POS_Y,
+                     Graphic3d_CubeMapSide::Graphic3d_CMS_NEG_Y);
       }
 
       unsigned int aTileIndexX = anOrder[myCurrentSide] % myTileNumberX;

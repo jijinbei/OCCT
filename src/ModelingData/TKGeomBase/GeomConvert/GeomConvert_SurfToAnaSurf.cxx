@@ -137,26 +137,26 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::TryCylinerCone(
     midisocirc = occ::down_cast<Geom_Circle>(theUmidiso);
     isoline    = occ::down_cast<Geom_Line>(theVmidiso)->Lin().Direction();
   }
-  firstisocirc =
-    occ::down_cast<Geom_Circle>(GeomConvert_CurveToAnaCurve::ComputeCurve(firstiso,
-                                                                          theToler,
-                                                                          param1,
-                                                                          param2,
-                                                                          cf1,
-                                                                          cl1,
-                                                                          aGap1,
-                                                                          GeomConvert_ConvType::GeomConvert_Target,
-                                                                          GeomAbs_CurveType::GeomAbs_Circle));
-  lastisocirc =
-    occ::down_cast<Geom_Circle>(GeomConvert_CurveToAnaCurve::ComputeCurve(lastiso,
-                                                                          theToler,
-                                                                          param1,
-                                                                          param2,
-                                                                          cf2,
-                                                                          cl2,
-                                                                          aGap2,
-                                                                          GeomConvert_ConvType::GeomConvert_Target,
-                                                                          GeomAbs_CurveType::GeomAbs_Circle));
+  firstisocirc = occ::down_cast<Geom_Circle>(
+    GeomConvert_CurveToAnaCurve::ComputeCurve(firstiso,
+                                              theToler,
+                                              param1,
+                                              param2,
+                                              cf1,
+                                              cl1,
+                                              aGap1,
+                                              GeomConvert_ConvType::GeomConvert_Target,
+                                              GeomAbs_CurveType::GeomAbs_Circle));
+  lastisocirc = occ::down_cast<Geom_Circle>(
+    GeomConvert_CurveToAnaCurve::ComputeCurve(lastiso,
+                                              theToler,
+                                              param1,
+                                              param2,
+                                              cf2,
+                                              cl2,
+                                              aGap2,
+                                              GeomConvert_ConvType::GeomConvert_Target,
+                                              GeomAbs_CurveType::GeomAbs_Circle));
   if (!firstisocirc.IsNull() || !lastisocirc.IsNull())
   {
     double R1, R2, R3;
@@ -525,24 +525,26 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::TryTorusSphere(
     IsoCrv2 = theSurf->UIso(Param1 + ((Param2 - Param1) * 2. / 3));
   }
 
-  occ::handle<Geom_Curve> Crv1 = GeomConvert_CurveToAnaCurve::ComputeCurve(IsoCrv1,
-                                                                           toler,
-                                                                           aParam1ToCrv,
-                                                                           aParam2ToCrv,
-                                                                           cf,
-                                                                           cl,
-                                                                           aGap1,
-                                                                           GeomConvert_ConvType::GeomConvert_Target,
-                                                                           GeomAbs_CurveType::GeomAbs_Circle);
-  occ::handle<Geom_Curve> Crv2 = GeomConvert_CurveToAnaCurve::ComputeCurve(IsoCrv2,
-                                                                           toler,
-                                                                           aParam1ToCrv,
-                                                                           aParam2ToCrv,
-                                                                           cf,
-                                                                           cl,
-                                                                           aGap2,
-                                                                           GeomConvert_ConvType::GeomConvert_Target,
-                                                                           GeomAbs_CurveType::GeomAbs_Circle);
+  occ::handle<Geom_Curve> Crv1 =
+    GeomConvert_CurveToAnaCurve::ComputeCurve(IsoCrv1,
+                                              toler,
+                                              aParam1ToCrv,
+                                              aParam2ToCrv,
+                                              cf,
+                                              cl,
+                                              aGap1,
+                                              GeomConvert_ConvType::GeomConvert_Target,
+                                              GeomAbs_CurveType::GeomAbs_Circle);
+  occ::handle<Geom_Curve> Crv2 =
+    GeomConvert_CurveToAnaCurve::ComputeCurve(IsoCrv2,
+                                              toler,
+                                              aParam1ToCrv,
+                                              aParam2ToCrv,
+                                              cf,
+                                              cl,
+                                              aGap2,
+                                              GeomConvert_ConvType::GeomConvert_Target,
+                                              GeomAbs_CurveType::GeomAbs_Circle);
   if (Crv1.IsNull() || Crv2.IsNull() || !Crv1->IsKind(STANDARD_TYPE(Geom_Circle))
       || !Crv2->IsKind(STANDARD_TYPE(Geom_Circle)))
     return newSurface;
@@ -864,7 +866,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
     newSurf[isurf] = new Geom_Plane(newPln);
     dd[isurf]      = ComputeGap(aTempS, U1, U2, V1, V2, newSurf[isurf]);
     if (myConvType == GeomConvert_ConvType::GeomConvert_Simplest
-        || (myConvType == GeomConvert_ConvType::GeomConvert_Target && myTarget == GeomAbs_SurfaceType::GeomAbs_Plane))
+        || (myConvType == GeomConvert_ConvType::GeomConvert_Target
+            && myTarget == GeomAbs_SurfaceType::GeomAbs_Plane))
     {
       myGap = dd[isurf];
       return newSurf[isurf];
@@ -872,7 +875,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
   }
   else
   {
-    if (myConvType == GeomConvert_ConvType::GeomConvert_Target && myTarget == GeomAbs_SurfaceType::GeomAbs_Plane)
+    if (myConvType == GeomConvert_ConvType::GeomConvert_Target
+        && myTarget == GeomAbs_SurfaceType::GeomAbs_Plane)
     {
       myGap = dd[isurf];
       return newSurf[isurf];
@@ -898,26 +902,28 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
 
   double                  cuf, cul, cvf, cvl, aGap1, aGap2;
   bool                    aLineIso = false;
-  occ::handle<Geom_Curve> umidiso  = GeomConvert_CurveToAnaCurve::ComputeCurve(UIso,
-                                                                              toler,
-                                                                              V1,
-                                                                              V2,
-                                                                              cuf,
-                                                                              cul,
-                                                                              aGap1,
-                                                                              GeomConvert_ConvType::GeomConvert_Simplest);
+  occ::handle<Geom_Curve> umidiso =
+    GeomConvert_CurveToAnaCurve::ComputeCurve(UIso,
+                                              toler,
+                                              V1,
+                                              V2,
+                                              cuf,
+                                              cul,
+                                              aGap1,
+                                              GeomConvert_ConvType::GeomConvert_Simplest);
   if (!umidiso.IsNull())
   {
     aLineIso = umidiso->IsKind(STANDARD_TYPE(Geom_Line));
   }
-  occ::handle<Geom_Curve> vmidiso = GeomConvert_CurveToAnaCurve::ComputeCurve(VIso,
-                                                                              toler,
-                                                                              U1,
-                                                                              U2,
-                                                                              cvf,
-                                                                              cvl,
-                                                                              aGap2,
-                                                                              GeomConvert_ConvType::GeomConvert_Simplest);
+  occ::handle<Geom_Curve> vmidiso =
+    GeomConvert_CurveToAnaCurve::ComputeCurve(VIso,
+                                              toler,
+                                              U1,
+                                              U2,
+                                              cvf,
+                                              cvl,
+                                              aGap2,
+                                              GeomConvert_ConvType::GeomConvert_Simplest);
   if (!vmidiso.IsNull() && !aLineIso)
   {
     aLineIso = vmidiso->IsKind(STANDARD_TYPE(Geom_Line));
@@ -931,7 +937,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
     {
       aToroidSphere = true;
       if (myConvType == GeomConvert_ConvType::GeomConvert_Target
-          && (myTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder || myTarget == GeomAbs_SurfaceType::GeomAbs_Cone))
+          && (myTarget == GeomAbs_SurfaceType::GeomAbs_Cylinder
+              || myTarget == GeomAbs_SurfaceType::GeomAbs_Cone))
       {
         isurf = 1;
         myGap = dd[isurf];
@@ -945,7 +952,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
       aCylinderConus = true;
       VCase          = true;
       if (myConvType == GeomConvert_ConvType::GeomConvert_Target
-          && (myTarget == GeomAbs_SurfaceType::GeomAbs_Sphere || myTarget == GeomAbs_SurfaceType::GeomAbs_Torus))
+          && (myTarget == GeomAbs_SurfaceType::GeomAbs_Sphere
+              || myTarget == GeomAbs_SurfaceType::GeomAbs_Torus))
       {
         isurf = 3;
         myGap = dd[isurf];
@@ -958,7 +966,8 @@ occ::handle<Geom_Surface> GeomConvert_SurfToAnaSurf::ConvertToAnalytical(const d
     {
       aCylinderConus = true;
       if (myConvType == GeomConvert_ConvType::GeomConvert_Target
-          && (myTarget == GeomAbs_SurfaceType::GeomAbs_Sphere || myTarget == GeomAbs_SurfaceType::GeomAbs_Torus))
+          && (myTarget == GeomAbs_SurfaceType::GeomAbs_Sphere
+              || myTarget == GeomAbs_SurfaceType::GeomAbs_Torus))
       {
         isurf = 3;
         myGap = dd[isurf];

@@ -41,7 +41,8 @@ AIS_Point::AIS_Point(const occ::handle<Geom_Point>& aComponent)
 {
   myHilightDrawer = new Prs3d_Drawer();
   myHilightDrawer->SetDisplayMode(-99);
-  myHilightDrawer->SetPointAspect(new Prs3d_PointAspect(Aspect_TypeOfMarker::Aspect_TOM_PLUS, Quantity_NOC_GRAY80, 3.0));
+  myHilightDrawer->SetPointAspect(
+    new Prs3d_PointAspect(Aspect_TypeOfMarker::Aspect_TOM_PLUS, Quantity_NOC_GRAY80, 3.0));
   myHilightDrawer->SetColor(Quantity_NOC_GRAY80);
   myHilightDrawer->SetZLayer(Graphic3d_ZLayerId_UNKNOWN);
   myDynHilightDrawer = new Prs3d_Drawer();

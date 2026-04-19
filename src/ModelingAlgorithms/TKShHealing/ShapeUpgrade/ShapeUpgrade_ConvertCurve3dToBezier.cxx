@@ -131,7 +131,8 @@ void ShapeUpgrade_ConvertCurve3dToBezier::Compute()
       else
       {
         occ::handle<Geom_TrimmedCurve> t3d = new Geom_TrimmedCurve(myCurve, First, Last);
-        aBSpline = GeomConvert::CurveToBSplineCurve(t3d, Convert_ParameterisationType::Convert_QuasiAngular);
+        aBSpline =
+          GeomConvert::CurveToBSplineCurve(t3d, Convert_ParameterisationType::Convert_QuasiAngular);
       }
       Shift = First - aBSpline->FirstParameter();
       First = aBSpline->FirstParameter();
@@ -139,7 +140,9 @@ void ShapeUpgrade_ConvertCurve3dToBezier::Compute()
     }
     else if (!myCurve->IsKind(STANDARD_TYPE(Geom_BSplineCurve)))
     {
-      aBSpline = GeomConvert::CurveToBSplineCurve(myCurve, Convert_ParameterisationType::Convert_QuasiAngular);
+      aBSpline =
+        GeomConvert::CurveToBSplineCurve(myCurve,
+                                         Convert_ParameterisationType::Convert_QuasiAngular);
     }
     else
       aBSpline = occ::down_cast<Geom_BSplineCurve>(myCurve);

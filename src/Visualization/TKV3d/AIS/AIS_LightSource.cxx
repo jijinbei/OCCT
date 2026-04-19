@@ -188,7 +188,8 @@ AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
 
   const Quantity_Color aColor = theLight->Color();
   myDrawer->SetPointAspect(new Prs3d_PointAspect(myMarkerTypes[1], aColor, 3.0f));
-  myDisabledMarkerAspect = new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_EMPTY, aColor, 3.0f);
+  myDisabledMarkerAspect =
+    new Graphic3d_AspectMarker3d(Aspect_TypeOfMarker::Aspect_TOM_EMPTY, aColor, 3.0f);
 
   Graphic3d_MaterialAspect aMat(Graphic3d_NameOfMaterial_UserDefined);
   aMat.SetColor(aColor);
@@ -212,8 +213,10 @@ AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
   myDrawer->SetTextAspect(new Prs3d_TextAspect());
   myDrawer->TextAspect()->Aspect()->SetDisplayType(Aspect_TypeOfDisplayText::Aspect_TODT_SHADOW);
   myDrawer->TextAspect()->Aspect()->SetColorSubTitle(Quantity_NOC_BLACK);
-  myDrawer->TextAspect()->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT);
-  myDrawer->TextAspect()->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOPFIRSTLINE);
+  myDrawer->TextAspect()->SetHorizontalJustification(
+    Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT);
+  myDrawer->TextAspect()->SetVerticalJustification(
+    Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOPFIRSTLINE);
 
   updateLightTransformPersistence();
 
@@ -227,8 +230,10 @@ AIS_LightSource::AIS_LightSource(const occ::handle<Graphic3d_CLight>& theLight)
   {
     myDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
     myDynHilightDrawer->SetZLayer(Graphic3d_ZLayerId_Topmost);
-    myDrawer->TextAspect()->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER);
-    myDrawer->TextAspect()->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOP);
+    myDrawer->TextAspect()->SetHorizontalJustification(
+      Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_CENTER);
+    myDrawer->TextAspect()->SetVerticalJustification(
+      Graphic3d_VerticalTextAlignment::Graphic3d_VTA_TOP);
   }
 }
 
@@ -302,8 +307,8 @@ void AIS_LightSource::updateLightAspects()
 
   myDisabledMarkerAspect->SetColor(aColor);
   myDisabledMarkerAspect->SetMarkerScale(myDrawer->PointAspect()->Aspect()->MarkerScale());
-  myDisabledMarkerAspect->SetMarkerType(myLightSource->IsEnabled() ? Aspect_TypeOfMarker::Aspect_TOM_EMPTY
-                                                                   : MarkerType(false));
+  myDisabledMarkerAspect->SetMarkerType(
+    myLightSource->IsEnabled() ? Aspect_TypeOfMarker::Aspect_TOM_EMPTY : MarkerType(false));
   myDisabledMarkerAspect->SetMarkerImage(MarkerImage(false));
 
   myDrawer->ShadingAspect()->SetColor(aColor);

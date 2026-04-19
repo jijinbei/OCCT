@@ -155,8 +155,12 @@ public:
       return bindProgramWithState(theCustomProgram, theShadingModel);
     }
 
-    int aBits =
-      getProgramBits(theTextures, theAlphaMode, Aspect_InteriorStyle::Aspect_IS_SOLID, theHasVertColor, false, false);
+    int aBits = getProgramBits(theTextures,
+                               theAlphaMode,
+                               Aspect_InteriorStyle::Aspect_IS_SOLID,
+                               theHasVertColor,
+                               false,
+                               false);
     if (theLineType != Aspect_TypeOfLine::Aspect_TOL_SOLID)
     {
       aBits |= Graphic3d_ShaderFlags_StippleLine;
@@ -600,7 +604,8 @@ protected:
                      bool                                  theEnableMeshEdges) const
   {
     int aBits = 0;
-    if (theAlphaMode == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask || theAlphaMode == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend)
+    if (theAlphaMode == Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask
+        || theAlphaMode == Graphic3d_AlphaMode::Graphic3d_AlphaMode_MaskBlend)
     {
       aBits |= Graphic3d_ShaderFlags_AlphaTest;
     }
@@ -637,7 +642,8 @@ protected:
     {
       aBits |= Graphic3d_ShaderFlags_WriteOit;
     }
-    else if (myOitState.ActiveMode() == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT)
+    else if (myOitState.ActiveMode()
+             == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT)
     {
       aBits |= Graphic3d_ShaderFlags_OitDepthPeeling;
     }

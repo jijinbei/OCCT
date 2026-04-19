@@ -99,7 +99,8 @@ static bool ToricRotule(const BRepAdaptor_Surface&        fac,
     return false;
   if (!sp1->IsConstant() || !sp2->IsConstant())
     return false;
-  if ((fac.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane) || (s1.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
+  if ((fac.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
+      || (s1.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane)
       || (s2.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane))
     return false;
   gp_Dir df  = fac.Plane().Position().Direction();
@@ -330,7 +331,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
   Stat1                 = st1->Spine()->Status(isfirst1);
   Stat2                 = st2->Spine()->Status(isfirst2);
   bool c1biseau         = (Stat1 == ChFiDS_State::ChFiDS_AllSame);
-  bool c1rotule         = (Stat1 == ChFiDS_State::ChFiDS_OnSame && Stat2 == ChFiDS_State::ChFiDS_OnSame);
+  bool c1rotule = (Stat1 == ChFiDS_State::ChFiDS_OnSame && Stat2 == ChFiDS_State::ChFiDS_OnSame);
 
   // It is checked if the fillets have a commonpoint on a common arc.
   // This edge is the pivot of the bevel or the knee.

@@ -305,8 +305,10 @@ void BRepFill_TrimEdgeTool::IntersectWith(const TopoDS_Edge&            Edge1,
   double TolInit            = 1.e-9;
   int    nn                 = 7;
 
-  if ((AC1.GetType() != GeomAbs_CurveType::GeomAbs_Circle && AC1.GetType() != GeomAbs_CurveType::GeomAbs_Line)
-      || (AC2.GetType() != GeomAbs_CurveType::GeomAbs_Circle && AC2.GetType() != GeomAbs_CurveType::GeomAbs_Line))
+  if ((AC1.GetType() != GeomAbs_CurveType::GeomAbs_Circle
+       && AC1.GetType() != GeomAbs_CurveType::GeomAbs_Line)
+      || (AC2.GetType() != GeomAbs_CurveType::GeomAbs_Circle
+          && AC2.GetType() != GeomAbs_CurveType::GeomAbs_Line))
   {
 
     TolInit = 1.e-8;
@@ -525,8 +527,8 @@ void BRepFill_TrimEdgeTool::IntersectWith(const TopoDS_Edge&            Edge1,
   // Now we define: if there are more than one point of intersection
   // is it Ok ?
   double init_fpar = RealFirst(), init_lpar = RealLast();
-  if (NbPoints > 1 && theJoinType == GeomAbs_JoinType::GeomAbs_Intersection && InitShape1.ShapeType() != TopAbs_VERTEX
-      && InitShape2.ShapeType() != TopAbs_VERTEX)
+  if (NbPoints > 1 && theJoinType == GeomAbs_JoinType::GeomAbs_Intersection
+      && InitShape1.ShapeType() != TopAbs_VERTEX && InitShape2.ShapeType() != TopAbs_VERTEX)
   {
     // definition of initial first and last parameters:
     // this is inverse procedure to extension of parameters

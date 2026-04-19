@@ -221,7 +221,8 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
     if (GetColorMode() && IsCTool)
     {
       // read colors
-      if (ent->DefColor() == IGESData_DefType::IGESData_DefValue || ent->DefColor() == IGESData_DefType::IGESData_DefReference)
+      if (ent->DefColor() == IGESData_DefType::IGESData_DefValue
+          || ent->DefColor() == IGESData_DefType::IGESData_DefReference)
       {
         // color is assigned
         // decode color and set to document

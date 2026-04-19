@@ -75,7 +75,8 @@ void RWStepDimTol_RWGeometricToleranceWithMaximumTolerance::ReadStep(
     int num2   = sub5;
     for (int i0 = 1; i0 <= nb0; i0++)
     {
-      StepDimTol_GeometricToleranceModifier anIt0 = StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement;
+      StepDimTol_GeometricToleranceModifier anIt0 =
+        StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement;
       if (data->ParamType(num2, i0) == Interface_ParamType::Interface_ParamEnum)
       {
         const char* text = data->ParamCValue(num2, i0);

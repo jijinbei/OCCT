@@ -28,8 +28,8 @@
 #include <TCollection_AsciiString.hxx>
 
 // forward declarations to avoid including of FreeType headers
-using FT_Face = struct FT_FaceRec_*;
-using FT_Vector = struct FT_Vector_;
+using FT_Face    = struct FT_FaceRec_*;
+using FT_Vector  = struct FT_Vector_;
 using FT_Outline = struct FT_Outline_;
 class Font_FTLibrary;
 
@@ -190,10 +190,11 @@ public:
   //! @param theParams      initialization parameters
   //! @param theStrictLevel search strict level for using aliases and fallback
   //! @return true on success
-  Standard_EXPORT bool FindAndInit(const TCollection_AsciiString& theFontName,
-                                   Font_FontAspect                theFontAspect,
-                                   const Font_FTFontParams&       theParams,
-                                   Font_StrictLevel theStrictLevel = Font_StrictLevel::Font_StrictLevel_Any);
+  Standard_EXPORT bool FindAndInit(
+    const TCollection_AsciiString& theFontName,
+    Font_FontAspect                theFontAspect,
+    const Font_FTFontParams&       theParams,
+    Font_StrictLevel               theStrictLevel = Font_StrictLevel::Font_StrictLevel_Any);
 
   //! Return flag to use fallback fonts in case if used font does not include symbols from specific
   //! Unicode subset; TRUE by default.

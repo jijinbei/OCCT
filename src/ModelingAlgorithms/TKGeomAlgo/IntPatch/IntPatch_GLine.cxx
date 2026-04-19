@@ -370,7 +370,8 @@ void IntPatch_GLine::AddVertex(const IntPatch_Point& Pnt)
     const double pf  = (fipt ? svtx.Value(indf).ParameterOnLine() : 0.0);
     const double pl  = (lapt ? svtx.Value(indl).ParameterOnLine() : 0.0);
     double       par = Pnt.ParameterOnLine();
-    if (ArcType() == IntPatch_IType::IntPatch_Circle || ArcType() == IntPatch_IType::IntPatch_Ellipse)
+    if (ArcType() == IntPatch_IType::IntPatch_Circle
+        || ArcType() == IntPatch_IType::IntPatch_Ellipse)
     {
       if (fipt && lapt)
       {
@@ -797,7 +798,8 @@ void IntPatch_GLine::ComputeVertexParameters(const double /*Tol*/)
               svtx.Remove(j);
               nbvtx--;
             } //	    else
-            else if (ArcType() == IntPatch_IType::IntPatch_Circle || ArcType() == IntPatch_IType::IntPatch_Ellipse) // eap
+            else if (ArcType() == IntPatch_IType::IntPatch_Circle
+                     || ArcType() == IntPatch_IType::IntPatch_Ellipse) // eap
             {
               //-- deux points de meme parametre qui ne peuvent etre confondus
               //-- On change les parametres d un des points si les points UV sont
@@ -872,7 +874,8 @@ void IntPatch_GLine::ComputeVertexParameters(const double /*Tol*/)
               };
 
               // eap
-              // if(ArcType()==IntPatch_IType::IntPatch_Circle || ArcType()==IntPatch_IType::IntPatch_Ellipse) {}
+              // if(ArcType()==IntPatch_IType::IntPatch_Circle ||
+              // ArcType()==IntPatch_IType::IntPatch_Ellipse) {}
               if (TestOn1)
               {
                 //// modified by jgv, 2.11.01 for BUC61033 ////

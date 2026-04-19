@@ -1881,10 +1881,10 @@ static void ChFi3d_MakeExtremities(occ::handle<ChFiDS_Stripe>& Stripe,
 #endif
     }
   }
-  const occ::handle<ChFiDS_SurfData>& SDfin   = Stripe->SetOfSurfData()->Sequence().Last();
-  const ChFiDS_CommonPoint&           cpfin1  = SDfin->VertexLastOnS1();
-  const ChFiDS_CommonPoint&           cpfin2  = SDfin->VertexLastOnS2();
-  bool                                freefin = sp->LastStatus() == ChFiDS_State::ChFiDS_FreeBoundary;
+  const occ::handle<ChFiDS_SurfData>& SDfin  = Stripe->SetOfSurfData()->Sequence().Last();
+  const ChFiDS_CommonPoint&           cpfin1 = SDfin->VertexLastOnS1();
+  const ChFiDS_CommonPoint&           cpfin2 = SDfin->VertexLastOnS2();
+  bool freefin = sp->LastStatus() == ChFiDS_State::ChFiDS_FreeBoundary;
   if (!freefin && cpfin1.IsOnArc() && cpfin2.IsOnArc())
   {
     freefin = (IsFree(cpfin1.Arc(), EFMap) && IsFree(cpfin2.Arc(), EFMap));

@@ -725,7 +725,8 @@ static void RefEdgeInter(
   //
   Geom2dAdaptor_Curve GAC1(pcurve1, f[1], l[1]);
   Geom2dAdaptor_Curve GAC2(pcurve2, f[2], l[2]);
-  if ((GAC1.GetType() == GeomAbs_CurveType::GeomAbs_Line) && (GAC2.GetType() == GeomAbs_CurveType::GeomAbs_Line))
+  if ((GAC1.GetType() == GeomAbs_CurveType::GeomAbs_Line)
+      && (GAC2.GetType() == GeomAbs_CurveType::GeomAbs_Line))
   {
     // Just quickly check if lines coincide
     double anAngle = std::abs(GAC1.Line().Direction().Angle(GAC2.Line().Direction()));
@@ -1071,9 +1072,11 @@ static bool ExtendPCurve(const occ::handle<Geom2d_Curve>& aPCurve,
   gp_Dir2d                              aDBnd;
   occ::handle<Geom2d_Line>              aLin;
   occ::handle<Geom2d_TrimmedCurve>      aSegment;
-  Geom2dConvert_CompCurveToBSplineCurve aCompCurve(aTrCurve, Convert_ParameterisationType::Convert_RationalC1);
-  constexpr double                      aTol   = Precision::Confusion();
-  double                                aDelta = std::max(a2Offset, 1.);
+  Geom2dConvert_CompCurveToBSplineCurve aCompCurve(
+    aTrCurve,
+    Convert_ParameterisationType::Convert_RationalC1);
+  constexpr double aTol   = Precision::Confusion();
+  double           aDelta = std::max(a2Offset, 1.);
 
   if (FirstPar > anEf - a2Offset)
   {
@@ -1492,9 +1495,11 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
       gp_Dir                              aDBnd;
       occ::handle<Geom_Line>              aLin;
       occ::handle<Geom_TrimmedCurve>      aSegment;
-      GeomConvert_CompCurveToBSplineCurve aCompCurve(aTrCurve, Convert_ParameterisationType::Convert_RationalC1);
-      constexpr double                    aTol   = Precision::Confusion();
-      double                              aDelta = std::max(a2Offset, 1.);
+      GeomConvert_CompCurveToBSplineCurve aCompCurve(
+        aTrCurve,
+        Convert_ParameterisationType::Convert_RationalC1);
+      constexpr double aTol   = Precision::Confusion();
+      double           aDelta = std::max(a2Offset, 1.);
 
       if (FirstPar > anEf - a2Offset)
       {

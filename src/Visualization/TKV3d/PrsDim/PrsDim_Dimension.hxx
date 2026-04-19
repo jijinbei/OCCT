@@ -297,7 +297,10 @@ public:
   PrsDim_KindOfDimension KindOfDimension() const { return myKindOfDimension; }
 
   //! @return the kind of interactive.
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Dimension; }
+  AIS_KindOfInteractive Type() const override
+  {
+    return AIS_KindOfInteractive::AIS_KindOfInteractive_Dimension;
+  }
 
   //! Returns true if the class of objects accepts the display mode theMode.
   //! The interactive context can have a default mode of representation for
@@ -477,8 +480,8 @@ protected:
   //! @param[out] theLabelPosition  the label position, contains bits that defines
   //! vertical and horizontal alignment. (for internal usage in count text position)
   //! @param[out] theIsArrowExternal  is the arrows external,
-  //! if arrow orientation in the dimension aspect is Prs3d_DimensionArrowOrientation::Prs3d_DAO_Fit, it fits arrow
-  //! orientation automatically.
+  //! if arrow orientation in the dimension aspect is
+  //! Prs3d_DimensionArrowOrientation::Prs3d_DAO_Fit, it fits arrow orientation automatically.
   Standard_EXPORT void FitTextAlignmentForLinear(
     const gp_Pnt&                                theFirstPoint,
     const gp_Pnt&                                theSecondPoint,
@@ -571,9 +574,9 @@ protected: //! @name Selection geometry
       gp_Dir Direction;
     };
 
-    using Curve = NCollection_Sequence<gp_Pnt>;
-    using HCurve = NCollection_Handle<Curve>;
-    using HArrow = NCollection_Handle<Arrow>;
+    using Curve       = NCollection_Sequence<gp_Pnt>;
+    using HCurve      = NCollection_Handle<Curve>;
+    using HArrow      = NCollection_Handle<Arrow>;
     using SeqOfCurves = NCollection_Sequence<HCurve>;
     using SeqOfArrows = NCollection_Sequence<HArrow>;
 

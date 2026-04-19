@@ -83,8 +83,11 @@ MoniTool_TypedValue::MoniTool_TypedValue(const char* const        name,
       theival(0),
       thehval(new TCollection_HAsciiString(""))
 {
-  if (type != MoniTool_ValueType::MoniTool_ValueInteger && type != MoniTool_ValueType::MoniTool_ValueReal && type != MoniTool_ValueType::MoniTool_ValueEnum
-      && type != MoniTool_ValueType::MoniTool_ValueText && type != MoniTool_ValueType::MoniTool_ValueIdent)
+  if (type != MoniTool_ValueType::MoniTool_ValueInteger
+      && type != MoniTool_ValueType::MoniTool_ValueReal
+      && type != MoniTool_ValueType::MoniTool_ValueEnum
+      && type != MoniTool_ValueType::MoniTool_ValueText
+      && type != MoniTool_ValueType::MoniTool_ValueIdent)
     throw Standard_ConstructionError("MoniTool_TypedValue : Type not supported");
   if (init[0] != '\0')
     if (Satisfies(new TCollection_HAsciiString(init)))
@@ -300,7 +303,8 @@ void MoniTool_TypedValue::PrintValue(Standard_OStream& S) const
     if (thetype == MoniTool_ValueType::MoniTool_ValueIdent)
       S << " (type) " << theoval->DynamicType()->Name();
     if (!thehval.IsNull())
-      S << (thetype == MoniTool_ValueType::MoniTool_ValueIdent ? " : " : "") << thehval->ToCString();
+      S << (thetype == MoniTool_ValueType::MoniTool_ValueIdent ? " : " : "")
+        << thehval->ToCString();
 
     if (HasInterpret())
     {

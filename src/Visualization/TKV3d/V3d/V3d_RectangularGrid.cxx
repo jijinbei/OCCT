@@ -294,9 +294,9 @@ void V3d_RectangularGrid::DefineLines()
 
 void V3d_RectangularGrid::DefinePoints()
 {
-  const double aXStep   = XStep();
-  const double aYStep   = YStep();
-  const bool   toUpdate = !myCurAreDefined || myCurDrawMode != Aspect_GridDrawMode::Aspect_GDM_Points
+  const double aXStep = XStep();
+  const double aYStep = YStep();
+  const bool toUpdate = !myCurAreDefined || myCurDrawMode != Aspect_GridDrawMode::Aspect_GDM_Points
                         || aXStep != myCurXStep || aYStep != myCurYStep;
   if (!toUpdate && !myToComputePrs)
   {

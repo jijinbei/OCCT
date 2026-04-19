@@ -451,7 +451,8 @@ public:
     {
       if (T2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Middle)
       {
-        if (T1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_In || T1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Out)
+        if (T1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_In
+            || T1.TransitionType() == IntRes2d_TypeTrans::IntRes2d_Out)
         {
           Set(i0, i1, IP.ParamOnFirst());
           Set(i1, i0, IP.ParamOnSecond());
@@ -784,8 +785,11 @@ void HLRBRep_Data::Update(const HLRAlgo_Projector& P)
     // not cut and simple surface
 
     if (!withOutL
-        && (iFaceType == GeomAbs_SurfaceType::GeomAbs_Plane || iFaceType == GeomAbs_SurfaceType::GeomAbs_Cylinder || iFaceType == GeomAbs_SurfaceType::GeomAbs_Cone
-            || iFaceType == GeomAbs_SurfaceType::GeomAbs_Sphere || iFaceType == GeomAbs_SurfaceType::GeomAbs_Torus))
+        && (iFaceType == GeomAbs_SurfaceType::GeomAbs_Plane
+            || iFaceType == GeomAbs_SurfaceType::GeomAbs_Cylinder
+            || iFaceType == GeomAbs_SurfaceType::GeomAbs_Cone
+            || iFaceType == GeomAbs_SurfaceType::GeomAbs_Sphere
+            || iFaceType == GeomAbs_SurfaceType::GeomAbs_Torus))
       fd.Simple(true);
     else
       fd.Simple(false);
@@ -2452,8 +2456,12 @@ bool HLRBRep_Data::SameVertex(const bool h1, const bool h2)
   if (SameV)
   {
     myIntersected = true; // compute the intersections
-    if ((myLEType == GeomAbs_CurveType::GeomAbs_Line || myLEType == GeomAbs_CurveType::GeomAbs_Circle || myLEType == GeomAbs_CurveType::GeomAbs_Ellipse)
-        && (myFEType == GeomAbs_CurveType::GeomAbs_Line || myFEType == GeomAbs_CurveType::GeomAbs_Circle || myFEType == GeomAbs_CurveType::GeomAbs_Ellipse))
+    if ((myLEType == GeomAbs_CurveType::GeomAbs_Line
+         || myLEType == GeomAbs_CurveType::GeomAbs_Circle
+         || myLEType == GeomAbs_CurveType::GeomAbs_Ellipse)
+        && (myFEType == GeomAbs_CurveType::GeomAbs_Line
+            || myFEType == GeomAbs_CurveType::GeomAbs_Circle
+            || myFEType == GeomAbs_CurveType::GeomAbs_Ellipse))
       myIntersected = false; // no other intersection
 
     bool otherCase = true;

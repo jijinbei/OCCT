@@ -241,7 +241,13 @@ void TopOpeBRep_FacesFiller::ProcessVPonclosingR(
     TopOpeBRepDS_Transition T = transAdd;
     T.Index(iOOFace);
     occ::handle<TopOpeBRepDS_Interference> EPI =
-      ::MakeEPVInterference(T, iOOFace, PVIndex, paredge, PVKind, TopOpeBRepDS_Kind::TopOpeBRepDS_FACE, isvertex);
+      ::MakeEPVInterference(T,
+                            iOOFace,
+                            PVIndex,
+                            paredge,
+                            PVKind,
+                            TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
+                            isvertex);
     myHDS->StoreInterference(EPI, edge);
   }
   if (hasOOedge)

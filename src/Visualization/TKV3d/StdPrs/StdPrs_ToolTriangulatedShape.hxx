@@ -34,10 +34,10 @@ public:
 
   //! Computes the absolute deflection value depending on the type of deflection in theDrawer:
   //! <ul>
-  //! <li><b>Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE</b>: the absolute deflection is computed using the relative
-  //! deviation coefficient from theDrawer and the shape's bounding box;</li>
-  //! <li><b>Aspect_TypeOfDeflection::Aspect_TOD_ABSOLUTE</b>: the maximal chordial deviation from theDrawer is
-  //! returned.</li>
+  //! <li><b>Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE</b>: the absolute deflection is computed
+  //! using the relative deviation coefficient from theDrawer and the shape's bounding box;</li>
+  //! <li><b>Aspect_TypeOfDeflection::Aspect_TOD_ABSOLUTE</b>: the maximal chordial deviation from
+  //! theDrawer is returned.</li>
   //! </ul>
   //! In case of the type of deflection in theDrawer computed relative deflection for shape is
   //! stored as absolute deflection. It is necessary to use it later on for sub-shapes. This

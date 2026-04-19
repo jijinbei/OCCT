@@ -131,7 +131,8 @@ void BRepMesh_MeshTool::CleanFrontierLinks()
   IMeshData::MapOfInteger               aTrianglesToErase;
   IMeshData::MapOfIntegerInteger        aLoopEdges(1, aAlloc);
 
-  Handle(IMeshData::MapOfInteger)   aFrontier = GetEdgesByType(BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
+  Handle(IMeshData::MapOfInteger) aFrontier =
+    GetEdgesByType(BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
   IMeshData::IteratorOfMapOfInteger aFrontierIt(*aFrontier);
   for (; aFrontierIt.More(); aFrontierIt.Next())
   {

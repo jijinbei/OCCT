@@ -185,7 +185,8 @@ public:
   //! Set type of presentation.
   Standard_EXPORT void SetTypeOfPresentation(const PrsMgr_TypeOfPresentation3d theType);
 
-  //! Return presentation display status; PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None by default.
+  //! Return presentation display status; PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None by
+  //! default.
   PrsMgr_DisplayStatus DisplayStatus() const { return myDisplayStatus; }
 
 public: //! @name presentation attributes
@@ -389,8 +390,8 @@ public: //! @name parent/children properties
 
 protected: //! @name interface methods
   //! Protected empty constructor.
-  Standard_EXPORT PrsMgr_PresentableObject(
-    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
+  Standard_EXPORT PrsMgr_PresentableObject(const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d =
+                                             PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
 
   //! Destructor.
   Standard_EXPORT ~PrsMgr_PresentableObject() override;
@@ -475,7 +476,8 @@ public: //! @name simplified presentation properties API
   //! change the current facing model apply on polygons for SetColor(), SetTransparency(),
   //! SetMaterial() methods default facing model is Aspect_TOFM_TWO_SIDE. This mean that attributes
   //! is applying both on the front and back face.
-  void SetCurrentFacingModel(const Aspect_TypeOfFacingModel theModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
+  void SetCurrentFacingModel(
+    const Aspect_TypeOfFacingModel theModel = Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE)
   {
     myCurrentFacingModel = theModel;
   }

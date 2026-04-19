@@ -430,7 +430,8 @@ bool TopOpeBRepTool_ShapeTool::SurfacesSameOriented(const BRepAdaptor_Surface& S
     double d = n1.Dot(n2);
     so       = (d > 0.);
   }
-  else if (ST1 == GeomAbs_SurfaceType::GeomAbs_Cylinder && ST2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
+  else if (ST1 == GeomAbs_SurfaceType::GeomAbs_Cylinder
+           && ST2 == GeomAbs_SurfaceType::GeomAbs_Cylinder)
   {
 
     // On peut projeter n'importe quel point.

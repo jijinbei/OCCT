@@ -47,7 +47,8 @@ AIS_Axis::AIS_Axis(const occ::handle<Geom_Line>& aComponent)
       myTypeOfAxis(AIS_TypeOfAxis::AIS_TOAX_Unknown),
       myIsXYZAxis(false)
 {
-  myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_DOTDASH, 1.));
+  myDrawer->SetLineAspect(
+    new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_DOTDASH, 1.));
   SetInfiniteState();
 
   gp_Dir thedir  = myComponent->Position().Direction();
@@ -94,7 +95,8 @@ AIS_Axis::AIS_Axis(const occ::handle<Geom_Axis1Placement>& anAxis)
       myTypeOfAxis(AIS_TypeOfAxis::AIS_TOAX_Unknown),
       myIsXYZAxis(false)
 {
-  myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_DOTDASH, 1.));
+  myDrawer->SetLineAspect(
+    new Prs3d_LineAspect(Quantity_NOC_RED, Aspect_TypeOfLine::Aspect_TOL_DOTDASH, 1.));
   SetInfiniteState();
 
   gp_Dir thedir  = myComponent->Position().Direction();

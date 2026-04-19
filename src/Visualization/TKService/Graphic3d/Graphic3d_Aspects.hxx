@@ -54,13 +54,14 @@ public:
     myShadingModel = theShadingModel;
   }
 
-  //! Returns the way how alpha value should be treated (Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto by default,
-  //! for backward compatibility).
+  //! Returns the way how alpha value should be treated
+  //! (Graphic3d_AlphaMode::Graphic3d_AlphaMode_BlendAuto by default, for backward compatibility).
   Graphic3d_AlphaMode AlphaMode() const { return myAlphaMode; }
 
-  //! Returns alpha cutoff threshold, for discarding fragments within Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask mode
-  //! (0.5 by default). If the alpha value is greater than or equal to this value then it is
-  //! rendered as fully opaque, otherwise, it is rendered as fully transparent.
+  //! Returns alpha cutoff threshold, for discarding fragments within
+  //! Graphic3d_AlphaMode::Graphic3d_AlphaMode_Mask mode (0.5 by default). If the alpha value is
+  //! greater than or equal to this value then it is rendered as fully opaque, otherwise, it is
+  //! rendered as fully transparent.
   float AlphaCutoff() const { return myAlphaCutoff; }
 
   //! Defines the way how alpha value should be treated.
@@ -251,8 +252,8 @@ public:
   //! Return custom stipple line pattern; 0xFFFF by default.
   uint16_t LinePattern() const { return myLinePattern; }
 
-  //! Modifies the stipple line pattern, and changes line type to Aspect_TypeOfLine::Aspect_TOL_USERDEFINED for
-  //! non-standard pattern.
+  //! Modifies the stipple line pattern, and changes line type to
+  //! Aspect_TypeOfLine::Aspect_TOL_USERDEFINED for non-standard pattern.
   void SetLinePattern(uint16_t thePattern)
   {
     myLineType    = DefaultLineTypeForPattern(thePattern);
@@ -341,9 +342,9 @@ public:
   float MarkerScale() const { return myMarkerScale; }
 
   //! Modifies the scale factor.
-  //! Marker type Aspect_TypeOfMarker::Aspect_TOM_POINT is not affected by the marker size scale factor.
-  //! It is always the smallest displayable dot.
-  //! Warning: Raises Standard_OutOfRange if the scale is a negative value.
+  //! Marker type Aspect_TypeOfMarker::Aspect_TOM_POINT is not affected by the marker size scale
+  //! factor. It is always the smallest displayable dot. Warning: Raises Standard_OutOfRange if the
+  //! scale is a negative value.
   void SetMarkerScale(const float theScale)
   {
     if (theScale <= 0.0f)
@@ -367,7 +368,8 @@ public:
   //! generated).
   bool IsMarkerSprite() const
   {
-    if (myMarkerType == Aspect_TypeOfMarker::Aspect_TOM_POINT || myMarkerType == Aspect_TypeOfMarker::Aspect_TOM_EMPTY)
+    if (myMarkerType == Aspect_TypeOfMarker::Aspect_TOM_POINT
+        || myMarkerType == Aspect_TypeOfMarker::Aspect_TOM_EMPTY)
     {
       return false;
     }
@@ -428,7 +430,10 @@ public:
   //! @name parameters specific to Mesh Edges (of triangulation primitive) rendering
 public:
   //! Returns true if mesh edges should be drawn (false by default).
-  bool ToDrawEdges() const { return myToDrawEdges && myLineType != Aspect_TypeOfLine::Aspect_TOL_EMPTY; }
+  bool ToDrawEdges() const
+  {
+    return myToDrawEdges && myLineType != Aspect_TypeOfLine::Aspect_TOL_EMPTY;
+  }
 
   //! Set if mesh edges should be drawn or not.
   void SetDrawEdges(bool theToDraw)
@@ -550,30 +555,41 @@ public:
   Standard_DEPRECATED("Deprecated method, FaceCulling() should be used instead")
   bool ToSuppressBackFaces() const
   {
-    return myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled
-           || myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
+    return myFaceCulling
+             == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled
+           || myFaceCulling
+                == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
   }
 
   Standard_DEPRECATED("Deprecated method, SetFaceCulling() should be used "
                       "instead")
   void SetSuppressBackFaces(bool theToSuppress)
   {
-    myFaceCulling = theToSuppress ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
-                                  : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
+    myFaceCulling =
+      theToSuppress ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
+                    : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
   }
 
   Standard_DEPRECATED("Deprecated method, FaceCulling() should be used instead")
   bool BackFace() const
   {
-    return myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled
-           || myFaceCulling == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
+    return myFaceCulling
+             == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled
+           || myFaceCulling
+                == Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
   }
 
   Standard_DEPRECATED("Deprecated method, SetFaceCulling() should be used instead")
-  void AllowBackFace() { myFaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided; }
+  void AllowBackFace()
+  {
+    myFaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided;
+  }
 
   Standard_DEPRECATED("Deprecated method, SetFaceCulling() should be used instead")
-  void SuppressBackFace() { myFaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto; }
+  void SuppressBackFace()
+  {
+    myFaceCulling = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
+  }
 
 protected:
   occ::handle<Graphic3d_ShaderProgram>  myProgram;

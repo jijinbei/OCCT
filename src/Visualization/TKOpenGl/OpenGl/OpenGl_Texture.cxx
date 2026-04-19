@@ -231,8 +231,9 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
   switch (theType)
   {
     case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D: {
-      aTarget = theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES ? GL_TEXTURE_1D
-                                                                             : GL_TEXTURE_2D;
+      aTarget = theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
+                  ? GL_TEXTURE_1D
+                  : GL_TEXTURE_2D;
       break;
     }
     case Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D:
@@ -252,7 +253,8 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
   const bool toPatchExisting =
     IsValid() && myTextFormat == theFormat.PixelFormat() && myTarget == aTarget
     && mySize.x() == theSizeXYZ.x()
-    && (mySize.y() == theSizeXYZ.y() || theType == Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D)
+    && (mySize.y() == theSizeXYZ.y()
+        || theType == Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D)
     && mySize.z() == theSizeXYZ.z();
   if (!Create(theCtx))
   {
@@ -278,7 +280,8 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
 
   // ES 2.0 does not support sized formats and format conversions - them detected from data type
   const GLint anIntFormat =
-    (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES || theCtx->IsGlGreaterEqual(3, 0))
+    (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
+     || theCtx->IsGlGreaterEqual(3, 0))
       ? theFormat.InternalFormat()
       : theFormat.PixelFormat();
 
@@ -321,7 +324,8 @@ bool OpenGl_Texture::Init(const occ::handle<OpenGl_Context>& theCtx,
     const NCollection_Vec2<int> aSizeP2(OpenGl_Context::GetPowerOfTwo(theSizeXYZ.x(), aMaxSize),
                                         OpenGl_Context::GetPowerOfTwo(theSizeXYZ.y(), aMaxSize));
     if (theSizeXYZ.x() != aSizeP2.x()
-        || (theType != Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D && theSizeXYZ.y() != aSizeP2.y()))
+        || (theType != Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_1D
+            && theSizeXYZ.y() != aSizeP2.y()))
     {
       theCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
                           GL_DEBUG_TYPE_PORTABILITY,
@@ -1308,7 +1312,8 @@ bool OpenGl_Texture::InitCubeMap(const occ::handle<OpenGl_Context>&    theCtx,
     return false;
   }
 
-  if (theToGenMipmap && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
+  if (theToGenMipmap
+      && theCtx->GraphicsLibrary() == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
       && !theCtx->IsGlGreaterEqual(3, 0)
       && (aFormat.PixelFormat() == GL_SRGB_EXT || aFormat.PixelFormat() == GL_SRGB_ALPHA_EXT))
   {
@@ -1332,7 +1337,8 @@ bool OpenGl_Texture::InitCubeMap(const occ::handle<OpenGl_Context>&    theCtx,
 
   // ES 2.0 does not support sized formats and format conversions - them detected from data type
   const GLint anIntFormat =
-    (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES || theCtx->IsGlGreaterEqual(3, 0))
+    (theCtx->GraphicsLibrary() != Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES
+     || theCtx->IsGlGreaterEqual(3, 0))
       ? aFormat.InternalFormat()
       : aFormat.PixelFormat();
 
@@ -1619,7 +1625,8 @@ bool OpenGl_Texture::ImageDump(Image_PixMap&                      theImage,
   const OpenGl_TextureFormat aFormat = OpenGl_TextureFormat::FindSizedFormat(theCtx, mySizedFormat);
   if (theCtx.IsNull() || !IsValid()
       || theCtx->GraphicsLibrary()
-           == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES // glGetTexImage() is unavailable in OpenGL ES
+           == Aspect_GraphicsLibrary::Aspect_GraphicsLibrary_OpenGLES // glGetTexImage() is
+                                                                      // unavailable in OpenGL ES
       || theLevel < 0 || !aFormat.IsValid() || aFormat.ImageFormat() == Image_Format_UNKNOWN
       || (myTarget == GL_TEXTURE_CUBE_MAP && (theCubeSide < 0 || theCubeSide > 5)))
   {

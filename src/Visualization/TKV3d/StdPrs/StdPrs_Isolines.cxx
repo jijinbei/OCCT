@@ -53,7 +53,7 @@ const gp_Lin2d isoV(const double theV)
   return gp_Lin2d(gp_Pnt2d(0.0, theV), gp::DX2d());
 }
 
-using VecOfSegments = NCollection_Shared<NCollection_Vector<StdPrs_Isolines::SegOnIso>>;
+using VecOfSegments      = NCollection_Shared<NCollection_Vector<StdPrs_Isolines::SegOnIso>>;
 using SeqOfVecOfSegments = NCollection_Sequence<occ::handle<VecOfSegments>>;
 
 //! Pack isoline segments into polylines.
@@ -600,7 +600,8 @@ void StdPrs_Isolines::addOnSurface(
         }
         else
         {
-          aCanonicalCurve.Load(isIsoU ? GeomAbs_IsoType::GeomAbs_IsoU : GeomAbs_IsoType::GeomAbs_IsoV,
+          aCanonicalCurve.Load(isIsoU ? GeomAbs_IsoType::GeomAbs_IsoU
+                                      : GeomAbs_IsoType::GeomAbs_IsoV,
                                anIsoParam,
                                aSegmentP1,
                                aSegmentP2);

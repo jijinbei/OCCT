@@ -206,7 +206,7 @@ static void GetLinePoint2d(const occ::handle<IntPatch_Line>& L,
   occ::handle<IntPatch_WLine> wlin = occ::down_cast<IntPatch_WLine>(L);
   occ::handle<IntPatch_RLine> rlin = occ::down_cast<IntPatch_RLine>(L);
   IntPatch_IType              typL = L->ArcType();
-  int Nbptlin                      = (typL == IntPatch_IType::IntPatch_Walking ? wlin->NbPnts() : rlin->NbPnts());
+  int Nbptlin = (typL == IntPatch_IType::IntPatch_Walking ? wlin->NbPnts() : rlin->NbPnts());
 
   double par   = std::trunc(param);
   int    Irang = int(par);
@@ -501,7 +501,9 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
   bool                                  SurfaceIsPeriodic   = false;
   bool                                  SurfaceIsBiPeriodic = false;
   GeomAbs_SurfaceType                   surfacetype         = (OnFirst ? TypeS1 : TypeS2);
-  if (surfacetype == GeomAbs_SurfaceType::GeomAbs_Cylinder || surfacetype == GeomAbs_SurfaceType::GeomAbs_Cone || surfacetype == GeomAbs_SurfaceType::GeomAbs_Torus
+  if (surfacetype == GeomAbs_SurfaceType::GeomAbs_Cylinder
+      || surfacetype == GeomAbs_SurfaceType::GeomAbs_Cone
+      || surfacetype == GeomAbs_SurfaceType::GeomAbs_Torus
       || surfacetype == GeomAbs_SurfaceType::GeomAbs_Sphere)
   {
     SurfaceIsPeriodic = true;

@@ -37,7 +37,8 @@ void RWStepVisual_RWViewVolume::ReadStep(const occ::handle<StepData_StepReaderDa
 
   // --- own field : projectionType ---
 
-  StepVisual_CentralOrParallel aProjectionType = StepVisual_CentralOrParallel::StepVisual_copCentral;
+  StepVisual_CentralOrParallel aProjectionType =
+    StepVisual_CentralOrParallel::StepVisual_copCentral;
   if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);

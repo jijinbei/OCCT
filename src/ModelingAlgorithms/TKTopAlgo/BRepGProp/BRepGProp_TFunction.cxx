@@ -86,15 +86,19 @@ bool BRepGProp_TFunction::Value(const double X, double& F)
     if (myIsByPoint)
       aCoeff /= 3.;
   }
-  else if (myValueType == GProp_ValueType::GProp_CenterMassX || myValueType == GProp_ValueType::GProp_CenterMassY
+  else if (myValueType == GProp_ValueType::GProp_CenterMassX
+           || myValueType == GProp_ValueType::GProp_CenterMassY
            || myValueType == GProp_ValueType::GProp_CenterMassZ)
   {
     if (myIsByPoint)
       aCoeff *= 0.25;
   }
-  else if (myValueType == GProp_ValueType::GProp_InertiaXX || myValueType == GProp_ValueType::GProp_InertiaYY
-           || myValueType == GProp_ValueType::GProp_InertiaZZ || myValueType == GProp_ValueType::GProp_InertiaXY
-           || myValueType == GProp_ValueType::GProp_InertiaXZ || myValueType == GProp_ValueType::GProp_InertiaYZ)
+  else if (myValueType == GProp_ValueType::GProp_InertiaXX
+           || myValueType == GProp_ValueType::GProp_InertiaYY
+           || myValueType == GProp_ValueType::GProp_InertiaZZ
+           || myValueType == GProp_ValueType::GProp_InertiaXY
+           || myValueType == GProp_ValueType::GProp_InertiaXZ
+           || myValueType == GProp_ValueType::GProp_InertiaYZ)
   {
     if (myIsByPoint)
       aCoeff *= 0.2;

@@ -374,7 +374,8 @@ void Geom2dHatch_Hatcher::Trim(const int IndH)
       OK                             = GlobalTransition(PntH);
       AllOK                          = AllOK && OK;
     }
-    Hatching.Status(AllOK ? HatchGen_ErrorStatus::HatchGen_NoProblem : HatchGen_ErrorStatus::HatchGen_TransitionFailure);
+    Hatching.Status(AllOK ? HatchGen_ErrorStatus::HatchGen_NoProblem
+                          : HatchGen_ErrorStatus::HatchGen_TransitionFailure);
   }
 }
 
@@ -624,13 +625,17 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
       {
         Conf3d = true;
         if (Conf3d)
-          Conf3d = TypePnt1H != IntRes2d_TypeTrans::IntRes2d_Touch && TypePnt1H != IntRes2d_TypeTrans::IntRes2d_Undecided;
+          Conf3d = TypePnt1H != IntRes2d_TypeTrans::IntRes2d_Touch
+                   && TypePnt1H != IntRes2d_TypeTrans::IntRes2d_Undecided;
         if (Conf3d)
-          Conf3d = TypePnt1E != IntRes2d_TypeTrans::IntRes2d_Touch && TypePnt1E != IntRes2d_TypeTrans::IntRes2d_Undecided;
+          Conf3d = TypePnt1E != IntRes2d_TypeTrans::IntRes2d_Touch
+                   && TypePnt1E != IntRes2d_TypeTrans::IntRes2d_Undecided;
         if (Conf3d)
-          Conf3d = TypePnt2H != IntRes2d_TypeTrans::IntRes2d_Touch && TypePnt2H != IntRes2d_TypeTrans::IntRes2d_Undecided;
+          Conf3d = TypePnt2H != IntRes2d_TypeTrans::IntRes2d_Touch
+                   && TypePnt2H != IntRes2d_TypeTrans::IntRes2d_Undecided;
         if (Conf3d)
-          Conf3d = TypePnt2E != IntRes2d_TypeTrans::IntRes2d_Touch && TypePnt2E != IntRes2d_TypeTrans::IntRes2d_Undecided;
+          Conf3d = TypePnt2E != IntRes2d_TypeTrans::IntRes2d_Touch
+                   && TypePnt2E != IntRes2d_TypeTrans::IntRes2d_Undecided;
         if (Conf3d)
           Conf3d = TypePnt1H == TypePnt2H && TypePnt1E == TypePnt2E;
         if (Conf3d)
@@ -678,9 +683,11 @@ bool Geom2dHatch_Hatcher::Trim(const int IndH, const int IndE)
             break;
           }
         }
-        PntE.SetIntersectionType((PntE.Position() == TopAbs_INTERNAL) ? HatchGen_IntersectionType::HatchGen_TRUE
-                                                                      : HatchGen_IntersectionType::HatchGen_TOUCH);
-        PntE.SetStateBefore((TypePnt1H == IntRes2d_TypeTrans::IntRes2d_In) ? TopAbs_OUT : TopAbs_IN);
+        PntE.SetIntersectionType((PntE.Position() == TopAbs_INTERNAL)
+                                   ? HatchGen_IntersectionType::HatchGen_TRUE
+                                   : HatchGen_IntersectionType::HatchGen_TOUCH);
+        PntE.SetStateBefore((TypePnt1H == IntRes2d_TypeTrans::IntRes2d_In) ? TopAbs_OUT
+                                                                           : TopAbs_IN);
         PntE.SetStateAfter((TypePnt2H == IntRes2d_TypeTrans::IntRes2d_In) ? TopAbs_OUT : TopAbs_IN);
 
         HatchGen_PointOnHatching PntH;

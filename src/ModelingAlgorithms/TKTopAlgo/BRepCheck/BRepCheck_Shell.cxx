@@ -219,7 +219,8 @@ void BRepCheck_Shell::InContext(const TopoDS_Shape& S)
 
     case TopAbs_SOLID: {
       BRepCheck_Status fst = Closed();
-      if ((fst == BRepCheck_Status::BRepCheck_NotClosed && S.Closed()) || (fst != BRepCheck_Status::BRepCheck_NoError))
+      if ((fst == BRepCheck_Status::BRepCheck_NotClosed && S.Closed())
+          || (fst != BRepCheck_Status::BRepCheck_NoError))
       {
         BRepCheck::Add(lst, fst);
       }
@@ -464,7 +465,8 @@ BRepCheck_Status BRepCheck_Shell::Orientation(const bool Update)
   myOdone = true;
 
   myOstat = Closed();
-  if (myOstat != BRepCheck_Status::BRepCheck_NotClosed && myOstat != BRepCheck_Status::BRepCheck_NoError)
+  if (myOstat != BRepCheck_Status::BRepCheck_NotClosed
+      && myOstat != BRepCheck_Status::BRepCheck_NoError)
   {
     if (Update)
     {

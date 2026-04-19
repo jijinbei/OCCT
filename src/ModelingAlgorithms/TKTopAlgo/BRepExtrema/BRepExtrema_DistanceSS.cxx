@@ -508,16 +508,14 @@ static void PERFORM_C0(const TopoDS_Edge&                              S1,
                   {
                     if (mDstRef > Dstmin)
                       mDstRef = Dstmin;
-                    const BRepExtrema_SolutionElem Sol1(Dstmin,
-                                                        aPnt,
-                                                        BRepExtrema_SupportType::BRepExtrema_IsOnEdge,
-                                                        E,
-                                                        aParameter);
-                    const BRepExtrema_SolutionElem Sol2(Dstmin,
-                                                        Pt,
-                                                        BRepExtrema_SupportType::BRepExtrema_IsOnEdge,
-                                                        Eother,
-                                                        t);
+                    const BRepExtrema_SolutionElem Sol1(
+                      Dstmin,
+                      aPnt,
+                      BRepExtrema_SupportType::BRepExtrema_IsOnEdge,
+                      E,
+                      aParameter);
+                    const BRepExtrema_SolutionElem
+                      Sol2(Dstmin, Pt, BRepExtrema_SupportType::BRepExtrema_IsOnEdge, Eother, t);
                     SeqSol1.Append(iE == 0 ? Sol1 : Sol2);
                     SeqSol2.Append(iE == 0 ? Sol2 : Sol1);
                   }
@@ -534,7 +532,11 @@ static void PERFORM_C0(const TopoDS_Edge&                              S1,
           {
             if (mDstRef > Dst)
               mDstRef = Dst;
-            const BRepExtrema_SolutionElem Sol1(Dst, aPnt, BRepExtrema_SupportType::BRepExtrema_IsOnEdge, E, aParameter);
+            const BRepExtrema_SolutionElem Sol1(Dst,
+                                                aPnt,
+                                                BRepExtrema_SupportType::BRepExtrema_IsOnEdge,
+                                                E,
+                                                aParameter);
             const BRepExtrema_SolutionElem Sol2(Dst,
                                                 aPntOther,
                                                 BRepExtrema_SupportType::BRepExtrema_IsOnEdge,
@@ -704,8 +706,14 @@ void BRepExtrema_DistanceSS::Perform(
     if (myDstRef > Dst)
       myDstRef = Dst;
     myModif = true;
-    const BRepExtrema_SolutionElem Sol1(Dst, aP1, BRepExtrema_SupportType::BRepExtrema_IsVertex, theS1);
-    const BRepExtrema_SolutionElem Sol2(Dst, aP2, BRepExtrema_SupportType::BRepExtrema_IsVertex, theS2);
+    const BRepExtrema_SolutionElem Sol1(Dst,
+                                        aP1,
+                                        BRepExtrema_SupportType::BRepExtrema_IsVertex,
+                                        theS1);
+    const BRepExtrema_SolutionElem Sol2(Dst,
+                                        aP2,
+                                        BRepExtrema_SupportType::BRepExtrema_IsVertex,
+                                        theS2);
     theSeqSolShape1.Append(Sol1);
     theSeqSolShape2.Append(Sol2);
   }
@@ -755,8 +763,15 @@ void BRepExtrema_DistanceSS::Perform(
               if (myDstRef > Dstmin)
                 myDstRef = Dstmin;
               myModif = true;
-              const BRepExtrema_SolutionElem Sol1(Dstmin, P1, BRepExtrema_SupportType::BRepExtrema_IsVertex, theS1);
-              const BRepExtrema_SolutionElem Sol2(Dstmin, Pt, BRepExtrema_SupportType::BRepExtrema_IsOnEdge, theS2, t);
+              const BRepExtrema_SolutionElem Sol1(Dstmin,
+                                                  P1,
+                                                  BRepExtrema_SupportType::BRepExtrema_IsVertex,
+                                                  theS1);
+              const BRepExtrema_SolutionElem Sol2(Dstmin,
+                                                  Pt,
+                                                  BRepExtrema_SupportType::BRepExtrema_IsOnEdge,
+                                                  theS2,
+                                                  t);
               theSeqSolShape1.Append(Sol1);
               theSeqSolShape2.Append(Sol2);
             }
@@ -812,8 +827,16 @@ void BRepExtrema_DistanceSS::Perform(
               if (myDstRef > Dstmin)
                 myDstRef = Dstmin;
               myModif = true;
-              const BRepExtrema_SolutionElem Sol1(Dstmin, P1, BRepExtrema_SupportType::BRepExtrema_IsVertex, theS1);
-              const BRepExtrema_SolutionElem Sol2(Dstmin, Pt, BRepExtrema_SupportType::BRepExtrema_IsInFace, theS2, U, V);
+              const BRepExtrema_SolutionElem Sol1(Dstmin,
+                                                  P1,
+                                                  BRepExtrema_SupportType::BRepExtrema_IsVertex,
+                                                  theS1);
+              const BRepExtrema_SolutionElem Sol2(Dstmin,
+                                                  Pt,
+                                                  BRepExtrema_SupportType::BRepExtrema_IsInFace,
+                                                  theS2,
+                                                  U,
+                                                  V);
               theSeqSolShape1.Append(Sol1);
               theSeqSolShape2.Append(Sol2);
             }
@@ -873,8 +896,16 @@ void BRepExtrema_DistanceSS::Perform(
               if (myDstRef > Dstmin)
                 myDstRef = Dstmin;
               myModif = true;
-              const BRepExtrema_SolutionElem Sol1(Dstmin, Pt1, BRepExtrema_SupportType::BRepExtrema_IsOnEdge, theS1, t1);
-              const BRepExtrema_SolutionElem Sol2(Dstmin, Pt2, BRepExtrema_SupportType::BRepExtrema_IsOnEdge, theS2, t2);
+              const BRepExtrema_SolutionElem Sol1(Dstmin,
+                                                  Pt1,
+                                                  BRepExtrema_SupportType::BRepExtrema_IsOnEdge,
+                                                  theS1,
+                                                  t1);
+              const BRepExtrema_SolutionElem Sol2(Dstmin,
+                                                  Pt2,
+                                                  BRepExtrema_SupportType::BRepExtrema_IsOnEdge,
+                                                  theS2,
+                                                  t2);
               theSeqSolShape1.Append(Sol1);
               theSeqSolShape2.Append(Sol2);
             }
@@ -968,8 +999,17 @@ void BRepExtrema_DistanceSS::Perform(
                 if (myDstRef > Dstmin)
                   myDstRef = Dstmin;
                 myModif = true;
-                const BRepExtrema_SolutionElem Sol1(Dstmin, Pt1, BRepExtrema_SupportType::BRepExtrema_IsOnEdge, theS1, t1);
-                const BRepExtrema_SolutionElem Sol2(Dstmin, Pt2, BRepExtrema_SupportType::BRepExtrema_IsInFace, theS2, U, V);
+                const BRepExtrema_SolutionElem Sol1(Dstmin,
+                                                    Pt1,
+                                                    BRepExtrema_SupportType::BRepExtrema_IsOnEdge,
+                                                    theS1,
+                                                    t1);
+                const BRepExtrema_SolutionElem Sol2(Dstmin,
+                                                    Pt2,
+                                                    BRepExtrema_SupportType::BRepExtrema_IsInFace,
+                                                    theS2,
+                                                    U,
+                                                    V);
                 theSeqSolShape1.Append(Sol1);
                 theSeqSolShape2.Append(Sol2);
               }

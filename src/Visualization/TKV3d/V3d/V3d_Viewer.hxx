@@ -128,10 +128,10 @@ public:
 
   //! Defines the default gradient background colours of views
   //! attached to the viewer by supplying the colour objects
-  void SetDefaultBgGradientColors(
-    const Quantity_Color&           theColor1,
-    const Quantity_Color&           theColor2,
-    const Aspect_GradientFillMethod theFillStyle = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal)
+  void SetDefaultBgGradientColors(const Quantity_Color&           theColor1,
+                                  const Quantity_Color&           theColor2,
+                                  const Aspect_GradientFillMethod theFillStyle =
+                                    Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal)
   {
     myGradientBackground.SetColors(theColor1, theColor2, theFillStyle);
   }

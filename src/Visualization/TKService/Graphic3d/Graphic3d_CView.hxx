@@ -104,8 +104,9 @@ public:
   //! Will throw an exception on attempt to set Graphic3d_TypeOfShadingModel_DEFAULT.
   Standard_EXPORT void SetShadingModel(Graphic3d_TypeOfShadingModel theModel);
 
-  //! Return backfacing model used for the view; Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto by default,
-  //! which means that backface culling is defined by each presentation.
+  //! Return backfacing model used for the view;
+  //! Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto by default, which means
+  //! that backface culling is defined by each presentation.
   Graphic3d_TypeOfBackfacingModel BackfacingModel() const { return myBackfacing; }
 
   //! Sets backfacing model for the view.

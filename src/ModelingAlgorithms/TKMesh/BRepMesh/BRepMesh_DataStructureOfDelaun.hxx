@@ -68,7 +68,8 @@ public: //! @name API for accessing mesh nodes.
   //! is not Free.
   void RemoveNode(const int theIndex, const bool isForce = false)
   {
-    if (isForce || myNodes->FindKey(theIndex).Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Free)
+    if (isForce
+        || myNodes->FindKey(theIndex).Movability() == BRepMesh_DegreeOfFreedom::BRepMesh_Free)
     {
       if (LinksConnectedTo(theIndex).Extent() == 0)
         myNodes->DeleteVertex(theIndex);

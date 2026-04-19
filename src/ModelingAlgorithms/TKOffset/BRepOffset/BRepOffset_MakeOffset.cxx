@@ -910,8 +910,9 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   // Intersection 3d .
   //-----------------
   Message_ProgressScope aPSInter(aPS.Next(aSteps(PIOperation_Intersection)), nullptr, 100);
-  aPSInter.SetName((myJoin == GeomAbs_JoinType::GeomAbs_Arc) ? "Connect offset faces by arc"
-                                           : "Connect offset faces by intersection");
+  aPSInter.SetName((myJoin == GeomAbs_JoinType::GeomAbs_Arc)
+                     ? "Connect offset faces by arc"
+                     : "Connect offset faces by intersection");
 
   BRepOffset_Inter3d Inter(myAsDes, Side, myTol);
   Intersection3D(Inter, aPSInter.Next(90));
@@ -1278,13 +1279,13 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   {
     aSteps.Init(0);
 
-    bool   isInter                                       = myJoin == GeomAbs_JoinType::GeomAbs_Intersection;
-    double aFaceInter                                    = isInter ? 25. : 50.;
-    double aBuildFaces                                   = isInter ? 50. : 25.;
-    aSteps(BuildOffsetByInter_MakeOffsetFaces)           = 5.;
-    aSteps(BuildOffsetByInter_ConnexIntByInt)            = aFaceInter * anOffsetsPart;
-    aSteps(BuildOffsetByInter_ContextIntByInt)           = aFaceInter * aDeepeningsPart;
-    aSteps(BuildOffsetByInter_IntersectEdges)            = 10.;
+    bool   isInter                             = myJoin == GeomAbs_JoinType::GeomAbs_Intersection;
+    double aFaceInter                          = isInter ? 25. : 50.;
+    double aBuildFaces                         = isInter ? 50. : 25.;
+    aSteps(BuildOffsetByInter_MakeOffsetFaces) = 5.;
+    aSteps(BuildOffsetByInter_ConnexIntByInt)  = aFaceInter * anOffsetsPart;
+    aSteps(BuildOffsetByInter_ContextIntByInt) = aFaceInter * aDeepeningsPart;
+    aSteps(BuildOffsetByInter_IntersectEdges)  = 10.;
     aSteps(BuildOffsetByInter_CompleteEdgesIntersection) = 5.;
     aSteps(BuildOffsetByInter_BuildFaces)                = aBuildFaces;
     aSteps(BuildOffsetByInter_FillHistoryForOffsets)     = 5. * anOffsetsPart;
@@ -2016,7 +2017,8 @@ void BRepOffset_MakeOffset::BuildOffsetByArc(const Message_ProgressRange& theRan
     }
     const TopoDS_Shape&      SI = It.Key();
     const BRepOffset_Offset& SF = It.Value();
-    if (SF.Status() == BRepOffset_Status::BRepOffset_Reversed || SF.Status() == BRepOffset_Status::BRepOffset_Degenerated)
+    if (SF.Status() == BRepOffset_Status::BRepOffset_Reversed
+        || SF.Status() == BRepOffset_Status::BRepOffset_Degenerated)
     {
       //------------------------------------------------
       // Degenerated or returned faces are not stored.
@@ -2729,7 +2731,9 @@ void BRepOffset_MakeOffset::Intersection3D(BRepOffset_Inter3d&          Inter,
     Clock.Start();
   }
 #endif
-  Message_ProgressScope aPS(theRange, nullptr, (myFaces.Extent() && myJoin == GeomAbs_JoinType::GeomAbs_Arc) ? 2 : 1);
+  Message_ProgressScope aPS(theRange,
+                            nullptr,
+                            (myFaces.Extent() && myJoin == GeomAbs_JoinType::GeomAbs_Arc) ? 2 : 1);
 
   // In the Complete Intersection mode, implemented currently for planar
   // solids only, there is no need to intersect the faces here.
@@ -3125,7 +3129,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
 
       OE.Orientation(TopAbs::Reverse(anEdge.Orientation()));
       TopoDS_Edge E3, E4;
-      bool        ArcOnV2 = ((myJoin == GeomAbs_JoinType::GeomAbs_Arc) && (myInitOffsetEdge.HasImage(V2)));
+      bool ArcOnV2 = ((myJoin == GeomAbs_JoinType::GeomAbs_Arc) && (myInitOffsetEdge.HasImage(V2)));
       if (FirstStep || isBuildFromScratch)
       {
         E4 = BRepLib_MakeEdge(V1, V4);
@@ -3181,7 +3185,8 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
       gp_Dir                    OffsetDir = gce_MakeDir(PonE, PonOE);
       occ::handle<Geom2d_Line>  EdgeLine2d, OELine2d, aLine2d, aLine2d2;
       bool                      IsPlanar = false;
-      if (BAcurve.GetType() == GeomAbs_CurveType::GeomAbs_Circle && BAcurveOE.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
+      if (BAcurve.GetType() == GeomAbs_CurveType::GeomAbs_Circle
+          && BAcurveOE.GetType() == GeomAbs_CurveType::GeomAbs_Circle)
       {
         gp_Circ aCirc   = BAcurve.Circle();
         gp_Circ aCircOE = BAcurveOE.Circle();
@@ -3580,8 +3585,8 @@ void BRepOffset_MakeOffset::MakeShells(const Message_ProgressRange& theRange)
   }
   //
   bool bDone = false;
-  if ((myJoin == GeomAbs_JoinType::GeomAbs_Intersection) && myInter && !myThickening && myFaces.IsEmpty()
-      && IsSolid(myShape) && myIsPlanar)
+  if ((myJoin == GeomAbs_JoinType::GeomAbs_Intersection) && myInter && !myThickening
+      && myFaces.IsEmpty() && IsSolid(myShape) && myIsPlanar)
   {
     //
     TopoDS_Shape aShells;
@@ -3849,7 +3854,9 @@ void BRepOffset_MakeOffset::EncodeRegularity()
         {
           BRepAdaptor_Surface BS(F1, false);
           GeomAbs_SurfaceType SType = BS.GetType();
-          if (SType == GeomAbs_SurfaceType::GeomAbs_Cylinder || SType == GeomAbs_SurfaceType::GeomAbs_Cone || SType == GeomAbs_SurfaceType::GeomAbs_Sphere
+          if (SType == GeomAbs_SurfaceType::GeomAbs_Cylinder
+              || SType == GeomAbs_SurfaceType::GeomAbs_Cone
+              || SType == GeomAbs_SurfaceType::GeomAbs_Sphere
               || SType == GeomAbs_SurfaceType::GeomAbs_Torus)
           {
             B.Continuity(OE, F1, F1, GeomAbs_CN);

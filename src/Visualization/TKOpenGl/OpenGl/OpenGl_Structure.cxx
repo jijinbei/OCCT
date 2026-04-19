@@ -436,7 +436,8 @@ void OpenGl_Structure::Render(const occ::handle<OpenGl_Workspace>& theWorkspace)
   const occ::handle<OpenGl_Context>& aCtx = theWorkspace->GetGlContext();
 
   // Render named status
-  if (highlight && !myHighlightStyle.IsNull() && myHighlightStyle->Method() != Aspect_TypeOfHighlightMethod::Aspect_TOHM_BOUNDBOX)
+  if (highlight && !myHighlightStyle.IsNull()
+      && myHighlightStyle->Method() != Aspect_TypeOfHighlightMethod::Aspect_TOHM_BOUNDBOX)
   {
     theWorkspace->SetHighlightStyle(myHighlightStyle);
   }

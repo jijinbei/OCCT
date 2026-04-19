@@ -34,13 +34,14 @@ public:
   Standard_EXPORT Aspect_GradientBackground(
     const Quantity_Color&           theColor1,
     const Quantity_Color&           theColor2,
-    const Aspect_GradientFillMethod theMethod = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal);
+    const Aspect_GradientFillMethod theMethod =
+      Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal);
 
   //! Modifies the colours of the window gradient background.
-  Standard_EXPORT void SetColors(
-    const Quantity_Color&           theColor1,
-    const Quantity_Color&           theColor2,
-    const Aspect_GradientFillMethod theMethod = Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal);
+  Standard_EXPORT void SetColors(const Quantity_Color&           theColor1,
+                                 const Quantity_Color&           theColor2,
+                                 const Aspect_GradientFillMethod theMethod =
+                                   Aspect_GradientFillMethod::Aspect_GradientFillMethod_Horizontal);
 
   //! Returns colours of the window gradient background.
   Standard_EXPORT void Colors(Quantity_Color& theColor1, Quantity_Color& theColor2) const;

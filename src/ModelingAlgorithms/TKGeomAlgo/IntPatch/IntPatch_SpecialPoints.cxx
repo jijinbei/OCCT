@@ -849,8 +849,9 @@ bool IntPatch_SpecialPoints::AddSingularPole(const occ::handle<Adaptor3d_Surface
 
   // Transforms parametric surface in coordinate-system of the quadric
   gp_Trsf aTr;
-  aTr.SetTransformation((theQSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere) ? theQSurf->Sphere().Position()
-                                                                : theQSurf->Cone().Position());
+  aTr.SetTransformation((theQSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Sphere)
+                          ? theQSurf->Sphere().Position()
+                          : theQSurf->Cone().Position());
 
   // Derivatives of transformed thePSurf
   aVecDu.Transform(aTr);
@@ -958,7 +959,8 @@ bool IntPatch_SpecialPoints::ContinueAfterSpecialPoint(
     return false;
   }
 
-  if ((theSPType == IntPatch_SPntPole) && (theQSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cone))
+  if ((theSPType == IntPatch_SPntPole)
+      && (theQSurf->GetType() == GeomAbs_SurfaceType::GeomAbs_Cone))
   {
     // Check if the condition b) is satisfied.
     // Repeat the same steps as in

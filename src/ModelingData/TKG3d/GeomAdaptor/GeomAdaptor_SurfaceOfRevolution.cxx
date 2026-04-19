@@ -482,7 +482,8 @@ gp_Cylinder GeomAdaptor_SurfaceOfRevolution::Cylinder() const
 
 gp_Cone GeomAdaptor_SurfaceOfRevolution::Cone() const
 {
-  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_SurfaceType::GeomAbs_Cone, "GeomAdaptor_SurfaceOfRevolution:Cone");
+  Standard_NoSuchObject_Raise_if(GetType() != GeomAbs_SurfaceType::GeomAbs_Cone,
+                                 "GeomAdaptor_SurfaceOfRevolution:Cone");
 
   gp_Ax3 Axe   = myAxeRev;
   gp_Dir ldir  = (myBasisCurve->Line()).Direction();

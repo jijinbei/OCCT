@@ -86,7 +86,8 @@ public:
   //! @return TRUE if equal, FALSE if not.
   bool IsEqual(const BRepMesh_Triangle& theOther) const
   {
-    if (myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted || theOther.myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
+    if (myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted
+        || theOther.myMovability == BRepMesh_DegreeOfFreedom::BRepMesh_Deleted)
       return false;
 
     if (myEdges[0] == theOther.myEdges[0] && myEdges[1] == theOther.myEdges[1]

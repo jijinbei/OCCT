@@ -279,7 +279,8 @@ bool TopOpeBRep_FacesFiller::CheckLine(TopOpeBRep_LineInter& L) const
   } // LINE
   else
   {
-    bool notrnotw = (t != TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION && t != TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING);
+    bool notrnotw = (t != TopOpeBRep_TypeLineCurve::TopOpeBRep_RESTRICTION
+                     && t != TopOpeBRep_TypeLineCurve::TopOpeBRep_WALKING);
     if (notrnotw)
     {
       if (t == TopOpeBRep_TypeLineCurve::TopOpeBRep_CIRCLE)

@@ -1222,7 +1222,8 @@ void TopOpeBRepDS_BuildTool::Closed(TopoDS_Shape& S, const bool B) const
 
 bool TopOpeBRepDS_BuildTool::Approximation() const
 {
-  return myCurveTool.GetGeomTool().TypeC3D() != TopOpeBRepTool_OutCurveType::TopOpeBRepTool_BSPLINE1;
+  return myCurveTool.GetGeomTool().TypeC3D()
+         != TopOpeBRepTool_OutCurveType::TopOpeBRepTool_BSPLINE1;
 }
 
 void TopOpeBRepDS_BuildTool::UpdateSurface(const TopoDS_Shape&              F,

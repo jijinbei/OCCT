@@ -110,15 +110,19 @@ AIS_ViewController::AIS_ViewController()
   myAnchorPointPrs2->SetZLayer(Graphic3d_ZLayerId_Topmost);
   myAnchorPointPrs2->SetMutable(true);
 
-  myRubberBand =
-    new AIS_RubberBand(Quantity_NOC_LIGHTBLUE, Aspect_TypeOfLine::Aspect_TOL_SOLID, Quantity_NOC_LIGHTBLUE4, 0.5, 1.0);
+  myRubberBand = new AIS_RubberBand(Quantity_NOC_LIGHTBLUE,
+                                    Aspect_TypeOfLine::Aspect_TOL_SOLID,
+                                    Quantity_NOC_LIGHTBLUE4,
+                                    0.5,
+                                    1.0);
   myRubberBand->SetZLayer(Graphic3d_ZLayerId_TopOSD);
   myRubberBand->SetTransformPersistence(
     new Graphic3d_TransformPers(Graphic3d_TMF_2d, Aspect_TOTP_LEFT_UPPER));
   myRubberBand->SetDisplayMode(0);
   myRubberBand->SetMutable(true);
 
-  myMouseGestureMap.Bind((unsigned int)Aspect_VKeyMouse_LeftButton, AIS_MouseGesture::AIS_MouseGesture_RotateOrbit);
+  myMouseGestureMap.Bind((unsigned int)Aspect_VKeyMouse_LeftButton,
+                         AIS_MouseGesture::AIS_MouseGesture_RotateOrbit);
   myMouseGestureMap.Bind((unsigned int)Aspect_VKeyMouse_LeftButton
                            | (unsigned int)Aspect_VKeyFlags_CTRL,
                          AIS_MouseGesture::AIS_MouseGesture_Zoom);
@@ -146,12 +150,14 @@ AIS_ViewController::AIS_ViewController()
                                  | (unsigned int)Aspect_VKeyFlags_SHIFT,
                                AIS_SelectionScheme::AIS_SelectionScheme_XOR);
 
-  myMouseGestureMap.Bind((unsigned int)Aspect_VKeyMouse_RightButton, AIS_MouseGesture::AIS_MouseGesture_Zoom);
+  myMouseGestureMap.Bind((unsigned int)Aspect_VKeyMouse_RightButton,
+                         AIS_MouseGesture::AIS_MouseGesture_Zoom);
   myMouseGestureMap.Bind((unsigned int)Aspect_VKeyMouse_RightButton
                            | (unsigned int)Aspect_VKeyFlags_CTRL,
                          AIS_MouseGesture::AIS_MouseGesture_RotateOrbit);
 
-  myMouseGestureMap.Bind((unsigned int)Aspect_VKeyMouse_MiddleButton, AIS_MouseGesture::AIS_MouseGesture_Pan);
+  myMouseGestureMap.Bind((unsigned int)Aspect_VKeyMouse_MiddleButton,
+                         AIS_MouseGesture::AIS_MouseGesture_Pan);
   myMouseGestureMap.Bind((unsigned int)Aspect_VKeyMouse_MiddleButton
                            | (unsigned int)Aspect_VKeyFlags_CTRL,
                          AIS_MouseGesture::AIS_MouseGesture_Pan);
@@ -418,7 +424,8 @@ void AIS_ViewController::flushGestures(const occ::handle<AIS_InteractiveContext>
     if (std::abs(aTouch.Delta().x()) + std::abs(aTouch.Delta().y()) > aRotTouchTol)
     {
       const double aRotAccel =
-        myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk ? myMouseAccel : myOrbitAccel;
+        myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk ? myMouseAccel
+                                                                                   : myOrbitAccel;
       if (myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_Orbit)
       {
         const NCollection_Vec2<double> aRotDelta = aTouch.To - myGL.OrbitRotation.PointStart;
@@ -915,7 +922,8 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
   NCollection_Vec2<int> aDelta       = thePoint - myMouseProgressPoint;
   if (!theIsEmulated && myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk)
   {
-    if (!myMouseActiveIdleRotation || myMouseActiveGesture != AIS_MouseGesture::AIS_MouseGesture_RotateView)
+    if (!myMouseActiveIdleRotation
+        || myMouseActiveGesture != AIS_MouseGesture::AIS_MouseGesture_RotateView)
     {
       myMouseActiveIdleRotation = true;
       myMouseActiveGesture      = AIS_MouseGesture::AIS_MouseGesture_RotateView;
@@ -930,7 +938,8 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
   }
   else
   {
-    if (myMouseActiveIdleRotation && myMouseActiveGesture == AIS_MouseGesture::AIS_MouseGesture_RotateView)
+    if (myMouseActiveIdleRotation
+        && myMouseActiveGesture == AIS_MouseGesture::AIS_MouseGesture_RotateView)
     {
       myMouseActiveGesture = AIS_MouseGesture::AIS_MouseGesture_NONE;
     }
@@ -987,7 +996,8 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
       if (std::abs(aDeltaF.x()) + std::abs(aDeltaF.y()) > aRotTol)
       {
         const double aRotAccel =
-          myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk ? myMouseAccel : myOrbitAccel;
+          myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk ? myMouseAccel
+                                                                                     : myOrbitAccel;
         const NCollection_Vec2<int> aRotDelta = thePoint - myMousePressPoint;
         if (myMouseActiveGesture == AIS_MouseGesture::AIS_MouseGesture_RotateOrbit)
         {
@@ -1084,7 +1094,8 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
       if (double(std::abs(aDelta.x()) + std::abs(aDelta.y())) > aDragTol)
       {
         const double aRotAccel =
-          myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk ? myMouseAccel : myOrbitAccel;
+          myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk ? myMouseAccel
+                                                                                     : myOrbitAccel;
         const NCollection_Vec2<int> aRotDelta = thePoint - myMousePressPoint;
         myUI.ViewRotation.ToRotate            = true;
         myUI.ViewRotation.PointTo =
@@ -1103,7 +1114,8 @@ bool AIS_ViewController::UpdateMousePosition(const NCollection_Vec2<int>& thePoi
     }
   }
 
-  if (theButtons == Aspect_VKeyMouse_NONE && myNavigationMode != AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk
+  if (theButtons == Aspect_VKeyMouse_NONE
+      && myNavigationMode != AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk
       && !theIsEmulated && !HasTouchPoints() && myToAllowHighlight)
   {
     myUI.MoveTo.ToHilight = true;
@@ -1283,7 +1295,8 @@ AIS_WalkDelta AIS_ViewController::FetchNavigationKeys(double theCrouchRatio, dou
   {
     if (myHasThrust)
     {
-      aWalk[AIS_WalkTranslation::AIS_WalkTranslation_Forward].Value = myThrustSpeed * (aNewEventTime - aPrevEventTime);
+      aWalk[AIS_WalkTranslation::AIS_WalkTranslation_Forward].Value =
+        myThrustSpeed * (aNewEventTime - aPrevEventTime);
     }
     myHasThrust      = true;
     myToAskNextFrame = true;
@@ -1368,7 +1381,8 @@ AIS_WalkDelta AIS_ViewController::FetchNavigationKeys(double theCrouchRatio, dou
   {
     double aProgress = std::abs(std::min(aMaxDuration, aDuration)) * aPressure;
     aWalk.SetDefined(true);
-    aWalk[AIS_WalkRotation::AIS_WalkRotation_Pitch].Value    = !myToInvertPitch ? -aProgress : aProgress;
+    aWalk[AIS_WalkRotation::AIS_WalkRotation_Pitch].Value =
+      !myToInvertPitch ? -aProgress : aProgress;
     aWalk[AIS_WalkRotation::AIS_WalkRotation_Pitch].Pressure = aPressure;
     aWalk[AIS_WalkRotation::AIS_WalkRotation_Pitch].Duration = aDuration;
   }
@@ -1376,7 +1390,8 @@ AIS_WalkDelta AIS_ViewController::FetchNavigationKeys(double theCrouchRatio, dou
   {
     double aProgress = std::abs(std::min(aMaxDuration, aDuration)) * aPressure;
     aWalk.SetDefined(true);
-    aWalk[AIS_WalkRotation::AIS_WalkRotation_Pitch].Value    = !myToInvertPitch ? aProgress : -aProgress;
+    aWalk[AIS_WalkRotation::AIS_WalkRotation_Pitch].Value =
+      !myToInvertPitch ? aProgress : -aProgress;
     aWalk[AIS_WalkRotation::AIS_WalkRotation_Pitch].Pressure = aPressure;
     aWalk[AIS_WalkRotation::AIS_WalkRotation_Pitch].Duration = aDuration;
   }
@@ -2174,10 +2189,11 @@ AIS_WalkDelta AIS_ViewController::handleNavigationKeys(const occ::handle<AIS_Int
     aBndDiam = 0.001;
   }
 
-  const double                         aWalkSpeed = myNavigationMode != AIS_NavigationMode::AIS_NavigationMode_Orbit
-                                && myNavigationMode != AIS_NavigationMode::AIS_NavigationMode_FirstPersonFlight
-                                                      ? theView->View()->UnitFactor() * WalkSpeedAbsolute()
-                                                      : aWalkSpeedCoef * aBndDiam;
+  const double aWalkSpeed =
+    myNavigationMode != AIS_NavigationMode::AIS_NavigationMode_Orbit
+        && myNavigationMode != AIS_NavigationMode::AIS_NavigationMode_FirstPersonFlight
+      ? theView->View()->UnitFactor() * WalkSpeedAbsolute()
+      : aWalkSpeedCoef * aBndDiam;
   const occ::handle<Graphic3d_Camera>& aCam =
     theView->View()->IsActiveXR() ? theView->View()->BaseXRCamera() : theView->Camera();
 
@@ -2213,8 +2229,9 @@ AIS_WalkDelta AIS_ViewController::handleNavigationKeys(const occ::handle<AIS_Int
       {
         if (!aWalk[AIS_WalkTranslation::AIS_WalkTranslation_Forward].IsEmpty())
         {
-          const double aZoomDelta = aWalk[AIS_WalkTranslation::AIS_WalkTranslation_Forward].Value
-                                    * aWalk[AIS_WalkTranslation::AIS_WalkTranslation_Forward].Pressure * aWalkSpeedCoef;
+          const double aZoomDelta =
+            aWalk[AIS_WalkTranslation::AIS_WalkTranslation_Forward].Value
+            * aWalk[AIS_WalkTranslation::AIS_WalkTranslation_Forward].Pressure * aWalkSpeedCoef;
           handleZoom(theView, Aspect_ScrollDelta(aZoomDelta * 100.0), nullptr);
         }
       }
@@ -2362,8 +2379,8 @@ void AIS_ViewController::handleCameraActions(const occ::handle<AIS_InteractiveCo
     handleZRotate(theView);
   }
 
-  if ((myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_Orbit || myGL.OrbitRotation.ToStart
-       || myGL.OrbitRotation.ToRotate)
+  if ((myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_Orbit
+       || myGL.OrbitRotation.ToStart || myGL.OrbitRotation.ToRotate)
       && myToAllowRotation)
   {
     if (myGL.OrbitRotation.ToStart && !myHasHlrOnBeforeRotation)
@@ -2396,7 +2413,8 @@ void AIS_ViewController::handleCameraActions(const occ::handle<AIS_InteractiveCo
     }
     handleOrbitRotation(theView,
                         aGravPnt,
-                        myToLockOrbitZUp || myNavigationMode != AIS_NavigationMode::AIS_NavigationMode_Orbit);
+                        myToLockOrbitZUp
+                          || myNavigationMode != AIS_NavigationMode::AIS_NavigationMode_Orbit);
   }
 
   if ((myNavigationMode != AIS_NavigationMode::AIS_NavigationMode_Orbit || myGL.ViewRotation.ToStart
@@ -2416,7 +2434,8 @@ void AIS_ViewController::handleCameraActions(const occ::handle<AIS_InteractiveCo
     if (!theWalk[AIS_WalkRotation::AIS_WalkRotation_Roll].IsEmpty() && !myToLockOrbitZUp)
     {
       aRoll = (M_PI / 12.0) * theWalk[AIS_WalkRotation::AIS_WalkRotation_Roll].Pressure;
-      aRoll *= std::min(1000.0 * theWalk[AIS_WalkRotation::AIS_WalkRotation_Roll].Duration, 100.0) / 100.0;
+      aRoll *=
+        std::min(1000.0 * theWalk[AIS_WalkRotation::AIS_WalkRotation_Roll].Duration, 100.0) / 100.0;
       if (theWalk[AIS_WalkRotation::AIS_WalkRotation_Roll].Value < 0.0)
       {
         aRoll = -aRoll;
@@ -2427,7 +2446,8 @@ void AIS_ViewController::handleCameraActions(const occ::handle<AIS_InteractiveCo
                        theWalk[AIS_WalkRotation::AIS_WalkRotation_Yaw].Value,
                        theWalk[AIS_WalkRotation::AIS_WalkRotation_Pitch].Value,
                        aRoll,
-                       myNavigationMode == AIS_NavigationMode::AIS_NavigationMode_FirstPersonFlight);
+                       myNavigationMode
+                         == AIS_NavigationMode::AIS_NavigationMode_FirstPersonFlight);
   }
 
   if (!myGL.ZoomActions.IsEmpty())
@@ -2504,12 +2524,14 @@ void AIS_ViewController::handleXRTurnPad(const occ::handle<AIS_InteractiveContex
   for (int aHand = 0; aHand < 2; ++aHand)
   {
     const Aspect_XRTrackedDeviceRole aRole =
-      aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand;
-    const occ::handle<Aspect_XRAction>& aPadClickAct =
-      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadClick);
-    const occ::handle<Aspect_XRAction>& aPadPosAct =
-      theView->View()->XRSession()->GenericAction(aRole,
-                                                  Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadPosition);
+      aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand
+                 : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand;
+    const occ::handle<Aspect_XRAction>& aPadClickAct = theView->View()->XRSession()->GenericAction(
+      aRole,
+      Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadClick);
+    const occ::handle<Aspect_XRAction>& aPadPosAct = theView->View()->XRSession()->GenericAction(
+      aRole,
+      Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadPosition);
     if (aPadClickAct.IsNull() || aPadPosAct.IsNull())
     {
       continue;
@@ -2543,22 +2565,24 @@ void AIS_ViewController::handleXRTeleport(const occ::handle<AIS_InteractiveConte
 
   // teleport on forward trackpad unclicks
   const Aspect_XRTrackedDeviceRole aTeleOld = myXRLastTeleportHand;
-  myXRLastTeleportHand                      = Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other;
+  myXRLastTeleportHand = Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other;
   for (int aHand = 0; aHand < 2; ++aHand)
   {
     const Aspect_XRTrackedDeviceRole aRole =
-      aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand;
+      aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand
+                 : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand;
     const int aDeviceId = theView->View()->XRSession()->NamedTrackedDevice(aRole);
     if (aDeviceId == -1)
     {
       continue;
     }
 
-    const occ::handle<Aspect_XRAction>& aPadClickAct =
-      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadClick);
-    const occ::handle<Aspect_XRAction>& aPadPosAct =
-      theView->View()->XRSession()->GenericAction(aRole,
-                                                  Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadPosition);
+    const occ::handle<Aspect_XRAction>& aPadClickAct = theView->View()->XRSession()->GenericAction(
+      aRole,
+      Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadClick);
+    const occ::handle<Aspect_XRAction>& aPadPosAct = theView->View()->XRSession()->GenericAction(
+      aRole,
+      Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadPosition);
     if (aPadClickAct.IsNull() || aPadPosAct.IsNull())
     {
       continue;
@@ -2581,9 +2605,10 @@ void AIS_ViewController::handleXRTeleport(const occ::handle<AIS_InteractiveConte
       }
 
       myXRLastTeleportHand = aRole;
-      double& aPickDepth   = aRole == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand ? myXRLastPickDepthLeft
-                                                                          : myXRLastPickDepthRight;
-      aPickDepth           = Precision::Infinite();
+      double& aPickDepth = aRole == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
+                             ? myXRLastPickDepthLeft
+                             : myXRLastPickDepthRight;
+      aPickDepth         = Precision::Infinite();
       NCollection_Vec3<float> aPickNorm;
       const gp_Trsf           aHandBase = theView->View()->PoseXRToWorld(aPose.Orientation);
       const double aHeadHeight = theView->View()->XRSession()->HeadPose().TranslationPart().Y();
@@ -2644,18 +2669,18 @@ void AIS_ViewController::handleXRTeleport(const occ::handle<AIS_InteractiveConte
   {
     if (aTeleOld != Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other)
     {
-      if (const occ::handle<Aspect_XRAction>& aHaptic =
-            theView->View()->XRSession()->GenericAction(aTeleOld,
-                                                        Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
+      if (const occ::handle<Aspect_XRAction>& aHaptic = theView->View()->XRSession()->GenericAction(
+            aTeleOld,
+            Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
       {
         theView->View()->XRSession()->AbortHapticVibrationAction(aHaptic);
       }
     }
     if (myXRLastTeleportHand != Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other)
     {
-      if (const occ::handle<Aspect_XRAction>& aHaptic =
-            theView->View()->XRSession()->GenericAction(myXRLastTeleportHand,
-                                                        Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
+      if (const occ::handle<Aspect_XRAction>& aHaptic = theView->View()->XRSession()->GenericAction(
+            myXRLastTeleportHand,
+            Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
       {
         theView->View()->XRSession()->TriggerHapticVibrationAction(aHaptic, myXRTeleportHaptic);
       }
@@ -2675,15 +2700,18 @@ void AIS_ViewController::handleXRPicking(const occ::handle<AIS_InteractiveContex
 
   // handle selection on trigger clicks
   Aspect_XRTrackedDeviceRole aPickDevOld = myXRLastPickingHand;
-  myXRLastPickingHand                    = Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other;
+  myXRLastPickingHand = Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Other;
   for (int aHand = 0; aHand < 2; ++aHand)
   {
     const Aspect_XRTrackedDeviceRole aRole =
-      aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand;
-    const occ::handle<Aspect_XRAction>& aTrigClickAct =
-      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction::Aspect_XRGenericAction_InputTriggerClick);
-    const occ::handle<Aspect_XRAction>& aTrigPullAct =
-      theView->View()->XRSession()->GenericAction(aRole, Aspect_XRGenericAction::Aspect_XRGenericAction_InputTriggerPull);
+      aHand == 0 ? Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand
+                 : Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand;
+    const occ::handle<Aspect_XRAction>& aTrigClickAct = theView->View()->XRSession()->GenericAction(
+      aRole,
+      Aspect_XRGenericAction::Aspect_XRGenericAction_InputTriggerClick);
+    const occ::handle<Aspect_XRAction>& aTrigPullAct = theView->View()->XRSession()->GenericAction(
+      aRole,
+      Aspect_XRGenericAction::Aspect_XRGenericAction_InputTriggerPull);
     if (aTrigClickAct.IsNull() || aTrigPullAct.IsNull())
     {
       continue;
@@ -2702,8 +2730,9 @@ void AIS_ViewController::handleXRPicking(const occ::handle<AIS_InteractiveContex
         theCtx->SelectDetected();
         OnSelectionChanged(theCtx, theView);
         if (const occ::handle<Aspect_XRAction>& aHaptic =
-              theView->View()->XRSession()->GenericAction(myXRLastPickingHand,
-                                                          Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
+              theView->View()->XRSession()->GenericAction(
+                myXRLastPickingHand,
+                Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
         {
           theView->View()->XRSession()->TriggerHapticVibrationAction(aHaptic, myXRSelectHaptic);
         }
@@ -2901,7 +2930,8 @@ void AIS_ViewController::contextLazyMoveTo(const occ::handle<AIS_InteractiveCont
 void AIS_ViewController::handleSelectionPick(const occ::handle<AIS_InteractiveContext>& theCtx,
                                              const occ::handle<V3d_View>&               theView)
 {
-  if (myGL.Selection.Tool == AIS_ViewSelectionTool::AIS_ViewSelectionTool_Picking && !myGL.Selection.Points.IsEmpty())
+  if (myGL.Selection.Tool == AIS_ViewSelectionTool::AIS_ViewSelectionTool_Picking
+      && !myGL.Selection.Points.IsEmpty())
   {
     for (NCollection_Sequence<NCollection_Vec2<int>>::Iterator aPntIter(myGL.Selection.Points);
          aPntIter.More();
@@ -2941,8 +2971,9 @@ void AIS_ViewController::handleSelectionPoly(const occ::handle<AIS_InteractiveCo
       myRubberBand->ClearPoints();
       myRubberBand->SetToUpdate();
 
-      const bool anIsRubber = myGL.Selection.Tool == AIS_ViewSelectionTool::AIS_ViewSelectionTool_RubberBand
-                              || myGL.Selection.Tool == AIS_ViewSelectionTool::AIS_ViewSelectionTool_ZoomWindow;
+      const bool anIsRubber =
+        myGL.Selection.Tool == AIS_ViewSelectionTool::AIS_ViewSelectionTool_RubberBand
+        || myGL.Selection.Tool == AIS_ViewSelectionTool::AIS_ViewSelectionTool_ZoomWindow;
       if (anIsRubber)
       {
         myRubberBand->SetRectangle(myGL.Selection.Points.First().x(),
@@ -3299,18 +3330,19 @@ void AIS_ViewController::handleXRHighlight(const occ::handle<AIS_InteractiveCont
   handleXRMoveTo(theCtx, theView, aPose.Orientation, true);
   if (!theCtx->DetectedOwner().IsNull() && theCtx->DetectedOwner() != aDetOld)
   {
-    if (const occ::handle<Aspect_XRAction>& aHaptic =
-          theView->View()->XRSession()->GenericAction(myXRLastPickingHand,
-                                                      Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
+    if (const occ::handle<Aspect_XRAction>& aHaptic = theView->View()->XRSession()->GenericAction(
+          myXRLastPickingHand,
+          Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic))
     {
       theView->View()->XRSession()->TriggerHapticVibrationAction(aHaptic, myXRPickingHaptic);
     }
   }
 
-  double& aPickDepth = myXRLastPickingHand == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
-                         ? myXRLastPickDepthLeft
-                         : myXRLastPickDepthRight;
-  aPickDepth         = Precision::Infinite();
+  double& aPickDepth =
+    myXRLastPickingHand == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
+      ? myXRLastPickDepthLeft
+      : myXRLastPickDepthRight;
+  aPickDepth = Precision::Infinite();
   if (theCtx->MainSelector()->NbPicked() > 0)
   {
     const gp_Trsf                  aHandBase = theView->View()->PoseXRToWorld(aPose.Orientation);
@@ -3355,12 +3387,12 @@ void AIS_ViewController::handleXRPresentations(const occ::handle<AIS_Interactive
                           false);
   }
 
-  const int aHeadDevice =
-    theView->View()->XRSession()->NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Head);
-  const int aLeftDevice =
-    theView->View()->XRSession()->NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand);
-  const int aRightDevice =
-    theView->View()->XRSession()->NamedTrackedDevice(Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand);
+  const int aHeadDevice = theView->View()->XRSession()->NamedTrackedDevice(
+    Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_Head);
+  const int aLeftDevice = theView->View()->XRSession()->NamedTrackedDevice(
+    Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand);
+  const int aRightDevice = theView->View()->XRSession()->NamedTrackedDevice(
+    Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_RightHand);
   for (int aDeviceIter = theView->View()->XRSession()->TrackedPoses().Lower();
        aDeviceIter <= theView->View()->XRSession()->TrackedPoses().Upper();
        ++aDeviceIter)
@@ -3439,9 +3471,10 @@ void AIS_ViewController::handleXRPresentations(const occ::handle<AIS_Interactive
     double aLaserLen = 0.0;
     if (isHand && aPosePrs->Role() == myXRLastPickingHand)
     {
-      aLaserLen = myXRLastPickingHand == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
-                    ? myXRLastPickDepthLeft
-                    : myXRLastPickDepthRight;
+      aLaserLen =
+        myXRLastPickingHand == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
+          ? myXRLastPickDepthLeft
+          : myXRLastPickDepthRight;
       if (Precision::IsInfinite(aLaserLen))
       {
         const Bnd_Box aViewBox = theView->View()->MinMaxValues(true);
@@ -3458,9 +3491,10 @@ void AIS_ViewController::handleXRPresentations(const occ::handle<AIS_Interactive
     }
     else if (isHand && aPosePrs->Role() == myXRLastTeleportHand)
     {
-      aLaserLen = myXRLastTeleportHand == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
-                    ? myXRLastPickDepthLeft
-                    : myXRLastPickDepthRight;
+      aLaserLen =
+        myXRLastTeleportHand == Aspect_XRTrackedDeviceRole::Aspect_XRTrackedDeviceRole_LeftHand
+          ? myXRLastPickDepthLeft
+          : myXRLastPickDepthRight;
       if (Precision::IsInfinite(aLaserLen))
       {
         const Bnd_Box aViewBox = theView->View()->MinMaxValues(true);
@@ -3492,7 +3526,8 @@ void AIS_ViewController::HandleViewEvents(const occ::handle<AIS_InteractiveConte
     // activate another subview on mouse click
     bool                  toPickSubview = false;
     NCollection_Vec2<int> aClickPoint;
-    if (myGL.Selection.Tool == AIS_ViewSelectionTool::AIS_ViewSelectionTool_Picking && !myGL.Selection.Points.IsEmpty())
+    if (myGL.Selection.Tool == AIS_ViewSelectionTool::AIS_ViewSelectionTool_Picking
+        && !myGL.Selection.Points.IsEmpty())
     {
       aClickPoint   = myGL.Selection.Points.Last();
       toPickSubview = true;

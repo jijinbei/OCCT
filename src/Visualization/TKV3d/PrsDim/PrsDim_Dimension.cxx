@@ -504,7 +504,8 @@ void PrsDim_Dimension::drawText(const occ::handle<Prs3d_Presentation>& thePresen
       // Setting color for text
       if (!myDrawer->HasOwnFreeBoundaryAspect())
       {
-        myDrawer->SetFreeBoundaryAspect(new Prs3d_LineAspect(aColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
+        myDrawer->SetFreeBoundaryAspect(
+          new Prs3d_LineAspect(aColor, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
       }
       myDrawer->FreeBoundaryAspect()->Aspect()->SetColor(aColor);
 
@@ -527,7 +528,8 @@ void PrsDim_Dimension::drawText(const occ::handle<Prs3d_Presentation>& thePresen
   }
 
   // generate primitives for 2D text
-  myDrawer->DimensionAspect()->TextAspect()->Aspect()->SetDisplayType(Aspect_TypeOfDisplayText::Aspect_TODT_DIMENSION);
+  myDrawer->DimensionAspect()->TextAspect()->Aspect()->SetDisplayType(
+    Aspect_TypeOfDisplayText::Aspect_TODT_DIMENSION);
 
   Prs3d_Text::Draw(aGroup, myDrawer->DimensionAspect()->TextAspect(), theText, theTextPos);
 
@@ -717,7 +719,8 @@ void PrsDim_Dimension::DrawLinearDimension(const occ::handle<Prs3d_Presentation>
       // add dimension line primitives
       if (theMode == ComputeMode_All || theMode == ComputeMode_Line)
       {
-        bool isLineBreak = aDimensionAspect->TextVerticalPosition() == Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center
+        bool isLineBreak = aDimensionAspect->TextVerticalPosition()
+                             == Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center
                            && aDimensionAspect->IsText3d();
 
         occ::handle<Graphic3d_ArrayOfSegments> aPrimSegments =
@@ -755,7 +758,8 @@ void PrsDim_Dimension::DrawLinearDimension(const occ::handle<Prs3d_Presentation>
         }
 
         // set text label justification
-        Graphic3d_VerticalTextAlignment aTextJustificaton = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
+        Graphic3d_VerticalTextAlignment aTextJustificaton =
+          Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
         switch (aLabelPosition & LabelPosition_VMask)
         {
           case LabelPosition_Above:

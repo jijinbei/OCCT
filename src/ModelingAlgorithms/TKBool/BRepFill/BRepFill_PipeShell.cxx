@@ -377,7 +377,8 @@ void BRepFill_PipeShell::Set(const TopoDS_Wire&           AuxiliarySpine,
 
   if (CurvilinearEquivalence)
   { // trihedron by curvilinear reduced abscissa
-    if (KeepContact == BRepFill_TypeOfContact::BRepFill_Contact || KeepContact == BRepFill_TypeOfContact::BRepFill_ContactOnBorder)
+    if (KeepContact == BRepFill_TypeOfContact::BRepFill_Contact
+        || KeepContact == BRepFill_TypeOfContact::BRepFill_ContactOnBorder)
       myTrihedron = GeomFill_Trihedron::GeomFill_IsGuideACWithContact; // with rotation
     else
       myTrihedron = GeomFill_Trihedron::GeomFill_IsGuideAC; // without rotation
@@ -388,7 +389,8 @@ void BRepFill_PipeShell::Set(const TopoDS_Wire&           AuxiliarySpine,
   }
   else
   { // trihedron by plane
-    if (KeepContact == BRepFill_TypeOfContact::BRepFill_Contact || KeepContact == BRepFill_TypeOfContact::BRepFill_ContactOnBorder)
+    if (KeepContact == BRepFill_TypeOfContact::BRepFill_Contact
+        || KeepContact == BRepFill_TypeOfContact::BRepFill_ContactOnBorder)
       myTrihedron = GeomFill_Trihedron::GeomFill_IsGuidePlanWithContact; // with rotation
     else
       myTrihedron = GeomFill_Trihedron::GeomFill_IsGuidePlan; // without rotation

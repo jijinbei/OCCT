@@ -265,7 +265,8 @@ void GeomFill::GetMinimalWeights(const Convert_ParameterisationType TConv,
 
 void GeomFill::Knots(const Convert_ParameterisationType TConv, NCollection_Array1<double>& TKnots)
 {
-  if ((TConv != Convert_ParameterisationType::Convert_QuasiAngular) && (TConv != Convert_ParameterisationType::Convert_Polynomial))
+  if ((TConv != Convert_ParameterisationType::Convert_QuasiAngular)
+      && (TConv != Convert_ParameterisationType::Convert_Polynomial))
   {
     int    i;
     double val = 0.;

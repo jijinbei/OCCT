@@ -83,7 +83,9 @@ protected:
     // Create and return the final object
     occ::handle<StepVisual_SurfaceStyleRenderingWithProperties> aResult =
       new StepVisual_SurfaceStyleRenderingWithProperties();
-    aResult->Init(StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading, aSurfaceColor, aProps);
+    aResult->Init(StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading,
+                  aSurfaceColor,
+                  aProps);
 
     return aResult;
   }
@@ -271,7 +273,8 @@ TEST_F(STEPConstruct_RenderingPropertiesTest, CreateRenderingProperties)
     aProps.CreateRenderingProperties();
 
   ASSERT_FALSE(aStepProps.IsNull());
-  EXPECT_EQ(aStepProps->RenderingMethod(), StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading);
+  EXPECT_EQ(aStepProps->RenderingMethod(),
+            StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading);
 
   // Verify properties through re-parsing
   STEPConstruct_RenderingProperties aParsedProps(aStepProps);

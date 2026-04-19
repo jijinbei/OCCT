@@ -634,8 +634,9 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
         myUCloseVal = RealLast();
         break;
       }
-      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: { //: c8 abv 03 Mar 98: UKI60094 #753: process
-                                         //: Geom_SurfaceOfLinearExtrusion
+      case GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion: { //: c8 abv 03 Mar 98: UKI60094 #753:
+                                                              //: process
+                                                              //: Geom_SurfaceOfLinearExtrusion
         occ::handle<Geom_SurfaceOfLinearExtrusion> extr =
           occ::down_cast<Geom_SurfaceOfLinearExtrusion>(mySurf);
         occ::handle<Geom_Curve> crv = extr->BasisCurve();
@@ -1222,8 +1223,8 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
           S = (uf + ul) / 2;
           T = (vf + vl) / 2; // yaura aumoins qqchose
                              // pdn to fix hangs PRO17015
-          if ((surftype == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion) && Precision::IsInfinite(uf)
-              && Precision::IsInfinite(ul))
+          if ((surftype == GeomAbs_SurfaceType::GeomAbs_SurfaceOfExtrusion)
+              && Precision::IsInfinite(uf) && Precision::IsInfinite(ul))
           {
             // conic case
             gp_Pnt2d prev(S, T);

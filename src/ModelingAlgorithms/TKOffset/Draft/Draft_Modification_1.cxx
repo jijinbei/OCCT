@@ -2259,7 +2259,9 @@ static double SmartParameter(Draft_EdgeInfo&                  Einf,
       PntArray(1)                                 = P2d;
       PntArray(2)                                 = BCurve->Pole(1);
       occ::handle<Geom2d_BezierCurve>       Patch = new Geom2d_BezierCurve(PntArray);
-      Geom2dConvert_CompCurveToBSplineCurve Concat(BCurve, Convert_ParameterisationType::Convert_QuasiAngular);
+      Geom2dConvert_CompCurveToBSplineCurve Concat(
+        BCurve,
+        Convert_ParameterisationType::Convert_QuasiAngular);
       Concat.Add(Patch, Tol, false);
       BCurve = Concat.BSplineCurve();
     }
@@ -2269,7 +2271,9 @@ static double SmartParameter(Draft_EdgeInfo&                  Einf,
       PntArray(1)                                 = BCurve->Pole(BCurve->NbPoles());
       PntArray(2)                                 = P2d;
       occ::handle<Geom2d_BezierCurve>       Patch = new Geom2d_BezierCurve(PntArray);
-      Geom2dConvert_CompCurveToBSplineCurve Concat(BCurve, Convert_ParameterisationType::Convert_QuasiAngular);
+      Geom2dConvert_CompCurveToBSplineCurve Concat(
+        BCurve,
+        Convert_ParameterisationType::Convert_QuasiAngular);
       Concat.Add(Patch, Tol, true);
       BCurve = Concat.BSplineCurve();
     }

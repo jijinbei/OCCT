@@ -116,9 +116,10 @@ public:
   //! on the sweeped shape
   //! - correspondence between spine, and section on the sweeped shape
   //! defined by a vertex of the spine
-  Standard_EXPORT void SetMode(const TopoDS_Wire&           AuxiliarySpine,
-                               const bool                   CurvilinearEquivalence,
-                               const BRepFill_TypeOfContact KeepContact = BRepFill_TypeOfContact::BRepFill_NoContact);
+  Standard_EXPORT void SetMode(
+    const TopoDS_Wire&           AuxiliarySpine,
+    const bool                   CurvilinearEquivalence,
+    const BRepFill_TypeOfContact KeepContact = BRepFill_TypeOfContact::BRepFill_NoContact);
 
   //! Adds the section Profile to this framework. First and last
   //! sections may be punctual, so the shape Profile may be
@@ -238,7 +239,8 @@ public:
   //! with option WithCorrection = True, i.e. it is strictly
   //! orthogonal to the spine.
   Standard_EXPORT void SetTransitionMode(
-    const BRepBuilderAPI_TransitionMode Mode = BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed);
+    const BRepBuilderAPI_TransitionMode Mode =
+      BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed);
 
   //! Simulates the resulting shape by calculating its
   //! cross-sections. The spine is divided by this

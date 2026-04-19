@@ -2280,7 +2280,8 @@ bool V3d_View::IfWindow() const
 
 V3d_TypeOfView V3d_View::Type() const
 {
-  return Camera()->IsOrthographic() ? V3d_TypeOfView::V3d_ORTHOGRAPHIC : V3d_TypeOfView::V3d_PERSPECTIVE;
+  return Camera()->IsOrthographic() ? V3d_TypeOfView::V3d_ORTHOGRAPHIC
+                                    : V3d_TypeOfView::V3d_PERSPECTIVE;
 }
 
 //=================================================================================================
@@ -2727,8 +2728,10 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
 
   if (aFBOPtr.IsNull())
   {
-    int aMaxTexSizeX = MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxViewDumpSizeX);
-    int aMaxTexSizeY = MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxViewDumpSizeY);
+    int aMaxTexSizeX = MyViewer->Driver()->InquireLimit(
+      Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxViewDumpSizeX);
+    int aMaxTexSizeY = MyViewer->Driver()->InquireLimit(
+      Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_MaxViewDumpSizeY);
     if (theParams.TileSize > aMaxTexSizeX || theParams.TileSize > aMaxTexSizeY)
     {
       Message::SendFail(
@@ -2740,7 +2743,8 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
 
     if (aFBOVPSize.x() > aMaxTexSizeX || aFBOVPSize.y() > aMaxTexSizeY)
     {
-      if (MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_IsWorkaroundFBO))
+      if (MyViewer->Driver()->InquireLimit(
+            Graphic3d_TypeOfLimit::Graphic3d_TypeOfLimit_IsWorkaroundFBO))
       {
         Message::SendWarning("Warning, workaround for Intel driver problem with empty FBO for "
                              "images with big width is applied");

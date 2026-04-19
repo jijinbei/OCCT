@@ -697,13 +697,14 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
     */
     if (!isT2d)
     {
-      occ::handle<TopOpeBRepDS_Interference> EVI1 = ::MakeEPVInterference(T1ondg,
-                                                                          iFi,
-                                                                          PVIndex,
-                                                                          par1ondg,
-                                                                          TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
-                                                                          TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
-                                                                          isvertex1);
+      occ::handle<TopOpeBRepDS_Interference> EVI1 =
+        ::MakeEPVInterference(T1ondg,
+                              iFi,
+                              PVIndex,
+                              par1ondg,
+                              TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
+                              TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
+                              isvertex1);
       myHDS->StoreInterference(EVI1, dgEd);
     }
   }
@@ -722,13 +723,14 @@ bool TopOpeBRep_FacesFiller::ProcessVPondgE(const TopOpeBRep_VPointInter&       
     */
     if (!isT2d)
     {
-      occ::handle<TopOpeBRepDS_Interference> EVI2 = ::MakeEPVInterference(T2ondg,
-                                                                          iFi,
-                                                                          PVIndex,
-                                                                          par2ondg,
-                                                                          TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
-                                                                          TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
-                                                                          isvertex2);
+      occ::handle<TopOpeBRepDS_Interference> EVI2 =
+        ::MakeEPVInterference(T2ondg,
+                              iFi,
+                              PVIndex,
+                              par2ondg,
+                              TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
+                              TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
+                              isvertex2);
       myHDS->StoreInterference(EVI2, dgEd);
     }
   }

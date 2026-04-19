@@ -62,8 +62,9 @@ public:
   //! which parameterisation matches the circle one.
   //! ChFi3d_FilletShape::ChFi3d_Polynomial corresponds to a polynomial
   //! representation of circles.
-  Standard_EXPORT BRepFilletAPI_MakeFillet(const TopoDS_Shape&      S,
-                                           const ChFi3d_FilletShape FShape = ChFi3d_FilletShape::ChFi3d_Rational);
+  Standard_EXPORT BRepFilletAPI_MakeFillet(
+    const TopoDS_Shape&      S,
+    const ChFi3d_FilletShape FShape = ChFi3d_FilletShape::ChFi3d_Rational);
 
   Standard_EXPORT void SetParams(const double Tang,
                                  const double Tesp,

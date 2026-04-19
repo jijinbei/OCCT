@@ -108,7 +108,8 @@ void Graphic3d_CView::Activate()
 
       // If the structure can be displayed in the new context of the view, it is displayed.
       const Graphic3d_TypeOfAnswer anAnswer = acceptDisplay(aStruct->Visual());
-      if (anAnswer == Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES || anAnswer == Graphic3d_TypeOfAnswer::Graphic3d_TOA_COMPUTE)
+      if (anAnswer == Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES
+          || anAnswer == Graphic3d_TypeOfAnswer::Graphic3d_TOA_COMPUTE)
       {
         Display(aStruct);
       }
@@ -143,7 +144,8 @@ void Graphic3d_CView::Deactivate()
       }
 
       const Graphic3d_TypeOfAnswer anAnswer = acceptDisplay(aStruct->Visual());
-      if (anAnswer == Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES || anAnswer == Graphic3d_TypeOfAnswer::Graphic3d_TOA_COMPUTE)
+      if (anAnswer == Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES
+          || anAnswer == Graphic3d_TypeOfAnswer::Graphic3d_TOA_COMPUTE)
       {
         Erase(aStruct);
       }
@@ -373,10 +375,12 @@ void Graphic3d_CView::SetComputedMode(const bool theMode)
       }
       aCompStruct->SetHLRValidation(true);
 
-      const bool toComputeWireframe = myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_WIREFRAME
-                                      && aStruct->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_SHADING;
-      const bool toComputeShading = myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_SHADING
-                                    && aStruct->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME;
+      const bool toComputeWireframe =
+        myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_WIREFRAME
+        && aStruct->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_SHADING;
+      const bool toComputeShading =
+        myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_SHADING
+        && aStruct->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME;
       if (toComputeWireframe)
         aCompStruct->SetVisual(Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME);
       if (toComputeShading)
@@ -459,10 +463,12 @@ void Graphic3d_CView::ReCompute(const occ::handle<Graphic3d_Structure>& theStruc
   aCompStruct->CalculateBoundBox();
 
   // of which type will be the computed?
-  const bool toComputeWireframe = myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_WIREFRAME
-                                  && theStruct->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_SHADING;
-  const bool toComputeShading = myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_SHADING
-                                && theStruct->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME;
+  const bool toComputeWireframe =
+    myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_WIREFRAME
+    && theStruct->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_SHADING;
+  const bool toComputeShading =
+    myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_SHADING
+    && theStruct->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME;
   if (toComputeWireframe)
   {
     aCompStruct->SetVisual(Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME);
@@ -676,10 +682,14 @@ Graphic3d_TypeOfAnswer Graphic3d_CView::acceptDisplay(
       return Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES; // The structure accepts any type of view
     }
     case Graphic3d_TypeOfStructure::Graphic3d_TOS_SHADING: {
-      return myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_SHADING ? Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES : Graphic3d_TypeOfAnswer::Graphic3d_TOA_NO;
+      return myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_SHADING
+               ? Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES
+               : Graphic3d_TypeOfAnswer::Graphic3d_TOA_NO;
     }
     case Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME: {
-      return myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_WIREFRAME ? Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES : Graphic3d_TypeOfAnswer::Graphic3d_TOA_NO;
+      return myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_WIREFRAME
+               ? Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES
+               : Graphic3d_TypeOfAnswer::Graphic3d_TOA_NO;
     }
     case Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED: {
       return (myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_SHADING
@@ -912,17 +922,20 @@ void Graphic3d_CView::Display(const occ::handle<Graphic3d_Structure>& theStructu
   }
 
   // Of which type will be the computed?
-  const bool toComputeWireframe = myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_WIREFRAME
-                                  && theStructure->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_SHADING;
-  const bool toComputeShading = myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_SHADING
-                                && theStructure->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME;
+  const bool toComputeWireframe =
+    myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_WIREFRAME
+    && theStructure->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_SHADING;
+  const bool toComputeShading =
+    myVisualization == Graphic3d_TypeOfVisualization::Graphic3d_TOV_SHADING
+    && theStructure->ComputeVisual() != Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME;
   if (!toComputeShading && !toComputeWireframe)
   {
     anAnswer = Graphic3d_TypeOfAnswer::Graphic3d_TOA_NO;
   }
   else
   {
-    aStruct->SetVisual(toComputeWireframe ? Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME : Graphic3d_TypeOfStructure::Graphic3d_TOS_SHADING);
+    aStruct->SetVisual(toComputeWireframe ? Graphic3d_TypeOfStructure::Graphic3d_TOS_WIREFRAME
+                                          : Graphic3d_TypeOfStructure::Graphic3d_TOS_SHADING);
     anAnswer = acceptDisplay(aStruct->Visual());
   }
 
@@ -953,8 +966,9 @@ void Graphic3d_CView::Erase(const occ::handle<Graphic3d_Structure>& theStructure
     return;
   }
 
-  const Graphic3d_TypeOfAnswer anAnswer =
-    myIsInComputedMode ? acceptDisplay(theStructure->Visual()) : Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES;
+  const Graphic3d_TypeOfAnswer anAnswer = myIsInComputedMode
+                                            ? acceptDisplay(theStructure->Visual())
+                                            : Graphic3d_TypeOfAnswer::Graphic3d_TOA_YES;
   if (anAnswer != Graphic3d_TypeOfAnswer::Graphic3d_TOA_COMPUTE)
   {
     eraseStructure(theStructure->CStructure());
@@ -1294,12 +1308,18 @@ void Graphic3d_CView::ProcessXRInput()
   }
   else
   {
-    const NCollection_Mat4<double> aPoseL = myXRSession->HeadToEyeTransform(Aspect_Eye::Aspect_Eye_Left);
-    const NCollection_Mat4<double> aPoseR = myXRSession->HeadToEyeTransform(Aspect_Eye::Aspect_Eye_Right);
+    const NCollection_Mat4<double> aPoseL =
+      myXRSession->HeadToEyeTransform(Aspect_Eye::Aspect_Eye_Left);
+    const NCollection_Mat4<double> aPoseR =
+      myXRSession->HeadToEyeTransform(Aspect_Eye::Aspect_Eye_Right);
     const NCollection_Mat4<double> aProjL =
-      myXRSession->ProjectionMatrix(Aspect_Eye::Aspect_Eye_Left, myCamera->ZNear(), myCamera->ZFar());
+      myXRSession->ProjectionMatrix(Aspect_Eye::Aspect_Eye_Left,
+                                    myCamera->ZNear(),
+                                    myCamera->ZFar());
     const NCollection_Mat4<double> aProjR =
-      myXRSession->ProjectionMatrix(Aspect_Eye::Aspect_Eye_Right, myCamera->ZNear(), myCamera->ZFar());
+      myXRSession->ProjectionMatrix(Aspect_Eye::Aspect_Eye_Right,
+                                    myCamera->ZNear(),
+                                    myCamera->ZFar());
     myCamera->SetCustomStereoProjection(aProjL, aPoseL, aProjR, aPoseR);
   }
   myBaseXRCamera = myCamera;

@@ -367,7 +367,8 @@ void TopOpeBRepBuild_Builder::GFillFaceSFS(const TopoDS_Shape&                  
       FUN_unsetmotherope(); // +12/07
 
       GM = Gin;
-      GM.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED, TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
+      GM.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED,
+                      TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED);
       if (dodo)
       {
 #ifdef OCCT_DEBUG
@@ -424,7 +425,8 @@ void TopOpeBRepBuild_Builder::GFillFaceSFS(const TopoDS_Shape&                  
       NTB = TopAbs_IN; // NTB = (TB == TopAbs_OUT) ? TopAbs_IN : TopAbs_OUT;
       GM.ChangeValue(TB, TopAbs_ON, false);
       GM.ChangeValue(NTB, TopAbs_ON, true);
-      GM.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED, TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
+      GM.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED,
+                      TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
       FUN_setmotherope(GM); // +12/07
       if (dodo)
       {
@@ -506,7 +508,8 @@ void TopOpeBRepBuild_Builder::GFillFaceSFS(const TopoDS_Shape&                  
         NTB = TopAbs_IN;
         GM.ChangeValue(TopAbs_ON, TB, false);
         GM.ChangeValue(TopAbs_ON, NTB, true);
-        GM.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED, TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
+        GM.ChangeConfig(TopOpeBRepDS_Config::TopOpeBRepDS_SAMEORIENTED,
+                        TopOpeBRepDS_Config::TopOpeBRepDS_DIFFORIENTED);
         FUN_setmotherope(GM); // +12/07
         if (dodo)
         {

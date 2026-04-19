@@ -104,7 +104,8 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W, const TopoDS_Face& F)
     // For the faces based on Cone, BSpline and Bezier compute the
     // UV bounds to precise the UV tolerance values
     const GeomAbs_SurfaceType aSurfType = BRepAdaptor_Surface(F, false).GetType();
-    if (aSurfType == GeomAbs_SurfaceType::GeomAbs_Cone || aSurfType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface
+    if (aSurfType == GeomAbs_SurfaceType::GeomAbs_Cone
+        || aSurfType == GeomAbs_SurfaceType::GeomAbs_BSplineSurface
         || aSurfType == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
     {
       BRepTools::UVBounds(F, UMin, UMax, VMin, VMax);
@@ -183,7 +184,8 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
       myTolU = 2. * std::max(tol1, tol2);
     }
 
-    if (aGAS.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface || aGAS.GetType() == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
+    if (aGAS.GetType() == GeomAbs_SurfaceType::GeomAbs_BSplineSurface
+        || aGAS.GetType() == GeomAbs_SurfaceType::GeomAbs_BezierSurface)
     {
       double maxTol = std::max(myTolU, myTolV);
       gp_Pnt aP;

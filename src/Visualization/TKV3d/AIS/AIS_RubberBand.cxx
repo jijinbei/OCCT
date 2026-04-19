@@ -35,7 +35,8 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_RubberBand, AIS_InteractiveObject)
 AIS_RubberBand::AIS_RubberBand()
     : myIsPolygonClosed(true)
 {
-  myDrawer->SetLineAspect(new Prs3d_LineAspect(Quantity_NOC_WHITE, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
+  myDrawer->SetLineAspect(
+    new Prs3d_LineAspect(Quantity_NOC_WHITE, Aspect_TypeOfLine::Aspect_TOL_SOLID, 1.0));
   myDrawer->SetShadingAspect(new Prs3d_ShadingAspect());
   myDrawer->ShadingAspect()->SetMaterial(Graphic3d_NameOfMaterial_Plastified);
   myDrawer->ShadingAspect()->Aspect()->SetShadingModel(Graphic3d_TypeOfShadingModel_Unlit);
@@ -210,8 +211,8 @@ double AIS_RubberBand::FillTransparency() const
 
 void AIS_RubberBand::SetFilling(const bool theIsFilling)
 {
-  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(theIsFilling ? Aspect_InteriorStyle::Aspect_IS_SOLID
-                                                                     : Aspect_InteriorStyle::Aspect_IS_EMPTY);
+  myDrawer->ShadingAspect()->Aspect()->SetInteriorStyle(
+    theIsFilling ? Aspect_InteriorStyle::Aspect_IS_SOLID : Aspect_InteriorStyle::Aspect_IS_EMPTY);
 }
 
 //=================================================================================================
@@ -276,7 +277,9 @@ bool AIS_RubberBand::fillTriangles()
   {
     int           aPtIdx     = isClockwiseOrdered ? aIdx : (aIdx + 1) % anIndexes.Length();
     int           aNextPtIdx = isClockwiseOrdered ? (aIdx + 1) % anIndexes.Length() : aIdx;
-    BRepMesh_Edge anEdge(anIndexes.Value(aPtIdx), anIndexes.Value(aNextPtIdx), BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
+    BRepMesh_Edge anEdge(anIndexes.Value(aPtIdx),
+                         anIndexes.Value(aNextPtIdx),
+                         BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
     aMeshStructure->AddLink(anEdge);
   }
 

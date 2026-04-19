@@ -43,7 +43,8 @@ void RWStepElement_RWSurface3dElementDescriptor::ReadStep(
 
   // Inherited fields of ElementDescriptor
 
-  StepElement_ElementOrder aElementDescriptor_TopologyOrder = StepElement_ElementOrder::StepElement_Linear;
+  StepElement_ElementOrder aElementDescriptor_TopologyOrder =
+    StepElement_ElementOrder::StepElement_Linear;
   if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);

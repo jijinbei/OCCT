@@ -1168,7 +1168,8 @@ void BlendFunc_ConstRad::Section(const double Param,
 
 bool BlendFunc_ConstRad::IsRational() const
 {
-  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
+  return (mySShape == BlendFunc_SectionShape::BlendFunc_Rational
+          || mySShape == BlendFunc_SectionShape::BlendFunc_QuasiAngular);
 }
 
 //=================================================================================================

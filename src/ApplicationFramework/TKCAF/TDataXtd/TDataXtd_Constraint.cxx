@@ -348,7 +348,8 @@ void TDataXtd_Constraint::References(const occ::handle<TDF_DataSet>& DS) const
   // bidouille en attendant traitement des contraintes d assemblage en dehors de la part
   //  l attribut placement devrait oriente vers les contraintes de placement en dehors
   int Lim;
-  if (myType >= TDataXtd_ConstraintEnum::TDataXtd_MATE && myType <= TDataXtd_ConstraintEnum::TDataXtd_FACES_ANGLE)
+  if (myType >= TDataXtd_ConstraintEnum::TDataXtd_MATE
+      && myType <= TDataXtd_ConstraintEnum::TDataXtd_FACES_ANGLE)
     Lim = 1;
   else
     Lim = 3;

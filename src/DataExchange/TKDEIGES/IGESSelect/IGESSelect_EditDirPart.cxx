@@ -34,7 +34,8 @@ IMPLEMENT_STANDARD_RTTIEXT(IGESSelect_EditDirPart, IFSelect_Editor)
 
 static occ::handle<Interface_TypedValue> NewDefType(const char* const name)
 {
-  occ::handle<Interface_TypedValue> deftype = new Interface_TypedValue(name, Interface_ParamType::Interface_ParamEnum);
+  occ::handle<Interface_TypedValue> deftype =
+    new Interface_TypedValue(name, Interface_ParamType::Interface_ParamEnum);
   deftype->StartEnum(0);
   deftype->AddEnumValue("Void", 0);
   deftype->AddEnumValue("Value", 1);
@@ -44,7 +45,8 @@ static occ::handle<Interface_TypedValue> NewDefType(const char* const name)
 
 static occ::handle<Interface_TypedValue> NewDefList(const char* const name)
 {
-  occ::handle<Interface_TypedValue> deftype = new Interface_TypedValue(name, Interface_ParamType::Interface_ParamEnum);
+  occ::handle<Interface_TypedValue> deftype =
+    new Interface_TypedValue(name, Interface_ParamType::Interface_ParamEnum);
   deftype->StartEnum(0);
   deftype->AddEnumValue("None", 0);
   deftype->AddEnumValue("One", 1);
@@ -99,7 +101,8 @@ IGESSelect_EditDirPart::IGESSelect_EditDirPart()
   SetValue(12, transf, "D7:Transf", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> labdisp =
-    new Interface_TypedValue("Label Display Associativity", Interface_ParamType::Interface_ParamIdent);
+    new Interface_TypedValue("Label Display Associativity",
+                             Interface_ParamType::Interface_ParamIdent);
   SetValue(13, labdisp, "D8:LabelDisp", IFSelect_Optional);
 
   occ::handle<Interface_TypedValue> blank =

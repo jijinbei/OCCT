@@ -195,7 +195,8 @@ void IntTools_EdgeEdge::Perform()
   Prepare();
   //
   // 3.1. Check Line/Line case
-  if (myCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Line && myCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line)
+  if (myCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Line
+      && myCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line)
   {
     ComputeLineLine();
     return;
@@ -214,8 +215,10 @@ void IntTools_EdgeEdge::Perform()
     }
   }
   //
-  if ((myCurve1.GetType() <= GeomAbs_CurveType::GeomAbs_Parabola && myCurve2.GetType() <= GeomAbs_CurveType::GeomAbs_Parabola)
-      && (myCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Line || myCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line))
+  if ((myCurve1.GetType() <= GeomAbs_CurveType::GeomAbs_Parabola
+       && myCurve2.GetType() <= GeomAbs_CurveType::GeomAbs_Parabola)
+      && (myCurve1.GetType() == GeomAbs_CurveType::GeomAbs_Line
+          || myCurve2.GetType() == GeomAbs_CurveType::GeomAbs_Line))
   {
     // Improvement of performance for cases of searching common parts between line
     // and analytical curve. This code allows to define that edges have no

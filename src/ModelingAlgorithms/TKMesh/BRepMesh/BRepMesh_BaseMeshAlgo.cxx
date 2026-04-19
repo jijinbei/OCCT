@@ -166,13 +166,14 @@ int BRepMesh_BaseMeshAlgo::addLinkToMesh(const int                theFirstNodeId
 {
   int aLinkIndex;
   if (theOrientation == TopAbs_REVERSED)
-    aLinkIndex =
-      myStructure->AddLink(BRepMesh_Edge(theLastNodeId, theFirstNodeId, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier));
+    aLinkIndex = myStructure->AddLink(
+      BRepMesh_Edge(theLastNodeId, theFirstNodeId, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier));
   else if (theOrientation == TopAbs_INTERNAL)
-    aLinkIndex = myStructure->AddLink(BRepMesh_Edge(theFirstNodeId, theLastNodeId, BRepMesh_DegreeOfFreedom::BRepMesh_Fixed));
+    aLinkIndex = myStructure->AddLink(
+      BRepMesh_Edge(theFirstNodeId, theLastNodeId, BRepMesh_DegreeOfFreedom::BRepMesh_Fixed));
   else
-    aLinkIndex =
-      myStructure->AddLink(BRepMesh_Edge(theFirstNodeId, theLastNodeId, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier));
+    aLinkIndex = myStructure->AddLink(
+      BRepMesh_Edge(theFirstNodeId, theLastNodeId, BRepMesh_DegreeOfFreedom::BRepMesh_Frontier));
 
   return std::abs(aLinkIndex);
 }

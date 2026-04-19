@@ -4683,9 +4683,11 @@ static void setGeomTolObjectToXCAF(const occ::handle<Standard_Transient>&    the
   {
     for (int i = aModifiers->Lower(); i <= aModifiers->Upper(); i++)
     {
-      if (aModifiers->Value(i) == StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement)
+      if (aModifiers->Value(i)
+          == StepDimTol_GeometricToleranceModifier::StepDimTol_GTMLeastMaterialRequirement)
         aTolObj->SetMaterialRequirementModifier(XCAFDimTolObjects_GeomToleranceMatReqModif_L);
-      else if (aModifiers->Value(i) == StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement)
+      else if (aModifiers->Value(i)
+               == StepDimTol_GeometricToleranceModifier::StepDimTol_GTMMaximumMaterialRequirement)
         aTolObj->SetMaterialRequirementModifier(XCAFDimTolObjects_GeomToleranceMatReqModif_M);
       else
         aTolObj->AddModifier((XCAFDimTolObjects_GeomToleranceModif)aModifiers->Value(i));

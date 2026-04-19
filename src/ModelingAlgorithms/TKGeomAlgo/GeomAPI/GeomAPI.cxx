@@ -43,7 +43,8 @@ occ::handle<Geom2d_Curve> GeomAPI::To2d(const occ::handle<Geom_Curve>& C, const 
 
   ProjLib_ProjectedCurve Proj(HS, HC);
 
-  if (Proj.GetType() != GeomAbs_CurveType::GeomAbs_OffsetCurve && Proj.GetType() != GeomAbs_CurveType::GeomAbs_OtherCurve)
+  if (Proj.GetType() != GeomAbs_CurveType::GeomAbs_OffsetCurve
+      && Proj.GetType() != GeomAbs_CurveType::GeomAbs_OtherCurve)
   {
     result = Geom2dAdaptor::MakeCurve(Proj);
   }

@@ -318,7 +318,8 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
           aTanV = aT2;
         }
       }
-      else // if(anExtr.SupportTypeShape2(anIdxMin) == BRepExtrema_SupportType::BRepExtrema_IsOnEdge)
+      else // if(anExtr.SupportTypeShape2(anIdxMin) ==
+           // BRepExtrema_SupportType::BRepExtrema_IsOnEdge)
       {
         const TopoDS_Edge       anE = TopoDS::Edge(anExtr.SupportOnShape2(anIdxMin));
         const BRepAdaptor_Curve anAC(anE);
@@ -1436,8 +1437,11 @@ bool BRepFill_AdvancedEvolved::CheckSingularityAndAdd(
     return true;
   }
 
-  if ((aSType != GeomAbs_SurfaceType::GeomAbs_Cone) && (aSType != GeomAbs_SurfaceType::GeomAbs_Sphere) && (aSType != GeomAbs_SurfaceType::GeomAbs_BezierSurface)
-      && (aSType != GeomAbs_SurfaceType::GeomAbs_BSplineSurface) && (aSType != GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution))
+  if ((aSType != GeomAbs_SurfaceType::GeomAbs_Cone)
+      && (aSType != GeomAbs_SurfaceType::GeomAbs_Sphere)
+      && (aSType != GeomAbs_SurfaceType::GeomAbs_BezierSurface)
+      && (aSType != GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
+      && (aSType != GeomAbs_SurfaceType::GeomAbs_SurfaceOfRevolution))
   {
     theListOfFaces.Append(theF);
     return false;

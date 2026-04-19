@@ -406,7 +406,8 @@ Aspect_OpenVRSession::Aspect_OpenVRSession()
     aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputSysMenu] = aSysMenuClick;
 
     occ::handle<Aspect_XRAction> aTriggerPull =
-      new Aspect_XRAction(anActionSet->Id() + "/in/trigger_pull", Aspect_XRActionType::Aspect_XRActionType_InputAnalog);
+      new Aspect_XRAction(anActionSet->Id() + "/in/trigger_pull",
+                          Aspect_XRActionType::Aspect_XRActionType_InputAnalog);
     anActionSet->AddAction(aTriggerPull);
     aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputTriggerPull] = aTriggerPull;
 
@@ -417,7 +418,8 @@ Aspect_OpenVRSession::Aspect_OpenVRSession()
     aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputTriggerClick] = aTriggerClick;
 
     occ::handle<Aspect_XRAction> aGripClick =
-      new Aspect_XRAction(anActionSet->Id() + "/in/grip_click", Aspect_XRActionType::Aspect_XRActionType_InputDigital);
+      new Aspect_XRAction(anActionSet->Id() + "/in/grip_click",
+                          Aspect_XRActionType::Aspect_XRActionType_InputDigital);
     anActionSet->AddAction(aGripClick);
     aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputGripClick] = aGripClick;
 
@@ -440,27 +442,32 @@ Aspect_OpenVRSession::Aspect_OpenVRSession()
     aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputTrackPadClick] = aPadClick;
 
     occ::handle<Aspect_XRAction> aPoseBase =
-      new Aspect_XRAction(anActionSet->Id() + "/in/pose_base", Aspect_XRActionType::Aspect_XRActionType_InputPose);
+      new Aspect_XRAction(anActionSet->Id() + "/in/pose_base",
+                          Aspect_XRActionType::Aspect_XRActionType_InputPose);
     anActionSet->AddAction(aPoseBase);
     aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputPoseBase] = aPoseBase;
 
     occ::handle<Aspect_XRAction> aPoseFront =
-      new Aspect_XRAction(anActionSet->Id() + "/in/pose_front", Aspect_XRActionType::Aspect_XRActionType_InputPose);
+      new Aspect_XRAction(anActionSet->Id() + "/in/pose_front",
+                          Aspect_XRActionType::Aspect_XRActionType_InputPose);
     anActionSet->AddAction(aPoseFront);
     aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputPoseFront] = aPoseFront;
 
     occ::handle<Aspect_XRAction> aPoseGrip =
-      new Aspect_XRAction(anActionSet->Id() + "/in/pose_handgrip", Aspect_XRActionType::Aspect_XRActionType_InputPose);
+      new Aspect_XRAction(anActionSet->Id() + "/in/pose_handgrip",
+                          Aspect_XRActionType::Aspect_XRActionType_InputPose);
     anActionSet->AddAction(aPoseGrip);
     aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputPoseHandGrip] = aPoseGrip;
 
     occ::handle<Aspect_XRAction> aPoseTip =
-      new Aspect_XRAction(anActionSet->Id() + "/in/pose_tip", Aspect_XRActionType::Aspect_XRActionType_InputPose);
+      new Aspect_XRAction(anActionSet->Id() + "/in/pose_tip",
+                          Aspect_XRActionType::Aspect_XRActionType_InputPose);
     anActionSet->AddAction(aPoseTip);
     aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputPoseFingerTip] = aPoseTip;
 
     occ::handle<Aspect_XRAction> aHaptic =
-      new Aspect_XRAction(anActionSet->Id() + "/out/haptic", Aspect_XRActionType::Aspect_XRActionType_OutputHaptic);
+      new Aspect_XRAction(anActionSet->Id() + "/out/haptic",
+                          Aspect_XRActionType::Aspect_XRActionType_OutputHaptic);
     anActionSet->AddAction(aHaptic);
     aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_OutputHaptic] = aHaptic;
 
@@ -468,19 +475,22 @@ Aspect_OpenVRSession::Aspect_OpenVRSession()
       new Aspect_XRAction(anActionSet->Id() + "/in/thumbstick_position",
                           Aspect_XRActionType::Aspect_XRActionType_InputAnalog);
     anActionSet->AddAction(aThumbsctickPos);
-    aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputThumbstickPosition] = aThumbsctickPos;
+    aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputThumbstickPosition] =
+      aThumbsctickPos;
 
     occ::handle<Aspect_XRAction> aThumbsctickTouch =
       new Aspect_XRAction(anActionSet->Id() + "/in/thumbstick_touch",
                           Aspect_XRActionType::Aspect_XRActionType_InputDigital);
     anActionSet->AddAction(aThumbsctickTouch);
-    aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputThumbstickTouch] = aThumbsctickTouch;
+    aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputThumbstickTouch] =
+      aThumbsctickTouch;
 
     occ::handle<Aspect_XRAction> aThumbsctickClick =
       new Aspect_XRAction(anActionSet->Id() + "/in/thumbstick_click",
                           Aspect_XRActionType::Aspect_XRActionType_InputDigital);
     anActionSet->AddAction(aThumbsctickClick);
-    aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputThumbstickClick] = aThumbsctickClick;
+    aGenericSet[Aspect_XRGenericAction::Aspect_XRGenericAction_InputThumbstickClick] =
+      aThumbsctickClick;
   }
 #endif
 }
@@ -962,7 +972,8 @@ bool Aspect_OpenVRSession::WaitPoses()
 Aspect_XRDigitalActionData Aspect_OpenVRSession::GetDigitalActionData(
   const occ::handle<Aspect_XRAction>& theAction) const
 {
-  if (theAction.IsNull() || theAction->Type() != Aspect_XRActionType::Aspect_XRActionType_InputDigital)
+  if (theAction.IsNull()
+      || theAction->Type() != Aspect_XRActionType::Aspect_XRActionType_InputDigital)
   {
     throw Standard_ProgramError(
       "Aspect_OpenVRSession::GetDigitalActionData() called for wrong action");
@@ -1000,7 +1011,8 @@ Aspect_XRDigitalActionData Aspect_OpenVRSession::GetDigitalActionData(
 Aspect_XRAnalogActionData Aspect_OpenVRSession::GetAnalogActionData(
   const occ::handle<Aspect_XRAction>& theAction) const
 {
-  if (theAction.IsNull() || theAction->Type() != Aspect_XRActionType::Aspect_XRActionType_InputAnalog)
+  if (theAction.IsNull()
+      || theAction->Type() != Aspect_XRActionType::Aspect_XRActionType_InputAnalog)
   {
     throw Standard_ProgramError(
       "Aspect_OpenVRSession::GetAnalogActionData() called for wrong action");
@@ -1085,7 +1097,8 @@ void Aspect_OpenVRSession::triggerHapticVibrationAction(
   const occ::handle<Aspect_XRAction>& theAction,
   const Aspect_XRHapticActionData&    theParams)
 {
-  if (theAction.IsNull() || theAction->Type() != Aspect_XRActionType::Aspect_XRActionType_OutputHaptic)
+  if (theAction.IsNull()
+      || theAction->Type() != Aspect_XRActionType::Aspect_XRActionType_OutputHaptic)
   {
     throw Standard_ProgramError(
       "Aspect_OpenVRSession::triggerHapticVibrationAction() called for wrong action");
@@ -1268,9 +1281,9 @@ bool Aspect_OpenVRSession::SubmitEye(void*                  theTexture,
       break;
   }
 
-  const vr::EVRCompositorError aVRError =
-    vr::VRCompositor()->Submit(theEye == Aspect_Eye::Aspect_Eye_Right ? vr::Eye_Right : vr::Eye_Left,
-                               &aVRTexture);
+  const vr::EVRCompositorError aVRError = vr::VRCompositor()->Submit(
+    theEye == Aspect_Eye::Aspect_Eye_Right ? vr::Eye_Right : vr::Eye_Left,
+    &aVRTexture);
   if (aVRError != vr::VRCompositorError_None)
   {
     if (aVRError != vr::VRCompositorError_AlreadySubmitted)

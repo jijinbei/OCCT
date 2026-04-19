@@ -71,7 +71,10 @@ public:
   int Signature() const override { return 0; }
 
   //! Returns Object as the type of Interactive Object.
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Shape; }
+  AIS_KindOfInteractive Type() const override
+  {
+    return AIS_KindOfInteractive::AIS_KindOfInteractive_Shape;
+  }
 
   //! Returns true if the Interactive Object accepts shape decomposition.
   bool AcceptShapeDecomposition() const override { return true; }

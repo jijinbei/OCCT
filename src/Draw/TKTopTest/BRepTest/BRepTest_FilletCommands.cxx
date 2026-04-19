@@ -497,16 +497,22 @@ static int blend1(Draw_Interpretor& di, int narg, const char** a)
 
   // if (Rakk.IsDone()==FilletSurf_StatusDone::FilletSurf_IsNotOk)
   //  { FilletSurf_ErrorTypeStatus err=Rakk.StatusError();
-  //    if (err==FilletSurf_ErrorTypeStatus::FilletSurf_EmptyList) std::cout<< "StatusError=EmptyList"<<std::endl;
-  //    else if (err==FilletSurf_ErrorTypeStatus::FilletSurf_EdgeNotG1) std::cout<< "StatusError=NotG1"<<std::endl;
-  //    else if (err==FilletSurf_ErrorTypeStatus::FilletSurf_FacesNotG1) std::cout<< "StatusError=facesNotG1"<<std::endl;
-  //    else if (err==FilletSurf_ErrorTypeStatus::FilletSurf_EdgeNotOnShape)
-  //    std::cout<< "StatusError=edgenotonshape"<<std::endl;
-  //    else if (err==FilletSurf_ErrorTypeStatus::FilletSurf_NotSharpEdge ) std::cout<< "StatusError=notsharpedge"<<std::endl;
-  //    else if (err==FilletSurf_ErrorTypeStatus::FilletSurf_PbFilletCompute) std::cout <<"StatusError=PBFillet"<<std::endl;
+  //    if (err==FilletSurf_ErrorTypeStatus::FilletSurf_EmptyList) std::cout<<
+  //    "StatusError=EmptyList"<<std::endl; else if
+  //    (err==FilletSurf_ErrorTypeStatus::FilletSurf_EdgeNotG1) std::cout<<
+  //    "StatusError=NotG1"<<std::endl; else if
+  //    (err==FilletSurf_ErrorTypeStatus::FilletSurf_FacesNotG1) std::cout<<
+  //    "StatusError=facesNotG1"<<std::endl; else if
+  //    (err==FilletSurf_ErrorTypeStatus::FilletSurf_EdgeNotOnShape) std::cout<<
+  //    "StatusError=edgenotonshape"<<std::endl; else if
+  //    (err==FilletSurf_ErrorTypeStatus::FilletSurf_NotSharpEdge ) std::cout<<
+  //    "StatusError=notsharpedge"<<std::endl; else if
+  //    (err==FilletSurf_ErrorTypeStatus::FilletSurf_PbFilletCompute) std::cout
+  //    <<"StatusError=PBFillet"<<std::endl;
   //  }
   //  else {
-  //   if (Rakk.IsDone()==FilletSurf_StatusDone::FilletSurf_IsPartial) std::cout <<"resultat partiel"<<std::endl;
+  //   if (Rakk.IsDone()==FilletSurf_StatusDone::FilletSurf_IsPartial) std::cout <<"resultat
+  //   partiel"<<std::endl;
   if (aRakk.IsDone() == FilletSurf_StatusDone::FilletSurf_IsNotOk)
   {
     FilletSurf_ErrorTypeStatus err = aRakk.StatusError();

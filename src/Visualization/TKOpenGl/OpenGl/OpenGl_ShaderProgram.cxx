@@ -223,12 +223,16 @@ bool OpenGl_ShaderProgram::Initialize(
   myNbFragOutputs  = !myProxy.IsNull() ? myProxy->NbFragmentOutputs() : 1;
   myTextureSetBits = Graphic3d_TextureSetBits_NONE;
   myHasAlphaTest   = !myProxy.IsNull() && myProxy->HasAlphaTest();
-  myOitOutput      = !myProxy.IsNull() ? myProxy->OitOutput() : Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
-  if (myOitOutput == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT && myNbFragOutputs < 2)
+  myOitOutput      = !myProxy.IsNull()
+                       ? myProxy->OitOutput()
+                       : Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
+  if (myOitOutput == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_OIT
+      && myNbFragOutputs < 2)
   {
     myOitOutput = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
   }
-  else if (myOitOutput == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT && myNbFragOutputs < 3)
+  else if (myOitOutput == Graphic3d_RenderTransparentMethod::Graphic3d_RTM_DEPTH_PEELING_OIT
+           && myNbFragOutputs < 3)
   {
     myOitOutput = Graphic3d_RenderTransparentMethod::Graphic3d_RTM_BLEND_UNORDERED;
   }

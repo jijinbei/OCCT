@@ -98,7 +98,7 @@ TEST_F(BOPAlgo_TwoStepOperationsTest, TwoStepCut_SphereMinusBox)
   const TopoDS_Shape aSphere = BOPTest_Utilities::CreateUnitSphere();
   const TopoDS_Shape aBox    = BOPTest_Utilities::CreateUnitBox();
 
-  const TopoDS_Shape aResult      = PerformTwoStepBOP(aSphere, aBox, BOPAlgo_Operation::BOPAlgo_CUT);
+  const TopoDS_Shape aResult = PerformTwoStepBOP(aSphere, aBox, BOPAlgo_Operation::BOPAlgo_CUT);
   const double       aSurfaceArea = BOPTest_Utilities::GetSurfaceArea(aResult);
   EXPECT_GT(aSurfaceArea, 0.0) << "Two-step cut result should have positive surface area";
 }
@@ -155,12 +155,14 @@ TEST_F(BOPAlgo_ComplexOperationsTest, MultipleIntersectingPrimitives)
   const TopoDS_Shape aBox = BOPTest_Utilities::CreateBox(gp_Pnt(-0.5, -0.5, -0.5), 1.0, 1.0, 1.0);
 
   // First intersect sphere with cylinder
-  const TopoDS_Shape aIntermediate = PerformDirectBOP(aSphere, aCylinder, BOPAlgo_Operation::BOPAlgo_COMMON);
+  const TopoDS_Shape aIntermediate =
+    PerformDirectBOP(aSphere, aCylinder, BOPAlgo_Operation::BOPAlgo_COMMON);
   EXPECT_FALSE(aIntermediate.IsNull()) << "Intermediate result should not be null";
 
   // Then fuse with box
-  const TopoDS_Shape aFinalResult = PerformDirectBOP(aIntermediate, aBox, BOPAlgo_Operation::BOPAlgo_FUSE);
-  const double       aVolume      = BOPTest_Utilities::GetVolume(aFinalResult);
+  const TopoDS_Shape aFinalResult =
+    PerformDirectBOP(aIntermediate, aBox, BOPAlgo_Operation::BOPAlgo_FUSE);
+  const double aVolume = BOPTest_Utilities::GetVolume(aFinalResult);
   EXPECT_GT(aVolume, 0.0) << "Complex operation result should have positive volume";
 }
 
@@ -171,10 +173,12 @@ TEST_F(BOPAlgo_ComplexOperationsTest, DirectVsTwoStepComparison)
   const TopoDS_Shape aBox    = BOPTest_Utilities::CreateUnitBox();
 
   // Perform direct operation
-  const TopoDS_Shape aDirectResult = PerformDirectBOP(aSphere, aBox, BOPAlgo_Operation::BOPAlgo_FUSE);
+  const TopoDS_Shape aDirectResult =
+    PerformDirectBOP(aSphere, aBox, BOPAlgo_Operation::BOPAlgo_FUSE);
 
   // Perform two-step operation
-  const TopoDS_Shape aTwoStepResult = PerformTwoStepBOP(aSphere, aBox, BOPAlgo_Operation::BOPAlgo_FUSE);
+  const TopoDS_Shape aTwoStepResult =
+    PerformTwoStepBOP(aSphere, aBox, BOPAlgo_Operation::BOPAlgo_FUSE);
 
   // Results should be equivalent
   const double aDirectVolume  = BOPTest_Utilities::GetVolume(aDirectResult);

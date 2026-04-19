@@ -172,7 +172,8 @@ void IGESData_GlobalSection::Init(const occ::handle<Interface_ParamSet>& params,
     }
 
     // if the param is a Real
-    else if (fpt == Interface_ParamType::Interface_ParamReal || fpt == Interface_ParamType::Interface_ParamEnum)
+    else if (fpt == Interface_ParamType::Interface_ParamReal
+             || fpt == Interface_ParamType::Interface_ParamEnum)
     {
       char text[50];
       int  k, j = 0;

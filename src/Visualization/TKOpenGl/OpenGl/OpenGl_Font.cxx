@@ -140,7 +140,10 @@ bool OpenGl_Font::createTexture(const occ::handle<OpenGl_Context>& theCtx)
 
   Image_PixMap aBlackImg;
   if (!aBlackImg.InitZero(Image_Format_Alpha, size_t(aTextureSizeX), size_t(aTextureSizeY))
-      || !aTexture->Init(theCtx, aBlackImg, Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D, true)) // myTextureFormat
+      || !aTexture->Init(theCtx,
+                         aBlackImg,
+                         Graphic3d_TypeOfTexture::Graphic3d_TypeOfTexture_2D,
+                         true)) // myTextureFormat
   {
     theCtx->PushMessage(GL_DEBUG_SOURCE_APPLICATION,
                         GL_DEBUG_TYPE_ERROR,

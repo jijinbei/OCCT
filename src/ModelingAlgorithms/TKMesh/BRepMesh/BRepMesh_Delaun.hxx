@@ -88,13 +88,22 @@ public:
   }
 
   //! Gives the list of frontier edges.
-  Handle(IMeshData::MapOfInteger) Frontier() const { return getEdgesByType(BRepMesh_DegreeOfFreedom::BRepMesh_Frontier); }
+  Handle(IMeshData::MapOfInteger) Frontier() const
+  {
+    return getEdgesByType(BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
+  }
 
   //! Gives the list of internal edges.
-  Handle(IMeshData::MapOfInteger) InternalEdges() const { return getEdgesByType(BRepMesh_DegreeOfFreedom::BRepMesh_Fixed); }
+  Handle(IMeshData::MapOfInteger) InternalEdges() const
+  {
+    return getEdgesByType(BRepMesh_DegreeOfFreedom::BRepMesh_Fixed);
+  }
 
   //! Gives the list of free edges used only one time
-  Handle(IMeshData::MapOfInteger) FreeEdges() const { return getEdgesByType(BRepMesh_DegreeOfFreedom::BRepMesh_Free); }
+  Handle(IMeshData::MapOfInteger) FreeEdges() const
+  {
+    return getEdgesByType(BRepMesh_DegreeOfFreedom::BRepMesh_Free);
+  }
 
   //! Gives vertex with the given index
   const BRepMesh_Vertex& GetVertex(const int theIndex) const

@@ -156,7 +156,8 @@ bool ProcessAsSurfaceStyleFillArea(const StepVisual_SurfaceStyleElementSelect& t
         // If current surface color is null, we will use negative side color.
         // Otherwise negative side color is ignored.
         && (theSurfaceColour.IsNull()
-            || theSide != StepVisual_SurfaceSide::StepVisual_ssNegative)) // abv 30 Mar 00: trj3_s1-pe.stp
+            || theSide
+                 != StepVisual_SurfaceSide::StepVisual_ssNegative)) // abv 30 Mar 00: trj3_s1-pe.stp
     {
       theSurfaceColour = aFASC->FillColour();
     }

@@ -40,7 +40,8 @@ void RWStepVisual_RWSurfaceStyleRendering::ReadStep(
 
   // Own fields of SurfaceStyleRendering
 
-  StepVisual_ShadingSurfaceMethod aRenderingMethod = StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
+  StepVisual_ShadingSurfaceMethod aRenderingMethod =
+    StepVisual_ShadingSurfaceMethod::StepVisual_ssmNormalShading;
   if (data->ParamType(num, 1) == Interface_ParamType::Interface_ParamEnum)
   {
     const char* text = data->ParamCValue(num, 1);

@@ -22,8 +22,8 @@ class Graphic3d_ArrayOfPolylines : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfPolylines, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of polylines (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES), a polyline can be filled as:
-  //! 1) Creating a single polyline defined with his vertexes, i.e:
+  //! Creates an array of polylines (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_POLYLINES), a
+  //! polyline can be filled as: 1) Creating a single polyline defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfPolylines (7);
   //!   myArray->AddVertex (x1, y1, z1);

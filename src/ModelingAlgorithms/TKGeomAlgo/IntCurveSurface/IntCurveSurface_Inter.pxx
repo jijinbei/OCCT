@@ -138,8 +138,10 @@ void PerformBounds(const CurveType&           theCurve,
     default: {
       int                 nbIntervalsOnCurve = CurveTool::NbIntervals(theCurve, GeomAbs_C2);
       GeomAbs_SurfaceType aSurfaceType       = SurfaceTool::GetType(theSurface);
-      if ((aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Plane) && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cylinder)
-          && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cone) && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Sphere))
+      if ((aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Plane)
+          && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cylinder)
+          && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cone)
+          && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Sphere))
       {
         if (nbIntervalsOnCurve > 1)
         {
@@ -455,8 +457,10 @@ void InternalPerformPolygonBounds(const CurveType&        theCurve,
                                   AppendFunc              theAppend)
 {
   GeomAbs_SurfaceType aSurfaceType = SurfaceTool::GetType(theSurface);
-  if ((aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Plane) && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cylinder)
-      && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cone) && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Sphere))
+  if ((aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Plane)
+      && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cylinder)
+      && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Cone)
+      && (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_Sphere))
   {
     if (aSurfaceType != GeomAbs_SurfaceType::GeomAbs_BSplineSurface)
     {

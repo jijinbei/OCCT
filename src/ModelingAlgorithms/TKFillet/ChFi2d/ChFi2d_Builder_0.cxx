@@ -106,8 +106,10 @@ TopoDS_Edge ChFi2d_Builder::AddChamfer(const TopoDS_Edge& E1,
   }
 
   ComputeChamfer(commonVertex, EE1, EE2, D1, D2, E1Mod, E2Mod, chamfer);
-  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone || status == ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
-      || status == ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated || status == ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
+  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone
+      || status == ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
+      || status == ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated
+      || status == ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
   {
     //  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone) {
     BuildNewWire(EE1, EE2, E1Mod, chamfer, E2Mod);
@@ -157,8 +159,10 @@ TopoDS_Edge ChFi2d_Builder::AddChamfer(const TopoDS_Edge&   E,
   TopoDS_Edge E1, E2;
   ComputeChamfer(V, adjEdge1, D, Ang, adjEdge2, E1, E2, aChamfer);
   TopoDS_Edge basisEdge1, basisEdge2;
-  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone || status == ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
-      || status == ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated || status == ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
+  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone
+      || status == ChFi2d_ConstructionError::ChFi2d_FirstEdgeDegenerated
+      || status == ChFi2d_ConstructionError::ChFi2d_LastEdgeDegenerated
+      || status == ChFi2d_ConstructionError::ChFi2d_BothEdgesDegenerated)
   {
     //  if (status == ChFi2d_ConstructionError::ChFi2d_IsDone) {
     BuildNewWire(adjEdge1, adjEdge2, E1, aChamfer, E2);

@@ -127,7 +127,8 @@ void IGESAppli_ToolLineWidening::OwnCheck(const occ::handle<IGESAppli_LineWideni
                                           occ::handle<Interface_Check>& ach) const
 {
   if (ent->SubordinateStatus() != 0)
-    if (ent->DefLevel() == IGESData_DefList::IGESData_DefOne || ent->DefLevel() == IGESData_DefList::IGESData_DefSeveral)
+    if (ent->DefLevel() == IGESData_DefList::IGESData_DefOne
+        || ent->DefLevel() == IGESData_DefList::IGESData_DefSeveral)
       ach->AddWarning("Level type: defined while ignored");
   if (ent->NbPropertyValues() != 5)
     ach->AddFail("Number of Property Values != 5");

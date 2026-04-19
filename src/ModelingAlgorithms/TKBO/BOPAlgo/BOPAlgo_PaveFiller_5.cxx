@@ -385,8 +385,9 @@ void BOPAlgo_PaveFiller::PerformEF(const Message_ProgressRange& theRange)
     if (aNbCPrts)
     {
       BRepAdaptor_Curve aBAC(aE);
-      bLinePlane = (aBAC.GetType() == GeomAbs_CurveType::GeomAbs_Line
-                    && myContext->SurfaceAdaptor(aF).GetType() == GeomAbs_SurfaceType::GeomAbs_Plane);
+      bLinePlane =
+        (aBAC.GetType() == GeomAbs_CurveType::GeomAbs_Line
+         && myContext->SurfaceAdaptor(aF).GetType() == GeomAbs_SurfaceType::GeomAbs_Plane);
     }
     //
     for (i = 1; i <= aNbCPrts; ++i)
@@ -991,7 +992,8 @@ void BOPAlgo_PaveFiller::ForceInterfEF(
       if (!myContext->IsPointInFace(aF, gp_Pnt2d(U, V)))
         continue;
 
-      if (aSurfAdaptor.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane || aBAC.GetType() != GeomAbs_CurveType::GeomAbs_Line)
+      if (aSurfAdaptor.GetType() != GeomAbs_SurfaceType::GeomAbs_Plane
+          || aBAC.GetType() != GeomAbs_CurveType::GeomAbs_Line)
       {
         gp_Pnt aPOnS = aProjPS.NearestPoint();
         gp_Vec aVFNorm(aPOnS, aPOnE);

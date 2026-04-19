@@ -1582,7 +1582,11 @@ void ProjLib_CompProjectedCurve::D0(const double U, gp_Pnt2d& P) const
   else
   {
     gp_Pnt        thePoint = myCurve->Value(U);
-    Extrema_ExtPS aExtPS(thePoint, *mySurface, myTolU, myTolV, Extrema_ExtFlag::Extrema_ExtFlag_MIN);
+    Extrema_ExtPS aExtPS(thePoint,
+                         *mySurface,
+                         myTolU,
+                         myTolV,
+                         Extrema_ExtFlag::Extrema_ExtFlag_MIN);
     if (aExtPS.IsDone() && aExtPS.NbExt())
     {
       int k, Nend, imin = 1;

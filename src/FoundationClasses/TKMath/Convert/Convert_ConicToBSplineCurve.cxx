@@ -629,7 +629,8 @@ void Convert_ConicToBSplineCurve::BuildCosAndSin(
   int ii, jj, index, num_poles, num_periodic_poles, temp_degree, pivot_index_problem,
     num_flat_knots, num_knots;
 
-  if (Parameterisation != Convert_ParameterisationType::Convert_TgtThetaOver2 && Parameterisation != Convert_ParameterisationType::Convert_RationalC1)
+  if (Parameterisation != Convert_ParameterisationType::Convert_TgtThetaOver2
+      && Parameterisation != Convert_ParameterisationType::Convert_RationalC1)
   {
     throw Standard_ConstructionError();
   }

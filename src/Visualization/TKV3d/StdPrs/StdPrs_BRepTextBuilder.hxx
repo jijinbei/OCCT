@@ -37,12 +37,13 @@ public:
   //! @param theHAlign horizontal alignment of the text
   //! @param theVAlign vertical alignment of the text
   //! @return result shape with pen transformation applied as shape location
-  Standard_EXPORT TopoDS_Shape
-    Perform(StdPrs_BRepFont&                        theFont,
-            const NCollection_String&               theString,
-            const gp_Ax3&                           thePenLoc = gp_Ax3(),
-            const Graphic3d_HorizontalTextAlignment theHAlign = Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT,
-            const Graphic3d_VerticalTextAlignment   theVAlign = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM);
+  Standard_EXPORT TopoDS_Shape Perform(StdPrs_BRepFont&                        theFont,
+                                       const NCollection_String&               theString,
+                                       const gp_Ax3&                           thePenLoc = gp_Ax3(),
+                                       const Graphic3d_HorizontalTextAlignment theHAlign =
+                                         Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT,
+                                       const Graphic3d_VerticalTextAlignment theVAlign =
+                                         Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM);
 
 protected:
   BRep_Builder myBuilder;

@@ -22,8 +22,9 @@ class Graphic3d_ArrayOfTriangleFans : public Graphic3d_ArrayOfPrimitives
 {
   DEFINE_STANDARD_RTTIEXT(Graphic3d_ArrayOfTriangleFans, Graphic3d_ArrayOfPrimitives)
 public:
-  //! Creates an array of triangle fans (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLEFANS), a polygon can be filled as:
-  //! 1) Creating a single fan defined with his vertexes, i.e:
+  //! Creates an array of triangle fans
+  //! (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLEFANS), a polygon can be filled as: 1)
+  //! Creating a single fan defined with his vertexes, i.e:
   //! @code
   //!   myArray = Graphic3d_ArrayOfTriangleFans (7);
   //!   myArray->AddVertex (x1, y1, z1);
@@ -58,7 +59,8 @@ public:
   {
   }
 
-  //! Creates an array of triangle fans (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLEFANS).
+  //! Creates an array of triangle fans
+  //! (Graphic3d_TypeOfPrimitiveArray::Graphic3d_TOPA_TRIANGLEFANS).
   //! @param theMaxVertexs defines the maximum allowed vertex number in the array
   //! @param theMaxFans    defines the maximum allowed fan    number in the array
   Graphic3d_ArrayOfTriangleFans(int  theMaxVertexs,

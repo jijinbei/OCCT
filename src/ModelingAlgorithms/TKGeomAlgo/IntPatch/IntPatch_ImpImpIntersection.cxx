@@ -2937,8 +2937,10 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
   for (i = 1; i <= nblin; i++)
   {
     IntPatch_IType thetype = slin.Value(i)->ArcType();
-    if ((thetype == IntPatch_IType::IntPatch_Ellipse) || (thetype == IntPatch_IType::IntPatch_Circle) || (thetype == IntPatch_IType::IntPatch_Lin)
-        || (thetype == IntPatch_IType::IntPatch_Parabola) || (thetype == IntPatch_IType::IntPatch_Hyperbola))
+    if ((thetype == IntPatch_IType::IntPatch_Ellipse)
+        || (thetype == IntPatch_IType::IntPatch_Circle) || (thetype == IntPatch_IType::IntPatch_Lin)
+        || (thetype == IntPatch_IType::IntPatch_Parabola)
+        || (thetype == IntPatch_IType::IntPatch_Hyperbola))
     {
       occ::handle<IntPatch_GLine>& glin = *((occ::handle<IntPatch_GLine>*)&slin.Value(i));
       glin->ComputeVertexParameters(TolArc);
@@ -8604,12 +8606,12 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
           situC1 = IntSurf_Situation::IntSurf_Inside;
           situC2 = IntSurf_Situation::IntSurf_Outside;
           if (aR1 > aR2)
-          {                          // Intersection line parametrizes from Apex1 to Apex2,
-                                     // clang-format off
+          { // Intersection line parametrizes from Apex1 to Apex2,
+            // clang-format off
             situC1 = IntSurf_Situation::IntSurf_Outside; // So the distance between ptbid and aLAx1 is greater than the
-                                     // clang-format on
-            situC2 = IntSurf_Situation::IntSurf_Inside; // distance between ptbid and aLAx2 and in that case Cone2
-                                     // is inside Cone 1
+                                                       // clang-format on
+            situC2 = IntSurf_Situation::IntSurf_Inside; // distance between ptbid and aLAx2 and in
+                                                        // that case Cone2 is inside Cone 1
           }
         }
         // 1
@@ -8997,8 +8999,10 @@ bool IntCoCo(const IntSurf_Quadric&                            Quad1,
     // common generatrix of cones
     gce_MakeLin                 aMkLin(aPApex1, aPApex2);
     const gp_Lin&               linsol = aMkLin.Value();
-    occ::handle<IntPatch_GLine> glig =
-      new IntPatch_GLine(linsol, true, IntSurf_TypeTrans::IntSurf_Undecided, IntSurf_TypeTrans::IntSurf_Undecided);
+    occ::handle<IntPatch_GLine> glig   = new IntPatch_GLine(linsol,
+                                                          true,
+                                                          IntSurf_TypeTrans::IntSurf_Undecided,
+                                                          IntSurf_TypeTrans::IntSurf_Undecided);
 
     const gp_Pnt& aPChar = inter.PChar();
     Quad1.Parameters(aPChar, U1, V1);

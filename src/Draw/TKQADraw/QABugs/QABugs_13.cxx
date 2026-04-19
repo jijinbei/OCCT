@@ -224,7 +224,8 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
   // Make inner pipe shell
   BRepOffsetAPI_MakePipeShell mkPipe1(SpineWire);
   mkPipe1.SetTolerance(1.0e-8, 1.0e-8, 1.0e-6);
-  // mkPipe1.SetTransitionMode(BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed); // Default mode !!
+  // mkPipe1.SetTransitionMode(BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed); //
+  // Default mode !!
   mkPipe1.SetLaw(Wire1_, myLaw1 /*, Location2*/, false, false);
   mkPipe1.Build();
   if (!mkPipe1.IsDone())
@@ -233,7 +234,8 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
   // Make outer pipe shell
   BRepOffsetAPI_MakePipeShell mkPipe2(SpineWire);
   mkPipe2.SetTolerance(1.0e-8, 1.0e-8, 1.0e-6);
-  // mkPipe2.SetTransitionMode(BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed); // Default mode !!
+  // mkPipe2.SetTransitionMode(BRepBuilderAPI_TransitionMode::BRepBuilderAPI_Transformed); //
+  // Default mode !!
   mkPipe2.SetLaw(outerWire1_, myLaw2 /*, Location2*/, false, false);
   mkPipe2.Build();
   if (!mkPipe2.IsDone())

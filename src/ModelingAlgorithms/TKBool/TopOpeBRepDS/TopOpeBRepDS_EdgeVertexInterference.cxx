@@ -30,7 +30,13 @@ TopOpeBRepDS_EdgeVertexInterference::TopOpeBRepDS_EdgeVertexInterference(
   const bool                     GIsBound,
   const TopOpeBRepDS_Config      C,
   const double                   P)
-    : TopOpeBRepDS_ShapeShapeInterference(T, ST, S, TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX, G, GIsBound, C),
+    : TopOpeBRepDS_ShapeShapeInterference(T,
+                                          ST,
+                                          S,
+                                          TopOpeBRepDS_Kind::TopOpeBRepDS_VERTEX,
+                                          G,
+                                          GIsBound,
+                                          C),
       myParam(P)
 {
 }

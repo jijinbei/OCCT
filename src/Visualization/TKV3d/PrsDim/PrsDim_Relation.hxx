@@ -56,10 +56,16 @@ public:
   //! lines representing the relation between the two shapes.
   Standard_EXPORT void UnsetColor() override;
 
-  AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Relation; }
+  AIS_KindOfInteractive Type() const override
+  {
+    return AIS_KindOfInteractive::AIS_KindOfInteractive_Relation;
+  }
 
   //! Indicates that the type of dimension is unknown.
-  virtual PrsDim_KindOfDimension KindOfDimension() const { return PrsDim_KindOfDimension::PrsDim_KOD_NONE; }
+  virtual PrsDim_KindOfDimension KindOfDimension() const
+  {
+    return PrsDim_KindOfDimension::PrsDim_KOD_NONE;
+  }
 
   //! Returns true if the interactive object is movable.
   virtual bool IsMovable() const { return false; }
@@ -177,8 +183,8 @@ public:
   bool AutomaticPosition() const { return myAutomaticPosition; }
 
 protected:
-  Standard_EXPORT PrsDim_Relation(
-    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
+  Standard_EXPORT PrsDim_Relation(const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d =
+                                    PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
 
   //! Calculates the presentation aPres of the edge
   //! anEdge and the curve it defines, ProjCurve. The later

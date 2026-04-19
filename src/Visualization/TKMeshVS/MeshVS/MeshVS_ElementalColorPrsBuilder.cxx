@@ -604,13 +604,14 @@ void MeshVS_ElementalColorPrsBuilder::Build(const occ::handle<Prs3d_Presentation
 
     // OCC20644 NOTE: aMyIntColor color is then scaled by TelUpdateMaterial() in OpenGl_attri.c
     // using the material reflection coefficients. This affects the visual result.
-    occ::handle<Graphic3d_AspectFillArea3d> anAsp = new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
-                                                                                   aMyIntColor,
-                                                                                   anEdgeColor,
-                                                                                   anEdgeType,
-                                                                                   anEdgeWidth,
-                                                                                   aMaterial2[0],
-                                                                                   aMaterial2[1]);
+    occ::handle<Graphic3d_AspectFillArea3d> anAsp =
+      new Graphic3d_AspectFillArea3d(Aspect_InteriorStyle::Aspect_IS_SOLID,
+                                     aMyIntColor,
+                                     anEdgeColor,
+                                     anEdgeType,
+                                     anEdgeWidth,
+                                     aMaterial2[0],
+                                     aMaterial2[1]);
     anAsp->SetDistinguishOn();
     anAsp->SetInteriorColor(aMyIntColor);
     anAsp->SetBackInteriorColor(aMyBackColor);

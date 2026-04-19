@@ -118,12 +118,14 @@ void Graphic3d_Structure::Remove()
   // of the same structure.
   for (int aStructIdx = 1, aNbDesc = myDescendants.Size(); aStructIdx <= aNbDesc; ++aStructIdx)
   {
-    myDescendants.FindKey(aStructIdx)->Remove(this, Graphic3d_TypeOfConnection::Graphic3d_TOC_ANCESTOR);
+    myDescendants.FindKey(aStructIdx)
+      ->Remove(this, Graphic3d_TypeOfConnection::Graphic3d_TOC_ANCESTOR);
   }
 
   for (int aStructIdx = 1, aNbAnces = myAncestors.Size(); aStructIdx <= aNbAnces; ++aStructIdx)
   {
-    myAncestors.FindKey(aStructIdx)->Remove(this, Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT);
+    myAncestors.FindKey(aStructIdx)
+      ->Remove(this, Graphic3d_TypeOfConnection::Graphic3d_TOC_DESCENDANT);
   }
 
   // Destruction of me in the graphic library

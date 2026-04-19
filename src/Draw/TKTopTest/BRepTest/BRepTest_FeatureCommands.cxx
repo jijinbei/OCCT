@@ -1114,8 +1114,14 @@ static int mkoffsetshape(Draw_Interpretor& theDI, int theArgNb, const char** the
         aRemIntEdges = true;
       }
     }
-    aMaker
-      .PerformByJoin(aShape, anOffVal, aTol, BRepOffset_Mode::BRepOffset_Skin, anInt, aSelfInt, aJoin, aRemIntEdges);
+    aMaker.PerformByJoin(aShape,
+                         anOffVal,
+                         aTol,
+                         BRepOffset_Mode::BRepOffset_Skin,
+                         anInt,
+                         aSelfInt,
+                         aJoin,
+                         aRemIntEdges);
   }
 
   if (!aMaker.IsDone())

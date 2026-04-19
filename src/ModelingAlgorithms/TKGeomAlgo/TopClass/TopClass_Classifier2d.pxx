@@ -153,8 +153,8 @@ inline void Compare(int&                      theClosest,
 
   theParam                       = aDMin;
   const IntRes2d_Transition& aT2 = aPClosest->TransitionOfSecond();
-  theIsHeadOrEnd =
-    (aT2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Head) || (aT2.PositionOnCurve() == IntRes2d_Position::IntRes2d_End);
+  theIsHeadOrEnd                 = (aT2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Head)
+                   || (aT2.PositionOnCurve() == IntRes2d_Position::IntRes2d_End);
 
   // Transition on the segment.
   TopAbs_Orientation aSegTrans = TopAbs_FORWARD;
@@ -217,8 +217,9 @@ inline void Compare(int&                      theClosest,
       theFirstTrans = false;
     }
 
-    const TopAbs_Orientation aOrt =
-      (aT2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Head) ? TopAbs_FORWARD : TopAbs_REVERSED;
+    const TopAbs_Orientation aOrt = (aT2.PositionOnCurve() == IntRes2d_Position::IntRes2d_Head)
+                                      ? TopAbs_FORWARD
+                                      : TopAbs_REVERSED;
     theTrans.Compare(RealEpsilon(), aTang, aNorm, aCurv, aSegTrans, aOrt);
     theState = theTrans.StateBefore();
   }

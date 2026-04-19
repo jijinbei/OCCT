@@ -49,7 +49,8 @@ PrsMgr_Presentation::PrsMgr_Presentation(const occ::handle<PrsMgr_PresentationMa
       myMode(theMode),
       myMustBeUpdated(false)
 {
-  if (thePrsObject->TypeOfPresentation3d() == PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent)
+  if (thePrsObject->TypeOfPresentation3d()
+      == PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent)
   {
     SetVisual(Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED);
   }

@@ -25,11 +25,11 @@
 //! converge. In this case, you can not be
 //! certain of the result quality and should
 //! resume computation if you want to make use of the curve.
-//! -   FairCurve_AnalysisCode::FairCurve_InfiniteSliding describes the case where sliding is infinite, and,
-//! consequently, computation stops. The solution is to use an imposed sliding value.
-//! -   FairCurve_AnalysisCode::FairCurve_NullHeight describes the case where no matter is left at one of the
-//! ends of the curve, and as a result, computation stops. The solution is to
-//! change (increase or reduce) the slope value by increasing or decreasing it.
+//! -   FairCurve_AnalysisCode::FairCurve_InfiniteSliding describes the case where sliding is
+//! infinite, and, consequently, computation stops. The solution is to use an imposed sliding value.
+//! -   FairCurve_AnalysisCode::FairCurve_NullHeight describes the case where no matter is left at
+//! one of the ends of the curve, and as a result, computation stops. The solution is to change
+//! (increase or reduce) the slope value by increasing or decreasing it.
 enum class FairCurve_AnalysisCode
 {
   FairCurve_OK,

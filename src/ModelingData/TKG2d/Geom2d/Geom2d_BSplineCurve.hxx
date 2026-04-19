@@ -873,13 +873,13 @@ private:
   NCollection_Array1<double>                 myFlatKnots;
   NCollection_Array1<int>                    myMults;
   occ::handle<Geom2dEval_RepCurveDesc::Base> myEvalRep;
-  int                                        myDeg           = 0;
-  bool                                       myPeriodic      = false;
-  bool                                       myRational      = false;
-  GeomAbs_BSplKnotDistribution               myKnotSet       = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
-  GeomAbs_Shape                              mySmooth        = GeomAbs_C0;
-  double                                     myMaxDerivInv   = 0.0;
-  bool                                       myMaxDerivInvOk = false;
+  int                                        myDeg      = 0;
+  bool                                       myPeriodic = false;
+  bool                                       myRational = false;
+  GeomAbs_BSplKnotDistribution myKnotSet       = GeomAbs_BSplKnotDistribution::GeomAbs_NonUniform;
+  GeomAbs_Shape                mySmooth        = GeomAbs_C0;
+  double                       myMaxDerivInv   = 0.0;
+  bool                         myMaxDerivInvOk = false;
 };
 
 #endif // _Geom2d_BSplineCurve_HeaderFile

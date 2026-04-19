@@ -394,8 +394,8 @@ bool VrmlAPI_Writer::write_v1(const TopoDS_Shape& aShape, Standard_OStream& theO
   //----  Definition of data for Projector
   //=========================================
 
-  VrmlConverter_TypeOfLight            Light  = VrmlConverter_TypeOfLight::VrmlConverter_NoLight;
-  VrmlConverter_TypeOfCamera           Camera = VrmlConverter_TypeOfCamera::VrmlConverter_PerspectiveCamera;
+  VrmlConverter_TypeOfLight  Light  = VrmlConverter_TypeOfLight::VrmlConverter_NoLight;
+  VrmlConverter_TypeOfCamera Camera = VrmlConverter_TypeOfCamera::VrmlConverter_PerspectiveCamera;
   occ::handle<VrmlConverter_Projector> projector =
     new VrmlConverter_Projector(Shapes, Focus, DX, DY, DZ, XUp, YUp, ZUp, Camera, Light);
 

@@ -105,8 +105,10 @@ V3d_Trihedron::V3d_Trihedron()
 
     myTextAspects[anIt]->SetFont(Font_NOF_ASCII_MONO);
     myTextAspects[anIt]->SetHeight(16);
-    myTextAspects[anIt]->SetHorizontalJustification(Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT);
-    myTextAspects[anIt]->SetVerticalJustification(Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM);
+    myTextAspects[anIt]->SetHorizontalJustification(
+      Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT);
+    myTextAspects[anIt]->SetVerticalJustification(
+      Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM);
   }
   myArrowShadingAspects[V3d_X]->SetColor(Quantity_NOC_RED);
   myArrowShadingAspects[V3d_Y]->SetColor(Quantity_NOC_GREEN);

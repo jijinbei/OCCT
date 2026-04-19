@@ -1123,14 +1123,17 @@ static int XAddVisMaterial(Draw_Interpretor&, int theNbArgs, const char** theArg
       {
         ++anArgIter;
       }
-      aMat->SetFaceCulling(isDoubleSided ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
-                                         : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
+      aMat->SetFaceCulling(
+        isDoubleSided
+          ? Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto
+          : Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
     }
     else if (anArgIter + 1 < theNbArgs && (anArg == "-faceculling" || anArg == "-facecull"))
     {
       aMatPbr.IsDefined = true;
       TCollection_AsciiString         aCullStr(theArgVec[++anArgIter]);
-      Graphic3d_TypeOfBackfacingModel aMode = Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
+      Graphic3d_TypeOfBackfacingModel aMode =
+        Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_Auto;
       aCullStr.LowerCase();
       if (aCullStr == "auto")
       {

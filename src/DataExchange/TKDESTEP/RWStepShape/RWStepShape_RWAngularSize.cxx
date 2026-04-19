@@ -53,8 +53,8 @@ void RWStepShape_RWAngularSize::ReadStep(const occ::handle<StepData_StepReaderDa
   // Own fields of AngularSize
 
   // PTV 16.09.2000
-  // default value set as StepShape_AngleRelator::StepShape_Small, cause there wasn't default value, but may be situation
-  // when value will not be initialized and returned in ent->Init.
+  // default value set as StepShape_AngleRelator::StepShape_Small, cause there wasn't default value,
+  // but may be situation when value will not be initialized and returned in ent->Init.
 
   StepShape_AngleRelator aAngleSelection = StepShape_AngleRelator::StepShape_Small;
   if (data->ParamType(num, 3) == Interface_ParamType::Interface_ParamEnum)

@@ -309,13 +309,16 @@ bool XmlMXCAFDoc_VisMaterialDriver::Paste(const XmlObjMgt_Persistent&       theS
   switch (aDoubleSidedInt)
   {
     case 1:
-      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
+      aMat->SetFaceCulling(
+        Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_DoubleSided);
       break;
     case 2:
-      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
+      aMat->SetFaceCulling(
+        Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_BackCulled);
       break;
     case 3:
-      aMat->SetFaceCulling(Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled);
+      aMat->SetFaceCulling(
+        Graphic3d_TypeOfBackfacingModel::Graphic3d_TypeOfBackfacingModel_FrontCulled);
       break;
     case 0:
     default:

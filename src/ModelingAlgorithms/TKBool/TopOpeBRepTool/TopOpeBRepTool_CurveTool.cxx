@@ -918,7 +918,9 @@ bool TopOpeBRepTool_CurveTool::IsProjectable(const TopoDS_Shape&            S,
   bool projectable = true;
   if (suty == GeomAbs_SurfaceType::GeomAbs_Cone)
   {
-    if ((cuty == GeomAbs_CurveType::GeomAbs_Ellipse) || (cuty == GeomAbs_CurveType::GeomAbs_Hyperbola) || (cuty == GeomAbs_CurveType::GeomAbs_Parabola))
+    if ((cuty == GeomAbs_CurveType::GeomAbs_Ellipse)
+        || (cuty == GeomAbs_CurveType::GeomAbs_Hyperbola)
+        || (cuty == GeomAbs_CurveType::GeomAbs_Parabola))
     {
       projectable = false;
     }

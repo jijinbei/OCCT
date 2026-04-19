@@ -117,8 +117,10 @@ protected:
       const gp_Pnt2d& aPnt2d = aNodesIt.Value();
       if (this->getClassifier()->Perform(aPnt2d) == TopAbs_IN)
       {
-        aVertexIndexes.Append(
-          this->registerNode(this->getRangeSplitter().Point(aPnt2d), aPnt2d, BRepMesh_DegreeOfFreedom::BRepMesh_Free, false));
+        aVertexIndexes.Append(this->registerNode(this->getRangeSplitter().Point(aPnt2d),
+                                                 aPnt2d,
+                                                 BRepMesh_DegreeOfFreedom::BRepMesh_Free,
+                                                 false));
       }
     }
 
@@ -147,7 +149,10 @@ private:
       if (this->getClassifier()->Perform(aPnt2d) == TopAbs_IN)
       {
         isAdded = true;
-        this->registerNode(this->getRangeSplitter().Point(aPnt2d), aPnt2d, BRepMesh_DegreeOfFreedom::BRepMesh_Free, false);
+        this->registerNode(this->getRangeSplitter().Point(aPnt2d),
+                           aPnt2d,
+                           BRepMesh_DegreeOfFreedom::BRepMesh_Free,
+                           false);
       }
     }
 

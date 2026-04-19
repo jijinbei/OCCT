@@ -71,7 +71,8 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
 
   // Create a driver appropriate for the given file
   occ::handle<Storage_BaseDriver> aFileDriver;
-  if (PCDM::FileDriverType(TCollection_AsciiString(theFileName), aFileDriver) == PCDM_TypeOfFileDriver::PCDM_TOFD_Unknown)
+  if (PCDM::FileDriverType(TCollection_AsciiString(theFileName), aFileDriver)
+      == PCDM_TypeOfFileDriver::PCDM_TOFD_Unknown)
   {
     myReaderStatus = PCDM_ReaderStatus::PCDM_RS_UnknownFileDriver;
     return nullptr;

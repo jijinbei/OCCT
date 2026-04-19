@@ -71,7 +71,8 @@ bool IntTools_EdgeFace::IsCoincident()
   GeomAPI_ProjectPointOnSurf& aProjector = myContext->ProjPS(myFace);
 
   int aNbSeg = 23;
-  if (myC.GetType() == GeomAbs_CurveType::GeomAbs_Line && myS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
+  if (myC.GetType() == GeomAbs_CurveType::GeomAbs_Line
+      && myS.GetType() == GeomAbs_SurfaceType::GeomAbs_Plane)
     aNbSeg = 2; // Check only three points for Line/Plane intersection
 
   const double aTresh                   = 0.5;
@@ -513,7 +514,8 @@ void IntTools_EdgeFace::Perform()
   double aFuzz = myFuzzyValue / 2.;
   double aTolF = BRep_Tool::Tolerance(myFace) + aFuzz;
   double aTolE = BRep_Tool::Tolerance(myEdge) + aFuzz;
-  if (aCurveType == GeomAbs_CurveType::GeomAbs_BSplineCurve || aCurveType == GeomAbs_CurveType::GeomAbs_BezierCurve)
+  if (aCurveType == GeomAbs_CurveType::GeomAbs_BSplineCurve
+      || aCurveType == GeomAbs_CurveType::GeomAbs_BezierCurve)
   {
     //--- 5112
     double diff1 = (aTolE / aTolF);
@@ -597,7 +599,8 @@ void IntTools_EdgeFace::Perform()
     aCType = myC.GetType();
     aSType = myS.GetType();
 
-    if (aCType == GeomAbs_CurveType::GeomAbs_Line && aSType == GeomAbs_SurfaceType::GeomAbs_Cylinder)
+    if (aCType == GeomAbs_CurveType::GeomAbs_Line
+        && aSType == GeomAbs_SurfaceType::GeomAbs_Cylinder)
     {
       for (i = 1; i <= aNb; i++)
       {

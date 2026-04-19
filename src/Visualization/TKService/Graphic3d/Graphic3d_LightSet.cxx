@@ -142,19 +142,22 @@ size_t Graphic3d_LightSet::UpdateRevision()
   }
   aKeyLong[aLightLast] = '\0';
   myAmbient.a()        = 1.0f;
-  myNbEnabled          = myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Directional)]
+  myNbEnabled = myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Directional)]
                 + myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Positional)]
                 + myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Spot)];
   myKeyEnabledLong = aKeyLong;
   myKeyEnabledShort =
-    TCollection_AsciiString(myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Directional)] > 0
-                              ? THE_LIGHT_KEY_LETTERS[static_cast<int>(Graphic3d_TypeOfLightSource_Directional)]
-                              : '\0')
-    + TCollection_AsciiString(myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Positional)] > 0
-                                ? THE_LIGHT_KEY_LETTERS[static_cast<int>(Graphic3d_TypeOfLightSource_Positional)]
-                                : '\0')
-    + TCollection_AsciiString(myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Spot)] > 0
-                                ? THE_LIGHT_KEY_LETTERS[static_cast<int>(Graphic3d_TypeOfLightSource_Spot)]
-                                : '\0');
+    TCollection_AsciiString(
+      myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Directional)] > 0
+        ? THE_LIGHT_KEY_LETTERS[static_cast<int>(Graphic3d_TypeOfLightSource_Directional)]
+        : '\0')
+    + TCollection_AsciiString(
+      myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Positional)] > 0
+        ? THE_LIGHT_KEY_LETTERS[static_cast<int>(Graphic3d_TypeOfLightSource_Positional)]
+        : '\0')
+    + TCollection_AsciiString(
+      myLightTypesEnabled[static_cast<int>(Graphic3d_TypeOfLightSource_Spot)] > 0
+        ? THE_LIGHT_KEY_LETTERS[static_cast<int>(Graphic3d_TypeOfLightSource_Spot)]
+        : '\0');
   return myRevision;
 }

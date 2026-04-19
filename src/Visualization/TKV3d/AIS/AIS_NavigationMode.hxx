@@ -25,7 +25,8 @@ enum class AIS_NavigationMode
 enum
 {
   AIS_NavigationMode_LOWER = 0,
-  AIS_NavigationMode_UPPER = static_cast<int>(AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk)
+  AIS_NavigationMode_UPPER =
+    static_cast<int>(AIS_NavigationMode::AIS_NavigationMode_FirstPersonWalk)
 };
 
 #endif // _V3d_NavigationMode_HeaderFile

@@ -471,7 +471,9 @@ public:
     }
 
     // Postprocessing
-    if (type == GeomAbs_CurveType::GeomAbs_BSplineCurve || type == GeomAbs_CurveType::GeomAbs_OffsetCurve || type == GeomAbs_CurveType::GeomAbs_OtherCurve)
+    if (type == GeomAbs_CurveType::GeomAbs_BSplineCurve
+        || type == GeomAbs_CurveType::GeomAbs_OffsetCurve
+        || type == GeomAbs_CurveType::GeomAbs_OtherCurve)
     {
       if (mydist1 < Precision::SquareConfusion() || mydist2 < Precision::SquareConfusion())
       {

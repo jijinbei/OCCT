@@ -565,7 +565,9 @@ int RWObj_Reader::triangulatePolygon(const NCollection_Array1<int>& theIndices)
   {
     const int     aPtIdx     = isClockwiseOrdered ? aIdx : (aIdx + 1) % anIndexes.Length();
     const int     aNextPtIdx = isClockwiseOrdered ? (aIdx + 1) % anIndexes.Length() : aIdx;
-    BRepMesh_Edge anEdge(anIndexes.Value(aPtIdx), anIndexes.Value(aNextPtIdx), BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
+    BRepMesh_Edge anEdge(anIndexes.Value(aPtIdx),
+                         anIndexes.Value(aNextPtIdx),
+                         BRepMesh_DegreeOfFreedom::BRepMesh_Frontier);
     aMeshStructure->AddLink(anEdge);
   }
 

@@ -373,7 +373,8 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
     if (myKPart == 1)
       myCont = GeomAbs_G1;
 
-    if ((Type1 == GeomAbs_SurfaceType::GeomAbs_Plane) && (Type2 == GeomAbs_SurfaceType::GeomAbs_Plane))
+    if ((Type1 == GeomAbs_SurfaceType::GeomAbs_Plane)
+        && (Type2 == GeomAbs_SurfaceType::GeomAbs_Plane))
     {
       myKPart = 2;
     }

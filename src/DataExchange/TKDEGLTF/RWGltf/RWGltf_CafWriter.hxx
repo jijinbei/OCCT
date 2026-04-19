@@ -90,13 +90,15 @@ public:
   //! Set preferred transformation format for writing into glTF file.
   void SetTransformationFormat(RWGltf_WriterTrsfFormat theFormat) { myTrsfFormat = theFormat; }
 
-  //! Return name format for exporting Nodes; RWMesh_NameFormat::RWMesh_NameFormat_InstanceOrProduct by default.
+  //! Return name format for exporting Nodes; RWMesh_NameFormat::RWMesh_NameFormat_InstanceOrProduct
+  //! by default.
   RWMesh_NameFormat NodeNameFormat() const { return myNodeNameFormat; }
 
   //! Set name format for exporting Nodes.
   void SetNodeNameFormat(RWMesh_NameFormat theFormat) { myNodeNameFormat = theFormat; }
 
-  //! Return name format for exporting Meshes; RWMesh_NameFormat::RWMesh_NameFormat_Product by default.
+  //! Return name format for exporting Meshes; RWMesh_NameFormat::RWMesh_NameFormat_Product by
+  //! default.
   RWMesh_NameFormat MeshNameFormat() const { return myMeshNameFormat; }
 
   //! Set name format for exporting Meshes.
@@ -310,20 +312,23 @@ protected:
                                                  const RWMesh_VertexIterator& theVertexIter);
 
 protected:
-  //! Write bufferView for vertex positions within RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section
+  //! Write bufferView for vertex positions within
+  //! RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section
   //! @param[in] theGltfFace  face definition to write
   Standard_EXPORT virtual void writePositions(const RWGltf_GltfFace& theGltfFace);
 
-  //! Write bufferView for vertex normals within RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section
+  //! Write bufferView for vertex normals within
+  //! RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section
   //! @param[in] theGltfFace  face definition to write
   Standard_EXPORT virtual void writeNormals(const RWGltf_GltfFace& theGltfFace);
 
-  //! Write bufferView for vertex texture coordinates within RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors
-  //! section
+  //! Write bufferView for vertex texture coordinates within
+  //! RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section
   //! @param[in] theGltfFace  face definition to write
   Standard_EXPORT virtual void writeTextCoords(const RWGltf_GltfFace& theGltfFace);
 
-  //! Write bufferView for triangle indexes within RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section.
+  //! Write bufferView for triangle indexes within
+  //! RWGltf_GltfRootElement::RWGltf_GltfRootElement_Accessors section.
   //! @param[in] theGltfFace  face definition to write
   Standard_EXPORT virtual void writeIndices(const RWGltf_GltfFace& theGltfFace);
 
@@ -348,8 +353,9 @@ protected:
   //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Buffers section.
   Standard_EXPORT virtual void writeBuffers();
 
-  //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_ExtensionsUsed/RWGltf_GltfRootElement::RWGltf_GltfRootElement_ExtensionsRequired sections
-  //! (reserved).
+  //! Write
+  //! RWGltf_GltfRootElement::RWGltf_GltfRootElement_ExtensionsUsed/RWGltf_GltfRootElement::RWGltf_GltfRootElement_ExtensionsRequired
+  //! sections (reserved).
   Standard_EXPORT virtual void writeExtensions();
 
   //! Write RWGltf_GltfRootElement::RWGltf_GltfRootElement_Images section.

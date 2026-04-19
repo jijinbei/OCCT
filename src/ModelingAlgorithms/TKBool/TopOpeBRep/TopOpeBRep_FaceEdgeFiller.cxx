@@ -108,12 +108,13 @@ void TopOpeBRep_FaceEdgeFiller::Insert(const TopoDS_Shape&                      
       //      StoreInterference(FPI,EIL1,BDS);
 
       // sur EE
-      EPI = TopOpeBRepDS_InterferenceTool::MakeCurveInterference(TEE,
-                                                                 TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
-                                                                 FFindex,
-                                                                 TopOpeBRepDS_Kind::TopOpeBRepDS_POINT,
-                                                                 DSPindex,
-                                                                 parE);
+      EPI =
+        TopOpeBRepDS_InterferenceTool::MakeCurveInterference(TEE,
+                                                             TopOpeBRepDS_Kind::TopOpeBRepDS_FACE,
+                                                             FFindex,
+                                                             TopOpeBRepDS_Kind::TopOpeBRepDS_POINT,
+                                                             DSPindex,
+                                                             parE);
       StoreInterference(EPI, EIL2, BDS);
     }
 

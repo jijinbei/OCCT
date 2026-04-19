@@ -371,7 +371,8 @@ static void BoundedArc(const TheArc&                    A,
       maxdist = TolBoundary;
     }
 
-    if (TypeQuad != GeomAbs_SurfaceType::GeomAbs_OtherSurface) // intersection of boundary curve and quadric surface
+    if (TypeQuad != GeomAbs_SurfaceType::GeomAbs_OtherSurface) // intersection of boundary curve and
+                                                               // quadric surface
     {
       // Exact solution
       occ::handle<Adaptor3d_Surface> aSurf = Func.Surface();
@@ -451,9 +452,13 @@ static void BoundedArc(const TheArc&                    A,
       }
       occ::handle<GeomAdaptor_Surface> GAHsurf = new GeomAdaptor_Surface(QuadSurf);
 
-      if ((TypeConS == GeomAbs_CurveType::GeomAbs_Line || TypeConS == GeomAbs_CurveType::GeomAbs_Circle || TypeConS == GeomAbs_CurveType::GeomAbs_Ellipse
-           || TypeConS == GeomAbs_CurveType::GeomAbs_Parabola || TypeConS == GeomAbs_CurveType::GeomAbs_Hyperbola)
-          && TypeQuad != GeomAbs_SurfaceType::GeomAbs_Torus && !IsDegenerated(HConS) && !IsDegenerated(aQuadric))
+      if ((TypeConS == GeomAbs_CurveType::GeomAbs_Line
+           || TypeConS == GeomAbs_CurveType::GeomAbs_Circle
+           || TypeConS == GeomAbs_CurveType::GeomAbs_Ellipse
+           || TypeConS == GeomAbs_CurveType::GeomAbs_Parabola
+           || TypeConS == GeomAbs_CurveType::GeomAbs_Hyperbola)
+          && TypeQuad != GeomAbs_SurfaceType::GeomAbs_Torus && !IsDegenerated(HConS)
+          && !IsDegenerated(aQuadric))
       {
         // exact intersection for only canonic curves and real quadric surfaces
         IntCS.Perform(HConS, GAHsurf);
@@ -470,7 +475,8 @@ static void BoundedArc(const TheArc&                    A,
       if (Nbp == 0 && Nbi == 0)
         IsIntCSdone = false;
 
-    } // if (TypeQuad != GeomAbs_SurfaceType::GeomAbs_OtherSurface) - intersection of boundary curve and quadric surface
+    } // if (TypeQuad != GeomAbs_SurfaceType::GeomAbs_OtherSurface) - intersection of boundary curve
+      // and quadric surface
 
     if (!IsIntCSdone)
     {

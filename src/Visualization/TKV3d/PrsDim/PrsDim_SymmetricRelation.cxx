@@ -358,10 +358,12 @@ void PrsDim_SymmetricRelation::ComputeTwoFacesSymmetric(const occ::handle<Prs3d_
 void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_Presentation>& aprs)
 {
   BRepAdaptor_Curve cu1(TopoDS::Edge(myFShape));
-  if (cu1.GetType() != GeomAbs_CurveType::GeomAbs_Line && cu1.GetType() != GeomAbs_CurveType::GeomAbs_Circle)
+  if (cu1.GetType() != GeomAbs_CurveType::GeomAbs_Line
+      && cu1.GetType() != GeomAbs_CurveType::GeomAbs_Circle)
     return;
   BRepAdaptor_Curve cu2(TopoDS::Edge(mySShape));
-  if (cu2.GetType() != GeomAbs_CurveType::GeomAbs_Line && cu2.GetType() != GeomAbs_CurveType::GeomAbs_Circle)
+  if (cu2.GetType() != GeomAbs_CurveType::GeomAbs_Line
+      && cu2.GetType() != GeomAbs_CurveType::GeomAbs_Circle)
     return;
   //  gp_Pnt pint3d,ptat11,ptat12,ptat21,ptat22;
   gp_Pnt                  ptat11, ptat12, ptat21, ptat22;

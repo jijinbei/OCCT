@@ -1234,7 +1234,8 @@ gp_Parab ProjLib_ProjectOnPlane::Parabola() const
 
 int ProjLib_ProjectOnPlane::Degree() const
 {
-  if ((GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve) && (GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve))
+  if ((GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve)
+      && (GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve))
     throw Standard_NoSuchObject("ProjLib_ProjectOnPlane:Degree");
 
   if (myIsApprox)
@@ -1247,7 +1248,8 @@ int ProjLib_ProjectOnPlane::Degree() const
 
 bool ProjLib_ProjectOnPlane::IsRational() const
 {
-  if ((GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve) && (GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve))
+  if ((GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve)
+      && (GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve))
     throw Standard_NoSuchObject("ProjLib_ProjectOnPlane:IsRational");
 
   if (myIsApprox)
@@ -1260,7 +1262,8 @@ bool ProjLib_ProjectOnPlane::IsRational() const
 
 int ProjLib_ProjectOnPlane::NbPoles() const
 {
-  if ((GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve) && (GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve))
+  if ((GetType() != GeomAbs_CurveType::GeomAbs_BSplineCurve)
+      && (GetType() != GeomAbs_CurveType::GeomAbs_BezierCurve))
     throw Standard_NoSuchObject("ProjLib_ProjectOnPlane:NbPoles");
 
   if (myIsApprox)
@@ -1377,8 +1380,8 @@ bool ProjLib_ProjectOnPlane::BuildParabolaByApex(occ::handle<Geom_Curve>& theGeo
   // Searching parabola apex as point with maximal curvature
   double            aF       = myCurve->Parabola().Focal();
   GeomAbs_CurveType aCurType = myType;
-  myType = GeomAbs_CurveType::GeomAbs_OtherCurve; // To provide correct calculation of derivativesb by projection for
-                               // copy of instance;
+  myType = GeomAbs_CurveType::GeomAbs_OtherCurve; // To provide correct calculation of derivativesb
+                                                  // by projection for copy of instance;
   occ::handle<Adaptor3d_Curve> aProjCrv = ShallowCopy();
   myType                                = aCurType;
   LProp_CLProps3d      aProps(aProjCrv, 2, Precision::Confusion());
@@ -1434,8 +1437,8 @@ bool ProjLib_ProjectOnPlane::BuildHyperbolaByApex(occ::handle<Geom_Curve>& theGe
 {
   // Try to build hyperbola with help of apex position
   GeomAbs_CurveType aCurType = myType;
-  myType = GeomAbs_CurveType::GeomAbs_OtherCurve; // To provide correct calculation of derivativesb by projection for
-                               // copy of instance;
+  myType = GeomAbs_CurveType::GeomAbs_OtherCurve; // To provide correct calculation of derivativesb
+                                                  // by projection for copy of instance;
   occ::handle<Adaptor3d_Curve> aProjCrv = ShallowCopy();
   myType                                = aCurType;
   // Searching hyperbola apex as point with maximal curvature

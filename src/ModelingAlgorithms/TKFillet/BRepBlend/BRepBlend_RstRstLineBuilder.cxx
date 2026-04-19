@@ -703,7 +703,8 @@ void BRepBlend_RstRstLineBuilder::InternalPerform(Blend_RstRstFunction&   Func,
         }
       }
 
-      if (decroch == Blend_DecrochStatus::Blend_DecrochRst1 || decroch == Blend_DecrochStatus::Blend_DecrochBoth)
+      if (decroch == Blend_DecrochStatus::Blend_DecrochRst1
+          || decroch == Blend_DecrochStatus::Blend_DecrochBoth)
       {
         // pb inversion rst1/surf1
         recadrst1 = Recadre1(Func, Finv1, solinvrst1, IsVtxrst1, Vtxrst1);
@@ -717,7 +718,8 @@ void BRepBlend_RstRstLineBuilder::InternalPerform(Blend_RstRstFunction&   Func,
         }
       }
 
-      if (decroch == Blend_DecrochStatus::Blend_DecrochRst2 || decroch == Blend_DecrochStatus::Blend_DecrochBoth)
+      if (decroch == Blend_DecrochStatus::Blend_DecrochRst2
+          || decroch == Blend_DecrochStatus::Blend_DecrochBoth)
       {
         // pb inverse rst2/surf2
         recadrst2 = Recadre2(Func, Finv2, solinvrst2, IsVtxrst2, Vtxrst2);
@@ -1747,8 +1749,9 @@ Blend_Status BRepBlend_RstRstLineBuilder::TestArret(Blend_RstRstFunction& Func,
   gp_Vec            tgrst1, tgrst2;
   gp_Vec2d          tg2drst1, tg2drst2;
   Blend_Status      StateRst1, StateRst2;
-  IntSurf_TypeTrans trarst1 = IntSurf_TypeTrans::IntSurf_Undecided, trarst2 = IntSurf_TypeTrans::IntSurf_Undecided;
-  Blend_Point       curpoint;
+  IntSurf_TypeTrans trarst1 = IntSurf_TypeTrans::IntSurf_Undecided,
+                    trarst2 = IntSurf_TypeTrans::IntSurf_Undecided;
+  Blend_Point curpoint;
 
   if (Func.IsSolution(sol, tolpoint3d))
   {
@@ -1809,7 +1812,8 @@ Blend_Status BRepBlend_RstRstLineBuilder::TestArret(Blend_RstRstFunction& Func,
       StateRst2 = Blend_Status::Blend_StepTooLarge;
       rebrou    = true;
     }
-    if (StateRst1 == Blend_Status::Blend_StepTooLarge || StateRst2 == Blend_Status::Blend_StepTooLarge)
+    if (StateRst1 == Blend_Status::Blend_StepTooLarge
+        || StateRst2 == Blend_Status::Blend_StepTooLarge)
     {
       return Blend_Status::Blend_StepTooLarge;
     }
@@ -1857,7 +1861,8 @@ Blend_Status BRepBlend_RstRstLineBuilder::TestArret(Blend_RstRstFunction& Func,
       previousP = curpoint;
       return State;
     }
-    if (StateRst1 == Blend_Status::Blend_StepTooSmall && StateRst2 == Blend_Status::Blend_StepTooSmall)
+    if (StateRst1 == Blend_Status::Blend_StepTooSmall
+        && StateRst2 == Blend_Status::Blend_StepTooSmall)
     {
       previousP = curpoint;
       if (State == Blend_Status::Blend_OK)
@@ -1922,5 +1927,6 @@ bool BRepBlend_RstRstLineBuilder::CheckInside(Blend_RstRstFunction& Func,
   gp_Vec tgrst1, norst1, tgrst2, norst2;
   Decroch = Func.Decroch(sol, tgrst1, norst1, tgrst2, norst2);
 
-  return (SituOnC1 == TopAbs_IN && SituOnC2 == TopAbs_IN && Decroch == Blend_DecrochStatus::Blend_NoDecroch);
+  return (SituOnC1 == TopAbs_IN && SituOnC2 == TopAbs_IN
+          && Decroch == Blend_DecrochStatus::Blend_NoDecroch);
 }

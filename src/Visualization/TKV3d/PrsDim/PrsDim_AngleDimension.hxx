@@ -258,8 +258,8 @@ protected:
   //! @param[out] theLabelPosition  the label position, contains bits that defines
   //! vertical and horizontal alignment. (for internal usage in count text position).
   //! @param[out] theIsArrowExternal  is the arrows external,
-  //! if arrow orientation in the dimension aspect is Prs3d_DimensionArrowOrientation::Prs3d_DAO_Fit, it fits arrow
-  //! orientation automatically.
+  //! if arrow orientation in the dimension aspect is
+  //! Prs3d_DimensionArrowOrientation::Prs3d_DAO_Fit, it fits arrow orientation automatically.
   Standard_EXPORT void FitTextAlignment(
     const Prs3d_DimensionTextHorizontalPosition& theHorizontalTextPos,
     int&                                         theLabelPosition,

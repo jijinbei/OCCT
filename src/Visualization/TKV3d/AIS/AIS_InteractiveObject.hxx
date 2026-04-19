@@ -47,8 +47,12 @@ class AIS_InteractiveObject : public SelectMgr_SelectableObject
   friend class AIS_InteractiveContext;
   DEFINE_STANDARD_RTTIEXT(AIS_InteractiveObject, SelectMgr_SelectableObject)
 public:
-  //! Returns the kind of Interactive Object; AIS_KindOfInteractive::AIS_KindOfInteractive_None by default.
-  virtual AIS_KindOfInteractive Type() const { return AIS_KindOfInteractive::AIS_KindOfInteractive_None; }
+  //! Returns the kind of Interactive Object; AIS_KindOfInteractive::AIS_KindOfInteractive_None by
+  //! default.
+  virtual AIS_KindOfInteractive Type() const
+  {
+    return AIS_KindOfInteractive::AIS_KindOfInteractive_None;
+  }
 
   //! Specifies additional characteristics of Interactive Object of Type(); -1 by default.
   //! Among the datums, this signature is attributed to the shape.
@@ -144,8 +148,8 @@ public:
 protected:
   //! The TypeOfPresention3d means that the interactive object
   //! may have a presentation dependent on the view of Display.
-  Standard_EXPORT AIS_InteractiveObject(
-    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
+  Standard_EXPORT AIS_InteractiveObject(const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d =
+                                          PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
 
   //! Set presentation display status.
   Standard_EXPORT void SetDisplayStatus(PrsMgr_DisplayStatus theStatus);

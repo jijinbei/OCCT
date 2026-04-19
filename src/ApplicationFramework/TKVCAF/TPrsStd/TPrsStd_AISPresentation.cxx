@@ -931,10 +931,11 @@ void TPrsStd_AISPresentation::ActivateSelectionMode()
             }
           }
           if (!isActivated)
-            aContext->SetSelectionModeActive(myAIS,
-                                             aSelectionMode,
-                                             true,
-                                             AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple);
+            aContext->SetSelectionModeActive(
+              myAIS,
+              aSelectionMode,
+              true,
+              AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple);
         }
       }
       else
@@ -942,11 +943,12 @@ void TPrsStd_AISPresentation::ActivateSelectionMode()
         for (int iSelMode = 1; iSelMode <= nbSelModes; iSelMode++)
         {
           const int aSelectionMode = SelectionMode(iSelMode);
-          aContext->SetSelectionModeActive(myAIS,
-                                           aSelectionMode,
-                                           true /*activate*/,
-                                           iSelMode == 1 ? AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single
-                                                         : AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple);
+          aContext->SetSelectionModeActive(
+            myAIS,
+            aSelectionMode,
+            true /*activate*/,
+            iSelMode == 1 ? AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Single
+                          : AIS_SelectionModesConcurrency::AIS_SelectionModesConcurrency_Multiple);
         }
       }
     }

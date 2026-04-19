@@ -230,8 +230,10 @@ void PrsMgr_PresentableObject::SetTypeOfPresentation(const PrsMgr_TypeOfPresenta
        aPrsIter.Next())
   {
     const occ::handle<PrsMgr_Presentation>& aPrs = aPrsIter.Value();
-    aPrs->SetVisual(myTypeOfPresentation3d == PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent ? Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED
-                                                                            : Graphic3d_TypeOfStructure::Graphic3d_TOS_ALL);
+    aPrs->SetVisual(myTypeOfPresentation3d
+                        == PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent
+                      ? Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED
+                      : Graphic3d_TypeOfStructure::Graphic3d_TOS_ALL);
   }
 }
 

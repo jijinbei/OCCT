@@ -1390,7 +1390,8 @@ void BiTgte_Blend::ComputeCenters()
         }
         // end of map created tangent
 
-        if (OF1.Status() == BRepOffset_Status::BRepOffset_Reversed || OF1.Status() == BRepOffset_Status::BRepOffset_Degenerated)
+        if (OF1.Status() == BRepOffset_Status::BRepOffset_Reversed
+            || OF1.Status() == BRepOffset_Status::BRepOffset_Degenerated)
           continue;
 
         const TopoDS_Face& F1 = OF1.Face();

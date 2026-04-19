@@ -186,8 +186,10 @@ void OpenGl_Sampler::applySamplerParams(const occ::handle<OpenGl_Context>&      
   }
 
   // setup texture filtering
-  const GLenum aFilter = (theParams->Filter() == Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST) ? GL_NEAREST : GL_LINEAR;
-  GLenum       aFilterMin = aFilter;
+  const GLenum aFilter =
+    (theParams->Filter() == Graphic3d_TypeOfTextureFilter::Graphic3d_TOTF_NEAREST) ? GL_NEAREST
+                                                                                   : GL_LINEAR;
+  GLenum aFilterMin = aFilter;
   if (theMaxMipLevels > 0)
   {
     aFilterMin = GL_NEAREST_MIPMAP_NEAREST;
