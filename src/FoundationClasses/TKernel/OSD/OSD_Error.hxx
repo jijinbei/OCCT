@@ -41,7 +41,7 @@ public:
   //! This is only used by OSD methods to instantiates an error code.
   //! No description is done for the programmer.
   Standard_EXPORT void SetValue(const int                      Errcode,
-                                const int                      From,
+                                const OSD_WhoAmI               From,
                                 const TCollection_AsciiString& Message);
 
   //! Returns an accurate error code.

@@ -21,7 +21,7 @@
   #include <Standard_NullObject.hxx>
   #include <TCollection_AsciiString.hxx>
 
-const OSD_WhoAmI Iam = OSD_WHost;
+const OSD_WhoAmI Iam = OSD_WhoAmI::OSD_WHost;
 
   #include <cerrno>
 
@@ -74,26 +74,26 @@ OSD_SysType OSD_Host::SystemId() const
   uname(&info);
 
   if (!strcmp(info.sysname, "SunOS"))
-    return (OSD_UnixBSD);
+    return (OSD_SysType::OSD_UnixBSD);
   if (!strcmp(info.sysname, "ULTRIX"))
-    return (OSD_UnixBSD);
+    return (OSD_SysType::OSD_UnixBSD);
   if (!strcmp(info.sysname, "FreeBSD"))
-    return (OSD_UnixBSD);
+    return (OSD_SysType::OSD_UnixBSD);
   if (!strncmp(info.sysname, "Linux", 5))
-    return (OSD_LinuxREDHAT);
+    return (OSD_SysType::OSD_LinuxREDHAT);
   if (!strncmp(info.sysname, "IRIX", 4))
-    return (OSD_UnixSystemV);
+    return (OSD_SysType::OSD_UnixSystemV);
   if (!strncmp(info.sysname, "OSF", 3))
-    return (OSD_OSF);
+    return (OSD_SysType::OSD_OSF);
   if (!strcmp(info.sysname, "AIX"))
-    return (OSD_Aix);
+    return (OSD_SysType::OSD_Aix);
   if (!strcmp(info.sysname, "UNIX_System_V"))
-    return (OSD_UnixSystemV);
+    return (OSD_SysType::OSD_UnixSystemV);
   if (!strcmp(info.sysname, "VMS_POSIX"))
-    return (OSD_VMS);
+    return (OSD_SysType::OSD_VMS);
   if (!strcmp(info.sysname, "Darwin"))
-    return (OSD_MacOs);
-  return (OSD_Unknown);
+    return (OSD_SysType::OSD_MacOs);
+  return (OSD_SysType::OSD_Unknown);
 }
 
 // =========================================================================
@@ -165,28 +165,28 @@ OSD_OEMType OSD_Host::MachineType()
   uname(&info);
 
   if (!strcmp(info.sysname, "SunOS"))
-    return (OSD_SUN);
+    return (OSD_OEMType::OSD_SUN);
   if (!strcmp(info.sysname, "ULTRIX"))
-    return (OSD_DEC);
+    return (OSD_OEMType::OSD_DEC);
   if (!strncmp(info.sysname, "IRIX", 4))
-    return (OSD_SGI);
+    return (OSD_OEMType::OSD_SGI);
   if (!strcmp(info.sysname, "HP-UX"))
-    return (OSD_HP);
+    return (OSD_OEMType::OSD_HP);
   if (!strcmp(info.sysname, "UNIX_System_V"))
-    return (OSD_NEC);
+    return (OSD_OEMType::OSD_NEC);
   if (!strcmp(info.sysname, "VMS_POSIX"))
-    return (OSD_VAX);
+    return (OSD_OEMType::OSD_VAX);
   if (!strncmp(info.sysname, "OSF", 3))
-    return (OSD_DEC);
+    return (OSD_OEMType::OSD_DEC);
   if (!strncmp(info.sysname, "Linux", 5))
-    return (OSD_LIN);
+    return (OSD_OEMType::OSD_LIN);
   if (!strcmp(info.sysname, "FreeBSD"))
-    return (OSD_LIN);
+    return (OSD_OEMType::OSD_LIN);
   if (!strncmp(info.sysname, "AIX", 3))
-    return (OSD_AIX);
+    return (OSD_OEMType::OSD_AIX);
   if (!strcmp(info.sysname, "Darwin"))
-    return (OSD_MAC);
-  return (OSD_Unavailable);
+    return (OSD_OEMType::OSD_MAC);
+  return (OSD_OEMType::OSD_Unavailable);
 }
 
 void OSD_Host::Reset()
@@ -221,7 +221,7 @@ int OSD_Host::Error() const
 
   #include <mutex>
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(OSD_Error&, OSD_WhoAmI, ...);
 
 static TCollection_AsciiString hostName;
 static TCollection_AsciiString version;
@@ -253,11 +253,11 @@ OSD_Host ::OSD_Host()
     // suppress GetVersionEx() deprecation warning
     Standard_DISABLE_DEPRECATION_WARNINGS if (!GetVersionExW(&osVerInfo))
     {
-      _osd_wnt_set_error(myError, OSD_WHost);
+      _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WHost);
     }
     else if (!GetComputerNameA(szHostName, &nSize))
     {
-      _osd_wnt_set_error(myError, OSD_WHost);
+      _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WHost);
     }
     else
     {
@@ -274,12 +274,12 @@ OSD_Host ::OSD_Host()
       if (WSAStartup(MAKEWORD(1, 1), &wd))
       {
 
-        _osd_wnt_set_error(myError, OSD_WHost);
+        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WHost);
       }
       else if ((phe = gethostbyname(szHostName)) == nullptr)
       {
 
-        _osd_wnt_set_error(myError, OSD_WHost);
+        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WHost);
       }
       else
       {
@@ -326,7 +326,7 @@ TCollection_AsciiString OSD_Host ::SystemVersion()
 OSD_SysType OSD_Host ::SystemId() const
 {
 
-  return OSD_WindowsNT;
+  return OSD_SysType::OSD_WindowsNT;
 
 } // end OSD_Host :: SystemId
 
@@ -354,7 +354,7 @@ TCollection_AsciiString OSD_Host ::InternetAddress()
 OSD_OEMType OSD_Host ::MachineType()
 {
 
-  return OSD_PC;
+  return OSD_OEMType::OSD_PC;
 
 } // end OSD_Host :: MachineTYpe
 

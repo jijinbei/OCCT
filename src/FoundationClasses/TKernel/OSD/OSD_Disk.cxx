@@ -22,7 +22,7 @@
 #ifdef _WIN32
   #include <windows.h>
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(OSD_Error&, OSD_WhoAmI, ...);
 
 static TCollection_AsciiString _osd_wnt_set_disk_name(const OSD_Path& thePath)
 {
@@ -82,7 +82,7 @@ static TCollection_AsciiString _osd_wnt_set_disk_name(const OSD_Path& thePath)
 }
 
 #else
-const OSD_WhoAmI Iam = OSD_WDisk;
+const OSD_WhoAmI Iam = OSD_WhoAmI::OSD_WDisk;
 extern "C"
 {
   #if defined(__ANDROID__)
@@ -165,7 +165,7 @@ int OSD_Disk::DiskSize()
                            &aNbTotalBytes,
                            &aNbTotalFreeBytes))
   {
-    _osd_wnt_set_error(myError, OSD_WDisk);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WDisk);
     return 0;
   }
 
@@ -195,7 +195,7 @@ int OSD_Disk::DiskFree()
                            &aNbTotalBytes,
                            &aNbTotalFreeBytes))
   {
-    _osd_wnt_set_error(myError, OSD_WDisk);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WDisk);
     return 0;
   }
 

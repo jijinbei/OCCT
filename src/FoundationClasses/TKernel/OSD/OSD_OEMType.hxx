@@ -17,7 +17,7 @@
 
 //! This is set of possible machine types
 //! used in OSD_Host::MachineType
-enum OSD_OEMType
+enum class OSD_OEMType
 {
   OSD_Unavailable,
   OSD_SUN,

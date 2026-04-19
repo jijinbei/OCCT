@@ -48,7 +48,7 @@ extern char* vmsify PARAMS((char* name, int type));
     #define FAKE_DIR_ENTRY(dp) (dp->d_ino = 1)
   #endif /* POSIX */
 
-// const OSD_WhoAmI Iam = OSD_WFileIterator;
+// const OSD_WhoAmI Iam = OSD_WhoAmI::OSD_WFileIterator;
 
 OSD_FileIterator::OSD_FileIterator()
     : myFlag(false),
@@ -226,7 +226,7 @@ int OSD_FileIterator::Error() const
 
   #define _FD ((PWIN32_FIND_DATAW)myData)
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(OSD_Error&, OSD_WhoAmI, ...);
 
 OSD_FileIterator ::OSD_FileIterator(const OSD_Path& where, const TCollection_AsciiString& Mask)
 {
@@ -277,7 +277,7 @@ bool OSD_FileIterator ::More()
 
     if (myHandle == INVALID_HANDLE_VALUE)
 
-      _osd_wnt_set_error(myError, OSD_WDirectoryIterator);
+      _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WDirectoryIterator);
 
     else
     {

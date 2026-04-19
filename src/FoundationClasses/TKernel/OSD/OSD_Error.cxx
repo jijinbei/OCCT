@@ -40,10 +40,12 @@ bool OSD_Error::Failed() const
     return (true);
 }
 
-void OSD_Error::SetValue(const int errcode, const int from, const TCollection_AsciiString& message)
+void OSD_Error::SetValue(const int              errcode,
+                         const OSD_WhoAmI       from,
+                         const TCollection_AsciiString& message)
 {
   myErrno   = errcode;
-  myCode    = (OSD_WhoAmI)from;
+  myCode    = from;
   myMessage = message;
 }
 
@@ -67,7 +69,7 @@ void OSD_Error::Perror()
     case EBADF:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "Invalid file descriptor or bad mode";
           extCode = ERR_FBADF;
           break;
@@ -80,7 +82,7 @@ void OSD_Error::Perror()
     case EBADMSG:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "The message waiting to be read on stream is not a data message";
           extCode = ERR_FBADMSG;
           break;
@@ -93,11 +95,11 @@ void OSD_Error::Perror()
     case EINVAL:
       switch (myCode)
       {
-        case OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFileNode:
           buffer += "Can't unlink '.' or '..'";
           extCode = ERR_FNINVAL;
           break;
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "Invalid file descriptor";
           extCode = ERR_FINVAL;
           break;
@@ -111,9 +113,9 @@ void OSD_Error::Perror()
     case EDQUOT:
       switch (myCode)
       {
-        case OSD_WDirectory:
-        case OSD_WFileNode:
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WDirectory:
+        case OSD_WhoAmI::OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "Exceed quota of disk blocks";
           extCode = ERR_QUOT;
           break;
@@ -127,7 +129,7 @@ void OSD_Error::Perror()
     case EDEADLK:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "Lock is already blocked by another process";
           extCode = ERR_FDEADLK;
           break;
@@ -140,7 +142,7 @@ void OSD_Error::Perror()
     case ENOLCK:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "No more file lock entries available";
           extCode = ERR_FNOLCK;
           break;
@@ -151,7 +153,7 @@ void OSD_Error::Perror()
     case EOPNOTSUPP:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "File descriptor doesn't refer to a file";
           extCode = ERR_FWFD;
           break;
@@ -166,7 +168,7 @@ void OSD_Error::Perror()
     case EBUSY:
       switch (myCode)
       {
-        case OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFileNode:
           buffer += "Still used by system or a process";
           extCode = ERR_FNBUSY;
           break;
@@ -177,7 +179,7 @@ void OSD_Error::Perror()
     case ERANGE:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "Not enough or too many bytes written";
           extCode = ERR_FRANGE;
           break;
@@ -188,11 +190,11 @@ void OSD_Error::Perror()
     case EPERM:
       switch (myCode)
       {
-        case OSD_WPackage:
+        case OSD_WhoAmI::OSD_WPackage:
           buffer += "Permission denied";
           extCode = ERR_PPERM;
           break;
-        case OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFileNode:
           buffer += "Permission denied or can't unlink directory";
           extCode = ERR_FPERM;
           break;
@@ -205,8 +207,8 @@ void OSD_Error::Perror()
     case EROFS:
       switch (myCode)
       {
-        case OSD_WFileNode:
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "Read only file system";
           extCode = ERR_ROFS;
           break;
@@ -218,12 +220,12 @@ void OSD_Error::Perror()
     case EIO:
       switch (myCode)
       {
-        case OSD_WDirectory:
-        case OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WDirectory:
+        case OSD_WhoAmI::OSD_WFileNode:
           buffer += "I/O error";
           extCode = ERR_IO;
           break;
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "I/O error or Hang up from terminal";
           extCode = ERR_FIO;
           break;
@@ -234,8 +236,8 @@ void OSD_Error::Perror()
     case EISDIR:
       switch (myCode)
       {
-        case OSD_WFileNode:
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "The File is a Directory";
           extCode = ERR_ISDIR;
           break;
@@ -248,7 +250,7 @@ void OSD_Error::Perror()
     case EWOULDBLOCK:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "File is locked";
           extCode = ERR_FLOCKED;
           break;
@@ -262,7 +264,7 @@ void OSD_Error::Perror()
     case EWOULDBLOCK:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "File is locked";
           extCode = ERR_FLOCKED;
           break;
@@ -275,7 +277,7 @@ void OSD_Error::Perror()
     case EAGAIN:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "No data ready to be read/written";
           extCode = ERR_FAGAIN;
           break;
@@ -286,9 +288,9 @@ void OSD_Error::Perror()
     case ENOTDIR:
       switch (myCode)
       {
-        case OSD_WDirectory:
-        case OSD_WFileNode:
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WDirectory:
+        case OSD_WhoAmI::OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "A component of path is not a Directory";
           extCode = ERR_NOTDIR;
           break;
@@ -299,7 +301,7 @@ void OSD_Error::Perror()
     case EMLINK:
       switch (myCode)
       {
-        case OSD_WDirectory:
+        case OSD_WhoAmI::OSD_WDirectory:
           buffer += "Too many links";
           extCode = ERR_DMLINK;
           break;
@@ -310,9 +312,9 @@ void OSD_Error::Perror()
     case ELOOP:
       switch (myCode)
       {
-        case OSD_WDirectory:
-        case OSD_WFileNode:
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WDirectory:
+        case OSD_WhoAmI::OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "Too many symbolic links";
           break;
         default:
@@ -326,7 +328,7 @@ void OSD_Error::Perror()
     case EFBIG:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "Exceed process's file size limit or the maximum file size";
           extCode = ERR_FFBIG;
           break;
@@ -345,7 +347,7 @@ void OSD_Error::Perror()
     case EMFILE:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "Too many file descriptors are currently in use by this process";
           extCode = ERR_FMFILE;
           break;
@@ -360,7 +362,7 @@ void OSD_Error::Perror()
     case ENFILE:
       switch (myCode)
       {
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "Too many files are currently open in the system";
           extCode = ERR_FNFILE;
           break;
@@ -371,7 +373,7 @@ void OSD_Error::Perror()
     case EXDEV:
       switch (myCode)
       {
-        case OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFileNode:
           buffer += "The link named by path2 and the file named by path1 are\n";
           buffer += "on different logical devices (file systems)";
           extCode = ERR_FNXDEV;
@@ -383,14 +385,14 @@ void OSD_Error::Perror()
     case ENOENT:
       switch (myCode)
       {
-        case OSD_WFileNode:
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFile:
           if (myMessage != "Open")
             buffer += "File doesn't exist or";
           buffer += "Invalid path (empty string)";
           extCode = ERR_NOENT;
           break;
-        case OSD_WDirectory:
+        case OSD_WhoAmI::OSD_WDirectory:
           buffer += "A component of the path prefix of path does not exist";
           extCode = ERR_DNOENT;
           break;
@@ -401,8 +403,8 @@ void OSD_Error::Perror()
     case ENOSPC: {
       switch (myCode)
       {
-        case OSD_WDirectory:
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WDirectory:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "No more free space on file system";
           extCode = ERR_FNOSPC;
           break;
@@ -420,7 +422,7 @@ void OSD_Error::Perror()
     case ENOTEMPTY:
       switch (myCode)
       {
-        case OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFileNode:
           buffer += "Directory not empty";
           extCode = ERR_FNNOTEMPTY;
           break;
@@ -433,11 +435,11 @@ void OSD_Error::Perror()
     case EEXIST:
       switch (myCode)
       {
-        case OSD_WFileNode:
+        case OSD_WhoAmI::OSD_WFileNode:
           buffer += "Directory not empty";
           extCode = ERR_FNNOTEMPTY;
           break;
-        case OSD_WFile:
+        case OSD_WhoAmI::OSD_WFile:
           buffer += "OSD_Create and OSD_Exclude are set and the named file exists";
           extCode = ERR_FEXIST;
           break;
@@ -607,43 +609,43 @@ void OSD_Error ::Perror()
   switch (myCode)
   {
 
-    case OSD_WDirectoryIterator:
+    case OSD_WhoAmI::OSD_WDirectoryIterator:
       StringCchCatW(buff, _countof(buff), L"OSD_DirectoryIterator");
       break;
 
-    case OSD_WDirectory:
+    case OSD_WhoAmI::OSD_WDirectory:
       StringCchCatW(buff, _countof(buff), L"OSD_Directory");
       break;
 
-    case OSD_WFileIterator:
+    case OSD_WhoAmI::OSD_WFileIterator:
       StringCchCatW(buff, _countof(buff), L"OSD_FileIterator");
       break;
 
-    case OSD_WFile:
+    case OSD_WhoAmI::OSD_WFile:
       StringCchCatW(buff, _countof(buff), L"OSD_File");
       break;
 
-    case OSD_WFileNode:
+    case OSD_WhoAmI::OSD_WFileNode:
       StringCchCatW(buff, _countof(buff), L"OSD_FileNode");
       break;
 
-    case OSD_WHost:
+    case OSD_WhoAmI::OSD_WHost:
       StringCchCatW(buff, _countof(buff), L"OSD_Host");
       break;
 
-    case OSD_WProcess:
+    case OSD_WhoAmI::OSD_WProcess:
       StringCchCatW(buff, _countof(buff), L"OSD_Environment");
       break;
 
-    case OSD_WEnvironmentIterator:
+    case OSD_WhoAmI::OSD_WEnvironmentIterator:
       StringCchCatW(buff, _countof(buff), L"OSD_EnvironmentIterator");
       break;
 
-    case OSD_WEnvironment:
+    case OSD_WhoAmI::OSD_WEnvironment:
       StringCchCatW(buff, _countof(buff), L"OSD_Environment");
       break;
 
-    case OSD_WDisk:
+    case OSD_WhoAmI::OSD_WDisk:
       StringCchCatW(buff, _countof(buff), L"OSD_Disk");
       break;
 
@@ -672,7 +674,7 @@ void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_A
   switch (From)
   {
 
-    case OSD_WDirectory:
+    case OSD_WhoAmI::OSD_WDirectory:
 
       for (i = 0; i < DIR_ERR_TABLE_SIZE; ++i)
 
@@ -689,7 +691,7 @@ void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_A
 
       break;
 
-    case OSD_WFile:
+    case OSD_WhoAmI::OSD_WFile:
 
       for (i = 0; i < FILE_ERR_TABLE_SIZE; ++i)
 
@@ -706,7 +708,7 @@ void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_A
 
       break;
 
-    case OSD_WFileNode:
+    case OSD_WhoAmI::OSD_WFileNode:
 
       for (i = 0; i < FILE_NODE_ERR_TABLE_SIZE; ++i)
 

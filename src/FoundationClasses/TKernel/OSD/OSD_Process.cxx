@@ -35,7 +35,7 @@
   #include <OSD_WNT.hxx>
   #include <lmcons.h> // for UNLEN - maximum user name length GetUserName()
 #else
-const OSD_WhoAmI Iam = OSD_WProcess;
+const OSD_WhoAmI Iam = OSD_WhoAmI::OSD_WProcess;
   #include <cerrno>
   #include <cstdlib>
   #include <sys/param.h>
@@ -193,7 +193,7 @@ int OSD_Process::Error() const
 //-------------------  WNT Sources of OSD_Path ---------------------------
 //------------------------------------------------------------------------
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(OSD_Error&, OSD_WhoAmI, ...);
 
 //=================================================================================================
 
@@ -231,7 +231,7 @@ TCollection_AsciiString OSD_Process::UserName()
   TCollection_AsciiString retVal;
   if (!GetUserNameW(aUserName, &aNameSize))
   {
-    _osd_wnt_set_error(myError, OSD_WProcess);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WProcess);
     return TCollection_AsciiString();
   }
   return TCollection_AsciiString(aUserName);
@@ -251,7 +251,7 @@ bool OSD_Process ::IsSuperUser()
   if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hProcessToken)
       || (pTKgroups = (PTOKEN_GROUPS)GetTokenInformationEx(hProcessToken, TokenGroups)) == nullptr)
 
-    _osd_wnt_set_error(myError, OSD_WProcess);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WProcess);
 
   else
   {
@@ -307,7 +307,7 @@ OSD_Path OSD_Process::CurrentDirectory()
   }
   else
   {
-    _osd_wnt_set_error(myError, OSD_WProcess);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WProcess);
   }
   #endif
   return anCurrentDirectory;
@@ -323,7 +323,7 @@ void OSD_Process ::SetCurrentDirectory(const OSD_Path& where)
 
   if (!::SetCurrentDirectoryW(pathW.ToWideString()))
 
-    _osd_wnt_set_error(myError, OSD_WProcess);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WProcess);
 
 } // end OSD_Process :: SetCurrentDirectory
 

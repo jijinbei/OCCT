@@ -38,7 +38,7 @@
   #define OPEN_OLD 1
   #define OPEN_APPEND 2
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(OSD_Error&, OSD_WhoAmI, ...);
 
   #ifndef OCCT_UWP
 PSECURITY_DESCRIPTOR __fastcall _osd_wnt_protection_to_sd(const OSD_Protection&,
@@ -380,7 +380,7 @@ static HANDLE OSD_File_openFile(const TCollection_AsciiString& theFileName,
 
 #else
 
-const OSD_WhoAmI Iam = OSD_WFile;
+const OSD_WhoAmI Iam = OSD_WhoAmI::OSD_WFile;
 
   #if defined(sun) || defined(SOLARIS)
     #define POSIX
@@ -471,7 +471,7 @@ void OSD_File::Build(const OSD_OpenMode theMode, const OSD_Protection& theProtec
   myFileHandle = OSD_File_openFile(aFileName, theMode, OPEN_NEW);
   if (myFileHandle == INVALID_HANDLE_VALUE)
   {
-    _osd_wnt_set_error(myError, OSD_WFile);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
   }
   else
   {
@@ -545,7 +545,7 @@ void OSD_File::Append(const OSD_OpenMode theMode, const OSD_Protection& theProte
   myFileHandle   = OSD_File_openFile(aFileName, theMode, OPEN_APPEND, &isNewFile);
   if (myFileHandle == INVALID_HANDLE_VALUE)
   {
-    _osd_wnt_set_error(myError, OSD_WFile);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
   }
   else
   {
@@ -633,7 +633,7 @@ void OSD_File::Open(const OSD_OpenMode theMode, const OSD_Protection& theProtect
   myFileHandle = OSD_File_openFile(aFileName, theMode, OPEN_OLD);
   if (myFileHandle == INVALID_HANDLE_VALUE)
   {
-    _osd_wnt_set_error(myError, OSD_WFile);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
   }
   else
   {
@@ -870,7 +870,7 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
   {
     if (!ReadFile(myFileHandle, &aBuffer.ChangeFirst(), theNbBytes, &aNbBytesRead, nullptr))
     {
-      _osd_wnt_set_error(myError, OSD_WFile);
+      _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
       theBuffer.Clear();
       theNbBytesRead = 0;
     }
@@ -889,7 +889,7 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
         DWORD dwDummy = 0;
         if (!ReadFile(myFileHandle, &aPeekChar, 1, &dwDummy, nullptr))
         {
-          _osd_wnt_set_error(myError, OSD_WFile);
+          _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
         }
         else if (dwDummy != 0) // end-of-file reached?
         {
@@ -926,7 +926,7 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
                                              myIO & FLAG_SOCKET);
     if ((int)aNbBytesRead == -1)
     {
-      _osd_wnt_set_error(myError, OSD_WFile);
+      _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
       theBuffer.Clear();
       theNbBytesRead = 0;
     }
@@ -948,7 +948,7 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
           OSD_File_getBuffer(myFileHandle, &aPeekChar, 1, TRUE, myIO & FLAG_SOCKET);
         if ((int)dwDummy == -1)
         {
-          _osd_wnt_set_error(myError, OSD_WFile);
+          _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
         }
         else if (dwDummy != 0) // connection closed?
         {
@@ -1101,7 +1101,7 @@ void OSD_File::Read(void* const theBuffer, const int theNbBytes, int& theNbReadB
   DWORD aNbReadBytes = 0;
   if (!ReadFile(myFileHandle, theBuffer, (DWORD)theNbBytes, &aNbReadBytes, nullptr))
   {
-    _osd_wnt_set_error(myError, OSD_WFile);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
     aNbReadBytes = 0;
   }
   else if (aNbReadBytes == 0)
@@ -1162,7 +1162,7 @@ void OSD_File::Write(void* const theBuffer, const int theNbBytes)
   if (!WriteFile(myFileHandle, theBuffer, (DWORD)theNbBytes, &aNbWritten, nullptr)
       || aNbWritten != (DWORD)theNbBytes)
   {
-    _osd_wnt_set_error(myError, OSD_WFile);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
   }
 #else
   const int aNbWritten = (int)write(myFileChannel, (const char*)theBuffer, theNbBytes);
@@ -1214,7 +1214,7 @@ void OSD_File::Seek(const int theOffset, const OSD_FromWhere theWhence)
     aDistanceToMove.QuadPart = theOffset;
     if (!SetFilePointerEx(myFileHandle, aDistanceToMove, &aNewFilePointer, aWhere))
     {
-      _osd_wnt_set_error(myError, OSD_WFile);
+      _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
     }
   }
   myIO &= ~FLAG_EOF;
@@ -1342,7 +1342,7 @@ void OSD_File::SetLock(const OSD_LockType theLock)
     aSize.QuadPart = Size();
     if (!LockFileEx(myFileHandle, dwFlags, 0, aSize.LowPart, aSize.HighPart, &anOverlapped))
     {
-      _osd_wnt_set_error(myError, OSD_WFile);
+      _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
       __leave;
     }
     ImperativeFlag = true;
@@ -1473,7 +1473,7 @@ void OSD_File::UnLock()
     anOverlappedArea.OffsetHigh = 0;
     if (!UnlockFileEx(myFileHandle, 0, aSize.LowPart, aSize.HighPart, &anOverlappedArea))
     {
-      _osd_wnt_set_error(myError, OSD_WFile);
+      _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
     }
     ImperativeFlag = false;
   }
@@ -1543,14 +1543,14 @@ size_t OSD_File::Size()
   aSize.QuadPart = 0;
   if (GetFileSizeEx(myFileHandle, &aSize) == 0)
   {
-    _osd_wnt_set_error(myError, OSD_WFile);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
   }
   return (size_t)aSize.QuadPart;
   #else
   DWORD aSize = GetFileSize(myFileHandle, nullptr);
   if (aSize == INVALID_FILE_SIZE)
   {
-    _osd_wnt_set_error(myError, OSD_WFile);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFile);
   }
   return aSize;
   #endif

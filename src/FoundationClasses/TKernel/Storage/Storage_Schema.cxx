@@ -705,7 +705,7 @@ bool Storage_Schema::CheckTypeMigration(const TCollection_AsciiString& oldName,
     OSD_Environment         csf(TCollection_AsciiString("CSF_MIGRATION_TYPES"));
     TCollection_AsciiString aFileName = csf.Value();
     OSD_File                aFile;
-    OSD_Path                aPath(aFileName, OSD_Default);
+    OSD_Path                aPath(aFileName, OSD_SysType::OSD_Default);
     aFile.SetPath(aPath);
     if (aFile.Exists())
     {

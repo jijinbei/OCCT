@@ -15,7 +15,7 @@
 #define _OSD_SignalMode_HeaderFile
 
 //! Mode of operation for OSD::SetSignal() function
-enum OSD_SignalMode
+enum class OSD_SignalMode
 {
   OSD_SignalMode_AsIs,         //!< Do not set or remove signal handlers
   OSD_SignalMode_Set,          //!< Set OCCT signal handlers

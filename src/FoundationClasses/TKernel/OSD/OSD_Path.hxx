@@ -33,9 +33,9 @@ public:
   Standard_EXPORT OSD_Path();
 
   //! Creates a Path object initialized by dependent path.
-  //! ex: OSD_Path me ("/usr/bin/myprog.sh",OSD_UnixBSD);
+  //! ex: OSD_Path me ("/usr/bin/myprog.sh",OSD_SysType::OSD_UnixBSD);
   //!
-  //! OSD_Path me ("sys$common:[syslib]cc.exe",OSD_OSF) will
+  //! OSD_Path me ("sys$common:[syslib]cc.exe",OSD_SysType::OSD_OSF) will
   //! raise a ProgramError due to invalid name for this
   //! type of system.
   //! In order to avoid a 'ProgramError' , use IsValid(...)
@@ -43,7 +43,7 @@ public:
   //! Raises ConstructionError when the path is either null
   //! or contains characters not in range of ' '...'~'.
   Standard_EXPORT OSD_Path(const TCollection_AsciiString& aDependentName,
-                           const OSD_SysType              aSysType = OSD_Default);
+                           const OSD_SysType              aSysType = OSD_SysType::OSD_Default);
 
   //! Initializes a system independent path.
   //! By default , the Path conversion will be assumed using
@@ -107,14 +107,14 @@ public:
   //! On VMS   sparc4"sga secret_passwd"::$5$dkb100:[users.examples]
   //! Sets each component of a Path giving its system dependent name.
   Standard_EXPORT void SystemName(TCollection_AsciiString& FullName,
-                                  const OSD_SysType        aType = OSD_Default) const;
+                                  const OSD_SysType        aType = OSD_SysType::OSD_Default) const;
 
   //! Returns system dependent path resolving logical symbols.
   Standard_EXPORT void ExpandedName(TCollection_AsciiString& aName);
 
   //! Returns TRUE if <theDependentName> is valid for this SysType.
   Standard_EXPORT static bool IsValid(const TCollection_AsciiString& theDependentName,
-                                      const OSD_SysType              theSysType = OSD_Default);
+                                      const OSD_SysType              theSysType = OSD_SysType::OSD_Default);
 
   //! This removes the last directory name in <aTrek>
   //! and returns result.

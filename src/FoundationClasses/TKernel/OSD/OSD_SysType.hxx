@@ -22,7 +22,7 @@
 //! Such systems are Solaris, NexTOS ...
 //! A category of systems accept MSDOS-like path such as
 //! WindowsNT and OS2.
-enum OSD_SysType
+enum class OSD_SysType
 {
   OSD_Unknown,
   OSD_Default,

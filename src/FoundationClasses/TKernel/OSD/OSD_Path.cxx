@@ -20,26 +20,26 @@ static OSD_SysType whereAmI()
 {
 #if defined(__digital__) || defined(__FreeBSD__) || defined(SUNOS) || defined(__APPLE__)           \
   || defined(__QNX__) || defined(__FreeBSD_kernel__)
-  return OSD_UnixBSD;
+  return OSD_SysType::OSD_UnixBSD;
 #elif defined(sgi) || defined(IRIX) || defined(__sun) || defined(SOLARIS) || defined(__sco__)      \
   || defined(__hpux) || defined(HPUX)
-  return OSD_UnixSystemV;
+  return OSD_SysType::OSD_UnixSystemV;
 #elif defined(__osf__) || defined(DECOSF1)
-  return OSD_OSF;
+  return OSD_SysType::OSD_OSF;
 #elif defined(OS2)
-  return OSD_WindowsNT;
+  return OSD_SysType::OSD_WindowsNT;
 #elif defined(_WIN32) || defined(__WIN32__)
-  return OSD_WindowsNT;
+  return OSD_SysType::OSD_WindowsNT;
 #elif defined(__CYGWIN32_) || defined(__MINGW32__)
-  return OSD_WindowsNT;
+  return OSD_SysType::OSD_WindowsNT;
 #elif defined(vax) || defined(__vms)
-  return OSD_VMS;
+  return OSD_SysType::OSD_VMS;
 #elif defined(__linux__) || defined(__linux)
-  return OSD_LinuxREDHAT;
+  return OSD_SysType::OSD_LinuxREDHAT;
 #elif defined(__EMSCRIPTEN__)
-  return OSD_LinuxREDHAT;
+  return OSD_SysType::OSD_LinuxREDHAT;
 #elif defined(_AIX) || defined(AIX)
-  return OSD_Aix;
+  return OSD_SysType::OSD_Aix;
 #else
   struct utsname info;
   uname(&info);
@@ -48,7 +48,7 @@ static OSD_SysType whereAmI()
   std::cout << info.release << std::endl;
   std::cout << info.version << std::endl;
   std::cout << info.machine << std::endl;
-  return OSD_Default;
+  return OSD_SysType::OSD_Default;
 #endif
 }
 
@@ -351,7 +351,7 @@ OSD_Path::OSD_Path(const TCollection_AsciiString& aDependentName, const OSD_SysT
   OSD_SysType todo;
   //  int i,l;
 
-  if (aSysType == OSD_Default)
+  if (aSysType == OSD_SysType::OSD_Default)
   {
     todo = mySysDep;
   }
@@ -362,7 +362,7 @@ OSD_Path::OSD_Path(const TCollection_AsciiString& aDependentName, const OSD_SysT
 
   switch (todo)
   {
-    case OSD_VMS:
+    case OSD_SysType::OSD_VMS:
       VmsExtract(aDependentName,
                  myNode,
                  myUserName,
@@ -372,18 +372,18 @@ OSD_Path::OSD_Path(const TCollection_AsciiString& aDependentName, const OSD_SysT
                  myName,
                  myExtension);
       break;
-    case OSD_LinuxREDHAT:
-    case OSD_UnixBSD:
-    case OSD_UnixSystemV:
-    case OSD_Aix:
-    case OSD_OSF:
+    case OSD_SysType::OSD_LinuxREDHAT:
+    case OSD_SysType::OSD_UnixBSD:
+    case OSD_SysType::OSD_UnixSystemV:
+    case OSD_SysType::OSD_Aix:
+    case OSD_SysType::OSD_OSF:
       UnixExtract(aDependentName, myNode, myUserName, myPassword, myTrek, myName, myExtension);
       break;
-    case OSD_OS2:
-    case OSD_WindowsNT:
+    case OSD_SysType::OSD_OS2:
+    case OSD_SysType::OSD_WindowsNT:
       DosExtract(aDependentName, myDisk, myTrek, myName, myExtension);
       break;
-    case OSD_MacOs:
+    case OSD_SysType::OSD_MacOs:
       MacExtract(aDependentName, myDisk, myTrek, myName, myExtension);
       break;
     default:
@@ -656,7 +656,7 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
   TCollection_AsciiString pDisk;
   OSD_SysType             pType;
 
-  if (aType == OSD_Default)
+  if (aType == OSD_SysType::OSD_Default)
   {
     pType = mySysDep;
   }
@@ -670,7 +670,7 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
 
   switch (pType)
   {
-    case OSD_VMS:
+    case OSD_SysType::OSD_VMS:
       pNode = myNode;
 
       P2VMS(Way); // Convert path
@@ -714,8 +714,8 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
       //   FullName.UpperCase();
       break;
 
-    case OSD_OS2:
-    case OSD_WindowsNT: // MSDOS-like syntax
+    case OSD_SysType::OSD_OS2:
+    case OSD_SysType::OSD_WindowsNT: // MSDOS-like syntax
     {
       int length = (int)myDisk.Length();
 
@@ -754,7 +754,7 @@ void OSD_Path::SystemName(TCollection_AsciiString& FullName, const OSD_SysType a
       break;
     }
 
-    case OSD_MacOs: // Mackintosh-like syntax
+    case OSD_SysType::OSD_MacOs: // Mackintosh-like syntax
       if (myDisk.Length() != 0)
       {
         FullName += myDisk;
@@ -924,13 +924,13 @@ static void __fastcall _remove_dup(TCollection_AsciiString&);
 
 OSD_Path ::OSD_Path()
     : myUNCFlag(false),
-      mySysDep(OSD_WindowsNT)
+      mySysDep(OSD_SysType::OSD_WindowsNT)
 {
 } // end constructor ( 1 )
 
 OSD_Path ::OSD_Path(const TCollection_AsciiString& aDependentName, const OSD_SysType aSysType)
     : myUNCFlag(false),
-      mySysDep(OSD_WindowsNT)
+      mySysDep(OSD_SysType::OSD_WindowsNT)
 {
 
   int  i, j, len;
@@ -995,7 +995,7 @@ OSD_Path ::OSD_Path(const TCollection_AsciiString& aNode,
                     const TCollection_AsciiString& aName,
                     const TCollection_AsciiString& anExtension)
     : myUNCFlag(false),
-      mySysDep(OSD_WindowsNT)
+      mySysDep(OSD_SysType::OSD_WindowsNT)
 {
 
   SetValues(aNode, aUsername, aPassword, aDisk, aTrek, aName, anExtension);
@@ -1408,7 +1408,7 @@ static void __fastcall _test_raise(OSD_SysType type, const char* str)
 
   char buff[64];
 
-  if (type != OSD_Default && type != OSD_WindowsNT)
+  if (type != OSD_SysType::OSD_Default && type != OSD_SysType::OSD_WindowsNT)
   {
 
     strcpy(buff, "OSD_Path :: ");
@@ -1507,14 +1507,14 @@ bool OSD_Path::IsValid(const TCollection_AsciiString& theDependentName,
     return true;
   }
 
-  switch (theSysType == OSD_Default ? whereAmI() : theSysType)
+  switch (theSysType == OSD_SysType::OSD_Default ? whereAmI() : theSysType)
   {
-    case OSD_VMS:
+    case OSD_SysType::OSD_VMS:
       return Analyse_VMS(theDependentName);
-    case OSD_OS2:
-    case OSD_WindowsNT:
+    case OSD_SysType::OSD_OS2:
+    case OSD_SysType::OSD_WindowsNT:
       return Analyse_DOS(theDependentName);
-    case OSD_MacOs:
+    case OSD_SysType::OSD_MacOs:
       return Analyse_MACOS(theDependentName);
     default:
       return true;

@@ -36,7 +36,7 @@
   #include <sys/stat.h>
   #include <unistd.h>
 // For "system"
-const OSD_WhoAmI Iam = OSD_WFileNode;
+const OSD_WhoAmI Iam = OSD_WhoAmI::OSD_WFileNode;
 
 // Create a file/directory object
 
@@ -414,7 +414,7 @@ BOOL __fastcall _osd_wnt_sd_to_protection(PSECURITY_DESCRIPTOR pSD, OSD_Protecti
   #endif
 int __fastcall _get_file_type(const char*, HANDLE);
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(OSD_Error&, OSD_WhoAmI, ...);
 
 static BOOL __fastcall _get_file_time(const wchar_t*, LPSYSTEMTIME, BOOL);
 static void __fastcall _test_raise(TCollection_AsciiString, const char*);
@@ -472,7 +472,7 @@ bool OSD_FileNode::Exists()
   {
     if (GetLastError() != ERROR_FILE_NOT_FOUND)
     {
-      _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString());
+      _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString());
     }
   }
   else
@@ -502,7 +502,7 @@ void OSD_FileNode::Remove()
     case FLAG_FILE:
 
       if (!DeleteFileW(fNameW.ToWideString()))
-        _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString());
+        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString());
       break;
 
     case FLAG_DIRECTORY:
@@ -511,7 +511,7 @@ void OSD_FileNode::Remove()
       //      ne pas detruire un repertoire no vide.
 
       if (!RemoveDirectoryW(fNameW.ToWideString()))
-        _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString());
+        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString());
       break;
 
     default:
@@ -544,13 +544,13 @@ void OSD_FileNode::Move(const OSD_Path& NewPath)
       if (!MoveFileExW(fNameW.ToWideString(),
                        fNameDstW.ToWideString(),
                        MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED))
-        _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
+        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
       break;
 
     case FLAG_DIRECTORY:
 
       if (!MoveDirectory(fNameW.ToWideString(), fNameDstW.ToWideString()))
-        _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
+        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
       break;
 
     default:
@@ -584,13 +584,13 @@ void OSD_FileNode::Copy(const OSD_Path& ToPath)
   #else
       if (CopyFile2(fNameW.ToWideString(), fNameDstW.ToWideString(), FALSE) != S_OK)
   #endif
-        _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
+        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
       break;
 
     case FLAG_DIRECTORY:
 
       if (!CopyDirectory(fNameW.ToWideString(), fNameDstW.ToWideString()))
-        _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
+        _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString(), fNameDstW.ToWideString());
 
       break;
 
@@ -626,7 +626,7 @@ OSD_Protection OSD_FileNode::Protection()
                                     _get_file_type(fName.ToCString(), INVALID_HANDLE_VALUE)
                                       == FLAG_DIRECTORY))
 
-    _osd_wnt_set_error(myError, OSD_WFileNode);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode);
 
   if (pSD != nullptr)
 
@@ -655,7 +655,7 @@ void OSD_FileNode::SetProtection(const OSD_Protection& Prot)
                                   fNameW.ToWideString());
 
   if (pSD == nullptr || !SetFileSecurityW(fNameW.ToWideString(), DACL_SECURITY_INFORMATION, pSD))
-    _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString());
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString());
 
   if (pSD != nullptr)
 
@@ -727,7 +727,7 @@ Quantity_Date OSD_FileNode::AccessMoment()
   }
   else
   {
-    _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString());
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString());
   }
 
   return retVal;
@@ -765,7 +765,7 @@ Quantity_Date OSD_FileNode::CreationMoment()
   }
   else
   {
-    _osd_wnt_set_error(myError, OSD_WFileNode, fNameW.ToWideString());
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WFileNode, fNameW.ToWideString());
   }
 
   return retVal;
@@ -808,7 +808,7 @@ int OSD_FileNode::Error() const
 
 } // end OSD_FileNode :: Error
 
-void _osd_wnt_set_error(OSD_Error& err, int who, ...)
+void _osd_wnt_set_error(OSD_Error& err, OSD_WhoAmI who, ...)
 {
 
   DWORD errCode;

@@ -3974,7 +3974,7 @@ private:
   static void* performThread(void* theData)
   {
     QABugs_XdeLoader* aLoader = (QABugs_XdeLoader*)theData;
-    OSD::SetThreadLocalSignal(OSD_SignalMode_Set, false);
+    OSD::SetThreadLocalSignal(OSD_SignalMode::OSD_SignalMode_Set, false);
     try
     {
       OCC_CATCH_SIGNALS

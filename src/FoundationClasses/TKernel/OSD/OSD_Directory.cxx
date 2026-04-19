@@ -28,14 +28,14 @@
     #include <tchar.h>
   #endif
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(OSD_Error&, OSD_WhoAmI, ...);
 #else
   #include <cerrno>
   #include <cstdio>
   #include <sys/stat.h>
   #include <unistd.h>
 
-const OSD_WhoAmI Iam = OSD_WDirectory;
+const OSD_WhoAmI Iam = OSD_WhoAmI::OSD_WDirectory;
 #endif
 
 //=================================================================================================
@@ -100,7 +100,7 @@ void OSD_Directory::Build(const OSD_Protection& theProtect)
   }
   else
   {
-    _osd_wnt_set_error(myError, OSD_WDirectory);
+    _osd_wnt_set_error(myError, OSD_WhoAmI::OSD_WDirectory);
   }
 #else
   errno = 0;

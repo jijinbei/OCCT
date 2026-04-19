@@ -861,7 +861,7 @@ static int dperf(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 
 static int dsetsignal(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
-  OSD_SignalMode aMode     = OSD_SignalMode_Set;
+  OSD_SignalMode aMode     = OSD_SignalMode::OSD_SignalMode_Set;
   bool           aSetFPE   = OSD::ToCatchFloatingSignals();
   int            aStackLen = OSD::SignalStackTraceLength();
 
@@ -880,19 +880,19 @@ static int dsetsignal(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     anArg.LowerCase();
     if (anArg == "asis")
     {
-      aMode = OSD_SignalMode_AsIs;
+      aMode = OSD_SignalMode::OSD_SignalMode_AsIs;
     }
     else if (anArg == "set")
     {
-      aMode = OSD_SignalMode_Set;
+      aMode = OSD_SignalMode::OSD_SignalMode_Set;
     }
     else if (anArg == "unhandled")
     {
-      aMode = OSD_SignalMode_SetUnhandled;
+      aMode = OSD_SignalMode::OSD_SignalMode_SetUnhandled;
     }
     else if (anArg == "unset")
     {
-      aMode = OSD_SignalMode_Unset;
+      aMode = OSD_SignalMode::OSD_SignalMode_Unset;
     }
     else if (anArg == "1" || anArg == "on")
     {
@@ -926,16 +926,16 @@ static int dsetsignal(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   switch (OSD::SignalMode())
   {
     default:
-    case OSD_SignalMode_AsIs:
+    case OSD_SignalMode::OSD_SignalMode_AsIs:
       aModeStr = "asis";
       break;
-    case OSD_SignalMode_Set:
+    case OSD_SignalMode::OSD_SignalMode_Set:
       aModeStr = "set";
       break;
-    case OSD_SignalMode_SetUnhandled:
+    case OSD_SignalMode::OSD_SignalMode_SetUnhandled:
       aModeStr = "unhandled";
       break;
-    case OSD_SignalMode_Unset:
+    case OSD_SignalMode::OSD_SignalMode_Unset:
       aModeStr = "unset";
       break;
   }

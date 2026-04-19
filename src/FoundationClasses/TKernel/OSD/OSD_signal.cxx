@@ -25,7 +25,7 @@
 
 #include <Standard_WarningDisableFunctionCast.hxx>
 
-static std::atomic<OSD_SignalMode> OSD_WasSetSignal{OSD_SignalMode_AsIs};
+static std::atomic<OSD_SignalMode> OSD_WasSetSignal{OSD_SignalMode::OSD_SignalMode_AsIs};
 static std::atomic<int>            OSD_SignalStackTraceLength{0};
 
 //=================================================================================================
@@ -426,10 +426,10 @@ void OSD::SetThreadLocalSignal(OSD_SignalMode theSignalMode, bool theFloatingSig
 {
   #ifdef _MSC_VER
   _se_translator_function aPreviousFunc = nullptr;
-  if (theSignalMode == OSD_SignalMode_Set || theSignalMode == OSD_SignalMode_SetUnhandled)
+  if (theSignalMode == OSD_SignalMode::OSD_SignalMode_Set || theSignalMode == OSD_SignalMode::OSD_SignalMode_SetUnhandled)
     aPreviousFunc = _set_se_translator(TranslateSE);
-  if (theSignalMode == OSD_SignalMode_Unset
-      || (theSignalMode == OSD_SignalMode_SetUnhandled && aPreviousFunc != nullptr))
+  if (theSignalMode == OSD_SignalMode::OSD_SignalMode_Unset
+      || (theSignalMode == OSD_SignalMode::OSD_SignalMode_SetUnhandled && aPreviousFunc != nullptr))
     _set_se_translator(aPreviousFunc);
   #else
   (void)theSignalMode;
@@ -470,12 +470,12 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
   // in the calling process
   {
     LPTOP_LEVEL_EXCEPTION_FILTER aPreviousFunc = nullptr;
-    if (theSignalMode == OSD_SignalMode_Set || theSignalMode == OSD_SignalMode_SetUnhandled)
+    if (theSignalMode == OSD_SignalMode::OSD_SignalMode_Set || theSignalMode == OSD_SignalMode::OSD_SignalMode_SetUnhandled)
     {
       aPreviousFunc = ::SetUnhandledExceptionFilter(WntHandler);
     }
-    if (theSignalMode == OSD_SignalMode_Unset
-        || (theSignalMode == OSD_SignalMode_SetUnhandled && aPreviousFunc != nullptr))
+    if (theSignalMode == OSD_SignalMode::OSD_SignalMode_Unset
+        || (theSignalMode == OSD_SignalMode::OSD_SignalMode_SetUnhandled && aPreviousFunc != nullptr))
     {
       ::SetUnhandledExceptionFilter(aPreviousFunc);
     }
@@ -489,12 +489,12 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
   {
     typedef void (*SignalFuncType)(int); // same as _crt_signal_t available since vc14
     SignalFuncType aPreviousFunc = SIG_DFL;
-    if (theSignalMode == OSD_SignalMode_Set || theSignalMode == OSD_SignalMode_SetUnhandled)
+    if (theSignalMode == OSD_SignalMode::OSD_SignalMode_Set || theSignalMode == OSD_SignalMode::OSD_SignalMode_SetUnhandled)
     {
       aPreviousFunc = signal(aSignalTypes[i], (SignalFuncType)SIGWntHandler);
     }
-    if (theSignalMode == OSD_SignalMode_Unset
-        || (theSignalMode == OSD_SignalMode_SetUnhandled && aPreviousFunc != SIG_DFL
+    if (theSignalMode == OSD_SignalMode::OSD_SignalMode_Unset
+        || (theSignalMode == OSD_SignalMode::OSD_SignalMode_SetUnhandled && aPreviousFunc != SIG_DFL
             && aPreviousFunc != SIG_ERR))
     {
       aPreviousFunc = signal(aSignalTypes[i], aPreviousFunc);
@@ -507,11 +507,11 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
   // Set Ctrl-C and Ctrl-Break handler
   fCtrlBrk = false;
   #ifndef OCCT_UWP
-  if (theSignalMode == OSD_SignalMode_Set || theSignalMode == OSD_SignalMode_SetUnhandled)
+  if (theSignalMode == OSD_SignalMode::OSD_SignalMode_Set || theSignalMode == OSD_SignalMode::OSD_SignalMode_SetUnhandled)
   {
     SetConsoleCtrlHandler(&_osd_ctrl_break_handler, true);
   }
-  else if (theSignalMode == OSD_SignalMode_Unset)
+  else if (theSignalMode == OSD_SignalMode::OSD_SignalMode_Unset)
   {
     SetConsoleCtrlHandler(&_osd_ctrl_break_handler, false);
   }
@@ -751,7 +751,7 @@ LONG _osd_debug(void)
 // variable signalling that Control-C has been pressed (SIGINT signal)
 static bool fCtrlBrk;
 
-// const OSD_WhoAmI Iam = OSD_WPackage;
+// const OSD_WhoAmI Iam = OSD_WhoAmI::OSD_WPackage;
 
 using ACT_SIGIO_HANDLER = void();
 std::atomic<ACT_SIGIO_HANDLER*> ADR_ACT_SIGIO_HANDLER{nullptr};
@@ -1040,7 +1040,7 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
   SetFloatingSignal(theFloatingSignal);
 
   OSD_WasSetSignal = theSignalMode;
-  if (theSignalMode == OSD_SignalMode_AsIs)
+  if (theSignalMode == OSD_SignalMode::OSD_SignalMode_AsIs)
   {
     return; // nothing to be done with signal handlers
   }
@@ -1081,15 +1081,15 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
 
     // set handler according to specified mode and current handler
     int retcode = -1;
-    if (theSignalMode == OSD_SignalMode_Set || theSignalMode == OSD_SignalMode_SetUnhandled)
+    if (theSignalMode == OSD_SignalMode::OSD_SignalMode_Set || theSignalMode == OSD_SignalMode::OSD_SignalMode_SetUnhandled)
     {
       retcode = sigaction(aSignalTypes[i], &anActSet, &anActOld);
     }
-    else if (theSignalMode == OSD_SignalMode_Unset)
+    else if (theSignalMode == OSD_SignalMode::OSD_SignalMode_Unset)
     {
       retcode = sigaction(aSignalTypes[i], &anActDfl, &anActOld);
     }
-    if (theSignalMode == OSD_SignalMode_SetUnhandled && retcode == 0
+    if (theSignalMode == OSD_SignalMode::OSD_SignalMode_SetUnhandled && retcode == 0
         && anActOld.sa_handler != SIG_DFL)
     {
       struct sigaction anActOld2;

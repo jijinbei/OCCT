@@ -575,7 +575,7 @@ static OSD_SingleProtection TabProtSub[16][16] = {{OSD_None,
 
 };
 
-// const OSD_WhoAmI Iam = OSD_WProtection;
+// const OSD_WhoAmI Iam = OSD_WhoAmI::OSD_WProtection;
 
 // Initialize System, Group, World for read only and User for read & write
 

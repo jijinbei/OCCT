@@ -30,7 +30,7 @@
 
 #ifndef _WIN32
 
-static const OSD_WhoAmI Iam = OSD_WEnvironment;
+static const OSD_WhoAmI Iam = OSD_WhoAmI::OSD_WEnvironment;
 
 // ----------------------------------------------------------------------
 //
@@ -375,13 +375,13 @@ static void __fastcall _set_error(OSD_Error& theErr, DWORD theCode)
                       nullptr))
   {
     theErr.SetValue(anErrCode,
-                    OSD_WEnvironment,
+                    OSD_WhoAmI::OSD_WEnvironment,
                     TCollection_AsciiString("error code ") + (int)anErrCode);
     SetLastError(anErrCode);
   }
   else
   {
-    theErr.SetValue(anErrCode, OSD_WEnvironment, TCollection_AsciiString(aBuffer));
+    theErr.SetValue(anErrCode, OSD_WhoAmI::OSD_WEnvironment, TCollection_AsciiString(aBuffer));
   }
 }
   #endif

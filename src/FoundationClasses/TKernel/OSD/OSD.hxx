@@ -83,10 +83,10 @@ public:
   Standard_EXPORT static void SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal);
 
   //! Sets signal and FPE handlers.
-  //! Short-cut for OSD::SetSignal (OSD_SignalMode_Set, theFloatingSignal).
+  //! Short-cut for OSD::SetSignal (OSD_SignalMode::OSD_SignalMode_Set, theFloatingSignal).
   static void SetSignal(const bool theFloatingSignal = true)
   {
-    SetSignal(OSD_SignalMode_Set, theFloatingSignal);
+    SetSignal(OSD_SignalMode::OSD_SignalMode_Set, theFloatingSignal);
   }
 
   //! Initializes thread-local signal handlers.
@@ -103,7 +103,7 @@ public:
   Standard_EXPORT static void SetFloatingSignal(bool theFloatingSignal);
 
   //! Returns signal mode set by the last call to SetSignal().
-  //! By default, returns OSD_SignalMode_AsIs.
+  //! By default, returns OSD_SignalMode::OSD_SignalMode_AsIs.
   Standard_EXPORT static OSD_SignalMode SignalMode();
 
   //! Returns true if floating point exceptions will raise C signal
