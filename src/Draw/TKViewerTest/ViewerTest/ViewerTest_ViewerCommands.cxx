@@ -8054,8 +8054,7 @@ static int VTextureEnv(Draw_Interpretor& /*theDI*/, int theArgNb, const char** t
       isOk = (!aTextureOpt.IsIntegerValue()
               || (aTextureOpt.IntegerValue() >= 0
                   && aTextureOpt.IntegerValue()
-                       < static_cast<int>(
-                         Graphic3d_NameOfTextureEnv::Graphic3d_NOT_ENV_UNKNOWN)));
+                       < static_cast<int>(Graphic3d_NameOfTextureEnv::Graphic3d_NOT_ENV_UNKNOWN)));
 
       if (isOk && theArgNb == 11)
       {
