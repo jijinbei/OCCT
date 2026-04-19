@@ -33,6 +33,7 @@ set(OCCT_TKMath_GTests_FILES
   BVH_Traverse_Test.cxx
   BVH_Triangulation_Test.cxx
   BVH_Tree_Test.cxx
+  BVH_Visualize_Test.cxx
   # Convert tests
   Convert_CircleToBSplineCurve_Test.cxx
   Convert_CompBezierCurvesToBSplineCurve_Test.cxx
