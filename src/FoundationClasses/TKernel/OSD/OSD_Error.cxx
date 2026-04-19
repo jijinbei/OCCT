@@ -663,8 +663,8 @@ void OSD_Error ::Perror()
 } // end OSD_Error :: Perror
 
 void OSD_Error ::SetValue(const int                      Errcode,
-                          const OSD_WhoAmI                From,
-                          const TCollection_AsciiString&  Message)
+                          const OSD_WhoAmI               From,
+                          const TCollection_AsciiString& Message)
 {
 
   int i;
