@@ -662,13 +662,15 @@ void OSD_Error ::Perror()
 
 } // end OSD_Error :: Perror
 
-void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_AsciiString& Message)
+void OSD_Error ::SetValue(const int                      Errcode,
+                          const OSD_WhoAmI                From,
+                          const TCollection_AsciiString&  Message)
 {
 
   int i;
 
   myErrno   = Errcode;
-  myCode    = (OSD_WhoAmI)From;
+  myCode    = From;
   myMessage = Message;
 
   switch (From)
