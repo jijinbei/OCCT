@@ -15,7 +15,7 @@
 #define _Prs3d_DatumMode_HeaderFile
 
 //! Enumeration defining a mode of datum graphic presentation, see Prs3d_Datum.
-enum Prs3d_DatumMode
+enum class Prs3d_DatumMode
 {
   Prs3d_DM_WireFrame = 0,
   Prs3d_DM_Shaded

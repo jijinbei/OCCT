@@ -42,7 +42,7 @@ public:
   //! aTypeOfPresentation3d.
   //! Top_AllView deactivates hidden line removal.
   Standard_EXPORT AIS_ConnectedInteractive(
-    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TOP_AllView);
+    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
 
   //! Returns KOI_Object
   AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Object; }

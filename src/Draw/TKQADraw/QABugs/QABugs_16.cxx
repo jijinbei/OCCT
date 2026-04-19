@@ -611,7 +611,7 @@ static int OCC301(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<Prs3d_DimensionAspect> anAspect = new Prs3d_DimensionAspect;
   anAspect->MakeArrows3d(true);
   anAspect->ArrowAspect()->SetLength(anArrowSize);
-  anAspect->SetTextHorizontalPosition(Prs3d_DTHP_Right);
+  anAspect->SetTextHorizontalPosition(Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Right);
   anAspect->TextAspect()->SetColor(Quantity_NOC_YELLOW);
   anAngleDimension->SetDimensionAspect(anAspect);
   // Another position of dimension

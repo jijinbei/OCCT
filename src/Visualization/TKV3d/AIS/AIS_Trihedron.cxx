@@ -50,7 +50,7 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_Trihedron, AIS_InteractiveObject)
 
 AIS_Trihedron::AIS_Trihedron(const occ::handle<Geom_Axis2Placement>& theComponent)
     : myComponent(theComponent),
-      myTrihDispMode(Prs3d_DM_WireFrame),
+      myTrihDispMode(Prs3d_DatumMode::Prs3d_DM_WireFrame),
       myHasOwnSize(false),
       myHasOwnTextColor(false),
       myHasOwnArrowColor(false)
@@ -183,7 +183,7 @@ void AIS_Trihedron::ComputeSelection(const occ::handle<SelectMgr_Selection>& the
     case static_cast<int>(AIS_TrihedronSelectionMode::AIS_TrihedronSelectionMode_EntireObject): {
       occ::handle<SelectMgr_EntityOwner> anOwner =
         new SelectMgr_EntityOwner(this, mySelectionPriority[Prs3d_DatumParts_None]);
-      const bool isShadingMode = myTrihDispMode == Prs3d_DM_Shaded;
+      const bool isShadingMode = myTrihDispMode == Prs3d_DatumMode::Prs3d_DM_Shaded;
       for (int aPartIter = isShadingMode ? Prs3d_DatumParts_Origin : Prs3d_DatumParts_XAxis;
            aPartIter <= Prs3d_DatumParts_ZAxis;
            ++aPartIter)
@@ -274,7 +274,7 @@ void AIS_Trihedron::HilightOwnerWithColor(const occ::handle<PrsMgr_PresentationM
   }
   else
   {
-    if (myTrihDispMode == Prs3d_DM_Shaded)
+    if (myTrihDispMode == Prs3d_DatumMode::Prs3d_DM_Shaded)
     {
       aGroup->SetGroupPrimitivesAspect(theStyle->ShadingAspect()->Aspect());
     }
@@ -314,7 +314,7 @@ void AIS_Trihedron::HilightSelected(
     return;
   }
 
-  const bool isShadingMode = myTrihDispMode == Prs3d_DM_Shaded;
+  const bool isShadingMode = myTrihDispMode == Prs3d_DatumMode::Prs3d_DM_Shaded;
 
   occ::handle<Prs3d_Drawer> anAspect =
     !myHilightDrawer.IsNull() ? myHilightDrawer : GetContext()->SelectionStyle();
@@ -368,7 +368,7 @@ void AIS_Trihedron::HilightSelected(
 void AIS_Trihedron::ClearSelected()
 {
   occ::handle<Prs3d_DatumAspect> anAspect      = myDrawer->DatumAspect();
-  const bool                     isShadingMode = myTrihDispMode == Prs3d_DM_Shaded;
+  const bool                     isShadingMode = myTrihDispMode == Prs3d_DatumMode::Prs3d_DM_Shaded;
   for (NCollection_List<Prs3d_DatumParts>::Iterator anIterator(mySelectedParts); anIterator.More();
        anIterator.Next())
   {
@@ -409,7 +409,7 @@ void AIS_Trihedron::computePresentation(
   }
 
   occ::handle<Prs3d_DatumAspect> anAspect      = myDrawer->DatumAspect();
-  const bool                     isShadingMode = myTrihDispMode == Prs3d_DM_Shaded;
+  const bool                     isShadingMode = myTrihDispMode == Prs3d_DatumMode::Prs3d_DM_Shaded;
   // display origin
   {
     // Origin is visualized only in shading mode
@@ -564,7 +564,7 @@ void AIS_Trihedron::SetTextColor(const Quantity_Color& theColor)
 
 Quantity_Color AIS_Trihedron::DatumPartColor(Prs3d_DatumParts thePart)
 {
-  if (myTrihDispMode == Prs3d_DM_Shaded)
+  if (myTrihDispMode == Prs3d_DatumMode::Prs3d_DM_Shaded)
   {
     return myDrawer->DatumAspect()->ShadingAspect(thePart)->Color();
   }
@@ -578,7 +578,7 @@ Quantity_Color AIS_Trihedron::DatumPartColor(Prs3d_DatumParts thePart)
 
 void AIS_Trihedron::SetOriginColor(const Quantity_Color& theColor)
 {
-  if (myTrihDispMode == Prs3d_DM_Shaded)
+  if (myTrihDispMode == Prs3d_DatumMode::Prs3d_DM_Shaded)
   {
     SetDatumPartColor(Prs3d_DatumParts_Origin, theColor);
   }
@@ -714,7 +714,7 @@ occ::handle<Select3D_SensitiveEntity> AIS_Trihedron::createSensitiveEntity(
     return new Select3D_SensitiveTriangle(theOwner, anXYZ1, anXYZ2, anXYZ3);
   }
 
-  if (myTrihDispMode == Prs3d_DM_Shaded)
+  if (myTrihDispMode == Prs3d_DatumMode::Prs3d_DM_Shaded)
   {
     occ::handle<Select3D_SensitivePrimitiveArray> aSelArray =
       new Select3D_SensitivePrimitiveArray(theOwner);
@@ -769,7 +769,7 @@ void AIS_Trihedron::updatePrimitives(const occ::handle<Prs3d_DatumAspect>& theAs
       gp_Pnt(anXYZOrigin + anAxisDirs.Find(aPart).XYZ() * theAspect->AxisLength(aPart)));
   }
 
-  if (theMode == Prs3d_DM_WireFrame)
+  if (theMode == Prs3d_DatumMode::Prs3d_DM_WireFrame)
   {
     // origin
     if (theAspect->DrawDatumPart(Prs3d_DatumParts_Origin))

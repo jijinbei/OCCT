@@ -41,7 +41,7 @@ IMPLEMENT_STANDARD_RTTIEXT(PrsDim_LengthDimension, PrsDim_Dimension)
 //=================================================================================================
 
 PrsDim_LengthDimension::PrsDim_LengthDimension()
-    : PrsDim_Dimension(PrsDim_KOD_LENGTH),
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_LENGTH),
       myHasCustomDirection(false)
 {
   SetFlyout(15.0);
@@ -51,7 +51,7 @@ PrsDim_LengthDimension::PrsDim_LengthDimension()
 
 PrsDim_LengthDimension::PrsDim_LengthDimension(const TopoDS_Face& theFirstFace,
                                                const TopoDS_Face& theSecondFace)
-    : PrsDim_Dimension(PrsDim_KOD_LENGTH),
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_LENGTH),
       myHasCustomDirection(false)
 {
   SetMeasuredGeometry(theFirstFace, theSecondFace);
@@ -62,7 +62,7 @@ PrsDim_LengthDimension::PrsDim_LengthDimension(const TopoDS_Face& theFirstFace,
 
 PrsDim_LengthDimension::PrsDim_LengthDimension(const TopoDS_Face& theFace,
                                                const TopoDS_Edge& theEdge)
-    : PrsDim_Dimension(PrsDim_KOD_LENGTH),
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_LENGTH),
       myHasCustomDirection(false)
 {
   SetMeasuredGeometry(theFace, theEdge);
@@ -74,7 +74,7 @@ PrsDim_LengthDimension::PrsDim_LengthDimension(const TopoDS_Face& theFace,
 PrsDim_LengthDimension::PrsDim_LengthDimension(const gp_Pnt& theFirstPoint,
                                                const gp_Pnt& theSecondPoint,
                                                const gp_Pln& thePlane)
-    : PrsDim_Dimension(PrsDim_KOD_LENGTH),
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_LENGTH),
       myHasCustomDirection(false)
 {
   SetMeasuredGeometry(theFirstPoint, theSecondPoint, thePlane);
@@ -86,7 +86,7 @@ PrsDim_LengthDimension::PrsDim_LengthDimension(const gp_Pnt& theFirstPoint,
 PrsDim_LengthDimension::PrsDim_LengthDimension(const TopoDS_Shape& theFirstShape,
                                                const TopoDS_Shape& theSecondShape,
                                                const gp_Pln&       thePlane)
-    : PrsDim_Dimension(PrsDim_KOD_LENGTH),
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_LENGTH),
       myHasCustomDirection(false)
 {
   SetCustomPlane(thePlane);
@@ -97,7 +97,7 @@ PrsDim_LengthDimension::PrsDim_LengthDimension(const TopoDS_Shape& theFirstShape
 //=================================================================================================
 
 PrsDim_LengthDimension::PrsDim_LengthDimension(const TopoDS_Edge& theEdge, const gp_Pln& thePlane)
-    : PrsDim_Dimension(PrsDim_KOD_LENGTH),
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_LENGTH),
       myHasCustomDirection(false)
 {
   SetMeasuredGeometry(theEdge, thePlane);
@@ -570,7 +570,7 @@ bool PrsDim_LengthDimension::InitTwoShapesPoints(const TopoDS_Shape& theFirstSha
                                aSecondSurfKind,
                                aSecondOffset);
 
-        if (aFirstSurfKind == PrsDim_KOS_Plane)
+        if (aFirstSurfKind == PrsDim_KindOfSurface::PrsDim_KOS_Plane)
         {
           if (!aFirstPlane.Axis().Direction().IsParallel(aSecondPlane.Axis().Direction(),
                                                          Precision::Angular()))

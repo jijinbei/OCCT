@@ -20,7 +20,7 @@
 //! Provides values for different types of edges. These
 //! values are used to filter edges in frameworks
 //! inheriting StdSelect_EdgeFilter.
-enum StdSelect_TypeOfEdge
+enum class StdSelect_TypeOfEdge
 {
   StdSelect_AnyEdge,
   StdSelect_Line,

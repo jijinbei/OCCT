@@ -341,31 +341,31 @@ static int ParseDimensionParams(
 
         if (aParamValue == "left")
         {
-          theAspect->SetTextHorizontalPosition(Prs3d_DTHP_Left);
+          theAspect->SetTextHorizontalPosition(Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Left);
         }
         else if (aParamValue == "right")
         {
-          theAspect->SetTextHorizontalPosition(Prs3d_DTHP_Right);
+          theAspect->SetTextHorizontalPosition(Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Right);
         }
         else if (aParamValue == "hcenter")
         {
-          theAspect->SetTextHorizontalPosition(Prs3d_DTHP_Center);
+          theAspect->SetTextHorizontalPosition(Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Center);
         }
         else if (aParamValue == "hfit")
         {
-          theAspect->SetTextHorizontalPosition(Prs3d_DTHP_Fit);
+          theAspect->SetTextHorizontalPosition(Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Fit);
         }
         else if (aParamValue == "above")
         {
-          theAspect->SetTextVerticalPosition(Prs3d_DTVP_Above);
+          theAspect->SetTextVerticalPosition(Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Above);
         }
         else if (aParamValue == "below")
         {
-          theAspect->SetTextVerticalPosition(Prs3d_DTVP_Below);
+          theAspect->SetTextVerticalPosition(Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Below);
         }
         else if (aParamValue == "vcenter")
         {
-          theAspect->SetTextVerticalPosition(Prs3d_DTVP_Center);
+          theAspect->SetTextVerticalPosition(Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center);
         }
         else
         {
@@ -381,15 +381,15 @@ static int ParseDimensionParams(
 
       if (aLocalParam == "external")
       {
-        theAspect->SetArrowOrientation(Prs3d_DAO_External);
+        theAspect->SetArrowOrientation(Prs3d_DimensionArrowOrientation::Prs3d_DAO_External);
       }
       if (aLocalParam == "internal")
       {
-        theAspect->SetArrowOrientation(Prs3d_DAO_Internal);
+        theAspect->SetArrowOrientation(Prs3d_DimensionArrowOrientation::Prs3d_DAO_Internal);
       }
       if (aLocalParam == "fit")
       {
-        theAspect->SetArrowOrientation(Prs3d_DAO_Fit);
+        theAspect->SetArrowOrientation(Prs3d_DimensionArrowOrientation::Prs3d_DAO_Fit);
       }
     }
     else if (aParam.IsEqual("-zoomablearrow"))
@@ -630,15 +630,15 @@ static void SetAngleDimensionParams(
 
   if (theStringParams.IsBound("type"))
   {
-    PrsDim_TypeOfAngle      anAngleType    = PrsDim_TypeOfAngle_Interior;
+    PrsDim_TypeOfAngle      anAngleType    = PrsDim_TypeOfAngle::PrsDim_TypeOfAngle_Interior;
     TCollection_AsciiString anAngleTypeStr = theStringParams.Find("type");
     if (anAngleTypeStr.IsEqual("interior"))
     {
-      anAngleType = PrsDim_TypeOfAngle_Interior;
+      anAngleType = PrsDim_TypeOfAngle::PrsDim_TypeOfAngle_Interior;
     }
     else if (anAngleTypeStr.IsEqual("exterior"))
     {
-      anAngleType = PrsDim_TypeOfAngle_Exterior;
+      anAngleType = PrsDim_TypeOfAngle::PrsDim_TypeOfAngle_Exterior;
     }
     else
     {
@@ -649,23 +649,23 @@ static void SetAngleDimensionParams(
 
   if (theStringParams.IsBound("showarrow"))
   {
-    PrsDim_TypeOfAngleArrowVisibility anArrowType    = PrsDim_TypeOfAngleArrowVisibility_Both;
+    PrsDim_TypeOfAngleArrowVisibility anArrowType    = PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both;
     TCollection_AsciiString           anArrowTypeStr = theStringParams.Find("showarrow");
     if (anArrowTypeStr.IsEqual("both"))
     {
-      anArrowType = PrsDim_TypeOfAngleArrowVisibility_Both;
+      anArrowType = PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both;
     }
     else if (anArrowTypeStr.IsEqual("first"))
     {
-      anArrowType = PrsDim_TypeOfAngleArrowVisibility_First;
+      anArrowType = PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First;
     }
     else if (anArrowTypeStr.IsEqual("second"))
     {
-      anArrowType = PrsDim_TypeOfAngleArrowVisibility_Second;
+      anArrowType = PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second;
     }
     else if (anArrowTypeStr.IsEqual("none"))
     {
-      anArrowType = PrsDim_TypeOfAngleArrowVisibility_None;
+      anArrowType = PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_None;
     }
     else
     {
@@ -704,19 +704,19 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
   PrsDim_KindOfDimension aKindOfDimension;
   if (aDimType == "-length")
   {
-    aKindOfDimension = PrsDim_KOD_LENGTH;
+    aKindOfDimension = PrsDim_KindOfDimension::PrsDim_KOD_LENGTH;
   }
   else if (aDimType == "-angle")
   {
-    aKindOfDimension = PrsDim_KOD_PLANEANGLE;
+    aKindOfDimension = PrsDim_KindOfDimension::PrsDim_KOD_PLANEANGLE;
   }
   else if (aDimType == "-radius")
   {
-    aKindOfDimension = PrsDim_KOD_RADIUS;
+    aKindOfDimension = PrsDim_KindOfDimension::PrsDim_KOD_RADIUS;
   }
   else if (aDimType == "-diameter" || aDimType == "-diam")
   {
-    aKindOfDimension = PrsDim_KOD_DIAMETER;
+    aKindOfDimension = PrsDim_KindOfDimension::PrsDim_KOD_DIAMETER;
   }
   else
   {
@@ -741,7 +741,7 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
   occ::handle<PrsDim_Dimension> aDim;
   switch (aKindOfDimension)
   {
-    case PrsDim_KOD_LENGTH: {
+    case PrsDim_KindOfDimension::PrsDim_KOD_LENGTH: {
       if (aShapes.Extent() == 1)
       {
         occ::handle<AIS_Shape> aFirstShapePrs = occ::down_cast<AIS_Shape>(aShapes.First());
@@ -824,7 +824,7 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
 
       break;
     }
-    case PrsDim_KOD_PLANEANGLE: {
+    case PrsDim_KindOfDimension::PrsDim_KOD_PLANEANGLE: {
       switch (aShapes.Extent())
       {
         case 1: {
@@ -879,7 +879,7 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
       }
       break;
     }
-    case PrsDim_KOD_RADIUS: // radius of the circle
+    case PrsDim_KindOfDimension::PrsDim_KOD_RADIUS: // radius of the circle
     {
       gp_Pnt anAnchor;
       bool   hasAnchor = false;
@@ -929,7 +929,7 @@ static int VDimBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const char** 
       }
       break;
     }
-    case PrsDim_KOD_DIAMETER: {
+    case PrsDim_KindOfDimension::PrsDim_KOD_DIAMETER: {
       if (aShapes.Extent() == 1)
       {
         if (aShapes.First()->DynamicType() == STANDARD_TYPE(AIS_Circle))
@@ -1010,46 +1010,46 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
   TCollection_AsciiString aName(theArgs[1]);
   TCollection_AsciiString aType(theArgs[2]);
 
-  PrsDim_KindOfRelation aKindOfRelation = PrsDim_KOR_NONE;
+  PrsDim_KindOfRelation aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_NONE;
   if (aType == "-concentric")
   {
-    aKindOfRelation = PrsDim_KOR_CONCENTRIC;
+    aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_CONCENTRIC;
   }
   else if (aType == "-equaldistance")
   {
-    aKindOfRelation = PrsDim_KOR_EQUALDISTANCE;
+    aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_EQUALDISTANCE;
   }
   else if (aType == "-equalradius")
   {
-    aKindOfRelation = PrsDim_KOR_EQUALRADIUS;
+    aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_EQUALRADIUS;
   }
   else if (aType == "-fix")
   {
-    aKindOfRelation = PrsDim_KOR_FIX;
+    aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_FIX;
   }
   else if (aType == "-identic")
   {
-    aKindOfRelation = PrsDim_KOR_IDENTIC;
+    aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_IDENTIC;
   }
   else if (aType == "-offset")
   {
-    aKindOfRelation = PrsDim_KOR_OFFSET;
+    aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_OFFSET;
   }
   else if (aType == "-parallel")
   {
-    aKindOfRelation = PrsDim_KOR_PARALLEL;
+    aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_PARALLEL;
   }
   else if (aType == "-perpendicular")
   {
-    aKindOfRelation = PrsDim_KOR_PERPENDICULAR;
+    aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_PERPENDICULAR;
   }
   else if (aType == "-tangent")
   {
-    aKindOfRelation = PrsDim_KOR_TANGENT;
+    aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_TANGENT;
   }
   else if (aType == "-symmetric")
   {
-    aKindOfRelation = PrsDim_KOR_SYMMETRIC;
+    aKindOfRelation = PrsDim_KindOfRelation::PrsDim_KOR_SYMMETRIC;
   }
 
   NCollection_List<TopoDS_Shape> aShapes;
@@ -1059,7 +1059,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
   occ::handle<PrsDim_Relation> aRelation;
   switch (aKindOfRelation)
   {
-    case PrsDim_KOR_CONCENTRIC: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_CONCENTRIC: {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1086,7 +1086,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
 
       break;
     }
-    case PrsDim_KOR_EQUALDISTANCE: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_EQUALDISTANCE: {
       if (aShapes.Extent() != 4)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1157,7 +1157,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
 
       break;
     }
-    case PrsDim_KOR_EQUALRADIUS: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_EQUALRADIUS: {
       if (aShapes.Extent() != 2 && aShapes.Extent() != 1)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1183,7 +1183,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       aRelation = new PrsDim_EqualRadiusRelation(anEdge1, anEdge2, aMkPlane.Value());
       break;
     }
-    case PrsDim_KOR_FIX: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_FIX: {
       if (aShapes.Extent() != 1)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1208,7 +1208,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       aRelation = new PrsDim_FixRelation(anEdge, aMkPlane.Value());
       break;
     }
-    case PrsDim_KOR_IDENTIC: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_IDENTIC: {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1277,7 +1277,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       aRelation = new PrsDim_IdenticRelation(aShapeA, aShapeB, aMkPlane.Value());
       break;
     }
-    case PrsDim_KOR_OFFSET: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_OFFSET: {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1308,7 +1308,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       aRelation = new PrsDim_OffsetDimension(aFace1, aFace2, aDist, aMessage);
       break;
     }
-    case PrsDim_KOR_PARALLEL: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_PARALLEL: {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: wrong number of selected shapes");
@@ -1370,7 +1370,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       }
       break;
     }
-    case PrsDim_KOR_PERPENDICULAR: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_PERPENDICULAR: {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1421,7 +1421,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
 
       break;
     }
-    case PrsDim_KOR_TANGENT: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_TANGENT: {
       if (aShapes.Extent() != 2)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1471,7 +1471,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
       }
       break;
     }
-    case PrsDim_KOR_SYMMETRIC: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_SYMMETRIC: {
       if (aShapes.Extent() != 3)
       {
         Message::SendFail("Error: Wrong number of selected shapes");
@@ -1537,7 +1537,7 @@ static int VRelationBuilder(Draw_Interpretor& /*theDi*/, int theArgsNb, const ch
 
       break;
     }
-    case PrsDim_KOR_NONE: {
+    case PrsDim_KindOfRelation::PrsDim_KOR_NONE: {
       Message::SendFail("Error: Unknown type of relation!");
       return 1;
     }
@@ -1869,27 +1869,27 @@ static int VMoveDim(Draw_Interpretor& theDi, int theArgNum, const char** theArgV
     {
       occ::handle<PrsDim_Dimension> aDim = occ::down_cast<PrsDim_Dimension>(aPickedObj);
       gp_Pnt                        aFirstPoint, aSecondPoint;
-      if (aDim->KindOfDimension() == PrsDim_KOD_PLANEANGLE)
+      if (aDim->KindOfDimension() == PrsDim_KindOfDimension::PrsDim_KOD_PLANEANGLE)
       {
         occ::handle<PrsDim_AngleDimension> anAngleDim = occ::down_cast<PrsDim_AngleDimension>(aDim);
         aFirstPoint                                   = anAngleDim->FirstPoint();
         aSecondPoint                                  = anAngleDim->SecondPoint();
       }
-      else if (aDim->KindOfDimension() == PrsDim_KOD_LENGTH)
+      else if (aDim->KindOfDimension() == PrsDim_KindOfDimension::PrsDim_KOD_LENGTH)
       {
         occ::handle<PrsDim_LengthDimension> aLengthDim =
           occ::down_cast<PrsDim_LengthDimension>(aDim);
         aFirstPoint  = aLengthDim->FirstPoint();
         aSecondPoint = aLengthDim->SecondPoint();
       }
-      else if (aDim->KindOfDimension() == PrsDim_KOD_RADIUS)
+      else if (aDim->KindOfDimension() == PrsDim_KindOfDimension::PrsDim_KOD_RADIUS)
       {
         occ::handle<PrsDim_RadiusDimension> aRadiusDim =
           occ::down_cast<PrsDim_RadiusDimension>(aDim);
         aFirstPoint  = aRadiusDim->AnchorPoint();
         aSecondPoint = aRadiusDim->Circle().Location();
       }
-      else if (aDim->KindOfDimension() == PrsDim_KOD_DIAMETER)
+      else if (aDim->KindOfDimension() == PrsDim_KindOfDimension::PrsDim_KOD_DIAMETER)
       {
         occ::handle<PrsDim_DiameterDimension> aDiameterDim =
           occ::down_cast<PrsDim_DiameterDimension>(aDim);

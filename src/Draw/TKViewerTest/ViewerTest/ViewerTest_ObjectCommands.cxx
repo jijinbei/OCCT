@@ -371,7 +371,7 @@ static bool setTrihedronParams(int                               theArgsNb,
     bool                    isWireframe = true;
     if (aValue.IsEqual("sh") || aValue.IsEqual("shading"))
       isWireframe = false;
-    theTrihedron->SetDatumDisplayMode(isWireframe ? Prs3d_DM_WireFrame : Prs3d_DM_Shaded);
+    theTrihedron->SetDatumDisplayMode(isWireframe ? Prs3d_DatumMode::Prs3d_DM_WireFrame : Prs3d_DatumMode::Prs3d_DM_Shaded);
   }
 
   if (aMapOfArgs.Find("hidelabels", aValues))
@@ -602,21 +602,21 @@ static int parseFontStrictLevel(const int         theArgNb,
     anArg.LowerCase();
     if (anArg == "any")
     {
-      theLevel = Font_StrictLevel_Any;
+      theLevel = Font_StrictLevel::Font_StrictLevel_Any;
       return 1;
     }
     else if (anArg == "aliases")
     {
-      theLevel = Font_StrictLevel_Aliases;
+      theLevel = Font_StrictLevel::Font_StrictLevel_Aliases;
       return 1;
     }
     else if (anArg == "strict")
     {
-      theLevel = Font_StrictLevel_Strict;
+      theLevel = Font_StrictLevel::Font_StrictLevel_Strict;
       return 1;
     }
   }
-  theLevel = Font_StrictLevel_Strict;
+  theLevel = Font_StrictLevel::Font_StrictLevel_Strict;
   return 0;
 }
 } // namespace
@@ -3072,7 +3072,7 @@ static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   gp_Dir                  aDir;
   gp_Ax2                  aProjAx;
   bool                    hasViewDirArg = false;
-  Prs3d_TypeOfHLR         anAlgoType    = Prs3d_TOH_PolyAlgo;
+  Prs3d_TypeOfHLR         anAlgoType    = Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo;
   bool                    toShowCNEdges = false, toShowHiddenEdges = false;
   int                     aNbIsolines = 0;
   if (occ::handle<V3d_Viewer> aViewer = ViewerTest::GetViewerFromContext())
@@ -3105,11 +3105,11 @@ static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
       anArgNext.LowerCase();
       if (anArgNext == "polyalgo")
       {
-        anAlgoType = Prs3d_TOH_PolyAlgo;
+        anAlgoType = Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo;
       }
       else if (anArgNext == "algo")
       {
-        anAlgoType = Prs3d_TOH_Algo;
+        anAlgoType = Prs3d_TypeOfHLR::Prs3d_TOH_Algo;
       }
       else
       {
@@ -3194,7 +3194,7 @@ static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   HLRAlgo_Projector aProjector(aProjAx);
   TopoDS_Shape      aVisible[6];
   TopoDS_Shape      aHidden[6];
-  if (anAlgoType == Prs3d_TOH_PolyAlgo)
+  if (anAlgoType == Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo)
   {
     occ::handle<HLRBRep_PolyAlgo> aPolyAlgo = new HLRBRep_PolyAlgo();
     aPolyAlgo->Projector(aProjector);
@@ -5647,7 +5647,7 @@ static int TextToBRep(Draw_Interpretor& /*theDI*/, int theArgNb, const char** th
 
   Graphic3d_HorizontalTextAlignment aHJustification = Graphic3d_HorizontalTextAlignment::Graphic3d_HTA_LEFT;
   Graphic3d_VerticalTextAlignment   aVJustification = Graphic3d_VerticalTextAlignment::Graphic3d_VTA_BOTTOM;
-  Font_StrictLevel                  aStrictLevel    = Font_StrictLevel_Any;
+  Font_StrictLevel                  aStrictLevel    = Font_StrictLevel::Font_StrictLevel_Any;
   for (; anArgIt < theArgNb; ++anArgIt)
   {
     TCollection_AsciiString aParam(theArgVec[anArgIt]);
@@ -5829,7 +5829,7 @@ static int VFont(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   occ::handle<Font_FontMgr> aMgr        = Font_FontMgr::GetInstance();
   bool                      toPrintList = theArgNb < 2, toPrintNames = false;
-  Font_StrictLevel          aStrictLevel = Font_StrictLevel_Any;
+  Font_StrictLevel          aStrictLevel = Font_StrictLevel::Font_StrictLevel_Any;
   for (int anArgIter = 1; anArgIter < theArgNb; ++anArgIter)
   {
     const TCollection_AsciiString anArg(theArgVec[anArgIter]);
@@ -6131,7 +6131,7 @@ static int VVertexMode(Draw_Interpretor& theDI, int theArgNum, const char** theA
   {
     Prs3d_VertexDrawMode aCurrMode = aContext->DefaultDrawer()->VertexDrawMode();
     theDI << "Default vertex draw mode: "
-          << (aCurrMode == Prs3d_VDM_Isolated ? "'isolated'" : "'all'") << "\n";
+          << (aCurrMode == Prs3d_VertexDrawMode::Prs3d_VDM_Isolated ? "'isolated'" : "'all'") << "\n";
     return 0;
   }
 
@@ -6150,8 +6150,8 @@ static int VVertexMode(Draw_Interpretor& theDI, int theArgNum, const char** theA
 
     TCollection_AsciiString aModeStr(theArgs[2]);
     Prs3d_VertexDrawMode    aNewMode = aModeStr == "isolated"
-                                         ? Prs3d_VDM_Isolated
-                                         : (aModeStr == "all" ? Prs3d_VDM_All : Prs3d_VDM_Inherited);
+                                         ? Prs3d_VertexDrawMode::Prs3d_VDM_Isolated
+                                         : (aModeStr == "all" ? Prs3d_VertexDrawMode::Prs3d_VDM_All : Prs3d_VertexDrawMode::Prs3d_VDM_Inherited);
 
     bool                                                 aRedrawNeeded = false;
     NCollection_List<occ::handle<AIS_InteractiveObject>> anObjs;
@@ -6202,7 +6202,7 @@ static int VVertexMode(Draw_Interpretor& theDI, int theArgNum, const char** theA
   // One argument (object name) --> print the current vertex draw mode for the object
   Prs3d_VertexDrawMode aCurrMode = anObject->Attributes()->VertexDrawMode();
   theDI << "Object's vertex draw mode: "
-        << (aCurrMode == Prs3d_VDM_Isolated ? "'isolated'" : "'all'") << "\n";
+        << (aCurrMode == Prs3d_VertexDrawMode::Prs3d_VDM_Isolated ? "'isolated'" : "'all'") << "\n";
   return 0;
 }
 

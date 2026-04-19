@@ -38,7 +38,7 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_Circle, AIS_InteractiveObject)
 //=================================================================================================
 
 AIS_Circle::AIS_Circle(const occ::handle<Geom_Circle>& aComponent)
-    : AIS_InteractiveObject(PrsMgr_TOP_AllView),
+    : AIS_InteractiveObject(PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView),
       myComponent(aComponent),
       myUStart(0.0),
       myUEnd(2.0 * M_PI),
@@ -53,7 +53,7 @@ AIS_Circle::AIS_Circle(const occ::handle<Geom_Circle>& theComponent,
                        const double                    theUStart,
                        const double                    theUEnd,
                        const bool                      theIsFilledCircleSens)
-    : AIS_InteractiveObject(PrsMgr_TOP_AllView),
+    : AIS_InteractiveObject(PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView),
       myComponent(theComponent),
       myUStart(theUStart),
       myUEnd(theUEnd),

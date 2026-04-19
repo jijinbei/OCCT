@@ -18,7 +18,7 @@
 #define _PrsDim_TypeOfAngleArrowVisibility_HeaderFile
 
 //! Declares what arrows are visible on angle presentation
-enum PrsDim_TypeOfAngleArrowVisibility
+enum class PrsDim_TypeOfAngleArrowVisibility
 {
   PrsDim_TypeOfAngleArrowVisibility_Both,   //!< both arrows of the first and the second angle tips
   PrsDim_TypeOfAngleArrowVisibility_First,  //!< only first point arrow

@@ -2665,7 +2665,7 @@ void OpenGl_View::renderStructs(Graphic3d_Camera::Projection theProjection,
         // Render bottom OSD layer
         myZLayers.Render(myWorkspace,
                          theToDrawImmediate,
-                         OpenGl_LF_Bottom,
+                         OpenGl_LayerFilter::OpenGl_LF_Bottom,
                          myZLayerTarget,
                          theReadDrawFbo,
                          theOitAccumFbo);
@@ -2687,7 +2687,7 @@ void OpenGl_View::renderStructs(Graphic3d_Camera::Projection theProjection,
           // Render non-polygonal elements in default layer
           myZLayers.Render(myWorkspace,
                            theToDrawImmediate,
-                           OpenGl_LF_RayTracable,
+                           OpenGl_LayerFilter::OpenGl_LF_RayTracable,
                            myZLayerTarget,
                            theReadDrawFbo,
                            theOitAccumFbo);
@@ -2715,7 +2715,7 @@ void OpenGl_View::renderStructs(Graphic3d_Camera::Projection theProjection,
       // Render upper (top and topmost) OpenGL layers
       myZLayers.Render(myWorkspace,
                        theToDrawImmediate,
-                       OpenGl_LF_Upper,
+                       OpenGl_LayerFilter::OpenGl_LF_Upper,
                        myZLayerTarget,
                        theReadDrawFbo,
                        theOitAccumFbo);
@@ -2727,7 +2727,7 @@ void OpenGl_View::renderStructs(Graphic3d_Camera::Projection theProjection,
   if (toRenderGL)
   {
     // check if only a single layer is to be dumped
-    OpenGl_LayerFilter aFilter = myZLayerRedrawMode ? OpenGl_LF_Single : OpenGl_LF_All;
+    OpenGl_LayerFilter aFilter = myZLayerRedrawMode ? OpenGl_LayerFilter::OpenGl_LF_Single : OpenGl_LayerFilter::OpenGl_LF_All;
     myZLayers.Render(myWorkspace,
                      theToDrawImmediate,
                      aFilter,

@@ -50,7 +50,7 @@ PrsDim_MaxRadiusDimension::PrsDim_MaxRadiusDimension(const TopoDS_Shape&        
     : PrsDim_EllipseRadiusDimension(aShape, aText)
 {
   myVal               = aVal;
-  mySymbolPrs         = DsgPrs_AS_LASTAR;
+  mySymbolPrs         = DsgPrs_ArrowSide::DsgPrs_AS_LASTAR;
   myAutomaticPosition = true;
   myArrowSize         = myVal / 100.;
 }

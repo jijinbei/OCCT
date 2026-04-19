@@ -62,7 +62,7 @@ PrsDim_EqualDistanceRelation::PrsDim_EqualDistanceRelation(const TopoDS_Shape&  
 
   // Temporary
   myArrowSize = 3.0; // set the concrete value
-  mySymbolPrs = DsgPrs_AS_BOTHAR;
+  mySymbolPrs = DsgPrs_ArrowSide::DsgPrs_AS_BOTHAR;
 }
 
 //=================================================================================================
@@ -115,7 +115,7 @@ void PrsDim_EqualDistanceRelation::Compute(const occ::handle<PrsMgr_Presentation
                                                            myAutomaticPosition,
                                                            myIsSetBndBox,
                                                            myBndBox,
-                                                           PrsDim_TypeOfDist_Unknown,
+                                                           PrsDim_TypeOfDist::PrsDim_TypeOfDist_Unknown,
                                                            Position12,
                                                            myAttachPoint1,
                                                            myAttachPoint2,
@@ -166,7 +166,7 @@ void PrsDim_EqualDistanceRelation::Compute(const occ::handle<PrsMgr_Presentation
                                                            myAutomaticPosition,
                                                            myIsSetBndBox,
                                                            myBndBox,
-                                                           PrsDim_TypeOfDist_Unknown,
+                                                           PrsDim_TypeOfDist::PrsDim_TypeOfDist_Unknown,
                                                            Position34,
                                                            myAttachPoint3,
                                                            myAttachPoint4,
@@ -640,9 +640,9 @@ void PrsDim_EqualDistanceRelation::ComputeTwoVerticesLength(
   constexpr double confusion(Precision::Confusion());
   bool             samePoint(FirstAttach.IsEqual(SecondAttach, confusion));
 
-  if (TypeDist == PrsDim_TypeOfDist_Vertical)
+  if (TypeDist == PrsDim_TypeOfDist::PrsDim_TypeOfDist_Vertical)
     DirAttach = Plane->Pln().XAxis().Direction();
-  else if (TypeDist == PrsDim_TypeOfDist_Horizontal)
+  else if (TypeDist == PrsDim_TypeOfDist::PrsDim_TypeOfDist_Horizontal)
     DirAttach = Plane->Pln().YAxis().Direction();
   else
   {

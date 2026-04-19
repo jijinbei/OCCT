@@ -55,7 +55,7 @@ PrsDim_ParallelRelation::PrsDim_ParallelRelation(const TopoDS_Shape&            
   myPlane             = aPlane;
   myAutomaticPosition = true;
   myArrowSize         = 0.01;
-  mySymbolPrs         = DsgPrs_AS_BOTHAR;
+  mySymbolPrs         = DsgPrs_ArrowSide::DsgPrs_AS_BOTHAR;
 }
 
 //=================================================================================================
@@ -341,9 +341,9 @@ void PrsDim_ParallelRelation::ComputeTwoEdgesParallel(
   arr = la->ArrowAspect();
   arr->SetLength(myArrowSize);
   if (myExtShape == 1)
-    mySymbolPrs = DsgPrs_AS_FIRSTPT_LASTAR;
+    mySymbolPrs = DsgPrs_ArrowSide::DsgPrs_AS_FIRSTPT_LASTAR;
   else if (myExtShape == 2)
-    mySymbolPrs = DsgPrs_AS_FIRSTAR_LASTPT;
+    mySymbolPrs = DsgPrs_ArrowSide::DsgPrs_AS_FIRSTAR_LASTPT;
 
   DsgPrs_LengthPresentation::Add(aPresentation,
                                  myDrawer,

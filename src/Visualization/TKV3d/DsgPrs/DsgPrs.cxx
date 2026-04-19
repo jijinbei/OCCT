@@ -59,27 +59,27 @@ void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentati
 
   switch (ArrowSide)
   {
-    case DsgPrs_AS_NONE: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_NONE: {
       break;
     }
-    case DsgPrs_AS_FIRSTAR: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_FIRSTAR: {
       Prs3d_Arrow::Draw(aGroup, pt1, dir1, LA->ArrowAspect()->Angle(), LA->ArrowAspect()->Length());
       break;
     }
-    case DsgPrs_AS_LASTAR: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_LASTAR: {
 
       Prs3d_Arrow::Draw(aGroup, pt2, dir2, LA->ArrowAspect()->Angle(), LA->ArrowAspect()->Length());
       break;
     }
 
-    case DsgPrs_AS_BOTHAR: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_BOTHAR: {
       Prs3d_Arrow::Draw(aGroup, pt1, dir1, LA->ArrowAspect()->Angle(), LA->ArrowAspect()->Length());
       Prs3d_Arrow::Draw(aGroup, pt2, dir2, LA->ArrowAspect()->Angle(), LA->ArrowAspect()->Length());
 
       break;
     }
 
-    case DsgPrs_AS_FIRSTPT: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_FIRSTPT: {
       if (drawFromCenter)
       {
         occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints = new Graphic3d_ArrayOfPoints(1);
@@ -89,7 +89,7 @@ void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentati
       break;
     }
 
-    case DsgPrs_AS_LASTPT: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_LASTPT: {
       // On dessine un rond
       occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints = new Graphic3d_ArrayOfPoints(1);
       anArrayOfPoints->AddVertex(pt2.X(), pt2.Y(), pt2.Z());
@@ -97,7 +97,7 @@ void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentati
       break;
     }
 
-    case DsgPrs_AS_BOTHPT: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_BOTHPT: {
       if (drawFromCenter)
       {
         occ::handle<Graphic3d_ArrayOfPoints> anArrayOfPoints1 = new Graphic3d_ArrayOfPoints(2);
@@ -109,7 +109,7 @@ void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentati
       break;
     }
 
-    case DsgPrs_AS_FIRSTAR_LASTPT: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_FIRSTAR_LASTPT: {
       // an Arrow
       Prs3d_Arrow::Draw(aGroup, pt1, dir1, LA->ArrowAspect()->Angle(), LA->ArrowAspect()->Length());
       // a Round
@@ -120,7 +120,7 @@ void DsgPrs::ComputeSymbol(const occ::handle<Prs3d_Presentation>&    aPresentati
       break;
     }
 
-    case DsgPrs_AS_FIRSTPT_LASTAR: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_FIRSTPT_LASTAR: {
       // an Arrow
       Prs3d_Arrow::Draw(aGroup, pt2, dir2, LA->ArrowAspect()->Angle(), LA->ArrowAspect()->Length());
 

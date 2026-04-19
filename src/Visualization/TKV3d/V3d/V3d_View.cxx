@@ -78,7 +78,7 @@ V3d_View::V3d_View(const occ::handle<V3d_Viewer>& theViewer, const V3d_TypeOfVie
   aCamera->SetFOVy(45.0);
   aCamera->SetIOD(Graphic3d_Camera::IODType_Relative, 0.05);
   aCamera->SetZFocus(Graphic3d_Camera::FocusType_Relative, 1.0);
-  aCamera->SetProjectionType((theType == V3d_ORTHOGRAPHIC)
+  aCamera->SetProjectionType((theType == V3d_TypeOfView::V3d_ORTHOGRAPHIC)
                                ? Graphic3d_Camera::Projection_Orthographic
                                : Graphic3d_Camera::Projection_Perspective);
 
@@ -2164,7 +2164,7 @@ void V3d_View::ProjReferenceAxe(const int Xpix,
   double Xo, Yo, Zo;
 
   Convert(Xpix, Ypix, XP, YP, ZP);
-  if (Type() == V3d_PERSPECTIVE)
+  if (Type() == V3d_TypeOfView::V3d_PERSPECTIVE)
   {
     FocalReferencePoint(Xo, Yo, Zo);
     VX = Xo - XP;
@@ -2280,7 +2280,7 @@ bool V3d_View::IfWindow() const
 
 V3d_TypeOfView V3d_View::Type() const
 {
-  return Camera()->IsOrthographic() ? V3d_ORTHOGRAPHIC : V3d_PERSPECTIVE;
+  return Camera()->IsOrthographic() ? V3d_TypeOfView::V3d_ORTHOGRAPHIC : V3d_TypeOfView::V3d_PERSPECTIVE;
 }
 
 //=================================================================================================
@@ -2781,19 +2781,19 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
   {
     switch (theParams.StereoOptions)
     {
-      case V3d_SDO_MONO: {
+      case V3d_StereoDumpOptions::V3d_SDO_MONO: {
         aCamera->SetProjectionType(Graphic3d_Camera::Projection_Perspective);
         break;
       }
-      case V3d_SDO_LEFT_EYE: {
+      case V3d_StereoDumpOptions::V3d_SDO_LEFT_EYE: {
         aCamera->SetProjectionType(Graphic3d_Camera::Projection_MonoLeftEye);
         break;
       }
-      case V3d_SDO_RIGHT_EYE: {
+      case V3d_StereoDumpOptions::V3d_SDO_RIGHT_EYE: {
         aCamera->SetProjectionType(Graphic3d_Camera::Projection_MonoRightEye);
         break;
       }
-      case V3d_SDO_BLENDED: {
+      case V3d_StereoDumpOptions::V3d_SDO_BLENDED: {
         break; // dump as is
       }
     }
@@ -3519,7 +3519,7 @@ void V3d_View::TriedronDisplay(const Aspect_TypeOfTriedronPosition thePosition,
   aTrihedron->SetLabelsColor(theColor);
   aTrihedron->SetScale(theScale);
   aTrihedron->SetPosition(thePosition);
-  aTrihedron->SetWireframe(theMode == V3d_WIREFRAME);
+  aTrihedron->SetWireframe(theMode == V3d_TypeOfVisualization::V3d_WIREFRAME);
 
   aTrihedron->Display(*this);
 }

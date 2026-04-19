@@ -119,7 +119,7 @@ public:
   occ::handle<Font_SystemFont> FindFont(const TCollection_AsciiString& theFontName,
                                         Font_FontAspect&               theFontAspect) const
   {
-    return FindFont(theFontName, Font_StrictLevel_Any, theFontAspect);
+    return FindFont(theFontName, Font_StrictLevel::Font_StrictLevel_Any, theFontAspect);
   }
 
   //! Tries to find fallback font for specified Unicode subset.

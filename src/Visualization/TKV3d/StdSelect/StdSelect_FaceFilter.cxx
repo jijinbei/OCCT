@@ -60,31 +60,31 @@ bool StdSelect_FaceFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) co
 
   switch (mytype)
   {
-    case StdSelect_AnyFace:
+    case StdSelect_TypeOfFace::StdSelect_AnyFace:
       return true;
-    case StdSelect_Plane: {
+    case StdSelect_TypeOfFace::StdSelect_Plane: {
       BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Plane);
     }
-    case StdSelect_Cylinder: {
+    case StdSelect_TypeOfFace::StdSelect_Cylinder: {
       BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Cylinder);
     }
-    case StdSelect_Sphere: {
+    case StdSelect_TypeOfFace::StdSelect_Sphere: {
       BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Sphere);
     }
-    case StdSelect_Torus: {
+    case StdSelect_TypeOfFace::StdSelect_Torus: {
       BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Torus);
     }
-    case StdSelect_Revol: {
+    case StdSelect_TypeOfFace::StdSelect_Revol: {
       BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Cylinder || surf.GetType() == GeomAbs_Cone
               || surf.GetType() == GeomAbs_Torus || surf.GetType() == GeomAbs_Sphere
               || surf.GetType() == GeomAbs_SurfaceOfRevolution);
     }
-    case StdSelect_Cone: // waiting for the free cdl, it is used for Cone
+    case StdSelect_TypeOfFace::StdSelect_Cone: // waiting for the free cdl, it is used for Cone
     {
       BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Cone);

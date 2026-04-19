@@ -84,7 +84,7 @@ public:
     const TCollection_AsciiString& theFontName,
     const Font_FontAspect          theFontAspect,
     const Font_FTFontParams&       theParams,
-    const Font_StrictLevel         theStrictLevel = Font_StrictLevel_Any);
+    const Font_StrictLevel         theStrictLevel = Font_StrictLevel::Font_StrictLevel_Any);
 
   //! Return TRUE if specified character is within subset of modern CJK characters.
   static bool IsCharFromCJK(char32_t theUChar)
@@ -193,7 +193,7 @@ public:
   Standard_EXPORT bool FindAndInit(const TCollection_AsciiString& theFontName,
                                    Font_FontAspect                theFontAspect,
                                    const Font_FTFontParams&       theParams,
-                                   Font_StrictLevel theStrictLevel = Font_StrictLevel_Any);
+                                   Font_StrictLevel theStrictLevel = Font_StrictLevel::Font_StrictLevel_Any);
 
   //! Return flag to use fallback fonts in case if used font does not include symbols from specific
   //! Unicode subset; TRUE by default.

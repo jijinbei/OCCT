@@ -17,7 +17,7 @@
 //! Define the type of depth tolerance for considering picked entities to lie on the same depth
 //! (distance from eye to entity).
 //! @sa SelectMgr_SortCriterion, SelectMgr_ViewerSelector
-enum SelectMgr_TypeOfDepthTolerance
+enum class SelectMgr_TypeOfDepthTolerance
 {
   SelectMgr_TypeOfDepthTolerance_Uniform, //!< use a predefined tolerance value (defined in 3D world
                                           //!< scale) to compare any entities

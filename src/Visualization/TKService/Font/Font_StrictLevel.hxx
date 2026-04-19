@@ -15,7 +15,7 @@
 #define _Font_StrictLevel_HeaderFile
 
 //! Enumeration defining font search restrictions.
-enum Font_StrictLevel
+enum class Font_StrictLevel
 {
   Font_StrictLevel_Strict,  //!< search only for exact font
   Font_StrictLevel_Aliases, //!< search for exact font match and for aliases (ignore global

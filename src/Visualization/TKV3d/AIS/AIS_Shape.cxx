@@ -84,7 +84,7 @@ void AIS_Shape::replaceWithNewOwnAspects()
 //=================================================================================================
 
 AIS_Shape::AIS_Shape(const TopoDS_Shape& theShape)
-    : AIS_InteractiveObject(PrsMgr_TOP_ProjectorDependent),
+    : AIS_InteractiveObject(PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent),
       myshape(theShape),
       myUVOrigin(0.0, 0.0),
       myUVRepeat(1.0, 1.0),
@@ -256,13 +256,13 @@ void AIS_Shape::computeHlrPresentation(const occ::handle<Graphic3d_Camera>&   th
       OCC_CATCH_SIGNALS
       switch (theDrawer->TypeOfHLR())
       {
-        case Prs3d_TOH_Algo: {
+        case Prs3d_TypeOfHLR::Prs3d_TOH_Algo: {
           StdPrs_HLRShape aBuilder;
           aBuilder.ComputeHLR(thePrs, theShape, theDrawer, theProjector);
           break;
         }
-        case Prs3d_TOH_PolyAlgo:
-        case Prs3d_TOH_NotSet: {
+        case Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo:
+        case Prs3d_TypeOfHLR::Prs3d_TOH_NotSet: {
           StdPrs_HLRPolyShape aBuilder;
           aBuilder.ComputeHLR(thePrs, theShape, theDrawer, theProjector);
           break;

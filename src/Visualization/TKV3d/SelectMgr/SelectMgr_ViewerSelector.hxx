@@ -117,7 +117,7 @@ public:
   void SetPickClosest(bool theToPreferClosest) { myToPreferClosest = theToPreferClosest; }
 
   //! Return the type of tolerance for considering two entities having a similar depth (distance
-  //! from eye to entity); SelectMgr_TypeOfDepthTolerance_SensitivityFactor by default.
+  //! from eye to entity); SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor by default.
   SelectMgr_TypeOfDepthTolerance DepthToleranceType() const { return myDepthTolType; }
 
   //! Return the tolerance for considering two entities having a similar depth (distance from eye to
@@ -127,10 +127,10 @@ public:
   //! Set the tolerance for considering two entities having a similar depth (distance from eye to
   //! entity).
   //! @param[in] theType  type of tolerance value
-  //! @param[in] theTolerance  tolerance value in 3D scale (SelectMgr_TypeOfDepthTolerance_Uniform)
-  //!                          or in pixels (SelectMgr_TypeOfDepthTolerance_UniformPixels);
+  //! @param[in] theTolerance  tolerance value in 3D scale (SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_Uniform)
+  //!                          or in pixels (SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_UniformPixels);
   //!                          value is ignored in case of
-  //!                          SelectMgr_TypeOfDepthTolerance_SensitivityFactor
+  //!                          SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor
   void SetDepthTolerance(SelectMgr_TypeOfDepthTolerance theType, double theTolerance)
   {
     myDepthTolType   = theType;
@@ -187,7 +187,7 @@ public:
   Standard_EXPORT bool Modes(
     const occ::handle<SelectMgr_SelectableObject>& theSelectableObject,
     NCollection_List<int>&                         theModeList,
-    const SelectMgr_StateOfSelection               theWantedState = SelectMgr_SOS_Any) const;
+    const SelectMgr_StateOfSelection               theWantedState = SelectMgr_StateOfSelection::SelectMgr_SOS_Any) const;
 
   //! Returns true if the selectable object
   //! aSelectableObject having the selection mode aMode

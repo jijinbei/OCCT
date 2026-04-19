@@ -15,7 +15,7 @@
 #ifndef _PrsDim_KindOfRelation_HeaderFile
 #define _PrsDim_KindOfRelation_HeaderFile
 
-enum PrsDim_KindOfRelation
+enum class PrsDim_KindOfRelation
 {
   PrsDim_KOR_NONE = 0,
   PrsDim_KOR_CONCENTRIC,

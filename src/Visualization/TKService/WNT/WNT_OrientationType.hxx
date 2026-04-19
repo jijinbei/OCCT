@@ -18,7 +18,7 @@
 #define _WNT_OrientationType_HeaderFile
 
 //! Portrait/landscape orientation.
-enum WNT_OrientationType
+enum class WNT_OrientationType
 {
   WNT_OT_PORTRAIT,
   WNT_OT_LANDSCAPE

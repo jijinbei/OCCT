@@ -96,7 +96,7 @@ void PrsDim_EllipseRadiusDimension::ComputeFaceGeometry()
   double                    Offset;
   PrsDim::GetPlaneFromFace(TopoDS::Face(myFShape), aPln, aBasisSurf, aSurfType, Offset);
 
-  if (aSurfType == PrsDim_KOS_Plane)
+  if (aSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane)
     ComputePlanarFaceGeometry();
   else
     ComputeCylFaceGeometry(aSurfType, aBasisSurf, Offset);
@@ -121,7 +121,7 @@ void PrsDim_EllipseRadiusDimension::ComputeCylFaceGeometry(
   gp_Pln aPlane;
   gp_Ax1 Axis;
   //  double Param;
-  if (aSurfType == PrsDim_KOS_Extrusion)
+  if (aSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Extrusion)
   {
     Axis.SetDirection((occ::down_cast<Geom_SurfaceOfLinearExtrusion>(aBasisSurf))->Direction());
     Axis.SetLocation(

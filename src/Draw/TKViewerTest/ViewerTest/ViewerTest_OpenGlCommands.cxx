@@ -955,7 +955,7 @@ static int VListColors(Draw_Interpretor& theDI, int theArgNb, const char** theAr
   anImgParams.Width          = 60;
   anImgParams.Height         = 30;
   anImgParams.BufferType     = Graphic3d_BufferType::Graphic3d_BT_RGB;
-  anImgParams.StereoOptions  = V3d_SDO_MONO;
+  anImgParams.StereoOptions  = V3d_StereoDumpOptions::V3d_SDO_MONO;
   anImgParams.ToAdjustAspect = true;
   occ::handle<V3d_View> aView;
   if (!aDumpFile.IsEmpty())

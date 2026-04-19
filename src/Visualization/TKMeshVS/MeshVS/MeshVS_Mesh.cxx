@@ -66,7 +66,7 @@ MeshVS_Mesh::MeshVS_Mesh(const bool theIsAllowOverlapped)
   myDataSource.Nullify();
   myHilighter.Nullify();
   myWholeMeshOwner.Nullify();
-  mySelectionMethod = MeshVS_MSM_NODES;
+  mySelectionMethod = MeshVS_MeshSelectionMethod::MeshVS_MSM_NODES;
 
   SetAutoHilight(false);
 
@@ -358,7 +358,7 @@ void MeshVS_Mesh::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSe
 
         switch (mySelectionMethod)
         {
-          case MeshVS_MSM_BOX: {
+          case MeshVS_MeshSelectionMethod::MeshVS_MSM_BOX: {
             Bnd_Box aBndBox;
             BoundingBox(aBndBox);
             if (!aBndBox.IsVoid())
@@ -367,14 +367,14 @@ void MeshVS_Mesh::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSe
             }
             break;
           }
-          case MeshVS_MSM_NODES: {
+          case MeshVS_MeshSelectionMethod::MeshVS_MSM_NODES: {
             theSelection->Add(
-              new MeshVS_CommonSensitiveEntity(myWholeMeshOwner, this, MeshVS_MSM_NODES));
+              new MeshVS_CommonSensitiveEntity(myWholeMeshOwner, this, MeshVS_MeshSelectionMethod::MeshVS_MSM_NODES));
             break;
           }
-          case MeshVS_MSM_PRECISE: {
+          case MeshVS_MeshSelectionMethod::MeshVS_MSM_PRECISE: {
             theSelection->Add(
-              new MeshVS_CommonSensitiveEntity(myWholeMeshOwner, this, MeshVS_MSM_PRECISE));
+              new MeshVS_CommonSensitiveEntity(myWholeMeshOwner, this, MeshVS_MeshSelectionMethod::MeshVS_MSM_PRECISE));
 
             // since MeshVS_Mesh objects can contain free edges and vertices, it is necessary to
             // create separate sensitive entity for each of them

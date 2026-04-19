@@ -17,7 +17,7 @@
 #ifndef _PrsDim_KindOfSurface_HeaderFile
 #define _PrsDim_KindOfSurface_HeaderFile
 
-enum PrsDim_KindOfSurface
+enum class PrsDim_KindOfSurface
 {
   PrsDim_KOS_Plane,
   PrsDim_KOS_Cylinder,

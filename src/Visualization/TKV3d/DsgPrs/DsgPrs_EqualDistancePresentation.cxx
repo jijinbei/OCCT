@@ -59,7 +59,7 @@ void DsgPrs_EqualDistancePresentation::Add(const occ::handle<Prs3d_Presentation>
 
   // Add presentation of arrows (points)
   gp_Dir aDir(gp_Dir::D::Z);
-  DsgPrs::ComputeSymbol(aPresentation, LA, Middle12, Middle34, aDir, aDir, DsgPrs_AS_BOTHPT);
+  DsgPrs::ComputeSymbol(aPresentation, LA, Middle12, Middle34, aDir, aDir, DsgPrs_ArrowSide::DsgPrs_AS_BOTHPT);
   // ota -- begin --
   // Two small lines in the middle of this line
   gp_Pnt Middle((Middle12.XYZ() + Middle34.XYZ()) * 0.5), aTextPos;

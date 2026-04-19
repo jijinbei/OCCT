@@ -20,7 +20,7 @@
 #include <Standard_Macro.hxx>
 
 //! The type of presentation.
-enum PrsMgr_TypeOfPresentation3d
+enum class PrsMgr_TypeOfPresentation3d
 {
   //! Presentation display involves no recalculation for new projectors (points of view) in hidden
   //! line removal mode.
@@ -29,7 +29,7 @@ enum PrsMgr_TypeOfPresentation3d
   PrsMgr_TOP_ProjectorDependent
 };
 
-Standard_DEPRECATED("PrsMgr_TOP_ProjectorDependent should be used instead")
-const PrsMgr_TypeOfPresentation3d PrsMgr_TOP_ProjectorDependant = PrsMgr_TOP_ProjectorDependent;
+Standard_DEPRECATED("PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent should be used instead")
+const PrsMgr_TypeOfPresentation3d PrsMgr_TOP_ProjectorDependant = PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent;
 
 #endif // _PrsMgr_TypeOfPresentation3d_HeaderFile

@@ -145,7 +145,7 @@ protected:
   //! The TypeOfPresention3d means that the interactive object
   //! may have a presentation dependent on the view of Display.
   Standard_EXPORT AIS_InteractiveObject(
-    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TOP_AllView);
+    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
 
   //! Set presentation display status.
   Standard_EXPORT void SetDisplayStatus(PrsMgr_DisplayStatus theStatus);

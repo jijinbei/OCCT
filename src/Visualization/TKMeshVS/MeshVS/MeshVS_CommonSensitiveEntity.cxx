@@ -39,7 +39,7 @@ MeshVS_CommonSensitiveEntity::MeshVS_CommonSensitiveEntity(
     "The maximal amount of nodes in a face must be greater than zero to create sensitive entity");
   gp_XYZ aCenter(0.0, 0.0, 0.0);
 
-  if (mySelMethod == MeshVS_MSM_NODES)
+  if (mySelMethod == MeshVS_MeshSelectionMethod::MeshVS_MSM_NODES)
   {
     int                               aNbSelectableNodes = 0;
     const TColStd_PackedMapOfInteger& anAllNodesMap      = myDataSource->GetAllNodes();
@@ -61,7 +61,7 @@ MeshVS_CommonSensitiveEntity::MeshVS_CommonSensitiveEntity(
     SetSensitivityFactor(8);
     myCOG = aCenter / aNbSelectableNodes;
   }
-  else if (mySelMethod == MeshVS_MSM_PRECISE)
+  else if (mySelMethod == MeshVS_MeshSelectionMethod::MeshVS_MSM_PRECISE)
   {
     const TColStd_PackedMapOfInteger& anAllNodesMap = myDataSource->GetAllNodes();
     for (TColStd_PackedMapOfInteger::Iterator aNodesIter(anAllNodesMap); aNodesIter.More();
@@ -146,7 +146,7 @@ Select3D_BndBox3d MeshVS_CommonSensitiveEntity::Box(const int theIdx) const
 {
   const int         anItemIdx = myItemIndexes.Value(theIdx);
   Select3D_BndBox3d aBox;
-  if (mySelMethod == MeshVS_MSM_PRECISE)
+  if (mySelMethod == MeshVS_MeshSelectionMethod::MeshVS_MSM_PRECISE)
   {
     MeshVS_Buffer              aCoordsBuf(3 * myMaxFaceNodes * sizeof(double));
     NCollection_Array1<double> aCoords(aCoordsBuf, 1, 3 * myMaxFaceNodes);
@@ -172,7 +172,7 @@ Select3D_BndBox3d MeshVS_CommonSensitiveEntity::Box(const int theIdx) const
       aBox.Add(aPnt);
     }
   }
-  else if (mySelMethod == MeshVS_MSM_NODES)
+  else if (mySelMethod == MeshVS_MeshSelectionMethod::MeshVS_MSM_NODES)
   {
     const gp_Pnt aVert = getVertexByIndex(anItemIdx);
     aBox.Add(NCollection_Vec3<double>(aVert.X(), aVert.Y(), aVert.Z()));
@@ -214,7 +214,7 @@ bool MeshVS_CommonSensitiveEntity::overlapsElement(SelectBasics_PickResult& theP
   }
 
   const int anItemIdx = myItemIndexes.Value(theElemIdx);
-  if (mySelMethod == MeshVS_MSM_PRECISE)
+  if (mySelMethod == MeshVS_MeshSelectionMethod::MeshVS_MSM_PRECISE)
   {
     MeshVS_Buffer              aCoordsBuf(3 * myMaxFaceNodes * sizeof(double));
     NCollection_Array1<double> aCoords(aCoordsBuf, 1, 3 * myMaxFaceNodes);
@@ -250,7 +250,7 @@ bool MeshVS_CommonSensitiveEntity::overlapsElement(SelectBasics_PickResult& theP
     }
     return theMgr.OverlapsPolygon(aFacePnts, Select3D_TOS_INTERIOR, thePickResult);
   }
-  else if (mySelMethod == MeshVS_MSM_NODES)
+  else if (mySelMethod == MeshVS_MeshSelectionMethod::MeshVS_MSM_NODES)
   {
     const gp_Pnt aVert = getVertexByIndex(anItemIdx);
     return theMgr.OverlapsPoint(aVert, thePickResult);
@@ -270,7 +270,7 @@ bool MeshVS_CommonSensitiveEntity::elementIsInside(SelectBasics_SelectingVolumeM
   }
 
   const int anItemIdx = myItemIndexes.Value(theElemIdx);
-  if (mySelMethod == MeshVS_MSM_PRECISE)
+  if (mySelMethod == MeshVS_MeshSelectionMethod::MeshVS_MSM_PRECISE)
   {
     MeshVS_Buffer              aCoordsBuf(3 * myMaxFaceNodes * sizeof(double));
     NCollection_Array1<double> aCoords(aCoordsBuf, 1, 3 * myMaxFaceNodes);
@@ -302,7 +302,7 @@ bool MeshVS_CommonSensitiveEntity::elementIsInside(SelectBasics_SelectingVolumeM
     }
     return true;
   }
-  else if (mySelMethod == MeshVS_MSM_NODES)
+  else if (mySelMethod == MeshVS_MeshSelectionMethod::MeshVS_MSM_NODES)
   {
     const gp_Pnt aVert = getVertexByIndex(anItemIdx);
     return theMgr.OverlapsPoint(aVert);

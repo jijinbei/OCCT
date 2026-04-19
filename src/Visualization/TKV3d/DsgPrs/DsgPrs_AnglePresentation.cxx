@@ -181,14 +181,14 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
                         AttachmentPnt,
                         aDir,
                         aDir,
-                        DsgPrs_AS_LASTAR);
+                        DsgPrs_ArrowSide::DsgPrs_AS_LASTAR);
   DsgPrs::ComputeSymbol(aPresentation,
                         aDimensionAspect,
                         OppositePnt,
                         OppositePnt,
                         aDir2,
                         aDir2,
-                        DsgPrs_AS_LASTAR);
+                        DsgPrs_ArrowSide::DsgPrs_AS_LASTAR);
 
   param  = ElCLib::Parameter(aCircle2, tmpPnt);
   tmpPnt = ElCLib::Value(param, aCircle2);
@@ -878,7 +878,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   gp_Pnt ptarr;
   switch (ArrowSide)
   {
-    case DsgPrs_AS_FIRSTAR: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_FIRSTAR: {
       ElCLib::D1(uc1, cer, ptarr, vecarr);
       Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                         ptarr,
@@ -887,7 +887,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
                         length);
       break;
     }
-    case DsgPrs_AS_LASTAR: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_LASTAR: {
       ElCLib::D1(uc2, cer, ptarr, vecarr);
       Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                         ptarr,
@@ -896,7 +896,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
                         length);
       break;
     }
-    case DsgPrs_AS_BOTHAR: {
+    case DsgPrs_ArrowSide::DsgPrs_AS_BOTHAR: {
       ElCLib::D1(uc1, cer, ptarr, vecarr);
       Prs3d_Arrow::Draw(aPresentation->CurrentGroup(),
                         ptarr,

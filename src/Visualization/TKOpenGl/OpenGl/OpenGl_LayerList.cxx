@@ -100,14 +100,14 @@ private:
 
       switch (myFilterMode)
       {
-        case OpenGl_LF_All: {
+        case OpenGl_LayerFilter::OpenGl_LF_All: {
           if (aLayer->LayerId() >= myLayersToProcess)
           {
             return;
           }
           break;
         }
-        case OpenGl_LF_Upper: {
+        case OpenGl_LayerFilter::OpenGl_LF_Upper: {
           if (aLayer->LayerId() != Graphic3d_ZLayerId_BotOSD
               && (!aLayer->LayerSettings().IsRaytracable() || aLayer->IsImmediate()))
           {
@@ -115,7 +115,7 @@ private:
           }
           break;
         }
-        case OpenGl_LF_Bottom: {
+        case OpenGl_LayerFilter::OpenGl_LF_Bottom: {
           if (aLayer->LayerId() == Graphic3d_ZLayerId_BotOSD
               && !aLayer->LayerSettings().IsRaytracable())
           {
@@ -123,14 +123,14 @@ private:
           }
           break;
         }
-        case OpenGl_LF_Single: {
+        case OpenGl_LayerFilter::OpenGl_LF_Single: {
           if (aLayer->LayerId() == myLayersToProcess)
           {
             return;
           }
           break;
         }
-        case OpenGl_LF_RayTracable: {
+        case OpenGl_LayerFilter::OpenGl_LF_RayTracable: {
           if (aLayer->LayerSettings().IsRaytracable() && !aLayer->IsImmediate())
           {
             return;

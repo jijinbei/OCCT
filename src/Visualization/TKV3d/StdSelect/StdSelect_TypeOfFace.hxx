@@ -20,7 +20,7 @@
 //! Provides values for different types of faces. These
 //! values are used to filter faces in frameworks inheriting
 //! StdSelect_FaceFilter.
-enum StdSelect_TypeOfFace
+enum class StdSelect_TypeOfFace
 {
   StdSelect_AnyFace,
   StdSelect_Plane,

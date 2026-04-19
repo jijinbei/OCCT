@@ -49,15 +49,15 @@ bool SelectMgr_AndOrFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& theOb
        anIter.Next())
   {
     bool isOK = anIter.Value()->IsOk(theObj);
-    if (isOK && myFilterType == SelectMgr_FilterType_OR)
+    if (isOK && myFilterType == SelectMgr_FilterType::SelectMgr_FilterType_OR)
     {
       return true;
     }
-    else if (!isOK && myFilterType == SelectMgr_FilterType_AND)
+    else if (!isOK && myFilterType == SelectMgr_FilterType::SelectMgr_FilterType_AND)
     {
       return false;
     }
   }
 
-  return myFilterType != SelectMgr_FilterType_OR || myFilters.IsEmpty();
+  return myFilterType != SelectMgr_FilterType::SelectMgr_FilterType_OR || myFilters.IsEmpty();
 }

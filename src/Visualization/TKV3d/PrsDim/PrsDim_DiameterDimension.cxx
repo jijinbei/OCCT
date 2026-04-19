@@ -34,34 +34,34 @@ static const char16_t THE_DIAMETER_SYMBOL(0x00D8);
 //=================================================================================================
 
 PrsDim_DiameterDimension::PrsDim_DiameterDimension(const gp_Circ& theCircle)
-    : PrsDim_Dimension(PrsDim_KOD_DIAMETER)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_DIAMETER)
 {
   SetMeasuredGeometry(theCircle);
   SetSpecialSymbol(THE_DIAMETER_SYMBOL);
-  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
+  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
 
 //=================================================================================================
 
 PrsDim_DiameterDimension::PrsDim_DiameterDimension(const gp_Circ& theCircle, const gp_Pln& thePlane)
-    : PrsDim_Dimension(PrsDim_KOD_DIAMETER)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_DIAMETER)
 {
   SetCustomPlane(thePlane);
   SetMeasuredGeometry(theCircle);
   SetSpecialSymbol(THE_DIAMETER_SYMBOL);
-  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
+  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
 
 //=================================================================================================
 
 PrsDim_DiameterDimension::PrsDim_DiameterDimension(const TopoDS_Shape& theShape)
-    : PrsDim_Dimension(PrsDim_KOD_DIAMETER)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_DIAMETER)
 {
   SetMeasuredGeometry(theShape);
   SetSpecialSymbol(THE_DIAMETER_SYMBOL);
-  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
+  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
 
@@ -69,12 +69,12 @@ PrsDim_DiameterDimension::PrsDim_DiameterDimension(const TopoDS_Shape& theShape)
 
 PrsDim_DiameterDimension::PrsDim_DiameterDimension(const TopoDS_Shape& theShape,
                                                    const gp_Pln&       thePlane)
-    : PrsDim_Dimension(PrsDim_KOD_DIAMETER)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_DIAMETER)
 {
   SetCustomPlane(thePlane);
   SetMeasuredGeometry(theShape);
   SetSpecialSymbol(THE_DIAMETER_SYMBOL);
-  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
+  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
 

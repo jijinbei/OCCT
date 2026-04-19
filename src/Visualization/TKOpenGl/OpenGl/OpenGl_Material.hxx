@@ -148,7 +148,7 @@ private:
 };
 
 //! Material flag
-enum OpenGl_MaterialFlag
+enum class OpenGl_MaterialFlag
 {
   OpenGl_MaterialFlag_Front, //!< material for front faces
   OpenGl_MaterialFlag_Back   //!< material for back  faces

@@ -117,7 +117,7 @@ void IVtkOCC_ShapePickerAlgo::SetSelectionMode(const IVtk_IShape::Handle& theSha
     const occ::handle<SelectMgr_Selection>& aSel = aSelObj->Selection(theMode);
     switch (aSel->UpdateStatus())
     {
-      case SelectMgr_TOU_Full: {
+      case SelectMgr_TypeOfUpdate::SelectMgr_TOU_Full: {
         // Recompute the sensitive primitives which correspond to the mode.
         myViewerSelector->RemoveSelectionOfObject(aSelObj, aSelObj->Selection(theMode));
         aSelObj->RecomputePrimitives(theMode);
@@ -126,7 +126,7 @@ void IVtkOCC_ShapePickerAlgo::SetSelectionMode(const IVtk_IShape::Handle& theSha
         myViewerSelector->RebuildSensitivesTree(aSelObj);
       }
         [[fallthrough]];
-      case SelectMgr_TOU_Partial: {
+      case SelectMgr_TypeOfUpdate::SelectMgr_TOU_Partial: {
         if (aSelObj->HasTransformation())
         {
           myViewerSelector->RebuildObjectsTree();
@@ -137,7 +137,7 @@ void IVtkOCC_ShapePickerAlgo::SetSelectionMode(const IVtk_IShape::Handle& theSha
         break;
     }
     // Set status of the selection to "nothing to update".
-    aSel->UpdateStatus(SelectMgr_TOU_None);
+    aSel->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_None);
 
     // Activate the selection in the viewer selector.
     myViewerSelector->Activate(aSelObj->Selection(theMode));

@@ -256,7 +256,9 @@ bool Select3D_InteriorSensitivePointSet::overlapsElement(
   int                                            aPolygIdx = myPolygonsIdxs->Value(theElemIdx);
   const occ::handle<Select3D_SensitivePoly>&     aPolygon  = myPlanarPolygons.Value(aPolygIdx);
   const occ::handle<NCollection_HArray1<gp_Pnt>> aPoints   = aPolygon->Points3D();
-  return theMgr.OverlapsPolygon(aPoints->Array1(), Select3D_TOS_INTERIOR, thePickResult);
+  return theMgr.OverlapsPolygon(aPoints->Array1(),
+                                static_cast<int>(Select3D_TOS_INTERIOR),
+                                thePickResult);
 }
 
 //=================================================================================================

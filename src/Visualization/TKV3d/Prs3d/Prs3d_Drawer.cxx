@@ -48,7 +48,7 @@ Prs3d_Drawer::Prs3d_Drawer()
       myChordialDeviation(-1.0),
       myTypeOfDeflection(Aspect_TypeOfDeflection::Aspect_TOD_RELATIVE),
       myHasOwnTypeOfDeflection(false),
-      myTypeOfHLR(Prs3d_TOH_NotSet),
+      myTypeOfHLR(Prs3d_TypeOfHLR::Prs3d_TOH_NotSet),
       myDeviationCoefficient(-1.0),
       myDeviationAngle(-1.0),
       myIsoOnPlane(false),
@@ -64,7 +64,7 @@ Prs3d_Drawer::Prs3d_Drawer()
       myHasOwnLineArrowDraw(false),
       myDrawHiddenLine(false),
       myHasOwnDrawHiddenLine(false),
-      myVertexDrawMode(Prs3d_VDM_Inherited),
+      myVertexDrawMode(Prs3d_VertexDrawMode::Prs3d_VDM_Inherited),
 
       myFreeBoundaryDraw(true),
       myHasOwnFreeBoundaryDraw(false),
@@ -129,7 +129,7 @@ Prs3d_TypeOfHLR Prs3d_Drawer::TypeOfHLR() const
   {
     return myLink->TypeOfHLR();
   }
-  return Prs3d_TOH_PolyAlgo;
+  return Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo;
 }
 
 //=================================================================================================
@@ -479,7 +479,7 @@ const occ::handle<Prs3d_LineAspect>& Prs3d_Drawer::VectorAspect() const
 
 void Prs3d_Drawer::SetVertexDrawMode(const Prs3d_VertexDrawMode theMode)
 {
-  // Prs3d_VDM_Inherited is default value and means
+  // Prs3d_VertexDrawMode::Prs3d_VDM_Inherited is default value and means
   // that correct value should be taken from the Link if it exists.
   myVertexDrawMode = theMode;
 }
@@ -496,7 +496,7 @@ Prs3d_VertexDrawMode Prs3d_Drawer::VertexDrawMode() const
   {
     return myLink->VertexDrawMode();
   }
-  return Prs3d_VDM_Isolated;
+  return Prs3d_VertexDrawMode::Prs3d_VDM_Isolated;
 }
 
 //=================================================================================================
@@ -569,8 +569,8 @@ void Prs3d_Drawer::ClearLocalAttributes()
   UnsetOwnDimAngleModelUnits();
   UnsetOwnDimAngleDisplayUnits();
 
-  myVertexDrawMode = Prs3d_VDM_Inherited;
-  myTypeOfHLR      = Prs3d_TOH_NotSet;
+  myVertexDrawMode = Prs3d_VertexDrawMode::Prs3d_VDM_Inherited;
+  myTypeOfHLR      = Prs3d_TypeOfHLR::Prs3d_TOH_NotSet;
 }
 
 //=================================================================================================

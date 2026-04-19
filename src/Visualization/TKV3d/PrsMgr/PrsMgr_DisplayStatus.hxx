@@ -18,7 +18,7 @@
 #define _PrsMgr_DisplayStatus_HeaderFile
 
 //! To give the display status of an Interactive Object.
-enum PrsMgr_DisplayStatus
+enum class PrsMgr_DisplayStatus
 {
   PrsMgr_DisplayStatus_Displayed, //!< the Interactive Object is displayed in the main viewer
   PrsMgr_DisplayStatus_Erased,    //!< the Interactive Object is hidden in main viewer

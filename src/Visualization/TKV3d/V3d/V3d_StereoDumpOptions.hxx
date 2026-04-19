@@ -18,7 +18,7 @@
 
 //! Options to be used with image dumping.
 //! Notice that the value will have no effect with disabled stereo output.
-enum V3d_StereoDumpOptions
+enum class V3d_StereoDumpOptions
 {
   V3d_SDO_MONO,      //!< ignore stereo mode and dump monographic projection for stereo camera
   V3d_SDO_LEFT_EYE,  //!< dump only left  eye projection for stereo camera

@@ -453,7 +453,7 @@ occ::handle<Graphic3d_ArrayOfPoints> StdPrs_WFShape::AddVertexes(const TopoDS_Sh
                                                                  Prs3d_VertexDrawMode theVertexMode)
 {
   NCollection_Sequence<gp_Pnt> aShapeVertices;
-  if (theVertexMode == Prs3d_VDM_All)
+  if (theVertexMode == Prs3d_VertexDrawMode::Prs3d_VDM_All)
   {
     for (TopExp_Explorer aVertIter(theShape, TopAbs_VERTEX); aVertIter.More(); aVertIter.Next())
     {

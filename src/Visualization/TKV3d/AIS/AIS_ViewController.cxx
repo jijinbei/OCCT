@@ -2355,7 +2355,7 @@ void AIS_ViewController::handleCameraActions(const occ::handle<AIS_InteractiveCo
     if (myToShowPanAnchorPoint && hasPanningAnchorPoint() && myGL.Panning.ToPan
         && !myGL.IsNewGesture && !myAnchorPointPrs2->HasInteractiveContext())
     {
-      theCtx->Display(myAnchorPointPrs2, 0, -1, false, AIS_DS_Displayed);
+      theCtx->Display(myAnchorPointPrs2, 0, -1, false, PrsMgr_DisplayStatus::AIS_DS_Displayed);
     }
 
     handlePanning(theView);
@@ -2391,8 +2391,8 @@ void AIS_ViewController::handleCameraActions(const occ::handle<AIS_InteractiveCo
     if (myToShowRotateCenter && myGL.OrbitRotation.ToRotate && !myGL.IsNewGesture
         && !myAnchorPointPrs1->HasInteractiveContext())
     {
-      theCtx->Display(myAnchorPointPrs1, 0, -1, false, AIS_DS_Displayed);
-      theCtx->Display(myAnchorPointPrs2, 0, -1, false, AIS_DS_Displayed);
+      theCtx->Display(myAnchorPointPrs1, 0, -1, false, PrsMgr_DisplayStatus::AIS_DS_Displayed);
+      theCtx->Display(myAnchorPointPrs2, 0, -1, false, PrsMgr_DisplayStatus::AIS_DS_Displayed);
     }
     handleOrbitRotation(theView,
                         aGravPnt,
@@ -2971,7 +2971,7 @@ void AIS_ViewController::handleSelectionPoly(const occ::handle<AIS_InteractiveCo
       myRubberBand->SetPolygonClosed(anIsRubber);
       try
       {
-        theCtx->Display(myRubberBand, 0, -1, false, AIS_DS_Displayed);
+        theCtx->Display(myRubberBand, 0, -1, false, PrsMgr_DisplayStatus::AIS_DS_Displayed);
       }
       catch (const Standard_Failure& theEx)
       {

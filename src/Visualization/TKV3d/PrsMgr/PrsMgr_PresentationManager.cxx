@@ -69,7 +69,7 @@ void PrsMgr_PresentationManager::Display(const occ::handle<PrsMgr_PresentableObj
          anIter.Next())
     {
       const occ::handle<PrsMgr_PresentableObject>& aChild = anIter.Value();
-      if (aChild->DisplayStatus() != PrsMgr_DisplayStatus_Erased)
+      if (aChild->DisplayStatus() != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Erased)
       {
         Display(anIter.Value(), theMode);
       }
@@ -161,7 +161,7 @@ void PrsMgr_PresentationManager::SetVisibility(
          anIter.Next())
     {
       const occ::handle<PrsMgr_PresentableObject>& aChild = anIter.Value();
-      if (!theValue || aChild->DisplayStatus() != PrsMgr_DisplayStatus_Erased)
+      if (!theValue || aChild->DisplayStatus() != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Erased)
       {
         SetVisibility(anIter.Value(), theMode, theValue);
       }
@@ -643,7 +643,7 @@ void PrsMgr_PresentationManager::Color(const occ::handle<PrsMgr_PresentableObjec
          anIter.Next())
     {
       const occ::handle<PrsMgr_PresentableObject>& aChild = anIter.Value();
-      if (aChild->DisplayStatus() != PrsMgr_DisplayStatus_Erased)
+      if (aChild->DisplayStatus() != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Erased)
       {
         Color(aChild, theStyle, theMode, nullptr, theImmediateStructLayerId);
       }

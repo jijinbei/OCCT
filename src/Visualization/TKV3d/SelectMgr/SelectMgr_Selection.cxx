@@ -25,8 +25,8 @@ IMPLEMENT_STANDARD_RTTIEXT(SelectMgr_Selection, Standard_Transient)
 
 SelectMgr_Selection::SelectMgr_Selection(const int theModeIdx)
     : myMode(theModeIdx),
-      mySelectionState(SelectMgr_SOS_Unknown),
-      myBVHUpdateStatus(SelectMgr_TBU_None),
+      mySelectionState(SelectMgr_StateOfSelection::SelectMgr_SOS_Unknown),
+      myBVHUpdateStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_None),
       mySensFactor(2),
       myIsCustomSens(false)
 {
@@ -67,7 +67,7 @@ void SelectMgr_Selection::Add(const occ::handle<Select3D_SensitiveEntity>& theSe
 
   occ::handle<SelectMgr_SensitiveEntity> anEntity = new SelectMgr_SensitiveEntity(theSensitive);
   myEntities.Append(anEntity);
-  if (mySelectionState == SelectMgr_SOS_Activated && !anEntity->IsActiveForSelection())
+  if (mySelectionState == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated && !anEntity->IsActiveForSelection())
   {
     anEntity->SetActiveForSelection();
   }

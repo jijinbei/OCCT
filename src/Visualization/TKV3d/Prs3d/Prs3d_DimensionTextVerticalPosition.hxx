@@ -22,7 +22,7 @@
 //! DTVP_Above - text label is located above the dimension or extension line.
 //! DTVP_Below - text label is located below the dimension or extension line.
 //! DTVP_Center - the text label middle-point is in line with dimension or extension line.
-enum Prs3d_DimensionTextVerticalPosition
+enum class Prs3d_DimensionTextVerticalPosition
 {
   Prs3d_DTVP_Above,
   Prs3d_DTVP_Below,

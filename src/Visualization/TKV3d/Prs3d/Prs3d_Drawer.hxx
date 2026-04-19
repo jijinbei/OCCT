@@ -106,8 +106,8 @@ public:
   //! Returns the type of HLR algorithm currently in use.
   Standard_EXPORT Prs3d_TypeOfHLR TypeOfHLR() const;
 
-  //! Returns true if the type of HLR is not equal to Prs3d_TOH_NotSet.
-  bool HasOwnTypeOfHLR() const { return (myTypeOfHLR != Prs3d_TOH_NotSet); }
+  //! Returns true if the type of HLR is not equal to Prs3d_TypeOfHLR::Prs3d_TOH_NotSet.
+  bool HasOwnTypeOfHLR() const { return (myTypeOfHLR != Prs3d_TypeOfHLR::Prs3d_TOH_NotSet); }
 
   //! Defines the maximum value allowed for the first and last
   //! parameters of an infinite curve.
@@ -550,16 +550,16 @@ public:
   //! that corresponds to Prs3d_VDM_Standalone mode.
   //! Switching to Prs3d_VDM_Standalone mode makes all shape's vertices visible.
   //! To inherit this parameter from the global drawer instance ("the link") when it is present,
-  //! Prs3d_VDM_Inherited value should be used.
+  //! Prs3d_VertexDrawMode::Prs3d_VDM_Inherited value should be used.
   Standard_EXPORT void SetVertexDrawMode(const Prs3d_VertexDrawMode theMode);
 
   //! Returns the current mode of visualization of vertices of a TopoDS_Shape instance.
   Standard_EXPORT Prs3d_VertexDrawMode VertexDrawMode() const;
 
-  //! Returns true if the vertex draw mode is not equal to <b>Prs3d_VDM_Inherited</b>.
+  //! Returns true if the vertex draw mode is not equal to <b>Prs3d_VertexDrawMode::Prs3d_VDM_Inherited</b>.
   //! This means that individual vertex draw mode value (i.e. not inherited from the global
   //! drawer) is used for a specific interactive object.
-  bool HasOwnVertexDrawMode() const { return (myVertexDrawMode != Prs3d_VDM_Inherited); }
+  bool HasOwnVertexDrawMode() const { return (myVertexDrawMode != Prs3d_VertexDrawMode::Prs3d_VDM_Inherited); }
 
   //! Returns own settings for the appearance of datums, settings from linked Drawer or NULL if
   //! neither was set.

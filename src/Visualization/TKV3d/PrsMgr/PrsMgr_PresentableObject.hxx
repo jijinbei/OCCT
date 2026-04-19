@@ -185,7 +185,7 @@ public:
   //! Set type of presentation.
   Standard_EXPORT void SetTypeOfPresentation(const PrsMgr_TypeOfPresentation3d theType);
 
-  //! Return presentation display status; PrsMgr_DisplayStatus_None by default.
+  //! Return presentation display status; PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None by default.
   PrsMgr_DisplayStatus DisplayStatus() const { return myDisplayStatus; }
 
 public: //! @name presentation attributes
@@ -390,7 +390,7 @@ public: //! @name parent/children properties
 protected: //! @name interface methods
   //! Protected empty constructor.
   Standard_EXPORT PrsMgr_PresentableObject(
-    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TOP_AllView);
+    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
 
   //! Destructor.
   Standard_EXPORT ~PrsMgr_PresentableObject() override;

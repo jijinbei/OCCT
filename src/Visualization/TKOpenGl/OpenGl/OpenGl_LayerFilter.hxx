@@ -18,7 +18,7 @@
 
 //! Tool object to specify processed OpenGL layers
 //! for intermixed rendering of raytracable and non-raytracable layers.
-enum OpenGl_LayerFilter
+enum class OpenGl_LayerFilter
 {
   OpenGl_LF_All,        //!< process all layers
   OpenGl_LF_Upper,      //!< process only top non-raytracable layers

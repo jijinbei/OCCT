@@ -23,7 +23,7 @@
 //! TOH_NotSet is used by Prs3d_Drawer class, it means that the drawer should return the global
 //! value. For more details see Prs3d_Drawer class, AIS_Shape::Compute() method and HLRAlgo package
 //! from TKHLR toolkit.
-enum Prs3d_TypeOfHLR
+enum class Prs3d_TypeOfHLR
 {
   Prs3d_TOH_NotSet,
   Prs3d_TOH_PolyAlgo,

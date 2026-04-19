@@ -58,14 +58,14 @@ void DsgPrs_EqualRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& 
                         FirstPoint,
                         FirstDir.Reversed(),
                         FirstDir,
-                        DsgPrs_AS_FIRSTPT_LASTAR);
+                        DsgPrs_ArrowSide::DsgPrs_AS_FIRSTPT_LASTAR);
   DsgPrs::ComputeSymbol(aPresentation,
                         LA,
                         SecondCenter,
                         SecondPoint,
                         SecondDir.Reversed(),
                         SecondDir,
-                        DsgPrs_AS_FIRSTPT_LASTAR);
+                        DsgPrs_ArrowSide::DsgPrs_AS_FIRSTPT_LASTAR);
 
   // ota === begin ===
   gp_Pnt Middle((FirstCenter.XYZ() + SecondCenter.XYZ()) * 0.5), aTextPos;

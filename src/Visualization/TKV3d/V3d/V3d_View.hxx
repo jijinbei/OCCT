@@ -57,7 +57,7 @@ class V3d_View : public Standard_Transient
 public:
   //! Initializes the view.
   Standard_EXPORT V3d_View(const occ::handle<V3d_Viewer>& theViewer,
-                           const V3d_TypeOfView           theType = V3d_ORTHOGRAPHIC);
+                           const V3d_TypeOfView           theType = V3d_TypeOfView::V3d_ORTHOGRAPHIC);
 
   //! Initializes the view by copying.
   Standard_EXPORT V3d_View(const occ::handle<V3d_Viewer>& theViewer,
@@ -316,7 +316,7 @@ public:
     const Aspect_TypeOfTriedronPosition thePosition = Aspect_TOTP_CENTER,
     const Quantity_Color&               theColor    = Quantity_NOC_WHITE,
     const double                        theScale    = 0.02,
-    const V3d_TypeOfVisualization       theMode     = V3d_WIREFRAME);
+    const V3d_TypeOfVisualization       theMode     = V3d_TypeOfVisualization::V3d_WIREFRAME);
 
   //! Erases the Triedron.
   Standard_EXPORT void TriedronErase();
@@ -947,7 +947,7 @@ public:
                 const bool                  theToAdjustAspect = true,
                 const Graphic3d_ZLayerId    theTargetZLayerId = Graphic3d_ZLayerId_BotOSD,
                 const int                   theIsSingleLayer  = false,
-                const V3d_StereoDumpOptions theStereoOptions  = V3d_SDO_MONO,
+                const V3d_StereoDumpOptions theStereoOptions  = V3d_StereoDumpOptions::V3d_SDO_MONO,
                 const char* const           theLightName      = "")
   {
     V3d_ImageDumpOptions aParams;

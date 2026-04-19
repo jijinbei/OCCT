@@ -1240,11 +1240,11 @@ static bool parseHlrAlgoType(const char* theName, Prs3d_TypeOfHLR& theType)
   aName.LowerCase();
   if (aName == "polyalgo")
   {
-    theType = Prs3d_TOH_PolyAlgo;
+    theType = Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo;
   }
   else if (aName == "algo")
   {
-    theType = Prs3d_TOH_Algo;
+    theType = Prs3d_TypeOfHLR::Prs3d_TOH_Algo;
   }
   else
   {
@@ -1272,7 +1272,7 @@ static int VHLR(Draw_Interpretor& di, int argc, const char** argv)
   bool                   hasShowHiddenArg = false;
   bool                   isHLROn          = false;
   bool                   toShowHidden     = aCtx->DefaultDrawer()->DrawHiddenLine();
-  Prs3d_TypeOfHLR        aTypeOfHLR       = Prs3d_TOH_NotSet;
+  Prs3d_TypeOfHLR        aTypeOfHLR       = Prs3d_TypeOfHLR::Prs3d_TOH_NotSet;
   ViewerTest_AutoUpdater anUpdateTool(occ::handle<AIS_InteractiveContext>(), aView);
   for (int anArgIter = 1; anArgIter < argc; ++anArgIter)
   {
@@ -1319,13 +1319,13 @@ static int VHLR(Draw_Interpretor& di, int argc, const char** argv)
     di << "HlrAlgo:    ";
     switch (aCtx->DefaultDrawer()->TypeOfHLR())
     {
-      case Prs3d_TOH_NotSet:
+      case Prs3d_TypeOfHLR::Prs3d_TOH_NotSet:
         di << "NotSet\n";
         break;
-      case Prs3d_TOH_PolyAlgo:
+      case Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo:
         di << "PolyAlgo\n";
         break;
-      case Prs3d_TOH_Algo:
+      case Prs3d_TypeOfHLR::Prs3d_TOH_Algo:
         di << "Algo\n";
         break;
     }
@@ -1334,7 +1334,7 @@ static int VHLR(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   bool toRecompute = false;
-  if (aTypeOfHLR != Prs3d_TOH_NotSet && aTypeOfHLR != aCtx->DefaultDrawer()->TypeOfHLR())
+  if (aTypeOfHLR != Prs3d_TypeOfHLR::Prs3d_TOH_NotSet && aTypeOfHLR != aCtx->DefaultDrawer()->TypeOfHLR())
   {
     toRecompute = true;
     aCtx->DefaultDrawer()->SetTypeOfHLR(aTypeOfHLR);
@@ -1387,7 +1387,7 @@ static int VHLRType(Draw_Interpretor&, int argc, const char** argv)
     return 1;
   }
 
-  Prs3d_TypeOfHLR        aTypeOfHLR = Prs3d_TOH_NotSet;
+  Prs3d_TypeOfHLR        aTypeOfHLR = Prs3d_TypeOfHLR::Prs3d_TOH_NotSet;
   ViewerTest_AutoUpdater anUpdateTool(occ::handle<AIS_InteractiveContext>(), aView);
   NCollection_List<occ::handle<AIS_InteractiveObject>> aListOfShapes;
   for (int anArgIter = 1; anArgIter < argc; ++anArgIter)
@@ -1405,7 +1405,7 @@ static int VHLRType(Draw_Interpretor&, int argc, const char** argv)
       continue;
     }
     // old syntax
-    else if (aTypeOfHLR == Prs3d_TOH_NotSet && parseHlrAlgoType(argv[anArgIter], aTypeOfHLR))
+    else if (aTypeOfHLR == Prs3d_TypeOfHLR::Prs3d_TOH_NotSet && parseHlrAlgoType(argv[anArgIter], aTypeOfHLR))
     {
       continue;
     }
@@ -1430,7 +1430,7 @@ static int VHLRType(Draw_Interpretor&, int argc, const char** argv)
       continue;
     }
   }
-  if (aTypeOfHLR == Prs3d_TOH_NotSet)
+  if (aTypeOfHLR == Prs3d_TypeOfHLR::Prs3d_TOH_NotSet)
   {
     Message::SendFail("Syntax error: wrong number of arguments");
     return 1;
@@ -3159,7 +3159,7 @@ static int VZBuffTrihedron(Draw_Interpretor& /*theDI*/, int theArgNb, const char
   ViewerTest_AutoUpdater anUpdateTool(ViewerTest::GetAISContext(), aView);
 
   Aspect_TypeOfTriedronPosition aPosition     = Aspect_TOTP_LEFT_LOWER;
-  V3d_TypeOfVisualization       aVisType      = V3d_ZBUFFER;
+  V3d_TypeOfVisualization       aVisType      = V3d_TypeOfVisualization::V3d_ZBUFFER;
   Quantity_Color                aLabelsColorX = Quantity_NOC_WHITE;
   Quantity_Color                aLabelsColorY = Quantity_NOC_WHITE;
   Quantity_Color                aLabelsColorZ = Quantity_NOC_WHITE;
@@ -3215,11 +3215,11 @@ static int VZBuffTrihedron(Draw_Interpretor& /*theDI*/, int theArgNb, const char
       aTypeName.LowerCase();
       if (aTypeName == "wireframe" || aTypeName == "wire")
       {
-        aVisType = V3d_WIREFRAME;
+        aVisType = V3d_TypeOfVisualization::V3d_WIREFRAME;
       }
       else if (aTypeName == "zbuffer" || aTypeName == "shaded")
       {
-        aVisType = V3d_ZBUFFER;
+        aVisType = V3d_TypeOfVisualization::V3d_ZBUFFER;
       }
       else
       {
@@ -3324,7 +3324,7 @@ static int VZBuffTrihedron(Draw_Interpretor& /*theDI*/, int theArgNb, const char
   aTrihedron->SetArrowDiameter(anArrowDiam);
   aTrihedron->SetScale(aScale);
   aTrihedron->SetPosition(aPosition);
-  aTrihedron->SetWireframe(aVisType == V3d_WIREFRAME);
+  aTrihedron->SetWireframe(aVisType == V3d_TypeOfVisualization::V3d_WIREFRAME);
   aTrihedron->Display(aView);
 
   aView->ZFitAll();
@@ -7774,7 +7774,7 @@ static int VAnimation(Draw_Interpretor& theDI, int theArgNb, const char** theArg
       aDumpParams.Width          = aRecParams.Width;
       aDumpParams.Height         = aRecParams.Height;
       aDumpParams.BufferType     = Graphic3d_BufferType::Graphic3d_BT_RGBA;
-      aDumpParams.StereoOptions  = V3d_SDO_MONO;
+      aDumpParams.StereoOptions  = V3d_StereoDumpOptions::V3d_SDO_MONO;
       aDumpParams.ToAdjustAspect = true;
       if (!aView->ToPixMap(aRecorder->ChangeFrame(), aDumpParams))
       {
@@ -12675,16 +12675,16 @@ static int VSelectionProperties(Draw_Interpretor& theDi, int theArgsNb, const ch
         return 1;
       }
 
-      SelectMgr_PickingStrategy aStrategy = SelectMgr_PickingStrategy_FirstAcceptable;
+      SelectMgr_PickingStrategy aStrategy = SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_FirstAcceptable;
       TCollection_AsciiString   aVal(theArgVec[anArgIter]);
       aVal.LowerCase();
       if (aVal == "first" || aVal == "firstaccepted" || aVal == "firstacceptable")
       {
-        aStrategy = SelectMgr_PickingStrategy_FirstAcceptable;
+        aStrategy = SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_FirstAcceptable;
       }
       else if (aVal == "topmost" || aVal == "onlyTopmost")
       {
-        aStrategy = SelectMgr_PickingStrategy_OnlyTopmost;
+        aStrategy = SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_OnlyTopmost;
       }
       else
       {
@@ -12718,7 +12718,7 @@ static int VSelectionProperties(Draw_Interpretor& theDi, int theArgsNb, const ch
           Message::SendFail() << "Syntax error: wrong number of arguments";
           return 1;
         }
-        aCtx->MainSelector()->SetDepthTolerance(SelectMgr_TypeOfDepthTolerance_Uniform,
+        aCtx->MainSelector()->SetDepthTolerance(SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_Uniform,
                                                 Draw::Atof(theArgVec[++anArgIter]));
       }
       else if (aTolType == "uniformpx")
@@ -12728,12 +12728,12 @@ static int VSelectionProperties(Draw_Interpretor& theDi, int theArgsNb, const ch
           Message::SendFail() << "Syntax error: wrong number of arguments";
           return 1;
         }
-        aCtx->MainSelector()->SetDepthTolerance(SelectMgr_TypeOfDepthTolerance_UniformPixels,
+        aCtx->MainSelector()->SetDepthTolerance(SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_UniformPixels,
                                                 Draw::Atof(theArgVec[++anArgIter]));
       }
       else if (aTolType == "sensfactor")
       {
-        aCtx->MainSelector()->SetDepthTolerance(SelectMgr_TypeOfDepthTolerance_SensitivityFactor,
+        aCtx->MainSelector()->SetDepthTolerance(SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor,
                                                 0.0);
       }
       else
@@ -12908,7 +12908,7 @@ static int VDumpSelectionImage(Draw_Interpretor& /*theDi*/, int theArgsNb, const
   }
 
   TCollection_AsciiString        aFile;
-  StdSelect_TypeOfSelectionImage aType = StdSelect_TypeOfSelectionImage_NormalizedDepth;
+  StdSelect_TypeOfSelectionImage aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepth;
   occ::handle<Graphic3d_Camera>  aCustomCam;
   Image_Format                   anImgFormat  = Image_Format_BGR;
   int                            aPickedIndex = 1;
@@ -12928,44 +12928,44 @@ static int VDumpSelectionImage(Draw_Interpretor& /*theDi*/, int theArgsNb, const
       aValue.LowerCase();
       if (aValue == "depth" || aValue == "normdepth" || aValue == "normalizeddepth")
       {
-        aType       = StdSelect_TypeOfSelectionImage_NormalizedDepth;
+        aType       = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepth;
         anImgFormat = Image_Format_GrayF;
       }
       else if (aValue == "depthinverted" || aValue == "normdepthinverted"
                || aValue == "normalizeddepthinverted" || aValue == "inverted")
       {
-        aType       = StdSelect_TypeOfSelectionImage_NormalizedDepthInverted;
+        aType       = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepthInverted;
         anImgFormat = Image_Format_GrayF;
       }
       else if (aValue == "unnormdepth" || aValue == "unnormalizeddepth")
       {
-        aType       = StdSelect_TypeOfSelectionImage_UnnormalizedDepth;
+        aType       = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_UnnormalizedDepth;
         anImgFormat = Image_Format_GrayF;
       }
       else if (aValue == "objectcolor" || aValue == "object" || aValue == "color")
       {
-        aType = StdSelect_TypeOfSelectionImage_ColoredDetectedObject;
+        aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredDetectedObject;
       }
       else if (aValue == "entitycolor" || aValue == "entity")
       {
-        aType = StdSelect_TypeOfSelectionImage_ColoredEntity;
+        aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredEntity;
       }
       else if (aValue == "entitytypecolor" || aValue == "entitytype")
       {
-        aType = StdSelect_TypeOfSelectionImage_ColoredEntityType;
+        aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredEntityType;
       }
       else if (aValue == "ownercolor" || aValue == "owner")
       {
-        aType = StdSelect_TypeOfSelectionImage_ColoredOwner;
+        aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredOwner;
       }
       else if (aValue == "selectionmodecolor" || aValue == "selectionmode"
                || aValue == "selmodecolor" || aValue == "selmode")
       {
-        aType = StdSelect_TypeOfSelectionImage_ColoredSelectionMode;
+        aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredSelectionMode;
       }
       else if (aValue == "surfnormal" || aValue == "surfacenormal" || aValue == "normal")
       {
-        aType = StdSelect_TypeOfSelectionImage_SurfaceNormal;
+        aType = StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_SurfaceNormal;
       }
       else
       {

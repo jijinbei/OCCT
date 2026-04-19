@@ -48,7 +48,7 @@ PrsDim_Chamf3dDimension::PrsDim_Chamf3dDimension(const TopoDS_Shape&            
   myFShape            = aFShape;
   myVal               = aVal;
   myText              = aText;
-  mySymbolPrs         = DsgPrs_AS_LASTAR;
+  mySymbolPrs         = DsgPrs_ArrowSide::DsgPrs_AS_LASTAR;
   myAutomaticPosition = true;
 
   myArrowSize = myVal / 100.;

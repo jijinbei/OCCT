@@ -74,7 +74,7 @@ static bool isSameLine(const gp_Pnt& theFirstPoint,
 
 PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Edge& theFirstEdge,
                                              const TopoDS_Edge& theSecondEdge)
-    : PrsDim_Dimension(PrsDim_KOD_PLANEANGLE)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_PLANEANGLE)
 {
   Init();
   SetMeasuredGeometry(theFirstEdge, theSecondEdge);
@@ -85,7 +85,7 @@ PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Edge& theFirstEdge,
 PrsDim_AngleDimension::PrsDim_AngleDimension(const gp_Pnt& theFirstPoint,
                                              const gp_Pnt& theSecondPoint,
                                              const gp_Pnt& theThirdPoint)
-    : PrsDim_Dimension(PrsDim_KOD_PLANEANGLE)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_PLANEANGLE)
 {
   Init();
   SetMeasuredGeometry(theFirstPoint, theSecondPoint, theThirdPoint);
@@ -96,7 +96,7 @@ PrsDim_AngleDimension::PrsDim_AngleDimension(const gp_Pnt& theFirstPoint,
 PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Vertex& theFirstVertex,
                                              const TopoDS_Vertex& theSecondVertex,
                                              const TopoDS_Vertex& theThirdVertex)
-    : PrsDim_Dimension(PrsDim_KOD_PLANEANGLE)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_PLANEANGLE)
 {
   Init();
   SetMeasuredGeometry(theFirstVertex, theSecondVertex, theThirdVertex);
@@ -105,7 +105,7 @@ PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Vertex& theFirstVertex
 //=================================================================================================
 
 PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Face& theCone)
-    : PrsDim_Dimension(PrsDim_KOD_PLANEANGLE)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_PLANEANGLE)
 {
   Init();
   SetMeasuredGeometry(theCone);
@@ -115,7 +115,7 @@ PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Face& theCone)
 
 PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Face& theFirstFace,
                                              const TopoDS_Face& theSecondFace)
-    : PrsDim_Dimension(PrsDim_KOD_PLANEANGLE)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_PLANEANGLE)
 {
   Init();
   SetMeasuredGeometry(theFirstFace, theSecondFace);
@@ -126,7 +126,7 @@ PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Face& theFirstFace,
 PrsDim_AngleDimension::PrsDim_AngleDimension(const TopoDS_Face& theFirstFace,
                                              const TopoDS_Face& theSecondFace,
                                              const gp_Pnt&      thePoint)
-    : PrsDim_Dimension(PrsDim_KOD_PLANEANGLE)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_PLANEANGLE)
 {
   Init();
   SetMeasuredGeometry(theFirstFace, theSecondFace, thePoint);
@@ -262,10 +262,10 @@ void PrsDim_AngleDimension::SetMeasuredGeometry(const TopoDS_Face& theFirstFace,
 
 void PrsDim_AngleDimension::Init()
 {
-  SetType(PrsDim_TypeOfAngle_Interior);
-  SetArrowsVisibility(PrsDim_TypeOfAngleArrowVisibility_Both);
+  SetType(PrsDim_TypeOfAngle::PrsDim_TypeOfAngle_Interior);
+  SetArrowsVisibility(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both);
   SetSpecialSymbol(THE_DEGREE_SYMBOL);
-  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_After);
+  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_After);
   SetFlyout(15.0);
 }
 
@@ -285,7 +285,7 @@ gp_Pnt PrsDim_AngleDimension::GetCenterOnArc(const gp_Pnt& theFirstAttach,
   gp_Pln aPlane = aConstructPlane.Value();
   // to have an exterior angle presentation, a plane for further constructed circle should be
   // reversed
-  if (myType == PrsDim_TypeOfAngle_Exterior)
+  if (myType == PrsDim_TypeOfAngle::PrsDim_TypeOfAngle_Exterior)
   {
     gp_Ax1 anAxis = aPlane.Axis();
     gp_Dir aDir   = anAxis.Direction();
@@ -338,7 +338,7 @@ void PrsDim_AngleDimension::DrawArc(const occ::handle<Prs3d_Presentation>& thePr
 
   // to have an exterior angle presentation, a plane for further constructed circle should be
   // reversed
-  if (myType == PrsDim_TypeOfAngle_Exterior)
+  if (myType == PrsDim_TypeOfAngle::PrsDim_TypeOfAngle_Exterior)
   {
     gp_Ax1 anAxis = aPlane.Axis();
     gp_Dir aDir   = anAxis.Direction();
@@ -373,7 +373,7 @@ void PrsDim_AngleDimension::DrawArc(const occ::handle<Prs3d_Presentation>& thePr
   gp_Vec aCenterToFirstVec(theCenter, theFirstAttach);
   gp_Vec aCenterToSecondVec(theCenter, theSecondAttach);
   double anAngle = aCenterToFirstVec.Angle(aCenterToSecondVec);
-  if (myType == PrsDim_TypeOfAngle_Exterior)
+  if (myType == PrsDim_TypeOfAngle::PrsDim_TypeOfAngle_Exterior)
     anAngle = 2.0 * M_PI - anAngle;
   // it sets 50 points on PI, and a part of points if angle is less
   const int aNbPoints = std::max(4, int(50.0 * anAngle / M_PI));
@@ -464,7 +464,7 @@ void PrsDim_AngleDimension::DrawArcWithText(const occ::handle<Prs3d_Presentation
   occ::handle<Prs3d_DimensionAspect> aDimensionAspect = myDrawer->DimensionAspect();
 
   bool isLineBreak =
-    aDimensionAspect->TextVerticalPosition() == Prs3d_DTVP_Center && aDimensionAspect->IsText3d();
+    aDimensionAspect->TextVerticalPosition() == Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center && aDimensionAspect->IsText3d();
 
   if (isLineBreak)
   {
@@ -658,7 +658,7 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
   switch (aHPosition)
   {
     case LabelPosition_HCenter: {
-      bool isLineBreak = aDimensionAspect->TextVerticalPosition() == Prs3d_DTVP_Center
+      bool isLineBreak = aDimensionAspect->TextVerticalPosition() == Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center
                          && aDimensionAspect->IsText3d();
 
       if (isLineBreak)
@@ -689,10 +689,10 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
       if (theMode == ComputeMode_All || theMode == ComputeMode_Line)
       {
         DrawArc(thePresentation,
-                (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_First))
+                (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
                   ? aFirstAttach
                   : aFirstArrowEnd,
-                (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_Second))
+                (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
                   ? aSecondAttach
                   : aSecondArrowEnd,
                 myCenterPoint,
@@ -705,7 +705,7 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     case LabelPosition_Left: {
       DrawExtension(thePresentation,
                     anExtensionSize,
-                    (isArrowsExternal && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_First))
+                    (isArrowsExternal && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
                       ? aFirstArrowEnd
                       : aFirstAttach,
                     aFirstExtensionDir,
@@ -719,7 +719,7 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     case LabelPosition_Right: {
       DrawExtension(thePresentation,
                     anExtensionSize,
-                    (isArrowsExternal && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_Second))
+                    (isArrowsExternal && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
                       ? aSecondArrowEnd
                       : aSecondAttach,
                     aSecondExtensionDir,
@@ -738,10 +738,10 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     thePresentation->NewGroup();
 
     DrawArc(thePresentation,
-            (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_First))
+            (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
               ? aFirstAttach
               : aFirstArrowEnd,
-            (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_Second))
+            (isArrowsExternal || !isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
               ? aSecondAttach
               : aSecondArrowEnd,
             myCenterPoint,
@@ -754,9 +754,9 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
   {
     thePresentation->NewGroup();
 
-    if (isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_First))
+    if (isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
       DrawArrow(thePresentation, aFirstArrowBegin, gp_Dir(aFirstArrowVec));
-    if (isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_Second))
+    if (isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
       DrawArrow(thePresentation, aSecondArrowBegin, gp_Dir(aSecondArrowVec));
   }
 
@@ -764,7 +764,7 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
   {
     thePresentation->NewGroup();
 
-    if (aHPosition != LabelPosition_Left && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_First))
+    if (aHPosition != LabelPosition_Left && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First))
     {
       DrawExtension(thePresentation,
                     aDimensionAspect->ArrowTailSize(),
@@ -777,7 +777,7 @@ void PrsDim_AngleDimension::Compute(const occ::handle<PrsMgr_PresentationManager
     }
 
     if (aHPosition != LabelPosition_Right
-        && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility_Second))
+        && isArrowVisible(PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second))
     {
       DrawExtension(thePresentation,
                     aDimensionAspect->ArrowTailSize(),
@@ -970,7 +970,7 @@ bool PrsDim_AngleDimension::InitTwoFacesAngle()
                            aSecondSurfType,
                            aSecondOffset);
 
-  if (aFirstSurfType == PrsDim_KOS_Plane && aSecondSurfType == PrsDim_KOS_Plane)
+  if (aFirstSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane && aSecondSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane)
   {
     // Planar faces angle
     occ::handle<Geom_Plane> aFirstPlane  = occ::down_cast<Geom_Plane>(aFirstBasisSurf);
@@ -1019,7 +1019,7 @@ bool PrsDim_AngleDimension::InitTwoFacesAngle(const gp_Pnt& thePointOnFirstFace)
                            aSecondOffset);
 
   myFirstPoint = thePointOnFirstFace;
-  if (aFirstSurfType == PrsDim_KOS_Plane && aSecondSurfType == PrsDim_KOS_Plane)
+  if (aFirstSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane && aSecondSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane)
   {
     // Planar faces angle
     occ::handle<Geom_Plane> aFirstPlane  = occ::down_cast<Geom_Plane>(aFirstBasisSurf);
@@ -1077,7 +1077,7 @@ bool PrsDim_AngleDimension::InitConeAngle()
   const double aMaxV = aConeAdaptor.FirstVParameter();
   const double aMinV = aConeAdaptor.LastVParameter();
   PrsDim::GetPlaneFromFace(aConeShape, aPln, aSurf, aSurfType, anOffset);
-  if (aSurfType == PrsDim_KOS_Revolution)
+  if (aSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Revolution)
   {
     // Surface of revolution
     aRevSurf = occ::down_cast<Geom_SurfaceOfRevolution>(aSurf);
@@ -1170,15 +1170,15 @@ bool PrsDim_AngleDimension::isArrowVisible(
 {
   switch (theArrowType)
   {
-    case PrsDim_TypeOfAngleArrowVisibility_Both:
-      return myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility_Both;
-    case PrsDim_TypeOfAngleArrowVisibility_First:
-      return myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility_Both
-             || myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility_First;
-    case PrsDim_TypeOfAngleArrowVisibility_Second:
-      return myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility_Both
-             || myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility_Second;
-    case PrsDim_TypeOfAngleArrowVisibility_None:
+    case PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both:
+      return myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both;
+    case PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First:
+      return myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both
+             || myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_First;
+    case PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second:
+      return myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Both
+             || myArrowsVisibility == PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_Second;
+    case PrsDim_TypeOfAngleArrowVisibility::PrsDim_TypeOfAngleArrowVisibility_None:
       return false;
   }
   return false;
@@ -1301,7 +1301,7 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
 
   // Default values
   theExtensionSize = aDimensionAspect->ArrowAspect()->Length();
-  theAlignment     = Prs3d_DTHP_Center;
+  theAlignment     = Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Center;
 
   double aParamBeg = ElCLib::Parameter(aCircle, aFirstAttach);
   double aParamEnd = ElCLib::Parameter(aCircle, aSecondAttach);
@@ -1346,7 +1346,7 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
     double aNewExtensionSize = aFirstDist - anArrowLength;
     theExtensionSize         = aNewExtensionSize < 0.0 ? 0.0 : aNewExtensionSize;
 
-    theAlignment = Prs3d_DTHP_Left;
+    theAlignment = Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Left;
 
     gp_Vec aPosFlyoutDir = gp_Vec(myCenterPoint, myFirstPoint).Normalized().Scaled(aRadius);
 
@@ -1363,7 +1363,7 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
 
     theExtensionSize = aNewExtensionSize < 0.0 ? 0.0 : aNewExtensionSize;
 
-    theAlignment = Prs3d_DTHP_Right;
+    theAlignment = Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Right;
 
     gp_Vec aPosFlyoutDir = gp_Vec(myCenterPoint, mySecondPoint).Normalized().Scaled(aRadius);
 
@@ -1403,13 +1403,13 @@ void PrsDim_AngleDimension::FitTextAlignment(
   // Handle user-defined and automatic arrow placement
   switch (aDimensionAspect->ArrowOrientation())
   {
-    case Prs3d_DAO_External:
+    case Prs3d_DimensionArrowOrientation::Prs3d_DAO_External:
       theIsArrowsExternal = true;
       break;
-    case Prs3d_DAO_Internal:
+    case Prs3d_DimensionArrowOrientation::Prs3d_DAO_Internal:
       theIsArrowsExternal = false;
       break;
-    case Prs3d_DAO_Fit: {
+    case Prs3d_DimensionArrowOrientation::Prs3d_DAO_Fit: {
       gp_Vec anAttachVector(aFirstAttach, aSecondAttach);
       double aDimensionWidth = anAttachVector.Magnitude();
 
@@ -1428,16 +1428,16 @@ void PrsDim_AngleDimension::FitTextAlignment(
   // Handle user-defined and automatic text placement
   switch (theHorizontalTextPos)
   {
-    case Prs3d_DTHP_Left:
+    case Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Left:
       theLabelPosition |= LabelPosition_Left;
       break;
-    case Prs3d_DTHP_Right:
+    case Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Right:
       theLabelPosition |= LabelPosition_Right;
       break;
-    case Prs3d_DTHP_Center:
+    case Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Center:
       theLabelPosition |= LabelPosition_HCenter;
       break;
-    case Prs3d_DTHP_Fit: {
+    case Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Fit: {
       gp_Vec anAttachVector(aFirstAttach, aSecondAttach);
       double aDimensionWidth = anAttachVector.Magnitude();
       double anArrowsWidth   = anArrowLength * 2.0;
@@ -1451,13 +1451,13 @@ void PrsDim_AngleDimension::FitTextAlignment(
 
   switch (aDimensionAspect->TextVerticalPosition())
   {
-    case Prs3d_DTVP_Above:
+    case Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Above:
       theLabelPosition |= LabelPosition_Above;
       break;
-    case Prs3d_DTVP_Below:
+    case Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Below:
       theLabelPosition |= LabelPosition_Below;
       break;
-    case Prs3d_DTVP_Center:
+    case Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center:
       theLabelPosition |= LabelPosition_VCenter;
       break;
   }

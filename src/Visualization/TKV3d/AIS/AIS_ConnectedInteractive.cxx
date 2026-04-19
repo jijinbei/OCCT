@@ -71,7 +71,7 @@ void AIS_ConnectedInteractive::connect(const occ::handle<AIS_InteractiveObject>&
   if (!myReference.IsNull())
   {
     if (myReference->HasInteractiveContext()
-        && myReference->GetContext()->DisplayStatus(myReference) != AIS_DS_None)
+        && myReference->GetContext()->DisplayStatus(myReference) != PrsMgr_DisplayStatus::AIS_DS_None)
     {
       myReference.Nullify();
       throw Standard_ProgramError("AIS_ConnectedInteractive::Connect() - connected object should "
@@ -242,7 +242,7 @@ void AIS_ConnectedInteractive::computeSubShapeSelection(
   }
 
   const occ::handle<SelectMgr_Selection>& aRefSel = myReference->Selection(theMode);
-  if (aRefSel->IsEmpty() || aRefSel->UpdateStatus() == SelectMgr_TOU_Full)
+  if (aRefSel->IsEmpty() || aRefSel->UpdateStatus() == SelectMgr_TypeOfUpdate::SelectMgr_TOU_Full)
   {
     myReference->RecomputePrimitives(theMode);
   }

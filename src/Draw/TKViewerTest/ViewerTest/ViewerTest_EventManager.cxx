@@ -446,9 +446,9 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
     }
     case Aspect_VKey_P: // Type of HLR
     {
-      myCtx->DefaultDrawer()->SetTypeOfHLR(myCtx->DefaultDrawer()->TypeOfHLR() == Prs3d_TOH_Algo
-                                             ? Prs3d_TOH_PolyAlgo
-                                             : Prs3d_TOH_Algo);
+      myCtx->DefaultDrawer()->SetTypeOfHLR(myCtx->DefaultDrawer()->TypeOfHLR() == Prs3d_TypeOfHLR::Prs3d_TOH_Algo
+                                             ? Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo
+                                             : Prs3d_TypeOfHLR::Prs3d_TOH_Algo);
       if (myCtx->NbSelected() == 0)
       {
         NCollection_List<occ::handle<AIS_InteractiveObject>> aListOfShapes;
@@ -459,8 +459,8 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
         {
           if (occ::handle<AIS_Shape> aShape = occ::down_cast<AIS_Shape>(anIter.Value()))
           {
-            aShape->SetTypeOfHLR(aShape->TypeOfHLR() == Prs3d_TOH_PolyAlgo ? Prs3d_TOH_Algo
-                                                                           : Prs3d_TOH_PolyAlgo);
+            aShape->SetTypeOfHLR(aShape->TypeOfHLR() == Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo ? Prs3d_TypeOfHLR::Prs3d_TOH_Algo
+                                                                           : Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo);
             myCtx->Redisplay(aShape, false);
           }
         }
@@ -472,8 +472,8 @@ void ViewerTest_EventManager::ProcessKeyPress(Aspect_VKey theKey)
           if (occ::handle<AIS_Shape> aShape =
                 occ::down_cast<AIS_Shape>(myCtx->SelectedInteractive()))
           {
-            aShape->SetTypeOfHLR(aShape->TypeOfHLR() == Prs3d_TOH_PolyAlgo ? Prs3d_TOH_Algo
-                                                                           : Prs3d_TOH_PolyAlgo);
+            aShape->SetTypeOfHLR(aShape->TypeOfHLR() == Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo ? Prs3d_TypeOfHLR::Prs3d_TOH_Algo
+                                                                           : Prs3d_TypeOfHLR::Prs3d_TOH_PolyAlgo);
             myCtx->Redisplay(aShape, false);
           }
         }

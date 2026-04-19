@@ -102,8 +102,8 @@ void SelectMgr_SelectableObject::RecomputePrimitives(const int theMode)
     {
       aSel->Clear();
       ComputeSelection(aSel, theMode);
-      aSel->UpdateStatus(SelectMgr_TOU_Partial);
-      aSel->UpdateBVHStatus(SelectMgr_TBU_Renew);
+      aSel->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_Partial);
+      aSel->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Renew);
       if (theMode == 0 && aSelParent != nullptr)
       {
         if (const occ::handle<SelectMgr_EntityOwner>& anAsmOwner = aSelParent->GetAssemblyOwner())
@@ -126,8 +126,8 @@ void SelectMgr_SelectableObject::RecomputePrimitives(const int theMode)
     }
   }
 
-  aNewSel->UpdateStatus(SelectMgr_TOU_Partial);
-  aNewSel->UpdateBVHStatus(SelectMgr_TBU_Add);
+  aNewSel->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_Partial);
+  aNewSel->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Add);
 
   myselections.Append(aNewSel);
 }
@@ -142,10 +142,10 @@ void SelectMgr_SelectableObject::ClearSelections(const bool theToUpdate)
   {
     const occ::handle<SelectMgr_Selection>& aSel = aSelIter.Value();
     aSel->Clear();
-    aSel->UpdateBVHStatus(SelectMgr_TBU_Remove);
+    aSel->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Remove);
     if (theToUpdate)
     {
-      aSel->UpdateStatus(SelectMgr_TOU_Full);
+      aSel->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_Full);
     }
   }
 }
@@ -181,8 +181,8 @@ void SelectMgr_SelectableObject::AddSelection(const occ::handle<SelectMgr_Select
   if (theSel->IsEmpty())
   {
     ComputeSelection(theSel, theMode);
-    theSel->UpdateStatus(SelectMgr_TOU_Partial);
-    theSel->UpdateBVHStatus(SelectMgr_TBU_Add);
+    theSel->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_Partial);
+    theSel->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Add);
   }
 
   bool isReplaced = false;
@@ -201,7 +201,7 @@ void SelectMgr_SelectableObject::AddSelection(const occ::handle<SelectMgr_Select
   myselections.Append(theSel);
   if (isReplaced)
   {
-    myselections.Last()->UpdateBVHStatus(SelectMgr_TBU_Renew);
+    myselections.Last()->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Renew);
   }
 
   if (theMode == 0)
@@ -226,8 +226,8 @@ void SelectMgr_SelectableObject::ResetTransformation()
        aSelIter.Next())
   {
     const occ::handle<SelectMgr_Selection>& aSel = aSelIter.Value();
-    aSel->UpdateStatus(SelectMgr_TOU_Partial);
-    aSel->UpdateBVHStatus(SelectMgr_TBU_None);
+    aSel->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_Partial);
+    aSel->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_None);
   }
 
   PrsMgr_PresentableObject::ResetTransformation();
@@ -241,7 +241,7 @@ void SelectMgr_SelectableObject::UpdateTransformation()
        aSelIter.More();
        aSelIter.Next())
   {
-    aSelIter.Value()->UpdateStatus(SelectMgr_TOU_Partial);
+    aSelIter.Value()->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_Partial);
   }
 
   PrsMgr_PresentableObject::UpdateTransformation();
@@ -437,7 +437,7 @@ void SelectMgr_SelectableObject::updateSelection(const int theMode)
          aSelIter.Next())
     {
       const occ::handle<SelectMgr_Selection>& aSel = aSelIter.Value();
-      aSel->UpdateStatus(SelectMgr_TOU_Full);
+      aSel->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_Full);
     }
     return;
   }
@@ -449,7 +449,7 @@ void SelectMgr_SelectableObject::updateSelection(const int theMode)
     const occ::handle<SelectMgr_Selection>& aSel = aSelIter.Value();
     if (aSel->Mode() == theMode)
     {
-      aSel->UpdateStatus(SelectMgr_TOU_Full);
+      aSel->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_Full);
       return;
     }
   }
@@ -515,7 +515,7 @@ Bnd_Box SelectMgr_SelectableObject::BndBoxOfSelected(
        aSelIter.Next())
   {
     const occ::handle<SelectMgr_Selection>& aSel = aSelIter.Value();
-    if (aSel->GetSelectionState() != SelectMgr_SOS_Activated)
+    if (aSel->GetSelectionState() != SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
       continue;
 
     for (NCollection_Vector<occ::handle<SelectMgr_SensitiveEntity>>::Iterator aSelEntIter(

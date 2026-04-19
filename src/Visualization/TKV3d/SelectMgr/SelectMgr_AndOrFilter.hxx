@@ -44,7 +44,7 @@ public:
   SelectMgr_FilterType FilterType() const { return myFilterType; }
 
   //! Sets a selection filter type.
-  //! SelectMgr_FilterType_OR selection filter is used be default.
+  //! SelectMgr_FilterType::SelectMgr_FilterType_OR selection filter is used be default.
   //! @param theFilterType the filter type.
   void SetFilterType(const SelectMgr_FilterType theFilterType) { myFilterType = theFilterType; }
 

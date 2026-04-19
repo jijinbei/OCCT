@@ -93,7 +93,7 @@ void SelectMgr_SelectionManager::Remove(const occ::handle<SelectMgr_SelectableOb
            aSelIter.Next())
       {
         mySelector->RemoveSelectionOfObject(theObject, aSelIter.Value());
-        aSelIter.Value()->UpdateBVHStatus(SelectMgr_TBU_Remove);
+        aSelIter.Value()->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Remove);
         mySelector->Deactivate(aSelIter.Value());
       }
       mySelector->RemoveSelectableObject(theObject);
@@ -119,7 +119,7 @@ void SelectMgr_SelectionManager::Activate(const occ::handle<SelectMgr_Selectable
   {
     occ::handle<SelectMgr_SelectableObject> aChild =
       occ::down_cast<SelectMgr_SelectableObject>(anChildIter.Value());
-    if (aChild->DisplayStatus() != PrsMgr_DisplayStatus_Erased)
+    if (aChild->DisplayStatus() != PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_Erased)
     {
       Activate(aChild, theMode);
     }
@@ -140,16 +140,16 @@ void SelectMgr_SelectionManager::Activate(const occ::handle<SelectMgr_Selectable
   const occ::handle<SelectMgr_Selection>& aSelection = theObject->Selection(theMode);
   switch (aSelection->UpdateStatus())
   {
-    case SelectMgr_TOU_Full: {
+    case SelectMgr_TypeOfUpdate::SelectMgr_TOU_Full: {
       if (theObject->HasSelection(theMode))
       {
         mySelector->RemoveSelectionOfObject(theObject, aSelection);
       }
       theObject->RecomputePrimitives(theMode);
-      // pass through SelectMgr_TOU_Partial
+      // pass through SelectMgr_TypeOfUpdate::SelectMgr_TOU_Partial
     }
       [[fallthrough]];
-    case SelectMgr_TOU_Partial: {
+    case SelectMgr_TypeOfUpdate::SelectMgr_TOU_Partial: {
       theObject->UpdateTransformations(aSelection);
       mySelector->RebuildObjectsTree();
       break;
@@ -157,17 +157,17 @@ void SelectMgr_SelectionManager::Activate(const occ::handle<SelectMgr_Selectable
     default:
       break;
   }
-  aSelection->UpdateStatus(SelectMgr_TOU_None);
+  aSelection->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_None);
 
   switch (aSelection->BVHUpdateStatus())
   {
-    case SelectMgr_TBU_Add:
-    case SelectMgr_TBU_Renew: {
+    case SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Add:
+    case SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Renew: {
       mySelector->AddSelectionToObject(theObject, aSelection);
       break;
     }
-    case SelectMgr_TBU_Remove: {
-      if (aSelection->GetSelectionState() == SelectMgr_SOS_Deactivated)
+    case SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Remove: {
+      if (aSelection->GetSelectionState() == SelectMgr_StateOfSelection::SelectMgr_SOS_Deactivated)
       {
         mySelector->AddSelectionToObject(theObject, aSelection);
       }
@@ -176,7 +176,7 @@ void SelectMgr_SelectionManager::Activate(const occ::handle<SelectMgr_Selectable
     default:
       break;
   }
-  aSelection->UpdateBVHStatus(SelectMgr_TBU_None);
+  aSelection->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_None);
 
   if (myGlobal.Contains(theObject))
   {
@@ -253,7 +253,7 @@ bool SelectMgr_SelectionManager::IsActivated(
          aSelIter.More();
          aSelIter.Next())
     {
-      if (mySelector->Status(aSelIter.Value()) == SelectMgr_SOS_Activated)
+      if (mySelector->Status(aSelIter.Value()) == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
       {
         return true;
       }
@@ -266,7 +266,7 @@ bool SelectMgr_SelectionManager::IsActivated(
   {
     return false;
   }
-  return !aSelection.IsNull() && mySelector->Status(aSelection) == SelectMgr_SOS_Activated;
+  return !aSelection.IsNull() && mySelector->Status(aSelection) == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated;
 }
 
 //=======================================================================
@@ -302,7 +302,7 @@ void SelectMgr_SelectionManager::ClearSelectionStructures(
     if (const occ::handle<SelectMgr_Selection>& aSelection = theObj->Selection(theMode))
     {
       mySelector->RemoveSelectionOfObject(theObj, aSelection);
-      aSelection->UpdateBVHStatus(SelectMgr_TBU_Add);
+      aSelection->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Add);
     }
   }
   else
@@ -314,7 +314,7 @@ void SelectMgr_SelectionManager::ClearSelectionStructures(
     {
       const occ::handle<SelectMgr_Selection>& aSelection = aSelIter.Value();
       mySelector->RemoveSelectionOfObject(theObj, aSelection);
-      aSelection->UpdateBVHStatus(SelectMgr_TBU_Add);
+      aSelection->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Add);
     }
   }
   mySelector->RebuildObjectsTree();
@@ -351,7 +351,7 @@ void SelectMgr_SelectionManager::RestoreSelectionStructures(
     if (const occ::handle<SelectMgr_Selection>& aSelection = theObj->Selection(theMode))
     {
       mySelector->AddSelectionToObject(theObj, aSelection);
-      aSelection->UpdateBVHStatus(SelectMgr_TBU_None);
+      aSelection->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_None);
     }
   }
   else
@@ -363,7 +363,7 @@ void SelectMgr_SelectionManager::RestoreSelectionStructures(
     {
       const occ::handle<SelectMgr_Selection>& aSelection = aSelIter.Value();
       mySelector->AddSelectionToObject(theObj, aSelection);
-      aSelection->UpdateBVHStatus(SelectMgr_TBU_None);
+      aSelection->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_None);
     }
   }
   mySelector->RebuildObjectsTree();
@@ -376,13 +376,13 @@ void SelectMgr_SelectionManager::recomputeSelectionMode(
   const occ::handle<SelectMgr_Selection>&        theSelection,
   const int                                      theMode)
 {
-  theSelection->UpdateStatus(SelectMgr_TOU_Full);
+  theSelection->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_Full);
 
   ClearSelectionStructures(theObject, theMode);
   theObject->RecomputePrimitives(theMode);
   RestoreSelectionStructures(theObject, theMode);
-  theSelection->UpdateStatus(SelectMgr_TOU_None);
-  theSelection->UpdateBVHStatus(SelectMgr_TBU_None);
+  theSelection->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_None);
+  theSelection->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_None);
 }
 
 //=================================================================================================
@@ -478,18 +478,18 @@ void SelectMgr_SelectionManager::Update(const occ::handle<SelectMgr_SelectableOb
        aSelIter.Next())
   {
     const occ::handle<SelectMgr_Selection>& aSelection = aSelIter.Value();
-    if (theIsForce || mySelector->Status(aSelection) == SelectMgr_SOS_Activated)
+    if (theIsForce || mySelector->Status(aSelection) == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
     {
       switch (aSelection->UpdateStatus())
       {
-        case SelectMgr_TOU_Full: {
+        case SelectMgr_TypeOfUpdate::SelectMgr_TOU_Full: {
           ClearSelectionStructures(theObject, aSelection->Mode());
           theObject->RecomputePrimitives(aSelection->Mode()); // no break on purpose...
           RestoreSelectionStructures(theObject, aSelection->Mode());
-          // pass through SelectMgr_TOU_Partial
+          // pass through SelectMgr_TypeOfUpdate::SelectMgr_TOU_Partial
         }
           [[fallthrough]];
-        case SelectMgr_TOU_Partial: {
+        case SelectMgr_TypeOfUpdate::SelectMgr_TOU_Partial: {
           theObject->UpdateTransformations(aSelection);
           mySelector->RebuildObjectsTree();
           break;
@@ -497,8 +497,8 @@ void SelectMgr_SelectionManager::Update(const occ::handle<SelectMgr_SelectableOb
         default:
           break;
       }
-      aSelection->UpdateStatus(SelectMgr_TOU_None);
-      aSelection->UpdateBVHStatus(SelectMgr_TBU_None);
+      aSelection->UpdateStatus(SelectMgr_TypeOfUpdate::SelectMgr_TOU_None);
+      aSelection->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_None);
     }
   }
 }
@@ -517,12 +517,12 @@ void SelectMgr_SelectionManager::loadMode(const occ::handle<SelectMgr_Selectable
   {
     if (aSelOld->IsEmpty())
     {
-      if (aSelOld->BVHUpdateStatus() == SelectMgr_TBU_Remove)
+      if (aSelOld->BVHUpdateStatus() == SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Remove)
       {
         occ::handle<SelectMgr_Selection> aNewSel = new SelectMgr_Selection(theMode);
         theObject->AddSelection(aNewSel, theMode);
-        aNewSel->UpdateBVHStatus(SelectMgr_TBU_Remove);
-        aNewSel->SetSelectionState(SelectMgr_SOS_Deactivated);
+        aNewSel->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_Remove);
+        aNewSel->SetSelectionState(SelectMgr_StateOfSelection::SelectMgr_SOS_Deactivated);
 
         buildBVH(aNewSel);
       }
@@ -535,7 +535,7 @@ void SelectMgr_SelectionManager::loadMode(const occ::handle<SelectMgr_Selectable
   if (myGlobal.Contains(theObject))
   {
     mySelector->AddSelectionToObject(theObject, aNewSel);
-    aNewSel->UpdateBVHStatus(SelectMgr_TBU_None);
+    aNewSel->UpdateBVHStatus(SelectMgr_TypeOfBVHUpdate::SelectMgr_TBU_None);
   }
 
   buildBVH(aNewSel);

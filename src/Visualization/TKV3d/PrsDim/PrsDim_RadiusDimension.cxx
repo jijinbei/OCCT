@@ -31,11 +31,11 @@ static const char16_t THE_RADIUS_SYMBOL('R');
 //=================================================================================================
 
 PrsDim_RadiusDimension::PrsDim_RadiusDimension(const gp_Circ& theCircle)
-    : PrsDim_Dimension(PrsDim_KOD_RADIUS)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_RADIUS)
 {
   SetMeasuredGeometry(theCircle);
   SetSpecialSymbol(THE_RADIUS_SYMBOL);
-  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
+  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
 
@@ -43,22 +43,22 @@ PrsDim_RadiusDimension::PrsDim_RadiusDimension(const gp_Circ& theCircle)
 
 PrsDim_RadiusDimension::PrsDim_RadiusDimension(const gp_Circ& theCircle,
                                                const gp_Pnt&  theAttachPoint)
-    : PrsDim_Dimension(PrsDim_KOD_RADIUS)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_RADIUS)
 {
   SetMeasuredGeometry(theCircle, theAttachPoint);
   SetSpecialSymbol(THE_RADIUS_SYMBOL);
-  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
+  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
 
 //=================================================================================================
 
 PrsDim_RadiusDimension::PrsDim_RadiusDimension(const TopoDS_Shape& theShape)
-    : PrsDim_Dimension(PrsDim_KOD_RADIUS)
+    : PrsDim_Dimension(PrsDim_KindOfDimension::PrsDim_KOD_RADIUS)
 {
   SetMeasuredGeometry(theShape);
   SetSpecialSymbol(THE_RADIUS_SYMBOL);
-  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_Before);
+  SetDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_Before);
   SetFlyout(0.0);
 }
 

@@ -16,7 +16,7 @@
 
 //! Enumeration defines picking strategy - which entities detected by picking line will be accepted,
 //! considering selection filters.
-enum SelectMgr_PickingStrategy
+enum class SelectMgr_PickingStrategy
 {
   SelectMgr_PickingStrategy_FirstAcceptable, //!< the first detected entity passing selection filter
                                              //!< is accepted (e.g. any)

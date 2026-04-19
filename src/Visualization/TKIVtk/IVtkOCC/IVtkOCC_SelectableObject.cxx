@@ -31,7 +31,7 @@ IMPLEMENT_STANDARD_RTTIEXT(IVtkOCC_SelectableObject, SelectMgr_SelectableObject)
 //=================================================================================================
 
 IVtkOCC_SelectableObject::IVtkOCC_SelectableObject(const IVtkOCC_Shape::Handle& theShape)
-    : SelectMgr_SelectableObject(PrsMgr_TOP_AllView),
+    : SelectMgr_SelectableObject(PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView),
       myShape(theShape)
 {
   if (!myShape.IsNull())
@@ -43,7 +43,7 @@ IVtkOCC_SelectableObject::IVtkOCC_SelectableObject(const IVtkOCC_Shape::Handle& 
 //=================================================================================================
 
 IVtkOCC_SelectableObject::IVtkOCC_SelectableObject()
-    : SelectMgr_SelectableObject(PrsMgr_TOP_AllView)
+    : SelectMgr_SelectableObject(PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView)
 {
 }
 

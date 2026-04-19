@@ -62,7 +62,7 @@ PrsDim_OffsetDimension::PrsDim_OffsetDimension(const TopoDS_Shape&              
 {
   myFShape    = FistShape;
   mySShape    = SecondShape;
-  mySymbolPrs = DsgPrs_AS_BOTHAR;
+  mySymbolPrs = DsgPrs_ArrowSide::DsgPrs_AS_BOTHAR;
   myVal       = aVal;
   myText      = aText;
   // myArrowSize = fabs (myVal/5.);

@@ -221,7 +221,7 @@ occ::handle<Font_FTFont> Font_FTFont::FindAndCreate(const TCollection_AsciiStrin
     }
   }
 #ifdef HAVE_FREETYPE
-  else if (theStrictLevel == Font_StrictLevel_Any)
+  else if (theStrictLevel == Font_StrictLevel::Font_StrictLevel_Any)
   {
     switch (theFontAspect)
     {
@@ -271,7 +271,7 @@ bool Font_FTFont::FindAndInit(const TCollection_AsciiString& theFontName,
     return Init(aPath, aParams, aFaceId);
   }
 #ifdef HAVE_FREETYPE
-  else if (theStrictLevel == Font_StrictLevel_Any)
+  else if (theStrictLevel == Font_StrictLevel::Font_StrictLevel_Any)
   {
     if (theFontAspect == Font_FontAspect_Italic || theFontAspect == Font_FontAspect_BoldItalic)
     {

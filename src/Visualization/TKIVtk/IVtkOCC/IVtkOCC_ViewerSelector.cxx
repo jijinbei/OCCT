@@ -209,9 +209,9 @@ void IVtkOCC_ViewerSelector::Activate(const occ::handle<SelectMgr_Selection>& th
     aSelEntIter.Value()->SetActiveForSelection();
   }
 
-  if (theSelection->GetSelectionState() != SelectMgr_SOS_Activated)
+  if (theSelection->GetSelectionState() != SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
   {
-    theSelection->SetSelectionState(SelectMgr_SOS_Activated);
+    theSelection->SetSelectionState(SelectMgr_StateOfSelection::SelectMgr_SOS_Activated);
     myTolerances.Add(theSelection->Sensitivity());
   }
 }
@@ -230,9 +230,9 @@ void IVtkOCC_ViewerSelector::Deactivate(const occ::handle<SelectMgr_Selection>& 
     aSelEntIter.Value()->ResetSelectionActiveStatus();
   }
 
-  if (theSelection->GetSelectionState() == SelectMgr_SOS_Activated)
+  if (theSelection->GetSelectionState() == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
   {
-    theSelection->SetSelectionState(SelectMgr_SOS_Deactivated);
+    theSelection->SetSelectionState(SelectMgr_StateOfSelection::SelectMgr_SOS_Deactivated);
     myTolerances.Decrement(theSelection->Sensitivity());
   }
 }

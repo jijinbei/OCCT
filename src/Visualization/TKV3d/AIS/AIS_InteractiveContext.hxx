@@ -82,10 +82,10 @@ public: //! @name object display management
 
   //! Returns the display status of the entity anIobj.
   //! This will be one of the following:
-  //! - AIS_DS_Displayed displayed in main viewer
-  //! - AIS_DS_Erased    hidden in main viewer
+  //! - PrsMgr_DisplayStatus::AIS_DS_Displayed displayed in main viewer
+  //! - PrsMgr_DisplayStatus::AIS_DS_Erased    hidden in main viewer
   //! - AIS_DS_Temporary temporarily displayed
-  //! - AIS_DS_None      nowhere displayed.
+  //! - PrsMgr_DisplayStatus::AIS_DS_None      nowhere displayed.
   Standard_EXPORT PrsMgr_DisplayStatus
     DisplayStatus(const occ::handle<AIS_InteractiveObject>& anIobj) const;
 
@@ -121,7 +121,7 @@ public: //! @name object display management
     const int                                 theDispMode,
     const int                                 theSelectionMode,
     const bool                                theToUpdateViewer,
-    const PrsMgr_DisplayStatus                theDispStatus = PrsMgr_DisplayStatus_None);
+    const PrsMgr_DisplayStatus                theDispStatus = PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None);
 
   //! Allows you to load the Interactive Object with a given selection mode,
   //! and/or with the desired decomposition option, whether the object is visualized or not.
@@ -871,23 +871,23 @@ public: //! @name Selection Filters management
   //! Remove all filters from context.
   void RemoveFilters() { myFilters->Clear(); }
 
-  //! Return picking strategy; SelectMgr_PickingStrategy_FirstAcceptable by default.
+  //! Return picking strategy; SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_FirstAcceptable by default.
   //! @sa MoveTo(), Filters()
   SelectMgr_PickingStrategy PickingStrategy() const { return myPickingStrategy; }
 
   //! Setup picking strategy - which entities detected by picking line will be accepted, considering
-  //! Selection Filters. By default (SelectMgr_PickingStrategy_FirstAcceptable), Selection Filters
+  //! Selection Filters. By default (SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_FirstAcceptable), Selection Filters
   //! reduce the list of entities so that the context accepts topmost in remaining.
   //!
   //! This means that entities behind non-selectable (by filters) parts can be picked by user.
   //! If this behavior is undesirable, and user wants that non-selectable (by filters) parts
-  //! should remain an obstacle for picking, SelectMgr_PickingStrategy_OnlyTopmost can be set
+  //! should remain an obstacle for picking, SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_OnlyTopmost can be set
   //! instead.
   //!
   //! Notice, that since Selection Manager operates only objects registered in it,
-  //! SelectMgr_PickingStrategy_OnlyTopmost will NOT prevent picking entities behind
+  //! SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_OnlyTopmost will NOT prevent picking entities behind
   //! visible by unregistered in Selection Manager presentations (e.g. deactivated).
-  //! Hence, SelectMgr_PickingStrategy_OnlyTopmost changes behavior only with Selection Filters
+  //! Hence, SelectMgr_PickingStrategy::SelectMgr_PickingStrategy_OnlyTopmost changes behavior only with Selection Filters
   //! enabled.
   void SetPickingStrategy(const SelectMgr_PickingStrategy theStrategy)
   {
@@ -994,7 +994,7 @@ public: //! @name common properties
     NCollection_List<occ::handle<AIS_InteractiveObject>>& theListOfIO,
     const occ::handle<V3d_View>&                          theView,
     const bool                                            theIsVisibleInView,
-    const PrsMgr_DisplayStatus theStatus = PrsMgr_DisplayStatus_None) const;
+    const PrsMgr_DisplayStatus theStatus = PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None) const;
 
   //! Return rotation gravity point.
   Standard_EXPORT virtual gp_Pnt GravityPoint(const occ::handle<V3d_View>& theView) const;
@@ -1244,7 +1244,7 @@ public:
                const int                                 theSelectionMode,
                const bool                                theToUpdateViewer,
                const bool                                theToAllowDecomposition,
-               const PrsMgr_DisplayStatus                theDispStatus = PrsMgr_DisplayStatus_None)
+               const PrsMgr_DisplayStatus                theDispStatus = PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None)
   {
     (void)theToAllowDecomposition;
     Display(theIObj, theDispMode, theSelectionMode, theToUpdateViewer, theDispStatus);
@@ -1550,7 +1550,7 @@ protected: //! @name internal methods
   //! @param[in] theDispMode  display mode. If -1 is given, sub-intensity will be turned on for
   //! all display modes in global status's list of modes
   //! @param[in] theIsDisplayedOnly  is true if sub-intensity should be applied only to objects with
-  //! status AIS_DS_Displayed
+  //! status PrsMgr_DisplayStatus::AIS_DS_Displayed
   Standard_EXPORT void turnOnSubintensity(
     const occ::handle<AIS_InteractiveObject>& theObject          = nullptr,
     const int                                 theDispMode        = -1,

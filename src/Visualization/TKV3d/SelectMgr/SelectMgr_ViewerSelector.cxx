@@ -130,17 +130,17 @@ void SelectMgr_ViewerSelector::updatePoint3d(SelectMgr_SortCriterion&       theC
     }
   }
 
-  const double aSensFactor = myDepthTolType == SelectMgr_TypeOfDepthTolerance_SensitivityFactor
+  const double aSensFactor = myDepthTolType == SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor
                                ? theEntity->SensitivityFactor()
                                : myDepthTolerance;
   switch (myDepthTolType)
   {
-    case SelectMgr_TypeOfDepthTolerance_Uniform: {
+    case SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_Uniform: {
       theCriterion.Tolerance = myDepthTolerance;
       break;
     }
-    case SelectMgr_TypeOfDepthTolerance_UniformPixels:
-    case SelectMgr_TypeOfDepthTolerance_SensitivityFactor: {
+    case SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_UniformPixels:
+    case SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor: {
       if (theMgr.Camera().IsNull())
       {
         // fallback for an arbitrary projection matrix
@@ -165,7 +165,7 @@ void SelectMgr_ViewerSelector::updatePoint3d(SelectMgr_SortCriterion&       theC
 
 SelectMgr_ViewerSelector::SelectMgr_ViewerSelector()
     : myDepthTolerance(0.0),
-      myDepthTolType(SelectMgr_TypeOfDepthTolerance_SensitivityFactor),
+      myDepthTolType(SelectMgr_TypeOfDepthTolerance::SelectMgr_TypeOfDepthTolerance_SensitivityFactor),
       myToPreferClosest(true),
       myCameraScale(1.0),
       myToPrebuildBVH(false),
@@ -207,9 +207,9 @@ void SelectMgr_ViewerSelector::Activate(const occ::handle<SelectMgr_Selection>& 
     aSelEntIter.Value()->SetActiveForSelection();
   }
 
-  if (theSelection->GetSelectionState() != SelectMgr_SOS_Activated)
+  if (theSelection->GetSelectionState() != SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
   {
-    theSelection->SetSelectionState(SelectMgr_SOS_Activated);
+    theSelection->SetSelectionState(SelectMgr_StateOfSelection::SelectMgr_SOS_Activated);
 
     myTolerances.Add(theSelection->Sensitivity());
   }
@@ -227,9 +227,9 @@ void SelectMgr_ViewerSelector::Deactivate(const occ::handle<SelectMgr_Selection>
     aSelEntIter.Value()->ResetSelectionActiveStatus();
   }
 
-  if (theSelection->GetSelectionState() == SelectMgr_SOS_Activated)
+  if (theSelection->GetSelectionState() == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
   {
-    theSelection->SetSelectionState(SelectMgr_SOS_Deactivated);
+    theSelection->SetSelectionState(SelectMgr_StateOfSelection::SelectMgr_SOS_Deactivated);
 
     myTolerances.Decrement(theSelection->Sensitivity());
   }
@@ -949,7 +949,7 @@ bool SelectMgr_ViewerSelector::Modes(
        aSelIter.More();
        aSelIter.Next())
   {
-    if (theWantedState == SelectMgr_SOS_Any)
+    if (theWantedState == SelectMgr_StateOfSelection::SelectMgr_SOS_Any)
     {
       theModeList.Append(aSelIter.Value()->Mode());
     }
@@ -972,7 +972,7 @@ bool SelectMgr_ViewerSelector::IsActive(
     return false;
 
   const occ::handle<SelectMgr_Selection>& aSel = theSelectableObject->Selection(theMode);
-  return !aSel.IsNull() && aSel->GetSelectionState() == SelectMgr_SOS_Activated;
+  return !aSel.IsNull() && aSel->GetSelectionState() == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated;
 }
 
 //=================================================================================================
@@ -985,7 +985,7 @@ bool SelectMgr_ViewerSelector::IsInside(
     return false;
 
   const occ::handle<SelectMgr_Selection>& aSel = theSelectableObject->Selection(theMode);
-  return !aSel.IsNull() && aSel->GetSelectionState() != SelectMgr_SOS_Unknown;
+  return !aSel.IsNull() && aSel->GetSelectionState() != SelectMgr_StateOfSelection::SelectMgr_SOS_Unknown;
 }
 
 //=================================================================================================
@@ -1010,11 +1010,11 @@ TCollection_AsciiString SelectMgr_ViewerSelector::Status(
        aSelIter.More();
        aSelIter.Next())
   {
-    if (aSelIter.Value()->GetSelectionState() != SelectMgr_SOS_Unknown)
+    if (aSelIter.Value()->GetSelectionState() != SelectMgr_StateOfSelection::SelectMgr_SOS_Unknown)
     {
       aStatus =
         aStatus + "Mode " + TCollection_AsciiString(aSelIter.Value()->Mode()) + " present - "
-        + (aSelIter.Value()->GetSelectionState() == SelectMgr_SOS_Activated ? " Active \n\t"
+        + (aSelIter.Value()->GetSelectionState() == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated ? " Active \n\t"
                                                                             : " Inactive \n\t");
     }
   }
@@ -1361,7 +1361,7 @@ void SelectMgr_ViewerSelector::DisplaySensitive(const occ::handle<V3d_View>& the
          aSelIter.More();
          aSelIter.Next())
     {
-      if (aSelIter.Value()->GetSelectionState() == SelectMgr_SOS_Activated)
+      if (aSelIter.Value()->GetSelectionState() == SelectMgr_StateOfSelection::SelectMgr_SOS_Activated)
       {
         SelectMgr::ComputeSensitivePrs(aStruct,
                                        aSelIter.Value(),

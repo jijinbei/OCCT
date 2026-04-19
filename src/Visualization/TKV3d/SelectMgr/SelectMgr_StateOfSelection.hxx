@@ -18,7 +18,7 @@
 #define _SelectMgr_StateOfSelection_HeaderFile
 
 //! different state of a Selection in a ViewerSelector...
-enum SelectMgr_StateOfSelection
+enum class SelectMgr_StateOfSelection
 {
   SelectMgr_SOS_Any     = -2, //!< ANY selection state (for querying selections)
   SelectMgr_SOS_Unknown = -1, //!< selection, which has never been in SelectMgr_SOS_Activated state

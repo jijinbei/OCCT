@@ -941,7 +941,7 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   V3d_ImageDumpOptions          aParams;
   occ::handle<Graphic3d_Camera> aCustomCam;
   aParams.BufferType     = Graphic3d_BufferType::Graphic3d_BT_RGB;
-  aParams.StereoOptions  = V3d_SDO_MONO;
+  aParams.StereoOptions  = V3d_StereoDumpOptions::V3d_SDO_MONO;
   aParams.TargetZLayerId = Graphic3d_ZLayerId_BotOSD;
   aParams.IsSingleLayer  = false;
   aParams.LightName      = "";
@@ -1055,19 +1055,19 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
       aStereoArg.LowerCase();
       if (aStereoArg == "l" || aStereoArg == "left")
       {
-        aParams.StereoOptions = V3d_SDO_LEFT_EYE;
+        aParams.StereoOptions = V3d_StereoDumpOptions::V3d_SDO_LEFT_EYE;
       }
       else if (aStereoArg == "r" || aStereoArg == "right")
       {
-        aParams.StereoOptions = V3d_SDO_RIGHT_EYE;
+        aParams.StereoOptions = V3d_StereoDumpOptions::V3d_SDO_RIGHT_EYE;
       }
       else if (aStereoArg == "mono")
       {
-        aParams.StereoOptions = V3d_SDO_MONO;
+        aParams.StereoOptions = V3d_StereoDumpOptions::V3d_SDO_MONO;
       }
       else if (aStereoArg == "blended" || aStereoArg == "blend" || aStereoArg == "stereo")
       {
-        aParams.StereoOptions = V3d_SDO_BLENDED;
+        aParams.StereoOptions = V3d_StereoDumpOptions::V3d_SDO_BLENDED;
       }
       else if (aStereoArg == "sbs" || aStereoArg == "sidebyside")
       {
@@ -1259,9 +1259,9 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
                            aParams.Height,
                            aPixMap.SizeRowBytes());
 
-      aParams.StereoOptions = V3d_SDO_LEFT_EYE;
+      aParams.StereoOptions = V3d_StereoDumpOptions::V3d_SDO_LEFT_EYE;
       bool isOk             = aView->ToPixMap(aPixMapL, aParams);
-      aParams.StereoOptions = V3d_SDO_RIGHT_EYE;
+      aParams.StereoOptions = V3d_StereoDumpOptions::V3d_SDO_RIGHT_EYE;
       isOk                  = isOk && aView->ToPixMap(aPixMapR, aParams);
       if (!isOk)
       {
@@ -1289,9 +1289,9 @@ static int VDump(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
                            aParams.Height,
                            aPixMap.SizeRowBytes());
 
-      aParams.StereoOptions = V3d_SDO_LEFT_EYE;
+      aParams.StereoOptions = V3d_StereoDumpOptions::V3d_SDO_LEFT_EYE;
       bool isOk             = aView->ToPixMap(aPixMapL, aParams);
-      aParams.StereoOptions = V3d_SDO_RIGHT_EYE;
+      aParams.StereoOptions = V3d_StereoDumpOptions::V3d_SDO_RIGHT_EYE;
       isOk                  = isOk && aView->ToPixMap(aPixMapR, aParams);
       if (!isOk)
       {
@@ -4806,7 +4806,7 @@ static int VDisplay2(Draw_Interpretor& theDI, int theArgNb, const char** theArgV
   int                                           isAutoTriang  = -1;
   occ::handle<Graphic3d_TransformPers>          aTrsfPers;
   NCollection_Sequence<TCollection_AsciiString> aNamesOfDisplayIO;
-  AIS_DisplayStatus                             aDispStatus     = AIS_DS_None;
+  AIS_DisplayStatus                             aDispStatus     = PrsMgr_DisplayStatus::AIS_DS_None;
   int                                           toDisplayInView = false;
   for (int anArgIter = 1; anArgIter < theArgNb; ++anArgIter)
   {
@@ -4823,7 +4823,7 @@ static int VDisplay2(Draw_Interpretor& theDI, int theArgNb, const char** theArgV
     }
     else if (aNameCase == "-neutral")
     {
-      aDispStatus = AIS_DS_Displayed;
+      aDispStatus = PrsMgr_DisplayStatus::AIS_DS_Displayed;
     }
     else if (aNameCase == "-immediate" || aNameCase == "-top")
     {
@@ -5032,7 +5032,7 @@ static int VDisplay2(Draw_Interpretor& theDI, int theArgNb, const char** theArgV
     }
     else if (aNameCase == "-erased" || aNameCase == "-load")
     {
-      aDispStatus = AIS_DS_Erased;
+      aDispStatus = PrsMgr_DisplayStatus::AIS_DS_Erased;
     }
     else if (aNameCase == "-noecho")
     {
@@ -5388,23 +5388,23 @@ static void objInfo(const NCollection_Map<occ::handle<AIS_InteractiveObject>>& t
     occ::handle<PrsDim_Relation> aRelation = occ::down_cast<PrsDim_Relation>(theObj);
     switch (aRelation->KindOfDimension())
     {
-      case PrsDim_KOD_PLANEANGLE:
+      case PrsDim_KindOfDimension::PrsDim_KOD_PLANEANGLE:
         theDI << " PrsDim_AngleDimension";
         break;
-      case PrsDim_KOD_LENGTH:
+      case PrsDim_KindOfDimension::PrsDim_KOD_LENGTH:
         theDI << " PrsDim_Chamf2/3dDimension/PrsDim_LengthDimension";
         break;
-      case PrsDim_KOD_DIAMETER:
+      case PrsDim_KindOfDimension::PrsDim_KOD_DIAMETER:
         theDI << " PrsDim_DiameterDimension";
         break;
-      case PrsDim_KOD_ELLIPSERADIUS:
+      case PrsDim_KindOfDimension::PrsDim_KOD_ELLIPSERADIUS:
         theDI << " PrsDim_EllipseRadiusDimension";
         break;
       // case PrsDim_KOD_FILLETRADIUS:   theDI << " PrsDim_FilletRadiusDimension "; break;
-      case PrsDim_KOD_OFFSET:
+      case PrsDim_KindOfDimension::PrsDim_KOD_OFFSET:
         theDI << " PrsDim_OffsetDimension";
         break;
-      case PrsDim_KOD_RADIUS:
+      case PrsDim_KindOfDimension::PrsDim_KOD_RADIUS:
         theDI << " PrsDim_RadiusDimension";
         break;
       default:
@@ -5930,11 +5930,11 @@ static int VSelFilter(Draw_Interpretor&, int theArgc, const char** theArgv)
       aVal.LowerCase();
       if (aVal == "and")
       {
-        aContext->SetFilterType(SelectMgr_FilterType_AND);
+        aContext->SetFilterType(SelectMgr_FilterType::SelectMgr_FilterType_AND);
       }
       else if (aVal == "or")
       {
-        aContext->SetFilterType(SelectMgr_FilterType_OR);
+        aContext->SetFilterType(SelectMgr_FilterType::SelectMgr_FilterType_OR);
       }
       else
       {
@@ -6181,8 +6181,8 @@ static int VEraseType(Draw_Interpretor&, int argc, const char** argv)
     else
     {
       PrsDim_KindOfDimension KOD = occ::down_cast<PrsDim_Relation>(curio)->KindOfDimension();
-      if ((dimension_status == 0 && KOD == PrsDim_KOD_NONE)
-          || (dimension_status == 1 && KOD != PrsDim_KOD_NONE))
+      if ((dimension_status == 0 && KOD == PrsDim_KindOfDimension::PrsDim_KOD_NONE)
+          || (dimension_status == 1 && KOD != PrsDim_KindOfDimension::PrsDim_KOD_NONE))
         TheAISContext()->Erase(curio, false);
     }
   }
@@ -6219,8 +6219,8 @@ static int VDisplayType(Draw_Interpretor&, int argc, const char** argv)
     else
     {
       PrsDim_KindOfDimension KOD = occ::down_cast<PrsDim_Relation>(curio)->KindOfDimension();
-      if ((dimension_status == 0 && KOD == PrsDim_KOD_NONE)
-          || (dimension_status == 1 && KOD != PrsDim_KOD_NONE))
+      if ((dimension_status == 0 && KOD == PrsDim_KindOfDimension::PrsDim_KOD_NONE)
+          || (dimension_status == 1 && KOD != PrsDim_KindOfDimension::PrsDim_KOD_NONE))
         TheAISContext()->Display(curio, false);
     }
   }

@@ -15,7 +15,7 @@
 #define _SelectMgr_FilterType_HeaderFile
 
 //! Enumeration defines the filter type.
-enum SelectMgr_FilterType
+enum class SelectMgr_FilterType
 {
   SelectMgr_FilterType_AND, //!< an object should be suitable for all filters.
   SelectMgr_FilterType_OR   //!< an object should be suitable at least one filter.

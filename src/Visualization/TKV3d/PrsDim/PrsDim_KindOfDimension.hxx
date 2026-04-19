@@ -19,7 +19,7 @@
 
 //! Declares the kinds of dimensions needed in the
 //! display of Interactive Objects.
-enum PrsDim_KindOfDimension
+enum class PrsDim_KindOfDimension
 {
   PrsDim_KOD_NONE,
   PrsDim_KOD_LENGTH,

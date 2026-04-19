@@ -45,7 +45,7 @@ PrsMgr_PresentableObject::PrsMgr_PresentableObject(const PrsMgr_TypeOfPresentati
       myViewAffinity(new Graphic3d_ViewAffinity()),
       myDrawer(new Prs3d_Drawer()),
       myTypeOfPresentation3d(theType),
-      myDisplayStatus(PrsMgr_DisplayStatus_None),
+      myDisplayStatus(PrsMgr_DisplayStatus::PrsMgr_DisplayStatus_None),
       //
       myCurrentFacingModel(Aspect_TypeOfFacingModel::Aspect_TOFM_BOTH_SIDE),
       myOwnWidth(0.0f),
@@ -230,7 +230,7 @@ void PrsMgr_PresentableObject::SetTypeOfPresentation(const PrsMgr_TypeOfPresenta
        aPrsIter.Next())
   {
     const occ::handle<PrsMgr_Presentation>& aPrs = aPrsIter.Value();
-    aPrs->SetVisual(myTypeOfPresentation3d == PrsMgr_TOP_ProjectorDependent ? Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED
+    aPrs->SetVisual(myTypeOfPresentation3d == PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_ProjectorDependent ? Graphic3d_TypeOfStructure::Graphic3d_TOS_COMPUTED
                                                                             : Graphic3d_TypeOfStructure::Graphic3d_TOS_ALL);
   }
 }

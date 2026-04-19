@@ -16,7 +16,7 @@
 #define _StdSelect_TypeOfSelectionImage_HeaderFile
 
 //! Type of output selection image.
-enum StdSelect_TypeOfSelectionImage
+enum class StdSelect_TypeOfSelectionImage
 {
   StdSelect_TypeOfSelectionImage_NormalizedDepth = 0,     //!< normalized   depth (grayscale)
   StdSelect_TypeOfSelectionImage_NormalizedDepthInverted, //!< normalized   depth, inverted

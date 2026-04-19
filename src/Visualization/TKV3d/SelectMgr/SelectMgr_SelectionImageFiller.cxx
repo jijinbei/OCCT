@@ -432,32 +432,32 @@ occ::handle<SelectMgr_SelectionImageFiller> SelectMgr_SelectionImageFiller::Crea
 {
   switch (theType)
   {
-    case StdSelect_TypeOfSelectionImage_NormalizedDepth:
-    case StdSelect_TypeOfSelectionImage_NormalizedDepthInverted: {
+    case StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepth:
+    case StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepthInverted: {
       return new NormalizedDepthFiller(thePixMap,
                                        theSelector,
                                        theType
-                                         == StdSelect_TypeOfSelectionImage_NormalizedDepthInverted);
+                                         == StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_NormalizedDepthInverted);
     }
-    case StdSelect_TypeOfSelectionImage_UnnormalizedDepth: {
+    case StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_UnnormalizedDepth: {
       return new UnnormalizedDepthFiller(thePixMap, theSelector);
     }
-    case StdSelect_TypeOfSelectionImage_ColoredDetectedObject: {
+    case StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredDetectedObject: {
       return new DetectedObjectColorFiller(thePixMap, theSelector);
     }
-    case StdSelect_TypeOfSelectionImage_ColoredEntity: {
+    case StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredEntity: {
       return new GeneratedEntityColorFiller(thePixMap, theSelector);
     }
-    case StdSelect_TypeOfSelectionImage_ColoredEntityType: {
+    case StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredEntityType: {
       return new GeneratedEntityTypeColorFiller(thePixMap, theSelector);
     }
-    case StdSelect_TypeOfSelectionImage_ColoredOwner: {
+    case StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredOwner: {
       return new GeneratedOwnerColorFiller(thePixMap, theSelector);
     }
-    case StdSelect_TypeOfSelectionImage_ColoredSelectionMode: {
+    case StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_ColoredSelectionMode: {
       return new GeneratedSelModeColorFiller(thePixMap, theSelector);
     }
-    case StdSelect_TypeOfSelectionImage_SurfaceNormal: {
+    case StdSelect_TypeOfSelectionImage::StdSelect_TypeOfSelectionImage_SurfaceNormal: {
       return new SurfaceNormalFiller(thePixMap, theSelector);
     }
   }

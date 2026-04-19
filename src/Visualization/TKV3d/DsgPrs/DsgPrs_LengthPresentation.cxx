@@ -393,21 +393,21 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPrs,
   gp_Vec V;
   switch (ArrowPrs)
   {
-    case DsgPrs_AS_LASTAR:
+    case DsgPrs_ArrowSide::DsgPrs_AS_LASTAR:
       Prs3d_Arrow::Draw(aPrs->CurrentGroup(),
                         Pt2,
                         gp_Dir(gp_Vec(Pt1, Pt2)),
                         aDrawer->DimensionAspect()->ArrowAspect()->Angle(),
                         aDrawer->DimensionAspect()->ArrowAspect()->Length());
       break;
-    case DsgPrs_AS_FIRSTAR:
+    case DsgPrs_ArrowSide::DsgPrs_AS_FIRSTAR:
       Prs3d_Arrow::Draw(aPrs->CurrentGroup(),
                         Pt1,
                         gp_Dir(gp_Vec(Pt2, Pt1)),
                         aDrawer->DimensionAspect()->ArrowAspect()->Angle(),
                         aDrawer->DimensionAspect()->ArrowAspect()->Length());
       break;
-    case DsgPrs_AS_BOTHAR:
+    case DsgPrs_ArrowSide::DsgPrs_AS_BOTHAR:
       V = gp_Vec(Pt1, Pt2);
       Prs3d_Arrow::Draw(aPrs->CurrentGroup(),
                         Pt2,

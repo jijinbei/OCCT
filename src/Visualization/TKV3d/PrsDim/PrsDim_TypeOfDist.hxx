@@ -18,7 +18,7 @@
 #define _PrsDim_TypeOfDist_HeaderFile
 
 //! To declare the type of distance.
-enum PrsDim_TypeOfDist
+enum class PrsDim_TypeOfDist
 {
   PrsDim_TypeOfDist_Unknown,
   PrsDim_TypeOfDist_Horizontal,

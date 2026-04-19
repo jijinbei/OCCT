@@ -59,7 +59,7 @@ public:
   AIS_KindOfInteractive Type() const override { return AIS_KindOfInteractive::AIS_KindOfInteractive_Relation; }
 
   //! Indicates that the type of dimension is unknown.
-  virtual PrsDim_KindOfDimension KindOfDimension() const { return PrsDim_KOD_NONE; }
+  virtual PrsDim_KindOfDimension KindOfDimension() const { return PrsDim_KindOfDimension::PrsDim_KOD_NONE; }
 
   //! Returns true if the interactive object is movable.
   virtual bool IsMovable() const { return false; }
@@ -178,7 +178,7 @@ public:
 
 protected:
   Standard_EXPORT PrsDim_Relation(
-    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TOP_AllView);
+    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
 
   //! Calculates the presentation aPres of the edge
   //! anEdge and the curve it defines, ProjCurve. The later

@@ -63,7 +63,7 @@ void wireframeFromShape(const occ::handle<Prs3d_Presentation>& thePrs,
     return;
   }
 
-  const bool aDrawAllVerticesFlag = (theDrawer->VertexDrawMode() == Prs3d_VDM_All);
+  const bool aDrawAllVerticesFlag = (theDrawer->VertexDrawMode() == Prs3d_VertexDrawMode::Prs3d_VDM_All);
   if (!aDrawAllVerticesFlag && theShape.ShapeType() != TopAbs_COMPOUND)
   {
     return;
@@ -564,7 +564,7 @@ void StdPrs_ShadedShape::Add(const occ::handle<Prs3d_Presentation>& thePrs,
   // contain non-manifold parts inside (internal open shells)
   if ((theShape.ShapeType() == TopAbs_COMPOUND || theShape.ShapeType() == TopAbs_COMPSOLID
        || theShape.ShapeType() == TopAbs_SOLID)
-      && theVolume == StdPrs_Volume_Autodetection)
+      && theVolume == StdPrs_Volume::StdPrs_Volume_Autodetection)
   {
     // collect two compounds: for opened and closed (solid) sub-shapes
     TopoDS_Compound anOpened, aClosed;
@@ -609,7 +609,7 @@ void StdPrs_ShadedShape::Add(const occ::handle<Prs3d_Presentation>& thePrs,
                    theUVOrigin,
                    theUVRepeat,
                    theUVScale,
-                   theVolume == StdPrs_Volume_Closed,
+                   theVolume == StdPrs_Volume::StdPrs_Volume_Closed,
                    theGroup);
   }
 

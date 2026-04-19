@@ -85,7 +85,7 @@ PrsDim_Dimension::PrsDim_Dimension(const PrsDim_KindOfDimension theType)
 
       myIsTextPositionFixed(false),
       mySpecialSymbol(' '),
-      myDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol_No),
+      myDisplaySpecialSymbol(PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_No),
       myGeometryType(GeometryType_UndefShapes),
       myIsPlaneCustom(false),
       myFlyout(0.0),
@@ -260,13 +260,13 @@ TCollection_ExtendedString PrsDim_Dimension::GetValueString(double& theWidth) co
 
   switch (myDisplaySpecialSymbol)
   {
-    case PrsDim_DisplaySpecialSymbol_Before:
+    case PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_Before:
       aValueStr.Insert(1, mySpecialSymbol);
       break;
-    case PrsDim_DisplaySpecialSymbol_After:
+    case PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_After:
       aValueStr.Insert(aValueStr.Length() + 1, mySpecialSymbol);
       break;
-    case PrsDim_DisplaySpecialSymbol_No:
+    case PrsDim_DisplaySpecialSymbol::PrsDim_DisplaySpecialSymbol_No:
       break;
   }
 
@@ -283,7 +283,7 @@ TCollection_ExtendedString PrsDim_Dimension::GetValueString(double& theWidth) co
     if (aFont.FindAndInit(aTextAspect->Aspect()->Font(),
                           aTextAspect->Aspect()->GetTextFontAspect(),
                           aTextAspect->Height(),
-                          Font_StrictLevel_Any))
+                          Font_StrictLevel::Font_StrictLevel_Any))
     {
       for (NCollection_UtfIterator<char> anIter = anUTFString.Iterator(); *anIter != 0;)
       {
@@ -306,7 +306,7 @@ TCollection_ExtendedString PrsDim_Dimension::GetValueString(double& theWidth) co
           Font_FTFont::FindAndCreate(aTextAspect->Aspect()->Font(),
                                      aTextAspect->Aspect()->GetTextFontAspect(),
                                      aFontParams,
-                                     Font_StrictLevel_Any))
+                                     Font_StrictLevel::Font_StrictLevel_Any))
     {
       for (NCollection_UtfIterator<char> anIter = anUTFString.Iterator(); *anIter != 0;)
       {
@@ -717,7 +717,7 @@ void PrsDim_Dimension::DrawLinearDimension(const occ::handle<Prs3d_Presentation>
       // add dimension line primitives
       if (theMode == ComputeMode_All || theMode == ComputeMode_Line)
       {
-        bool isLineBreak = aDimensionAspect->TextVerticalPosition() == Prs3d_DTVP_Center
+        bool isLineBreak = aDimensionAspect->TextVerticalPosition() == Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center
                            && aDimensionAspect->IsText3d();
 
         occ::handle<Graphic3d_ArrayOfSegments> aPrimSegments =
@@ -1104,7 +1104,7 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
 {
   gp_Pln                    aPln;
   occ::handle<Geom_Surface> aBasisSurf;
-  PrsDim_KindOfSurface      aSurfType = PrsDim_KOS_OtherSurface;
+  PrsDim_KindOfSurface      aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_OtherSurface;
   gp_Pnt                    aFirstPoint, aLastPoint;
   double                    anOffset    = 0.0;
   double                    aFirstParam = 0.0;
@@ -1116,7 +1116,7 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
     case TopAbs_FACE: {
       PrsDim::GetPlaneFromFace(TopoDS::Face(theShape), aPln, aBasisSurf, aSurfType, anOffset);
 
-      if (aSurfType == PrsDim_KOS_Plane)
+      if (aSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Plane)
       {
         occ::handle<Geom_Curve> aCurve;
         if (!CircleFromPlanarFace(TopoDS::Face(theShape), aCurve, aFirstPoint, aLastPoint))
@@ -1139,13 +1139,13 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
         aSurf1.D0(aMidU, aMidV, aCurPos);
         occ::handle<Adaptor3d_Curve> aBasisCurve;
         bool                         isExpectedType = false;
-        if (aSurfType == PrsDim_KOS_Cylinder)
+        if (aSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Cylinder)
         {
           isExpectedType = true;
         }
         else
         {
-          if (aSurfType == PrsDim_KOS_Revolution)
+          if (aSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Revolution)
           {
             aBasisCurve = aSurf1.BasisCurve();
             if (aBasisCurve->GetType() == GeomAbs_Line)
@@ -1153,7 +1153,7 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
               isExpectedType = true;
             }
           }
-          else if (aSurfType == PrsDim_KOS_Extrusion)
+          else if (aSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Extrusion)
           {
             aBasisCurve = aSurf1.BasisCurve();
             if (aBasisCurve->GetType() == GeomAbs_Circle)
@@ -1555,21 +1555,21 @@ bool PrsDim_Dimension::AdjustParametersForLinear(
   // Set horizontal text alignment.
   if (aCos < 0.0)
   {
-    theAlignment = Prs3d_DTHP_Left;
+    theAlignment = Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Left;
 
     double aNewExtSize = theTextPos.Distance(aFirstAttach) - anArrowLength;
     theExtensionSize   = aNewExtSize < 0.0 ? 0.0 : aNewExtSize;
   }
   else if (aTextPosProj.Distance(theFirstPoint) > theFirstPoint.Distance(theSecondPoint))
   {
-    theAlignment = Prs3d_DTHP_Right;
+    theAlignment = Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Right;
 
     double aNewExtSize = theTextPos.Distance(aSecondAttach) - anArrowLength;
     theExtensionSize   = aNewExtSize < 0.0 ? 0.0 : aNewExtSize;
   }
   else
   {
-    theAlignment = Prs3d_DTHP_Center;
+    theAlignment = Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Center;
   }
   return true;
 }
@@ -1622,13 +1622,13 @@ void PrsDim_Dimension::FitTextAlignmentForLinear(
   // Handle user-defined and automatic arrow placement
   switch (aDimensionAspect->ArrowOrientation())
   {
-    case Prs3d_DAO_External:
+    case Prs3d_DimensionArrowOrientation::Prs3d_DAO_External:
       theIsArrowsExternal = true;
       break;
-    case Prs3d_DAO_Internal:
+    case Prs3d_DimensionArrowOrientation::Prs3d_DAO_Internal:
       theIsArrowsExternal = false;
       break;
-    case Prs3d_DAO_Fit: {
+    case Prs3d_DimensionArrowOrientation::Prs3d_DAO_Fit: {
       // Add margin to ensure a small tail between text and arrow
       double anArrowMargin = aDimensionAspect->IsText3d()
                                ? aDimensionAspect->TextAspect()->Height() * THE_3D_TEXT_MARGIN
@@ -1646,16 +1646,16 @@ void PrsDim_Dimension::FitTextAlignmentForLinear(
   // Handle user-defined and automatic text placement
   switch (theHorizontalTextPos)
   {
-    case Prs3d_DTHP_Left:
+    case Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Left:
       theLabelPosition |= LabelPosition_Left;
       break;
-    case Prs3d_DTHP_Right:
+    case Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Right:
       theLabelPosition |= LabelPosition_Right;
       break;
-    case Prs3d_DTHP_Center:
+    case Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Center:
       theLabelPosition |= LabelPosition_HCenter;
       break;
-    case Prs3d_DTHP_Fit: {
+    case Prs3d_DimensionTextHorizontalPosition::Prs3d_DTHP_Fit: {
       double aDimensionWidth = aLineBegPoint.Distance(aLineEndPoint);
       double anArrowsWidth   = theIsOneSide ? anArrowLength : 2.0 * anArrowLength;
       double aContentWidth   = theIsArrowsExternal ? aLabelWidth : aLabelWidth + anArrowsWidth;
@@ -1669,13 +1669,13 @@ void PrsDim_Dimension::FitTextAlignmentForLinear(
   // Handle vertical text placement options
   switch (aDimensionAspect->TextVerticalPosition())
   {
-    case Prs3d_DTVP_Above:
+    case Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Above:
       theLabelPosition |= LabelPosition_Above;
       break;
-    case Prs3d_DTVP_Below:
+    case Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Below:
       theLabelPosition |= LabelPosition_Below;
       break;
-    case Prs3d_DTVP_Center:
+    case Prs3d_DimensionTextVerticalPosition::Prs3d_DTVP_Center:
       theLabelPosition |= LabelPosition_VCenter;
       break;
   }

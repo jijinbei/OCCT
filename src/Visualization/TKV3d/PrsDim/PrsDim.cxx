@@ -760,7 +760,7 @@ bool PrsDim::GetPlaneFromFace(const TopoDS_Face&         aFace,
   if (surf2->GetType() == GeomAbs_Plane)
   {
     aPlane    = surf2->Plane();
-    aSurfType = PrsDim_KOS_Plane;
+    aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_Plane;
     Result    = true;
   }
   else if (surf2->GetType() == GeomAbs_SurfaceOfExtrusion)
@@ -774,7 +774,7 @@ bool PrsDim::GetPlaneFromFace(const TopoDS_Face&         aFace,
       gp_Pnt LinePos   = BasisLine.Location();
       gp_Pln thePlane(LinePos, LineDir ^ ExtrusionDir);
       aPlane    = thePlane;
-      aSurfType = PrsDim_KOS_Plane;
+      aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_Plane;
       Result    = true;
     }
   }
@@ -804,19 +804,19 @@ bool PrsDim::GetPlaneFromFace(const TopoDS_Face&         aFace,
     }
     occ::handle<Standard_Type> TheType = aSurf->DynamicType();
     if (TheType == STANDARD_TYPE(Geom_CylindricalSurface))
-      aSurfType = PrsDim_KOS_Cylinder;
+      aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_Cylinder;
     else if (TheType == STANDARD_TYPE(Geom_ConicalSurface))
-      aSurfType = PrsDim_KOS_Cone;
+      aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_Cone;
     else if (TheType == STANDARD_TYPE(Geom_SphericalSurface))
-      aSurfType = PrsDim_KOS_Sphere;
+      aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_Sphere;
     else if (TheType == STANDARD_TYPE(Geom_ToroidalSurface))
-      aSurfType = PrsDim_KOS_Torus;
+      aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_Torus;
     else if (TheType == STANDARD_TYPE(Geom_SurfaceOfRevolution))
-      aSurfType = PrsDim_KOS_Revolution;
+      aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_Revolution;
     else if (TheType == STANDARD_TYPE(Geom_SurfaceOfLinearExtrusion))
-      aSurfType = PrsDim_KOS_Extrusion;
+      aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_Extrusion;
     else
-      aSurfType = PrsDim_KOS_OtherSurface;
+      aSurfType = PrsDim_KindOfSurface::PrsDim_KOS_OtherSurface;
   }
   return Result;
 }
@@ -993,7 +993,7 @@ bool PrsDim::InitAngleBetweenCurvilinearFaces(const TopoDS_Face&         theFirs
 
   aFirstLine = occ::down_cast<Geom_Line>(aFirstSurf->UIso(aFirstU));
 
-  if (theSecondSurfType == PrsDim_KOS_Cylinder)
+  if (theSecondSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Cylinder)
   {
     occ::handle<Geom_CylindricalSurface> aCylinder =
       occ::down_cast<Geom_CylindricalSurface>(aSecondSurf);
@@ -1004,7 +1004,7 @@ bool PrsDim::InitAngleBetweenCurvilinearFaces(const TopoDS_Face&         theFirs
 
     aSecondLine = occ::down_cast<Geom_Line>(aCylinder->UIso(aSecondU));
   }
-  else if (theSecondSurfType == PrsDim_KOS_Cone)
+  else if (theSecondSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Cone)
   {
     occ::handle<Geom_ConicalSurface> aCone = occ::down_cast<Geom_ConicalSurface>(aSecondSurf);
 
@@ -1045,7 +1045,7 @@ bool PrsDim::InitAngleBetweenCurvilinearFaces(const TopoDS_Face&         theFirs
 
       // theFirstAttach should be on theFirstSurf.
       double anU, aV;
-      if (theFirstSurfType == PrsDim_KOS_Cylinder)
+      if (theFirstSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Cylinder)
       {
         ElSLib::Parameters((occ::down_cast<Geom_CylindricalSurface>(aFirstSurf))->Cylinder(),
                            theFirstAttach,
@@ -1057,7 +1057,7 @@ bool PrsDim::InitAngleBetweenCurvilinearFaces(const TopoDS_Face&         theFirs
                         aV,
                         (occ::down_cast<Geom_CylindricalSurface>(aFirstSurf))->Cylinder());
       }
-      else if (theFirstSurfType == PrsDim_KOS_Cone)
+      else if (theFirstSurfType == PrsDim_KindOfSurface::PrsDim_KOS_Cone)
       {
         ElSLib::Parameters((occ::down_cast<Geom_ConicalSurface>(aFirstSurf))->Cone(),
                            theFirstAttach,

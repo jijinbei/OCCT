@@ -192,7 +192,7 @@ public:
 protected:
   //! Protected empty constructor.
   Standard_EXPORT SelectMgr_SelectableObject(
-    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TOP_AllView);
+    const PrsMgr_TypeOfPresentation3d aTypeOfPresentation3d = PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView);
 
   //! Override global selection mode.
   void setGlobalSelMode(const int theMode) { myGlobalSelMode = theMode > 0 ? theMode : 0; }

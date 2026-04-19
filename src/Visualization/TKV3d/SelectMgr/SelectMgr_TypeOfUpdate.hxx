@@ -21,7 +21,7 @@
 //! -   full
 //! -   partial
 //! -   none.
-enum SelectMgr_TypeOfUpdate
+enum class SelectMgr_TypeOfUpdate
 {
   SelectMgr_TOU_Full,
   SelectMgr_TOU_Partial,

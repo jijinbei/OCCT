@@ -26,7 +26,7 @@ IMPLEMENT_STANDARD_RTTIEXT(AIS_MultipleConnectedInteractive, AIS_InteractiveObje
 //=================================================================================================
 
 AIS_MultipleConnectedInteractive::AIS_MultipleConnectedInteractive()
-    : AIS_InteractiveObject(PrsMgr_TOP_AllView)
+    : AIS_InteractiveObject(PrsMgr_TypeOfPresentation3d::PrsMgr_TOP_AllView)
 {
   myHasOwnPresentations = false;
 }

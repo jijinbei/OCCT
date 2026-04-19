@@ -970,16 +970,16 @@ occ::handle<Font_SystemFont> Font_FontMgr::FindFallbackFont(Font_UnicodeSubset t
   switch (theSubset)
   {
     case Font_UnicodeSubset_Western:
-      aFont = FindFont(Font_NOF_SANS_SERIF, Font_StrictLevel_Aliases, aFontAspect, false);
+      aFont = FindFont(Font_NOF_SANS_SERIF, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
       break;
     case Font_UnicodeSubset_Korean:
-      aFont = FindFont(Font_NOF_KOREAN, Font_StrictLevel_Aliases, aFontAspect, false);
+      aFont = FindFont(Font_NOF_KOREAN, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
       break;
     case Font_UnicodeSubset_CJK:
-      aFont = FindFont(Font_NOF_CJK, Font_StrictLevel_Aliases, aFontAspect, false);
+      aFont = FindFont(Font_NOF_CJK, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
       break;
     case Font_UnicodeSubset_Arabic:
-      aFont = FindFont(Font_NOF_ARABIC, Font_StrictLevel_Aliases, aFontAspect, false);
+      aFont = FindFont(Font_NOF_ARABIC, Font_StrictLevel::Font_StrictLevel_Aliases, aFontAspect, false);
       break;
   }
   if (aFont.IsNull())
@@ -1016,7 +1016,7 @@ occ::handle<Font_SystemFont> Font_FontMgr::FindFont(const TCollection_AsciiStrin
   TCollection_AsciiString aFontName(theFontName);
   aFontName.LowerCase();
   occ::handle<Font_SystemFont> aFont = myFontMap.Find(aFontName);
-  if (!aFont.IsNull() || theStrictLevel == Font_StrictLevel_Strict)
+  if (!aFont.IsNull() || theStrictLevel == Font_StrictLevel::Font_StrictLevel_Strict)
   {
     return aFont;
   }
@@ -1029,7 +1029,7 @@ occ::handle<Font_SystemFont> Font_FontMgr::FindFont(const TCollection_AsciiStrin
     {
       myFontAliases.Find(aFontName, anAliases);
     }
-    else if (theStrictLevel == Font_StrictLevel_Any)
+    else if (theStrictLevel == Font_StrictLevel::Font_StrictLevel_Any)
     {
       anAliases = myFallbackAlias;
     }
@@ -1091,7 +1091,7 @@ occ::handle<Font_SystemFont> Font_FontMgr::FindFont(const TCollection_AsciiStrin
     }
   }
 
-  if (aFont.IsNull() && theStrictLevel == Font_StrictLevel_Any)
+  if (aFont.IsNull() && theStrictLevel == Font_StrictLevel::Font_StrictLevel_Any)
   {
     // try finding ANY font in case if even default fallback alias myFallbackAlias cannot be found
     aFont = myFontMap.Find(TCollection_AsciiString::EmptyString());
