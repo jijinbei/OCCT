@@ -35,7 +35,7 @@ public:
         ByteOffset(0),
         ByteLength(0),
         ByteStride(0),
-        Target(RWGltf_GltfBufferViewTarget::RWGltf_GltfBufferViewTarget_UNKNOWN)
+        Target(RWGltf_GltfBufferViewTarget_UNKNOWN)
   {
   }
 };

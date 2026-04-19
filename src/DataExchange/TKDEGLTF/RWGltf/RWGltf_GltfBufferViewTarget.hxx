@@ -16,7 +16,7 @@
 #define _RWGltf_GltfBufferViewTarget_HeaderFile
 
 //! Low-level glTF enumeration defining BufferView target.
-enum class RWGltf_GltfBufferViewTarget
+enum RWGltf_GltfBufferViewTarget
 {
   RWGltf_GltfBufferViewTarget_UNKNOWN,                      //!< unknown or invalid type
   RWGltf_GltfBufferViewTarget_ARRAY_BUFFER         = 34962, //!< GL_ARRAY_BUFFER

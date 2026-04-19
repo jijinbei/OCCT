@@ -52,36 +52,36 @@ static bool parseNameFormat(const char* theArg, RWMesh_NameFormat& theFormat)
   aName.LowerCase();
   if (aName == "empty")
   {
-    theFormat = RWMesh_NameFormat::RWMesh_NameFormat_Empty;
+    theFormat = RWMesh_NameFormat_Empty;
   }
   else if (aName == "product" || aName == "prod")
   {
-    theFormat = RWMesh_NameFormat::RWMesh_NameFormat_Product;
+    theFormat = RWMesh_NameFormat_Product;
   }
   else if (aName == "instance" || aName == "inst")
   {
-    theFormat = RWMesh_NameFormat::RWMesh_NameFormat_Instance;
+    theFormat = RWMesh_NameFormat_Instance;
   }
   else if (aName == "instanceorproduct" || aName == "instance||product"
            || aName == "instance|product" || aName == "instorprod" || aName == "inst||prod"
            || aName == "inst|prod")
   {
-    theFormat = RWMesh_NameFormat::RWMesh_NameFormat_InstanceOrProduct;
+    theFormat = RWMesh_NameFormat_InstanceOrProduct;
   }
   else if (aName == "productorinstance" || aName == "product||instance"
            || aName == "product|instance" || aName == "prodorinst" || aName == "prod||inst"
            || aName == "prod|inst")
   {
-    theFormat = RWMesh_NameFormat::RWMesh_NameFormat_ProductOrInstance;
+    theFormat = RWMesh_NameFormat_ProductOrInstance;
   }
   else if (aName == "productandinstance" || aName == "prodandinst" || aName == "product&instance"
            || aName == "prod&inst")
   {
-    theFormat = RWMesh_NameFormat::RWMesh_NameFormat_ProductAndInstance;
+    theFormat = RWMesh_NameFormat_ProductAndInstance;
   }
   else if (aName == "productandinstanceandocaf" || aName == "verbose" || aName == "debug")
   {
-    theFormat = RWMesh_NameFormat::RWMesh_NameFormat_ProductAndInstanceAndOcaf;
+    theFormat = RWMesh_NameFormat_ProductAndInstanceAndOcaf;
   }
   else
   {
@@ -303,13 +303,13 @@ static int WriteGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   occ::handle<TDocStd_Document>    aDoc;
   occ::handle<TDocStd_Application> anApp = DDocStd::GetApplication();
   NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString> aFileInfo;
-  RWGltf_WriterTrsfFormat aTrsfFormat = RWGltf_WriterTrsfFormat::RWGltf_WriterTrsfFormat_Compact;
+  RWGltf_WriterTrsfFormat aTrsfFormat = RWGltf_WriterTrsfFormat_Compact;
   RWMesh_CoordinateSystem aSystemCoordSys = RWMesh_CoordinateSystem_Zup;
   bool                    toForceUVExport = false, toEmbedTexturesInGlb = true;
   bool                    toMergeFaces = false, toSplitIndices16 = false;
   bool                    isParallel      = false;
-  RWMesh_NameFormat       aNodeNameFormat = RWMesh_NameFormat::RWMesh_NameFormat_InstanceOrProduct;
-  RWMesh_NameFormat       aMeshNameFormat = RWMesh_NameFormat::RWMesh_NameFormat_Product;
+  RWMesh_NameFormat       aNodeNameFormat = RWMesh_NameFormat_InstanceOrProduct;
+  RWMesh_NameFormat       aMeshNameFormat = RWMesh_NameFormat_Product;
   RWGltf_DracoParameters  aDracoParameters;
   for (int anArgIter = 1; anArgIter < theNbArgs; ++anArgIter)
   {
@@ -366,15 +366,15 @@ static int WriteGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
       aTrsfStr.LowerCase();
       if (aTrsfStr == "compact")
       {
-        aTrsfFormat = RWGltf_WriterTrsfFormat::RWGltf_WriterTrsfFormat_Compact;
+        aTrsfFormat = RWGltf_WriterTrsfFormat_Compact;
       }
       else if (aTrsfStr == "mat4")
       {
-        aTrsfFormat = RWGltf_WriterTrsfFormat::RWGltf_WriterTrsfFormat_Mat4;
+        aTrsfFormat = RWGltf_WriterTrsfFormat_Mat4;
       }
       else if (aTrsfStr == "trs")
       {
-        aTrsfFormat = RWGltf_WriterTrsfFormat::RWGltf_WriterTrsfFormat_TRS;
+        aTrsfFormat = RWGltf_WriterTrsfFormat_TRS;
       }
       else
       {
@@ -417,7 +417,7 @@ static int WriteGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
         occ::handle<XCAFDoc_ShapeTool> aShapeTool = XCAFDoc_DocumentTool::ShapeTool(aDoc->Main());
         // auto-naming doesn't generate meaningful instance names
         // aShapeTool->SetAutoNaming (false);
-        aNodeNameFormat = RWMesh_NameFormat::RWMesh_NameFormat_Product;
+        aNodeNameFormat = RWMesh_NameFormat_Product;
         aShapeTool->AddShape(aShape);
       }
     }

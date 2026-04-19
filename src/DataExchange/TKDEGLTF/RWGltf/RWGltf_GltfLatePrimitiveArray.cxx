@@ -27,7 +27,7 @@ RWGltf_GltfLatePrimitiveArray::RWGltf_GltfLatePrimitiveArray(const TCollection_A
                                                              const TCollection_AsciiString& theName)
     : myId(theId),
       myName(theName),
-      myPrimMode(RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_UNKNOWN)
+      myPrimMode(RWGltf_GltfPrimitiveMode_UNKNOWN)
 {
 }
 

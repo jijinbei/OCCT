@@ -75,24 +75,24 @@ static RWGltf_GltfAccessorCompType compTypeFromDraco(draco::DataType theType)
   switch (theType)
   {
     case draco::DT_INT8:
-      return RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_Int8;
+      return RWGltf_GltfAccessorCompType_Int8;
     case draco::DT_UINT8:
-      return RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_UInt8;
+      return RWGltf_GltfAccessorCompType_UInt8;
     case draco::DT_INT16:
-      return RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_Int16;
+      return RWGltf_GltfAccessorCompType_Int16;
     case draco::DT_UINT16:
-      return RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_UInt16;
+      return RWGltf_GltfAccessorCompType_UInt16;
     case draco::DT_INT32:
     case draco::DT_UINT32:
-      return RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_UInt32;
+      return RWGltf_GltfAccessorCompType_UInt32;
     // case draco::DT_INT64:
     // case draco::DT_UINT64:
     case draco::DT_FLOAT32:
-      return RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_Float32;
+      return RWGltf_GltfAccessorCompType_Float32;
     // case draco::DT_FLOAT64:
     // case draco::DT_BOOL:
     default:
-      return RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_UNKNOWN;
+      return RWGltf_GltfAccessorCompType_UNKNOWN;
   }
 }
 #endif
@@ -198,7 +198,7 @@ bool RWGltf_TriangulationReader::loadStreamData(
     occ::down_cast<RWGltf_GltfLatePrimitiveArray>(theSourceMesh);
   if (aSourceGltfMesh.IsNull()
       || aSourceGltfMesh->PrimitiveMode()
-           == RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_UNKNOWN)
+           == RWGltf_GltfPrimitiveMode_UNKNOWN)
   {
     return false;
   }
@@ -303,7 +303,7 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
     switch (aWrapType)
     {
       case RWGltf_GltfArrayType::RWGltf_GltfArrayType_Position: {
-        if (aWrapCompType != RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_Float32
+        if (aWrapCompType != RWGltf_GltfAccessorCompType_Float32
             || aWrapLayout != RWGltf_GltfAccessorLayout::RWGltf_GltfAccessorLayout_Vec3)
         {
           reportError(TCollection_AsciiString("Buffer '") + aName
@@ -328,7 +328,7 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
         break;
       }
       case RWGltf_GltfArrayType::RWGltf_GltfArrayType_Normal: {
-        if (aWrapCompType != RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_Float32
+        if (aWrapCompType != RWGltf_GltfAccessorCompType_Float32
             || aWrapLayout != RWGltf_GltfAccessorLayout::RWGltf_GltfAccessorLayout_Vec3)
         {
           Message::SendTrace(TCollection_AsciiString()
@@ -368,7 +368,7 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
         break;
       }
       case RWGltf_GltfArrayType::RWGltf_GltfArrayType_TCoord0: {
-        if (aWrapCompType != RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_Float32
+        if (aWrapCompType != RWGltf_GltfAccessorCompType_Float32
             || aWrapLayout != RWGltf_GltfAccessorLayout::RWGltf_GltfAccessorLayout_Vec2)
         {
           Message::SendTrace(TCollection_AsciiString()
@@ -466,7 +466,7 @@ bool RWGltf_TriangulationReader::load(const occ::handle<RWMesh_TriangulationSour
     occ::down_cast<RWGltf_GltfLatePrimitiveArray>(theSourceMesh);
   if (aSourceGltfMesh.IsNull()
       || aSourceGltfMesh->PrimitiveMode()
-           == RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_UNKNOWN)
+           == RWGltf_GltfPrimitiveMode_UNKNOWN)
   {
     return false;
   }
@@ -530,7 +530,7 @@ bool RWGltf_TriangulationReader::finalizeLoading(
       occ::down_cast<RWGltf_GltfLatePrimitiveArray>(theSourceMesh);
     if (!aSourceGltfMesh.IsNull()
         && aSourceGltfMesh->PrimitiveMode()
-             == RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Triangles)
+             == RWGltf_GltfPrimitiveMode_Triangles)
     {
       // reconstruct indexes
       const int aNbTris = theDestMesh->NbNodes() / 3;
@@ -579,9 +579,9 @@ bool RWGltf_TriangulationReader::ReadStream(
 {
   const TCollection_AsciiString& aName     = theSourceMesh->Id();
   const RWGltf_GltfPrimitiveMode aPrimMode = theSourceMesh->PrimitiveMode();
-  if (aPrimMode != RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Triangles
-      && aPrimMode != RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Lines
-      && aPrimMode != RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Points)
+  if (aPrimMode != RWGltf_GltfPrimitiveMode_Triangles
+      && aPrimMode != RWGltf_GltfPrimitiveMode_Lines
+      && aPrimMode != RWGltf_GltfPrimitiveMode_Points)
   {
     Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
                          + "' skipped unsupported primitive array");
@@ -598,7 +598,7 @@ bool RWGltf_TriangulationReader::ReadStream(
 
       Poly_Triangle aVec3;
       if (theAccessor.ComponentType
-          == RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_UInt16)
+          == RWGltf_GltfAccessorCompType_UInt16)
       {
         if ((theAccessor.Count / 3) > std::numeric_limits<int>::max())
         {
@@ -607,7 +607,7 @@ bool RWGltf_TriangulationReader::ReadStream(
         }
 
         const bool isTriangles =
-          aPrimMode == RWGltf_GltfPrimitiveMode::RWGltf_GltfPrimitiveMode_Triangles;
+          aPrimMode == RWGltf_GltfPrimitiveMode_Triangles;
         const int aCounter = isTriangles ? (int)(theAccessor.Count / 3) : (int)(theAccessor.Count);
         if ((isTriangles && !setNbTriangles(theDestMesh, aCounter))
             || !setNbEdges(theDestMesh, aCounter))
@@ -682,7 +682,7 @@ bool RWGltf_TriangulationReader::ReadStream(
         }
       }
       else if (theAccessor.ComponentType
-               == RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_UInt32)
+               == RWGltf_GltfAccessorCompType_UInt32)
       {
         if ((theAccessor.Count / 3) > std::numeric_limits<int>::max())
         {
@@ -754,7 +754,7 @@ bool RWGltf_TriangulationReader::ReadStream(
         }
       }
       else if (theAccessor.ComponentType
-               == RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_UInt8)
+               == RWGltf_GltfAccessorCompType_UInt8)
       {
         if ((theAccessor.Count / 3) > std::numeric_limits<int>::max())
         {
@@ -834,7 +834,7 @@ bool RWGltf_TriangulationReader::ReadStream(
     }
     case RWGltf_GltfArrayType::RWGltf_GltfArrayType_Position: {
       if (theAccessor.ComponentType
-            != RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_Float32
+            != RWGltf_GltfAccessorCompType_Float32
           || theAccessor.Type != RWGltf_GltfAccessorLayout::RWGltf_GltfAccessorLayout_Vec3)
       {
         break;
@@ -894,7 +894,7 @@ bool RWGltf_TriangulationReader::ReadStream(
     }
     case RWGltf_GltfArrayType::RWGltf_GltfArrayType_Normal: {
       if (theAccessor.ComponentType
-            != RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_Float32
+            != RWGltf_GltfAccessorCompType_Float32
           || theAccessor.Type != RWGltf_GltfAccessorLayout::RWGltf_GltfAccessorLayout_Vec3)
       {
         break;
@@ -966,7 +966,7 @@ bool RWGltf_TriangulationReader::ReadStream(
     }
     case RWGltf_GltfArrayType::RWGltf_GltfArrayType_TCoord0: {
       if (theAccessor.ComponentType
-            != RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_Float32
+            != RWGltf_GltfAccessorCompType_Float32
           || theAccessor.Type != RWGltf_GltfAccessorLayout::RWGltf_GltfAccessorLayout_Vec2)
       {
         break;

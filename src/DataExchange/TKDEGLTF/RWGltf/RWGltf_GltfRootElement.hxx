@@ -16,7 +16,7 @@
 #define _RWGltf_GltfRootElement_HeaderFile
 
 //! Root elements within glTF JSON document.
-enum class RWGltf_GltfRootElement
+enum RWGltf_GltfRootElement
 {
   RWGltf_GltfRootElement_Asset,        //!< "asset"       element, mandatory
   RWGltf_GltfRootElement_Scenes,       //!< "scenes"      element, mandatory
@@ -45,27 +45,26 @@ enum class RWGltf_GltfRootElement
 //! Root elements within glTF JSON document - names array.
 inline const char* RWGltf_GltfRootElementName(RWGltf_GltfRootElement theElem)
 {
-  static const char* THE_ROOT_NAMES[static_cast<int>(
-    RWGltf_GltfRootElement::RWGltf_GltfRootElement_NB)] = {"asset",
-                                                           "scenes",
-                                                           "scene",
-                                                           "nodes",
-                                                           "meshes",
-                                                           "accessors",
-                                                           "bufferViews",
-                                                           "buffers",
-                                                           "animations",
-                                                           "materials",
-                                                           "programs",
-                                                           "samplers",
-                                                           "shaders",
-                                                           "skins",
-                                                           "techniques",
-                                                           "textures",
-                                                           "images",
-                                                           "extensionsUsed",
-                                                           "extensionsRequired"};
-  return THE_ROOT_NAMES[static_cast<int>(theElem)];
+  static const char* THE_ROOT_NAMES[RWGltf_GltfRootElement_NB] = {"asset",
+                                                                 "scenes",
+                                                                 "scene",
+                                                                 "nodes",
+                                                                 "meshes",
+                                                                 "accessors",
+                                                                 "bufferViews",
+                                                                 "buffers",
+                                                                 "animations",
+                                                                 "materials",
+                                                                 "programs",
+                                                                 "samplers",
+                                                                 "shaders",
+                                                                 "skins",
+                                                                 "techniques",
+                                                                 "textures",
+                                                                 "images",
+                                                                 "extensionsUsed",
+                                                                 "extensionsRequired"};
+  return THE_ROOT_NAMES[theElem];
 }
 
 #endif // _RWGltf_GltfRootElement_HeaderFile

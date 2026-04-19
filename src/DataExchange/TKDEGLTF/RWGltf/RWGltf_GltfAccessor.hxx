@@ -42,7 +42,7 @@ public:
         Count(0),
         ByteStride(0),
         Type(RWGltf_GltfAccessorLayout::RWGltf_GltfAccessorLayout_UNKNOWN),
-        ComponentType(RWGltf_GltfAccessorCompType::RWGltf_GltfAccessorCompType_UNKNOWN),
+        ComponentType(RWGltf_GltfAccessorCompType_UNKNOWN),
         IsCompressed(false)
   {
   }

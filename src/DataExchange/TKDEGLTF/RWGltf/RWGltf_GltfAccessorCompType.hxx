@@ -16,7 +16,7 @@
 #define _RWGltf_GltfAccessorCompType_HeaderFile
 
 //! Low-level glTF enumeration defining Accessor component type.
-enum class RWGltf_GltfAccessorCompType
+enum RWGltf_GltfAccessorCompType
 {
   RWGltf_GltfAccessorCompType_UNKNOWN,        //!< unknown or invalid type
   RWGltf_GltfAccessorCompType_Int8    = 5120, //!< GL_BYTE

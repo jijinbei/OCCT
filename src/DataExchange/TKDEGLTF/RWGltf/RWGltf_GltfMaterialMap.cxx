@@ -118,7 +118,7 @@ void RWGltf_GltfMaterialMap::addImage(RWGltf_GltfOStreamWriter*         theWrite
   if (!theIsStarted)
   {
     theWriter->Key(
-      RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Images));
+      RWGltf_GltfRootElementName(RWGltf_GltfRootElement_Images));
     theWriter->StartArray();
     theIsStarted = true;
   }
@@ -229,7 +229,7 @@ void RWGltf_GltfMaterialMap::FlushGlbImages(RWGltf_GltfOStreamWriter* theWriter)
     if (!isStarted)
     {
       theWriter->Key(
-        RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Images));
+        RWGltf_GltfRootElementName(RWGltf_GltfRootElement_Images));
       theWriter->StartArray();
       isStarted = true;
     }
@@ -276,7 +276,7 @@ void RWGltf_GltfMaterialMap::AddMaterial(RWGltf_GltfOStreamWriter* theWriter,
   if (!theIsStarted)
   {
     theWriter->Key(
-      RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Materials));
+      RWGltf_GltfRootElementName(RWGltf_GltfRootElement_Materials));
     theWriter->StartArray();
     theIsStarted = true;
   }
@@ -328,7 +328,7 @@ void RWGltf_GltfMaterialMap::addTexture(RWGltf_GltfOStreamWriter*         theWri
   if (!theIsStarted)
   {
     theWriter->Key(
-      RWGltf_GltfRootElementName(RWGltf_GltfRootElement::RWGltf_GltfRootElement_Textures));
+      RWGltf_GltfRootElementName(RWGltf_GltfRootElement_Textures));
     theWriter->StartArray();
     theIsStarted = true;
   }

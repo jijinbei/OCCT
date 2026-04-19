@@ -104,9 +104,9 @@ public:
     // Writing
     TCollection_AsciiString WriteComment; //!< Export special comment
     TCollection_AsciiString WriteAuthor; //!< Author of exported file name
-    RWGltf_WriterTrsfFormat WriteTrsfFormat = RWGltf_WriterTrsfFormat::RWGltf_WriterTrsfFormat_Compact; //!< Transformation format to write into glTF file
-    RWMesh_NameFormat WriteNodeNameFormat = RWMesh_NameFormat::RWMesh_NameFormat_InstanceOrProduct; //!< Name format for exporting Nodes
-    RWMesh_NameFormat WriteMeshNameFormat = RWMesh_NameFormat::RWMesh_NameFormat_Product; //!< Name format for exporting Meshes
+    RWGltf_WriterTrsfFormat WriteTrsfFormat = RWGltf_WriterTrsfFormat_Compact; //!< Transformation format to write into glTF file
+    RWMesh_NameFormat WriteNodeNameFormat = RWMesh_NameFormat_InstanceOrProduct; //!< Name format for exporting Nodes
+    RWMesh_NameFormat WriteMeshNameFormat = RWMesh_NameFormat_Product; //!< Name format for exporting Meshes
     bool WriteForcedUVExport = false; //!< Export UV coordinates even if there are no mapped texture
     bool WriteEmbedTexturesInGlb = true; //!< Flag to write image textures into GLB file
     bool WriteMergeFaces = false; //!< Flag to merge faces within a single part
