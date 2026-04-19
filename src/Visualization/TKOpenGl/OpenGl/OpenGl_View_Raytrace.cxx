@@ -1078,7 +1078,7 @@ bool OpenGl_View::ShaderSource::LoadFromFiles(const TCollection_AsciiString* the
     OSD_File aFile(theFileNames[anIndex]);
     if (aFile.Exists())
     {
-      aFile.Open(OSD_ReadOnly, OSD_Protection());
+      aFile.Open(OSD_OpenMode::OSD_ReadOnly, OSD_Protection());
     }
     if (!aFile.IsOpen())
     {

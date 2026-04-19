@@ -710,7 +710,7 @@ bool Storage_Schema::CheckTypeMigration(const TCollection_AsciiString& oldName,
     if (aFile.Exists())
     {
       OSD_Protection aProt(OSD_R, OSD_R, OSD_R, OSD_R);
-      aFile.Open(OSD_ReadOnly, aProt);
+      aFile.Open(OSD_OpenMode::OSD_ReadOnly, aProt);
       if (aFile.IsOpen() && aFile.IsReadable())
       {
         TCollection_AsciiString aLine;

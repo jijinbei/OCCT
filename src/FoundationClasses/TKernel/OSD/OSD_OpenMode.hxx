@@ -16,7 +16,7 @@
 #define _OSD_OpenMode_HeaderFile
 
 //! Specifies the file open mode.
-enum OSD_OpenMode
+enum class OSD_OpenMode
 {
   OSD_ReadOnly,
   OSD_WriteOnly,

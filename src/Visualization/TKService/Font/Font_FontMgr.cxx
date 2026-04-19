@@ -741,7 +741,7 @@ void Font_FontMgr::InitFontDataBase()
         continue;
       }
 
-      aFile.Open(OSD_ReadOnly, aProtectRead);
+      aFile.Open(OSD_OpenMode::OSD_ReadOnly, aProtectRead);
       if (!aFile.IsOpen())
       {
         continue;
@@ -832,7 +832,7 @@ void Font_FontMgr::InitFontDataBase()
       continue;
     }
 
-    aReadFile.Open(OSD_ReadOnly, aProtectRead);
+    aReadFile.Open(OSD_OpenMode::OSD_ReadOnly, aProtectRead);
     if (!aReadFile.IsOpen())
     {
       continue; // invalid fonts directory

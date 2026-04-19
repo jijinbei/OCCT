@@ -134,11 +134,11 @@ void OSD_SharedLibrary::SetName(const char* const aName)
 // ----------------------------------------------------------------
 bool OSD_SharedLibrary::DlOpen(const OSD_LoadMode aMode)
 {
-  if (aMode == OSD_RTLD_LAZY)
+  if (aMode == OSD_LoadMode::OSD_RTLD_LAZY)
   {
     myHandle = dlopen(myName, RTLD_LAZY);
   }
-  else if (aMode == OSD_RTLD_NOW)
+  else if (aMode == OSD_LoadMode::OSD_RTLD_NOW)
   {
     myHandle = dlopen(myName, RTLD_NOW);
   }

@@ -87,7 +87,7 @@ occ::handle<Standard_Transient> Plugin::Load(const Standard_GUID& aGUID, const b
     thePluginLibrary += ".so";
 #endif
     OSD_SharedLibrary theSharedLibrary(thePluginLibrary.ToCString());
-    if (!theSharedLibrary.DlOpen(OSD_RTLD_LAZY))
+    if (!theSharedLibrary.DlOpen(OSD_LoadMode::OSD_RTLD_LAZY))
     {
       TCollection_AsciiString error(theSharedLibrary.DlError());
       Standard_SStream        aMsg;

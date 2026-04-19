@@ -311,7 +311,7 @@ static bool dumpShaderSource(const TCollection_AsciiString& theFileName,
                              bool                           theToBeautify)
 {
   OSD_File aFile(theFileName);
-  aFile.Build(OSD_WriteOnly, OSD_Protection());
+  aFile.Build(OSD_OpenMode::OSD_WriteOnly, OSD_Protection());
   TCollection_AsciiString aSource = theSource;
   if (theToBeautify)
   {
@@ -340,7 +340,7 @@ static bool restoreShaderSource(TCollection_AsciiString&       theSource,
                                 const TCollection_AsciiString& theFileName)
 {
   OSD_File aFile(theFileName);
-  aFile.Open(OSD_ReadOnly, OSD_Protection());
+  aFile.Open(OSD_OpenMode::OSD_ReadOnly, OSD_Protection());
   if (!aFile.IsOpen())
   {
     Message::SendFail(TCollection_AsciiString("File '") + theFileName

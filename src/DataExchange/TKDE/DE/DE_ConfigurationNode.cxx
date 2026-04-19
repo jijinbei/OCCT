@@ -60,7 +60,7 @@ bool DE_ConfigurationNode::Save(const TCollection_AsciiString& theResourcePath) 
     try
     {
       OCC_CATCH_SIGNALS
-      aFile.Build(OSD_ReadWrite, aProt);
+      aFile.Build(OSD_OpenMode::OSD_ReadWrite, aProt);
     }
     catch (Standard_Failure const&)
     {

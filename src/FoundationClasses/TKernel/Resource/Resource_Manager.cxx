@@ -151,7 +151,7 @@ void Resource_Manager::Load(
   OSD_Path                Path(thePath);
   OSD_File                File     = Path;
   TCollection_AsciiString FileName = Path.Name();
-  File.Open(OSD_ReadOnly, OSD_Protection());
+  File.Open(OSD_OpenMode::OSD_ReadOnly, OSD_Protection());
   if (File.Failed())
   {
     if (myVerbose)
@@ -339,7 +339,7 @@ bool Resource_Manager::Save() const
     try
     {
       OCC_CATCH_SIGNALS
-      File.Build(OSD_ReadWrite, theProt);
+      File.Build(OSD_OpenMode::OSD_ReadWrite, theProt);
     }
     catch (Standard_Failure const&)
     {

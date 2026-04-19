@@ -405,7 +405,7 @@ static int noteCreateBinData(Draw_Interpretor& di, int argc, const char** argv)
   {
     OSD_Path aPath(aFilename);
     OSD_File aFile(aPath);
-    aFile.Open(OSD_ReadOnly, OSD_Protection());
+    aFile.Open(OSD_OpenMode::OSD_ReadOnly, OSD_Protection());
     aNote = aNotesTool->CreateBinData(aUsername, aTimestamp, aTitle, aMIMEtype, aFile);
   }
   else if (aFromData)

@@ -257,7 +257,7 @@ static int dtryload(Draw_Interpretor& di, int n, const char** argv)
   }
 
   OSD_SharedLibrary aLib(argv[1]);
-  if (aLib.DlOpen(OSD_RTLD_NOW))
+  if (aLib.DlOpen(OSD_LoadMode::OSD_RTLD_NOW))
   {
     di << "Loading " << argv[1] << " successful";
     aLib.DlClose();

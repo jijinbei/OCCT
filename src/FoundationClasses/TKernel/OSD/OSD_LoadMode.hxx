@@ -16,7 +16,7 @@
 #define _OSD_LoadMode_HeaderFile
 
 //! This enumeration is used to load shareable libraries.
-enum OSD_LoadMode
+enum class OSD_LoadMode
 {
   OSD_RTLD_LAZY,
   OSD_RTLD_NOW

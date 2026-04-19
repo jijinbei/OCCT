@@ -77,7 +77,7 @@ private:
 //! After loading of the library TKDESTEP:
 //! @code
 //! OSD_SharedLibrary aSharedLibrary("libTKDESTEP.so");
-//! if (!aSharedLibrary.DlOpen(OSD_RTLD_LAZY))
+//! if (!aSharedLibrary.DlOpen(OSD_LoadMode::OSD_RTLD_LAZY))
 //! {
 //!   // Error handling
 //!   return;

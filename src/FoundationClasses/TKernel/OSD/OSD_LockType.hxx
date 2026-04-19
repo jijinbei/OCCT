@@ -27,7 +27,7 @@
 //! current user of the file.
 //! So ExclusiveLock means only one user on the file and this
 //! user is the one who puts the lock.
-enum OSD_LockType
+enum class OSD_LockType
 {
   OSD_NoLock,
   OSD_ReadLock,

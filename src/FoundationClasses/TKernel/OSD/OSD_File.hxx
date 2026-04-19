@@ -144,7 +144,7 @@ public:
 #ifdef _WIN32
     return ImperativeFlag;
 #else
-    return myLock != OSD_NoLock;
+    return myLock != OSD_LockType::OSD_NoLock;
 #endif
   }
 

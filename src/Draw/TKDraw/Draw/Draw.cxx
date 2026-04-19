@@ -719,7 +719,7 @@ void Draw::Load(Draw_Interpretor&              theDI,
     aPluginLibrary += ".so";
 #endif
     OSD_SharedLibrary aSharedLibrary(aPluginLibrary.ToCString());
-    if (!aSharedLibrary.DlOpen(OSD_RTLD_LAZY))
+    if (!aSharedLibrary.DlOpen(OSD_LoadMode::OSD_RTLD_LAZY))
     {
       const TCollection_AsciiString anError(aSharedLibrary.DlError());
       Standard_SStream              aMsg;

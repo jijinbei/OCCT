@@ -180,7 +180,7 @@ bool DE_ConfigurationContext::LoadFile(const TCollection_AsciiString& theFile)
   OSD_Path                aPath(theFile);
   OSD_File                aFile    = aPath;
   TCollection_AsciiString FileName = aPath.Name();
-  aFile.Open(OSD_ReadOnly, OSD_Protection());
+  aFile.Open(OSD_OpenMode::OSD_ReadOnly, OSD_Protection());
   if (aFile.Failed())
   {
     Message::SendFail("Error: DE Context loading is stopped. Can't open the file");

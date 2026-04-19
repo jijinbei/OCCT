@@ -56,7 +56,7 @@ occ::handle<Graphic3d_ShaderObject> Graphic3d_ShaderObject::CreateFromFile(
     return nullptr;
   }
 
-  aFile.Open(OSD_ReadOnly, OSD_Protection());
+  aFile.Open(OSD_OpenMode::OSD_ReadOnly, OSD_Protection());
   aFile.Read(aShader->mySource, (int)aFile.Size());
   aFile.Close();
 

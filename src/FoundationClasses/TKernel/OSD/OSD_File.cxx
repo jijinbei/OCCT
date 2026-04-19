@@ -312,13 +312,13 @@ static HANDLE OSD_File_openFile(const TCollection_AsciiString& theFileName,
   DWORD dwDesiredAccess = 0;
   switch (theOpenMode)
   {
-    case OSD_ReadOnly:
+    case OSD_OpenMode::OSD_ReadOnly:
       dwDesiredAccess = GENERIC_READ;
       break;
-    case OSD_WriteOnly:
+    case OSD_OpenMode::OSD_WriteOnly:
       dwDesiredAccess = GENERIC_WRITE;
       break;
-    case OSD_ReadWrite:
+    case OSD_OpenMode::OSD_ReadWrite:
       dwDesiredAccess = GENERIC_READ | GENERIC_WRITE;
       break;
     default:
@@ -409,8 +409,8 @@ OSD_File::OSD_File()
       myFILE(nullptr),
 #endif
       myIO(0),
-      myLock(OSD_NoLock),
-      myMode(OSD_ReadWrite),
+      myLock(OSD_LockType::OSD_NoLock),
+      myMode(OSD_OpenMode::OSD_ReadWrite),
       ImperativeFlag(false)
 {
 }
@@ -426,8 +426,8 @@ OSD_File::OSD_File(const OSD_Path& theName)
       myFILE(nullptr),
 #endif
       myIO(0),
-      myLock(OSD_NoLock),
-      myMode(OSD_ReadWrite),
+      myLock(OSD_LockType::OSD_NoLock),
+      myMode(OSD_OpenMode::OSD_ReadWrite),
       ImperativeFlag(false)
 {
 }
@@ -450,7 +450,7 @@ OSD_File::~OSD_File()
 
 void OSD_File::Build(const OSD_OpenMode theMode, const OSD_Protection& theProtect)
 {
-  if (OSD_File::KindOfFile() == OSD_DIRECTORY)
+  if (OSD_File::KindOfFile() == OSD_KindFile::OSD_DIRECTORY)
   {
     throw Standard_ProgramError("OSD_File::Build(): it is a directory");
   }
@@ -492,15 +492,15 @@ void OSD_File::Build(const OSD_OpenMode theMode, const OSD_Protection& theProtec
   int         anOpenMode   = O_CREAT | O_TRUNC;
   switch (theMode)
   {
-    case OSD_ReadOnly:
+    case OSD_OpenMode::OSD_ReadOnly:
       anOpenMode |= O_RDONLY;
       anFDOpenMode = "r";
       break;
-    case OSD_WriteOnly:
+    case OSD_OpenMode::OSD_WriteOnly:
       anOpenMode |= O_WRONLY;
       anFDOpenMode = "w";
       break;
-    case OSD_ReadWrite:
+    case OSD_OpenMode::OSD_ReadWrite:
       anOpenMode |= O_RDWR;
       anFDOpenMode = "w+";
       break;
@@ -523,7 +523,7 @@ void OSD_File::Build(const OSD_OpenMode theMode, const OSD_Protection& theProtec
 
 void OSD_File::Append(const OSD_OpenMode theMode, const OSD_Protection& theProtect)
 {
-  if (OSD_File::KindOfFile() == OSD_DIRECTORY)
+  if (OSD_File::KindOfFile() == OSD_KindFile::OSD_DIRECTORY)
   {
     throw Standard_ProgramError("OSD_File::Append(): it is a directory");
   }
@@ -552,7 +552,7 @@ void OSD_File::Append(const OSD_OpenMode theMode, const OSD_Protection& theProte
     if (!isNewFile)
     {
       myIO |= _get_file_type(aFileName.ToCString(), myFileHandle);
-      Seek(0, OSD_FromEnd);
+      Seek(0, OSD_FromWhere::OSD_FromEnd);
     }
     else
     {
@@ -574,15 +574,15 @@ void OSD_File::Append(const OSD_OpenMode theMode, const OSD_Protection& theProte
   int         anOpenMode   = O_APPEND;
   switch (theMode)
   {
-    case OSD_ReadOnly:
+    case OSD_OpenMode::OSD_ReadOnly:
       anOpenMode |= O_RDONLY;
       anFDOpenMode = "r";
       break;
-    case OSD_WriteOnly:
+    case OSD_OpenMode::OSD_WriteOnly:
       anOpenMode |= O_WRONLY;
       anFDOpenMode = "a";
       break;
-    case OSD_ReadWrite:
+    case OSD_OpenMode::OSD_ReadWrite:
       anOpenMode |= O_RDWR;
       anFDOpenMode = "a+";
       break;
@@ -611,7 +611,7 @@ void OSD_File::Append(const OSD_OpenMode theMode, const OSD_Protection& theProte
 
 void OSD_File::Open(const OSD_OpenMode theMode, const OSD_Protection& theProtect)
 {
-  if (OSD_File::KindOfFile() == OSD_DIRECTORY)
+  if (OSD_File::KindOfFile() == OSD_KindFile::OSD_DIRECTORY)
   {
     throw Standard_ProgramError("OSD_File::Open(): it is a directory");
   }
@@ -649,15 +649,15 @@ void OSD_File::Open(const OSD_OpenMode theMode, const OSD_Protection& theProtect
   int         anOpenMode   = 0;
   switch (theMode)
   {
-    case OSD_ReadOnly:
+    case OSD_OpenMode::OSD_ReadOnly:
       anOpenMode |= O_RDONLY;
       anFDOpenMode = "r";
       break;
-    case OSD_WriteOnly:
+    case OSD_OpenMode::OSD_WriteOnly:
       anOpenMode |= O_WRONLY;
       anFDOpenMode = "w";
       break;
-    case OSD_ReadWrite:
+    case OSD_OpenMode::OSD_ReadWrite:
       anOpenMode |= O_RDWR;
       anFDOpenMode = "w+";
       break;
@@ -748,7 +748,7 @@ void OSD_File::BuildTemporary()
   }
 
   SetPath(OSD_Path(TCollection_AsciiString(aTmpPathW)));
-  Build(OSD_ReadWrite, OSD_Protection());
+  Build(OSD_OpenMode::OSD_ReadWrite, OSD_Protection());
 
 #else /* _WIN32 */
 
@@ -770,7 +770,7 @@ void OSD_File::BuildTemporary()
   SetPath(aPath);
   myFILE = fdopen(myFileChannel, "w+");
   #endif
-  myMode = OSD_ReadWrite;
+  myMode = OSD_OpenMode::OSD_ReadWrite;
 
 #endif
 }
@@ -779,7 +779,7 @@ void OSD_File::BuildTemporary()
 
 void OSD_File::Read(TCollection_AsciiString& theBuffer, const int theNbBytes)
 {
-  if (OSD_File::KindOfFile() == OSD_DIRECTORY)
+  if (OSD_File::KindOfFile() == OSD_KindFile::OSD_DIRECTORY)
   {
     throw Standard_ProgramError("OSD_File::Read(): it is a directory");
   }
@@ -791,7 +791,7 @@ void OSD_File::Read(TCollection_AsciiString& theBuffer, const int theNbBytes)
   {
     Perror();
   }
-  if (myMode == OSD_WriteOnly)
+  if (myMode == OSD_OpenMode::OSD_WriteOnly)
   {
     throw Standard_ProgramError("OSD_File::Read(): file is Write only");
   }
@@ -833,7 +833,7 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
                         const int                theNbBytes,
                         int&                     theNbBytesRead)
 {
-  if (OSD_File::KindOfFile() == OSD_DIRECTORY)
+  if (OSD_File::KindOfFile() == OSD_KindFile::OSD_DIRECTORY)
   {
     throw Standard_ProgramError("OSD_File::ReadLine(): it is a directory");
   }
@@ -845,7 +845,7 @@ void OSD_File::ReadLine(TCollection_AsciiString& theBuffer,
   {
     Perror();
   }
-  if (myMode == OSD_WriteOnly)
+  if (myMode == OSD_OpenMode::OSD_WriteOnly)
   {
     throw Standard_ProgramError("OSD_File::ReadLine(): file is Write only");
   }
@@ -1032,35 +1032,35 @@ OSD_KindFile OSD_File::KindOfFile() const
   switch (aFlags & FLAG_TYPE)
   {
     case FLAG_FILE:
-      return OSD_FILE;
+      return OSD_KindFile::OSD_FILE;
     case FLAG_DIRECTORY:
-      return OSD_DIRECTORY;
+      return OSD_KindFile::OSD_DIRECTORY;
     case FLAG_SOCKET:
-      return OSD_SOCKET;
+      return OSD_KindFile::OSD_SOCKET;
   }
-  return OSD_UNKNOWN;
+  return OSD_KindFile::OSD_UNKNOWN;
 #else
   struct stat aStatBuffer;
   if (stat(aFullName.ToCString(), &aStatBuffer) == 0)
   {
     if (S_ISDIR(aStatBuffer.st_mode))
     {
-      return OSD_DIRECTORY;
+      return OSD_KindFile::OSD_DIRECTORY;
     }
     else if (S_ISREG(aStatBuffer.st_mode))
     {
-      return OSD_FILE;
+      return OSD_KindFile::OSD_FILE;
     }
     else if (S_ISLNK(aStatBuffer.st_mode))
     {
-      return OSD_LINK;
+      return OSD_KindFile::OSD_LINK;
     }
     else if (S_ISSOCK(aStatBuffer.st_mode))
     {
-      return OSD_SOCKET;
+      return OSD_KindFile::OSD_SOCKET;
     }
   }
-  return OSD_UNKNOWN;
+  return OSD_KindFile::OSD_UNKNOWN;
 #endif
 }
 
@@ -1068,7 +1068,7 @@ OSD_KindFile OSD_File::KindOfFile() const
 
 void OSD_File::Read(void* const theBuffer, const int theNbBytes, int& theNbReadBytes)
 {
-  if (OSD_File::KindOfFile() == OSD_DIRECTORY)
+  if (OSD_File::KindOfFile() == OSD_KindFile::OSD_DIRECTORY)
   {
     throw Standard_ProgramError("OSD_File::Read(): it is a directory");
   }
@@ -1080,7 +1080,7 @@ void OSD_File::Read(void* const theBuffer, const int theNbBytes, int& theNbReadB
   {
     Perror();
   }
-  if (myMode == OSD_WriteOnly)
+  if (myMode == OSD_OpenMode::OSD_WriteOnly)
   {
     throw Standard_ProgramError("OSD_File::Read(): file is Write only");
   }
@@ -1144,7 +1144,7 @@ void OSD_File::Write(void* const theBuffer, const int theNbBytes)
   {
     Perror();
   }
-  if (myMode == OSD_ReadOnly)
+  if (myMode == OSD_OpenMode::OSD_ReadOnly)
   {
     throw Standard_ProgramError("OSD_File::Write(): file is Read only");
   }
@@ -1196,13 +1196,13 @@ void OSD_File::Seek(const int theOffset, const OSD_FromWhere theWhence)
   {
     switch (theWhence)
     {
-      case OSD_FromBeginning:
+      case OSD_FromWhere::OSD_FromBeginning:
         aWhere = FILE_BEGIN;
         break;
-      case OSD_FromHere:
+      case OSD_FromWhere::OSD_FromHere:
         aWhere = FILE_CURRENT;
         break;
-      case OSD_FromEnd:
+      case OSD_FromWhere::OSD_FromEnd:
         aWhere = FILE_END;
         break;
       default:
@@ -1222,13 +1222,13 @@ void OSD_File::Seek(const int theOffset, const OSD_FromWhere theWhence)
   int aWhere = 0;
   switch (theWhence)
   {
-    case OSD_FromBeginning:
+    case OSD_FromWhere::OSD_FromBeginning:
       aWhere = SEEK_SET;
       break;
-    case OSD_FromHere:
+    case OSD_FromWhere::OSD_FromHere:
       aWhere = SEEK_CUR;
       break;
-    case OSD_FromEnd:
+    case OSD_FromWhere::OSD_FromEnd:
       aWhere = SEEK_END;
       break;
     default:
@@ -1324,12 +1324,12 @@ void OSD_File::SetLock(const OSD_LockType theLock)
 #ifdef _WIN32
   DWORD dwFlags = 0;
   myLock        = theLock;
-  if (theLock == OSD_NoLock)
+  if (theLock == OSD_LockType::OSD_NoLock)
   {
     UnLock();
     return;
   }
-  else if (theLock == OSD_ReadLock || theLock == OSD_ExclusiveLock)
+  else if (theLock == OSD_LockType::OSD_ReadLock || theLock == OSD_LockType::OSD_ExclusiveLock)
   {
     dwFlags = LOCKFILE_EXCLUSIVE_LOCK;
   }
@@ -1355,11 +1355,11 @@ void OSD_File::SetLock(const OSD_LockType theLock)
   int aLock = 0;
   switch (theLock)
   {
-    case OSD_ExclusiveLock:
-    case OSD_WriteLock:
+    case OSD_LockType::OSD_ExclusiveLock:
+    case OSD_LockType::OSD_WriteLock:
       aLock = F_LOCK;
       break;
-    case OSD_ReadLock:
+    case OSD_LockType::OSD_ReadLock:
       return;
     default:
       myError.SetValue(EINVAL, Iam, "SetLock");
@@ -1389,14 +1389,14 @@ void OSD_File::SetLock(const OSD_LockType theLock)
   aLockKey.l_len    = 0;
   switch (theLock)
   {
-    case OSD_ExclusiveLock:
-    case OSD_WriteLock:
+    case OSD_LockType::OSD_ExclusiveLock:
+    case OSD_LockType::OSD_WriteLock:
       aLockKey.l_type = F_WRLCK;
       break;
-    case OSD_ReadLock:
+    case OSD_LockType::OSD_ReadLock:
       aLockKey.l_type = F_RDLCK;
       break;
-    case OSD_NoLock:
+    case OSD_LockType::OSD_NoLock:
       return;
       // default: myError.SetValue (EINVAL, Iam, "SetLock");
   }
@@ -1411,7 +1411,7 @@ void OSD_File::SetLock(const OSD_LockType theLock)
     myLock = theLock;
   }
 
-  if (theLock == OSD_ExclusiveLock)
+  if (theLock == OSD_LockType::OSD_ExclusiveLock)
   {
     struct stat aStatBuf;
     fstat(myFileChannel, &aStatBuf);
@@ -1424,11 +1424,11 @@ void OSD_File::SetLock(const OSD_LockType theLock)
   int aLock = 0;
   switch (theLock)
   {
-    case OSD_ExclusiveLock:
-    case OSD_WriteLock:
+    case OSD_LockType::OSD_ExclusiveLock:
+    case OSD_LockType::OSD_WriteLock:
       aLock = F_WRLCK;
       break;
-    case OSD_ReadLock:
+    case OSD_LockType::OSD_ReadLock:
       aLock = F_RDLCK;
       break;
     default:
@@ -1492,7 +1492,7 @@ void OSD_File::UnLock()
   }
   else
   {
-    myLock = OSD_NoLock;
+    myLock = OSD_LockType::OSD_NoLock;
   }
 #elif defined(SYSV)
   if (ImperativeFlag)
@@ -1514,7 +1514,7 @@ void OSD_File::UnLock()
   }
   else
   {
-    myLock = OSD_NoLock;
+    myLock = OSD_LockType::OSD_NoLock;
   }
 #else
   const int aStatus = flock(myFileChannel, LOCK_UN);
@@ -1524,7 +1524,7 @@ void OSD_File::UnLock()
   }
   else
   {
-    myLock = OSD_NoLock;
+    myLock = OSD_LockType::OSD_NoLock;
   }
 #endif
 }
@@ -1592,7 +1592,7 @@ bool OSD_File::IsReadable()
   TCollection_AsciiString aFileName;
   myPath.SystemName(aFileName);
 #ifdef _WIN32
-  HANDLE aChannel = OSD_File_openFile(aFileName, OSD_ReadOnly, OPEN_OLD);
+  HANDLE aChannel = OSD_File_openFile(aFileName, OSD_OpenMode::OSD_ReadOnly, OPEN_OLD);
   if (aChannel == INVALID_HANDLE_VALUE)
   {
     return false;
@@ -1612,7 +1612,7 @@ bool OSD_File::IsWriteable()
   TCollection_AsciiString aFileName;
   myPath.SystemName(aFileName);
 #ifdef _WIN32
-  HANDLE aChannel = OSD_File_openFile(aFileName, OSD_ReadWrite, OPEN_OLD);
+  HANDLE aChannel = OSD_File_openFile(aFileName, OSD_OpenMode::OSD_ReadWrite, OPEN_OLD);
   if (aChannel == INVALID_HANDLE_VALUE)
   {
     return false;
