@@ -318,12 +318,12 @@ static int BUC60811(Draw_Interpretor& di, int argc, const char** argv)
   Ex.Init(FP, TopAbs_VERTEX);
   TopoDS_Vertex v1 = TopoDS::Vertex(Ex.Current());
   fillet.AddFillet(v1, 20);
-  di << "\nError is " << fillet.Status() << "\n";
+  di << "\nError is " << static_cast<int>(fillet.Status()) << "\n";
   //  printf("\nError is %d ", fillet.Status());
   Ex.Next();
   TopoDS_Vertex V2 = TopoDS::Vertex(Ex.Current());
   fillet.AddFillet(V2, 20);
-  di << "\nError is " << fillet.Status() << "\n";
+  di << "\nError is " << static_cast<int>(fillet.Status()) << "\n";
   //  printf("\nError is %d ", fillet.Status());
   fillet.Build();
   FP1  = fillet.Shape();
