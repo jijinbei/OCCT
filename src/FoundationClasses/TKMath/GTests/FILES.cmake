@@ -27,6 +27,7 @@ set(OCCT_TKMath_GTests_FILES
   BVH_TraverseQuad_Test.cxx
   BVH_TraverseWide8_Test.cxx
   BVH_TraverseWide16_Test.cxx
+  BVH_Visualize_Test.cxx
   BVH_WideTree8_Test.cxx
   BVH_WideTree16_Test.cxx
   BVH_SpatialMedianBuilder_Test.cxx
